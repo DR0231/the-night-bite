@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Log — The Night Bite</title>
+  <meta name="description" content="Night fishing trip log for Hoover Reservoir. Sample cards marked SAMPLE. Add your own entries — saved in localStorage only.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/lantern.svg" alt="" width="28" height="42" class="lantern-glow">
+        <span class="logo-text">The Night Bite</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="log.html" aria-current="page">The Log</a></li>
+          <li><a href="water.html">Water</a></li>
+          <li><a href="dockside.html">Dockside</a></li>
+          <li><a href="whisperwood.html">Whisperwood</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <h1>The Log</h1>
+    <p class="lead">
+      Cream-paper trip cards from Hoover nights. Every demo trip is stamped
+      <span class="sample-badge">SAMPLE</span> — not live bite reports.
+      Add your own notes below; they stay in this browser only (<code>localStorage</code>).
+    </p>
+
+    <p class="placeholder-note">
+      <strong>No accounts. No server.</strong> Clearing site data or switching devices will remove your personal entries.
+      Samples re-seed if the log is empty.
+    </p>
+
+    <h2>Trips</h2>
+    <div id="log-list" aria-live="polite">
+      <!-- Filled by log.js; noscript fallback below -->
+      <noscript>
+        <article class="paper-card">
+          <span class="sample-badge">SAMPLE</span>
+          <h3>Channel catfish</h3>
+          <dl class="trip-dl">
+            <dt>Date</dt><dd>Jul 12, 2025</dd>
+            <dt>Spot</dt><dd>Oxbow (upper ramp)</dd>
+            <dt>Bait</dt><dd>Cut shad</dd>
+            <dt>Keep?</dt><dd>Released</dd>
+          </dl>
+          <p>Two keeper-size channels before midnight. SAMPLE trip for demo only.</p>
+        </article>
+        <article class="paper-card">
+          <span class="sample-badge">SAMPLE</span>
+          <h3>Channel catfish</h3>
+          <dl class="trip-dl">
+            <dt>Date</dt><dd>Aug 3, 2025</dd>
+            <dt>Spot</dt><dd>Redbank (middle ramp)</dd>
+            <dt>Bait</dt><dd>Nightcrawlers</dd>
+            <dt>Keep?</dt><dd>Kept (1)</dd>
+          </dl>
+          <p>Steady taps after 10pm. SAMPLE — not a live report.</p>
+        </article>
+        <article class="paper-card">
+          <span class="sample-badge">SAMPLE</span>
+          <h3>Flathead catfish</h3>
+          <dl class="trip-dl">
+            <dt>Date</dt><dd>Aug 22, 2025</dd>
+            <dt>Spot</dt><dd>Bank near Walnut Road</dd>
+            <dt>Bait</dt><dd>Chicken liver</dd>
+            <dt>Keep?</dt><dd>Released</dd>
+          </dl>
+          <p>Single flathead; storms east. SAMPLE entry.</p>
+        </article>
+        <article class="paper-card">
+          <span class="sample-badge">SAMPLE</span>
+          <h3>Blue catfish</h3>
+          <dl class="trip-dl">
+            <dt>Date</dt><dd>Sep 5, 2025</dd>
+            <dt>Spot</dt><dd>Walnut Road (lower ramp)</dd>
+            <dt>Bait</dt><dd>Cut bait (bluegill)</dd>
+            <dt>Keep?</dt><dd>Released</dd>
+          </dl>
+          <p>One blue, measured and released. SAMPLE.</p>
+        </article>
+        <article class="paper-card">
+          <span class="sample-badge">SAMPLE</span>
+          <h3>Channel catfish</h3>
+          <dl class="trip-dl">
+            <dt>Date</dt><dd>Jun 18, 2025</dd>
+            <dt>Spot</dt><dd>Oxbow (upper ramp)</dd>
+            <dt>Bait</dt><dd>Stink bait</dd>
+            <dt>Keep?</dt><dd>Released</dd>
+          </dl>
+          <p>Early summer night. SAMPLE for site demo.</p>
+        </article>
+        <article class="paper-card">
+          <span class="sample-badge">SAMPLE</span>
+          <h3>Channel catfish</h3>
+          <dl class="trip-dl">
+            <dt>Date</dt><dd>May 30, 2025</dd>
+            <dt>Spot</dt><dd>Redbank (middle ramp)</dd>
+            <dt>Bait</dt><dd>Nightcrawlers + cut bait</dd>
+            <dt>Keep?</dt><dd>Kept (2)</dd>
+          </dl>
+          <p>Memorial weekend trip. SAMPLE only.</p>
+        </article>
+        <p class="meta">Enable JavaScript to add your own trips and save them on this device.</p>
+      </noscript>
+    </div>
+
+    <h2>Add a trip</h2>
+    <form class="form-block" id="trip-form" action="#" method="post">
+      <div class="form-row">
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" required>
+      </div>
+      <div class="form-row">
+        <label for="location">Ramp or bank</label>
+        <select id="location" name="location" required>
+          <option value="">Choose…</option>
+          <option>Oxbow (upper ramp)</option>
+          <option>Redbank (middle ramp)</option>
+          <option>Walnut Road (lower ramp)</option>
+          <option>Bank — upper</option>
+          <option>Bank — middle</option>
+          <option>Bank — lower</option>
+          <option>Other / not sure</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="bait">Bait</label>
+        <input type="text" id="bait" name="bait" placeholder="e.g. cut bait, nightcrawlers" required maxlength="80">
+      </div>
+      <div class="form-row">
+        <label for="species">Species</label>
+        <select id="species" name="species" required>
+          <option value="">Choose…</option>
+          <option>Channel catfish</option>
+          <option>Blue catfish</option>
+          <option>Flathead catfish</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="disposition">Keep / release</label>
+        <select id="disposition" name="disposition" required>
+          <option value="">Choose…</option>
+          <option>Released</option>
+          <option>Kept (1)</option>
+          <option>Kept (2)</option>
+          <option>Kept (other)</option>
+          <option>No fish</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="notes">Notes</label>
+        <textarea id="notes" name="notes" maxlength="500" placeholder="Weather, moon, what worked…"></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn">Save trip</button>
+        <button type="button" class="btn btn-ghost btn-danger" id="clear-user-entries">Clear my entries</button>
+      </div>
+      <p class="meta" style="margin-top:0.75rem;margin-bottom:0;">“Clear my entries” keeps SAMPLE trips. Never stores names, addresses, or card info.</p>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="log.html">Log</a>
+        <a href="water.html">Water</a>
+        <a href="dockside.html">Dockside</a>
+        <a href="whisperwood.html">Whisperwood</a>
+        <a href="about.html">About</a>
+      </nav>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR or the City of Columbus.</p>
+    </div>
+  </footer>
+  <script src="js/nav.js"></script>
+  <script src="js/log.js"></script>
+</body>
+</html>

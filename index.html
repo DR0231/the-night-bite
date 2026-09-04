@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Night Bite — Hoover Reservoir night fishing</title>
+  <meta name="description" content="A cozy night-fishing log and dockside vegan snacks for Hoover Reservoir, Ohio. Catfish-first. Unofficial personal site.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/lantern.svg" alt="" width="28" height="42" class="lantern-glow">
+        <span class="logo-text">The Night Bite</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="log.html">The Log</a></li>
+          <li><a href="water.html">Water</a></li>
+          <li><a href="dockside.html">Dockside</a></li>
+          <li><a href="whisperwood.html">Whisperwood</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="home-title">
+      <div class="hero-art" aria-hidden="true">
+        <img src="assets/moon.svg" alt="" width="48" height="48">
+        <img src="assets/dock.svg" alt="" width="160" height="53">
+        <img src="assets/lantern.svg" alt="" width="36" height="54" class="lantern-glow">
+      </div>
+      <h1 id="home-title">The Night Bite</h1>
+      <p class="tagline">Hoover Reservoir after dark — a catfish notebook from the dock.</p>
+    </section>
+
+    <div class="status-strip" role="group" aria-label="Tonight status placeholders">
+      <div class="chip chip-go">
+        GO
+        <span class="chip-label">placeholder</span>
+      </div>
+      <div class="chip chip-nights">
+        NIGHTS ONLY
+        <span class="chip-label">placeholder</span>
+      </div>
+      <div class="chip chip-wait">
+        WAIT
+        <span class="chip-label">placeholder</span>
+      </div>
+    </div>
+    <p class="placeholder-note">
+      <strong>Not live data.</strong> These chips are static placeholders for a future “tonight’s conditions” strip.
+      They do not reflect current bite, weather, or water. Check real forecasts and USGS yourself before you go.
+    </p>
+
+    <p class="lead">
+      This is a personal, unofficial page for night fishing at Hoover Reservoir
+      (Delaware / Franklin County, Ohio) — mostly channel, blue, and flathead cats —
+      plus a few vegan snacks for the cooler.
+    </p>
+
+    <div class="card-grid cols-2">
+      <a class="card" href="log.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="assets/fish-channel.svg" alt=""> The Log</h3>
+        <p class="meta">Sample trip cards and a private journal that saves only in your browser.</p>
+      </a>
+      <a class="card" href="water.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="assets/ripple.svg" alt=""> Water</h3>
+        <p class="meta">USGS gauge notes, full pool, horsepower limit, and ramp layout — no invented levels.</p>
+      </a>
+      <a class="card" href="dockside.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="assets/lily-pad.svg" alt=""> Dockside</h3>
+        <p class="meta">Original vegan shore food and cookie recipes for thermos and tackle-box nights.</p>
+      </a>
+      <a class="card" href="whisperwood.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="assets/moon.svg" alt=""> Whisperwood Vale</h3>
+        <p class="meta">A cozy pixel fishing game teaser. Coming soon — not playable, not the real lake.</p>
+      </a>
+    </div>
+
+    <hr class="divider">
+
+    <h2>What this site is</h2>
+    <ul>
+      <li>A night-dock atmosphere and fishing journal look — visitors do not play a game here.</li>
+      <li>Sample log entries clearly marked <span class="sample-badge">SAMPLE</span> so they are never confused with live bite reports.</li>
+      <li>Local-only trip storage (your device). No accounts. No backend.</li>
+      <li>Not ODNR. Not City of Columbus. Confirm licenses, limits, and closures yourself.</li>
+    </ul>
+
+    <div class="callout warn">
+      Night fishing can be dangerous in storms, heat, and low visibility. Wear a life jacket when the situation calls for it.
+      Ohio fishing license required for ages 16+. See <a href="about.html">About</a> for catfish limit reminders.
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="log.html">Log</a>
+        <a href="water.html">Water</a>
+        <a href="dockside.html">Dockside</a>
+        <a href="whisperwood.html">Whisperwood</a>
+        <a href="about.html">About</a>
+      </nav>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR or the City of Columbus.</p>
+    </div>
+  </footer>
+  <script src="js/nav.js"></script>
+</body>
+</html>

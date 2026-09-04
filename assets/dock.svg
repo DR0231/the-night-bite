@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" width="120" height="40" role="img" aria-label="Dock silhouette">
+  <rect x="0" y="28" width="120" height="12" fill="#0a1628"/>
+  <rect x="10" y="18" width="90" height="6" fill="#1e2a3a"/>
+  <rect x="14" y="14" width="8" height="16" fill="#162030"/>
+  <rect x="36" y="14" width="8" height="16" fill="#162030"/>
+  <rect x="58" y="14" width="8" height="16" fill="#162030"/>
+  <rect x="80" y="14" width="8" height="16" fill="#162030"/>
+  <rect x="10" y="12" width="90" height="4" fill="#243044"/>
+  <circle cx="100" cy="10" r="3" fill="#f0a830" opacity="0.8"/>
+</svg>

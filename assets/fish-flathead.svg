@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 24" width="48" height="24" role="img" aria-label="Flathead catfish icon">
+  <ellipse cx="22" cy="13" rx="15" ry="7" fill="#8a7a5a"/>
+  <ellipse cx="10" cy="12" rx="6" ry="5" fill="#9a8a6a"/>
+  <path d="M37 13l9-6v12l-9-6z" fill="#7a6a4a"/>
+  <circle cx="8" cy="11" r="1.5" fill="#0a1628"/>
+  <path d="M4 8c-1.5 2-3 3-3 4s1.5 2 3 4" stroke="#aa9a7a" stroke-width="1" fill="none"/>
+  <path d="M18 6v-2M22 6v-3" stroke="#8a7a5a" stroke-width="1.5"/>
+</svg>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Water — The Night Bite</title>
+  <meta name="description" content="Hoover Reservoir water notes: USGS 03228400, full pool, 10 HP limit, Oxbow Redbank Walnut ramps. Levels shown as placeholders only.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/lantern.svg" alt="" width="28" height="42" class="lantern-glow">
+        <span class="logo-text">The Night Bite</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="log.html">The Log</a></li>
+          <li><a href="water.html" aria-current="page">Water</a></li>
+          <li><a href="dockside.html">Dockside</a></li>
+          <li><a href="whisperwood.html">Whisperwood</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <h1>Water</h1>
+    <p class="lead">
+      Quick reference for Hoover Reservoir — the lake behind the night log.
+      Numbers below for level and temp are <strong>placeholders</strong>, not live readings.
+    </p>
+
+    <div class="placeholder-note">
+      <strong>last checked: unknown.</strong>
+      This site does not invent or display current USGS stage or water temperature.
+      Pull live data from the official gauge when you need it.
+    </div>
+
+    <h2>USGS gauge</h2>
+    <div class="card">
+      <p>
+        <strong>USGS 03228400</strong> — Hoover Reservoir at Central College, OH.
+        Use the USGS National Water Information System (or your preferred gauge app) for
+        current stage and related parameters. Do not treat anything on this page as a live feed.
+      </p>
+      <div class="water-stat">
+        <span class="label">Site ID</span>
+        <span class="value">03228400</span>
+      </div>
+      <div class="water-stat">
+        <span class="label">Current level</span>
+        <span class="value unknown">placeholder — last checked: unknown.</span>
+      </div>
+      <div class="water-stat">
+        <span class="label">Water temp</span>
+        <span class="value unknown">placeholder — last checked: unknown.</span>
+      </div>
+    </div>
+
+    <h2>Pool &amp; power</h2>
+    <ul>
+      <li><strong>Full pool</strong> ≈ <strong>894 ft</strong> NGVD29 (reference elevation; confirm with official sources).</li>
+      <li><strong>10 HP limit</strong> on the reservoir — plan motors and noise accordingly for night trips.</li>
+    </ul>
+
+    <h2>Ramps (upper → lower)</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3><img class="icon-inline" src="assets/ripple.svg" alt=""> Oxbow</h3>
+        <p class="meta">Upper end of the lake</p>
+        <p>Common launch for the north / upper water. Quiet after dark when traffic thins.</p>
+      </div>
+      <div class="card">
+        <h3><img class="icon-inline" src="assets/ripple.svg" alt=""> Redbank</h3>
+        <p class="meta">Middle of the reservoir</p>
+        <p>Mid-lake access — a frequent SAMPLE log spot on this site.</p>
+      </div>
+      <div class="card">
+        <h3><img class="icon-inline" src="assets/ripple.svg" alt=""> Walnut Road</h3>
+        <p class="meta">Lower end</p>
+        <p>Lower ramp toward the dam end. Bank fishing nearby appears in SAMPLE entries too.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      Always verify ramp hours, closures, ice, and flood conditions with local authorities.
+      This page is a notebook, not an official bulletin.
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="log.html">Log</a>
+        <a href="water.html">Water</a>
+        <a href="dockside.html">Dockside</a>
+        <a href="whisperwood.html">Whisperwood</a>
+        <a href="about.html">About</a>
+      </nav>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR or the City of Columbus.</p>
+    </div>
+  </footer>
+  <script src="js/nav.js"></script>
+</body>
+</html>

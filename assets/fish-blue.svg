@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 24" width="48" height="24" role="img" aria-label="Blue catfish icon">
+  <ellipse cx="22" cy="12" rx="16" ry="8" fill="#4a6a8a"/>
+  <path d="M38 12l8-7v14l-8-7z" fill="#3a5a7a"/>
+  <circle cx="12" cy="10" r="1.5" fill="#0a1628"/>
+  <path d="M5 7c-2 2-4 4-4 5s2 3 4 5" stroke="#6a8aaa" stroke-width="1" fill="none"/>
+  <path d="M20 4v-3M24 4v-2M28 5v-2" stroke="#4a6a8a" stroke-width="1.5"/>
+</svg>

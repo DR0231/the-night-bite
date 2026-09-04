@@ -1,0 +1,5 @@
+# The Night Bite — static site
+User-agent: *
+Allow: /
+
+# No sitemap claimed yet

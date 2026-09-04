@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 24" width="48" height="24" role="img" aria-label="Channel catfish icon">
+  <ellipse cx="22" cy="12" rx="16" ry="7" fill="#6b7a8a"/>
+  <path d="M38 12l8-6v12l-8-6z" fill="#5a6878"/>
+  <circle cx="12" cy="10" r="1.5" fill="#0a1628"/>
+  <path d="M6 8c-2 2-4 3-4 4s2 2 4 4" stroke="#8a9aaa" stroke-width="1" fill="none"/>
+  <path d="M6 16c-2-2-4-3-4-4" stroke="#8a9aaa" stroke-width="1" fill="none"/>
+  <path d="M20 5v-3M24 5v-2" stroke="#6b7a8a" stroke-width="1.5"/>
+</svg>
