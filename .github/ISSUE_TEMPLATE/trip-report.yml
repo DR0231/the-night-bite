@@ -1,0 +1,89 @@
+name: Trip report
+description: Submit a Hoover Reservoir trip for the community log (Phase 1).
+title: "Trip: "
+labels: ["trip-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Public info only — no secret GPS, no private property, no personal addresses.
+        Photos are Phase 2. Confirm you fished public access at Hoover Reservoir (OH).
+  - type: input
+    id: date
+    attributes:
+      label: Date
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true
+  - type: dropdown
+    id: species
+    attributes:
+      label: Species
+      options:
+        - Channel catfish
+        - Blue catfish
+        - Flathead catfish
+        - Largemouth bass
+        - Smallmouth bass
+        - Black crappie
+        - White crappie
+        - Bluegill / sunfish
+        - White bass
+        - Hybrid striped bass
+        - Saugeye
+        - Walleye
+        - Common carp
+        - Longnose gar
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: ramp
+    attributes:
+      label: Ramp / area (public)
+      description: Public names only (Oxbow, Redbank, Walnut Road, Maxtown, bank, etc.)
+    validations:
+      required: true
+  - type: dropdown
+    id: time_window
+    attributes:
+      label: Time window
+      options:
+        - Day
+        - Night
+        - Dawn / dusk
+        - Mixed
+    validations:
+      required: true
+  - type: input
+    id: bait
+    attributes:
+      label: Bait / lure
+    validations:
+      required: true
+  - type: dropdown
+    id: keep_release
+    attributes:
+      label: Keep / release
+      options:
+        - Released
+        - Kept (1)
+        - Kept (2)
+        - Kept (other)
+        - No fish
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Public-safe notes only.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirm
+      options:
+        - label: This was at Hoover Reservoir on public access; no private property or secret pins.
+          required: true
+        - label: I understand regs must be verified on HuntFish OH / ODNR (this site is unofficial).
+          required: true

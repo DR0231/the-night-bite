@@ -23,10 +23,12 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="log.html">The Log</a></li>
+          <li><a href="species/index.html">Species</a></li>
           <li><a href="water.html" aria-current="page">Water</a></li>
+          <li><a href="log.html">Log</a></li>
+          <li><a href="tournaments.html">Tournaments</a></li>
+          <li><a href="gear.html">Gear</a></li>
           <li><a href="dockside.html">Dockside</a></li>
-          <li><a href="whisperwood.html">Whisperwood</a></li>
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
@@ -82,27 +84,27 @@
       </p>
       <div class="card" id="pool-correction">
         <p id="correction-line">
-          Pool now <strong>893.01 ft</strong> (USGS, provisional) · map drawn at <strong>894</strong> ·
-          contours about <strong>0.99 ft high</strong> tonight.
+          Pool now <strong>893.02 ft</strong> (USGS, provisional) · map drawn at <strong>894</strong> ·
+          contours about <strong>0.98 ft high</strong> tonight.
         </p>
         <p class="meta" id="correction-checked">
-          Last checked USGS param 62614: <time datetime="2026-09-04T12:00:00-04:00">2026-09-04 12:00 ET</time>.
+          Last checked USGS param 62614: <time datetime="2026-09-04T13:00:00-04:00">2026-09-04 13:00 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live gauge</a>.
         </p>
         <div class="water-stat">
           <span class="label">Water temp</span>
-          <span class="value unknown" id="water-temp">placeholder — last checked: unknown.</span>
+          <span class="value" id="water-temp"><strong>27.2 °C</strong> (~81 °F) · <time datetime="2026-09-04T13:45:00-04:00">2026-09-04 13:45 ET</time> · param 00010 · provisional snapshot</span>
         </div>
       </div>
       <p class="placeholder-note">
-        Snapshot above is real USGS data I copied in by hand (or refreshed from the public IV JSON when the browser allows).
+        Snapshot above is real USGS data copied in by hand (or pool refreshed from the public IV JSON when the browser allows).
         On fetch failure this page keeps the static snapshot — it never invents a level.
       </p>
     </section>
 
     <section id="structure" aria-labelledby="structure-title">
       <h2 id="structure-title">Structure key</h2>
-      <p class="meta">First-person notebook — how I read the lake for night cats.</p>
+      <p class="meta">First-person notebook — how I read the lake for night cats and low-light predators.</p>
       <ul class="notebook-list">
         <li><strong>Old Big Walnut channel</strong> still runs under the lake. I treat it as the buried highway — where bait and current sense often line up after dark.</li>
         <li><strong>Dam / main basin</strong> is the deepest water on the 894 map (often 50–60+ ft on that chart). Big water, boat traffic by day, more room to dig at night.</li>
@@ -187,11 +189,14 @@
     <div class="footer-inner">
       <nav aria-label="Footer">
         <a href="index.html">Home</a>
-        <a href="log.html">Log</a>
+        <a href="species/index.html">Species</a>
         <a href="water.html">Water</a>
+        <a href="log.html">Log</a>
+        <a href="tournaments.html">Tournaments</a>
+        <a href="gear.html">Gear</a>
         <a href="dockside.html">Dockside</a>
-        <a href="whisperwood.html">Whisperwood</a>
         <a href="about.html">About</a>
+        <a href="whisperwood.html">Whisperwood</a>
       </nav>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
     </div>

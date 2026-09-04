@@ -1,0 +1,28 @@
+{
+  "updated": "2026-09-04",
+  "note": "Community trips for The Night Bite. Phase 1: edit this file via PR or after reviewing GitHub issues / email. No accounts required to read. SAMPLE entries are demos only.",
+  "trips": [
+    {
+      "id": "community-sample-1",
+      "sample": true,
+      "date": "2026-08-15",
+      "species": "Channel catfish",
+      "ramp": "Oxbow (upper ramp)",
+      "time_window": "Night",
+      "bait": "Cut shad",
+      "keep_release": "Released",
+      "notes": "SAMPLE community demo — not a live bite report. Steady taps after 10pm on the upper flat."
+    },
+    {
+      "id": "community-sample-2",
+      "sample": true,
+      "date": "2026-07-20",
+      "species": "Saugeye",
+      "ramp": "Walnut Road (lower ramp)",
+      "time_window": "Dawn / dusk",
+      "bait": "Paddle-tail swimbait",
+      "keep_release": "Released",
+      "notes": "SAMPLE community demo — low-light cast along the break near the lower ramp. Not a live report."
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Species — The Night Bite</title>
+  <meta name="description" content="Hoover Reservoir species guide: catfish, bass, crappie, saugeye, walleye, and more. Unofficial Night Bite notebook.">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="../index.html">
+        <img src="../assets/lantern.svg" alt="" width="28" height="42" class="lantern-glow">
+        <span class="logo-text">The Night Bite</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="index.html" aria-current="page">Species</a></li>
+          <li><a href="../water.html">Water</a></li>
+          <li><a href="../log.html">Log</a></li>
+          <li><a href="../tournaments.html">Tournaments</a></li>
+          <li><a href="../gear.html">Gear</a></li>
+          <li><a href="../dockside.html">Dockside</a></li>
+          <li><a href="../about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wide">
+    <h1>Species</h1>
+    <p class="lead">
+      Hoover Reservoir targets — cats still anchor the night notebook, with bass, panfish, saugeye/walleye, and a few incidentals.
+      Filter the grid, then open a species card for season · where · limits · gear · bait.
+    </p>
+    <div class="filter-chips" role="group" aria-label="Filter species">
+      <button type="button" class="filter-chip is-active" data-filter="all">All</button>
+      <button type="button" class="filter-chip" data-filter="cats">Cats</button>
+      <button type="button" class="filter-chip" data-filter="bass">Bass</button>
+      <button type="button" class="filter-chip" data-filter="panfish">Panfish</button>
+      <button type="button" class="filter-chip" data-filter="others">Others</button>
+    </div>
+    <div class="card-grid cols-2" id="species-grid">
+      <a class="card species-card" data-group="cats" href="channel-catfish.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/fish-channel.svg" alt=""> Channel catfish</h3>
+        <p class="meta">Hoover’s workhorse night fish — reliable on cut bait and crawlers from bank or 10 hp boat.</p>
+      </a>
+      <a class="card species-card" data-group="cats" href="blue-catfish.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/fish-blue.svg" alt=""> Blue catfish</h3>
+        <p class="meta">Trophy fishery — blues were first stocked around 2011 and have become a Hoover highlight.</p>
+      </a>
+      <a class="card species-card" data-group="cats" href="flathead-catfish.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/fish-flathead.svg" alt=""> Flathead catfish</h3>
+        <p class="meta">Strong flathead presence — live or fresh bait near wood, rock, and channel structure after dark.</p>
+      </a>
+      <a class="card species-card" data-group="bass" href="largemouth-bass.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/lily-pad.svg" alt=""> Largemouth bass</h3>
+        <p class="meta">More abundant than smallmouth on Hoover — docks, weeds, and shoreline cover (public water).</p>
+      </a>
+      <a class="card species-card" data-group="bass" href="smallmouth-bass.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/ripple.svg" alt=""> Smallmouth bass</h3>
+        <p class="meta">Present but less abundant than largemouth — rock, points, and clearer main-lake edges.</p>
+      </a>
+      <a class="card species-card" data-group="panfish" href="black-crappie.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/lily-pad.svg" alt=""> Black crappie</h3>
+        <p class="meta">Solid Hoover panfish — spring banks and brush, then deeper wood/channel edges.</p>
+      </a>
+      <a class="card species-card" data-group="panfish" href="white-crappie.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/lily-pad.svg" alt=""> White crappie</h3>
+        <p class="meta">Shares Hoover with black crappie — same spring bank push and deeper summer brush.</p>
+      </a>
+      <a class="card species-card" data-group="panfish" href="bluegill.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/lily-pad.svg" alt=""> Bluegill / sunfish</h3>
+        <p class="meta">Good bluegill fishing at Hoover — perfect bank sessions and bait for the cooler (where legal).</p>
+      </a>
+      <a class="card species-card" data-group="bass" href="white-bass.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/ripple.svg" alt=""> White bass</h3>
+        <p class="meta">Confirmed on the ODNR Hoover page — spring run up Big Walnut Creek and summer schools chasing shad.</p>
+      </a>
+      <a class="card species-card" data-group="bass" href="hybrid-striped-bass.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/ripple.svg" alt=""> Hybrid striped bass (wiper)</h3>
+        <p class="meta">Possible in many Ohio reservoirs and share the striped/white aggregate limit — white bass are confirmed at Hoover; treat hybrids as “possible / verify reports,” not a guarantee.</p>
+      </a>
+      <a class="card species-card" data-group="others" href="saugeye.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/moon.svg" alt=""> Saugeye</h3>
+        <p class="meta">Stocked saugeye rebounded since ~2017 — a real Hoover target for low-light trolling and casting.</p>
+      </a>
+      <a class="card species-card" data-group="others" href="walleye.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/moon.svg" alt=""> Walleye</h3>
+        <p class="meta">Stocked in 2019 as part of a study vs saugeye — present via stocking; don’t assume a huge wild population.</p>
+      </a>
+      <a class="card species-card" data-group="others" href="common-carp.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/ripple.svg" alt=""> Common carp</h3>
+        <p class="meta">Incidental and intentional carp fishing on public banks — good fight, often unregulated as “other fish.”</p>
+      </a>
+      <a class="card species-card" data-group="others" href="longnose-gar.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="../assets/ripple.svg" alt=""> Longnose gar</h3>
+        <p class="meta">Incidental oddball — occasionally encountered; not a primary Night Bite target.</p>
+      </a>
+    </div>
+    <p class="meta">
+      Limits on species pages are reminders only — confirm on HuntFish OH /
+      <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27 (verify current)</a>.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="index.html">Species</a>
+        <a href="../water.html">Water</a>
+        <a href="../log.html">Log</a>
+        <a href="../tournaments.html">Tournaments</a>
+        <a href="../gear.html">Gear</a>
+        <a href="../dockside.html">Dockside</a>
+        <a href="../about.html">About</a>
+        <a href="../whisperwood.html">Whisperwood</a>
+      </nav>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
+    </div>
+  </footer>
+  <script src="../js/nav.js"></script>
+  <script src="../js/species-filter.js"></script>
+</body>
+</html>

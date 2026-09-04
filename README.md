@@ -1,8 +1,9 @@
 # The Night Bite
 
-Static website: night-fishing log and dockside vegan snacks for **Hoover Reservoir** (Delaware / Franklin County, Ohio). Cozy cabin-notebook look. Catfish-first. Unofficial personal project — not ODNR, not City of Columbus.
+Static website: **Hoover Reservoir** fishing hub (Delaware / Franklin County, Ohio) — species pages, water/maps, trip log, tournaments, gear kits, and dockside vegan snacks. Cozy cabin-notebook look. Night fishing still a strength. Unofficial personal project — **not ODNR, not City of Columbus, not USGS**.
 
-**Site name spelling:** *The Night Bite* (Night, not Nite).
+**Site name spelling:** *The Night Bite* (Night, not Nite).  
+**Live domain:** `nightbiteoh.com` (CNAME in repo). Serve over **HTTPS** in production.
 
 ## Local preview
 
@@ -13,62 +14,94 @@ cd the-night-bite
 python3 -m http.server 8080
 ```
 
-Open [http://localhost:8080](http://localhost:8080) in a browser.
+Open [http://localhost:8080](http://localhost:8080). A real HTTP server is required so `fetch()` can load `data/community-log.json` and `data/tournaments.json` (file:// will fail those).
 
 Any static server works (`npx serve`, VS Code Live Server, etc.).
 
 ## Deploy to GitHub Pages
 
-1. Create a GitHub repo and push this folder (as repo root, or as `/docs`, or via GitHub Actions).
-2. In the repo: **Settings → Pages**.
-3. Source: **Deploy from a branch**.
-4. Branch: `main` (or `master`), folder: `/` (root) or `/docs` if you keep the site there.
-5. Save. After a minute, open `https://<user>.github.io/<repo>/`.
+1. Push this repo (GitHub Pages already used for `nightbiteoh.com`).
+2. **Settings → Pages** → deploy from branch `main` / root (or your existing workflow).
+3. Keep asset paths relative (`css/`, `js/`, `assets/`, `data/`).
+4. Optional: `.nojekyll` at site root if Jekyll interferes.
 
-If the site lives in a project-pages subpath, keep asset paths relative (they already are: `css/`, `js/`, `assets/`).
+**Do not commit secrets or PATs.** This site has no API keys. Mailto uses placeholder `nightbite@local` until a public contact is set.
 
-Optional: add a empty `.nojekyll` file at the site root so GitHub Pages does not process the tree with Jekyll.
+## Nav
 
-**Do not commit secrets.** This site has no API keys.
+Home · Species · Water · Log · Tournaments · Gear · Dockside · About  
+(Whisperwood stays footer-linked / mentioned on About.)
 
-## Editing a SAMPLE log entry
+## Adding a community trip
 
-Samples are defined in two places:
+1. Prefer a GitHub issue via `.github/ISSUE_TEMPLATE/trip-report.yml`, or use the Log page mailto / markdown helper.
+2. After review, append an object to `data/community-log.json` → `trips` array:
 
-1. **Seeded in JavaScript:** `js/log.js` → array `SAMPLE_TRIPS` (used when `localStorage` is empty or samples were never seeded).
-2. **Noscript fallback in HTML:** `log.html` inside `<noscript>` (shown only when JS is off).
+```json
+{
+  "id": "community-YYYYMMDD-slug",
+  "sample": false,
+  "date": "2026-09-01",
+  "species": "Channel catfish",
+  "ramp": "Oxbow (upper ramp)",
+  "time_window": "Night",
+  "bait": "Cut shad",
+  "keep_release": "Released",
+  "notes": "Public-safe notes only."
+}
+```
 
-To change a sample:
+3. Set `"sample": true` only for clearly marked demos.
+4. Commit and deploy. No accounts required to read the list. Photos / logins = Phase 2.
 
-1. Edit the matching object in `SAMPLE_TRIPS` (`date`, `location`, `bait`, `species`, `disposition`, `notes`).
-2. Keep `"sample": true` and an `id` like `sample-N`.
-3. Update the matching `<noscript>` card in `log.html` if you care about no-JS users.
-4. In a browser you already tested: DevTools → Application → Local Storage → remove `nightbite-log-v1` and `nightbite-samples-seeded-v1`, then reload so samples re-seed.
+## Adding a tournament
 
-User-added trips use ids like `user-<timestamp>` and can be removed with **Clear my entries** (samples remain).
+1. Use `.github/ISSUE_TEMPLATE/tournament.yml` or the Tournaments mailto form.
+2. Append to `data/tournaments.json` → `events`:
 
-Storage key: `nightbite-log-v1`.
+```json
+{
+  "name": "Example club night",
+  "date": "2026-10-01",
+  "ramp": "Walnut Road (public)",
+  "club": "Example club",
+  "url": "https://example.com",
+  "notes": "Third-party only."
+}
+```
+
+3. **Zero invented events.** Empty list is the honest default. This site is not a tournament director.
+
+## SAMPLE private log entries
+
+Seeded in `js/log.js` (`SAMPLE_TRIPS`) and noscript fallback in `log.html`. Storage key: `nightbite-log-v1`.
 
 ## Water numbers
 
-**Water level and temperature on this site are placeholders only** (`last checked: unknown.`).  
-Do not invent live USGS values. Full pool (~894 ft NGVD29), gauge ID **03228400**, 10 HP limit, and ramp names (Oxbow / Redbank / Walnut Road) are reference notes — confirm current conditions via official USGS / local sources.
+Home + Water show a **labeled provisional USGS snapshot** (pool param 62614, temp param 00010). `js/water.js` may refresh pool from the public IV JSON; **on failure it keeps the static snapshot and never invents**. Depth map: ODNR 2001 @ 894 ft — PDF linked, not for navigation. No Garmin/Navionics.
+
+## Regs
+
+Limit tables are **reminders only** — confirm on [HuntFish OH / ODNR licenses](https://ohiodnr.gov/buy-and-apply/hunting-and-fishing-licenses) and [ODNR Fishing Regulations 2026–27 (verify current)](https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf).
 
 ## Pages
 
-| File | Purpose |
+| Path | Purpose |
 |------|---------|
-| `index.html` | Home, atmosphere, static GO / NIGHTS ONLY / WAIT chips |
-| `log.html` | SAMPLE trips + localStorage form |
-| `water.html` | Gauge / pool / ramps |
-| `dockside.html` | Original vegan recipes |
-| `whisperwood.html` | Game teaser (not playable) |
-| `about.html` | Disclaimer, safety, license & cat limit reminders |
+| `index.html` | Hub home, pool/temp snapshot, next actions |
+| `species/index.html` | Filterable species grid |
+| `species/*.html` | Per-species Season · Where · Limits · Gear · Bait |
+| `water.html` | Maps, pool correction, structure, ramps |
+| `log.html` | Community JSON + private localStorage + submit |
+| `tournaments.html` | Static JSON list + submit |
+| `gear.html` | Short kits (affiliate placeholders) |
+| `dockside.html` | Vegan recipes (kept) |
+| `whisperwood.html` | Game teaser (kept) |
+| `about.html` | Disclaimer, safety, regs reminders |
 
 ## Fonts
 
 - **Pixelify Sans** (display) + **Source Serif 4** (body) via Google Fonts.
-- Fallback: `"Courier New"` / Georgia system stack if fonts fail to load.
 
 ## License note
 

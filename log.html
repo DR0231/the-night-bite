@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Log — The Night Bite</title>
-  <meta name="description" content="Night fishing trip log for Hoover Reservoir. Sample cards marked SAMPLE. Add your own entries — saved in localStorage only.">
+  <meta name="description" content="Hoover Reservoir fishing log: private browser journal, community trip list from JSON, Phase 1 mailto/GitHub submit.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,10 +23,12 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="log.html" aria-current="page">The Log</a></li>
+          <li><a href="species/index.html">Species</a></li>
           <li><a href="water.html">Water</a></li>
+          <li><a href="log.html" aria-current="page">Log</a></li>
+          <li><a href="tournaments.html">Tournaments</a></li>
+          <li><a href="gear.html">Gear</a></li>
           <li><a href="dockside.html">Dockside</a></li>
-          <li><a href="whisperwood.html">Whisperwood</a></li>
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
@@ -36,19 +38,116 @@
   <main id="main">
     <h1>The Log</h1>
     <p class="lead">
-      Cream-paper trip cards from Hoover nights. Every demo trip is stamped
-      <span class="sample-badge">SAMPLE</span> — not live bite reports.
-      Add your own notes below; they stay in this browser only (<code>localStorage</code>).
+      Cream-paper trip cards from Hoover nights. Private entries stay in this browser.
+      Community trips load from a static JSON file in the repo — no account needed to read.
+      Photos, likes, and logins are <strong>Phase 2</strong>.
     </p>
 
     <p class="placeholder-note">
-      <strong>No accounts. No server.</strong> Clearing site data or switching devices will remove your personal entries.
-      Samples re-seed if the log is empty.
+      <strong>No Instagram. No likes.</strong> Phase 1 = localStorage journal + community JSON + mailto / GitHub issue submit.
     </p>
 
-    <h2>Trips</h2>
+    <h2>Community log</h2>
+    <p class="meta">
+      Loaded from <code>data/community-log.json</code>. Empty or SAMPLE demos only until real submits land in the repo.
+    </p>
+    <div id="community-log-list" aria-live="polite">
+      <div class="empty-log"><p>Loading community trips…</p></div>
+    </div>
+
+    <h2 id="add-trip">Submit a trip (Phase 1)</h2>
+    <p class="meta">
+      Builds a mailto draft or shows markdown for a GitHub issue. Public ramp/area names only — no secret GPS, no private property.
+    </p>
+    <form class="form-block" id="community-trip-form">
+      <div class="form-row">
+        <label for="c-date">Date</label>
+        <input type="date" id="c-date" name="date" required>
+      </div>
+      <div class="form-row">
+        <label for="c-species">Species</label>
+        <select id="c-species" name="species" required>
+          <option value="">Choose…</option>
+          <option>Channel catfish</option>
+          <option>Blue catfish</option>
+          <option>Flathead catfish</option>
+          <option>Largemouth bass</option>
+          <option>Smallmouth bass</option>
+          <option>Black crappie</option>
+          <option>White crappie</option>
+          <option>Bluegill / sunfish</option>
+          <option>White bass</option>
+          <option>Hybrid striped bass</option>
+          <option>Saugeye</option>
+          <option>Walleye</option>
+          <option>Common carp</option>
+          <option>Longnose gar</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="c-ramp">Ramp / area (public)</label>
+        <select id="c-ramp" name="ramp" required>
+          <option value="">Choose…</option>
+          <option>Oxbow (upper ramp)</option>
+          <option>Redbank (middle ramp)</option>
+          <option>Walnut Road (lower ramp)</option>
+          <option>Maxtown</option>
+          <option>Marina / lower marina</option>
+          <option>Bank — upper</option>
+          <option>Bank — middle</option>
+          <option>Bank — lower</option>
+          <option>Big Walnut Creek (public)</option>
+          <option>Other public / not sure</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="c-time">Time window</label>
+        <select id="c-time" name="time_window" required>
+          <option value="">Choose…</option>
+          <option>Day</option>
+          <option>Night</option>
+          <option>Dawn / dusk</option>
+          <option>Mixed</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="c-bait">Bait / lure</label>
+        <input type="text" id="c-bait" name="bait" required maxlength="120" placeholder="e.g. cut shad, jig">
+      </div>
+      <div class="form-row">
+        <label for="c-keep">Keep / release</label>
+        <select id="c-keep" name="keep_release" required>
+          <option value="">Choose…</option>
+          <option>Released</option>
+          <option>Kept (1)</option>
+          <option>Kept (2)</option>
+          <option>Kept (other)</option>
+          <option>No fish</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="c-notes">Notes</label>
+        <textarea id="c-notes" name="notes" maxlength="500" placeholder="Public-safe notes only…"></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn">Build email</button>
+        <button type="button" class="btn btn-ghost" id="show-markdown">Show markdown</button>
+        <a class="btn btn-ghost" href="https://github.com/DR0231/the-night-bite/issues/new?template=trip-report.yml" target="_blank" rel="noopener">GitHub issue</a>
+      </div>
+      <pre class="code-block" id="submit-preview" hidden></pre>
+      <p class="meta" id="mailto-status" style="margin-top:0.75rem;" hidden></p>
+    </form>
+
+    <hr class="divider">
+
+    <h2>Your private trips (this browser)</h2>
+    <p class="lead" style="font-size:1rem;">
+      Demo trips stamped <span class="sample-badge">SAMPLE</span> — not live bite reports.
+      Add your own notes below; they stay in <code>localStorage</code> only.
+    </p>
+
     <div id="log-list" aria-live="polite">
-      <!-- Filled by log.js; noscript fallback below -->
       <noscript>
         <article class="paper-card">
           <span class="sample-badge">SAMPLE</span>
@@ -61,69 +160,13 @@
           </dl>
           <p>Two keeper-size channels before midnight. SAMPLE trip for demo only.</p>
         </article>
-        <article class="paper-card">
-          <span class="sample-badge">SAMPLE</span>
-          <h3>Channel catfish</h3>
-          <dl class="trip-dl">
-            <dt>Date</dt><dd>Aug 3, 2025</dd>
-            <dt>Spot</dt><dd>Redbank (middle ramp)</dd>
-            <dt>Bait</dt><dd>Nightcrawlers</dd>
-            <dt>Keep?</dt><dd>Kept (1)</dd>
-          </dl>
-          <p>Steady taps after 10pm. SAMPLE — not a live report.</p>
-        </article>
-        <article class="paper-card">
-          <span class="sample-badge">SAMPLE</span>
-          <h3>Flathead catfish</h3>
-          <dl class="trip-dl">
-            <dt>Date</dt><dd>Aug 22, 2025</dd>
-            <dt>Spot</dt><dd>Bank near Walnut Road</dd>
-            <dt>Bait</dt><dd>Chicken liver</dd>
-            <dt>Keep?</dt><dd>Released</dd>
-          </dl>
-          <p>Single flathead; storms east. SAMPLE entry.</p>
-        </article>
-        <article class="paper-card">
-          <span class="sample-badge">SAMPLE</span>
-          <h3>Blue catfish</h3>
-          <dl class="trip-dl">
-            <dt>Date</dt><dd>Sep 5, 2025</dd>
-            <dt>Spot</dt><dd>Walnut Road (lower ramp)</dd>
-            <dt>Bait</dt><dd>Cut bait (bluegill)</dd>
-            <dt>Keep?</dt><dd>Released</dd>
-          </dl>
-          <p>One blue, measured and released. SAMPLE.</p>
-        </article>
-        <article class="paper-card">
-          <span class="sample-badge">SAMPLE</span>
-          <h3>Channel catfish</h3>
-          <dl class="trip-dl">
-            <dt>Date</dt><dd>Jun 18, 2025</dd>
-            <dt>Spot</dt><dd>Oxbow (upper ramp)</dd>
-            <dt>Bait</dt><dd>Stink bait</dd>
-            <dt>Keep?</dt><dd>Released</dd>
-          </dl>
-          <p>Early summer night. SAMPLE for site demo.</p>
-        </article>
-        <article class="paper-card">
-          <span class="sample-badge">SAMPLE</span>
-          <h3>Channel catfish</h3>
-          <dl class="trip-dl">
-            <dt>Date</dt><dd>May 30, 2025</dd>
-            <dt>Spot</dt><dd>Redbank (middle ramp)</dd>
-            <dt>Bait</dt><dd>Nightcrawlers + cut bait</dd>
-            <dt>Keep?</dt><dd>Kept (2)</dd>
-          </dl>
-          <p>Memorial weekend trip. SAMPLE only.</p>
-        </article>
         <p class="meta">Enable JavaScript to add your own trips and save them on this device.</p>
       </noscript>
     </div>
 
-    <h2>Add a real night</h2>
+    <h2>Add a private night</h2>
     <p class="meta">
-      Use the form below for your own trips. They save in this browser only (<code>localStorage</code>).
-      SAMPLE cards above stay for layout demos — they are not live bite reports.
+      Saves only in this browser. SAMPLE cards stay for layout demos.
     </p>
     <form class="form-block" id="trip-form" action="#" method="post">
       <div class="form-row">
@@ -156,6 +199,17 @@
           <option>Channel catfish</option>
           <option>Blue catfish</option>
           <option>Flathead catfish</option>
+          <option>Largemouth bass</option>
+          <option>Smallmouth bass</option>
+          <option>Black crappie</option>
+          <option>White crappie</option>
+          <option>Bluegill / sunfish</option>
+          <option>White bass</option>
+          <option>Hybrid striped bass</option>
+          <option>Saugeye</option>
+          <option>Walleye</option>
+          <option>Common carp</option>
+          <option>Longnose gar</option>
           <option>Other</option>
         </select>
       </div>
@@ -186,16 +240,20 @@
     <div class="footer-inner">
       <nav aria-label="Footer">
         <a href="index.html">Home</a>
-        <a href="log.html">Log</a>
+        <a href="species/index.html">Species</a>
         <a href="water.html">Water</a>
+        <a href="log.html">Log</a>
+        <a href="tournaments.html">Tournaments</a>
+        <a href="gear.html">Gear</a>
         <a href="dockside.html">Dockside</a>
-        <a href="whisperwood.html">Whisperwood</a>
         <a href="about.html">About</a>
+        <a href="whisperwood.html">Whisperwood</a>
       </nav>
-      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR or the City of Columbus.</p>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
     </div>
   </footer>
   <script src="js/nav.js"></script>
   <script src="js/log.js"></script>
+  <script src="js/community-log.js"></script>
 </body>
 </html>

@@ -1,0 +1,49 @@
+name: Tournament listing
+description: Submit a third-party Hoover tournament for the static list (Phase 1).
+title: "Tournament: "
+labels: ["tournament"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The Night Bite is **not** an official tournament director.
+        Public details only. Zero invented events — submit real club/third-party info.
+  - type: input
+    id: name
+    attributes:
+      label: Event name
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Date
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true
+  - type: input
+    id: ramp
+    attributes:
+      label: Public ramp / area
+    validations:
+      required: true
+  - type: input
+    id: club
+    attributes:
+      label: Club / organizer
+  - type: input
+    id: url
+    attributes:
+      label: Info URL
+      placeholder: https://
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirm
+      options:
+        - label: This is a real third-party event at Hoover; I am not claiming Night Bite hosts it.
+          required: true

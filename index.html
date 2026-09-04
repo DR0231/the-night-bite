@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Night Bite — Hoover Reservoir night fishing</title>
-  <meta name="description" content="A cozy night-fishing log and dockside vegan snacks for Hoover Reservoir, Ohio. Catfish-first. Unofficial personal site.">
+  <title>The Night Bite — Hoover Reservoir fishing hub</title>
+  <meta name="description" content="Unofficial Hoover Reservoir fishing hub: species, water maps, trip log, gear. Night fishing notebook for Delaware/Franklin OH.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,10 +23,12 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li><a href="index.html" aria-current="page">Home</a></li>
-          <li><a href="log.html">The Log</a></li>
+          <li><a href="species/index.html">Species</a></li>
           <li><a href="water.html">Water</a></li>
+          <li><a href="log.html">Log</a></li>
+          <li><a href="tournaments.html">Tournaments</a></li>
+          <li><a href="gear.html">Gear</a></li>
           <li><a href="dockside.html">Dockside</a></li>
-          <li><a href="whisperwood.html">Whisperwood</a></li>
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
@@ -41,7 +43,7 @@
         <img src="assets/lantern.svg" alt="" width="36" height="54" class="lantern-glow">
       </div>
       <h1 id="home-title">The Night Bite</h1>
-      <p class="tagline">Hoover Reservoir after dark — a catfish notebook from the dock.</p>
+      <p class="tagline">Hoover Reservoir fishing hub — night still a strength, cats to saugeye, maps to log.</p>
     </section>
 
     <div class="status-strip" role="group" aria-label="Tonight status placeholders">
@@ -59,37 +61,65 @@
       </div>
     </div>
     <p class="placeholder-note">
-      <strong>Not live data.</strong> These chips are static placeholders for a future “tonight’s conditions” strip.
-      They do not reflect current bite, weather, or water. Check real forecasts and USGS yourself before you go.
+      <strong>Not live bite data.</strong> These chips are static placeholders for a future “tonight’s conditions” strip.
+      They do not reflect current bite or weather. Check real forecasts and USGS yourself before you go.
     </p>
 
     <p class="lead">
-      This is a personal, unofficial page for night fishing at Hoover Reservoir
-      (Delaware / Franklin County, Ohio) — mostly channel, blue, and flathead cats —
-      plus a few vegan snacks for the cooler.
+      Personal, unofficial Hoover Reservoir hub (Delaware / Franklin County, Ohio).
+      Night fishing is still the heart of the notebook — with species pages, water/maps, a trip log, and gear kits.
+      Not ODNR. Not City of Columbus. Not USGS.
     </p>
+
+    <section class="card" id="pool-snapshot" aria-labelledby="snapshot-title">
+      <h2 id="snapshot-title" style="margin-top:0;">Today’s pool &amp; temp</h2>
+      <p id="correction-line">
+        Pool elevation <strong>893.02 ft</strong> NGVD29 (USGS provisional, param 62614) ·
+        map drawn at <strong>894</strong> · contours about <strong>0.98 ft high</strong> tonight.
+      </p>
+      <p class="meta" id="correction-checked">
+        Pool checked: <time datetime="2026-09-04T13:00:00-04:00">2026-09-04 13:00 ET</time>.
+        <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
+      </p>
+      <div class="water-stat">
+        <span class="label">Water temp</span>
+        <span class="value" id="water-temp"><strong>27.2 °C</strong> (~81 °F) · <time datetime="2026-09-04T13:45:00-04:00">2026-09-04 13:45 ET</time> · param 00010 · provisional snapshot</span>
+      </div>
+      <p class="meta" style="margin-bottom:0;margin-top:0.75rem;">
+        Snapshot labeled provisional. Optional browser refresh may update pool via public USGS JSON; on failure the static numbers stay — never invented.
+        Full notes on <a href="water.html#correction">Water</a>.
+      </p>
+    </section>
 
     <a class="home-map-cta" href="water.html#maps">
       <h3>ODNR depth map + ramps</h3>
-      <p class="meta">Jump to Maps &amp; depth — contour PDF, city ramp map, USGS gauge, and tonight’s pool correction.</p>
+      <p class="meta">Jump to Maps &amp; depth — contour PDF (2001 @ 894 ft), city ramp map, USGS gauge, and tonight’s pool correction.</p>
     </a>
 
-    <div class="card-grid cols-2">
+    <h2>Next actions</h2>
+    <div class="card-grid cols-3">
+      <a class="card" href="species/index.html" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="assets/fish-channel.svg" alt=""> Species</h3>
+        <p class="meta">Cats, bass, panfish, saugeye — season, where, limits reminders, gear.</p>
+      </a>
+      <a class="card" href="water.html#maps" style="text-decoration:none;color:inherit;">
+        <h3><img class="icon-inline" src="assets/ripple.svg" alt=""> Water / Maps</h3>
+        <p class="meta">ODNR contours, pool vs 894, structure key, night ramps.</p>
+      </a>
       <a class="card" href="log.html" style="text-decoration:none;color:inherit;">
-        <h3><img class="icon-inline" src="assets/fish-channel.svg" alt=""> The Log</h3>
-        <p class="meta">Sample trip cards and a private journal that saves only in your browser.</p>
+        <h3><img class="icon-inline" src="assets/moon.svg" alt=""> Log</h3>
+        <p class="meta">Private browser journal + Phase 1 community submit (mailto / GitHub).</p>
       </a>
-      <a class="card" href="water.html" style="text-decoration:none;color:inherit;">
-        <h3><img class="icon-inline" src="assets/ripple.svg" alt=""> Water</h3>
-        <p class="meta">ODNR depth maps, pool correction vs 894, structure notes, and night ramps — no invented levels.</p>
-      </a>
+    </div>
+
+    <div class="card-grid cols-2">
       <a class="card" href="dockside.html" style="text-decoration:none;color:inherit;">
         <h3><img class="icon-inline" src="assets/lily-pad.svg" alt=""> Dockside</h3>
-        <p class="meta">Original vegan shore food and cookie recipes for thermos and tackle-box nights.</p>
+        <p class="meta">Original vegan shore food and cookie recipes for thermos nights.</p>
       </a>
-      <a class="card" href="whisperwood.html" style="text-decoration:none;color:inherit;">
-        <h3><img class="icon-inline" src="assets/moon.svg" alt=""> Whisperwood Vale</h3>
-        <p class="meta">A cozy pixel fishing game teaser. Coming soon — not playable, not the real lake.</p>
+      <a class="card" href="gear.html" style="text-decoration:none;color:inherit;">
+        <h3>Gear kits</h3>
+        <p class="meta">Bank night cat, 10 hp boat, crappie, bass, saugeye — short lists.</p>
       </a>
     </div>
 
@@ -97,15 +127,16 @@
 
     <h2>What this site is</h2>
     <ul>
-      <li>A night-dock atmosphere and fishing journal look — visitors do not play a game here.</li>
-      <li>Sample log entries clearly marked <span class="sample-badge">SAMPLE</span> so they are never confused with live bite reports.</li>
-      <li>Local-only trip storage (your device). No accounts. No backend.</li>
+      <li>A Hoover-only fishing hub with night-dock atmosphere — unofficial Ohio notebook voice.</li>
+      <li>Species pages with limit <em>reminders</em> (verify HuntFish OH / ODNR 2026–27) — never invented live regs.</li>
+      <li>Sample log entries stamped <span class="sample-badge">SAMPLE</span>; community log is static JSON + mailto/GitHub submit (Phase 1).</li>
       <li>Not ODNR. Not City of Columbus. Confirm licenses, limits, and closures yourself.</li>
     </ul>
 
     <div class="callout warn">
       Night fishing can be dangerous in storms, heat, and low visibility. Wear a life jacket when the situation calls for it.
-      Ohio fishing license required for ages 16+. See <a href="about.html">About</a> for catfish limit reminders.
+      10 hp limit · drinking-water reservoir · Ohio fishing license required for ages 16+.
+      See <a href="about.html">About</a>.
     </div>
   </main>
 
@@ -113,15 +144,19 @@
     <div class="footer-inner">
       <nav aria-label="Footer">
         <a href="index.html">Home</a>
-        <a href="log.html">Log</a>
+        <a href="species/index.html">Species</a>
         <a href="water.html">Water</a>
+        <a href="log.html">Log</a>
+        <a href="tournaments.html">Tournaments</a>
+        <a href="gear.html">Gear</a>
         <a href="dockside.html">Dockside</a>
-        <a href="whisperwood.html">Whisperwood</a>
         <a href="about.html">About</a>
+        <a href="whisperwood.html">Whisperwood</a>
       </nav>
-      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR or the City of Columbus.</p>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
     </div>
   </footer>
   <script src="js/nav.js"></script>
+  <script src="js/water.js"></script>
 </body>
 </html>

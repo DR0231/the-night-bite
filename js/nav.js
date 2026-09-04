@@ -28,7 +28,7 @@
   // Close when a nav link is activated (mobile)
   nav.querySelectorAll("a").forEach(function (link) {
     link.addEventListener("click", function () {
-      if (window.matchMedia("(max-width: 720px)").matches) {
+      if (window.matchMedia("(max-width: 900px)").matches) {
         setOpen(false);
       }
     });

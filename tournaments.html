@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tournaments — The Night Bite</title>
+  <meta name="description" content="Third-party Hoover Reservoir fishing tournaments — submit via mailto or GitHub. Not an official tournament director.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/lantern.svg" alt="" width="28" height="42" class="lantern-glow">
+        <span class="logo-text">The Night Bite</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="species/index.html">Species</a></li>
+          <li><a href="water.html">Water</a></li>
+          <li><a href="log.html">Log</a></li>
+          <li><a href="tournaments.html" aria-current="page">Tournaments</a></li>
+          <li><a href="gear.html">Gear</a></li>
+          <li><a href="dockside.html">Dockside</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <h1>Tournaments</h1>
+    <p class="lead">
+      Third-party club events at Hoover — listed only when someone submits one.
+      The Night Bite is <strong>not</strong> an official tournament director, not ODNR, and not a club host.
+    </p>
+    <p class="placeholder-note">
+      Zero invented events. If the list is empty, that’s honest — not a broken feed.
+    </p>
+
+    <h2>Listed events</h2>
+    <div id="tournaments-list" aria-live="polite">
+      <div class="empty-log" id="tournaments-empty">
+        <p>None listed — submit one.</p>
+      </div>
+    </div>
+
+    <h2 id="submit-tournament">Submit a tournament</h2>
+    <p class="meta">
+      Phase 1: no accounts. Use the form to build a mailto, or open a GitHub issue from the template.
+      Photos / logins = Phase 2.
+    </p>
+    <form class="form-block" id="tournament-form">
+      <div class="form-row">
+        <label for="t-name">Event name</label>
+        <input type="text" id="t-name" name="name" required maxlength="120" placeholder="Club or event name">
+      </div>
+      <div class="form-row">
+        <label for="t-date">Date</label>
+        <input type="date" id="t-date" name="date" required>
+      </div>
+      <div class="form-row">
+        <label for="t-ramp">Public ramp / area</label>
+        <input type="text" id="t-ramp" name="ramp" required maxlength="120" placeholder="e.g. Walnut Road (public)">
+      </div>
+      <div class="form-row">
+        <label for="t-club">Club / organizer</label>
+        <input type="text" id="t-club" name="club" maxlength="120">
+      </div>
+      <div class="form-row">
+        <label for="t-url">Info URL (optional)</label>
+        <input type="url" id="t-url" name="url" maxlength="200" placeholder="https://">
+      </div>
+      <div class="form-row">
+        <label for="t-notes">Notes</label>
+        <textarea id="t-notes" name="notes" maxlength="500" placeholder="Start time, species, public details only…"></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn">Build email</button>
+        <a class="btn btn-ghost" href="https://github.com/DR0231/the-night-bite/issues/new?template=tournament.yml" id="tournament-gh-link" target="_blank" rel="noopener">Open GitHub issue</a>
+      </div>
+      <p class="meta" id="tournament-mailto-out" style="margin-top:0.75rem;" hidden></p>
+    </form>
+    <p class="meta">
+      Prefer editing the repo? Add an object to <code>data/tournaments.json</code> (see README).
+      Mailto goes to <code>nightbite@local</code> as a placeholder — replace when a public contact exists.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="species/index.html">Species</a>
+        <a href="water.html">Water</a>
+        <a href="log.html">Log</a>
+        <a href="tournaments.html">Tournaments</a>
+        <a href="gear.html">Gear</a>
+        <a href="dockside.html">Dockside</a>
+        <a href="about.html">About</a>
+        <a href="whisperwood.html">Whisperwood</a>
+      </nav>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
+    </div>
+  </footer>
+  <script src="js/nav.js"></script>
+  <script src="js/tournaments.js"></script>
+</body>
+</html>
