@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Water — The Night Bite</title>
-  <meta name="description" content="Hoover Reservoir water notes: USGS 03228400, full pool, 10 HP limit, Oxbow Redbank Walnut ramps. Levels shown as placeholders only.">
+  <meta name="description" content="Hoover Reservoir maps, depth notes, ODNR contours at 894 ft, USGS pool correction, and night ramp access. Unofficial notebook only.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,65 +36,150 @@
   <main id="main">
     <h1>Water</h1>
     <p class="lead">
-      Quick reference for Hoover Reservoir — the lake behind the night log.
-      Numbers below for level and temp are <strong>placeholders</strong>, not live readings.
+      Quick reference for Hoover Reservoir — maps, depth structure, tonight’s pool vs the ODNR chart,
+      and public ramps I actually use after dark. Notebook voice. Not a navigation chart.
     </p>
 
-    <div class="placeholder-note">
-      <strong>last checked: unknown.</strong>
-      This site does not invent or display current USGS stage or water temperature.
-      Pull live data from the official gauge when you need it.
-    </div>
-
-    <h2>USGS gauge</h2>
-    <div class="card">
+    <section id="maps" aria-labelledby="maps-title">
+      <h2 id="maps-title">Maps &amp; depth</h2>
       <p>
-        <strong>USGS 03228400</strong> — Hoover Reservoir at Central College, OH.
-        Use the USGS National Water Information System (or your preferred gauge app) for
-        current stage and related parameters. Do not treat anything on this page as a live feed.
+        Official public maps only — open in a new tab. I do not host or scrape Garmin / Navionics
+        (or any commercial chart). Contours are reference, not for navigation.
       </p>
-      <div class="water-stat">
-        <span class="label">Site ID</span>
-        <span class="value">03228400</span>
+      <div class="card-grid cols-2">
+        <a class="card map-link-card" href="https://ohiodnr.gov/static/documents/wildlife/maps/hooverreservoir2.pdf" target="_blank" rel="noopener">
+          <h3>ODNR depth PDF</h3>
+          <p class="meta">Wildlife contour map · opens PDF</p>
+          <p>
+            ~2,884 acres · 10-ft contours · depths based on <strong>894 ft</strong> summer pool ·
+            last surveyed <strong>2001</strong> · <strong>not for navigation</strong>.
+            Silt and pool swings change real depths.
+          </p>
+        </a>
+        <a class="card map-link-card" href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area" target="_blank" rel="noopener">
+          <h3>ODNR interactive</h3>
+          <p class="meta">Hoover Reservoir fishing area · official page</p>
+          <p>Property info, regulations links, and ODNR visit planning for the reservoir.</p>
+        </a>
+        <a class="card map-link-card" href="https://columbusrecparks.com/wp-content/uploads/2025/09/Hoover-Reservoir-Map.pdf" target="_blank" rel="noopener">
+          <h3>Columbus Rec Parks PDF</h3>
+          <p class="meta">City park / ramp layout map · opens PDF</p>
+          <p>Public access layout from Columbus Recreation and Parks — useful for ramps and shoreline names.</p>
+        </a>
+        <a class="card map-link-card" href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">
+          <h3>USGS gauge</h3>
+          <p class="meta">Site USGS-03228400 · live monitoring</p>
+          <p>Hoover Reservoir at Central College, OH. Pull provisional pool elevation (and other params) here.</p>
+        </a>
       </div>
-      <div class="water-stat">
-        <span class="label">Current level</span>
-        <span class="value unknown">placeholder — last checked: unknown.</span>
+    </section>
+
+    <section id="correction" aria-labelledby="correction-title">
+      <h2 id="correction-title">Tonight’s correction</h2>
+      <p>
+        ODNR contour depths assume a summer pool of <strong>894 ft NGVD29</strong>.
+        When the lake sits below that, every printed contour is a little high relative to tonight’s water.
+      </p>
+      <div class="card" id="pool-correction">
+        <p id="correction-line">
+          Pool now <strong>893.01 ft</strong> (USGS, provisional) · map drawn at <strong>894</strong> ·
+          contours about <strong>0.99 ft high</strong> tonight.
+        </p>
+        <p class="meta" id="correction-checked">
+          Last checked USGS param 62614: <time datetime="2026-09-04T12:00:00-04:00">2026-09-04 12:00 ET</time>.
+          <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live gauge</a>.
+        </p>
+        <div class="water-stat">
+          <span class="label">Water temp</span>
+          <span class="value unknown" id="water-temp">placeholder — last checked: unknown.</span>
+        </div>
       </div>
-      <div class="water-stat">
-        <span class="label">Water temp</span>
-        <span class="value unknown">placeholder — last checked: unknown.</span>
+      <p class="placeholder-note">
+        Snapshot above is real USGS data I copied in by hand (or refreshed from the public IV JSON when the browser allows).
+        On fetch failure this page keeps the static snapshot — it never invents a level.
+      </p>
+    </section>
+
+    <section id="structure" aria-labelledby="structure-title">
+      <h2 id="structure-title">Structure key</h2>
+      <p class="meta">First-person notebook — how I read the lake for night cats.</p>
+      <ul class="notebook-list">
+        <li><strong>Old Big Walnut channel</strong> still runs under the lake. I treat it as the buried highway — where bait and current sense often line up after dark.</li>
+        <li><strong>Dam / main basin</strong> is the deepest water on the 894 map (often 50–60+ ft on that chart). Big water, boat traffic by day, more room to dig at night.</li>
+        <li><strong>Causeway / Smothers cuts</strong> are the pinch points — bridges, cuts, and current funnels where I listen for bait and watch the graph harder.</li>
+        <li><strong>Walnut Road lower ramp:</strong> nearby flat vs drop. I use the flats for bank work and the nearby break when I’m in a boat and want a quick edge.</li>
+        <li><strong>Oxbow / upper arms:</strong> shallower, more bank and night work. Quieter when the middle lake is busy; watch for silted edges.</li>
+        <li><strong>10 hp / idle-speed</strong> rules apply. Hoover is a <strong>Columbus drinking-water reservoir</strong> — keep it clean, keep wakes down, follow posted limits.</li>
+      </ul>
+    </section>
+
+    <section id="access" aria-labelledby="access-title">
+      <h2 id="access-title">Night ramp / access</h2>
+      <p>
+        Public names only. No private property, no secret GPS pins.
+        Always verify hours, closures, and ice/flood with the City or ODNR before you launch.
+      </p>
+      <div class="table-wrap">
+        <table class="access-table">
+          <thead>
+            <tr>
+              <th scope="col">Ramp / area</th>
+              <th scope="col">Boat vs bank</th>
+              <th scope="col">Night-useful note</th>
+              <th scope="col">Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Oxbow</td>
+              <td>Boat + bank</td>
+              <td>Upper end; quieter after dark when traffic thins.</td>
+              <td>see Columbus map</td>
+            </tr>
+            <tr>
+              <td>Redbank</td>
+              <td>Boat + bank</td>
+              <td>Middle-lake access; common SAMPLE log spot here.</td>
+              <td>see Columbus map</td>
+            </tr>
+            <tr>
+              <td>Walnut Road</td>
+              <td>Boat + bank</td>
+              <td>Lower ramp toward the dam; flats vs nearby drop.</td>
+              <td>see Columbus map</td>
+            </tr>
+            <tr>
+              <td>Maxtown</td>
+              <td>Boat + bank</td>
+              <td>Public ramp name on the city layout — check hours.</td>
+              <td>see Columbus map</td>
+            </tr>
+            <tr>
+              <td>Marina / lower marina</td>
+              <td>Boat (services vary)</td>
+              <td>Lower-end marina area on public maps; confirm open status.</td>
+              <td>see Columbus map</td>
+            </tr>
+            <tr>
+              <td>General bank</td>
+              <td>Bank</td>
+              <td>Public shoreline only — stay off private docks and yards.</td>
+              <td>
+                <a href="https://columbusrecparks.com/wp-content/uploads/2025/09/Hoover-Reservoir-Map.pdf" target="_blank" rel="noopener">Columbus map</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </section>
+
+    <div class="callout warn">
+      Night fishing can be dangerous in storms, heat, and low visibility. Wear a life jacket when the situation calls for it.
+      Contours are not for navigation. Confirm licenses, limits, and closures yourself.
     </div>
-
-    <h2>Pool &amp; power</h2>
-    <ul>
-      <li><strong>Full pool</strong> ≈ <strong>894 ft</strong> NGVD29 (reference elevation; confirm with official sources).</li>
-      <li><strong>10 HP limit</strong> on the reservoir — plan motors and noise accordingly for night trips.</li>
-    </ul>
-
-    <h2>Ramps (upper → lower)</h2>
-    <div class="card-grid">
-      <div class="card">
-        <h3><img class="icon-inline" src="assets/ripple.svg" alt=""> Oxbow</h3>
-        <p class="meta">Upper end of the lake</p>
-        <p>Common launch for the north / upper water. Quiet after dark when traffic thins.</p>
-      </div>
-      <div class="card">
-        <h3><img class="icon-inline" src="assets/ripple.svg" alt=""> Redbank</h3>
-        <p class="meta">Middle of the reservoir</p>
-        <p>Mid-lake access — a frequent SAMPLE log spot on this site.</p>
-      </div>
-      <div class="card">
-        <h3><img class="icon-inline" src="assets/ripple.svg" alt=""> Walnut Road</h3>
-        <p class="meta">Lower end</p>
-        <p>Lower ramp toward the dam end. Bank fishing nearby appears in SAMPLE entries too.</p>
-      </div>
-    </div>
-
     <div class="callout">
-      Always verify ramp hours, closures, ice, and flood conditions with local authorities.
-      This page is a notebook, not an official bulletin.
+      The Night Bite is unofficial and personal — <strong>not ODNR</strong>, <strong>not the City of Columbus</strong>,
+      and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.
     </div>
   </main>
 
@@ -108,9 +193,10 @@
         <a href="whisperwood.html">Whisperwood</a>
         <a href="about.html">About</a>
       </nav>
-      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR or the City of Columbus.</p>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
     </div>
   </footer>
   <script src="js/nav.js"></script>
+  <script src="js/water.js"></script>
 </body>
 </html>
