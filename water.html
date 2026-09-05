@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Water — The Night Bite</title>
-  <meta name="description" content="Hoover Reservoir maps, depth notes, ODNR contours at 894 ft, USGS pool correction, and night ramp access. Unofficial notebook only.">
+  <meta name="description" content="Hoover Reservoir maps, depth notes, ODNR contours at 894 ft, USGS pool correction, and ramp access. Unofficial notebook only.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,8 +38,8 @@
   <main id="main">
     <h1>Water</h1>
     <p class="lead">
-      Quick reference for Hoover Reservoir — maps, depth structure, tonight’s pool vs the ODNR chart,
-      and public ramps I actually use after dark. Notebook voice. Not a navigation chart.
+      Quick reference for Hoover Reservoir — maps, depth structure, pool vs the ODNR chart,
+      and public ramps. Notebook voice. Not a navigation chart.
     </p>
 
     <section id="maps" aria-labelledby="maps-title">
@@ -77,34 +77,40 @@
     </section>
 
     <section id="correction" aria-labelledby="correction-title">
-      <h2 id="correction-title">Tonight’s correction</h2>
+      <h2 id="correction-title">Pool &amp; temp correction</h2>
       <p>
         ODNR contour depths assume a summer pool of <strong>894 ft NGVD29</strong>.
-        When the lake sits below that, every printed contour is a little high relative to tonight’s water.
+        When the lake sits below that, every printed contour is a little high relative to today’s water.
       </p>
       <div class="card" id="pool-correction">
         <p id="correction-line">
-          Pool now <strong>893.02 ft</strong> (USGS, provisional) · map drawn at <strong>894</strong> ·
-          contours about <strong>0.98 ft high</strong> tonight.
+          Pool elevation <strong>892.97 ft</strong> NGVD29 (USGS provisional, param 62614) ·
+          map drawn at <strong>894</strong> · contours about <strong>1.03 ft high</strong>.
         </p>
         <p class="meta" id="correction-checked">
-          Last checked USGS param 62614: <time datetime="2026-09-04T13:00:00-04:00">2026-09-04 13:00 ET</time>.
-          <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live gauge</a>.
+          Pool checked: <time datetime="2026-09-05T16:00:00-04:00">2026-09-05 16:00 ET</time>.
+          <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
         </p>
         <div class="water-stat">
           <span class="label">Water temp</span>
-          <span class="value" id="water-temp"><strong>27.2 °C</strong> (~81 °F) · <time datetime="2026-09-04T13:45:00-04:00">2026-09-04 13:45 ET</time> · param 00010 · provisional snapshot</span>
+          <span class="value" id="water-temp"><strong>28.3 °C</strong> (~82.9 °F) · <time datetime="2026-09-05T16:45:00-04:00">2026-09-05 16:45 ET</time> · param 00010 · provisional snapshot</span>
         </div>
+        <p class="meta" id="usgs-live-status" style="margin-bottom:0;margin-top:0.75rem;">
+          Snapshot labeled provisional. Browser may refresh pool + temp from USGS IV; on failure shows unavailable — never invented.
+        </p>
       </div>
+      <p class="meta">
+        <a href="index.html#how-to-read">How to read this</a> (pool vs hole depth, 894 contours, gauge temp, provisional data, 10 HP reservoir).
+      </p>
       <p class="placeholder-note">
-        Snapshot above is real USGS data copied in by hand (or pool refreshed from the public IV JSON when the browser allows).
-        On fetch failure this page keeps the static snapshot — it never invents a level.
+        Snapshot above is real USGS data copied in by hand (or refreshed from the public IV JSON when the browser allows).
+        On fetch failure this page keeps the static snapshot or marks unavailable — it never invents a level.
       </p>
     </section>
 
     <section id="structure" aria-labelledby="structure-title">
       <h2 id="structure-title">Structure key</h2>
-      <p class="meta">First-person notebook — how I read the lake for night cats and low-light predators.</p>
+      <p class="meta">First-person notebook — how I read the lake for cats and low-light predators.</p>
       <ul class="notebook-list">
         <li><strong>Old Big Walnut channel</strong> still runs under the lake. I treat it as the buried highway — where bait and current sense often line up after dark.</li>
         <li><strong>Dam / main basin</strong> is the deepest water on the 894 map (often 50–60+ ft on that chart). Big water, boat traffic by day, more room to dig at night.</li>
@@ -116,7 +122,7 @@
     </section>
 
     <section id="access" aria-labelledby="access-title">
-      <h2 id="access-title">Night ramp / access</h2>
+      <h2 id="access-title">Ramp / access</h2>
       <p>
         Public names only. No private property, no secret GPS pins.
         Always verify hours, closures, and ice/flood with the City or ODNR before you launch.
@@ -127,8 +133,7 @@
             <tr>
               <th scope="col">Ramp / area</th>
               <th scope="col">Boat vs bank</th>
-              <th scope="col">Night-useful note</th>
-              <th scope="col">Link</th>
+              <th scope="col">Useful note</th>
             </tr>
           </thead>
           <tbody>
@@ -136,47 +141,44 @@
               <td>Oxbow</td>
               <td>Boat + bank</td>
               <td>Upper end; quieter after dark when traffic thins.</td>
-              <td>see Columbus map</td>
             </tr>
             <tr>
               <td>Redbank</td>
               <td>Boat + bank</td>
               <td>Middle-lake access; common SAMPLE log spot here.</td>
-              <td>see Columbus map</td>
             </tr>
             <tr>
               <td>Walnut Road</td>
               <td>Boat + bank</td>
               <td>Lower ramp toward the dam; flats vs nearby drop.</td>
-              <td>see Columbus map</td>
             </tr>
             <tr>
               <td>Maxtown</td>
               <td>Boat + bank</td>
               <td>Public ramp name on the city layout — check hours.</td>
-              <td>see Columbus map</td>
             </tr>
             <tr>
               <td>Marina / lower marina</td>
               <td>Boat (services vary)</td>
               <td>Lower-end marina area on public maps; confirm open status.</td>
-              <td>see Columbus map</td>
             </tr>
             <tr>
               <td>General bank</td>
               <td>Bank</td>
               <td>Public shoreline only — stay off private docks and yards.</td>
-              <td>
-                <a href="https://columbusrecparks.com/wp-content/uploads/2025/09/Hoover-Reservoir-Map.pdf" target="_blank" rel="noopener">Columbus map</a>
-              </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p class="map-pdf-cta">
+        <a class="btn-map-pdf" href="https://columbusrecparks.com/wp-content/uploads/2025/09/Hoover-Reservoir-Map.pdf" target="_blank" rel="noopener">
+          Columbus Rec Parks — Hoover Reservoir Map (PDF)
+        </a>
+      </p>
     </section>
 
     <div class="callout warn">
-      Night fishing can be dangerous in storms, heat, and low visibility. Wear a life jacket when the situation calls for it.
+      Fishing after dark can be dangerous in storms, heat, and low visibility. Wear a life jacket when the situation calls for it.
       Contours are not for navigation. Confirm licenses, limits, and closures yourself.
     </div>
     <div class="callout">
@@ -202,6 +204,6 @@
     </div>
   </footer>
   <script src="js/nav.js"></script>
-  <script src="js/water.js"></script>
+  <script src="js/usgs.js"></script>
 </body>
 </html>

@@ -710,7 +710,7 @@ li { margin-bottom: 0.35rem; }
 
 .access-table {
   width: 100%;
-  min-width: 36rem;
+  min-width: 28rem;
   border-collapse: collapse;
   font-size: 0.95rem;
 }
@@ -872,4 +872,113 @@ li { margin-bottom: 0.35rem; }
     border-bottom: 1px solid var(--navy-light);
     font-size: 0.75rem;
   }
+}
+
+/* —— How to read (details/summary) —— */
+.how-to-read {
+  margin-top: 1rem;
+  border: 1px solid var(--navy-light);
+  border-radius: var(--radius);
+  background: rgba(10, 22, 40, 0.55);
+  padding: 0.35rem 0.85rem 0.55rem;
+}
+
+.how-to-read summary {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  color: var(--amber);
+  cursor: pointer;
+  padding: 0.55rem 0;
+  list-style: none;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.how-to-read summary::-webkit-details-marker { display: none; }
+
+.how-to-read summary::before {
+  content: "▸ ";
+  color: var(--amber-dim);
+  margin-right: 0.25rem;
+}
+
+.how-to-read[open] summary::before { content: "▾ "; }
+
+.how-to-read-body {
+  padding: 0 0 0.65rem;
+  color: var(--cream-dark);
+  font-size: 0.95rem;
+}
+
+.how-to-read-body ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.how-to-read-body li { margin-bottom: 0.4rem; }
+
+/* —— Water: prominent map PDF CTA —— */
+.map-pdf-cta {
+  margin: 0.25rem 0 1.5rem;
+}
+
+.btn-map-pdf {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 1.1rem;
+  border: 2px solid var(--amber);
+  border-radius: var(--radius);
+  background: rgba(240, 168, 48, 0.12);
+  color: var(--amber);
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  line-height: 1.3;
+}
+
+.btn-map-pdf:hover {
+  background: rgba(240, 168, 48, 0.22);
+  color: var(--cream);
+}
+
+/* —— Gear guide —— */
+.gear-guide .gear-section {
+  margin-bottom: 2rem;
+}
+
+.gear-sticky-nav {
+  margin-top: 0.5rem;
+}
+
+.gear-how-list {
+  margin: 0.75rem 0;
+  padding-left: 1.25rem;
+}
+
+.gear-how-list li { margin-bottom: 0.35rem; }
+
+.gear-kit-jump {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.gear-kit-jump h3 {
+  margin-top: 0;
+  color: var(--amber);
+}
+
+.bank-boat-card h3 {
+  margin-top: 0;
+  color: var(--amber);
+  font-size: 1.05rem;
+}
+
+.bank-boat-card ul {
+  margin-bottom: 0;
 }
