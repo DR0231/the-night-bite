@@ -982,3 +982,22 @@ li { margin-bottom: 0.35rem; }
 .bank-boat-card ul {
   margin-bottom: 0;
 }
+
+/* Whisperwood hub CTAs */
+.teaser-box .btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 6px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  text-decoration: none;
+  background: var(--amber);
+  color: #1a1208;
+  border: none;
+}
+.teaser-box .btn-ghost {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid var(--amber-dim);
+}
