@@ -22,15 +22,25 @@
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="index.html" aria-current="page">Species</a></li>
-          <li><a href="../water.html">Water</a></li>
-          <li><a href="../log.html">Log</a></li>
-          <li><a href="../tournaments.html">Tournaments</a></li>
-          <li><a href="../gear.html">Gear</a></li>
-          <li><a href="../dockside.html">Dockside</a></li>
-          <li><a href="../whisperwood.html">Whisperwood Vale</a></li>
-          <li><a href="../about.html">About</a></li>
+          <li class="nav-core"><a href="../index.html">Home</a></li>
+          <li class="nav-core"><a href="../species/index.html" aria-current="page"><span class="nav-label-full">Species</span><span class="nav-label-short">Fish</span></a></li>
+          <li class="nav-core"><a href="../water.html"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="../log.html">Log</a></li>
+          <li class="nav-extra"><a href="../tournaments.html">Tournaments</a></li>
+          <li class="nav-extra"><a href="../gear.html">Gear</a></li>
+          <li class="nav-extra"><a href="../dockside.html">Dockside</a></li>
+          <li class="nav-extra"><a href="../whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra"><a href="../about.html">About</a></li>
+          <li class="nav-more-item">
+            <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
+            <div id="nav-more-panel" class="nav-more-panel" hidden>
+              <a href="../gear.html">Gear</a>
+              <a href="../tournaments.html">Tournaments</a>
+              <a href="../whisperwood.html">Whisperwood Vale</a>
+              <a href="../dockside.html">Dockside</a>
+              <a href="../about.html">About</a>
+            </div>
+          </li>
         </ul>
       </nav>
     </div>
@@ -49,6 +59,11 @@
       <a href="#bait">Bait</a>
     </nav>
 
+    <div class="mode-toggle" role="radiogroup" aria-label="Bank or boat">
+      <button type="button" role="radio" data-mode-value="bank" aria-checked="true" class="is-active">Bank</button>
+      <button type="button" role="radio" data-mode-value="boat" aria-checked="false">Boat</button>
+    </div>
+
     <section id="season" class="species-section">
       <h2>Season</h2>
       <ul>
@@ -63,11 +78,22 @@
 
     <section id="where" class="species-section">
       <h2>Where on Hoover</h2>
+      <div class="mode-panel" data-mode="bank">
       <ul>
         <li>Public shallow banks and park shorelines.</li>
         <li>Weed edges near ramps.</li>
         <li>Kids-friendly public access spots on the Columbus map.</li>
       </ul>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
+      <ul>
+        <li>Public shallow banks and park shorelines.</li>
+        <li>Weed edges near ramps.</li>
+        <li>Kids-friendly public access spots on the Columbus map.</li>
+      </ul>
+      </div>
+
+
       <p>
         <a href="../water.html#maps">Water maps</a> ·
         <a href="https://ohiodnr.gov/static/documents/wildlife/maps/hooverreservoir2.pdf" target="_blank" rel="noopener">ODNR depth PDF (2001 @ 894 ft)</a>
@@ -94,10 +120,19 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
     <section id="gear" class="species-section">
       <h2>Gear</h2>
       <p class="meta">Sized for bank reality and ≤10 hp boats — Hoover is a drinking-water reservoir.</p>
+      <div class="mode-panel" data-mode="bank">
       <ul>
         <li>Ultralight spinning, small hooks, bobbers.</li>
         <li>Bank-first kit — no boat required.</li>
       </ul>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
+      <ul>
+        <li>Ultralight spinning, small hooks, bobbers.</li>
+        <li>Bank-first kit — no boat required.</li>
+      </ul>
+      </div>
+
     </section>
 
     <section id="bait" class="species-section">
@@ -146,6 +181,8 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
     </div>
   </footer>
   <script src="../js/nav.js"></script>
+  <script src="../js/sticky-nav.js"></script>
+  <script src="../js/mode-toggle.js"></script>
 
 </body>
 </html>

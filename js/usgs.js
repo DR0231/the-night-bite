@@ -1,8 +1,8 @@
 /**
  * The Night Bite — USGS IV refresh for pool (62614) and water temp (00010).
  * Site: 03228400 (Hoover Reservoir at Central College, OH).
- * Updates #pool-snapshot / #pool-correction on home + water.
- * On failure: show “unavailable — check USGS” + link. Never invent readings.
+ * Human lead: "892.97 ft · 83°F · ~1.0 ft below full pool"
+ * On failure: “unavailable — check USGS” + link. Never invent readings.
  */
 (function () {
   if (window.__nightbiteUsgsLoaded) return;
@@ -65,7 +65,7 @@
   }
 
   function cToF(c) {
-    return (Math.round(((c * 9) / 5 + 32) * 10) / 10).toFixed(1);
+    return Math.round(((c * 9) / 5 + 32) * 10) / 10;
   }
 
   function parseSeries(json, paramCd) {
@@ -95,6 +95,27 @@
     }
   }
 
+  function humanLead(poolFt, tempF) {
+    var poolStr = (Math.round(poolFt * 100) / 100).toFixed(2);
+    var delta = Math.abs(MAP_POOL_FT - poolFt);
+    var deltaStr = (Math.round(delta * 10) / 10).toFixed(1);
+    var rel = poolFt > MAP_POOL_FT ? "above" : "below";
+    var tempPart =
+      typeof tempF === "number" && isFinite(tempF)
+        ? Math.round(tempF) + "°F"
+        : "temp —";
+    return (
+      poolStr +
+      " ft · " +
+      tempPart +
+      " · ~" +
+      deltaStr +
+      " ft " +
+      rel +
+      " full pool"
+    );
+  }
+
   function unavailable(msg) {
     var link =
       '<a href="' +
@@ -102,35 +123,40 @@
       '" target="_blank" rel="noopener">USGS</a>';
     if (statusEl) {
       statusEl.innerHTML =
-        (msg || "Live refresh unavailable — check USGS") + " · " + link + ".";
+        (msg || "unavailable — check USGS") + " · " + link + ".";
     }
-    if (lineEl && lineEl.getAttribute("data-live-failed") !== "1") {
-      // Keep static snapshot text; only mark status. Never invent.
+    if (lineEl) {
+      lineEl.innerHTML =
+        'unavailable — check <a href="' +
+        GAUGE_URL +
+        '" target="_blank" rel="noopener">USGS</a>';
+      lineEl.setAttribute("data-live-failed", "1");
     }
   }
 
-  function applyPool(poolFt, dateTimeIso) {
-    if (!lineEl || typeof poolFt !== "number" || !isFinite(poolFt)) return false;
-    var delta = MAP_POOL_FT - poolFt;
-    var deltaStr = (Math.round(delta * 100) / 100).toFixed(2);
-    var poolStr = (Math.round(poolFt * 100) / 100).toFixed(2);
-    var when = formatEt(dateTimeIso) || "unknown time";
-    var safeIso = String(dateTimeIso).replace(/"/g, "");
+  function applyPoolAndTemp(pool, temp) {
+    var poolFt = pool && pool.value;
+    var tempC = temp && temp.value;
+    var tempF =
+      typeof tempC === "number" && isFinite(tempC) ? cToF(tempC) : null;
 
-    lineEl.innerHTML =
-      "Pool elevation <strong>" +
-      poolStr +
-      " ft</strong> NGVD29 (USGS provisional, param " +
-      PARAM_POOL +
-      ") · map drawn at <strong>" +
-      MAP_POOL_FT +
-      "</strong> · contours about <strong>" +
-      deltaStr +
-      " ft high</strong>.";
+    if (lineEl && typeof poolFt === "number" && isFinite(poolFt)) {
+      lineEl.textContent = humanLead(poolFt, tempF);
+      lineEl.removeAttribute("data-live-failed");
+    } else if (lineEl && tempF !== null) {
+      // temp only — keep pool from static HTML if present; do not invent pool
+    }
+
+    var whenPool = pool && formatEt(pool.dateTime);
+    var whenTemp = temp && formatEt(temp.dateTime);
+    var when = whenPool || whenTemp || "unknown time";
+    var iso =
+      (pool && pool.dateTime) || (temp && temp.dateTime) || "";
+    var safeIso = String(iso).replace(/"/g, "");
 
     if (checkedEl) {
       checkedEl.innerHTML =
-        "Pool checked: <time datetime=\"" +
+        "Checked: <time datetime=\"" +
         safeIso +
         "\">" +
         when +
@@ -139,28 +165,24 @@
         GAUGE_URL +
         '" target="_blank" rel="noopener">Live USGS gauge</a>.';
     }
-    return true;
-  }
 
-  function applyTemp(tempC, dateTimeIso) {
-    if (!tempEl || typeof tempC !== "number" || !isFinite(tempC)) return false;
-    var when = formatEt(dateTimeIso) || "unknown time";
-    var safeIso = String(dateTimeIso).replace(/"/g, "");
-    var cStr = (Math.round(tempC * 10) / 10).toFixed(1);
-    var fStr = String(cToF(tempC));
-    tempEl.innerHTML =
-      "<strong>" +
-      cStr +
-      " °C</strong> (~" +
-      fStr +
-      " °F) · <time datetime=\"" +
-      safeIso +
-      "\">" +
-      when +
-      "</time> · param " +
-      PARAM_TEMP +
-      " · provisional";
-    return true;
+    if (tempEl && tempF !== null) {
+      var cStr = (Math.round(tempC * 10) / 10).toFixed(1);
+      tempEl.innerHTML =
+        "<strong>" +
+        tempF +
+        " °F</strong> (" +
+        cStr +
+        " °C) · <time datetime=\"" +
+        String(temp.dateTime).replace(/"/g, "") +
+        "\">" +
+        (whenTemp || when) +
+        "</time>";
+    }
+
+    return (
+      (typeof poolFt === "number" && isFinite(poolFt)) || tempF !== null
+    );
   }
 
   fetch(IV_URL)
@@ -171,21 +193,20 @@
     .then(function (json) {
       var pool = parseSeries(json, PARAM_POOL);
       var temp = parseSeries(json, PARAM_TEMP);
-      var okPool = pool && applyPool(pool.value, pool.dateTime);
-      var okTemp = temp && applyTemp(temp.value, temp.dateTime);
-      if (!okPool && !okTemp) {
+      var ok = applyPoolAndTemp(pool, temp);
+      if (!ok) {
         unavailable("unavailable — check USGS");
         return;
       }
       if (statusEl) {
         var bits = [];
-        if (okPool) bits.push("pool");
-        if (okTemp) bits.push("temp");
+        if (pool) bits.push("pool");
+        if (temp) bits.push("temp");
         statusEl.textContent =
           "Live USGS refresh updated " + bits.join(" + ") + " (provisional).";
       }
-      if (!okPool || !okTemp) {
-        var miss = !okPool ? "pool" : "temp";
+      if (!pool || !temp) {
+        var miss = !pool ? "pool" : "temp";
         if (statusEl) {
           statusEl.innerHTML =
             statusEl.textContent +

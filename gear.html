@@ -22,15 +22,25 @@
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="species/index.html">Species</a></li>
-          <li><a href="water.html">Water</a></li>
-          <li><a href="log.html">Log</a></li>
-          <li><a href="tournaments.html">Tournaments</a></li>
-          <li><a href="gear.html" aria-current="page">Gear</a></li>
-          <li><a href="dockside.html">Dockside</a></li>
-          <li><a href="whisperwood.html">Whisperwood Vale</a></li>
-          <li><a href="about.html">About</a></li>
+          <li class="nav-core"><a href="index.html">Home</a></li>
+          <li class="nav-core"><a href="species/index.html"><span class="nav-label-full">Species</span><span class="nav-label-short">Fish</span></a></li>
+          <li class="nav-core"><a href="water.html"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="log.html">Log</a></li>
+          <li class="nav-extra"><a href="tournaments.html">Tournaments</a></li>
+          <li class="nav-extra"><a href="gear.html" aria-current="page">Gear</a></li>
+          <li class="nav-extra"><a href="dockside.html">Dockside</a></li>
+          <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra"><a href="about.html">About</a></li>
+          <li class="nav-more-item">
+            <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
+            <div id="nav-more-panel" class="nav-more-panel" hidden>
+              <a href="gear.html">Gear</a>
+              <a href="tournaments.html">Tournaments</a>
+              <a href="whisperwood.html">Whisperwood Vale</a>
+              <a href="dockside.html">Dockside</a>
+              <a href="about.html">About</a>
+            </div>
+          </li>
         </ul>
       </nav>
     </div>
@@ -230,6 +240,21 @@
         </table>
       </div>
 
+      <div class="rig-row" aria-label="Catfish rig diagrams">
+        <figure class="rig-figure">
+          <img src="assets/rigs/carolina.svg" alt="Carolina slip-sinker rig diagram" width="280" height="200">
+          <figcaption>Slip-sinker / Carolina</figcaption>
+        </figure>
+        <figure class="rig-figure">
+          <img src="assets/rigs/floating-hover.svg" alt="Floating hover rig diagram" width="280" height="200">
+          <figcaption>Floating / hover</figcaption>
+        </figure>
+        <figure class="rig-figure">
+          <img src="assets/rigs/three-way.svg" alt="Three-way rig diagram" width="280" height="200">
+          <figcaption>Three-way</figcaption>
+        </figure>
+      </div>
+
       <h3>Baits</h3>
       <ul>
         <li>Cut shad / skipjack · shrimp · chicken liver · nightcrawlers</li>
@@ -238,7 +263,12 @@
       </ul>
 
       <h3>Bank vs boat</h3>
-      <div class="card-grid cols-2">
+
+      <div class="mode-toggle" role="radiogroup" aria-label="Bank or boat">
+        <button type="button" role="radio" data-mode-value="bank" aria-checked="true" class="is-active">Bank</button>
+        <button type="button" role="radio" data-mode-value="boat" aria-checked="false">Boat</button>
+      </div>
+      <div class="mode-panel" data-mode="bank">
         <article class="card bank-boat-card">
           <h3>Bank</h3>
           <ul>
@@ -247,6 +277,8 @@
             <li>Watch private docks — public only</li>
           </ul>
         </article>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
         <article class="card bank-boat-card">
           <h3>Boat / kayak</h3>
           <ul>
@@ -278,6 +310,10 @@
         <li><strong>Vertical jig:</strong> boat over brush / timber · slow lift-drop</li>
         <li><strong>Cast-retrieve:</strong> small curly-tail or tube along points and riprap</li>
       </ul>
+      <figure class="rig-figure">
+        <img src="assets/rigs/slip-float.svg" alt="Slip-float rig diagram" width="280" height="200">
+        <figcaption>Slip-float</figcaption>
+      </figure>
 
       <h3>Baits / lures</h3>
       <ul>
@@ -286,7 +322,12 @@
       </ul>
 
       <h3>Bank vs boat</h3>
-      <div class="card-grid cols-2">
+
+      <div class="mode-toggle" role="radiogroup" aria-label="Bank or boat">
+        <button type="button" role="radio" data-mode-value="bank" aria-checked="true" class="is-active">Bank</button>
+        <button type="button" role="radio" data-mode-value="boat" aria-checked="false">Boat</button>
+      </div>
+      <div class="mode-panel" data-mode="bank">
         <article class="card bank-boat-card">
           <h3>Bank</h3>
           <ul>
@@ -294,8 +335,10 @@
             <li>Slip-float covers depth without a graph</li>
           </ul>
         </article>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
         <article class="card bank-boat-card">
-          <h3>Boat</h3>
+          <h3>Boat / kayak</h3>
           <ul>
             <li>Brush piles, creek arms, suspended schools</li>
             <li>FFS / sonar speeds finding timber</li>
@@ -331,7 +374,12 @@
       <p class="meta">Green pumpkin, watermelon, black/blue, white/chartreuse for stained water; natural when clear.</p>
 
       <h3>Bank vs boat</h3>
-      <div class="card-grid cols-2">
+
+      <div class="mode-toggle" role="radiogroup" aria-label="Bank or boat">
+        <button type="button" role="radio" data-mode-value="bank" aria-checked="true" class="is-active">Bank</button>
+        <button type="button" role="radio" data-mode-value="boat" aria-checked="false">Boat</button>
+      </div>
+      <div class="mode-panel" data-mode="bank">
         <article class="card bank-boat-card">
           <h3>Bank</h3>
           <ul>
@@ -339,8 +387,10 @@
             <li>Weightless stick worm covers water quietly</li>
           </ul>
         </article>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
         <article class="card bank-boat-card">
-          <h3>Boat</h3>
+          <h3>Boat / kayak</h3>
           <ul>
             <li>Creek channel swings, brush, dam riprap</li>
             <li>Cover water with search baits, then slow down</li>
@@ -381,7 +431,12 @@
       </ul>
 
       <h3>Bank vs boat</h3>
-      <div class="card-grid cols-2">
+
+      <div class="mode-toggle" role="radiogroup" aria-label="Bank or boat">
+        <button type="button" role="radio" data-mode-value="bank" aria-checked="true" class="is-active">Bank</button>
+        <button type="button" role="radio" data-mode-value="boat" aria-checked="false">Boat</button>
+      </div>
+      <div class="mode-panel" data-mode="bank">
         <article class="card bank-boat-card">
           <h3>Bank</h3>
           <ul>
@@ -389,8 +444,10 @@
             <li>Points and current edges after dark</li>
           </ul>
         </article>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
         <article class="card bank-boat-card">
-          <h3>Boat</h3>
+          <h3>Boat / kayak</h3>
           <ul>
             <li>Channel edges, flats adjacent to deep water</li>
             <li>Slow troll or vertical when marked on sonar</li>
@@ -402,25 +459,34 @@
     <!-- ========== PACKING ========== -->
     <section id="packing" class="species-section gear-section" aria-labelledby="packing-title">
       <h2 id="packing-title">Quick packing lists</h2>
-      <div class="card-grid cols-2">
+      <p class="meta">Checkboxes save in this browser (<code>nightbite-pack-v1</code>).</p>
+
+      <div class="mode-toggle" role="radiogroup" aria-label="Bank or boat">
+        <button type="button" role="radio" data-mode-value="bank" aria-checked="true" class="is-active">Bank</button>
+        <button type="button" role="radio" data-mode-value="boat" aria-checked="false">Boat</button>
+      </div>
+
+      <div class="mode-panel" data-mode="bank">
         <article class="card">
           <h3>Bank day — mixed</h3>
-          <ul>
-            <li>License · polarized glasses · sunscreen / bug spray</li>
-            <li>Medium spinning + light spinning (or one medium + terminal swap)</li>
-            <li>Plastics / jigs · one cat rod if targeting cats</li>
-            <li>Pliers · clippers · measure · small net</li>
-            <li>Water · snacks · trash bag</li>
+          <ul class="pack-list">
+            <li><label><input type="checkbox" data-pack-id="bank-license"> License · polarized glasses · sunscreen / bug spray</label></li>
+            <li><label><input type="checkbox" data-pack-id="bank-rods"> Medium spinning + light spinning (or one medium + terminal swap)</label></li>
+            <li><label><input type="checkbox" data-pack-id="bank-plastics"> Plastics / jigs · one cat rod if targeting cats</label></li>
+            <li><label><input type="checkbox" data-pack-id="bank-tools"> Pliers · clippers · measure · small net</label></li>
+            <li><label><input type="checkbox" data-pack-id="bank-water"> Water · snacks · trash bag</label></li>
           </ul>
         </article>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
         <article class="card">
           <h3>Boat / kayak</h3>
-          <ul>
-            <li>All bank items + wearable PFD · throwable if required</li>
-            <li>Anchor · lights · dry bag · whistle</li>
-            <li>Fish finder if you have one · spare kill-switch lanyard</li>
-            <li>Cooler + ice · measuring board · large net</li>
-            <li>Stay ≤10 HP · pack out everything</li>
+          <ul class="pack-list">
+            <li><label><input type="checkbox" data-pack-id="boat-bank"> All bank items + wearable PFD · throwable if required</label></li>
+            <li><label><input type="checkbox" data-pack-id="boat-anchor"> Anchor · lights · dry bag · whistle</label></li>
+            <li><label><input type="checkbox" data-pack-id="boat-finder"> Fish finder if you have one · spare kill-switch lanyard</label></li>
+            <li><label><input type="checkbox" data-pack-id="boat-cooler"> Cooler + ice · measuring board · large net</label></li>
+            <li><label><input type="checkbox" data-pack-id="boat-10hp"> Stay ≤10 HP · pack out everything</label></li>
           </ul>
         </article>
       </div>
@@ -460,5 +526,8 @@
     </div>
   </footer>
   <script src="js/nav.js"></script>
+  <script src="js/sticky-nav.js"></script>
+  <script src="js/mode-toggle.js"></script>
+  <script src="js/pack-list.js"></script>
 </body>
 </html>

@@ -21,15 +21,26 @@
       </a>
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="site-nav" id="site-nav" aria-label="Primary">
-                <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="species/index.html">Species</a></li>
-          <li><a href="water.html">Water</a></li>
-          <li><a href="log.html">Log</a></li>
-          <li><a href="tournaments.html">Tournaments</a></li>
-          <li><a href="gear.html">Gear</a></li>
-          <li><a href="dockside.html" aria-current="page">Dockside</a></li>
-          <li><a href="about.html">About</a></li>
+        <ul>
+          <li class="nav-core"><a href="index.html">Home</a></li>
+          <li class="nav-core"><a href="species/index.html"><span class="nav-label-full">Species</span><span class="nav-label-short">Fish</span></a></li>
+          <li class="nav-core"><a href="water.html"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="log.html">Log</a></li>
+          <li class="nav-extra"><a href="tournaments.html">Tournaments</a></li>
+          <li class="nav-extra"><a href="gear.html">Gear</a></li>
+          <li class="nav-extra"><a href="dockside.html" aria-current="page">Dockside</a></li>
+          <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra"><a href="about.html">About</a></li>
+          <li class="nav-more-item">
+            <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
+            <div id="nav-more-panel" class="nav-more-panel" hidden>
+              <a href="gear.html">Gear</a>
+              <a href="tournaments.html">Tournaments</a>
+              <a href="whisperwood.html">Whisperwood Vale</a>
+              <a href="dockside.html">Dockside</a>
+              <a href="about.html">About</a>
+            </div>
+          </li>
         </ul>
       </nav>
     </div>

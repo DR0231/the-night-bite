@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="The Night Bite">
+  <rect width="1200" height="630" fill="#0a1628"/>
+  <ellipse cx="900" cy="120" rx="280" ry="160" fill="#f0a830" opacity="0.08"/>
+  <ellipse cx="200" cy="520" rx="260" ry="140" fill="#3d7a4d" opacity="0.12"/>
+  <!-- lantern -->
+  <g transform="translate(520 140) scale(6)">
+    <rect x="13" y="2" width="6" height="4" fill="#8b6914"/>
+    <path d="M10 6h12l2 4H8l2-4z" fill="#c4a35a"/>
+    <rect x="8" y="10" width="16" height="22" rx="2" fill="#1a1208" stroke="#c4a35a" stroke-width="1.5"/>
+    <rect x="11" y="13" width="10" height="14" fill="#f0a830" opacity="0.9"/>
+    <rect x="13" y="15" width="6" height="8" fill="#ffe08a"/>
+    <path d="M8 32h16l-2 6H10l-2-6z" fill="#8b6914"/>
+    <rect x="14" y="38" width="4" height="6" fill="#5c4a1e"/>
+  </g>
+  <text x="600" y="480" text-anchor="middle" fill="#f0a830" font-family="Georgia, serif" font-size="64">The Night Bite</text>
+  <text x="600" y="540" text-anchor="middle" fill="#f5edd8" font-family="Georgia, serif" font-size="32" font-style="italic">Hoover Reservoir Fishing Hub</text>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 200" role="img" aria-labelledby="t d">
+  <title id="t">Carolina / slip-sinker rig</title>
+  <desc id="d">Main line, egg sinker, bead, swivel, leader, circle hook</desc>
+  <rect width="280" height="200" fill="none"/>
+  <!-- main line -->
+  <line x1="40" y1="20" x2="40" y2="70" stroke="#f5edd8" stroke-width="2.5"/>
+  <text x="52" y="40" fill="#f0a830" font-family="monospace" font-size="11">main line</text>
+  <!-- egg sinker -->
+  <ellipse cx="40" cy="82" rx="14" ry="10" fill="#c48420" stroke="#f5edd8" stroke-width="1.5"/>
+  <text x="62" y="86" fill="#f5edd8" font-family="monospace" font-size="11">egg sinker</text>
+  <!-- bead -->
+  <circle cx="40" cy="100" r="5" fill="#ffe08a" stroke="#f5edd8" stroke-width="1"/>
+  <text x="52" y="104" fill="#f5edd8" font-family="monospace" font-size="11">bead</text>
+  <!-- swivel -->
+  <rect x="34" y="110" width="12" height="16" rx="2" fill="none" stroke="#f0a830" stroke-width="2"/>
+  <text x="52" y="122" fill="#f0a830" font-family="monospace" font-size="11">swivel</text>
+  <!-- leader -->
+  <line x1="40" y1="126" x2="40" y2="165" stroke="#f5edd8" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="52" y="148" fill="#f5edd8" font-family="monospace" font-size="11">18–36″ leader</text>
+  <!-- hook -->
+  <path d="M40 165 L40 178 Q40 190 52 188" fill="none" stroke="#f0a830" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="52" cy="188" r="3" fill="#f0a830"/>
+  <text x="62" y="190" fill="#f0a830" font-family="monospace" font-size="11">circle hook</text>
+  <text x="140" y="24" fill="#c48420" font-family="monospace" font-size="12">SLIP-SINKER</text>
+</svg>

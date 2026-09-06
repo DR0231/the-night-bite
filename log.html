@@ -22,15 +22,25 @@
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="species/index.html">Species</a></li>
-          <li><a href="water.html">Water</a></li>
-          <li><a href="log.html" aria-current="page">Log</a></li>
-          <li><a href="tournaments.html">Tournaments</a></li>
-          <li><a href="gear.html">Gear</a></li>
-          <li><a href="dockside.html">Dockside</a></li>
-          <li><a href="whisperwood.html">Whisperwood Vale</a></li>
-          <li><a href="about.html">About</a></li>
+          <li class="nav-core"><a href="index.html">Home</a></li>
+          <li class="nav-core"><a href="species/index.html"><span class="nav-label-full">Species</span><span class="nav-label-short">Fish</span></a></li>
+          <li class="nav-core"><a href="water.html"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="log.html" aria-current="page">Log</a></li>
+          <li class="nav-extra"><a href="tournaments.html">Tournaments</a></li>
+          <li class="nav-extra"><a href="gear.html">Gear</a></li>
+          <li class="nav-extra"><a href="dockside.html">Dockside</a></li>
+          <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra"><a href="about.html">About</a></li>
+          <li class="nav-more-item">
+            <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
+            <div id="nav-more-panel" class="nav-more-panel" hidden>
+              <a href="gear.html">Gear</a>
+              <a href="tournaments.html">Tournaments</a>
+              <a href="whisperwood.html">Whisperwood Vale</a>
+              <a href="dockside.html">Dockside</a>
+              <a href="about.html">About</a>
+            </div>
+          </li>
         </ul>
       </nav>
     </div>
@@ -39,14 +49,21 @@
   <main id="main">
     <h1>The Log</h1>
     <p class="lead">
-      Cream-paper trip cards from Hoover nights. Private entries stay in this browser.
-      Community trips load from a static JSON file in the repo — no account needed to read.
-      Photos, likes, and logins are <strong>Phase 2</strong>.
+      Cream-paper trip cards from Hoover nights. Private notes stay in this browser.
+      Community trips load from the notebook JSON — SAMPLE stamps mean demos, not live bite reports.
     </p>
 
-    <p class="placeholder-note">
-      <strong>No Instagram. No likes.</strong> Phase 1 = localStorage journal + community JSON + mailto / GitHub issue submit.
-    </p>
+    <details class="how-to-read" id="how-submit-works">
+      <summary>How submit works</summary>
+      <div class="how-to-read-body">
+        <ul>
+          <li>Community list reads <code>data/community-log.json</code> in the repo.</li>
+          <li>Phase 1 submit: mailto draft or GitHub issue markdown — no accounts to read.</li>
+          <li>Photos, likes, Instagram, and logins are <strong>Phase 2</strong> — not here yet.</li>
+          <li>Public ramp names only. No secret GPS, no private property.</li>
+        </ul>
+      </div>
+    </details>
 
     <h2>Community log</h2>
     <p class="meta">
