@@ -1,2 +1,6 @@
 .DS_Store
 *.log
+
+# Keep Whisperwood reference images
+!whisperwood/.images/
+!whisperwood/.images/**

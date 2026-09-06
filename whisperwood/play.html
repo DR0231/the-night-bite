@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play · Whisperwood Vale</title>
+  <link rel="stylesheet" href="css/site.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="play-page">
+  <header class="site-nav site-nav--play">
+    <a class="brand" href="index.html">Whisperwood Vale</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="guide.html">Guide</a>
+      <a href="../index.html">← Night Bite</a>
+      <a class="nav-play is-current" href="play.html">Play</a>
+    </nav>
+  </header>
+
+  <div id="frame">
+    <canvas id="game" width="1280" height="720" tabindex="0" aria-label="Whisperwood Vale game"></canvas>
+
+    <div id="hud">
+      <div id="region-card">
+        <h1 id="region-title">Whisperwood Vale</h1>
+        <p id="region-blurb">A peaceful woodland valley with crystal-clear waters and abundant fish.</p>
+      </div>
+      <div id="clock">
+        <span id="clock-icon"></span>
+        <span id="clock-text">8:00 AM</span>
+      </div>
+      <div id="spot-label" class="hidden"></div>
+      <div id="prompt" class="hidden"></div>
+      <div id="hint">J Journal · I Pack</div>
+    </div>
+
+    <div id="catch-toast" class="hidden">
+      <div class="toast-inner">
+        <div id="toast-art"></div>
+        <div>
+          <div class="toast-kicker">Caught!</div>
+          <div id="toast-name">Sunperch</div>
+          <div id="toast-desc"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="journal" class="hidden">
+      <div class="journal-panel">
+        <header>
+          <h2>Fish Collection</h2>
+          <p class="journal-sub">Freshwater friends &amp; magical wonders</p>
+          <p id="journal-count">0 / 12 landed</p>
+          <div class="rarity-legend">
+            <span><i class="dot common"></i> Common</span>
+            <span><i class="dot uncommon"></i> Uncommon</span>
+            <span><i class="dot rare"></i> Rare</span>
+          </div>
+        </header>
+        <ul id="journal-list"></ul>
+        <footer>Click a known fish to favorite it. J or Esc closes. Opening the journal packs a waiting line and fails a live minigame.</footer>
+      </div>
+    </div>
+
+    <div id="start-screen">
+      <div class="start-panel">
+        <p class="kicker">A woodland fishing tale</p>
+        <h1>Whisperwood Vale</h1>
+        <p id="start-weather" class="weather-line"></p>
+        <p id="start-blurb" class="blurb">Wander the vale, find quiet water, and wait for the bobber to dance.</p>
+        <ul id="start-recap" class="recap"></ul>
+        <p class="blurb">Progress stays on this device. No account needed.</p>
+        <ul class="controls">
+          <li><kbd>W A S D</kbd> or <kbd>Arrows</kbd> Move</li>
+          <li><kbd>E</kbd> or <kbd>Space</kbd> Fish / interact / minigame</li>
+          <li><kbd>J</kbd> Journal · <kbd>I</kbd> Pack</li>
+          <li>Walk or <kbd>Esc</kbd> to pack up the rod</li>
+        </ul>
+        <button id="btn-start" type="button">Enter the Vale</button>
+      </div>
+    </div>
+
+    <div id="pack" class="hidden overlay-panel">
+      <div class="journal-panel pack-panel">
+        <header><h2>Pack</h2><p class="journal-sub">Rod, bait, and a little coin</p></header>
+        <div id="pack-body"></div>
+        <footer>I or Esc to close. Numbers 1–5 equip bait.</footer>
+      </div>
+    </div>
+
+    <div id="shop" class="hidden overlay-panel">
+      <div class="journal-panel">
+        <header><h2>Wren’s stall</h2><p class="journal-sub">Bait, rods, and a wider tank</p></header>
+        <div id="shop-body"></div>
+        <button type="button" data-close>Close</button>
+      </div>
+    </div>
+
+    <div id="board" class="hidden overlay-panel">
+      <div class="journal-panel">
+        <header><h2>Daily board</h2></header>
+        <div id="board-body"></div>
+        <button type="button" data-close>Close</button>
+      </div>
+    </div>
+
+    <div id="mail" class="hidden overlay-panel">
+      <div class="journal-panel">
+        <header><h2>Mail tray</h2></header>
+        <div id="mail-body"></div>
+        <button type="button" data-close>Close</button>
+      </div>
+    </div>
+
+    <div id="dialog" class="hidden">
+      <div class="dialog-card">
+        <div id="dialog-name">Wren</div>
+        <p id="dialog-line"></p>
+        <div class="dialog-actions">
+          <button type="button" id="dialog-gift">Give a duplicate fish</button>
+          <button type="button" id="dialog-close">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="move-pad" aria-label="On-screen movement">
+      <button type="button" data-move="up">▲</button>
+      <button type="button" data-move="left">◀</button>
+      <button type="button" data-move="down">▼</button>
+      <button type="button" data-move="right">▶</button>
+      <button type="button" id="btn-fish">Fish</button>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/fishing.js"></script>
+  <script src="js/save.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/timeweather.js"></script>
+  <script src="js/minigame.js"></script>
+  <script src="js/quests.js"></script>
+  <script src="js/npcs.js"></script>
+  <script src="js/cottage.js"></script>
+  <script src="js/journal.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

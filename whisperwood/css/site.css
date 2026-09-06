@@ -1,0 +1,300 @@
+/* Whisperwood Vale website chrome — landing, guide, and play header. */
+
+:root {
+  --ink: #2a1c12;
+  --parchment: #f3e2c4;
+  --parchment-dark: #e4c896;
+  --wood: #5a3a22;
+  --moss: #1a2a18;
+  --gold: #c4a05a;
+  --leaf: #3d7a48;
+  --leaf-hi: #4d9158;
+  --ui-shadow: rgba(12, 18, 10, 0.55);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body.site {
+  background:
+    radial-gradient(ellipse at 50% 0%, #16301c 0%, #0b140e 55%);
+  color: var(--parchment);
+  font-family: "Segoe UI", "Nunito", Georgia, serif;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+a:hover { color: #e8d090; }
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 22px;
+  background: #0e160fe8;
+  border-bottom: 1px solid #c4a05a55;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.site-nav--play {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.brand {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--parchment);
+  letter-spacing: 0.02em;
+}
+
+.brand:hover { color: #fff8e8; }
+
+.site-nav nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 14px;
+}
+
+.site-nav nav a {
+  color: #f3e2c4cc;
+  letter-spacing: 0.04em;
+}
+
+.site-nav nav a.is-current {
+  color: var(--parchment);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 2px;
+}
+
+.nav-play {
+  background: var(--leaf);
+  color: var(--parchment) !important;
+  border: 2px solid #2a1c12;
+  padding: 6px 14px;
+  font-weight: 700;
+}
+
+.nav-play:hover { background: var(--leaf-hi); }
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  min-height: calc(100vh - 56px);
+}
+
+.hero-art {
+  background:
+    linear-gradient(90deg, transparent 70%, #0b140e 100%),
+    url("../assets/fishing-reference.jpg") center / cover no-repeat,
+    #1a3a28;
+  min-height: 320px;
+}
+
+.hero-copy {
+  padding: 64px 40px 48px;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.kicker {
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--gold);
+  margin: 0 0 10px;
+}
+
+h1, h2, h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  color: #fff8e8;
+}
+
+.hero-copy h1 {
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1.05;
+  margin: 0 0 16px;
+}
+
+.lede, .section-lead {
+  color: #e4c896;
+  font-size: 17px;
+  margin: 0 0 24px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font: 700 15px Georgia, serif;
+  letter-spacing: 0.04em;
+  border: 2px solid #2a1c12;
+}
+
+.btn-primary {
+  background: var(--leaf);
+  color: var(--parchment) !important;
+}
+
+.btn-primary:hover { background: var(--leaf-hi); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--parchment) !important;
+  border-color: #c4a05a88;
+}
+
+.btn-ghost:hover { border-color: var(--gold); }
+
+.spots, .features, .guide {
+  padding: 48px 40px 64px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.spots h2, .guide h2 {
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+
+.spot-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.spot-grid article,
+.features article {
+  background: #f3e2c4;
+  color: var(--ink);
+  padding: 18px 16px;
+  border: 2px solid #8b6238;
+}
+
+.spot-grid h3,
+.features h3 {
+  color: var(--ink);
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+.spot-grid p,
+.features p {
+  margin: 0;
+  font-size: 14px;
+  color: #5a3a22;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding-top: 0;
+}
+
+.site-foot {
+  border-top: 1px solid #c4a05a44;
+  padding: 20px 40px 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: #f3e2c499;
+}
+
+.guide-hero {
+  margin-bottom: 36px;
+}
+
+.guide-hero h1 {
+  font-size: 36px;
+  margin: 0 0 12px;
+}
+
+.guide-hero .btn { margin-top: 8px; }
+
+.controls-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f3e2c4;
+  color: var(--ink);
+  border: 2px solid #8b6238;
+}
+
+.controls-table th,
+.controls-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid #c4a05a66;
+  vertical-align: top;
+}
+
+.controls-table th {
+  width: 34%;
+  font-family: Georgia, serif;
+}
+
+.steps, .spot-list {
+  color: #e4c896;
+  padding-left: 22px;
+}
+
+.steps li, .spot-list li {
+  margin: 10px 0;
+}
+
+.guide h2 { margin: 28px 0 12px; }
+
+/* Play page: nav + remaining viewport for the canvas. */
+body.play-page {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #0b140e;
+}
+
+html:has(body.play-page) {
+  height: 100%;
+}
+
+body.play-page #frame {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-art { min-height: 220px; }
+  .spot-grid, .features { grid-template-columns: 1fr 1fr; }
+  .hero-copy, .spots, .features, .guide { padding-left: 20px; padding-right: 20px; }
+}
+
+@media (max-width: 560px) {
+  .spot-grid, .features { grid-template-columns: 1fr; }
+  .site-nav { flex-wrap: wrap; }
+  .site-foot { flex-direction: column; }
+}
