@@ -83,14 +83,52 @@ html, body {
   top: 18px;
   right: 22px;
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
   padding: 8px 12px;
   background: #1c2418cc;
   border: 1px solid #c4a05a66;
   color: #f3e2c4;
   font-size: 13px;
   letter-spacing: 0.06em;
+}
+
+.clock-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#needs {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.need-row {
+  display: flex;
+  gap: 3px;
+}
+
+.need-row span {
+  width: 6px;
+  height: 6px;
+  border: 1px solid #c4a05a;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.need-row span.on {
+  background: #c4a05a;
+}
+
+.need-row.warn span {
+  border-color: #c45a5a;
+}
+
+.need-row.warn span.on {
+  background: #c45a5a;
 }
 
 #clock-icon {
@@ -109,7 +147,7 @@ html, body {
 
 #spot-label {
   position: absolute;
-  top: 72px;
+  top: 92px;
   left: 50%;
   transform: translateX(-50%);
   background: #6b4a2ccc;
@@ -436,6 +474,8 @@ kbd {
 .pack-panel #pack-body button,
 #shop-body button,
 #board-body button,
+#bench-body button,
+#rank-up-body button,
 .dialog-actions button {
   display: block;
   width: 100%;
@@ -454,6 +494,9 @@ kbd {
 .pack-mute { display: flex; gap: 8px; align-items: center; margin: 10px 0; font-size: 13px; }
 .shop-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 #journal-list li.favorite { outline: 2px solid #c4a05a; }
+.journal-cook { margin-top: 8px; font-size: 12px; color: #5a3a22; }
+.perk-picks button { display: block; width: 100%; }
+.perk-picks button span { display: block; font-size: 12px; font-weight: 400; margin-top: 4px; }
 
 #dialog {
   position: absolute;

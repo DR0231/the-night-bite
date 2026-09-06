@@ -64,6 +64,7 @@ const Inventory = {
       Shop.close();
       Board.close();
       Mail.close();
+      if (typeof Bench !== "undefined") Bench.close();
       this.refresh();
     } else {
       Save.mark();
@@ -92,12 +93,35 @@ const Inventory = {
       </button>`;
     }).join("");
     const extras = ["berries", "crystal"].map((id) => `${BAIT[id].name} ×${this.baitCount(id)}`).join(" · ");
+    const meal = Survival.meal();
+    const mealLine = meal ? `Active meal: ${meal.name}` : "No meal in you.";
+    const cooked = Object.keys(MEALS).map((id) => {
+      const n = Save.data.inventory.meals[id] | 0;
+      const m = MEALS[id];
+      const name = Save.data.flags.cooked[id] ? m.name : "???";
+      if (n < 1) return "";
+      return `<button type="button" data-eat="${id}">Eat ${name} ×${n}</button>`;
+    }).join("");
+    const tools = [];
+    if (this.baitCount("berries") > 0) tools.push(`<button type="button" id="btn-eat-berries">Eat berries (+12 hunger)</button>`);
+    if (Save.data.inventory.items.cloak | 0) tools.push("<p>Wool cloak — worn.</p>");
+    if (Save.data.inventory.items.campfireKit | 0) tools.push(`<p>Campfire kit ×${Save.data.inventory.items.campfireKit}</p>`);
+    if (Save.data.inventory.items.lantern | 0) {
+      const on = Save.data.inventory.lanternOn;
+      const fuel = Math.ceil(Save.data.inventory.items.lanternFuel || 0);
+      tools.push(`<button type="button" id="btn-lantern">${on ? "Douse lantern" : "Light lantern"} (fuel ${fuel})</button>`);
+      tools.push(`<button type="button" id="btn-fuel">Fill lantern (glow or crystal → 6)</button>`);
+    }
     el.innerHTML = `
       <p class="pack-rod"><strong>${rod.name}</strong> — ${rod.desc}</p>
+      <p class="pack-rank">${Skills.line()}</p>
       <p class="pack-coins">${this.coins()} coins</p>
       <div class="pack-baits">${rows}</div>
       <p class="pack-extra">${extras}</p>
-      <p class="pack-craft">Bench: berries + worm → berry blend · crystal + worm → bright glow</p>
+      <p class="pack-meal">${mealLine}</p>
+      <div class="pack-eats">${cooked}</div>
+      <div class="pack-tools">${tools.join("")}</div>
+      <p class="pack-craft">Bench: berries + worm → berry blend · crystal + worm → bright glow · meals in the pan</p>
       <label class="pack-mute"><input type="checkbox" id="chk-mute" ${Save.data.flags.mute ? "checked" : ""}/> Mute audio</label>
       <div class="pack-io">
         <button type="button" id="btn-export">Copy save</button>
@@ -106,6 +130,15 @@ const Inventory = {
     el.querySelectorAll("[data-bait]").forEach((btn) => {
       btn.addEventListener("click", () => { this.equip(btn.dataset.bait); this.refresh(); });
     });
+    el.querySelectorAll("[data-eat]").forEach((btn) => {
+      btn.addEventListener("click", () => Survival.eatMeal(btn.dataset.eat));
+    });
+    const berries = el.querySelector("#btn-eat-berries");
+    if (berries) berries.addEventListener("click", () => Survival.eatBerries());
+    const lan = el.querySelector("#btn-lantern");
+    if (lan) lan.addEventListener("click", () => Survival.toggleLantern());
+    const fuel = el.querySelector("#btn-fuel");
+    if (fuel) fuel.addEventListener("click", () => Survival.fillLantern());
     const mute = el.querySelector("#chk-mute");
     if (mute) mute.addEventListener("change", () => {
       Save.data.flags.mute = mute.checked;
@@ -154,7 +187,9 @@ const Pickups = {
     }
     if (!best) return false;
     best.taken = true;
-    Inventory.addBait(best.item, best.n || 1);
+    let n = best.n || 1;
+    if (Skills.has("forager") && Math.random() < 0.4) n += 1;
+    Inventory.addBait(best.item, n);
     UI.toastNote(`Picked ${BAIT[best.item] ? BAIT[best.item].name : best.item}.`);
     Save.mark();
     return true;

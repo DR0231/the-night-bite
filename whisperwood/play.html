@@ -27,12 +27,19 @@
         <p id="region-blurb">A peaceful woodland valley with crystal-clear waters and abundant fish.</p>
       </div>
       <div id="clock">
-        <span id="clock-icon"></span>
-        <span id="clock-text">8:00 AM</span>
+        <div class="clock-row">
+          <span id="clock-icon"></span>
+          <span id="clock-text">8:00 AM</span>
+        </div>
+        <div id="needs" aria-label="Hunger, warmth, and rest">
+          <div class="need-row" id="need-hunger" title="Hunger"></div>
+          <div class="need-row" id="need-warmth" title="Warmth"></div>
+          <div class="need-row" id="need-rest" title="Rest"></div>
+        </div>
       </div>
       <div id="spot-label" class="hidden"></div>
       <div id="prompt" class="hidden"></div>
-      <div id="hint">J Journal · I Pack</div>
+      <div id="hint">J Journal · I Pack · needs pips</div>
     </div>
 
     <div id="catch-toast" class="hidden">
@@ -59,7 +66,10 @@
           </div>
         </header>
         <ul id="journal-list"></ul>
-        <footer>Click a known fish to favorite it. J or Esc closes. Opening the journal packs a waiting line and fails a live minigame.</footer>
+        <footer>
+          Click a known fish to favorite it. J or Esc closes. Opening the journal packs a waiting line and fails a live minigame.
+          <p id="journal-cook" class="journal-cook"></p>
+        </footer>
       </div>
     </div>
 
@@ -76,6 +86,7 @@
           <li><kbd>E</kbd> or <kbd>Space</kbd> Fish / interact / minigame</li>
           <li><kbd>J</kbd> Journal · <kbd>I</kbd> Pack</li>
           <li>Walk or <kbd>Esc</kbd> to pack up the rod</li>
+          <li>Eat from the pack. Sleep at the cottage.</li>
         </ul>
         <button id="btn-start" type="button">Enter the Vale</button>
       </div>
@@ -113,6 +124,21 @@
       </div>
     </div>
 
+    <div id="bench" class="hidden overlay-panel">
+      <div class="journal-panel pack-panel">
+        <header><h2>Packing bench</h2><p class="journal-sub">Bait blends and a quiet pan</p></header>
+        <div id="bench-body"></div>
+        <button type="button" data-close>Close</button>
+      </div>
+    </div>
+
+    <div id="rank-up" class="hidden overlay-panel">
+      <div class="journal-panel">
+        <header><h2>Hands remember</h2></header>
+        <div id="rank-up-body"></div>
+      </div>
+    </div>
+
     <div id="dialog" class="hidden">
       <div class="dialog-card">
         <div id="dialog-name">Wren</div>
@@ -140,6 +166,8 @@
   <script src="js/player.js"></script>
   <script src="js/fishing.js"></script>
   <script src="js/save.js"></script>
+  <script src="js/survival.js"></script>
+  <script src="js/skills.js"></script>
   <script src="js/inventory.js"></script>
   <script src="js/timeweather.js"></script>
   <script src="js/minigame.js"></script>

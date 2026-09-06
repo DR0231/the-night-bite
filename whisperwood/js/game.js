@@ -7,7 +7,8 @@ const UI = {
   els: {},
 
   anyMenu() {
-    return this.journalOpen || Inventory.open || Shop.openFlag || Board.open || Mail.open;
+    return this.journalOpen || Inventory.open || Shop.openFlag || Board.open || Mail.open
+      || (typeof Bench !== "undefined" && Bench.openFlag) || Skills.offering;
   },
 
   init() {
@@ -57,12 +58,24 @@ const UI = {
     const w = document.getElementById("start-weather");
     const rec = document.getElementById("start-recap");
     const btn = this.els.btn;
-    if (w) w.textContent = TimeCycle.weatherLine();
+    if (w) {
+      let line = TimeCycle.weatherLine();
+      const wx = TimeCycle.weatherId();
+      const phase = TimeCycle.phaseId();
+      if (wx === "frost") line += " Frost overnight. Bring tea.";
+      else if (wx === "rain") line += " Rain on the vale. A cloak would help.";
+      else if (phase === "night") line += " Night on the water. A lantern or a fire.";
+      w.textContent = line;
+    }
     if (rec) {
-      rec.innerHTML = `
-        <li>${TimeCycle.weatherLine()}</li>
-        <li>${Quests.dailyLine()}</li>
-        <li>${Quests.rumorLine()}</li>`;
+      const bits = [
+        `<li>${TimeCycle.weatherLine()}</li>`,
+        `<li>${Quests.dailyLine()}</li>`,
+        `<li>${Quests.rumorLine()}</li>`,
+      ];
+      if ((Save.data.skills.rank | 0) > 1) bits.push(`<li>Fisher rank ${Save.data.skills.rank}.</li>`);
+      if ((Save.data.recap || []).some((r) => r.reason === "passout")) bits.push("<li>Wren found you in the reeds once. The kettle was on.</li>");
+      rec.innerHTML = bits.join("");
     }
     const returning = Save.data.playTime > 20 || Journal.count() > 0 || Save.data.flags.introComplete;
     if (btn) btn.textContent = returning ? "Return to the Vale" : "Enter the Vale";
@@ -112,11 +125,17 @@ const UI = {
       Sprites.fishIcon(c, 0, 0, f.color, !known);
       c.restore();
     }
+    const cook = document.getElementById("journal-cook");
+    if (cook) {
+      const names = Object.keys(MEALS).map((id) => Save.data.flags.cooked[id] ? MEALS[id].name : "???");
+      cook.textContent = "Cookbook: " + names.join(" · ");
+    }
   },
 
   toggleJournal() {
     if (this.journalOpen) { this.closeJournal(); return; }
     Inventory.close(); Shop.close(); Board.close(); Mail.close();
+    if (typeof Bench !== "undefined") Bench.close();
     // Journal pauses movement and world time, but is not a bite-timer exploit:
     // wait/nibble packs up the rod; an open minigame fails on the spot.
     if (Fishing.state === "wait" || Fishing.state === "nibble") Fishing.cancel();
@@ -139,6 +158,7 @@ const UI = {
     Board.close();
     Mail.close();
     Npcs.close();
+    if (typeof Bench !== "undefined") Bench.close();
   },
 
   showCatch(fish, rec) {
@@ -233,6 +253,7 @@ const UI = {
       const gate = World.nearPortal(Player.x, Player.y);
       if (gate) prompt = gate.hint;
       else prompt = Interact.hint();
+      if (!prompt && Survival.needPrompt) prompt = Survival.needPrompt;
     }
     if (prompt && !this.anyMenu()) {
       this.els.prompt.textContent = prompt;
@@ -268,6 +289,7 @@ const Game = {
     Shop.restock();
     Renderer.init();
     UI.init();
+    Survival.refreshPips();
     const canvas = document.getElementById("game");
     const frame = document.getElementById("frame");
     if (frame) {
@@ -361,6 +383,7 @@ const Game = {
       Save.data.cottage.visited = true;
       Npcs._checkMarsh();
     }
+    if (portal.passOut) Survival.wakeHome();
     Save.mark();
   },
 
@@ -382,15 +405,16 @@ const Game = {
     const dt = Math.min(0.05, (now - this.last) / 1000);
     this.last = now;
 
-    if (Input.pressed["j"]) UI.toggleJournal();
-    if (Input.pressed["i"]) Inventory.toggle();
+    if (Input.pressed["j"] && !Skills.offering) UI.toggleJournal();
+    if (Input.pressed["i"] && !Skills.offering) Inventory.toggle();
     if (Input.pressed["1"]) Inventory.numberKey(1);
     if (Input.pressed["2"]) Inventory.numberKey(2);
     if (Input.pressed["3"]) Inventory.numberKey(3);
     if (Input.pressed["4"]) Inventory.numberKey(4);
     if (Input.pressed["5"]) Inventory.numberKey(5);
     if (Input.pressed["escape"]) {
-      if (UI.anyMenu() || Npcs.talkId) UI.closeAll();
+      if (Skills.offering) { /* wait for a perk pick */ }
+      else if (UI.anyMenu() || Npcs.talkId) UI.closeAll();
       else if (Fishing.active) Fishing.cancel();
     }
 
@@ -404,6 +428,7 @@ const Game = {
       Player.update(dt);
       Fishing.update(dt);
       TimeCycle.update(dt);
+      if (!this.fading) Survival.tick(dt);
       Particles.update(dt);
       Npcs.update(dt);
       Weather.spawnAmbient(dt);

@@ -14,7 +14,11 @@ const Quests = {
       done: false,
     };
     const rumorFish = FISH.filter((f) => f.rarity === "Rare" || f.rarity === "Uncommon");
-    const rf = Utils.pick(rng, rumorFish);
+    let rf = Utils.pick(rng, rumorFish);
+    if (Skills.rank() >= 6 && rng() < 0.55) {
+      const night = FISH.filter((f) => f.nightOnly);
+      if (night.length) rf = Utils.pick(rng, night);
+    }
     Save.data.quests.rumor = {
       day: Save.data.clock.day,
       fish: rf.id,
@@ -32,6 +36,7 @@ const Quests = {
   },
 
   onLand(fish) {
+    let bonus = false;
     const d = Save.data.quests.daily;
     if (d && !d.done && fish.id === d.fish) {
       d.done = true;
@@ -40,15 +45,19 @@ const Quests = {
       Save.data.npcs.wren.hearts = Math.min(3, (Save.data.npcs.wren.hearts | 0) + 1);
       UI.toastNote("Daily board complete. Wren is pleased.");
       Save.mark("quest");
+      bonus = true;
     }
     const der = Save.data.quests.derby;
     if (der && der.key && SPOTS[fish.spot] && SPOTS[fish.spot].mood === der.mood) {
       der.landed = (der.landed | 0) + 1;
+      bonus = true;
     }
     const rumor = Save.data.quests.rumor;
     if (rumor && fish.id === rumor.fish) {
       UI.toastNote("The rumor was true.");
+      bonus = true;
     }
+    return bonus;
   },
 
   dailyLine() {
@@ -129,6 +138,9 @@ const Mail = {
     const last = Save.data.player.lastCatchName;
     if (last) notes.push(`Lark: “Still thinking about that ${last}.”`);
     else notes.push("Bramble left a note: the pond missed you.");
+    const rec = (Save.data.recap || []).find((r) => r.reason === "passout");
+    if (rec) notes.unshift("Wren: I found you in the reeds last night. The kettle’s still warm.");
+    if ((Save.data.skills.rank | 0) > 1) notes.push(`Someone pinned a scrap: fisher rank ${Save.data.skills.rank}.`);
     Save.data.cottage.mail = notes.slice(0, 3);
     Save.data.cottage.weeds = 4 + (Save.dayRng("weeds")() * 4) | 0;
   },

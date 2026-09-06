@@ -47,6 +47,10 @@ const Journal = {
   toggleFavorite(id) {
     const e = this.ensure(id);
     e.favorite = !e.favorite;
+    if (e.favorite) {
+      const f = FISH.find((x) => x.id === id);
+      if (f) Save.data.player.favoriteSpot = f.spot;
+    }
     Save.mark();
   },
 

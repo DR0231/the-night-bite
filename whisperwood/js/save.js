@@ -30,14 +30,20 @@ const Save = {
       player: {
         map: "vale", x: 0, y: 0, dir: 0,
         coins: 12, favoriteSpot: "pond", lastLogoutAt: Date.now(),
+        hunger: 100, warmth: 100, rest: 100,
       },
       inventory: {
         rodId: "willow", ownedRods: ["willow"],
         lineId: "gut", lureId: "",
         bait: { worms: 8, crickets: 2, glow: 1, berries: 0, crystal: 0, berryblend: 0, glowplus: 0 },
         equippedBait: "worms",
-        items: { tank: 0 },
+        items: { tank: 0, cloak: 0, lantern: 0, lanternFuel: 0, campfireKit: 0 },
+        meals: { panperch: 0, dawntea: 0, riverstew: 0, cavebroth: 0 },
+        mealId: "",
+        mealUntilDay: 0,
+        lanternOn: false,
       },
+      skills: { rank: 1, xp: 0, perks: [], offered: [], repeatsToday: { total: 0 }, speciesToday: {}, sightXp: {} },
       journal,
       cottage: { aquarium: [], trophies: [], mail: [], weeds: 0, decor: {}, visited: false },
       npcs,
@@ -47,7 +53,7 @@ const Save = {
         rumor: { day: 0, fish: "", spot: "", text: "" },
         derby: { key: "", mood: "still", landed: 0, goal: 8 },
       },
-      flags: { fifthWater: false, spotMastery: {}, introComplete: false, mute: false },
+      flags: { fifthWater: false, spotMastery: {}, introComplete: false, mute: false, campfire: false, passedOutDay: 0, cooked: {}, gotCampKit: false },
       recap: [],
     };
   },
@@ -88,15 +94,28 @@ const Save = {
 
   _migrate(d) {
     const base = this.fresh(d.worldSeed);
-    const out = Object.assign(base, d);
-    out.clock = Object.assign(base.clock, d.clock || {});
-    out.player = Object.assign(base.player, d.player || {});
-    out.inventory = Object.assign(base.inventory, d.inventory || {});
-    out.inventory.bait = Object.assign(base.inventory.bait, (d.inventory && d.inventory.bait) || {});
-    out.cottage = Object.assign(base.cottage, d.cottage || {});
-    out.npcs = Object.assign(base.npcs, d.npcs || {});
-    out.quests = Object.assign(base.quests, d.quests || {});
-    out.flags = Object.assign(base.flags, d.flags || {});
+    const out = Object.assign({}, base, d);
+    out.clock = Object.assign({}, base.clock, d.clock || {});
+    out.player = Object.assign({}, base.player, d.player || {});
+    if (out.player.hunger == null) out.player.hunger = 100;
+    if (out.player.warmth == null) out.player.warmth = 100;
+    if (out.player.rest == null) out.player.rest = 100;
+    out.inventory = Object.assign({}, base.inventory, d.inventory || {});
+    out.inventory.bait = Object.assign({}, base.inventory.bait, (d.inventory && d.inventory.bait) || {});
+    out.inventory.items = Object.assign({}, base.inventory.items, (d.inventory && d.inventory.items) || {});
+    out.inventory.meals = Object.assign({}, base.inventory.meals, (d.inventory && d.inventory.meals) || {});
+    out.skills = Object.assign({}, base.skills, d.skills || {});
+    out.skills.repeatsToday = Object.assign({ total: 0 }, (d.skills && d.skills.repeatsToday) || {});
+    out.skills.speciesToday = Object.assign({}, (d.skills && d.skills.speciesToday) || {});
+    out.skills.sightXp = Object.assign({}, (d.skills && d.skills.sightXp) || {});
+    if (!Array.isArray(out.skills.perks)) out.skills.perks = [];
+    if (!Array.isArray(out.skills.offered)) out.skills.offered = [];
+    if (!out.skills.rank) out.skills.rank = 1;
+    out.cottage = Object.assign({}, base.cottage, d.cottage || {});
+    out.npcs = Object.assign({}, base.npcs, d.npcs || {});
+    out.quests = Object.assign({}, base.quests, d.quests || {});
+    out.flags = Object.assign({}, base.flags, d.flags || {});
+    out.flags.cooked = Object.assign({}, base.flags.cooked, (d.flags && d.flags.cooked) || {});
     out.journal = Object.assign(Object.create(null), base.journal, d.journal || {});
     if (!Array.isArray(out.inventory.ownedRods)) out.inventory.ownedRods = ["willow"];
     return out;

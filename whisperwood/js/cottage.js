@@ -13,6 +13,7 @@ const Cottage = {
       addSolid(4.2 * TILE_SIZE, 3.6 * TILE_SIZE, 22, 16, "bed");
       addDeco("tank", 16 * TILE_SIZE, 5.2 * TILE_SIZE);
       addDeco("trophy", 11 * TILE_SIZE, 3.6 * TILE_SIZE);
+      addDeco("certificate", 8.4 * TILE_SIZE, 4.2 * TILE_SIZE);
       addDeco("bench", 5.5 * TILE_SIZE, 11 * TILE_SIZE);
       addSolid(4.6 * TILE_SIZE, 10.2 * TILE_SIZE, 22, 10, "bench");
       addDeco("calendar", 16.5 * TILE_SIZE, 11 * TILE_SIZE);
@@ -33,6 +34,7 @@ const Cottage = {
       bed: { x: 5 * TILE_SIZE, y: 5 * TILE_SIZE, r: 22 },
       tank: { x: 16 * TILE_SIZE, y: 5.2 * TILE_SIZE, r: 22 },
       trophy: { x: 11 * TILE_SIZE, y: 3.6 * TILE_SIZE, r: 20 },
+      certificate: { x: 8.4 * TILE_SIZE, y: 4.2 * TILE_SIZE, r: 16 },
       bench: { x: 5.5 * TILE_SIZE, y: 11 * TILE_SIZE, r: 20 },
       calendar: { x: 16.5 * TILE_SIZE, y: 11 * TILE_SIZE, r: 20 },
       mailtray: { x: 12.5 * TILE_SIZE, y: 11.2 * TILE_SIZE, r: 18 },
@@ -44,11 +46,12 @@ const Cottage = {
   hint() {
     if (World.id !== "cottage") return "";
     if (this.near("bed")) return "Press E to sleep until dusk or dawn";
-    if (this.near("bench")) return "Press E to craft bait";
+    if (this.near("bench")) return "Press E to use the packing bench";
     if (this.near("calendar")) return "Press E to read the forecast board";
     if (this.near("mailtray")) return "Press E to check the mail tray";
     if (this.near("tank")) return "Press E to tuck a fish into the tank";
-    if (this.near("trophy")) return "Press E to mount a personal best";
+    if (this.near("certificate")) return "Press E to read your fisher certificate";
+    if (this.near("trophy")) return "Press E to mount a personal best · " + Skills.line();
     return "";
   },
 
@@ -58,21 +61,21 @@ const Cottage = {
     if (this.near("bed")) {
       const night = TimeCycle.phaseId() === "night" || TimeCycle.phaseId() === "golden";
       Weather.skipTo(night ? "dawn" : "golden");
+      Survival.fillSleep();
       UI.toastNote(night ? "You slept until dawn." : "You slept until dusk.");
       return true;
     }
     if (this.near("bench")) {
-      if (Inventory.craft("berryblend") || Inventory.craft("glowplus")) {
-        UI.toastNote("The packing bench smells like the vale.");
-        Save.mark();
-      } else {
-        UI.toastNote("Need berries + worm, or crystal + worm.");
-      }
+      Bench.open();
       return true;
     }
     if (this.near("calendar")) { Quests.open = false; Board.toggle(); return true; }
     if (this.near("mailtray")) { Mail.toggle(); return true; }
     if (this.near("tank")) { this._tank(); return true; }
+    if (this.near("certificate")) {
+      UI.toastNote(Skills.line());
+      return true;
+    }
     if (this.near("trophy")) { this._trophy(); return true; }
     return false;
   },
@@ -158,7 +161,7 @@ const Shop = {
     }
     this.stock = Object.create(null);
     for (const it of SHOP_CATALOG) {
-      if (it.kind === "bait") this.stock[it.id] = it.stock;
+      if (it.kind === "bait" || (it.kind === "item" && it.stock)) this.stock[it.id] = it.stock;
     }
     Save.data.shop = { day, stock: this.stock };
   },
@@ -183,12 +186,18 @@ const Shop = {
     const el = document.getElementById("shop-body");
     if (!el) return;
     const buy = SHOP_CATALOG.map((it) => {
+      if (it.minRank && Skills.rank() < it.minRank) return "";
       if (it.kind === "bait") {
         return `<button type="button" data-buy="${it.kind}:${it.id}">${BAIT[it.id].name} — ${it.price}c (×${this.stock[it.id] | 0})</button>`;
       }
       if (it.kind === "rod") {
         const have = Inventory.ownsRod(it.id);
         return `<button type="button" data-buy="${it.kind}:${it.id}" ${have ? "disabled" : ""}>${RODS[it.id].name} — ${it.price}c + ${it.requireFish}</button>`;
+      }
+      if (it.kind === "item") {
+        const have = it.id !== "campfireKit" && (Save.data.inventory.items[it.id] | 0) > 0;
+        const stock = it.stock != null ? ` (×${this.stock[it.id] | 0})` : "";
+        return `<button type="button" data-buy="${it.kind}:${it.id}" ${have ? "disabled" : ""}>${it.name} — ${it.price}c${it.requireBait ? " + crystal" : ""}${stock}</button>`;
       }
       const have = Save.data.inventory.items.tank;
       return `<button type="button" data-buy="upgrade:tank" ${have ? "disabled" : ""}>${it.name} — donate a ${it.requireFish}</button>`;
@@ -229,6 +238,20 @@ const Shop = {
       e.caught = Math.max(0, e.caught - 1);
       Save.data.inventory.items.tank = 1;
       UI.toastNote("The aquarium has more room.");
+    } else if (kind === "item") {
+      const it = SHOP_CATALOG.find((s) => s.id === id);
+      if (!it || Skills.rank() < (it.minRank || 0) || Inventory.coins() < it.price) return;
+      if (it.stock != null && (this.stock[id] | 0) <= 0) return;
+      if (id !== "campfireKit" && (Save.data.inventory.items[id] | 0) > 0) return;
+      if (it.requireBait && Inventory.baitCount(it.requireBait) < 1) {
+        UI.toastNote("Wren wants a crystal mote for the lamp.");
+        return;
+      }
+      Inventory.addCoins(-it.price);
+      if (it.requireBait) Inventory.addBait(it.requireBait, -1);
+      Save.data.inventory.items[id] = (Save.data.inventory.items[id] | 0) + 1;
+      if (it.stock != null) this.stock[id]--;
+      UI.toastNote(`Bought ${it.name}.`);
     }
     Save.mark("sell");
     this.refresh();
@@ -243,5 +266,58 @@ const Shop = {
     Inventory.addCoins(f.sell || 6);
     Save.mark("sell");
     this.refresh();
+  },
+};
+
+const Bench = {
+  openFlag: false,
+
+  open() {
+    this.openFlag = true;
+    UI.closeJournal();
+    Inventory.close();
+    Shop.close();
+    Board.close();
+    Mail.close();
+    const el = document.getElementById("bench");
+    if (el) el.classList.remove("hidden");
+    this.refresh();
+  },
+
+  close() {
+    if (!this.openFlag) return;
+    this.openFlag = false;
+    const el = document.getElementById("bench");
+    if (el) el.classList.add("hidden");
+    Save.mark();
+  },
+
+  refresh() {
+    const el = document.getElementById("bench-body");
+    if (!el) return;
+    const baits = [
+      { id: "berryblend", label: "Berry blend — berries + worm" },
+      { id: "glowplus", label: "Bright glow — crystal + worm" },
+    ].map((r) => `<button type="button" data-craft="${r.id}">${r.label}</button>`).join("");
+    const meals = Object.keys(MEALS).map((id) => {
+      const m = MEALS[id];
+      const known = Save.data.flags.cooked[id];
+      const name = known ? m.name : "???";
+      const ok = Survival.canCook(id);
+      return `<button type="button" data-meal="${id}" ${ok ? "" : "disabled"}>${name} — ${m.desc}${ok ? "" : " (need more)"}</button>`;
+    }).join("");
+    el.innerHTML = `<p>Bait</p>${baits}<p>Meals</p>${meals}`;
+    el.querySelectorAll("[data-craft]").forEach((b) => b.addEventListener("click", () => {
+      if (Inventory.craft(b.dataset.craft)) {
+        UI.toastNote("The packing bench smells like the vale.");
+        Save.mark();
+        this.refresh();
+      } else {
+        UI.toastNote("Need berries + worm, or crystal + worm.");
+      }
+    }));
+    el.querySelectorAll("[data-meal]").forEach((b) => b.addEventListener("click", () => {
+      if (Survival.cook(b.dataset.meal)) this.refresh();
+    }));
   },
 };

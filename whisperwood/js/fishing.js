@@ -105,8 +105,10 @@ const Fishing = {
     const phase = TimeCycle.phaseId();
     const weather = TimeCycle.weatherId();
     const season = TimeCycle.season();
-    const hotspot = TimeCycle.hotspot() === this.spot.id ? 1.35 : 1;
+    let hotspot = TimeCycle.hotspot() === this.spot.id ? 1.35 : 1;
+    if (hotspot === 1 && Skills.has("homeshore") && Save.data.player.favoriteSpot === this.spot.id) hotspot = 1.18;
     const baitM = Inventory.biteMult(this.spot.id);
+    const starved = (Save.data.player.hunger | 0) <= 0;
     const pool = [];
     const weights = [];
     for (const f of FISH) {
@@ -114,15 +116,17 @@ const Fishing = {
       if (f.nightOnly && phase !== "night") continue;
       if (f.rainOnly && weather !== "rain") continue;
       if (f.season && f.season !== season) continue;
+      if (starved && f.rarity === "Rare") continue;
       let w = f.rarity === "Rare" ? 1 : f.rarity === "Uncommon" ? 3 : 6;
       const bw = (f.bite && f.bite[phase]) != null ? f.bite[phase] : 1;
       w *= bw * (WEATHERS[weather] ? WEATHERS[weather].bite : 1) * hotspot * baitM;
+      if (Skills.has("nightowl") && phase === "night") w *= 1.15;
       if (w <= 0.01) continue;
       pool.push(f);
       weights.push(w);
     }
     if (!pool.length) {
-      return FISH.find((f) => f.spot === this.spot.id) || FISH[0];
+      return FISH.find((f) => f.spot === this.spot.id && (!starved || f.rarity !== "Rare")) || FISH.find((f) => f.spot === this.spot.id) || FISH[0];
     }
     let total = 0;
     for (const w of weights) total += w;
@@ -282,6 +286,7 @@ const Fishing = {
     this.t = 0;
     AudioFX.fail();
     Journal.recordMiss(this.fish);
+    Skills.awardFromMiss(this.fish);
     UI.showMiss(this.fish);
   },
 
@@ -297,7 +302,8 @@ const Fishing = {
     this.size = inches;
     const rec = Journal.recordLand(this.fish, inches);
     this.catchMeta = rec;
-    Quests.onLand(this.fish);
+    const questBonus = Quests.onLand(this.fish);
+    Skills.awardFromLand(this.fish, rec, questBonus);
     Npcs.rememberCatch(this.fish);
     AudioFX.catch();
     Camera.shake = 3.4;

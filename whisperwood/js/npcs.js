@@ -31,7 +31,12 @@ const Npcs = {
     let line = n.greet;
     if (st.lastCatchRemembered) line = `That ${st.lastCatchRemembered} still sits with me. ` + line;
     if (hearts > 0) line = n.hearts[hearts - 1] || line;
-    if (n.role === "shop") Shop.open();
+    if (n.role === "shop") {
+      if (Skills.rank() >= 5) line = "Lanterns for the long walk home. " + line;
+      else if (Skills.rank() >= 4) line = "A cloak if the frost is in. " + line;
+      else if (Skills.rank() >= 3) line = "A campfire kit’s on the stall if you’re ranging at night. " + line;
+      Shop.open();
+    }
     this._show(n.name, line, n);
   },
 
@@ -117,6 +122,7 @@ const Interact = {
     if (World.id === "cottage" && Cottage.try()) return true;
     if (Pickups.try()) return true;
     if (Npcs.try()) return true;
+    if (this._plantFire()) return true;
     if (this._sitDock()) return true;
     if (this._weeds()) return true;
     if (this._raft()) return true;
@@ -127,6 +133,8 @@ const Interact = {
     if (World.id === "cottage") return Cottage.hint();
     const pick = Pickups.near();
     if (pick) return `Press E to pick ${pick}`;
+    if (Survival.atFire()) return "Sit by the fire";
+    if (Survival.canPlantFire()) return "Press E to set a campfire";
     const n = Npcs.at(Player.x, Player.y);
     if (n) return `Press E to talk to ${n.name}`;
     if (this._nearSit()) return "Press E to sit until dusk or dawn";
@@ -139,6 +147,10 @@ const Interact = {
     return "";
   },
 
+  _plantFire() {
+    return Survival.plantFire();
+  },
+
   _nearSit() {
     return World.id === "vale" && Utils.dist(Player.x, Player.y, 18.5 * TILE_SIZE, 24.5 * TILE_SIZE) < 18;
   },
@@ -147,6 +159,8 @@ const Interact = {
     if (!this._nearSit()) return false;
     const night = TimeCycle.phaseId() === "night";
     Weather.skipTo(night ? "dawn" : "golden");
+    Survival.add("rest", 35);
+    Survival.add("warmth", 15);
     UI.toastNote(night ? "You dozed until dawn." : "You sat until golden hour.");
     return true;
   },

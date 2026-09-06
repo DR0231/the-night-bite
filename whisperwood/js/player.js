@@ -48,8 +48,9 @@ const Player = {
       return;
     }
 
-    const wantX = axis.x * CONFIG.PLAYER_SPEED;
-    const wantY = axis.y * CONFIG.PLAYER_SPEED;
+    const wantSpeed = CONFIG.PLAYER_SPEED * ((Save.data && Save.data.player.hunger <= 0) ? 0.9 : 1);
+    const wantX = axis.x * wantSpeed;
+    const wantY = axis.y * wantSpeed;
     const accel = wantsMove ? CONFIG.PLAYER_ACCEL : CONFIG.PLAYER_FRICTION;
     this.vx = Utils.approach(this.vx, wantX, accel * dt);
     this.vy = Utils.approach(this.vy, wantY, accel * dt);
@@ -69,7 +70,7 @@ const Player = {
     } else {
       this.moving = speed > 1;
       this._face(this.vx, this.vy, wantsMove, axis);
-      this.animT += dt * Utils.clamp(speed / CONFIG.PLAYER_SPEED, 0.45, 1.2) * 8.4;
+      this.animT += dt * Utils.clamp(speed / Math.max(1, wantSpeed), 0.45, 1.2) * 8.4;
       this.frame = (this.animT | 0) % 4;
       this.idleT = 0;
       this.blink = false;

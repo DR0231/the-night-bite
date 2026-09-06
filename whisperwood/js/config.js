@@ -262,7 +262,33 @@ const SHOP_CATALOG = [
   { kind: "rod", id: "spine", price: 160, requireFish: "crystalfin" },
   { kind: "upgrade", id: "tank", name: "Larger tank", requireFish: "moonfin",
     desc: "Donate a moonfin to widen the cottage aquarium." },
+  { kind: "item", id: "campfireKit", name: "Campfire kit", price: 28, minRank: 3, stock: 1,
+    desc: "One small fire on vale grass. Warmth until dawn." },
+  { kind: "item", id: "cloak", name: "Wool cloak", price: 80, minRank: 4,
+    desc: "A little warmth in rain and frost." },
+  { kind: "item", id: "lantern", name: "Lantern", price: 55, minRank: 5, requireBait: "crystal",
+    desc: "A crystal for the lamp. Night is kinder while it burns." },
 ];
+
+const MEALS = {
+  panperch:  { id: "panperch",  name: "Pan perch",  need: { anyCommonFish: 1 }, hunger: 45, warmth: 8,  rest: 0,  buff: null, desc: "Any common fish in the pan." },
+  dawntea:   { id: "dawntea",   name: "Dawn tea",   need: { berries: 1 }, hunger: 8, warmth: 22, rest: 28, buff: "tea", desc: "Berries in the kettle." },
+  riverstew: { id: "riverstew", name: "River stew", need: { stonetrout: 1, berries: 1 }, hunger: 40, warmth: 12, rest: 8, buff: "steady", desc: "Wider timing until you sleep." },
+  cavebroth: { id: "cavebroth", name: "Cave broth", need: { glowminnow: 1, crystal: 1 }, hunger: 30, warmth: 40, rest: 6, buff: "warm", desc: "Holds warmth in cave and frost." },
+};
+
+const RANK_NEED = [80, 140, 220, 320, 440, 580, 740];
+
+const PERKS = {
+  steadyhands: { id: "steadyhands", name: "Steady hands", desc: "A wider timing bar." },
+  ironwrist:   { id: "ironwrist",   name: "Iron wrist", desc: "The tension band is more forgiving." },
+  nightowl:    { id: "nightowl",    name: "Night owl", desc: "Night costs less rest, and night bites come easier." },
+  weathered:   { id: "weathered",   name: "Weathered", desc: "Rain and frost take less warmth." },
+  forager:     { id: "forager",     name: "Forager", desc: "Sometimes the path yields a little extra." },
+  campcook:    { id: "campcook",    name: "Camp cook", desc: "Meals restore more and last an extra sleep." },
+  homeshore:   { id: "homeshore",   name: "Home shore", desc: "Your favorite water bites like a mild hotspot." },
+  softlanding: { id: "softlanding", name: "Soft landing", desc: "Waking in the reeds costs no bait." },
+};
 
 const NPC_DATA = [
   {

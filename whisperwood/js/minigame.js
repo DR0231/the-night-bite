@@ -24,19 +24,23 @@ const Minigame = {
     this.t = 0;
     this.done = false;
     this.hold = 0;
-    this.need = 0.78;
+    this.need = 0.78 * Skills.needMult();
+    let bar = (rod.bar || 1) * Skills.barMult() * Survival.barMult();
+    bar = Math.min(1.45, bar);
+    let spd = (rod.speed || 1);
+    if (Survival.nightHard()) spd *= 1.12;
     if (kind === "timing" || kind === "timingFast") {
       this.marker = 0;
       this.dir = 1;
       this.sweet = 0.42 + Math.random() * 0.2;
       const wide = kind === "timing" ? 0.18 : 0.11;
-      this.half = wide * (rod.bar || 1);
-      this.speed = (kind === "timing" ? 1.15 : 1.85) * (rod.speed || 1);
+      this.half = wide * bar;
+      this.speed = (kind === "timing" ? 1.15 : 1.85) * spd;
     } else {
       this.value = 0.5;
       this.band = 0.5;
-      this.bandW = (kind === "tensionErratic" ? 0.11 : 0.15) * (rod.tension || 1);
-      this.speed = (kind === "tensionErratic" ? 1.6 : 1.05) * (rod.speed || 1);
+      this.bandW = (kind === "tensionErratic" ? 0.11 : 0.15) * (rod.tension || 1) * Skills.tensionMult();
+      this.speed = (kind === "tensionErratic" ? 1.6 : 1.05) * spd;
     }
     Fishing.state = "play";
     Fishing.t = 0;

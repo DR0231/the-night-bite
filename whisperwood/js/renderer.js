@@ -60,6 +60,10 @@ const Renderer = {
     if (World.id === "vale") {
       for (const n of NPC_DATA) drawList.push({ type: "npc", x: n.x, y: n.y, color: n.color });
     }
+    const fire = Save.data && Save.data.flags.campfire;
+    if (fire && fire.x != null && fire.map === World.id) {
+      drawList.push({ type: "campfire", x: fire.x, y: fire.y });
+    }
     drawList.sort((a, b) => a.y - b.y);
     for (const d of drawList) this._deco(ctx, d, t, light);
 
@@ -187,6 +191,8 @@ const Renderer = {
     else if (d.type === "bench") Sprites.bench(ctx, d.x, d.y);
     else if (d.type === "calendar") Sprites.calendar(ctx, d.x, d.y);
     else if (d.type === "mailtray") Sprites.mailtray(ctx, d.x, d.y);
+    else if (d.type === "certificate") Sprites.certificate(ctx, d.x, d.y);
+    else if (d.type === "campfire") Sprites.campfire(ctx, d.x, d.y, t);
   },
 
   _lighting(ctx, light) {

@@ -49,6 +49,9 @@ TimeCycle.update = function (dt) {
       Quests.rollDay();
       Shop.restock();
       for (const id of Object.keys(Save.data.npcs)) Save.data.npcs[id].giftedToday = 0;
+      Save.data.skills.repeatsToday = { total: 0 };
+      Save.data.skills.speciesToday = {};
+      Survival.clearFireIfDawn();
       Save.mark("dawn");
     }
   }
@@ -87,6 +90,7 @@ const Weather = {
     const spots = ["pond", "river", "lake", "cave"];
     if (Save.data.flags.fifthWater) spots.push("marsh");
     Save.data.clock.hotspot = Utils.pick(rng, spots);
+    if (TimeCycle.season() === "winter" && Skills.rank() >= 4) Save.data.clock.hotspot = "lake";
   },
 
   advance() {

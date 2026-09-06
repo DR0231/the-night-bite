@@ -607,4 +607,19 @@ const Sprites = {
     this.fill(ctx, x - 8, y - 4, 16, 6, PALETTE.woodHi);
     this.fill(ctx, x - 6, y - 6, 10, 4, "#e8d2a4");
   },
+
+  certificate(ctx, x, y) {
+    this.fill(ctx, x - 6, y - 10, 12, 12, "#f3e2c4");
+    this.fill(ctx, x - 6, y - 10, 12, 2, "#c4a05a");
+    this.fill(ctx, x - 3, y - 6, 6, 1, "#8b6238");
+    this.fill(ctx, x - 4, y - 3, 8, 1, "#8b6238");
+  },
+
+  campfire(ctx, x, y, t) {
+    this.fill(ctx, x - 6, y - 2, 12, 4, PALETTE.woodLo);
+    this.fill(ctx, x - 5, y - 3, 10, 2, PALETTE.wood);
+    const flicker = 4 + Math.sin((t || 0) * 11) * 1.5;
+    this.fill(ctx, x - 2, y - 2 - flicker, 4, flicker, "#e07030");
+    this.fill(ctx, x - 1, y - 2 - flicker * 0.7, 2, flicker * 0.7, "#f0d060");
+  },
 };
