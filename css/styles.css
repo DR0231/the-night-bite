@@ -217,13 +217,21 @@ li { margin-bottom: 0.35rem; }
 .hero-art {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 1.25rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
-.hero-art img { image-rendering: pixelated; }
+.hero-art img {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  flex-shrink: 0;
+}
+
+.hero-art .hero-moon { width: 40px; height: 40px; }
+.hero-art .hero-hoover { width: 120px; height: 32px; }
+.hero-art .hero-lantern { width: 32px; height: 48px; }
 
 .hero h1 { margin-bottom: 0.5rem; }
 
