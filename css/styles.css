@@ -1014,6 +1014,7 @@ li { margin-bottom: 0.35rem; }
 @media (min-width: 560px) {
   .bento-grid {
     grid-template-columns: 1fr 1fr;
+    align-items: stretch;
   }
   .bento-grid .bento-wide {
     grid-column: 1 / -1;
@@ -1032,7 +1033,8 @@ li { margin-bottom: 0.35rem; }
 }
 
 .bento-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
   color: inherit;
   background: var(--navy-mid);
@@ -1040,7 +1042,9 @@ li { margin-bottom: 0.35rem; }
   border-radius: var(--radius);
   padding: 1rem 1.1rem;
   transition: border-color 0.15s ease, background 0.15s ease;
+  height: 100%;
   min-height: 100%;
+  box-sizing: border-box;
 }
 .bento-card:hover {
   border-color: var(--amber-dim);
@@ -1061,11 +1065,19 @@ li { margin-bottom: 0.35rem; }
 }
 .pool-lead {
   font-family: var(--font-display);
-  font-size: clamp(0.85rem, 2.8vw, 1.05rem);
+  font-size: clamp(0.72rem, 2.4vw, 1.05rem);
   color: var(--cream);
   letter-spacing: 0.02em;
-  line-height: 1.45;
+  line-height: 1.35;
   margin: 0.35rem 0 0.75rem;
+}
+@media (max-width: 559px) {
+  .pool-lead {
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 /* Sticky subnav polish */
@@ -1163,6 +1175,9 @@ li { margin-bottom: 0.35rem; }
   aspect-ratio: 4 / 3;
   border: 1px dashed var(--navy-light);
   border-radius: var(--radius);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
   background:
     repeating-linear-gradient(
       -45deg,

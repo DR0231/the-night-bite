@@ -5,7 +5,7 @@
  */
 (function () {
   var STORAGE_KEY = "nightbite-log-v1";
-  var SAMPLES_SEEDED_KEY = "nightbite-samples-seeded-v1";
+  var SAMPLES_SEEDED_KEY = "nightbite-samples-seeded-v2";
 
   var SAMPLE_TRIPS = [
     {
@@ -17,56 +17,6 @@
       species: "Channel catfish",
       disposition: "Released",
       notes: "Two keeper-size channels before midnight. Warm humid night, light breeze off the upper end. SAMPLE trip for demo only."
-    },
-    {
-      id: "sample-2",
-      sample: true,
-      date: "2025-08-03",
-      location: "Redbank (middle ramp)",
-      bait: "Nightcrawlers",
-      species: "Channel catfish",
-      disposition: "Kept (1)",
-      notes: "Steady taps after 10pm. One channel for the skillet; rest returned. SAMPLE — not a live report."
-    },
-    {
-      id: "sample-3",
-      sample: true,
-      date: "2025-08-22",
-      location: "Bank near Walnut Road",
-      bait: "Chicken liver",
-      species: "Flathead catfish",
-      disposition: "Released",
-      notes: "Single flathead on a quieter bank stretch. Storms rolled east — packed up early. SAMPLE entry."
-    },
-    {
-      id: "sample-4",
-      sample: true,
-      date: "2025-09-05",
-      location: "Walnut Road (lower ramp)",
-      bait: "Cut bait (bluegill)",
-      species: "Blue catfish",
-      disposition: "Released",
-      notes: "Moon nearly full; bites slower until after midnight. One blue, measured and released. SAMPLE."
-    },
-    {
-      id: "sample-5",
-      sample: true,
-      date: "2025-06-18",
-      location: "Oxbow (upper ramp)",
-      bait: "Stink bait",
-      species: "Channel catfish",
-      disposition: "Released",
-      notes: "Early summer night. Mostly channels; a few sunfish thieves. SAMPLE for site demo."
-    },
-    {
-      id: "sample-6",
-      sample: true,
-      date: "2025-05-30",
-      location: "Redbank (middle ramp)",
-      bait: "Nightcrawlers + cut bait",
-      species: "Channel catfish",
-      disposition: "Kept (2)",
-      notes: "Memorial weekend trip. Two channels kept within personal limit; rest released. SAMPLE only."
     }
   ];
 
@@ -87,17 +37,20 @@
 
   function ensureSamples() {
     var entries = loadEntries();
-    var seeded = localStorage.getItem(SAMPLES_SEEDED_KEY);
-    if (!seeded || entries.length === 0) {
-      // Merge samples if missing
-      var ids = {};
-      entries.forEach(function (e) { ids[e.id] = true; });
-      SAMPLE_TRIPS.forEach(function (s) {
-        if (!ids[s.id]) entries.push(Object.assign({}, s));
-      });
-      saveEntries(entries);
-      localStorage.setItem(SAMPLES_SEEDED_KEY, "1");
-    }
+    var allowedSampleIds = {};
+    SAMPLE_TRIPS.forEach(function (s) { allowedSampleIds[s.id] = true; });
+    // Drop legacy SAMPLE demos not in the current one-entry set
+    entries = entries.filter(function (e) {
+      if (e.sample && !allowedSampleIds[e.id]) return false;
+      return true;
+    });
+    var ids = {};
+    entries.forEach(function (e) { ids[e.id] = true; });
+    SAMPLE_TRIPS.forEach(function (s) {
+      if (!ids[s.id]) entries.push(Object.assign({}, s));
+    });
+    saveEntries(entries);
+    localStorage.setItem(SAMPLES_SEEDED_KEY, "1");
     return loadEntries();
   }
 
@@ -226,7 +179,7 @@
     var clearBtn = document.getElementById("clear-user-entries");
     if (clearBtn) {
       clearBtn.addEventListener("click", function () {
-        if (window.confirm("Remove all your personal entries? SAMPLE trips stay.")) {
+        if (window.confirm("Remove all your personal entries? The SAMPLE trip stays.")) {
           clearUserEntries();
         }
       });
