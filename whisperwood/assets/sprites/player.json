@@ -1,0 +1,8 @@
+{
+  "file": "player.png",
+  "cell": [32, 48],
+  "anchor": [16, 48],
+  "cols": ["idle", "walk1", "walk2", "walk3", "walk4", "fish"],
+  "rows": ["down", "left", "right", "up"],
+  "notes": "Feet at bottom-center of each cell. Walk 2/4 on left/right/up reuse idle (video harvest blocked). Front walk has four distinct strides."
+}

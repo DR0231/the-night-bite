@@ -8,7 +8,9 @@ const UI = {
 
   anyMenu() {
     return this.journalOpen || Inventory.open || Shop.openFlag || Board.open || Mail.open
-      || (typeof Bench !== "undefined" && Bench.openFlag) || Skills.offering;
+      || (typeof Bench !== "undefined" && Bench.openFlag)
+      || (typeof Tank !== "undefined" && Tank.openFlag)
+      || Skills.offering;
   },
 
   init() {
@@ -122,7 +124,7 @@ const UI = {
       c.clearRect(0, 0, 40, 26);
       c.save();
       c.translate(16, 13);
-      Sprites.fishIcon(c, 0, 0, f.color, !known);
+      Sprites.fishIcon(c, 0, 0, f, !known);
       c.restore();
     }
     const cook = document.getElementById("journal-cook");
@@ -136,6 +138,7 @@ const UI = {
     if (this.journalOpen) { this.closeJournal(); return; }
     Inventory.close(); Shop.close(); Board.close(); Mail.close();
     if (typeof Bench !== "undefined") Bench.close();
+    if (typeof Tank !== "undefined") Tank.close();
     // Journal pauses movement and world time, but is not a bite-timer exploit:
     // wait/nibble packs up the rod; an open minigame fails on the spot.
     if (Fishing.state === "wait" || Fishing.state === "nibble") Fishing.cancel();
@@ -159,6 +162,7 @@ const UI = {
     Mail.close();
     Npcs.close();
     if (typeof Bench !== "undefined") Bench.close();
+    if (typeof Tank !== "undefined") Tank.close();
   },
 
   showCatch(fish, rec) {
@@ -179,7 +183,7 @@ const UI = {
     g.fillRect(0, 0, 48, 48);
     g.save();
     g.translate(22, 24);
-    Sprites.fishIcon(g, 0, 0, fish.color, false);
+    Sprites.fishIcon(g, 0, 0, fish, false);
     g.restore();
     this.els.toastArt.replaceChildren(c);
     this.toastT = 2.2;
@@ -214,6 +218,8 @@ const UI = {
     }
 
     this.els.clockText.textContent = TimeCycle.clockLabel();
+    const rankEl = document.getElementById("clock-rank");
+    if (rankEl && typeof Skills !== "undefined") rankEl.textContent = `Rank ${Skills.rank()}`;
     this.els.clock.classList.toggle("night", TimeCycle.sample().night);
     const wx = TimeCycle.weatherId();
     this.els.clock.classList.toggle("rain", wx === "rain");
@@ -271,41 +277,50 @@ const Game = {
   last: 0,
   fishing: Fishing,
   fading: null,
+  sleeping: null,
+  sleepCool: 0,
 
   boot() {
     if (this.booted) return;
-    this.booted = true;
-    Input.bind();
-    Input.bindPad();
-    Save.load();
-    World.generate();
-    Player.spawn();
-    Save.applyToWorld();
-    if (!Save.data.quests.daily.day) {
-      Weather.rollDay();
-      Quests.rollDay();
+    try {
+      try { if (typeof Atlas !== "undefined") Atlas.load(); } catch (err) { /* sheets optional */ }
+      Input.bind();
+      Input.bindPad();
+      Save.load();
+      World.generate();
+      Player.spawn();
+      Save.applyToWorld();
+      if (!Save.data.quests.daily.day) {
+        Weather.rollDay();
+        Quests.rollDay();
+      }
+      if (Save.returning()) Mail.generateAway();
+      Shop.restock();
+      Renderer.init();
+      UI.init();
+      Survival.refreshPips();
+      const canvas = document.getElementById("game");
+      const frame = document.getElementById("frame");
+      if (frame) {
+        frame.addEventListener("pointerdown", () => {
+          if (canvas) canvas.focus({ preventScroll: true });
+        });
+      }
+      window.addEventListener("visibilitychange", () => { if (document.hidden) Save.write(); });
+      window.addEventListener("pagehide", () => Save.write());
+      const hint = document.getElementById("hint");
+      if (hint) hint.textContent = "J Journal · I Pack";
+      Camera.x = Player.x - CONFIG.VIEW_W * 0.5;
+      Camera.y = Player.y - CONFIG.VIEW_H * 0.58;
+      Camera.clampToWorld(World.pw, World.ph);
+      this.running = true;
+      this.last = performance.now();
+      requestAnimationFrame((t) => this.loop(t));
+      this.booted = true;
+    } catch (err) {
+      this.booted = false;
+      try { console.warn("boot failed", err); } catch (e) { /* ignore */ }
     }
-    if (Save.returning()) Mail.generateAway();
-    Shop.restock();
-    Renderer.init();
-    UI.init();
-    Survival.refreshPips();
-    const canvas = document.getElementById("game");
-    const frame = document.getElementById("frame");
-    if (frame) {
-      frame.addEventListener("pointerdown", () => {
-        if (canvas) canvas.focus({ preventScroll: true });
-      });
-    }
-    window.addEventListener("visibilitychange", () => { if (document.hidden) Save.write(); });
-    window.addEventListener("pagehide", () => Save.write());
-    const hint = document.getElementById("hint");
-    if (hint) hint.textContent = "J Journal · I Pack";
-    Camera.x = Player.x - CONFIG.VIEW_W * 0.5;
-    Camera.y = Player.y - CONFIG.VIEW_H * 0.58;
-    this.running = true;
-    this.last = performance.now();
-    requestAnimationFrame((t) => this.loop(t));
   },
 
   start(opts) {
@@ -347,13 +362,80 @@ const Game = {
   },
 
   fadeAlpha() {
+    if (this.sleeping) {
+      const u = Utils.clamp(this.sleeping.t / this.sleeping.dur, 0, 1);
+      if (u < 0.32) return u / 0.32;
+      if (u > 0.68) return 1 - (u - 0.68) / 0.32;
+      return 1;
+    }
     if (!this.fading) return 0;
     const u = Utils.clamp(this.fading.t / this.fading.dur, 0, 1);
     return this.fading.phase === "out" ? u : 1 - u;
   },
 
+  startSleep() {
+    if (this.sleeping || this.fading) return;
+    Fishing.cancel();
+    Player.locked = true;
+    Player.sleeping = true;
+    Player.vx = 0;
+    Player.vy = 0;
+    const night = TimeCycle.phaseId() === "night" || TimeCycle.phaseId() === "golden";
+    const phase = night ? "dawn" : "golden";
+    this.sleeping = {
+      t: 0,
+      dur: 3.1,
+      phase,
+      fromSec: TimeCycle.seconds,
+      targetSec: this._sleepTarget(phase),
+      applied: false,
+      toast: night ? "You slept until dawn." : "You slept until dusk.",
+    };
+  },
+
+  _sleepTarget(phase) {
+    const dayLen = CONFIG.DAY_LENGTH;
+    const dayBase = Math.floor(TimeCycle.seconds / dayLen) * dayLen;
+    const hour = phase === "dawn" ? 6 : 17.6;
+    let target = dayBase + (hour / 24) * dayLen;
+    if (target <= TimeCycle.seconds + 10) target += dayLen;
+    return target;
+  },
+
+  _updateSleep(dt) {
+    if (!this.sleeping) return;
+    this.sleeping.t += dt;
+    const skip = this.sleeping.t > 0.22 && Input.use;
+    if (skip || this.sleeping.t >= this.sleeping.dur) {
+      this._finishSleep();
+      return;
+    }
+    const u = Utils.clamp(this.sleeping.t / this.sleeping.dur, 0, 1);
+    const ease = u * u * (3 - 2 * u);
+    TimeCycle.seconds = this.sleeping.fromSec + (this.sleeping.targetSec - this.sleeping.fromSec) * ease;
+    Save.data.clock.seconds = TimeCycle.seconds;
+  },
+
+  _finishSleep() {
+    if (!this.sleeping) return;
+    TimeCycle.seconds = this.sleeping.targetSec;
+    Save.data.clock.seconds = TimeCycle.seconds;
+    if (!this.sleeping.applied) {
+      Weather.advance();
+      Survival.fillSleep();
+      UI.toastNote(this.sleeping.toast);
+      Save.mark("sleep");
+      this.sleeping.applied = true;
+    }
+    Player.sleeping = false;
+    Player.locked = false;
+    Cottage.wakeBesideBed();
+    this.sleeping = null;
+    this.sleepCool = 0.45;
+  },
+
   warp(portal) {
-    if (!portal || this.fading) return;
+    if (!portal || this.fading || this.sleeping) return;
     Fishing.cancel();
     Player.locked = true;
     Player.vx = 0;
@@ -374,10 +456,7 @@ const Game = {
     Camera.lookY = 0;
     Camera.x = Player.x - CONFIG.VIEW_W * 0.5;
     Camera.y = Player.y - CONFIG.VIEW_H * 0.56;
-    const maxX = Math.max(0, World.pw - Camera.w);
-    const maxY = Math.max(0, World.ph - Camera.h);
-    Camera.x = Utils.clamp(Camera.x, 0, maxX);
-    Camera.y = Utils.clamp(Camera.y, 0, maxY);
+    Camera.clampToWorld(World.pw, World.ph);
     World.portalCool = 0.85;
     if (portal.to === "cottage") {
       Save.data.cottage.visited = true;
@@ -405,8 +484,8 @@ const Game = {
     const dt = Math.min(0.05, (now - this.last) / 1000);
     this.last = now;
 
-    if (Input.pressed["j"] && !Skills.offering) UI.toggleJournal();
-    if (Input.pressed["i"] && !Skills.offering) Inventory.toggle();
+    if (Input.pressed["j"] && !Skills.offering && !this.sleeping) UI.toggleJournal();
+    if (Input.pressed["i"] && !Skills.offering && !this.sleeping) Inventory.toggle();
     if (Input.pressed["1"]) Inventory.numberKey(1);
     if (Input.pressed["2"]) Inventory.numberKey(2);
     if (Input.pressed["3"]) Inventory.numberKey(3);
@@ -420,25 +499,30 @@ const Game = {
 
     const pauseWorld = UI.anyMenu();
     if (!pauseWorld) {
-      this._updateFade(dt);
-      World.update(dt);
-      if (!this.fading) {
-        if (Input.use) Fishing.act();
+      if (this.sleeping) {
+        this._updateSleep(dt);
+      } else {
+        this._updateFade(dt);
+        World.update(dt);
+        if (this.sleepCool > 0) this.sleepCool -= dt;
+        if (!this.fading && this.sleepCool <= 0) {
+          if (Input.use) Fishing.act();
+        }
+        Player.update(dt);
+        Fishing.update(dt);
+        TimeCycle.update(dt);
+        if (!this.fading) Survival.tick(dt);
+        Particles.update(dt);
+        Npcs.update(dt);
+        Weather.spawnAmbient(dt);
+        Camera.follow(Player.x, Player.y, dt, World.pw, World.ph, Player.vx, Player.vy);
+        if (!this.fading && World.portalCool <= 0 && !Fishing.active) {
+          const gate = World.portalAt(Player.x, Player.y);
+          if (gate) this.warp(gate);
+        }
+        if (Math.random() < dt * (World.inCave() ? 1.4 : 0.6)) this._nightFlies();
+        Save.data.playTime += dt;
       }
-      Player.update(dt);
-      Fishing.update(dt);
-      TimeCycle.update(dt);
-      if (!this.fading) Survival.tick(dt);
-      Particles.update(dt);
-      Npcs.update(dt);
-      Weather.spawnAmbient(dt);
-      Camera.follow(Player.x, Player.y, dt, World.pw, World.ph, Player.vx, Player.vy);
-      if (!this.fading && World.portalCool <= 0 && !Fishing.active) {
-        const gate = World.portalAt(Player.x, Player.y);
-        if (gate) this.warp(gate);
-      }
-      if (Math.random() < dt * (World.inCave() ? 1.4 : 0.6)) this._nightFlies();
-      Save.data.playTime += dt;
     }
 
     UI.update(dt);

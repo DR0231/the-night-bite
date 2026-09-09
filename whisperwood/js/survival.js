@@ -50,8 +50,7 @@ const Survival = {
   fillSleep() {
     const p = this.p();
     p.rest = 100;
-    p.warmth = 100;
-    p.hunger = Utils.clamp((p.hunger || 0) + 25, 0, 100);
+    p.warmth = Utils.clamp((p.warmth || 0) + 10, 0, 100);
     const inv = Save.data.inventory;
     const dayNow = 1 + Math.floor(TimeCycle.seconds / CONFIG.DAY_LENGTH);
     if (inv.mealId && (inv.mealUntilDay | 0) < dayNow) {
@@ -63,7 +62,7 @@ const Survival = {
   },
 
   tick(dt) {
-    if (!Save.data || this.passing || Game.fading) return;
+    if (!Save.data || this.passing || Game.fading || Game.sleeping) return;
     const p = this.p();
     const weather = TimeCycle.weatherId();
     const phase = TimeCycle.phaseId();
@@ -79,23 +78,23 @@ const Survival = {
 
     // Tuned from the design rates so a calm ~2 min stroll barely dents,
     // while frost night at the lake actually bites toward danger.
-    let hunger = 0.22 + (heat ? 0.12 : 0);
+    let hunger = 0.12 + (heat ? 0.07 : 0);
     p.hunger -= hunger * dt;
 
-    let rest = cottage ? 0.03 : (Player.moving ? 0.16 : 0.07);
+    let rest = cottage ? 0.02 : (Player.moving ? 0.09 : 0.04);
     const fishingHard = Fishing.active && (Fishing.state === "play" || Fishing.state === "reel" || Fishing.state === "bite");
-    if (fishingHard) rest = 0.55;
+    if (fishingHard) rest = 0.30;
     if (meal && meal.buff === "tea") rest *= 0.7;
     if (has("nightowl") && night) rest *= 0.65;
-    if (this.nightHard()) rest += 0.22;
+    if (this.nightHard()) rest += 0.12;
     p.rest -= rest * dt;
 
-    let warmth = 0.08;
+    let warmth = 0.045;
     let weatherPart = 0;
-    if (frost) weatherPart += 0.95;
-    if (rain) weatherPart += 0.45;
-    if (night && outdoors && !cave) weatherPart += 0.45;
-    if (cave) weatherPart += 0.22;
+    if (frost) weatherPart += 0.55;
+    if (rain) weatherPart += 0.25;
+    if (night && outdoors && !cave) weatherPart += 0.25;
+    if (cave) weatherPart += 0.12;
     if (heat) warmth -= 0.15;
     if (cottage) warmth -= 0.4;
     if (this.atFire()) warmth -= 0.85;
@@ -179,21 +178,58 @@ const Survival = {
   },
 
   refreshPips() {
+    this._paintNeedIcons();
     const p = this.p();
     this._row("need-hunger", p.hunger);
     this._row("need-warmth", p.warmth);
     this._row("need-rest", p.rest);
+    this.refreshMealChip();
+  },
+
+  _paintNeedIcons() {
+    if (this._iconsPainted) return;
+    const map = [
+      ["need-hunger", "hudHunger"],
+      ["need-warmth", "hudWarmth"],
+      ["need-rest", "hudRest"],
+    ];
+    let ok = true;
+    for (const [id, fn] of map) {
+      const c = document.querySelector("#" + id + " .need-icon");
+      if (!c || !Sprites[fn]) { ok = false; continue; }
+      const ctx = c.getContext("2d");
+      ctx.imageSmoothingEnabled = false;
+      ctx.clearRect(0, 0, 16, 16);
+      Sprites[fn](ctx, 0, 0);
+    }
+    if (ok) this._iconsPainted = true;
+  },
+
+  refreshMealChip() {
+    const el = document.getElementById("meal-chip");
+    if (!el) return;
+    const id = Save.data.inventory.mealId;
+    const meal = MEALS[id];
+    if (!id || !meal) {
+      el.classList.add("hidden");
+      el.textContent = "";
+      return;
+    }
+    const name = (Save.data.flags.cooked && Save.data.flags.cooked[id]) ? meal.name : "???";
+    el.textContent = `${name} until sleep`;
+    el.classList.remove("hidden");
   },
 
   _row(id, value) {
     const el = document.getElementById(id);
     if (!el) return;
+    const pips = el.querySelector(".need-pips") || el;
     const n = Utils.clamp(Math.round(value / 20), 0, 5);
     const warn = value < 25;
     el.classList.toggle("warn", warn);
     let html = "";
     for (let i = 0; i < 5; i++) html += `<span class="${i < n ? "on" : ""}"></span>`;
-    el.innerHTML = html;
+    pips.innerHTML = html;
   },
 
   canCook(id) {

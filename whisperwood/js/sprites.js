@@ -141,10 +141,37 @@ const Sprites = {
     }
   },
 
+  waterRipple(ctx, x, y, kind, t, golden, weather) {
+    let hi = PALETTE.pondHi;
+    if (kind === TILE.RIVER) hi = PALETTE.riverHi;
+    else if (kind === TILE.CAVE_WATER) hi = PALETTE.caveHi;
+    else if (kind === TILE.MARSH) hi = "#8cbc98";
+    else if (kind === TILE.LAKE) hi = PALETTE.lakeHi;
+    if (weather === "rain") hi = "#6aa0b0";
+    if (weather === "frost") hi = "#d0e8f8";
+    const flow = kind === TILE.RIVER ? t * 22 : t * 8;
+    const phase = (x * 0.4 + y * 0.25 + flow);
+    const lineY = y + 4 + ((Math.sin(phase) * 3 + 4) | 0);
+    ctx.globalAlpha = 0.28;
+    this.fill(ctx, x, lineY, 16, 1, hi);
+    if (kind === TILE.RIVER) {
+      const lineY2 = y + 10 + ((Math.sin(phase + 1.7) * 2 + 2) | 0);
+      this.fill(ctx, x + 2, lineY2, 10, 1, hi);
+    }
+    ctx.globalAlpha = 1;
+    if (golden && (kind === TILE.LAKE || kind === TILE.RIVER)) {
+      ctx.globalAlpha = 0.16;
+      const gy = y + 6 + ((Math.sin(x * 0.5 + t * 3) * 2) | 0);
+      this.fill(ctx, x, gy, 16, 1, "#f0d080");
+      ctx.globalAlpha = 1;
+    }
+  },
+
   /* ---------- world objects ---------- */
   treeOak(ctx, x, y, sway, shade) {
     const s = sway | 0;
-    this.ellipse(ctx, x + shade.x * 1.1, y + 3, 14, 5, "rgba(12, 24, 12, 0.38)");
+    if (typeof Atlas !== "undefined" && Atlas.castShadow) Atlas.castShadow(ctx, x, y, 13, 3.2);
+    else this.ellipse(ctx, x + (shade && shade.x || 0) * 1.1, y + 3, 14, 5, "rgba(12, 24, 12, 0.38)");
     this.fill(ctx, x - 2, y - 22, 4, 24, "#5a3a22");
     this.fill(ctx, x - 1, y - 22, 2, 24, "#7a5632");
     this.blob(ctx, x + s, y - 42, 18, "#1e4a24");
@@ -157,7 +184,8 @@ const Sprites = {
 
   treePine(ctx, x, y, sway, shade) {
     const s = sway | 0;
-    this.ellipse(ctx, x + shade.x, y + 3, 11, 4, "rgba(12, 24, 12, 0.38)");
+    if (typeof Atlas !== "undefined" && Atlas.castShadow) Atlas.castShadow(ctx, x, y, 10, 3.2);
+    else this.ellipse(ctx, x + (shade && shade.x || 0), y + 3, 11, 4, "rgba(12, 24, 12, 0.38)");
     this.fill(ctx, x - 2, y - 16, 4, 18, "#4a3220");
     this.fill(ctx, x - 1, y - 16, 2, 18, "#6a4a2c");
     const layers = [
@@ -315,6 +343,47 @@ const Sprites = {
     if (fishing) this._rod(ctx, x, y, dir, state.rodPhase || 0, state.windup, bite);
   },
 
+  playerSleep(ctx, x, y) {
+    this.ellipse(ctx, x + 1, y + 2, 7, 2.2, "rgba(10, 18, 10, 0.32)");
+    this.fill(ctx, x - 1, y - 6, 12, 6, PALETTE.shirt);
+    this.fill(ctx, x - 1, y - 6, 12, 2, PALETTE.shirtHi);
+    this.fill(ctx, x + 9, y - 5, 5, 5, PALETTE.pants);
+    this.fill(ctx, x + 12, y - 4, 3, 3, PALETTE.boot);
+    this.fill(ctx, x - 8, y - 8, 7, 7, PALETTE.skin);
+    this.fill(ctx, x - 8, y - 10, 7, 3, PALETTE.hair);
+    this.fill(ctx, x - 7, y - 9, 5, 1, PALETTE.hairHi);
+    this.fill(ctx, x - 6, y - 5, 3, 1, PALETTE.skinLo);
+  },
+
+  hudHunger(ctx, x, y) {
+    this.fill(ctx, x + 10, y + 1, 3, 6, "#f4e8d0");
+    this.pixel(ctx, x + 9, y + 1, "#f4e8d0");
+    this.pixel(ctx, x + 13, y + 1, "#f4e8d0");
+    this.fill(ctx, x + 2, y + 6, 9, 8, "#8a3a18");
+    this.fill(ctx, x + 3, y + 7, 7, 6, "#b85a28");
+    this.fill(ctx, x + 4, y + 8, 5, 4, "#d47838");
+    this.pixel(ctx, x + 5, y + 9, "#E8913A");
+  },
+
+  hudWarmth(ctx, x, y) {
+    this.fill(ctx, x + 2, y + 9, 12, 6, "#6a7078");
+    this.fill(ctx, x + 3, y + 10, 10, 4, "#4a5058");
+    this.fill(ctx, x + 4, y + 8, 8, 2, "#8a9098");
+    this.fill(ctx, x + 6, y + 3, 4, 7, "#E8913A");
+    this.fill(ctx, x + 7, y + 2, 2, 6, "#f0d060");
+    this.pixel(ctx, x + 5, y + 5, "#e07030");
+    this.pixel(ctx, x + 10, y + 5, "#e07030");
+  },
+
+  hudRest(ctx, x, y) {
+    this.fill(ctx, x + 1, y + 4, 14, 9, "#e8d2a4");
+    this.fill(ctx, x + 2, y + 5, 12, 7, "#f3e2c4");
+    this.fill(ctx, x + 1, y + 8, 14, 1, "#c4a05a");
+    this.fill(ctx, x + 8, y + 4, 1, 9, "#c4a05a");
+    this.pixel(ctx, x + 3, y + 6, "#c4a05a");
+    this.pixel(ctx, x + 12, y + 10, "#c4a05a");
+  },
+
   _head(ctx, x, y, facing, blink) {
     this.fill(ctx, x, y, 8, 8, PALETTE.skin);
     this.fill(ctx, x, y + 6, 8, 2, PALETTE.skinLo);
@@ -460,6 +529,16 @@ const Sprites = {
     let lift = Math.sin(phase) * 1.2;
     if (windup) lift -= 6;
     if (bite) lift += 4 + Math.sin(phase * 8) * 2;
+    const sheet = typeof Atlas !== "undefined" && Atlas.sheets && Atlas.sheets.player;
+    const rod = sheet && Atlas.PLAYER && Atlas.PLAYER.rod && Atlas.PLAYER.rod[dir];
+    if (rod) {
+      return {
+        x: x + rod.x,
+        y: y + rod.y + lift,
+        handX: x + (rod.hx || 0),
+        handY: y + (rod.hy || -18),
+      };
+    }
     if (dir === 0) return { x: x + 11, y: y - 18 + lift, handX: x + 5, handY: y - 12 };
     if (dir === 3) return { x: x - 2, y: y - 30 + lift, handX: x + 2, handY: y - 16 };
     if (dir === 1) return { x: x - 18, y: y - 21 + lift, handX: x - 6, handY: y - 12 };
@@ -493,21 +572,30 @@ const Sprites = {
     const my = (y0 + y1) * 0.5 + sag;
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
-    ctx.strokeStyle = "rgba(40, 28, 18, 0.55)";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(x0, y0);
-    ctx.quadraticCurveTo(mx, my, x1, y1);
-    ctx.stroke();
     ctx.strokeStyle = PALETTE.line;
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 1.25;
     ctx.beginPath();
     ctx.moveTo(x0, y0);
     ctx.quadraticCurveTo(mx, my, x1, y1);
     ctx.stroke();
   },
 
-  fishIcon(ctx, x, y, color, silhouette) {
+  fishIcon(ctx, x, y, colorOrFish, silhouette) {
+    let fish = null;
+    let color = "#8ad";
+    if (colorOrFish && typeof colorOrFish === "object") {
+      fish = colorOrFish;
+      if (fish.color) color = fish.color;
+    } else if (typeof colorOrFish === "string") {
+      if (colorOrFish.charAt(0) === "#" || !colorOrFish) color = colorOrFish || color;
+      else if (typeof FISH !== "undefined") {
+        fish = FISH.find((k) => k.id === colorOrFish) || null;
+        color = fish ? fish.color : colorOrFish;
+      } else color = colorOrFish;
+    }
+    if (fish && typeof Atlas !== "undefined" && Atlas.drawFish(ctx, fish, x, y, { silhouette: !!silhouette })) {
+      return;
+    }
     const c = silhouette ? "#2a241c" : color;
     this.ellipse(ctx, x, y, 7, 4, c);
     ctx.fillStyle = c;
@@ -584,7 +672,7 @@ const Sprites = {
     for (let i = 0; i < aq.length; i++) {
       const f = FISH.find((k) => k.id === aq[i]);
       const ox = Math.sin(t * 1.4 + i) * 8;
-      Sprites.fishIcon(ctx, x + ox - 4, y - 8, f ? f.color : "#8ad", false);
+      Sprites.fishIcon(ctx, x + ox - 4, y - 8, f || "#8ad", false);
     }
   },
 

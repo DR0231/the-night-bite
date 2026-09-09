@@ -194,6 +194,15 @@ const Save = {
     this.write();
   },
 
+  resetFreshKeepingMute() {
+    const mute = !!(this.data && this.data.flags && this.data.flags.mute);
+    try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* ignore */ }
+    this.data = this.fresh();
+    this.data.flags.mute = mute;
+    AudioFX.muted = mute;
+    this.write();
+  },
+
   dayRng(salt) {
     const d = this.data;
     const hour = (TimeCycle.hour | 0);

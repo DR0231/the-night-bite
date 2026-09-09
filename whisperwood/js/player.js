@@ -13,6 +13,7 @@ const Player = {
   fishing: false,
   hop: 0,
   locked: false,
+  sleeping: false,
   lastStep: -1,
   blink: false,
 
@@ -130,6 +131,10 @@ const Player = {
   },
 
   draw(ctx) {
+    if (this.sleeping) {
+      Sprites.playerSleep(ctx, this.x, this.y);
+      return;
+    }
     Sprites.player(ctx, this.x, this.y, {
       dir: this.dir,
       frame: this.frame,

@@ -65,6 +65,7 @@ const Inventory = {
       Board.close();
       Mail.close();
       if (typeof Bench !== "undefined") Bench.close();
+      if (typeof Tank !== "undefined") Tank.close();
       this.refresh();
     } else {
       Save.mark();
@@ -124,6 +125,10 @@ const Inventory = {
       <p class="pack-craft">Bench: berries + worm → berry blend · crystal + worm → bright glow · meals in the pan</p>
       <label class="pack-mute"><input type="checkbox" id="chk-mute" ${Save.data.flags.mute ? "checked" : ""}/> Mute audio</label>
       <div class="pack-io">
+        <button type="button" id="btn-download">Download save</button>
+        <button type="button" id="btn-load">Load save</button>
+        <input type="file" id="pack-load-file" accept="application/json,.json" hidden />
+        <button type="button" id="btn-reset">Full reset</button>
         <button type="button" id="btn-export">Copy save</button>
         <button type="button" id="btn-import">Paste save</button>
       </div>`;
@@ -144,6 +149,27 @@ const Inventory = {
       Save.data.flags.mute = mute.checked;
       AudioFX.muted = mute.checked;
     });
+    const dl = el.querySelector("#btn-download");
+    if (dl) dl.addEventListener("click", () => this.downloadSave());
+    const loadBtn = el.querySelector("#btn-load");
+    const fileIn = el.querySelector("#pack-load-file");
+    if (loadBtn && fileIn) {
+      loadBtn.addEventListener("click", () => fileIn.click());
+      fileIn.addEventListener("change", () => {
+        const file = fileIn.files && fileIn.files[0];
+        fileIn.value = "";
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try { Save.importJson(String(reader.result || "")); location.reload(); }
+          catch (e) { UI.toastNote("That save could not be read."); }
+        };
+        reader.onerror = () => UI.toastNote("That save could not be read.");
+        reader.readAsText(file);
+      });
+    }
+    const reset = el.querySelector("#btn-reset");
+    if (reset) reset.addEventListener("click", () => this.fullReset());
     const exp = el.querySelector("#btn-export");
     if (exp) exp.addEventListener("click", () => {
       navigator.clipboard.writeText(Save.exportJson()).catch(() => {});
@@ -161,6 +187,24 @@ const Inventory = {
     if (!this.open) return;
     const id = HOOK_BAIT[n - 1];
     if (id) { this.equip(id); this.refresh(); }
+  },
+
+  downloadSave() {
+    const blob = new Blob([Save.exportJson()], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "whisperwood-save.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 500);
+  },
+
+  fullReset() {
+    if (!window.confirm("Wipe this vale and start fresh?")) return;
+    if (!window.confirm("Really erase whisperwood-save-v1?")) return;
+    Save.resetFreshKeepingMute();
+    location.reload();
   },
 
   craft(kind) {

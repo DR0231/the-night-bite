@@ -105,7 +105,7 @@ const Weather = {
   skipTo(phase) {
     const dayLen = CONFIG.DAY_LENGTH;
     const dayBase = Math.floor(TimeCycle.seconds / dayLen) * dayLen;
-    const hour = phase === "dawn" ? 6.4 : 17.6;
+    const hour = phase === "dawn" ? 6 : 17.6;
     let target = dayBase + (hour / 24) * dayLen;
     if (target <= TimeCycle.seconds + 10) target += dayLen;
     TimeCycle.seconds = target;

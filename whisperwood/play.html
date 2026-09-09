@@ -8,12 +8,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="play-page">
+  <p style="margin:0.5rem 1rem;font:14px/1.4 system-ui,sans-serif"><a href="../whisperwood.html" style="color:#c4a35a">← The Night Bite</a> · Whisperwood Vale (not the real lake)</p>
   <header class="site-nav site-nav--play">
     <a class="brand" href="index.html">Whisperwood Vale</a>
     <nav>
       <a href="index.html">Home</a>
       <a href="guide.html">Guide</a>
-      <a href="../index.html">← Night Bite</a>
       <a class="nav-play is-current" href="play.html">Play</a>
     </nav>
   </header>
@@ -29,13 +29,27 @@
       <div id="clock">
         <div class="clock-row">
           <span id="clock-icon"></span>
-          <span id="clock-text">8:00 AM</span>
+          <span id="clock-text">6:00 AM</span>
+          <span id="clock-rank"></span>
         </div>
         <div id="needs" aria-label="Hunger, warmth, and rest">
-          <div class="need-row" id="need-hunger" title="Hunger"></div>
-          <div class="need-row" id="need-warmth" title="Warmth"></div>
-          <div class="need-row" id="need-rest" title="Rest"></div>
+          <div class="need-row" id="need-hunger" title="Hunger">
+            <canvas class="need-icon" width="16" height="16"></canvas>
+            <em>Hunger</em>
+            <span class="need-pips"></span>
+          </div>
+          <div class="need-row" id="need-warmth" title="Warmth">
+            <canvas class="need-icon" width="16" height="16"></canvas>
+            <em>Warmth</em>
+            <span class="need-pips"></span>
+          </div>
+          <div class="need-row" id="need-rest" title="Rest">
+            <canvas class="need-icon" width="16" height="16"></canvas>
+            <em>Rest</em>
+            <span class="need-pips"></span>
+          </div>
         </div>
+        <div id="meal-chip" class="hidden"></div>
       </div>
       <div id="spot-label" class="hidden"></div>
       <div id="prompt" class="hidden"></div>
@@ -132,6 +146,14 @@
       </div>
     </div>
 
+    <div id="tank" class="hidden overlay-panel">
+      <div class="journal-panel">
+        <header><h2>Cottage tank</h2><p class="journal-sub">Tuck a fish in, or take one out</p></header>
+        <div id="tank-body"></div>
+        <button type="button" data-close>Close</button>
+      </div>
+    </div>
+
     <div id="rank-up" class="hidden overlay-panel">
       <div class="journal-panel">
         <header><h2>Hands remember</h2></header>
@@ -162,6 +184,7 @@
   <script src="js/config.js"></script>
   <script src="js/engine.js"></script>
   <script src="js/sprites.js"></script>
+  <script src="js/atlas.js"></script>
   <script src="js/world.js"></script>
   <script src="js/player.js"></script>
   <script src="js/fishing.js"></script>

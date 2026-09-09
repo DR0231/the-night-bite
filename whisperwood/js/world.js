@@ -126,18 +126,6 @@ const World = {
       };
       paintPath(20, 24, 42, 24);
       paintPath(31, 11, 31, 35);
-      paintPath(31, 24, 31, 24);
-
-      for (let y = 1; y < th - 1; y++) {
-        for (let x = 1; x < tw - 1; x++) {
-          if (get(x, y) !== TILE.GRASS) continue;
-          let dirt = 0;
-          for (let oy = -1; oy <= 1; oy++) for (let ox = -1; ox <= 1; ox++) {
-            if (get(x + ox, y + oy) === TILE.DIRT) dirt++;
-          }
-          if (dirt && rng() < dirt * 0.08) set(x, y, TILE.DIRT);
-        }
-      }
 
       for (let y = 1; y < th - 1; y++) {
         for (let x = 1; x < tw - 1; x++) {
@@ -179,10 +167,13 @@ const World = {
       // Seal the back of the mouth so the hill is only a doorway.
       for (let x = 30; x <= 34; x++) set(x, 40, TILE.CAVE_WALL);
 
-      for (let y = 20; y <= 23; y++) for (let x = 26; x <= 29; x++) set(x, y, TILE.STONE);
-      for (let y = 21; y <= 22; y++) for (let x = 27; x <= 28; x++) set(x, y, TILE.WOOD);
-      set(27, 23, TILE.WOOD);
-      set(28, 23, TILE.WOOD);
+      for (let y = 20; y <= 23; y++) for (let x = 26; x <= 29; x++) {
+        if (get(x, y) !== TILE.DIRT) set(x, y, TILE.GRASS);
+      }
+      set(27, 23, TILE.DIRT);
+      set(28, 23, TILE.DIRT);
+      set(27, 24, TILE.DIRT);
+      set(28, 24, TILE.DIRT);
 
       const nearPathOrWater = (tx, ty) => {
         for (let oy = -1; oy <= 1; oy++) for (let ox = -1; ox <= 1; ox++) {
@@ -255,20 +246,21 @@ const World = {
       addDeco("sign", 29.2 * TILE_SIZE, 35.4 * TILE_SIZE);
       addSolid(29.2 * TILE_SIZE - 3, 35.4 * TILE_SIZE - 3, 6, 4, "sign");
 
-      addDeco("sign", 29.5 * TILE_SIZE, 23.2 * TILE_SIZE);
+      addDeco("sign", 31.2 * TILE_SIZE, 24.6 * TILE_SIZE);
       addDeco("sign", 34.8 * TILE_SIZE, 25.4 * TILE_SIZE);
-      addSolid(29.5 * TILE_SIZE - 3, 23.2 * TILE_SIZE - 3, 6, 4, "sign");
+      addSolid(31.2 * TILE_SIZE - 3, 24.6 * TILE_SIZE - 3, 6, 4, "sign");
       addSolid(34.8 * TILE_SIZE - 3, 25.4 * TILE_SIZE - 3, 6, 4, "sign");
       addDeco("crate", 17.4 * TILE_SIZE, 24.6 * TILE_SIZE);
       addSolid(17.4 * TILE_SIZE - 5, 24.6 * TILE_SIZE - 4, 10, 6, "crate");
 
-      addDeco("cottage", 28 * TILE_SIZE, 23.2 * TILE_SIZE);
-      for (let y = 20; y <= 23; y++) {
+      addDeco("cottage", 28 * TILE_SIZE, 24 * TILE_SIZE);
+      for (let y = 20; y <= 22; y++) {
         for (let x = 26; x <= 29; x++) {
-          if (get(x, y) === TILE.WOOD) continue;
           addSolid(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, "wall");
         }
       }
+      addSolid(26 * TILE_SIZE, 23 * TILE_SIZE, TILE_SIZE, TILE_SIZE, "wall");
+      addSolid(29 * TILE_SIZE, 23 * TILE_SIZE, TILE_SIZE, TILE_SIZE, "wall");
       addDeco("raft", 58.5 * TILE_SIZE, 24.6 * TILE_SIZE);
 
       Pickups.scatter(addDeco, get, rng, tw, th, "vale");
@@ -311,9 +303,9 @@ const World = {
       });
       portals.push({
         x: 27 * TILE_SIZE,
-        y: 22.6 * TILE_SIZE,
+        y: 23.1 * TILE_SIZE,
         w: 2 * TILE_SIZE,
-        h: 1.6 * TILE_SIZE,
+        h: 1.5 * TILE_SIZE,
         to: "cottage",
         spawn: { x: 11 * TILE_SIZE, y: 12.2 * TILE_SIZE },
         dir: 3,

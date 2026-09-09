@@ -198,6 +198,15 @@ const Camera = {
   shake: 0,
   lookX: 0,
   lookY: 0,
+  /** When the map is smaller than the view (cottage), center it instead of pinning 0,0. */
+  clampToWorld(worldW, worldH) {
+    const maxX = worldW - this.w;
+    const maxY = worldH - this.h;
+    if (maxX < 0) this.x = maxX * 0.5;
+    else this.x = Utils.clamp(this.x, 0, maxX);
+    if (maxY < 0) this.y = maxY * 0.5;
+    else this.y = Utils.clamp(this.y, 0, maxY);
+  },
   follow(tx, ty, dt, worldW, worldH, vx, vy) {
     this.lookX = Utils.smooth(this.lookX, (vx || 0) * 0.22, dt, 0.04);
     this.lookY = Utils.smooth(this.lookY, (vy || 0) * 0.16, dt, 0.04);
@@ -205,10 +214,7 @@ const Camera = {
     const targetY = ty - this.h * 0.56 + this.lookY;
     this.x = Utils.smooth(this.x, targetX, dt, 0.018);
     this.y = Utils.smooth(this.y, targetY, dt, 0.018);
-    const maxX = Math.max(0, worldW - this.w);
-    const maxY = Math.max(0, worldH - this.h);
-    this.x = Utils.clamp(this.x, 0, maxX);
-    this.y = Utils.clamp(this.y, 0, maxY);
+    this.clampToWorld(worldW, worldH);
     if (this.shake > 0) {
       this.x += (Math.random() - 0.5) * this.shake;
       this.y += (Math.random() - 0.5) * this.shake;
@@ -244,10 +250,16 @@ const TimeCycle = {
     const a = stops[i], b = stops[i + 1];
     const t = (h - a.h) / Math.max(0.001, b.h - a.h);
     const color = Utils.lerpColor(a.c, b.c, t);
-    const sunA = ((h - 6) / 12) * Math.PI;
+    const day = h >= 5.8 && h <= 19.4;
+    const tSun = Utils.clamp((h - 6) / 13, 0, 1);
+    const elev = day ? Math.sin(tSun * Math.PI) : 0.08;
+    const az = tSun * Math.PI;
+    const len = 2.2 + (1 - elev) * 9;
     const shadow = {
-      x: Math.cos(sunA) * 5,
-      y: 3.2 + Math.sin(Math.max(0, sunA)) * 1.4,
+      x: day ? -Math.cos(az) * len : 0,
+      y: 2.2 + (1 - elev) * 2.8,
+      elev,
+      alpha: day ? 0.18 + (1 - elev) * 0.16 : 0.1,
     };
     const night = h < 6 || h > 20;
     const golden = h >= 16.5 && h <= 19.2;
@@ -375,6 +387,18 @@ const AudioFX = {
   },
   step() {
     this.ensure();
-    this.tone(90 + Math.random() * 30, 0.04, "sine", 0.018);
+    const t = typeof World !== "undefined" && World.tileAt ? World.tileAt(Player.x, Player.y) : TILE.GRASS;
+    const jitter = Math.random();
+    if (t === TILE.GRASS) {
+      this.tone(108 + jitter * 18, 0.045, "sine", 0.016);
+    } else if (t === TILE.DIRT || t === TILE.SHORE) {
+      this.tone(82 + jitter * 16, 0.05, "triangle", 0.02);
+    } else if (t === TILE.DOCK || t === TILE.BRIDGE || t === TILE.WOOD) {
+      this.tone(168 + jitter * 22, 0.036, "square", 0.011);
+    } else if (t === TILE.STONE || t === TILE.CAVE_FLOOR || t === TILE.CAVE_WALL || t === TILE.MARSH) {
+      this.tone(68 + jitter * 14, 0.055, "sine", 0.022, 48);
+    } else {
+      this.tone(100 + jitter * 20, 0.04, "sine", 0.016);
+    }
   },
 };

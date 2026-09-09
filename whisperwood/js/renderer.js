@@ -56,9 +56,11 @@ const Renderer = {
       if (d.type === "pickup" && d.taken) continue;
       drawList.push(d);
     }
-    drawList.push({ type: "player", x: Player.x, y: Player.y });
+    if (!(Player.sleeping && World.id === "cottage")) {
+      drawList.push({ type: "player", x: Player.x, y: Player.y });
+    }
     if (World.id === "vale") {
-      for (const n of NPC_DATA) drawList.push({ type: "npc", x: n.x, y: n.y, color: n.color });
+      for (const n of NPC_DATA) drawList.push({ type: "npc", x: n.x, y: n.y, color: n.color, id: n.id });
     }
     const fire = Save.data && Save.data.flags.campfire;
     if (fire && fire.x != null && fire.map === World.id) {
@@ -91,7 +93,9 @@ const Renderer = {
       ctx.save();
       ctx.translate(this.viewW * 0.5, this.viewH * 0.4 + bob);
       ctx.rotate(Math.sin(Fishing.t * 6) * 0.15);
-      Sprites.fishIcon(ctx, 0, 0, Fishing.fish.color, false);
+      if (!(typeof Atlas !== "undefined" && Atlas.drawFish(ctx, Fishing.fish, 0, 0, { scale: 2 }))) {
+        Sprites.fishIcon(ctx, 0, 0, Fishing.fish, false);
+      }
       ctx.restore();
     }
   },
@@ -113,6 +117,7 @@ const Renderer = {
         const tile = World.get(tx, ty);
         const x = tx * TILE_SIZE, y = ty * TILE_SIZE;
         const h = Utils.hash(tx, ty);
+        if (typeof Atlas !== "undefined" && Atlas.drawGround(ctx, tile, tx, ty, x, y, h)) continue;
         switch (tile) {
           case TILE.GRASS: Sprites.grass(ctx, x, y, h); break;
           case TILE.DIRT: Sprites.dirt(ctx, x, y, h); break;
@@ -140,7 +145,18 @@ const Renderer = {
         for (let oy = -1; oy <= 1; oy++) for (let ox = -1; ox <= 1; ox++) {
           if (!WATER_TILES.has(World.get(tx + ox, ty + oy))) deep = false;
         }
-        Sprites.water(ctx, x, y, tile, t, deep, light && light.golden, TimeCycle.weatherId());
+        const h = Utils.hash(tx, ty);
+        if (!(typeof Atlas !== "undefined" && Atlas.drawWater(ctx, tile, tx, ty, x, y, h))) {
+          Sprites.water(ctx, x, y, tile, t, deep, light && light.golden, TimeCycle.weatherId());
+        } else {
+          Sprites.waterRipple(ctx, x, y, tile, t, light && light.golden, TimeCycle.weatherId());
+          if (tile === TILE.CAVE_WATER) {
+            ctx.globalAlpha = 0.16 + Math.sin(t * 2.2 + tx * 0.2) * 0.06;
+            ctx.fillStyle = PALETTE.caveHi;
+            ctx.fillRect(x, y, 16, 16);
+            ctx.globalAlpha = 1;
+          }
+        }
 
         // dark shoreline edge
         const n = [
@@ -181,11 +197,16 @@ const Renderer = {
     else if (d.type === "crate") Sprites.crate(ctx, d.x, d.y);
     else if (d.type === "shrub") Sprites.shrub(ctx, d.x, d.y);
     else if (d.type === "reed") Sprites.reed(ctx, d.x, d.y, t);
-    else if (d.type === "npc") Sprites.npc(ctx, d.x, d.y, d.color);
+    else if (d.type === "npc") Sprites.npc(ctx, d.x, d.y, d.color, d.id);
     else if (d.type === "pickup") Sprites.pickup(ctx, d.x, d.y, d.item);
     else if (d.type === "cottage") Sprites.cottage(ctx, d.x, d.y);
     else if (d.type === "raft") Sprites.raft(ctx, d.x, d.y);
-    else if (d.type === "bed") Sprites.bed(ctx, d.x, d.y);
+    else if (d.type === "bed") {
+      Sprites.bed(ctx, d.x, d.y);
+      if (Player.sleeping && World.id === "cottage") {
+        Sprites.playerSleep(ctx, d.x + 4, d.y - 8);
+      }
+    }
     else if (d.type === "tank") Sprites.tank(ctx, d.x, d.y, t);
     else if (d.type === "trophy") Sprites.trophyWall(ctx, d.x, d.y);
     else if (d.type === "bench") Sprites.bench(ctx, d.x, d.y);

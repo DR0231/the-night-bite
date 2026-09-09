@@ -84,14 +84,17 @@ html, body {
   right: 22px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 6px;
-  padding: 8px 12px;
-  background: #1c2418cc;
-  border: 1px solid #c4a05a66;
-  color: #f3e2c4;
+  width: max-content;
+  padding: 8px 10px;
+  background: #f3e2c4;
+  color: #3a2418;
+  border: 3px solid #5a381c;
+  outline: 1px solid #c4a05a;
+  box-shadow: 0 0 0 2px #3a2418, 3px 4px 0 #2a1c1288;
   font-size: 13px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
 }
 
 .clock-row {
@@ -100,54 +103,108 @@ html, body {
   gap: 8px;
 }
 
+#clock-text {
+  color: #3a2418;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+#clock-rank {
+  margin-left: auto;
+  font-size: 10px;
+  color: #8b6238;
+  letter-spacing: 0.08em;
+}
+
+#meal-chip {
+  font-size: 10px;
+  color: #5a381c;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
 #needs {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
+  width: max-content;
 }
 
 .need-row {
   display: flex;
-  gap: 3px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  width: max-content;
+}
+
+.need-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.need-row em {
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: #5a381c;
+  min-width: 44px;
+}
+
+.need-pips {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
 }
 
 .need-row span {
-  width: 6px;
-  height: 6px;
-  border: 1px solid #c4a05a;
-  background: transparent;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #6a5340;
+  background: #9a8a78;
+  border-radius: 2px;
   box-sizing: border-box;
 }
 
 .need-row span.on {
-  background: #c4a05a;
+  background: #E8913A;
+  border-color: #b86a28;
 }
 
 .need-row.warn span {
-  border-color: #c45a5a;
+  border-color: #a04840;
+  background: #b89888;
 }
 
 .need-row.warn span.on {
   background: #c45a5a;
+  border-color: #8b3a32;
 }
 
 #clock-icon {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: #f0d060;
-  box-shadow: 0 0 8px #f0d060aa;
+  box-shadow: inset -4px 0 0 0 #f3e2c4;
 }
 
 #clock.night #clock-icon {
-  background: #d8e6f0;
-  box-shadow: 0 0 8px #a0c4eeaa;
-  border-radius: 50% 0 50% 50%;
+  background: #f0d060;
+  box-shadow: inset -4px 0 0 0 #f3e2c4;
+  border-radius: 50%;
 }
 
 #spot-label {
   position: absolute;
-  top: 92px;
+  top: 118px;
   left: 50%;
   transform: translateX(-50%);
   background: #6b4a2ccc;
@@ -475,6 +532,7 @@ kbd {
 #shop-body button,
 #board-body button,
 #bench-body button,
+#tank-body button,
 #rank-up-body button,
 .dialog-actions button {
   display: block;

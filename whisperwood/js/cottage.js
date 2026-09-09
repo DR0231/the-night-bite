@@ -9,8 +9,8 @@ const Cottage = {
         set(x, 14, TILE.WOOD);
         set(x, 15, TILE.WOOD);
       }
-      addDeco("bed", 5 * TILE_SIZE, 5 * TILE_SIZE);
-      addSolid(4.2 * TILE_SIZE, 3.6 * TILE_SIZE, 22, 16, "bed");
+      addDeco("bed", 7.2 * TILE_SIZE, 6.2 * TILE_SIZE);
+      addSolid(5.0 * TILE_SIZE, 4.8 * TILE_SIZE, 60, 20, "bed");
       addDeco("tank", 16 * TILE_SIZE, 5.2 * TILE_SIZE);
       addDeco("trophy", 11 * TILE_SIZE, 3.6 * TILE_SIZE);
       addDeco("certificate", 8.4 * TILE_SIZE, 4.2 * TILE_SIZE);
@@ -31,7 +31,7 @@ const Cottage = {
 
   near(kind) {
     const spots = {
-      bed: { x: 5 * TILE_SIZE, y: 5 * TILE_SIZE, r: 22 },
+      bed: { x: 7.2 * TILE_SIZE, y: 6.2 * TILE_SIZE, r: 30 },
       tank: { x: 16 * TILE_SIZE, y: 5.2 * TILE_SIZE, r: 22 },
       trophy: { x: 11 * TILE_SIZE, y: 3.6 * TILE_SIZE, r: 20 },
       certificate: { x: 8.4 * TILE_SIZE, y: 4.2 * TILE_SIZE, r: 16 },
@@ -43,13 +43,39 @@ const Cottage = {
     return s && Utils.dist(Player.x, Player.y, s.x, s.y) < s.r;
   },
 
+  snapToBed() {
+    Player.x = 7.2 * TILE_SIZE + 4;
+    Player.y = 6.2 * TILE_SIZE - 8;
+    Player.dir = 2;
+    Player.vx = 0;
+    Player.vy = 0;
+    Save.data.player.x = Player.x;
+    Save.data.player.y = Player.y;
+    Save.data.player.dir = Player.dir;
+  },
+
+  wakeBesideBed() {
+    Player.x = 10.4 * TILE_SIZE;
+    Player.y = 7.6 * TILE_SIZE;
+    Player.dir = 0;
+    Player.vx = 0;
+    Player.vy = 0;
+    Player.sleeping = false;
+    Save.data.player.x = Player.x;
+    Save.data.player.y = Player.y;
+    Save.data.player.dir = Player.dir;
+  },
+
   hint() {
     if (World.id !== "cottage") return "";
     if (this.near("bed")) return "Press E to sleep until dusk or dawn";
     if (this.near("bench")) return "Press E to use the packing bench";
     if (this.near("calendar")) return "Press E to read the forecast board";
     if (this.near("mailtray")) return "Press E to check the mail tray";
-    if (this.near("tank")) return "Press E to tuck a fish into the tank";
+    if (this.near("tank")) {
+      const aq = Save.data.cottage.aquarium || [];
+      if (aq.length || this.tuckable()) return "Press E to manage the tank";
+    }
     if (this.near("certificate")) return "Press E to read your fisher certificate";
     if (this.near("trophy")) return "Press E to mount a personal best · " + Skills.line();
     return "";
@@ -59,10 +85,9 @@ const Cottage = {
     if (World.id !== "cottage") return false;
     Save.data.cottage.visited = true;
     if (this.near("bed")) {
-      const night = TimeCycle.phaseId() === "night" || TimeCycle.phaseId() === "golden";
-      Weather.skipTo(night ? "dawn" : "golden");
-      Survival.fillSleep();
-      UI.toastNote(night ? "You slept until dawn." : "You slept until dusk.");
+      if (Game.sleeping) return true;
+      this.snapToBed();
+      Game.startSleep();
       return true;
     }
     if (this.near("bench")) {
@@ -84,20 +109,47 @@ const Cottage = {
     return Save.data.inventory.items.tank ? CONFIG.AQUARIUM_N_UP : CONFIG.AQUARIUM_N;
   },
 
+  tuckable() {
+    const aq = Save.data.cottage.aquarium || [];
+    return FISH.find((f) => (Journal.caughtOf(f.id) | 0) > 0 && aq.indexOf(f.id) < 0) || null;
+  },
+
   _tank() {
+    const aq = Save.data.cottage.aquarium || [];
+    if (!aq.length && !this.tuckable()) {
+      UI.toastNote("Catch a fish to keep.");
+      return;
+    }
+    Tank.open();
+  },
+
+  _tuck() {
     const aq = Save.data.cottage.aquarium;
     if (aq.length >= this.tankCap()) {
       UI.toastNote("The tank is full.");
-      return;
+      return false;
     }
-    const extra = FISH.find((f) => (Journal.caughtOf(f.id) | 0) > 0 && aq.indexOf(f.id) < 0);
-    if (!extra) { UI.toastNote("Catch a fish to keep."); return; }
+    const extra = this.tuckable();
+    if (!extra) { UI.toastNote("Catch a fish to keep."); return false; }
     const e = Save.ensureFish(extra.id);
-    if (e.caught < 1) return;
+    if (e.caught < 1) return false;
     e.caught -= 1;
     aq.push(extra.id);
     UI.toastNote(`${extra.name} now lives in the tank.`);
     Save.mark();
+    return true;
+  },
+
+  _takeOut(index) {
+    const aq = Save.data.cottage.aquarium;
+    const id = aq[index];
+    if (!id) return false;
+    aq.splice(index, 1);
+    Save.ensureFish(id).caught = (Save.ensureFish(id).caught | 0) + 1;
+    const f = FISH.find((x) => x.id === id);
+    UI.toastNote(`${f ? f.name : id} is back in your pack.`);
+    Save.mark();
+    return true;
   },
 
   _trophy() {
@@ -108,6 +160,62 @@ const Cottage = {
     if (wall.indexOf(best.id) < 0) wall.push(best.id);
     UI.toastNote(`${best.name} is on the wall.`);
     Save.mark();
+  },
+};
+
+const Tank = {
+  openFlag: false,
+
+  open() {
+    this.openFlag = true;
+    UI.closeJournal();
+    Inventory.close();
+    Shop.close();
+    Board.close();
+    Mail.close();
+    if (typeof Bench !== "undefined") Bench.close();
+    const el = document.getElementById("tank");
+    if (el) el.classList.remove("hidden");
+    this.refresh();
+  },
+
+  close() {
+    if (!this.openFlag) return;
+    this.openFlag = false;
+    const el = document.getElementById("tank");
+    if (el) el.classList.add("hidden");
+    Save.mark();
+  },
+
+  refresh() {
+    const el = document.getElementById("tank-body");
+    if (!el) return;
+    const aq = Save.data.cottage.aquarium || [];
+    const rows = aq.map((id, i) => {
+      const f = FISH.find((x) => x.id === id);
+      const name = f ? f.name : id;
+      return `<button type="button" data-take="${i}">Take out ${name}</button>`;
+    }).join("") || "<p>The tank is empty.</p>";
+    const extra = Cottage.tuckable();
+    const room = aq.length < Cottage.tankCap();
+    const tuck = extra && room
+      ? `<button type="button" id="btn-tuck">Tuck a fish (${extra.name})</button>`
+      : (aq.length >= Cottage.tankCap() ? "<p>The tank is full.</p>" : "");
+    el.innerHTML = `${rows}${tuck}`;
+    el.querySelectorAll("[data-take]").forEach((b) => b.addEventListener("click", () => {
+      Cottage._takeOut(b.dataset.take | 0);
+      const left = Save.data.cottage.aquarium || [];
+      if (!left.length && !Cottage.tuckable()) {
+        this.close();
+        return;
+      }
+      this.refresh();
+    }));
+    const tuckBtn = el.querySelector("#btn-tuck");
+    if (tuckBtn) tuckBtn.addEventListener("click", () => {
+      Cottage._tuck();
+      this.refresh();
+    });
   },
 };
 
@@ -202,7 +310,7 @@ const Shop = {
       const have = Save.data.inventory.items.tank;
       return `<button type="button" data-buy="upgrade:tank" ${have ? "disabled" : ""}>${it.name} — donate a ${it.requireFish}</button>`;
     }).join("");
-    const sellable = FISH.filter((f) => Journal.caughtOf(f.id) > 0 && Save.data.cottage.aquarium.indexOf(f.id) < 0);
+    const sellable = FISH.filter((f) => Journal.caughtOf(f.id) > 0);
     const sell = sellable.map((f) =>
       `<button type="button" data-sell="${f.id}">Sell ${f.name} (${f.sell}c) ×${Journal.caughtOf(f.id)}</button>`
     ).join("") || "<p>Nothing to sell.</p>";
@@ -259,7 +367,6 @@ const Shop = {
 
   sell(id) {
     if ((Journal.caughtOf(id) | 0) < 1) return;
-    if (Save.data.cottage.aquarium.indexOf(id) >= 0) return;
     const f = FISH.find((x) => x.id === id);
     const e = Save.ensureFish(id);
     e.caught -= 1;
@@ -279,6 +386,7 @@ const Bench = {
     Shop.close();
     Board.close();
     Mail.close();
+    if (typeof Tank !== "undefined") Tank.close();
     const el = document.getElementById("bench");
     if (el) el.classList.remove("hidden");
     this.refresh();

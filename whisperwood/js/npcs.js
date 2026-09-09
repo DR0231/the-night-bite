@@ -138,7 +138,7 @@ const Interact = {
     const n = Npcs.at(Player.x, Player.y);
     if (n) return `Press E to talk to ${n.name}`;
     if (this._nearSit()) return "Press E to sit until dusk or dawn";
-    if (Save.data.cottage.weeds > 0 && World.id === "vale" && Utils.dist(Player.x, Player.y, 27.5 * TILE_SIZE, 22.5 * TILE_SIZE) < 28) {
+    if (Save.data.cottage.weeds > 0 && World.id === "vale" && Utils.dist(Player.x, Player.y, 27.5 * TILE_SIZE, 24.4 * TILE_SIZE) < 28) {
       return "Press E to clear weeds";
     }
     if (this._nearRaft()) {
@@ -167,7 +167,7 @@ const Interact = {
 
   _weeds() {
     if (World.id !== "vale" || Save.data.cottage.weeds <= 0) return false;
-    if (Utils.dist(Player.x, Player.y, 27.5 * TILE_SIZE, 22.5 * TILE_SIZE) > 28) return false;
+    if (Utils.dist(Player.x, Player.y, 27.5 * TILE_SIZE, 24.4 * TILE_SIZE) > 28) return false;
     Save.data.cottage.weeds = 0;
     UI.toastNote("The cottage path is clear.");
     Save.mark();

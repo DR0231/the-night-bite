@@ -110,6 +110,7 @@ const Skills = {
     Board.close();
     Mail.close();
     if (typeof Bench !== "undefined") Bench.close();
+    if (typeof Tank !== "undefined") Tank.close();
     const offered = this.data.offered || [];
     const btns = offered.map((id) => {
       const p = PERKS[id];

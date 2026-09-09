@@ -21,8 +21,8 @@ const TILE = {
 
 const CONFIG = {
   TILE: TILE_SIZE,
-  VIEW_W: 384,
-  VIEW_H: 216,
+  VIEW_W: 640,
+  VIEW_H: 360,
   MAP_W: 64,
   MAP_H: 50,
   /** World pixels per second — planted start/stop, no ice-skate. */
@@ -34,10 +34,10 @@ const CONFIG = {
   /** Collision sits at the feet so the sprite can overlap trees/canopy. */
   PLAYER_COL_W: 8,
   PLAYER_COL_H: 4,
-  PLAYER_SPRITE_W: 16,
-  PLAYER_SPRITE_H: 26,
-  DAY_LENGTH: 180,
-  START_HOUR: 8.5,
+  PLAYER_SPRITE_W: 48,
+  PLAYER_SPRITE_H: 64,
+  DAY_LENGTH: 330,
+  START_HOUR: 6,
   FISH_RANGE: 28,
   CAST_DIST: 34,
   AQUARIUM_N: 4,
@@ -304,7 +304,7 @@ const NPC_DATA = [
   },
   {
     id: "bramble", name: "Bramble", role: "fisher",
-    x: 15.6 * 16, y: 21.2 * 16,
+    x: 19.4 * 16, y: 24.6 * 16,
     color: "#5a8a48",
     greet: "Pond’s kind if you wait. I like a patient neighbor.",
     hearts: [
@@ -315,7 +315,7 @@ const NPC_DATA = [
   },
   {
     id: "lark", name: "Lark", role: "rumor",
-    x: 44.2 * 16, y: 20.8 * 16,
+    x: 42.5 * 16, y: 24.4 * 16,
     color: "#7a6ab0",
     greet: "I collect almosts. The ones that got away still count.",
     hearts: [
