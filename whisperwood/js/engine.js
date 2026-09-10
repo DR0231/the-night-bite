@@ -105,6 +105,7 @@ const Input = {
     if (this._bound) return;
     this._bound = true;
     const on = (e, val) => {
+      if (typeof Admin !== "undefined" && Admin.typing()) return;
       const k = this._alias(e);
       if (!k) return;
       if (this._isMove(k) || k === " " || k === "e" || k === "j" || k === "i" || k === "escape") {

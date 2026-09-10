@@ -20,12 +20,12 @@ const Journal = {
     const e = this.ensure(fish.id);
     const first = e.landed === 0;
     const record = inches > (e.biggest || 0);
-    e.caught = (e.caught | 0) + 1;
     e.landed = (e.landed | 0) + 1;
     e.hooked = (e.hooked | 0) + 1;
     e.lastAt = Date.now();
     if (!e.firstAt) e.firstAt = e.lastAt;
     if (record) e.biggest = inches;
+    Save.pushLoose(fish.id);
     this._mastery(fish.spot);
     Save.mark("catch");
     return { first, record, inches };

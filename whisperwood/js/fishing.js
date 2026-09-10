@@ -98,16 +98,17 @@ const Fishing = {
   },
 
   _feel() {
-    return FISHING_FEEL[this.spot.mood] || FISHING_FEEL.still;
+    const mood = this.spot && this.spot.mood;
+    return FISHING_FEEL[mood] || FISHING_FEEL.still;
   },
 
   _pickFish() {
     const phase = TimeCycle.phaseId();
     const weather = TimeCycle.weatherId();
     const season = TimeCycle.season();
-    let hotspot = TimeCycle.hotspot() === this.spot.id ? 1.35 : 1;
-    if (hotspot === 1 && Skills.has("homeshore") && Save.data.player.favoriteSpot === this.spot.id) hotspot = 1.18;
-    const baitM = Inventory.biteMult(this.spot.id);
+    let hotspot = TimeCycle.hotspot() === this.spot.id ? DESIGN.hotspotBite : 1;
+    if (hotspot === 1 && Skills.has("homeshore") && Save.data.player.favoriteSpot === this.spot.id) hotspot = DESIGN.homeShoreBite;
+    const eq = Inventory.equipped();
     const starved = (Save.data.player.hunger | 0) <= 0;
     const pool = [];
     const weights = [];
@@ -119,8 +120,10 @@ const Fishing = {
       if (starved && f.rarity === "Rare") continue;
       let w = f.rarity === "Rare" ? 1 : f.rarity === "Uncommon" ? 3 : 6;
       const bw = (f.bite && f.bite[phase]) != null ? f.bite[phase] : 1;
-      w *= bw * (WEATHERS[weather] ? WEATHERS[weather].bite : 1) * hotspot * baitM;
-      if (Skills.has("nightowl") && phase === "night") w *= 1.15;
+      w *= bw * (WEATHERS[weather] ? WEATHERS[weather].bite : 1) * hotspot;
+      if (Skills.has("nightowl") && phase === "night") w *= DESIGN.nightOwlBite;
+      const bias = (f.baitBias && f.baitBias[eq] != null) ? f.baitBias[eq] : 1;
+      w *= bias;
       if (w <= 0.01) continue;
       pool.push(f);
       weights.push(w);
@@ -164,7 +167,7 @@ const Fishing = {
         this.state = "wait";
         this.t = 0;
         const baitM = Inventory.biteMult(this.spot.id);
-        const hot = TimeCycle.hotspot() === this.spot.id ? 0.78 : 1;
+        const hot = TimeCycle.hotspot() === this.spot.id ? DESIGN.hotspotWait : 1;
         this.wait = Utils.lerp(feel.waitMin, feel.waitMax, Math.random()) / Math.max(0.35, baitM) * hot;
         let nib = Utils.irand(Math.random, feel.nibbleCount[0], feel.nibbleCount[1]);
         if (baitM < 0.6) nib = Math.max(1, nib - 1);
@@ -255,7 +258,7 @@ const Fishing = {
     if (this.state === "fail") {
       b.dunk = 3 + this.t * 10;
       this.sag = 16;
-      if (this.t > 0.55) this.cancel();
+      if (this.t > 0.85) this.cancel();
       return;
     }
 
@@ -267,7 +270,7 @@ const Fishing = {
   _startBite() {
     this.fish = this._pickFish();
     Journal.recordHook(this.fish);
-    AudioFX.bite();
+    try { AudioFX.bite(); } catch (err) { /* minigame must still start */ }
     Camera.shake = 1.6;
     Particles.splash(this.bobber.x, this.bobber.y, 12, this._splashColor());
     Minigame.start(this.spot);
@@ -278,13 +281,13 @@ const Fishing = {
     this.t = 0;
     Camera.shake = 2.2;
     Player.hop = 3;
-    AudioFX.plop();
+    try { AudioFX.plop(); } catch (err) { /* toast path must still run */ }
   },
 
   _miss() {
     this.state = "fail";
     this.t = 0;
-    AudioFX.fail();
+    try { AudioFX.fail(); } catch (err) { /* miss toast must still run */ }
     Journal.recordMiss(this.fish);
     Skills.awardFromMiss(this.fish);
     UI.showMiss(this.fish);
@@ -305,7 +308,7 @@ const Fishing = {
     const questBonus = Quests.onLand(this.fish);
     Skills.awardFromLand(this.fish, rec, questBonus);
     Npcs.rememberCatch(this.fish);
-    AudioFX.catch();
+    try { AudioFX.catch(); } catch (err) { /* catch toast must still run */ }
     Camera.shake = 3.4;
     Player.hop = 5;
     Particles.splash(Player.x, Player.y - 4, 14, this._splashColor());
@@ -361,6 +364,8 @@ const Fishing = {
     if (this.state === "reel") return "Reeling in…";
     if (this.state === "fail") return "It got away…";
     if (this.state === "catch") return "";
+    if (typeof Npcs !== "undefined" && Npcs.at(Player.x, Player.y)) return "";
+    if (typeof Interact !== "undefined" && Interact.priorityHint()) return "";
     const water = World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE);
     if (water) return "Fish · Space or E";
     return "";

@@ -24,6 +24,8 @@ const Minigame = {
     this.t = 0;
     this.done = false;
     this.hold = 0;
+    this._tapHint = false;
+    this._tapAt = null;
     this.need = 0.78 * Skills.needMult();
     let bar = (rod.bar || 1) * Skills.barMult() * Survival.barMult();
     bar = Math.min(1.45, bar);
@@ -51,7 +53,11 @@ const Minigame = {
     if (this.kind === "timing" || this.kind === "timingFast") {
       const ok = Math.abs(this.marker - this.sweet) <= this.half;
       this.finish(ok);
+      return;
     }
+    /* Tension is a hold. Fish pad sets _padHold before act(); that is not a tap. */
+    if (this._padHold) return;
+    this._tapAt = this.t;
   },
 
   holding() {
@@ -69,6 +75,12 @@ const Minigame = {
       return;
     }
     const hold = this.holding();
+    if (hold) this._tapAt = null;
+    else if (this._tapAt != null && !this.done && this.t - this._tapAt > 0.18 && !this._tapHint) {
+      this._tapHint = true;
+      this._tapAt = null;
+      try { UI.toastNote("Hold E / Space to keep tension — don’t tap"); } catch (err) { /* hint still shows */ }
+    }
     this.value += (hold ? 0.72 : -0.55) * dt;
     if (this.kind === "tensionErratic") {
       this.band += Math.sin(this.t * 3.2 * this.speed) * 0.55 * dt;
@@ -80,7 +92,7 @@ const Minigame = {
     if (Math.abs(this.value - this.band) <= this.bandW) this.hold += dt;
     else this.hold = Math.max(0, this.hold - dt * 0.35);
     if (this.hold >= this.need) this.finish(true);
-    if (this.t > 7.5) this.finish(false);
+    else if (this.t > 7.5) this.finish(false);
   },
 
   finish(ok) {
@@ -97,7 +109,7 @@ const Minigame = {
 
   hint() {
     if (this.kind === "timing" || this.kind === "timingFast") return "Tap E / Space in the bright band";
-    return "Hold E / Space to keep tension";
+    return "Hold E / Space to keep tension — don’t tap";
   },
 
   draw(ctx, vw, vh) {

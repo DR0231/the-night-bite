@@ -98,7 +98,7 @@
         <ul class="controls">
           <li><kbd>W A S D</kbd> or <kbd>Arrows</kbd> Move</li>
           <li><kbd>E</kbd> or <kbd>Space</kbd> Fish / interact / minigame</li>
-          <li><kbd>J</kbd> Journal · <kbd>I</kbd> Pack</li>
+          <li><kbd>J</kbd> Journal · <kbd>I</kbd> Pack · <kbd>F8</kbd> Admin</li>
           <li>Walk or <kbd>Esc</kbd> to pack up the rod</li>
           <li>Eat from the pack. Sleep at the cottage.</li>
         </ul>
@@ -154,10 +154,56 @@
       </div>
     </div>
 
+    <div id="cooler" class="hidden overlay-panel">
+      <div class="journal-panel">
+        <header><h2>Cottage cooler</h2><p class="journal-sub">Keep fish cold. Loose fish go soft after a couple of days.</p></header>
+        <div id="cooler-body"></div>
+        <button type="button" data-close>Close</button>
+      </div>
+    </div>
+
     <div id="rank-up" class="hidden overlay-panel">
       <div class="journal-panel">
         <header><h2>Hands remember</h2></header>
         <div id="rank-up-body"></div>
+      </div>
+    </div>
+
+    <div id="admin" class="hidden overlay-panel">
+      <div class="journal-panel pack-panel admin-panel">
+        <header>
+          <h2>Admin</h2>
+          <p class="journal-sub">Testing only · F8 or ` to close · does not show for guests unless you open it</p>
+          <p id="admin-status"></p>
+          <div class="admin-tabs">
+            <button type="button" data-admin-tab="cheats" class="is-on">Cheats</button>
+            <button type="button" data-admin-tab="play">How to play</button>
+            <button type="button" data-admin-tab="progress">Progression</button>
+            <button type="button" data-admin-tab="items">Items &amp; meals</button>
+            <button type="button" data-admin-tab="fish">Waters &amp; fish</button>
+            <button type="button" data-admin-tab="check">Live check</button>
+          </div>
+        </header>
+        <div id="admin-cheats">
+        <form id="admin-cmd-form" class="admin-cmd-row">
+          <input id="admin-cmd" type="text" autocomplete="off" spellcheck="false" placeholder="help · give worms 99 · tp cave · time night · catch sunperch" />
+          <button type="submit">Run</button>
+        </form>
+        <p id="admin-log" class="admin-log"></p>
+        <p id="admin-bait" class="admin-bait"></p>
+        <div class="admin-grid">
+          <section id="admin-give"></section>
+          <section id="admin-player"></section>
+          <section id="admin-world"></section>
+          <section id="admin-time"></section>
+        </div>
+        <footer>
+          <button type="button" data-admin="cancel">Pack rod</button>
+          <button type="button" data-admin="save">Force save</button>
+          Esc or F8 closes. God mode does not persist across reload unless you leave it on this session.
+        </footer>
+        </div>
+        <div id="admin-docs" class="admin-docs hidden"></div>
       </div>
     </div>
 
@@ -200,5 +246,7 @@
   <script src="js/journal.js"></script>
   <script src="js/renderer.js"></script>
   <script src="js/game.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/admin-guide.js"></script>
 </body>
 </html>

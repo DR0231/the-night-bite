@@ -5,9 +5,13 @@ TimeCycle._lastHour = -1;
 
 TimeCycle.phaseId = function () {
   const h = this.hour;
-  if (h >= 5 && h < 8) return "dawn";
-  if (h >= 8 && h < 16.5) return "day";
-  if (h >= 16.5 && h < 19.5) return "golden";
+  const phases = DESIGN.phases || [];
+  for (let i = 0; i < phases.length; i++) {
+    const p = phases[i];
+    const a = p.range[0], b = p.range[1];
+    if (a < b && h >= a && h < b) return p.id;
+    if (a > b && (h >= a || h < b)) return p.id;
+  }
   return "night";
 };
 
@@ -44,7 +48,8 @@ TimeCycle.update = function (dt) {
     this.day = dayNow;
     if (Save.data) {
       Save.data.clock.day = dayNow;
-      Save.data.clock.season = SEASONS[Math.floor((dayNow - 1) / 3) % 4];
+      Save.data.clock.season = SEASONS[Math.floor((dayNow - 1) / DESIGN.seasonDays) % 4];
+      Save.spoilLoose();
       Weather.rollDay();
       Quests.rollDay();
       Shop.restock();
@@ -105,7 +110,8 @@ const Weather = {
   skipTo(phase) {
     const dayLen = CONFIG.DAY_LENGTH;
     const dayBase = Math.floor(TimeCycle.seconds / dayLen) * dayLen;
-    const hour = phase === "dawn" ? 6 : 17.6;
+    const ph = DESIGN.phases.find((p) => p.id === (phase === "dawn" ? "dawn" : "golden"));
+    const hour = ph ? ph.hour : (phase === "dawn" ? 6 : 17.6);
     let target = dayBase + (hour / 24) * dayLen;
     if (target <= TimeCycle.seconds + 10) target += dayLen;
     TimeCycle.seconds = target;

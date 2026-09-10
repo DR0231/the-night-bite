@@ -35,9 +35,10 @@ const Cottage = {
       tank: { x: 16 * TILE_SIZE, y: 5.2 * TILE_SIZE, r: 22 },
       trophy: { x: 11 * TILE_SIZE, y: 3.6 * TILE_SIZE, r: 20 },
       certificate: { x: 8.4 * TILE_SIZE, y: 4.2 * TILE_SIZE, r: 16 },
-      bench: { x: 5.5 * TILE_SIZE, y: 11 * TILE_SIZE, r: 20 },
+      bench: { x: 5.5 * TILE_SIZE, y: 11 * TILE_SIZE, r: 28 },
       calendar: { x: 16.5 * TILE_SIZE, y: 11 * TILE_SIZE, r: 20 },
       mailtray: { x: 12.5 * TILE_SIZE, y: 11.2 * TILE_SIZE, r: 18 },
+      crate: { x: 18.2 * TILE_SIZE, y: 12.4 * TILE_SIZE, r: 22 },
     };
     const s = spots[kind];
     return s && Utils.dist(Player.x, Player.y, s.x, s.y) < s.r;
@@ -69,7 +70,8 @@ const Cottage = {
   hint() {
     if (World.id !== "cottage") return "";
     if (this.near("bed")) return "Press E to sleep until dusk or dawn";
-    if (this.near("bench")) return "Press E to use the packing bench";
+    if (this.near("bench")) return "Press E — packing bench (cook & bait)";
+    if (this.near("crate")) return "Press E — cottage cooler";
     if (this.near("calendar")) return "Press E to read the forecast board";
     if (this.near("mailtray")) return "Press E to check the mail tray";
     if (this.near("tank")) {
@@ -94,6 +96,10 @@ const Cottage = {
       Bench.open();
       return true;
     }
+    if (this.near("crate")) {
+      Cooler.open();
+      return true;
+    }
     if (this.near("calendar")) { Quests.open = false; Board.toggle(); return true; }
     if (this.near("mailtray")) { Mail.toggle(); return true; }
     if (this.near("tank")) { this._tank(); return true; }
@@ -111,7 +117,7 @@ const Cottage = {
 
   tuckable() {
     const aq = Save.data.cottage.aquarium || [];
-    return FISH.find((f) => (Journal.caughtOf(f.id) | 0) > 0 && aq.indexOf(f.id) < 0) || null;
+    return FISH.find((f) => Save.countLoose(f.id) > 0 && aq.indexOf(f.id) < 0) || null;
   },
 
   _tank() {
@@ -131,10 +137,10 @@ const Cottage = {
     }
     const extra = this.tuckable();
     if (!extra) { UI.toastNote("Catch a fish to keep."); return false; }
-    const e = Save.ensureFish(extra.id);
-    if (e.caught < 1) return false;
-    e.caught -= 1;
+    const unit = Save.takeOldestLoose(extra.id);
+    if (!unit) return false;
     aq.push(extra.id);
+    Save.syncCaught();
     UI.toastNote(`${extra.name} now lives in the tank.`);
     Save.mark();
     return true;
@@ -145,9 +151,37 @@ const Cottage = {
     const id = aq[index];
     if (!id) return false;
     aq.splice(index, 1);
-    Save.ensureFish(id).caught = (Save.ensureFish(id).caught | 0) + 1;
+    Save.pushLoose(id);
     const f = FISH.find((x) => x.id === id);
     UI.toastNote(`${f ? f.name : id} is back in your pack.`);
+    Save.mark();
+    return true;
+  },
+
+  _coolerTuck(id) {
+    const slots = Save.cooler();
+    if (slots.length >= Save.coolerCap()) {
+      UI.toastNote("The cooler is full.");
+      return false;
+    }
+    const unit = Save.takeOldestLoose(id);
+    if (!unit) return false;
+    slots.push(unit);
+    Save.syncCaught();
+    const f = FISH.find((x) => x.id === id);
+    UI.toastNote(`${f ? f.name : id} tucked in the cooler.`);
+    Save.mark();
+    return true;
+  },
+
+  _coolerTake(index) {
+    const slots = Save.cooler();
+    const unit = slots[index];
+    if (!unit) return false;
+    slots.splice(index, 1);
+    Save.pushLoose(unit.id);
+    const f = FISH.find((x) => x.id === unit.id);
+    UI.toastNote(`${f ? f.name : unit.id} is back in your pack.`);
     Save.mark();
     return true;
   },
@@ -174,6 +208,7 @@ const Tank = {
     Board.close();
     Mail.close();
     if (typeof Bench !== "undefined") Bench.close();
+    if (typeof Cooler !== "undefined") Cooler.close();
     const el = document.getElementById("tank");
     if (el) el.classList.remove("hidden");
     this.refresh();
@@ -216,6 +251,71 @@ const Tank = {
       Cottage._tuck();
       this.refresh();
     });
+  },
+};
+
+const Cooler = {
+  openFlag: false,
+
+  open() {
+    this.openFlag = true;
+    UI.closeJournal();
+    Inventory.close();
+    Shop.close();
+    Board.close();
+    Mail.close();
+    if (typeof Bench !== "undefined") Bench.close();
+    if (typeof Tank !== "undefined") Tank.close();
+    const el = document.getElementById("cooler");
+    if (el) el.classList.remove("hidden");
+    this.refresh();
+  },
+
+  close() {
+    if (!this.openFlag) return;
+    this.openFlag = false;
+    const el = document.getElementById("cooler");
+    if (el) el.classList.add("hidden");
+    Save.mark();
+  },
+
+  refresh() {
+    const el = document.getElementById("cooler-body");
+    if (!el) return;
+    const slots = Save.cooler();
+    const cap = Save.coolerCap();
+    const stew = Save.stewCount();
+    const kept = slots.map((u, i) => {
+      const f = FISH.find((x) => x.id === u.id);
+      const name = f ? f.name : u.id;
+      return `<button type="button" data-take="${i}">Take out ${name}</button>`;
+    }).join("") || "<p>The cooler is empty.</p>";
+    const groups = Object.create(null);
+    for (const u of Save.loose()) {
+      if (!groups[u.id]) groups[u.id] = { fresh: 0, soft: 0 };
+      if (Save.freshness(u) === "soft") groups[u.id].soft++;
+      else groups[u.id].fresh++;
+    }
+    const ids = Object.keys(groups);
+    const room = slots.length < cap;
+    const tuck = ids.map((id) => {
+      const f = FISH.find((x) => x.id === id);
+      const g = groups[id];
+      const bits = [];
+      if (g.fresh) bits.push(`<span class="ink-fresh">Fresh ×${g.fresh}</span>`);
+      if (g.soft) bits.push(`<span class="ink-soft">Soft ×${g.soft}</span>`);
+      return `<button type="button" data-tuck="${id}">Tuck ${f ? f.name : id} · ${bits.join(" · ")}</button>`;
+    }).join("") || "<p>No loose fish to tuck.</p>";
+    const full = !room ? "<p>The cooler is full.</p>" : "";
+    el.innerHTML = `<p>Cooler ${slots.length} / ${cap}</p>${kept}<p>Loose</p>${tuck}${full}<p>Stew stock ×${stew}</p>`;
+    el.querySelectorAll("[data-take]").forEach((b) => b.addEventListener("click", () => {
+      Cottage._coolerTake(b.dataset.take | 0);
+      this.refresh();
+    }));
+    el.querySelectorAll("[data-tuck]").forEach((b) => b.addEventListener("click", () => {
+      Cottage._coolerTuck(b.dataset.tuck);
+      this.refresh();
+    }));
   },
 };
 
@@ -310,10 +410,14 @@ const Shop = {
       const have = Save.data.inventory.items.tank;
       return `<button type="button" data-buy="upgrade:tank" ${have ? "disabled" : ""}>${it.name} — donate a ${it.requireFish}</button>`;
     }).join("");
-    const sellable = FISH.filter((f) => Journal.caughtOf(f.id) > 0);
-    const sell = sellable.map((f) =>
-      `<button type="button" data-sell="${f.id}">Sell ${f.name} (${f.sell}c) ×${Journal.caughtOf(f.id)}</button>`
-    ).join("") || "<p>Nothing to sell.</p>";
+    const sellable = FISH.filter((f) => Save.countLoose(f.id) > 0);
+    const sell = sellable.map((f) => {
+      const n = Save.countLoose(f.id);
+      const oldest = Save.oldestLoose(f.id);
+      const price = oldest ? Save.sellPrice(oldest) : f.sell;
+      const soft = oldest && Save.freshness(oldest) === "soft";
+      return `<button type="button" data-sell="${f.id}">Sell ${f.name} (${price}c)${soft ? " (soft)" : ""} ×${n}</button>`;
+    }).join("") || "<p>Nothing to sell.</p>";
     el.innerHTML = `<p>${Inventory.coins()} coins</p><div class="shop-cols"><div>${buy}</div><div>${sell}</div></div>`;
     el.querySelectorAll("[data-buy]").forEach((b) => b.addEventListener("click", () => this.buy(b.dataset.buy)));
     el.querySelectorAll("[data-sell]").forEach((b) => b.addEventListener("click", () => this.sell(b.dataset.sell)));
@@ -330,7 +434,7 @@ const Shop = {
     } else if (kind === "rod") {
       const rod = RODS[id];
       if (Inventory.ownsRod(id) || Inventory.coins() < rod.cost) return;
-      if ((Journal.caughtOf(rod.requireFish) | 0) < 1) {
+      if (Save.countLoose(rod.requireFish) < 1) {
         UI.toastNote(`Wren wants a ${rod.requireFish} first.`);
         return;
       }
@@ -338,12 +442,12 @@ const Shop = {
       Inventory.giveRod(id);
     } else if (kind === "upgrade") {
       if (Save.data.inventory.items.tank) return;
-      if ((Journal.caughtOf("moonfin") | 0) < 1) {
+      if (Save.countLoose("moonfin") < 1) {
         UI.toastNote("A moonfin is the price of a wider tank.");
         return;
       }
-      const e = Save.ensureFish("moonfin");
-      e.caught = Math.max(0, e.caught - 1);
+      Save.takeOldestLoose("moonfin");
+      Save.syncCaught();
       Save.data.inventory.items.tank = 1;
       UI.toastNote("The aquarium has more room.");
     } else if (kind === "item") {
@@ -366,11 +470,10 @@ const Shop = {
   },
 
   sell(id) {
-    if ((Journal.caughtOf(id) | 0) < 1) return;
-    const f = FISH.find((x) => x.id === id);
-    const e = Save.ensureFish(id);
-    e.caught -= 1;
-    Inventory.addCoins(f.sell || 6);
+    const unit = Save.takeOldestLoose(id);
+    if (!unit) return;
+    Inventory.addCoins(Save.sellPrice(unit));
+    Save.syncCaught();
     Save.mark("sell");
     this.refresh();
   },
@@ -387,6 +490,7 @@ const Bench = {
     Board.close();
     Mail.close();
     if (typeof Tank !== "undefined") Tank.close();
+    if (typeof Cooler !== "undefined") Cooler.close();
     const el = document.getElementById("bench");
     if (el) el.classList.remove("hidden");
     this.refresh();
@@ -411,8 +515,10 @@ const Bench = {
       const m = MEALS[id];
       const known = Save.data.flags.cooked[id];
       const name = known ? m.name : "???";
+      const stock = Save.data.inventory.meals[id] | 0;
       const ok = Survival.canCook(id);
-      return `<button type="button" data-meal="${id}" ${ok ? "" : "disabled"}>${name} — ${m.desc}${ok ? "" : " (need more)"}</button>`;
+      const need = this._needLine(m.need);
+      return `<button type="button" data-meal="${id}" ${ok ? "" : "disabled"}><strong>${name} ×${stock}</strong><span>${m.desc}</span><span>${need}${ok ? "" : " · need more"}</span></button>`;
     }).join("");
     el.innerHTML = `<p>Bait</p>${baits}<p>Meals</p>${meals}`;
     el.querySelectorAll("[data-craft]").forEach((b) => b.addEventListener("click", () => {
@@ -427,5 +533,15 @@ const Bench = {
     el.querySelectorAll("[data-meal]").forEach((b) => b.addEventListener("click", () => {
       if (Survival.cook(b.dataset.meal)) this.refresh();
     }));
+  },
+
+  _needLine(need) {
+    return Object.keys(need).map((key) => {
+      const n = need[key] | 0;
+      if (key === "anyCommonFish") return `any common ×${n}`;
+      if (typeof BAIT !== "undefined" && BAIT[key]) return `${BAIT[key].name} ×${n}`;
+      const f = FISH.find((x) => x.id === key);
+      return `${f ? f.name : key} ×${n}`;
+    }).join(", ");
   },
 };

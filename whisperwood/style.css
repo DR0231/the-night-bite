@@ -528,11 +528,130 @@ kbd {
   z-index: 40;
 }
 
+.admin-panel {
+  width: min(760px, 96vw);
+  max-height: 88vh;
+}
+
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.admin-tabs button {
+  width: auto;
+  margin: 0;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.admin-tabs button.is-on {
+  background: #d4e8c8;
+}
+
+.admin-docs {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #3a2418;
+}
+
+.admin-docs h3 {
+  margin: 16px 0 6px;
+}
+
+.admin-docs p, .admin-docs li {
+  margin: 0 0 8px;
+}
+
+.admin-docs ol, .admin-docs ul {
+  padding-left: 1.2em;
+  margin: 0 0 10px;
+}
+
+.admin-docs code {
+  font-size: 12px;
+  background: #f3e2c4;
+  padding: 0 4px;
+}
+
+.admin-check {
+  list-style: none;
+  padding: 0;
+}
+
+.admin-check li {
+  padding: 8px 10px;
+  margin: 6px 0;
+  border: 1px solid #8b6238;
+  background: #f3e2c4;
+}
+
+.admin-check li.is-pass {
+  background: #d4e8c8;
+}
+
+.admin-check li.is-fail {
+  background: #f0d8c4;
+}
+
+.admin-panel h3 {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8b6238;
+  margin: 0 0 6px;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+}
+
+.admin-cmd-row {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 6px;
+}
+
+#admin-cmd {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #8b6238;
+  background: #f3e2c4;
+  font: 13px Georgia, serif;
+  color: var(--ink);
+}
+
+.admin-log, .admin-bait, #admin-status {
+  font-size: 12px;
+  color: #5a3a22;
+  margin: 4px 0 8px;
+}
+
+#admin-fish {
+  width: 100%;
+  margin: 6px 0;
+  padding: 6px;
+  border: 1px solid #8b6238;
+  background: #f3e2c4;
+  font: 13px Georgia, serif;
+}
+
+#admin-god.is-on {
+  background: #d4e8c8;
+}
+
 .pack-panel #pack-body button,
+.admin-panel button,
 #shop-body button,
 #board-body button,
 #bench-body button,
 #tank-body button,
+#cooler-body button,
 #rank-up-body button,
 .dialog-actions button {
   display: block;
@@ -545,6 +664,43 @@ kbd {
   font: 13px Georgia, serif;
   cursor: pointer;
   text-align: left;
+}
+
+#bench-body p {
+  margin: 10px 0 4px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b6238;
+}
+
+#cooler-body p {
+  margin: 10px 0 4px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6470;
+}
+
+#cooler-body .ink-fresh {
+  color: #3d4a42;
+}
+
+#cooler-body .ink-soft {
+  color: #5c6570;
+}
+
+#bench-body button span {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 3px;
+  color: #5a3a22;
+}
+
+#bench-body button[disabled] {
+  opacity: 0.55;
+  cursor: default;
 }
 
 .pack-bait.is-on { background: #d4e8c8; }

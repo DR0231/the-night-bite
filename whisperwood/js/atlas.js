@@ -432,7 +432,7 @@ const Atlas = {
     this.wrapped = true;
     this._orig = {};
     const skip = {
-      fence: 1, fenceH: 1, fenceV: 1, tank: 1,
+      fence: 1, fenceH: 1, fenceV: 1, tank: 1, crate: 1,
       grass: 1, dirt: 1, shore: 1, stone: 1, wood: 1, dock: 1, bridge: 1,
       caveWall: 1, caveFloor: 1,
     };
@@ -488,6 +488,14 @@ const Atlas = {
       Sprites.tank = function (ctx, x, y, t) {
         if (Atlas.drawTank(ctx, x, y, t)) return;
         return origTank.call(Sprites, ctx, x, y, t);
+      };
+    }
+    if (typeof Sprites.crate === "function") {
+      const origCrate = Sprites.crate;
+      this._orig.crate = origCrate;
+      Sprites.crate = function (ctx, x, y) {
+        if (!Atlas.draw(ctx, "crate", x, y)) origCrate.call(Sprites, ctx, x, y);
+        else if (Sprites.crateIce) Sprites.crateIce(ctx, x, y);
       };
     }
   },

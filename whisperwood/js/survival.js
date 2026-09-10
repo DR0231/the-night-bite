@@ -28,11 +28,11 @@ const Survival = {
     const f = Save.data.flags.campfire;
     if (!f || f.x == null) return false;
     if (World.id !== f.map) return false;
-    return Utils.dist(Player.x, Player.y, f.x, f.y) < 28;
+    return Utils.dist(Player.x, Player.y, f.x, f.y) < DESIGN.campfireRange;
   },
 
   barMult() {
-    return this.p().hunger < 20 ? 0.88 : 1;
+    return this.p().hunger < DESIGN.hungerBarShrink ? 0.88 : 1;
   },
 
   lanternLit() {
@@ -63,6 +63,7 @@ const Survival = {
 
   tick(dt) {
     if (!Save.data || this.passing || Game.fading || Game.sleeping) return;
+    if (typeof Admin !== "undefined" && Admin.god) return;
     const p = this.p();
     const weather = TimeCycle.weatherId();
     const phase = TimeCycle.phaseId();
@@ -85,7 +86,7 @@ const Survival = {
     const fishingHard = Fishing.active && (Fishing.state === "play" || Fishing.state === "reel" || Fishing.state === "bite");
     if (fishingHard) rest = 0.30;
     if (meal && meal.buff === "tea") rest *= 0.7;
-    if (has("nightowl") && night) rest *= 0.65;
+    if (has("nightowl") && night) rest *= DESIGN.nightOwlRest;
     if (this.nightHard()) rest += 0.12;
     p.rest -= rest * dt;
 
@@ -100,20 +101,20 @@ const Survival = {
     if (this.atFire()) warmth -= 0.85;
 
     let wMul = 1;
-    if ((Save.data.inventory.items.cloak | 0) > 0) wMul *= 0.7;
-    if (has("weathered") && (rain || frost)) wMul *= 0.65;
+    if ((Save.data.inventory.items.cloak | 0) > 0) wMul *= DESIGN.cloakWarmth;
+    if (has("weathered") && (rain || frost)) wMul *= DESIGN.weatheredWarmth;
     if (meal && meal.buff === "warm") {
       wMul *= 0.55;
       if (cave || frost) wMul *= 0.85;
     }
     let extra = weatherPart * wMul;
     if (weatherPart > 0) extra = Math.max(extra, 0.4 * weatherPart);
-    if (this.lanternLit() && night && outdoors && !cave) extra *= 0.55;
+    if (this.lanternLit() && night && outdoors && !cave) extra *= DESIGN.lanternWarmth;
     warmth += extra;
     p.warmth -= warmth * dt;
 
     if (this.lanternLit() && outdoors && night && !cave) {
-      Save.data.inventory.items.lanternFuel = Math.max(0, Save.data.inventory.items.lanternFuel - 0.12 * dt);
+      Save.data.inventory.items.lanternFuel = Math.max(0, Save.data.inventory.items.lanternFuel - DESIGN.lanternBurn * dt);
       if (Save.data.inventory.items.lanternFuel <= 0) Save.data.inventory.lanternOn = false;
     }
 
@@ -121,9 +122,9 @@ const Survival = {
     this.refreshPips();
 
     this.needPrompt = "";
-    if (p.warmth < 25) this.needPrompt = "You’re shivering. Cottage or tea.";
-    else if (p.rest < 25) this.needPrompt = "You’re worn out.";
-    else if (p.hunger < 25) this.needPrompt = "You’re hungry.";
+    if (p.warmth < DESIGN.needWarn) this.needPrompt = "You’re shivering. Cottage or tea.";
+    else if (p.rest < DESIGN.needWarn) this.needPrompt = "You’re worn out.";
+    else if (p.hunger < DESIGN.needWarn) this.needPrompt = "You’re hungry.";
 
     this._checkPassOut();
   },
@@ -137,7 +138,7 @@ const Survival = {
     if (!empty) return;
     const phase = TimeCycle.phaseId();
     const late = phase === "night" || phase === "golden";
-    const hungryCollapse = p.hunger < 15;
+    const hungryCollapse = p.hunger < DESIGN.passOutHunger;
     if (!late && !hungryCollapse) return;
     this.passOut();
   },
@@ -242,10 +243,10 @@ const Survival = {
     for (const key of Object.keys(need)) {
       const n = need[key] | 0;
       if (key === "anyCommonFish") {
-        if (!this._commonWithCatch()) return false;
+        if (Save.countLooseCommon() + Save.stewCount() < n) return false;
       } else if (BAIT[key]) {
         if (Inventory.baitCount(key) < n) return false;
-      } else if ((Journal.caughtOf(key) | 0) < n) {
+      } else if (Save.countLoose(key) < n) {
         return false;
       }
     }
@@ -253,24 +254,27 @@ const Survival = {
   },
 
   _commonWithCatch() {
-    return FISH.find((f) => f.rarity === "Common" && (Journal.caughtOf(f.id) | 0) > 0) || null;
+    return FISH.find((f) => f.rarity === "Common" && Save.countLoose(f.id) > 0) || null;
   },
 
   _consumeNeed(need) {
     for (const key of Object.keys(need)) {
       const n = need[key] | 0;
       if (key === "anyCommonFish") {
-        const f = this._commonWithCatch();
-        if (!f) return false;
-        const e = Save.ensureFish(f.id);
-        e.caught = Math.max(0, (e.caught | 0) - n);
+        for (let i = 0; i < n; i++) {
+          if (Save.takeOldestCommon()) continue;
+          if (Save.stewCount() < 1) return false;
+          Save.data.inventory.stew = Save.stewCount() - 1;
+        }
       } else if (BAIT[key]) {
         Inventory.addBait(key, -n);
       } else {
-        const e = Save.ensureFish(key);
-        e.caught = Math.max(0, (e.caught | 0) - n);
+        for (let i = 0; i < n; i++) {
+          if (!Save.takeOldestLoose(key)) return false;
+        }
       }
     }
+    Save.syncCaught();
     return true;
   },
 
@@ -288,15 +292,19 @@ const Survival = {
   eatMeal(id) {
     const meal = MEALS[id];
     if (!meal || (Save.data.inventory.meals[id] | 0) < 1) return false;
+    const prevId = Save.data.inventory.mealId;
+    const prev = prevId && prevId !== id ? MEALS[prevId] : null;
     Save.data.inventory.meals[id] -= 1;
     const cook = Skills.has("campcook");
-    const mul = cook ? 1.2 : 1;
+    const mul = cook ? DESIGN.campcookRestore : 1;
     this.add("hunger", meal.hunger * mul);
     this.add("warmth", meal.warmth * mul);
     this.add("rest", meal.rest * mul);
     Save.data.inventory.mealId = id;
     Save.data.inventory.mealUntilDay = (Save.data.clock.day | 0) + (cook ? 1 : 0);
-    UI.toastNote(`Ate ${meal.name}.`);
+    if (prev) UI.toastNote(`${meal.name} replaces ${prev.name}.`);
+    else UI.toastNote(`Ate ${meal.name}.`);
+    this.refreshPips();
     Save.mark();
     if (Inventory.open) Inventory.refresh();
     return true;
@@ -305,7 +313,7 @@ const Survival = {
   eatBerries() {
     if (Inventory.baitCount("berries") < 1) return false;
     Inventory.addBait("berries", -1);
-    this.add("hunger", 12);
+    this.add("hunger", DESIGN.berryHunger);
     UI.toastNote("A handful of vale berries.");
     Save.mark();
     if (Inventory.open) Inventory.refresh();
@@ -317,10 +325,10 @@ const Survival = {
     if (!(inv.items.lantern | 0)) return false;
     if (Inventory.baitCount("glow") > 0) {
       Inventory.addBait("glow", -1);
-      inv.items.lanternFuel = (inv.items.lanternFuel || 0) + 6;
+      inv.items.lanternFuel = (inv.items.lanternFuel || 0) + DESIGN.lanternFuel;
     } else if (Inventory.baitCount("crystal") > 0) {
       Inventory.addBait("crystal", -1);
-      inv.items.lanternFuel = (inv.items.lanternFuel || 0) + 6;
+      inv.items.lanternFuel = (inv.items.lanternFuel || 0) + DESIGN.lanternFuel;
     } else {
       return false;
     }

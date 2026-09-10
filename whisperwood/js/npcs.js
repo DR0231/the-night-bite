@@ -27,7 +27,7 @@ const Npcs = {
 
   talk(n) {
     const st = this.state(n.id);
-    const hearts = Math.min(3, st.hearts | 0);
+    const hearts = Math.min(DESIGN.npcHeartCap, st.hearts | 0);
     let line = n.greet;
     if (st.lastCatchRemembered) line = `That ${st.lastCatchRemembered} still sits with me. ` + line;
     if (hearts > 0) line = n.hearts[hearts - 1] || line;
@@ -54,15 +54,15 @@ const Npcs = {
       this._show(n.name, "One gift a day is plenty.", n);
       return;
     }
-    const extra = FISH.find((f) => (Journal.caughtOf(f.id) | 0) > 1);
+    const extra = FISH.find((f) => Save.countLoose(f.id) >= DESIGN.giftMinCaught);
     if (!extra) {
       this._show(n.name, "Keep the first of each. Bring me a duplicate sometime.", n);
       return;
     }
-    const e = Save.ensureFish(extra.id);
-    e.caught = Math.max(0, e.caught - 1);
+    Save.takeOldestLoose(extra.id);
+    Save.syncCaught();
     st.giftedToday = 1;
-    st.hearts = Math.min(3, (st.hearts | 0) + 1);
+    st.hearts = Math.min(DESIGN.npcHeartCap, (st.hearts | 0) + 1);
     this._show(n.name, n.hearts[st.hearts - 1] || "That’s kind.", n);
     Save.mark("gift");
     this._checkMarsh();
@@ -70,8 +70,8 @@ const Npcs = {
 
   _checkMarsh() {
     const unique = Journal.count();
-    const hearts = NPC_DATA.some((n) => (this.state(n.id).hearts | 0) >= 2);
-    if (unique >= 10 && Save.data.cottage.visited && hearts) {
+    const hearts = NPC_DATA.some((n) => (this.state(n.id).hearts | 0) >= DESIGN.millpondHearts);
+    if (unique >= DESIGN.millpondUnique && Save.data.cottage.visited && hearts) {
       Save.data.flags.fifthWater = true;
     }
   },
@@ -129,14 +129,21 @@ const Interact = {
     return false;
   },
 
-  hint() {
+  /** Talk, pickup, and cottage beat the idle Fish line. Sit/raft stay behind Fish. */
+  priorityHint() {
     if (World.id === "cottage") return Cottage.hint();
     const pick = Pickups.near();
     if (pick) return `Press E to pick ${pick}`;
-    if (Survival.atFire()) return "Sit by the fire";
-    if (Survival.canPlantFire()) return "Press E to set a campfire";
     const n = Npcs.at(Player.x, Player.y);
     if (n) return `Press E to talk to ${n.name}`;
+    return "";
+  },
+
+  hint() {
+    const first = this.priorityHint();
+    if (first) return first;
+    if (Survival.atFire()) return "Sit by the fire";
+    if (Survival.canPlantFire()) return "Press E to set a campfire";
     if (this._nearSit()) return "Press E to sit until dusk or dawn";
     if (Save.data.cottage.weeds > 0 && World.id === "vale" && Utils.dist(Player.x, Player.y, 27.5 * TILE_SIZE, 24.4 * TILE_SIZE) < 28) {
       return "Press E to clear weeds";

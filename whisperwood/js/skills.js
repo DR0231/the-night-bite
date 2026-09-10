@@ -40,17 +40,17 @@ const Skills = {
     if (!fish || !this.data) return;
     rec = rec || {};
     let xp = 0;
-    if (rec.first) xp += 40;
-    if (rec.record) xp += 18;
-    if (questBonus) xp += 15;
+    if (rec.first) xp += DESIGN.xpFirstLand;
+    if (rec.record) xp += DESIGN.xpRecord;
+    if (questBonus) xp += DESIGN.xpQuest;
     const today = this.data.speciesToday || (this.data.speciesToday = {});
     if (!today[fish.id]) {
-      xp += 10;
+      xp += DESIGN.xpSpeciesToday;
       today[fish.id] = 1;
     } else {
       const rep = this.data.repeatsToday || (this.data.repeatsToday = { total: 0 });
       rep.total = (rep.total | 0) + 1;
-      if (rep.total <= 8) xp += 2;
+      if (rep.total <= DESIGN.xpRepeatCap) xp += DESIGN.xpRepeat;
     }
     this._addXp(xp);
   },
@@ -62,7 +62,7 @@ const Skills = {
     const seen = this.data.sightXp || (this.data.sightXp = {});
     if (seen[fish.id]) return;
     seen[fish.id] = 1;
-    this._addXp(4);
+    this._addXp(DESIGN.xpSight);
   },
 
   _addXp(n) {
@@ -95,7 +95,7 @@ const Skills = {
       pool[i] = pool[j];
       pool[j] = t;
     }
-    this.data.offered = pool.slice(0, 2);
+    this.data.offered = pool.slice(0, DESIGN.perkOffer);
     this._showOffer();
   },
 

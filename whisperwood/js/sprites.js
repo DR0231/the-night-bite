@@ -295,6 +295,19 @@ const Sprites = {
     this.fill(ctx, x - 5, y - 8, 10, 2, PALETTE.woodHi);
     this.fill(ctx, x - 5, y - 1, 10, 1, PALETTE.woodLo);
     this.fill(ctx, x - 1, y - 8, 1, 8, PALETTE.woodLo);
+    this.crateIce(ctx, x, y);
+  },
+
+  crateIce(ctx, x, y) {
+    this.fill(ctx, x - 6, y - 11, 12, 4, "#d4e8f0");
+    this.fill(ctx, x - 6, y - 11, 12, 1, "#eef6fa");
+    this.fill(ctx, x - 6, y - 8, 12, 1, "#b7d0dc");
+    this.pixel(ctx, x - 3, y - 10, "#f4fafc");
+    this.pixel(ctx, x + 2, y - 9, "#c8e0ea");
+  },
+
+  cooler(ctx, x, y) {
+    this.crate(ctx, x, y);
   },
 
   shrub(ctx, x, y) {
@@ -682,8 +695,20 @@ const Sprites = {
   },
 
   bench(ctx, x, y) {
-    this.fill(ctx, x - 12, y - 8, 24, 10, PALETTE.wood);
-    this.fill(ctx, x - 12, y - 8, 24, 2, PALETTE.woodHi);
+    this.fill(ctx, x - 14, y - 8, 28, 10, PALETTE.wood);
+    this.fill(ctx, x - 14, y - 8, 28, 2, PALETTE.woodHi);
+    this.fill(ctx, x - 13, y - 6, 26, 1, "#6a4a28");
+    this.fill(ctx, x - 12, y + 2, 3, 4, PALETTE.woodLo);
+    this.fill(ctx, x + 9, y + 2, 3, 4, PALETTE.woodLo);
+    this.fill(ctx, x - 9, y - 6, 9, 5, "#4a4048");
+    this.fill(ctx, x - 8, y - 5, 7, 3, "#6a6068");
+    this.fill(ctx, x, y - 4, 4, 1, "#3a3038");
+    this.fill(ctx, x + 4, y - 8, 7, 6, "#6a3a28");
+    this.fill(ctx, x + 5, y - 9, 5, 2, "#8b4a32");
+    this.pixel(ctx, x + 11, y - 6, "#5a3020");
+    this.pixel(ctx, x + 6, y - 11, "#f3e2c4");
+    this.pixel(ctx, x + 7, y - 12, "#e8d2a4");
+    this.pixel(ctx, x + 5, y - 10, "#f3e2c499");
   },
 
   calendar(ctx, x, y) {

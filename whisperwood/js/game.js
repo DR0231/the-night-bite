@@ -10,7 +10,9 @@ const UI = {
     return this.journalOpen || Inventory.open || Shop.openFlag || Board.open || Mail.open
       || (typeof Bench !== "undefined" && Bench.openFlag)
       || (typeof Tank !== "undefined" && Tank.openFlag)
-      || Skills.offering;
+      || (typeof Cooler !== "undefined" && Cooler.openFlag)
+      || Skills.offering
+      || (typeof Admin !== "undefined" && Admin.open);
   },
 
   init() {
@@ -117,7 +119,7 @@ const UI = {
       li.classList.toggle("favorite", !!e.favorite);
       li.querySelector(".fish-name").textContent = known ? f.name : "???";
       li.querySelector(".fish-meta").innerHTML = landed
-        ? `<i class="dot ${f.rarity.toLowerCase()}"></i> ${f.rarity} · ${SPOTS[f.spot].name} · ×${e.caught} · best ${e.biggest}"`
+        ? `<i class="dot ${f.rarity.toLowerCase()}"></i> ${f.rarity} · ${SPOTS[f.spot].name} · ×${e.landed} · best ${e.biggest}"`
         : `<i class="dot ${f.rarity.toLowerCase()}"></i> ${SPOTS[f.spot].name}${known ? " · sighted" : ""}`;
       const c = li.querySelector("canvas").getContext("2d");
       c.imageSmoothingEnabled = false;
@@ -139,6 +141,7 @@ const UI = {
     Inventory.close(); Shop.close(); Board.close(); Mail.close();
     if (typeof Bench !== "undefined") Bench.close();
     if (typeof Tank !== "undefined") Tank.close();
+    if (typeof Cooler !== "undefined") Cooler.close();
     // Journal pauses movement and world time, but is not a bite-timer exploit:
     // wait/nibble packs up the rod; an open minigame fails on the spot.
     if (Fishing.state === "wait" || Fishing.state === "nibble") Fishing.cancel();
@@ -163,41 +166,55 @@ const UI = {
     Npcs.close();
     if (typeof Bench !== "undefined") Bench.close();
     if (typeof Tank !== "undefined") Tank.close();
+    if (typeof Cooler !== "undefined") Cooler.close();
+    if (typeof Admin !== "undefined") Admin.close();
   },
 
   showCatch(fish, rec) {
     rec = rec || {};
-    this.els.toast.classList.remove("miss");
+    const el = this.els.toast;
+    if (!el) return;
+    el.classList.remove("miss");
+    const kickerEl = el.querySelector(".toast-kicker");
     let kicker = "Caught!";
     if (rec.first) kicker = "First catch!";
     else if (rec.record) kicker = "New record";
-    this.els.toast.querySelector(".toast-kicker").textContent = kicker;
-    this.els.toastName.textContent = fish.name;
-    this.els.toastDesc.textContent = `${rec.inches ? rec.inches + '" · ' : ""}${fish.desc}`;
-    this.els.toast.classList.remove("hidden");
-    const c = document.createElement("canvas");
-    c.width = 48; c.height = 48;
-    const g = c.getContext("2d");
-    g.imageSmoothingEnabled = false;
-    g.fillStyle = "#1a3a48";
-    g.fillRect(0, 0, 48, 48);
-    g.save();
-    g.translate(22, 24);
-    Sprites.fishIcon(g, 0, 0, fish, false);
-    g.restore();
-    this.els.toastArt.replaceChildren(c);
+    if (kickerEl) kickerEl.textContent = kicker;
+    if (this.els.toastName) this.els.toastName.textContent = fish && fish.name ? fish.name : "A catch";
+    if (this.els.toastDesc) {
+      this.els.toastDesc.textContent = `${rec.inches ? rec.inches + '" · ' : ""}${(fish && fish.desc) || ""}`;
+    }
+    el.classList.remove("hidden");
     this.toastT = 2.2;
+    try {
+      const c = document.createElement("canvas");
+      c.width = 48; c.height = 48;
+      const g = c.getContext("2d");
+      g.imageSmoothingEnabled = false;
+      g.fillStyle = "#1a3a48";
+      g.fillRect(0, 0, 48, 48);
+      g.save();
+      g.translate(22, 24);
+      Sprites.fishIcon(g, 0, 0, fish, false);
+      g.restore();
+      if (this.els.toastArt) this.els.toastArt.replaceChildren(c);
+    } catch (err) { /* toast copy still shows */ }
     this.refreshJournal();
   },
 
   showMiss(fish) {
-    this.els.toast.classList.add("miss");
-    this.els.toast.querySelector(".toast-kicker").textContent = "Miss";
-    this.els.toastName.textContent = fish ? `${fish.name} got away…` : "It got away…";
-    this.els.toastDesc.textContent = fish ? "A sighting for the journal. Try again." : "The line went slack. Try again.";
-    this.els.toast.classList.remove("hidden");
-    this.els.toastArt.replaceChildren();
-    this.toastT = 1.6;
+    const el = this.els.toast;
+    if (!el) return;
+    el.classList.add("miss");
+    const kickerEl = el.querySelector(".toast-kicker");
+    if (kickerEl) kickerEl.textContent = "Miss";
+    if (this.els.toastName) this.els.toastName.textContent = fish ? `${fish.name} got away…` : "It got away…";
+    if (this.els.toastDesc) {
+      this.els.toastDesc.textContent = fish ? "A sighting for the journal. Try again." : "The line went slack. Try again.";
+    }
+    el.classList.remove("hidden");
+    if (this.els.toastArt) this.els.toastArt.replaceChildren();
+    this.toastT = 2.2;
     this.refreshJournal();
   },
 
@@ -254,12 +271,20 @@ const UI = {
       }
     }
 
-    let prompt = Fishing.prompt();
-    if (!prompt && !this.anyMenu()) {
-      const gate = World.nearPortal(Player.x, Player.y);
-      if (gate) prompt = gate.hint;
-      else prompt = Interact.hint();
-      if (!prompt && Survival.needPrompt) prompt = Survival.needPrompt;
+    let prompt = "";
+    if (!this.anyMenu()) {
+      if (Fishing.state !== "idle") {
+        prompt = Fishing.prompt();
+      } else {
+        prompt = Interact.priorityHint();
+        if (!prompt) {
+          const gate = World.nearPortal(Player.x, Player.y);
+          if (gate) prompt = gate.hint;
+        }
+        if (!prompt) prompt = Fishing.prompt();
+        if (!prompt) prompt = Interact.hint();
+        if (!prompt && Survival.needPrompt) prompt = Survival.needPrompt;
+      }
     }
     if (prompt && !this.anyMenu()) {
       this.els.prompt.textContent = prompt;
@@ -309,7 +334,7 @@ const Game = {
       window.addEventListener("visibilitychange", () => { if (document.hidden) Save.write(); });
       window.addEventListener("pagehide", () => Save.write());
       const hint = document.getElementById("hint");
-      if (hint) hint.textContent = "J Journal · I Pack";
+      if (hint) hint.textContent = "J Journal · I Pack · F8 Admin";
       Camera.x = Player.x - CONFIG.VIEW_W * 0.5;
       Camera.y = Player.y - CONFIG.VIEW_H * 0.58;
       Camera.clampToWorld(World.pw, World.ph);
@@ -396,7 +421,8 @@ const Game = {
   _sleepTarget(phase) {
     const dayLen = CONFIG.DAY_LENGTH;
     const dayBase = Math.floor(TimeCycle.seconds / dayLen) * dayLen;
-    const hour = phase === "dawn" ? 6 : 17.6;
+    const ph = DESIGN.phases.find((p) => p.id === (phase === "dawn" ? "dawn" : "golden"));
+    const hour = ph ? ph.hour : (phase === "dawn" ? 6 : 17.6);
     let target = dayBase + (hour / 24) * dayLen;
     if (target <= TimeCycle.seconds + 10) target += dayLen;
     return target;
@@ -484,8 +510,10 @@ const Game = {
     const dt = Math.min(0.05, (now - this.last) / 1000);
     this.last = now;
 
-    if (Input.pressed["j"] && !Skills.offering && !this.sleeping) UI.toggleJournal();
-    if (Input.pressed["i"] && !Skills.offering && !this.sleeping) Inventory.toggle();
+    if (!(typeof Admin !== "undefined" && Admin.open)) {
+      if (Input.pressed["j"] && !Skills.offering && !this.sleeping) UI.toggleJournal();
+      if (Input.pressed["i"] && !Skills.offering && !this.sleeping) Inventory.toggle();
+    }
     if (Input.pressed["1"]) Inventory.numberKey(1);
     if (Input.pressed["2"]) Inventory.numberKey(2);
     if (Input.pressed["3"]) Inventory.numberKey(3);

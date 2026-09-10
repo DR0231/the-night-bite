@@ -36,18 +36,19 @@ const Inventory = {
       if (this.baitCount("worms") > 0) Save.data.inventory.equippedBait = "worms";
       else return "none";
     }
+    if (typeof Admin !== "undefined" && Admin.god) return this.equipped();
     this.addBait(this.equipped(), -1);
     return this.equipped();
   },
 
   biteMult(spotId) {
-    if (this.baitCount(this.equipped()) <= 0) return 0.45;
+    if (this.baitCount(this.equipped()) <= 0) return DESIGN.emptyHookBite;
     const id = this.equipped();
     const bait = BAIT[id] || BAIT.worms;
     let m = bait.bonus || 1;
-    if (bait.prefer && bait.prefer === spotId) m *= 1.25;
-    else if (bait.prefer) m *= 0.72;
-    if (spotId === "cave" && bait.prefer !== "cave") m *= bait.strong ? 1 : 0.42;
+    if (bait.prefer && bait.prefer === spotId) m *= DESIGN.preferBait;
+    else if (bait.prefer) m *= DESIGN.wrongPreferBait;
+    if (spotId === "cave" && bait.prefer !== "cave") m *= bait.strong ? 1 : DESIGN.caveWrongBait;
     if (spotId === "cave" && (id === "glow" || id === "glowplus")) m *= this.rod().caveLuck || 1;
     return m;
   },
@@ -66,6 +67,7 @@ const Inventory = {
       Mail.close();
       if (typeof Bench !== "undefined") Bench.close();
       if (typeof Tank !== "undefined") Tank.close();
+      if (typeof Cooler !== "undefined") Cooler.close();
       this.refresh();
     } else {
       Save.mark();
@@ -117,6 +119,7 @@ const Inventory = {
       <p class="pack-rod"><strong>${rod.name}</strong> — ${rod.desc}</p>
       <p class="pack-rank">${Skills.line()}</p>
       <p class="pack-coins">${this.coins()} coins</p>
+      <p class="pack-fish">Loose fish ×${Save.loose().length} · Stew ×${Save.stewCount()}</p>
       <div class="pack-baits">${rows}</div>
       <p class="pack-extra">${extras}</p>
       <p class="pack-meal">${mealLine}</p>
@@ -232,7 +235,7 @@ const Pickups = {
     if (!best) return false;
     best.taken = true;
     let n = best.n || 1;
-    if (Skills.has("forager") && Math.random() < 0.4) n += 1;
+    if (Skills.has("forager") && Math.random() < DESIGN.foragerChance) n += 1;
     Inventory.addBait(best.item, n);
     UI.toastNote(`Picked ${BAIT[best.item] ? BAIT[best.item].name : best.item}.`);
     Save.mark();

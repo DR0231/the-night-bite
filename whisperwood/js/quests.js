@@ -40,9 +40,9 @@ const Quests = {
     const d = Save.data.quests.daily;
     if (d && !d.done && fish.id === d.fish) {
       d.done = true;
-      Inventory.addCoins(18);
-      Inventory.addBait("worms", 3);
-      Save.data.npcs.wren.hearts = Math.min(3, (Save.data.npcs.wren.hearts | 0) + 1);
+      Inventory.addCoins(DESIGN.dailyCoins);
+      Inventory.addBait("worms", DESIGN.dailyWorms);
+      Save.data.npcs.wren.hearts = Math.min(DESIGN.npcHeartCap, (Save.data.npcs.wren.hearts | 0) + 1);
       UI.toastNote("Daily board complete. Wren is pleased.");
       Save.mark("quest");
       bonus = true;
