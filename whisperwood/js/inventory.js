@@ -14,8 +14,15 @@ const Inventory = {
   equipped() { return Save.data.inventory.equippedBait || "worms"; },
 
   equip(id) {
+    if (id === "none" || id === "") {
+      Save.data.inventory.equippedBait = "none";
+      return true;
+    }
     if (!HOOK_BAIT.includes(id)) return false;
-    if (this.baitCount(id) <= 0 && id !== "worms") return false;
+    if (this.baitCount(id) <= 0) {
+      UI.toastNote("That bait is gone. Choose another, or fish an empty hook.");
+      return false;
+    }
     Save.data.inventory.equippedBait = id;
     return true;
   },
@@ -32,13 +39,20 @@ const Inventory = {
 
   consumeCastBait() {
     const id = this.equipped();
-    if (this.baitCount(id) <= 0) {
-      if (this.baitCount("worms") > 0) Save.data.inventory.equippedBait = "worms";
-      else return "none";
+    if (id === "none" || this.baitCount(id) <= 0) {
+      Save.data.inventory.equippedBait = "none";
+      return "none";
     }
-    if (typeof Admin !== "undefined" && Admin.god) return this.equipped();
-    this.addBait(this.equipped(), -1);
-    return this.equipped();
+    if (typeof Admin !== "undefined" && Admin.god) return id;
+    this.addBait(id, -1);
+    const left = this.baitCount(id);
+    if (left <= 0) {
+      Save.data.inventory.equippedBait = "none";
+      UI.toastNote(`${BAIT[id].name} is gone. Empty hook — pick bait in the pack (I).`);
+    } else if (left < 3) {
+      UI.toastNote(`${BAIT[id].name} running low (×${left}).`);
+    }
+    return id;
   },
 
   biteMult(spotId) {
@@ -68,6 +82,7 @@ const Inventory = {
       if (typeof Bench !== "undefined") Bench.close();
       if (typeof Tank !== "undefined") Tank.close();
       if (typeof Cooler !== "undefined") Cooler.close();
+      if (typeof Trophy !== "undefined") Trophy.close();
       this.refresh();
     } else {
       Save.mark();
@@ -87,14 +102,44 @@ const Inventory = {
     if (!el) return;
     const rod = this.rod();
     const eq = this.equipped();
+    const emptyOn = eq === "none" || this.baitCount(eq) <= 0;
     const rows = HOOK_BAIT.map((id, i) => {
       const b = BAIT[id];
       const n = this.baitCount(id);
-      const on = eq === id;
-      return `<button type="button" class="pack-bait${on ? " is-on" : ""}" data-bait="${id}">
-        <kbd>${i + 1}</kbd> ${b.name} ×${n}${on ? " · on hook" : ""}
+      const on = eq === id && n > 0;
+      const low = n > 0 && n < 3;
+      return `<button type="button" class="pack-bait${on ? " is-on" : ""}${low ? " is-low" : ""}" data-bait="${id}">
+        <kbd>${i + 1}</kbd> ${b.name} ×${n}${on ? " · on hook" : ""}${n === 0 ? " · out" : low ? " · low" : ""}
       </button>`;
     }).join("");
+    const emptyBtn = `<button type="button" class="pack-bait${emptyOn ? " is-on" : ""}" data-bait="none">Empty hook${emptyOn ? " · selected" : ""}</button>`;
+    const rodBtns = Object.keys(RODS).map((id) => {
+      const r = RODS[id];
+      const have = this.ownsRod(id);
+      const on = this.rod().id === id;
+      return `<button type="button" data-rod="${id}" ${have ? "" : "disabled"} class="${on ? "is-on" : ""}">${r.name}${on ? " · in hand" : have ? "" : " · locked"}</button>`;
+    }).join("");
+    const heartLine = NPC_DATA.map((n) => {
+      const h = (Save.data.npcs[n.id] && Save.data.npcs[n.id].hearts) | 0;
+      const cap = DESIGN.npcHeartCap;
+      const dots = "♥".repeat(h) + "♡".repeat(Math.max(0, cap - h));
+      const rank = h >= 3 ? "dear" : h >= 2 ? "friend" : h >= 1 ? "acquaintance" : "stranger";
+      return `${n.name} ${dots} (${rank})`;
+    }).join(" · ");
+    const looseGroups = Object.create(null);
+    for (const u of Save.loose()) {
+      if (!looseGroups[u.id]) looseGroups[u.id] = { fresh: 0, soft: 0 };
+      if (Save.freshness(u) === "soft") looseGroups[u.id].soft++;
+      else looseGroups[u.id].fresh++;
+    }
+    const fishLines = Object.keys(looseGroups).map((id) => {
+      const f = FISH.find((x) => x.id === id);
+      const g = looseGroups[id];
+      const bits = [];
+      if (g.fresh) bits.push(`<span class="ink-fresh">Fresh ×${g.fresh}</span>`);
+      if (g.soft) bits.push(`<span class="ink-soft">Aging ×${g.soft}</span>`);
+      return `${f ? f.name : id}: ${bits.join(" · ")} <button type="button" data-eatfish="${id}">Eat</button>`;
+    }).join("<br/>") || "No loose fish.";
     const extras = ["berries", "crystal"].map((id) => `${BAIT[id].name} ×${this.baitCount(id)}`).join(" · ");
     const meal = Survival.meal();
     const mealLine = meal ? `Active meal: ${meal.name}` : "No meal in you.";
@@ -117,10 +162,12 @@ const Inventory = {
     }
     el.innerHTML = `
       <p class="pack-rod"><strong>${rod.name}</strong> — ${rod.desc}</p>
+      <div class="pack-rods">${rodBtns}</div>
       <p class="pack-rank">${Skills.line()}</p>
       <p class="pack-coins">${this.coins()} coins</p>
-      <p class="pack-fish">Loose fish ×${Save.loose().length} · Stew ×${Save.stewCount()}</p>
-      <div class="pack-baits">${rows}</div>
+      <p class="pack-hearts">${heartLine}</p>
+      <p class="pack-fish">${fishLines}<br/>Stew ×${Save.stewCount()}</p>
+      <div class="pack-baits">${emptyBtn}${rows}</div>
       <p class="pack-extra">${extras}</p>
       <p class="pack-meal">${mealLine}</p>
       <div class="pack-eats">${cooked}</div>
@@ -138,8 +185,20 @@ const Inventory = {
     el.querySelectorAll("[data-bait]").forEach((btn) => {
       btn.addEventListener("click", () => { this.equip(btn.dataset.bait); this.refresh(); });
     });
+    el.querySelectorAll("[data-rod]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (!this.ownsRod(btn.dataset.rod)) return;
+        Save.data.inventory.rodId = btn.dataset.rod;
+        UI.toastNote(RODS[btn.dataset.rod].name + " in hand.");
+        this.refresh();
+        Save.mark();
+      });
+    });
     el.querySelectorAll("[data-eat]").forEach((btn) => {
       btn.addEventListener("click", () => Survival.eatMeal(btn.dataset.eat));
+    });
+    el.querySelectorAll("[data-eatfish]").forEach((btn) => {
+      btn.addEventListener("click", () => Survival.eatFish(btn.dataset.eatfish));
     });
     const berries = el.querySelector("#btn-eat-berries");
     if (berries) berries.addEventListener("click", () => Survival.eatBerries());

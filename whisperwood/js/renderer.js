@@ -15,7 +15,7 @@ const Renderer = {
   },
 
   resize() {
-    const host = document.getElementById("frame") || this.canvas.parentElement;
+    const host = document.getElementById("stage") || document.getElementById("frame") || this.canvas.parentElement;
     const pad = 24;
     const maxW = Math.max(320, (host.clientWidth || window.innerWidth) - pad);
     const maxH = Math.max(180, (host.clientHeight || window.innerHeight) - pad);
@@ -71,7 +71,7 @@ const Renderer = {
 
     ctx.restore();
 
-    this._lighting(ctx, light);
+    this._lighting(ctx, light, cam);
 
     // Line stays above the lighting pass so it never gets lost in dusk/night tint.
     ctx.save();
@@ -184,14 +184,14 @@ const Renderer = {
 
   _deco(ctx, d, t, light) {
     const sway = Math.sin(t * 1.3 + (d.seed || d.x * 0.05)) * 1.4;
-    if (d.type === "player") { Player.draw(ctx); return; }
+    if (d.type === "player") { Player.draw(ctx); this._eatFx(ctx, d); return; }
     if (d.type === "oak") Sprites.treeOak(ctx, d.x, d.y, sway, light.shadow);
     else if (d.type === "pine") Sprites.treePine(ctx, d.x, d.y, sway, light.shadow);
     else if (d.type === "rock") Sprites.rock(ctx, d.x, d.y, d.variant || 0);
     else if (d.type === "flower") Sprites.flower(ctx, d.x, d.y, d.variant || 0);
     else if (d.type === "stump") Sprites.stump(ctx, d.x, d.y);
     else if (d.type === "fence") Sprites.fence(ctx, d.x, d.y, d.horiz);
-    else if (d.type === "sign") Sprites.sign(ctx, d.x, d.y);
+    else if (d.type === "sign" || d.type === "waterSign") Sprites.sign(ctx, d.x, d.y);
     else if (d.type === "crystal") Sprites.crystal(ctx, d.x, d.y, t);
     else if (d.type === "caveMouth") Sprites.caveMouth(ctx, d.x, d.y);
     else if (d.type === "crate") Sprites.crate(ctx, d.x, d.y);
@@ -213,13 +213,17 @@ const Renderer = {
     else if (d.type === "calendar") Sprites.calendar(ctx, d.x, d.y);
     else if (d.type === "mailtray") Sprites.mailtray(ctx, d.x, d.y);
     else if (d.type === "certificate") Sprites.certificate(ctx, d.x, d.y);
+    else if (d.type === "dayclock") {
+      if (Save.data.inventory.items.dayclock) Sprites.dayclock(ctx, d.x, d.y);
+    }
     else if (d.type === "campfire") Sprites.campfire(ctx, d.x, d.y, t);
   },
 
-  _lighting(ctx, light) {
+  _lighting(ctx, light, cam) {
     if (World.id === "cottage") {
       ctx.fillStyle = "rgba(40, 24, 12, 0.22)";
       ctx.fillRect(0, 0, this.viewW, this.viewH);
+      this._lanternGlow(ctx, cam);
       return;
     }
     if (World.inCave()) {
@@ -232,6 +236,7 @@ const Renderer = {
       glow.addColorStop(1, "rgba(8, 10, 22, 0.42)");
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, this.viewW, this.viewH);
+      this._lanternGlow(ctx, cam);
       return;
     }
 
@@ -258,6 +263,57 @@ const Renderer = {
     g.addColorStop(1, "rgba(6, 12, 8, 0.28)");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, this.viewW, this.viewH);
+    this._weatherVeil(ctx);
+    this._lanternGlow(ctx, cam);
+  },
+
+  _weatherVeil(ctx) {
+    if (World.id === "cottage") return;
+    const w = typeof TimeCycle !== "undefined" ? TimeCycle.weatherId() : "clear";
+    if (w === "clear") return;
+    ctx.save();
+    if (w === "rain") ctx.fillStyle = "rgba(32, 52, 80, 0.22)";
+    else if (w === "mist") ctx.fillStyle = "rgba(200, 214, 224, 0.22)";
+    else if (w === "heat") ctx.fillStyle = "rgba(255, 160, 60, 0.14)";
+    else if (w === "frost") ctx.fillStyle = "rgba(190, 214, 255, 0.18)";
+    else ctx.fillStyle = "rgba(0,0,0,0)";
+    ctx.fillRect(0, 0, this.viewW, this.viewH);
+    ctx.restore();
+  },
+
+  _lanternGlow(ctx, cam) {
+    if (typeof Survival === "undefined" || !Survival.lanternLit()) return;
+    const sx = Player.x - (cam ? cam.x : 0);
+    const sy = Player.y - 20 - (cam ? cam.y : 0);
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    const glow = ctx.createRadialGradient(sx, sy, 8, sx, sy, 128);
+    glow.addColorStop(0, "rgba(255, 220, 140, 0.7)");
+    glow.addColorStop(0.35, "rgba(255, 176, 80, 0.28)");
+    glow.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(sx, sy, 128, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  },
+
+  _eatFx(ctx, d) {
+    const eat = Game.eating;
+    if (!eat) return;
+    const u = eat.t / eat.dur;
+    const bob = Math.sin(eat.t * 10) * 2;
+    const scale = u < 0.65 ? 1 : Math.max(0.2, 1 - (u - 0.65) / 0.35);
+    ctx.save();
+    ctx.globalAlpha = u < 0.75 ? 1 : 1 - (u - 0.75) / 0.25;
+    ctx.translate(d.x + 10, d.y - 18 + bob);
+    ctx.scale(scale, scale);
+    if (eat.fish) Sprites.fishIcon(ctx, 0, 0, eat.fish, false);
+    else {
+      ctx.fillStyle = "#c45a5a";
+      ctx.fillRect(-4, -4, 8, 8);
+    }
+    ctx.restore();
   },
 
   _particles(ctx, cam) {

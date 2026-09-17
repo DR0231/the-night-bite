@@ -60,6 +60,44 @@ const Journal = {
     if (ok) Save.data.flags.spotMastery[spotId] = true;
   },
 
+  hintLine(f) {
+    if (!f) return "";
+    const bits = [];
+    if (f.rarity === "Rare") bits.push(f.sell >= 30 || f.nightOnly ? "ultra-rare" : "rare");
+    if (f.rainOnly) bits.push("only in rain");
+    if (f.nightOnly) bits.push("only at night");
+    if (f.season) bits.push("best in " + f.season);
+    if (f.baitBias) {
+      let best = "", bestW = 0;
+      for (const id of Object.keys(f.baitBias)) {
+        if (f.baitBias[id] > bestW) { bestW = f.baitBias[id]; best = id; }
+      }
+      if (best && BAIT[best]) bits.push("likes " + BAIT[best].name);
+    }
+    if (f.bite) {
+      let peak = "day", pv = -1;
+      for (const k of ["dawn", "day", "golden", "night"]) {
+        if ((f.bite[k] || 0) > pv) { pv = f.bite[k]; peak = k; }
+      }
+      const names = { dawn: "dawn", day: "midday", golden: "dusk", night: "night" };
+      bits.push("bites most at " + names[peak]);
+    }
+    return bits.join(" · ");
+  },
+
+  signText(spotId) {
+    const s = SPOTS[spotId];
+    if (!s) return "";
+    const list = FISH.filter((f) => f.spot === spotId);
+    const names = list.map((f) => {
+      const tag = f.rarity === "Rare" ? (f.sell >= 30 || f.nightOnly ? " (ultra-rare)" : " (rare)") : "";
+      return f.name + tag;
+    }).join(", ");
+    const rares = list.filter((f) => f.rarity === "Rare");
+    const extra = rares.map((f) => `${f.name}: ${this.hintLine(f)}`).filter(Boolean).join(" · ");
+    return `${s.name}. Catch: ${names}. ${s.flavor}${extra ? " Hints — " + extra : ""}`;
+  },
+
   bestAt(spotId) {
     let best = null;
     for (const f of FISH) {

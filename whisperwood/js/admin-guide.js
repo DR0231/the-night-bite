@@ -91,7 +91,7 @@ const AdminGuide = {
       <p>Bar width = rod.bar × Steady hands (${PERKS.steadyhands ? "×1.12" : ""}) × river-stew-style steady meal × hunger-under-${D.hungerBarShrink} penalty (×0.88). Finch is snappier (speed ${RODS.finch.speed}); Spine is the cave rod (tension ${RODS.spine.tension}, caveLuck ${RODS.spine.caveLuck}).</p>
 
       <h3>Needs</h3>
-      <p>Five pips. Warnings under ${D.needWarn}. Hunger 0 blocks rares. Cloak ×${D.cloakWarmth} weather warmth. Lantern (lit, night, outdoors, not cave) ×${D.lanternWarmth} extra warmth drain and skips the “night without lamp” rest penalty. Fuel burns ${D.lanternBurn}/s; +${D.lanternFuel} per glow or crystal. Campfire warms inside ${D.campfireRange}px until dawn. Berries eat for +${D.berryHunger} hunger, no buff.</p>
+      <p>${D.needPips || 10} pips. Warnings under ${D.needWarn}, critical at ${D.needCrit || 10}. Hunger 0 blocks rares. Cloak ×${D.cloakWarmth} weather warmth. Lantern (lit, night, outdoors, not cave) ×${D.lanternWarmth} extra warmth drain and skips the “night without lamp” rest penalty. Fuel burns ${D.lanternBurn}/s; +${D.lanternFuel} per glow or crystal. Campfire warms inside ${D.campfireRange}px until dawn. Berries eat for +${D.berryHunger} hunger, no buff.</p>
     `;
   },
 

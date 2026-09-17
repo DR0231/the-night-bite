@@ -30,7 +30,11 @@ const Npcs = {
     const hearts = Math.min(DESIGN.npcHeartCap, st.hearts | 0);
     let line = n.greet;
     if (st.lastCatchRemembered) line = `That ${st.lastCatchRemembered} still sits with me. ` + line;
+    const cap = DESIGN.npcHeartCap;
+    const rank = hearts >= 3 ? "dear" : hearts >= 2 ? "friend" : hearts >= 1 ? "acquaintance" : "stranger";
+    const dots = "♥".repeat(hearts) + "♡".repeat(Math.max(0, cap - hearts));
     if (hearts > 0) line = n.hearts[hearts - 1] || line;
+    line = `${dots} ${rank}. ` + line;
     if (n.role === "shop") {
       if (Skills.rank() >= 5) line = "Lanterns for the long walk home. " + line;
       else if (Skills.rank() >= 4) line = "A cloak if the frost is in. " + line;
@@ -125,6 +129,7 @@ const Interact = {
     if (this._plantFire()) return true;
     if (this._sitDock()) return true;
     if (this._weeds()) return true;
+    if (this._readSign()) return true;
     if (this._raft()) return true;
     return false;
   },
@@ -149,9 +154,27 @@ const Interact = {
       return "Press E to clear weeds";
     }
     if (this._nearRaft()) {
-      return Save.data.flags.fifthWater ? "Walk the raft to the millpond" : "The east raft is tied. Come back with more of the vale.";
+      if (World.id === "marsh") return "Press E to boat back to the vale";
+      return Save.data.flags.fifthWater ? "Board the millpond boat" : "The east boat is lashed. Come back with more of the vale.";
     }
+    const sign = this._nearSign();
+    if (sign) return "Press E to read the water sign";
     return "";
+  },
+
+  _nearSign() {
+    for (const d of World.decos) {
+      if (d.type !== "waterSign") continue;
+      if (Utils.dist(Player.x, Player.y, d.x, d.y) < 20) return d;
+    }
+    return null;
+  },
+
+  _readSign() {
+    const d = this._nearSign();
+    if (!d) return false;
+    UI.toastNote(Journal.signText(d.spot));
+    return true;
   },
 
   _plantFire() {
@@ -182,18 +205,28 @@ const Interact = {
   },
 
   _nearRaft() {
-    return World.id === "vale" && Utils.dist(Player.x, Player.y, 58.5 * TILE_SIZE, 24.5 * TILE_SIZE) < 22;
+    if (World.id === "vale") return Utils.dist(Player.x, Player.y, 59.2 * TILE_SIZE, 24.9 * TILE_SIZE) < 32;
+    if (World.id === "marsh") return Utils.dist(Player.x, Player.y, 4.5 * TILE_SIZE, 12.2 * TILE_SIZE) < 32;
+    return false;
   },
 
   _raft() {
     if (!this._nearRaft()) return false;
+    if (World.id === "marsh") {
+      Game.warp({
+        to: "vale",
+        spawn: { x: 59.2 * TILE_SIZE, y: 26.4 * TILE_SIZE },
+        dir: 1,
+      });
+      return true;
+    }
     if (!Save.data.flags.fifthWater) {
-      UI.toastNote("The raft stays lashed until the vale knows you.");
+      UI.toastNote("The boat stays lashed until the vale knows you.");
       return true;
     }
     Game.warp({
       to: "marsh",
-      spawn: { x: 8 * TILE_SIZE, y: 12 * TILE_SIZE },
+      spawn: { x: 7.6 * TILE_SIZE, y: 12.2 * TILE_SIZE },
       dir: 2,
     });
     return true;

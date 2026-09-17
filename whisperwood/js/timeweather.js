@@ -122,19 +122,37 @@ const Weather = {
 
   spawnAmbient(dt) {
     const w = TimeCycle.weatherId();
-    if (w === "rain" && Particles.list.length < 48 && Math.random() < dt * 18) {
+    const indoor = World.id === "cottage";
+    if (!indoor && w === "rain") {
+      const n = Math.min(14, 2 + ((dt * 90) | 0));
+      for (let i = 0; i < n && Particles.list.length < 96; i++) {
+        Particles.spawn({
+          x: Camera.x + Math.random() * (Camera.w + 48) - 24,
+          y: Camera.y - 6,
+          vx: -30, vy: 110 + Math.random() * 55,
+          life: 0.55, max: 0.55, size: Math.random() < 0.35 ? 2 : 1, color: "#b8d0e0", kind: "drop",
+        });
+      }
+    }
+    if (!indoor && w === "mist" && Particles.list.length < 42 && Math.random() < dt * 7) {
       Particles.spawn({
-        x: Camera.x + Math.random() * Camera.w,
-        y: Camera.y - 4,
-        vx: -18, vy: 90 + Math.random() * 40,
-        life: 0.5, max: 0.5, size: 1, color: "#9ab8cc", kind: "drop",
+        x: Player.x + (Math.random() - 0.5) * 140,
+        y: Player.y + (Math.random() - 0.5) * 80,
+        vx: 8, vy: -2, life: 2.4, max: 2.4, size: 3, color: "#d8e4f0", kind: "dust",
       });
     }
-    if (w === "mist" && World.id === "vale" && Particles.list.length < 28 && Math.random() < dt * 2) {
+    if (!indoor && w === "frost" && Particles.list.length < 40 && Math.random() < dt * 12) {
       Particles.spawn({
-        x: Player.x + (Math.random() - 0.5) * 120,
-        y: Player.y + (Math.random() - 0.5) * 70,
-        vx: 6, vy: 0, life: 2.2, max: 2.2, size: 2, color: "#d8e4f0", kind: "dust",
+        x: Camera.x + Math.random() * Camera.w,
+        y: Camera.y + Math.random() * Camera.h,
+        vx: 5, vy: 10, life: 1.5, max: 1.5, size: 1, color: "#e8f0ff", kind: "dust",
+      });
+    }
+    if (!indoor && w === "heat" && Particles.list.length < 22 && Math.random() < dt * 5) {
+      Particles.spawn({
+        x: Player.x + (Math.random() - 0.5) * 90,
+        y: Player.y - 8 + (Math.random() - 0.5) * 20,
+        vx: 0, vy: -14, life: 0.95, max: 0.95, size: 2, color: "#f0c070", kind: "dust",
       });
     }
   },

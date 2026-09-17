@@ -14,6 +14,7 @@ const Cottage = {
       addDeco("tank", 16 * TILE_SIZE, 5.2 * TILE_SIZE);
       addDeco("trophy", 11 * TILE_SIZE, 3.6 * TILE_SIZE);
       addDeco("certificate", 8.4 * TILE_SIZE, 4.2 * TILE_SIZE);
+      addDeco("dayclock", 14.2 * TILE_SIZE, 4.0 * TILE_SIZE);
       addDeco("bench", 5.5 * TILE_SIZE, 11 * TILE_SIZE);
       addSolid(4.6 * TILE_SIZE, 10.2 * TILE_SIZE, 22, 10, "bench");
       addDeco("calendar", 16.5 * TILE_SIZE, 11 * TILE_SIZE);
@@ -22,7 +23,7 @@ const Cottage = {
       addSolid(18.2 * TILE_SIZE - 5, 12.4 * TILE_SIZE - 4, 10, 6, "crate");
       portals.push({
         x: 9 * TILE_SIZE, y: 14.2 * TILE_SIZE, w: 4 * TILE_SIZE, h: 1.6 * TILE_SIZE,
-        to: "vale", spawn: { x: 27.5 * TILE_SIZE, y: 24.2 * TILE_SIZE }, dir: 0,
+        to: "vale", spawn: { x: 28 * TILE_SIZE, y: 26.6 * TILE_SIZE }, dir: 0,
         hint: "Walk out to the vale",
       });
       return { x: 11 * TILE_SIZE, y: 12 * TILE_SIZE };
@@ -35,6 +36,7 @@ const Cottage = {
       tank: { x: 16 * TILE_SIZE, y: 5.2 * TILE_SIZE, r: 22 },
       trophy: { x: 11 * TILE_SIZE, y: 3.6 * TILE_SIZE, r: 20 },
       certificate: { x: 8.4 * TILE_SIZE, y: 4.2 * TILE_SIZE, r: 16 },
+      dayclock: { x: 14.2 * TILE_SIZE, y: 4.0 * TILE_SIZE, r: 16 },
       bench: { x: 5.5 * TILE_SIZE, y: 11 * TILE_SIZE, r: 28 },
       calendar: { x: 16.5 * TILE_SIZE, y: 11 * TILE_SIZE, r: 20 },
       mailtray: { x: 12.5 * TILE_SIZE, y: 11.2 * TILE_SIZE, r: 18 },
@@ -79,7 +81,12 @@ const Cottage = {
       if (aq.length || this.tuckable()) return "Press E to manage the tank";
     }
     if (this.near("certificate")) return "Press E to read your fisher certificate";
-    if (this.near("trophy")) return "Press E to mount a personal best · " + Skills.line();
+    if (this.near("dayclock")) {
+      return Save.data.inventory.items.dayclock
+        ? "Press E — the sundial"
+        : "A blank nail. Wren sells a cottage sundial.";
+    }
+    if (this.near("trophy")) return "Press E to manage the wall mount";
     return "";
   },
 
@@ -103,11 +110,21 @@ const Cottage = {
     if (this.near("calendar")) { Quests.open = false; Board.toggle(); return true; }
     if (this.near("mailtray")) { Mail.toggle(); return true; }
     if (this.near("tank")) { this._tank(); return true; }
+    if (this.near("dayclock")) {
+      if (!Save.data.inventory.items.dayclock) {
+        UI.toastNote("Buy a cottage sundial from Wren to hang here.");
+        return true;
+      }
+      const ph = TimeCycle.phaseId();
+      const names = { dawn: "Dawn", day: "Day", golden: "Dusk", night: "Night" };
+      UI.toastNote(`${names[ph] || ph} · ${TimeCycle.season()} · ${(WEATHERS[TimeCycle.weatherId()] || {}).name || ""} · ${TimeCycle.clockLabel()}`);
+      return true;
+    }
     if (this.near("certificate")) {
       UI.toastNote(Skills.line());
       return true;
     }
-    if (this.near("trophy")) { this._trophy(); return true; }
+    if (this.near("trophy")) { Trophy.open(); return true; }
     return false;
   },
 
@@ -186,14 +203,61 @@ const Cottage = {
     return true;
   },
 
-  _trophy() {
-    const best = FISH.filter((f) => Save.ensureFish(f.id).biggest > 0)
-      .sort((a, b) => Save.ensureFish(b.id).biggest - Save.ensureFish(a.id).biggest)[0];
-    if (!best) { UI.toastNote("Land something first."); return; }
-    const wall = Save.data.cottage.trophies;
-    if (wall.indexOf(best.id) < 0) wall.push(best.id);
-    UI.toastNote(`${best.name} is on the wall.`);
+};
+
+const Trophy = {
+  openFlag: false,
+  open() {
+    this.openFlag = true;
+    UI.closeJournal();
+    Inventory.close();
+    const el = document.getElementById("trophy");
+    if (el) el.classList.remove("hidden");
+    this.refresh();
+  },
+  close() {
+    if (!this.openFlag) return;
+    this.openFlag = false;
+    const el = document.getElementById("trophy");
+    if (el) el.classList.add("hidden");
     Save.mark();
+  },
+  refresh() {
+    const el = document.getElementById("trophy-body");
+    if (!el) return;
+    const wall = Save.data.cottage.trophies || (Save.data.cottage.trophies = []);
+    const mounted = wall.map((id, i) => {
+      const f = FISH.find((x) => x.id === id);
+      return `<button type="button" data-off="${i}">Take down ${f ? f.name : id}</button>`;
+    }).join("") || "<p>The mount is empty.</p>";
+    const cap = (DESIGN.trophySlots | 0) || 2;
+    const cands = FISH.filter((f) => Journal.landed(f.id) && wall.indexOf(f.id) < 0);
+    const mount = cands.map((f) => {
+      const e = Journal.ensure(f.id);
+      const full = wall.length >= cap;
+      return `<button type="button" data-on="${f.id}" ${full ? "disabled" : ""}>Mount ${f.name} (best ${e.biggest}")</button>`;
+    }).join("") || "<p>Land a fish, then hang it here.</p>";
+    const fullNote = wall.length >= cap ? "<p>Take one down to hang another.</p>" : "";
+    el.innerHTML = `<p>On the wall (${wall.length}/${cap})</p>${mounted}<p>Pack</p>${mount}${fullNote}`;
+    el.querySelectorAll("[data-off]").forEach((b) => b.addEventListener("click", () => {
+      wall.splice(b.dataset.off | 0, 1);
+      UI.toastNote("Taken down. Hang another whenever you like.");
+      Save.mark();
+      this.refresh();
+    }));
+    el.querySelectorAll("[data-on]").forEach((b) => {
+      b.addEventListener("click", () => {
+        if (wall.length >= cap) {
+          UI.toastNote("Take one down first.");
+          return;
+        }
+        wall.push(b.dataset.on);
+        const f = FISH.find((x) => x.id === b.dataset.on);
+        UI.toastNote(`${f ? f.name : "Fish"} is on the wall.`);
+        Save.mark();
+        this.refresh();
+      });
+    });
   },
 };
 
@@ -324,9 +388,7 @@ const Marsh = {
     const tw = 32, th = 24;
     return World._buildMap(tw, th, TILE.GRASS, ({ set, get, addSolid, addDeco, fillEllipse, spots, portals }) => {
       const rng = mulberry32(0xA15A);
-      fillEllipse(18, 13, 11, 8, TILE.MARSH);
-      fillEllipse(22, 11, 4, 3, TILE.GRASS);
-      for (let x = 4; x <= 10; x++) set(x, 12, TILE.DOCK);
+      fillEllipse(17, 12, 8.5, 6.2, TILE.MARSH);
       for (let y = 1; y < 23; y++) {
         for (let x = 1; x < 31; x++) {
           if (get(x, y) === TILE.GRASS) {
@@ -338,21 +400,30 @@ const Marsh = {
           }
         }
       }
-      for (let i = 0; i < 16; i++) addDeco("reed", (8 + rng() * 18) * TILE_SIZE, (8 + rng() * 12) * TILE_SIZE);
-      for (let i = 0; i < 8; i++) addDeco("mist", (10 + rng() * 14) * TILE_SIZE, (9 + rng() * 10) * TILE_SIZE, { seed: rng() * 6 });
-      addDeco("crate", 6.2 * TILE_SIZE, 11.6 * TILE_SIZE);
-      addSolid(6.2 * TILE_SIZE - 5, 11.6 * TILE_SIZE - 4, 10, 6, "crate");
+      for (let x = 4; x <= 28; x++) { set(x, 20, TILE.DIRT); set(x, 21, TILE.DIRT); }
+      for (let y = 5; y <= 21; y++) { set(27, y, TILE.DIRT); set(28, y, TILE.DIRT); }
+      for (let x = 6; x <= 28; x++) { set(x, 4, TILE.DIRT); set(x, 5, TILE.DIRT); }
+      for (let y = 5; y <= 19; y++) set(3, y, TILE.DIRT);
+      for (let x = 3; x <= 9; x++) set(x, 12, TILE.DOCK);
+      for (let y = 11; y <= 13; y++) { set(4, y, TILE.DOCK); set(5, y, TILE.DOCK); }
+      for (let i = 0; i < 14; i++) addDeco("reed", (9 + rng() * 16) * TILE_SIZE, (7 + rng() * 12) * TILE_SIZE);
+      for (let i = 0; i < 8; i++) addDeco("mist", (10 + rng() * 14) * TILE_SIZE, (8 + rng() * 10) * TILE_SIZE, { seed: rng() * 6 });
+      addDeco("crate", 6.4 * TILE_SIZE, 11.2 * TILE_SIZE);
+      addSolid(6.4 * TILE_SIZE - 5, 11.2 * TILE_SIZE - 4, 10, 6, "crate");
+      addDeco("raft", 4.5 * TILE_SIZE, 12.2 * TILE_SIZE);
+      addDeco("waterSign", 8.6 * TILE_SIZE, 14.4 * TILE_SIZE, { spot: "marsh" });
+      addSolid(8.6 * TILE_SIZE - 3, 14.4 * TILE_SIZE - 3, 6, 4, "sign");
       spots.push({
         ...SPOTS.marsh,
-        x: 6 * TILE_SIZE, y: 6 * TILE_SIZE, w: 22 * TILE_SIZE, h: 14 * TILE_SIZE,
+        x: 8 * TILE_SIZE, y: 6 * TILE_SIZE, w: 18 * TILE_SIZE, h: 13 * TILE_SIZE,
         cast: { x: 16 * TILE_SIZE, y: 13 * TILE_SIZE },
       });
       portals.push({
-        x: 3 * TILE_SIZE, y: 11 * TILE_SIZE, w: 3 * TILE_SIZE, h: 3 * TILE_SIZE,
-        to: "vale", spawn: { x: 57.2 * TILE_SIZE, y: 24.4 * TILE_SIZE }, dir: 1,
-        hint: "Walk the raft back to the vale",
+        x: 3.2 * TILE_SIZE, y: 11.1 * TILE_SIZE, w: 2.4 * TILE_SIZE, h: 2.2 * TILE_SIZE,
+        to: "vale", spawn: { x: 59.2 * TILE_SIZE, y: 26.4 * TILE_SIZE }, dir: 1,
+        hint: "Board the boat back to the vale",
       });
-      return { x: 8 * TILE_SIZE, y: 12 * TILE_SIZE };
+      return { x: 7.6 * TILE_SIZE, y: 12.2 * TILE_SIZE };
     });
   },
 };
@@ -439,7 +510,11 @@ const Shop = {
         return;
       }
       Inventory.addCoins(-rod.cost);
+      Save.takeOldestLoose(rod.requireFish);
+      Save.syncCaught();
       Inventory.giveRod(id);
+      const need = FISH.find((f) => f.id === rod.requireFish);
+      UI.toastNote(`Bought ${rod.name}. Wren took the ${need ? need.name : rod.requireFish}.`);
     } else if (kind === "upgrade") {
       if (Save.data.inventory.items.tank) return;
       if (Save.countLoose("moonfin") < 1) {

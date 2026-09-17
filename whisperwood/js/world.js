@@ -261,7 +261,21 @@ const World = {
       }
       addSolid(26 * TILE_SIZE, 23 * TILE_SIZE, TILE_SIZE, TILE_SIZE, "wall");
       addSolid(29 * TILE_SIZE, 23 * TILE_SIZE, TILE_SIZE, TILE_SIZE, "wall");
-      addDeco("raft", 58.5 * TILE_SIZE, 24.6 * TILE_SIZE);
+      for (let x = 56; x <= 63; x++) {
+        set(x, 23, TILE.RIVER);
+        set(x, 24, TILE.RIVER);
+        if (get(x, 22) === TILE.GRASS || get(x, 22) === TILE.SHORE) set(x, 22, TILE.SHORE);
+      }
+      for (let x = 57; x <= 61; x++) set(x, 25, TILE.DOCK);
+      set(58, 26, TILE.DOCK);
+      set(59, 26, TILE.DOCK);
+      addDeco("raft", 59.2 * TILE_SIZE, 24.9 * TILE_SIZE);
+      addDeco("waterSign", 29.5 * TILE_SIZE, 23.8 * TILE_SIZE, { spot: "pond" });
+      addDeco("waterSign", 34.2 * TILE_SIZE, 10.2 * TILE_SIZE, { spot: "river" });
+      addDeco("waterSign", 43.6 * TILE_SIZE, 24.2 * TILE_SIZE, { spot: "lake" });
+      addSolid(29.5 * TILE_SIZE - 3, 23.8 * TILE_SIZE - 3, 6, 4, "sign");
+      addSolid(34.2 * TILE_SIZE - 3, 10.2 * TILE_SIZE - 3, 6, 4, "sign");
+      addSolid(43.6 * TILE_SIZE - 3, 24.2 * TILE_SIZE - 3, 6, 4, "sign");
 
       Pickups.scatter(addDeco, get, rng, tw, th, "vale");
 
@@ -302,10 +316,10 @@ const World = {
         hint: "Walk in to enter Crystal Cave",
       });
       portals.push({
-        x: 27 * TILE_SIZE,
-        y: 23.1 * TILE_SIZE,
-        w: 2 * TILE_SIZE,
-        h: 1.5 * TILE_SIZE,
+        x: 27.15 * TILE_SIZE,
+        y: 23.15 * TILE_SIZE,
+        w: 1.7 * TILE_SIZE,
+        h: 0.85 * TILE_SIZE,
         to: "cottage",
         spawn: { x: 11 * TILE_SIZE, y: 12.2 * TILE_SIZE },
         dir: 3,
@@ -356,6 +370,7 @@ const World = {
         addDeco("mist", (12 + rng() * 14) * TILE_SIZE, (14 + rng() * 8) * TILE_SIZE, { seed: rng() * 8 });
       }
 
+      addDeco("waterSign", 20.2 * TILE_SIZE, 9.2 * TILE_SIZE, { spot: "cave" });
       addDeco("crate", 16.2 * TILE_SIZE, 8.6 * TILE_SIZE);
       addSolid(16.2 * TILE_SIZE - 5, 8.6 * TILE_SIZE - 4, 10, 6, "crate");
       addDeco("sign", 20.6 * TILE_SIZE, 8.4 * TILE_SIZE);

@@ -11,6 +11,7 @@ const UI = {
       || (typeof Bench !== "undefined" && Bench.openFlag)
       || (typeof Tank !== "undefined" && Tank.openFlag)
       || (typeof Cooler !== "undefined" && Cooler.openFlag)
+      || (typeof Trophy !== "undefined" && Trophy.openFlag)
       || Skills.offering
       || (typeof Admin !== "undefined" && Admin.open);
   },
@@ -89,6 +90,7 @@ const UI = {
 
   buildJournal() {
     const ul = this.els.journalList;
+    if (!ul) return;
     ul.innerHTML = "";
     for (const f of FISH) {
       const li = document.createElement("li");
@@ -118,9 +120,10 @@ const UI = {
       li.classList.toggle("unknown", !known);
       li.classList.toggle("favorite", !!e.favorite);
       li.querySelector(".fish-name").textContent = known ? f.name : "???";
+      const hint = Journal.hintLine(f);
       li.querySelector(".fish-meta").innerHTML = landed
-        ? `<i class="dot ${f.rarity.toLowerCase()}"></i> ${f.rarity} · ${SPOTS[f.spot].name} · ×${e.landed} · best ${e.biggest}"`
-        : `<i class="dot ${f.rarity.toLowerCase()}"></i> ${SPOTS[f.spot].name}${known ? " · sighted" : ""}`;
+        ? `<i class="dot ${f.rarity.toLowerCase()}"></i> ${f.rarity} · ${SPOTS[f.spot].name} · ×${e.landed} · best ${e.biggest}"${hint ? `<br/><span class="fish-hint">${hint}</span>` : ""}`
+        : `<i class="dot ${f.rarity.toLowerCase()}"></i> ${SPOTS[f.spot].name}${known ? " · sighted" : ""}${f.rarity === "Rare" && hint ? `<br/><span class="fish-hint">Hint: ${hint}</span>` : ""}`;
       const c = li.querySelector("canvas").getContext("2d");
       c.imageSmoothingEnabled = false;
       c.clearRect(0, 0, 40, 26);
@@ -168,6 +171,7 @@ const UI = {
     if (typeof Tank !== "undefined") Tank.close();
     if (typeof Cooler !== "undefined") Cooler.close();
     if (typeof Admin !== "undefined") Admin.close();
+    if (typeof Trophy !== "undefined") Trophy.close();
   },
 
   showCatch(fish, rec) {
@@ -237,10 +241,37 @@ const UI = {
     this.els.clockText.textContent = TimeCycle.clockLabel();
     const rankEl = document.getElementById("clock-rank");
     if (rankEl && typeof Skills !== "undefined") rankEl.textContent = `Rank ${Skills.rank()}`;
-    this.els.clock.classList.toggle("night", TimeCycle.sample().night);
+    const phase = TimeCycle.phaseId();
+    const phaseLabel = { dawn: "Dawn", day: "Day", golden: "Dusk", night: "Night" }[phase] || phase;
+    const season = TimeCycle.season();
+    this.els.clock.classList.remove("dawn", "day", "golden", "night", "rain", "mist", "heat", "frost", "clear", "spring", "summer", "autumn", "winter");
+    this.els.clock.classList.add(phase);
     const wx = TimeCycle.weatherId();
-    this.els.clock.classList.toggle("rain", wx === "rain");
-    this.els.clock.classList.toggle("mist", wx === "mist");
+    this.els.clock.classList.add(wx, season);
+    const phaseEl = document.getElementById("clock-phase");
+    if (phaseEl) phaseEl.textContent = phaseLabel;
+    const seasonEl = document.getElementById("clock-season");
+    if (seasonEl) seasonEl.textContent = season.charAt(0).toUpperCase() + season.slice(1);
+    const wxEl = document.getElementById("clock-weather");
+    if (wxEl) wxEl.textContent = (WEATHERS[wx] && WEATHERS[wx].name) || wx;
+    const iconEl = document.getElementById("clock-icon");
+    if (iconEl && iconEl.tagName === "IMG") {
+      const icons = {
+        dawn: "assets/ui/hud-dawn.png",
+        day: "assets/ui/hud-sun.png",
+        golden: "assets/ui/hud-dawn.png",
+        night: "assets/ui/hud-moon.png",
+      };
+      const src = icons[phase] || icons.day;
+      if (iconEl.getAttribute("src") !== src) iconEl.src = src;
+    }
+    const rodEl = document.getElementById("clock-rod");
+    if (rodEl && typeof Inventory !== "undefined") {
+      const eq = Inventory.equipped();
+      const empty = eq === "none" || Inventory.baitCount(eq) <= 0;
+      const bait = empty ? "empty hook" : ((BAIT[eq] && BAIT[eq].name) || eq);
+      rodEl.textContent = Inventory.rod().name + " - " + bait;
+    }
 
     const spot = World.spotAt(Player.x, Player.y);
     if (spot) {
@@ -304,6 +335,7 @@ const Game = {
   fading: null,
   sleeping: null,
   sleepCool: 0,
+  eating: null,
 
   boot() {
     if (this.booted) return;
@@ -328,7 +360,7 @@ const Game = {
       const frame = document.getElementById("frame");
       if (frame) {
         frame.addEventListener("pointerdown", () => {
-          if (canvas) canvas.focus({ preventScroll: true });
+          try { if (canvas) canvas.focus({ preventScroll: true }); } catch (e) { /* focus optional */ }
         });
       }
       window.addEventListener("visibilitychange", () => { if (document.hidden) Save.write(); });
@@ -345,6 +377,15 @@ const Game = {
     } catch (err) {
       this.booted = false;
       try { console.warn("boot failed", err); } catch (e) { /* ignore */ }
+      try {
+        const rec = document.getElementById("start-recap");
+        if (rec) rec.innerHTML = `<li>Boot failed: ${String((err && err.message) || err)}</li>`;
+        const btn = document.getElementById("btn-start");
+        if (btn) {
+          btn.textContent = "Retry boot";
+          btn.onclick = () => { this.booted = false; this.boot(); };
+        }
+      } catch (e) { /* ignore */ }
     }
   },
 
@@ -359,7 +400,7 @@ const Game = {
     Save.data.flags.introComplete = true;
     if (UI.els.btn) UI.els.btn.blur();
     const canvas = document.getElementById("game");
-    if (canvas) canvas.focus({ preventScroll: true });
+    try { if (canvas) canvas.focus({ preventScroll: true }); } catch (e) { /* focus optional */ }
     if (!this.running) {
       this.running = true;
       this.last = performance.now();
@@ -396,6 +437,22 @@ const Game = {
     if (!this.fading) return 0;
     const u = Utils.clamp(this.fading.t / this.fading.dur, 0, 1);
     return this.fading.phase === "out" ? u : 1 - u;
+  },
+
+  holdFood(fish) {
+    this.eating = { t: 0, dur: 1.15, fish: fish || null };
+    Player.locked = true;
+    Player.vx = 0;
+    Player.vy = 0;
+  },
+
+  _updateEat(dt) {
+    if (!this.eating) return;
+    this.eating.t += dt;
+    if (this.eating.t >= this.eating.dur) {
+      this.eating = null;
+      Player.locked = false;
+    }
   },
 
   startSleep() {
@@ -483,7 +540,12 @@ const Game = {
     Camera.x = Player.x - CONFIG.VIEW_W * 0.5;
     Camera.y = Player.y - CONFIG.VIEW_H * 0.56;
     Camera.clampToWorld(World.pw, World.ph);
-    World.portalCool = 0.85;
+    World.portalCool = 1.85;
+    let guard = 0;
+    while (World.portalAt(Player.x, Player.y) && guard < 64) {
+      Player.y += 1;
+      guard++;
+    }
     if (portal.to === "cottage") {
       Save.data.cottage.visited = true;
       Npcs._checkMarsh();
@@ -533,7 +595,8 @@ const Game = {
         this._updateFade(dt);
         World.update(dt);
         if (this.sleepCool > 0) this.sleepCool -= dt;
-        if (!this.fading && this.sleepCool <= 0) {
+        this._updateEat(dt);
+        if (!this.fading && this.sleepCool <= 0 && !this.eating) {
           if (Input.use) Fishing.act();
         }
         Player.update(dt);

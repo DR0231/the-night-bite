@@ -196,12 +196,16 @@ const Survival = {
     ];
     let ok = true;
     for (const [id, fn] of map) {
-      const c = document.querySelector("#" + id + " .need-icon");
-      if (!c || !Sprites[fn]) { ok = false; continue; }
+      const c = document.querySelector("#" + id + " canvas.need-icon");
+      if (!c) continue;
+      if (!Sprites[fn]) { ok = false; continue; }
       const ctx = c.getContext("2d");
       ctx.imageSmoothingEnabled = false;
-      ctx.clearRect(0, 0, 16, 16);
+      ctx.clearRect(0, 0, c.width, c.height);
+      ctx.save();
+      ctx.scale(c.width / 16, c.height / 16);
       Sprites[fn](ctx, 0, 0);
+      ctx.restore();
     }
     if (ok) this._iconsPainted = true;
   },
@@ -225,11 +229,15 @@ const Survival = {
     const el = document.getElementById(id);
     if (!el) return;
     const pips = el.querySelector(".need-pips") || el;
-    const n = Utils.clamp(Math.round(value / 20), 0, 5);
-    const warn = value < 25;
+    const pipsN = (DESIGN.needPips | 0) || 10;
+    const n = Utils.clamp(Math.round(value / (100 / pipsN)), 0, pipsN);
+    const warn = value < DESIGN.needWarn;
+    const crit = value <= ((DESIGN.needCrit | 0) || 10);
     el.classList.toggle("warn", warn);
+    el.classList.toggle("crit", crit);
+    el.title = el.id.replace("need-", "").replace(/^\w/, (c) => c.toUpperCase()) + " " + Math.round(value) + "/100";
     let html = "";
-    for (let i = 0; i < 5; i++) html += `<span class="${i < n ? "on" : ""}"></span>`;
+    for (let i = 0; i < pipsN; i++) html += `<span class="${i < n ? "on" : ""}"></span>`;
     pips.innerHTML = html;
   },
 
@@ -306,7 +314,31 @@ const Survival = {
     else UI.toastNote(`Ate ${meal.name}.`);
     this.refreshPips();
     Save.mark();
-    if (Inventory.open) Inventory.refresh();
+    if (Inventory.open) Inventory.close();
+    let held = null;
+    for (const key of Object.keys(meal.need)) {
+      if (key === "anyCommonFish") {
+        held = FISH.find((f) => f.rarity === "Common") || null;
+        break;
+      }
+      const f = FISH.find((x) => x.id === key);
+      if (f) { held = f; break; }
+    }
+    if (typeof Game !== "undefined" && Game.holdFood) Game.holdFood(held);
+    return true;
+  },
+
+  eatFish(id) {
+    const f = FISH.find((x) => x.id === id);
+    if (!f || Save.countLoose(id) < 1) return false;
+    if (!Save.takeOldestLoose(id)) return false;
+    Save.syncCaught();
+    this.add("hunger", DESIGN.eatFishHunger);
+    UI.toastNote(`Ate the ${f.name}.`);
+    this.refreshPips();
+    Save.mark();
+    if (Inventory.open) Inventory.close();
+    if (typeof Game !== "undefined" && Game.holdFood) Game.holdFood(f);
     return true;
   },
 
@@ -316,7 +348,8 @@ const Survival = {
     this.add("hunger", DESIGN.berryHunger);
     UI.toastNote("A handful of vale berries.");
     Save.mark();
-    if (Inventory.open) Inventory.refresh();
+    if (Inventory.open) Inventory.close();
+    if (typeof Game !== "undefined" && Game.holdFood) Game.holdFood(null);
     return true;
   },
 

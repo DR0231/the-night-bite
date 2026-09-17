@@ -19,6 +19,8 @@
   </header>
 
   <div id="frame">
+    <div id="stage">
+    <div id="playfield">
     <canvas id="game" width="1280" height="720" tabindex="0" aria-label="Whisperwood Vale game"></canvas>
 
     <div id="hud">
@@ -26,34 +28,46 @@
         <h1 id="region-title">Whisperwood Vale</h1>
         <p id="region-blurb">A peaceful woodland valley with crystal-clear waters and abundant fish.</p>
       </div>
-      <div id="clock">
-        <div class="clock-row">
-          <span id="clock-icon"></span>
-          <span id="clock-text">6:00 AM</span>
-          <span id="clock-rank"></span>
-        </div>
-        <div id="needs" aria-label="Hunger, warmth, and rest">
-          <div class="need-row" id="need-hunger" title="Hunger">
-            <canvas class="need-icon" width="16" height="16"></canvas>
-            <em>Hunger</em>
-            <span class="need-pips"></span>
-          </div>
-          <div class="need-row" id="need-warmth" title="Warmth">
-            <canvas class="need-icon" width="16" height="16"></canvas>
-            <em>Warmth</em>
-            <span class="need-pips"></span>
-          </div>
-          <div class="need-row" id="need-rest" title="Rest">
-            <canvas class="need-icon" width="16" height="16"></canvas>
-            <em>Rest</em>
-            <span class="need-pips"></span>
-          </div>
-        </div>
-        <div id="meal-chip" class="hidden"></div>
-      </div>
       <div id="spot-label" class="hidden"></div>
       <div id="prompt" class="hidden"></div>
       <div id="hint">J Journal · I Pack · needs pips</div>
+    </div>
+
+    <aside id="clock" aria-label="Time, season, and needs">
+      <i class="info-cap info-cap-tl" aria-hidden="true"></i>
+      <i class="info-cap info-cap-tr" aria-hidden="true"></i>
+      <i class="info-cap info-cap-bl" aria-hidden="true"></i>
+      <i class="info-cap info-cap-br" aria-hidden="true"></i>
+      <div class="clock-row">
+        <img id="clock-icon" class="phase-icon" alt="" width="48" height="48" src="assets/ui/hud-sun.png" />
+        <span id="clock-text">6:00 AM</span>
+        <span id="clock-rank"></span>
+      </div>
+      <div id="clock-meta">
+        <span id="clock-phase">Dawn</span>
+        <span id="clock-season">Spring</span>
+        <span id="clock-weather">Clear</span>
+      </div>
+      <div id="needs" aria-label="Hunger, warmth, and rest">
+        <div class="need-row" id="need-hunger" title="Hunger">
+          <em>Hunger</em>
+          <img class="need-icon" src="assets/ui/hud-fish.png" alt="" width="64" height="64" />
+          <span class="need-pips"></span>
+        </div>
+        <div class="need-row" id="need-warmth" title="Warmth">
+          <em>Warmth</em>
+          <img class="need-icon" src="assets/ui/hud-fire.png" alt="" width="64" height="64" />
+          <span class="need-pips"></span>
+        </div>
+        <div class="need-row" id="need-rest" title="Rest">
+          <em>Rest</em>
+          <img class="need-icon" src="assets/ui/hud-bed.png" alt="" width="64" height="64" />
+          <span class="need-pips"></span>
+        </div>
+      </div>
+      <div id="clock-rod"></div>
+      <div id="meal-chip" class="hidden"></div>
+    </aside>
     </div>
 
     <div id="catch-toast" class="hidden">
@@ -146,6 +160,14 @@
       </div>
     </div>
 
+    <div id="trophy" class="hidden overlay-panel">
+      <div class="journal-panel">
+        <header><h2>Wall mount</h2><p class="journal-sub">Hang a personal best, or take one down</p></header>
+        <div id="trophy-body"></div>
+        <button type="button" data-close>Close</button>
+      </div>
+    </div>
+
     <div id="tank" class="hidden overlay-panel">
       <div class="journal-panel">
         <header><h2>Cottage tank</h2><p class="journal-sub">Tuck a fish in, or take one out</p></header>
@@ -224,6 +246,7 @@
       <button type="button" data-move="down">▼</button>
       <button type="button" data-move="right">▶</button>
       <button type="button" id="btn-fish">Fish</button>
+    </div>
     </div>
   </div>
 

@@ -528,14 +528,20 @@ const Sprites = {
 
   _rod(ctx, x, y, dir, phase, windup, bite) {
     const tip = this.rodTip(x, y, dir, phase, windup, bite);
-    ctx.strokeStyle = "#4a3020";
-    ctx.lineWidth = 1.2;
+    const rod = typeof Inventory !== "undefined" ? Inventory.rod() : null;
+    const id = rod && rod.id;
+    const col = id === "spine" ? "#8ad4e8" : id === "finch" ? "#d4b05a" : "#4a3020";
+    const wrap = id === "spine" ? "#3a7088" : id === "finch" ? "#8b6238" : "#2a6a8a";
+    ctx.strokeStyle = col;
+    ctx.lineWidth = id === "willow" ? 1.2 : 2.4;
     ctx.beginPath();
     ctx.moveTo(tip.handX, tip.handY);
     ctx.lineTo(tip.x, tip.y);
     ctx.stroke();
-    this.fill(ctx, tip.handX - 1, tip.handY - 1, 3, 3, "#2a6a8a");
-    this.pixel(ctx, tip.x, tip.y, "#d0d4d8");
+    this.fill(ctx, tip.handX - 2, tip.handY - 2, 5, 5, wrap);
+    this.pixel(ctx, tip.x, tip.y, id === "spine" ? "#e8ffff" : id === "finch" ? "#f0e0a0" : "#d0d4d8");
+    if (id === "spine") this.pixel(ctx, tip.x + 1, tip.y - 1, "#a8f0ff");
+    if (id === "finch") this.pixel(ctx, tip.x - 1, tip.y, "#c47838");
   },
 
   rodTip(x, y, dir, phase, windup, bite) {
@@ -581,12 +587,16 @@ const Sprites = {
   },
 
   fishingLine(ctx, x0, y0, x1, y1, sag) {
+    const rod = typeof Inventory !== "undefined" ? Inventory.rod() : null;
     const mx = (x0 + x1) * 0.5;
     const my = (y0 + y1) * 0.5 + sag;
+    const col = rod && rod.id === "spine" ? "rgba(140, 210, 230, 0.95)"
+      : rod && rod.id === "finch" ? "rgba(220, 180, 90, 0.95)"
+      : PALETTE.line;
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
-    ctx.strokeStyle = PALETTE.line;
-    ctx.lineWidth = 1.25;
+    ctx.strokeStyle = col;
+    ctx.lineWidth = rod && rod.id !== "willow" ? 1.7 : 1.25;
     ctx.beginPath();
     ctx.moveTo(x0, y0);
     ctx.quadraticCurveTo(mx, my, x1, y1);
@@ -667,9 +677,23 @@ const Sprites = {
   },
 
   raft(ctx, x, y) {
-    this.fill(ctx, x - 10, y - 6, 20, 12, PALETTE.wood);
-    this.fill(ctx, x - 10, y - 6, 20, 2, PALETTE.woodHi);
-    this.fill(ctx, x - 8, y, 16, 1, PALETTE.woodLo);
+    this.ellipse(ctx, x, y + 6, 18, 6, "rgba(20, 40, 50, 0.3)");
+    ctx.fillStyle = PALETTE.woodLo;
+    ctx.beginPath();
+    ctx.moveTo(x - 18, y);
+    ctx.lineTo(x - 11, y - 8);
+    ctx.lineTo(x + 11, y - 8);
+    ctx.lineTo(x + 18, y);
+    ctx.lineTo(x + 11, y + 7);
+    ctx.lineTo(x - 11, y + 7);
+    ctx.closePath();
+    ctx.fill();
+    this.fill(ctx, x - 10, y - 7, 20, 2, PALETTE.woodHi);
+    this.fill(ctx, x - 9, y - 1, 18, 1, PALETTE.wood);
+    this.fill(ctx, x - 8, y + 3, 16, 1, PALETTE.wood);
+    this.fill(ctx, x - 1, y - 6, 2, 11, PALETTE.woodLo);
+    this.fill(ctx, x + 8, y - 11, 11, 2, PALETTE.woodLo);
+    this.fill(ctx, x + 17, y - 12, 4, 3, "#d8c8a0");
   },
 
   bed(ctx, x, y) {
@@ -690,8 +714,17 @@ const Sprites = {
   },
 
   trophyWall(ctx, x, y) {
-    this.fill(ctx, x - 12, y - 16, 24, 16, PALETTE.wood);
-    this.fill(ctx, x - 3, y - 12, 6, 8, "#c4a05a");
+    this.fill(ctx, x - 14, y - 20, 28, 20, PALETTE.wood);
+    this.fill(ctx, x - 14, y - 20, 28, 3, PALETTE.woodHi);
+    const wall = (Save.data && Save.data.cottage && Save.data.cottage.trophies) || [];
+    if (!wall.length) {
+      this.fill(ctx, x - 3, y - 12, 6, 8, "#c4a05a");
+      return;
+    }
+    wall.slice(0, (typeof DESIGN !== "undefined" && DESIGN.trophySlots) || 2).forEach((id, i) => {
+      const f = FISH.find((k) => k.id === id);
+      Sprites.fishIcon(ctx, x - 6 + i * 12, y - 8, f || "#c4a05a", false);
+    });
   },
 
   bench(ctx, x, y) {
@@ -714,6 +747,14 @@ const Sprites = {
   calendar(ctx, x, y) {
     this.fill(ctx, x - 6, y - 12, 12, 14, "#f3e2c4");
     this.fill(ctx, x - 6, y - 12, 12, 3, "#8b3a32");
+  },
+
+  dayclock(ctx, x, y) {
+    this.fill(ctx, x - 8, y - 16, 16, 16, PALETTE.wood);
+    this.ellipse(ctx, x, y - 8, 6, 6, "#f3e2c4");
+    const ph = typeof TimeCycle !== "undefined" ? TimeCycle.phaseId() : "day";
+    const col = ph === "night" ? "#d8e0f0" : ph === "golden" ? "#e07030" : ph === "dawn" ? "#f0a060" : "#f0d060";
+    this.ellipse(ctx, x + 1, y - 9, 3, 3, col);
   },
 
   mailtray(ctx, x, y) {

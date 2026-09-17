@@ -65,6 +65,8 @@ const DESIGN = {
   dailyCoins: 18,
   dailyWorms: 3,
   needWarn: 25,
+  needPips: 10,
+  needCrit: 10,
   hungerBarShrink: 20,
   passOutHunger: 15,
   emptyHookBite: 0.45,
@@ -77,6 +79,8 @@ const DESIGN = {
   nightOwlBite: 1.15,
   nightOwlRest: 0.65,
   berryHunger: 12,
+  eatFishHunger: 18,
+  trophySlots: 2,
   lanternFuel: 6,
   lanternBurn: 0.12,
   lanternWarmth: 0.55,
@@ -93,7 +97,7 @@ const DESIGN = {
     { id: "vale", label: "Vale spawn", map: "vale", x: 32.5, y: 26.2, dir: 0 },
     { id: "cottage", label: "Cottage", map: "cottage", x: 11, y: 12.2, dir: 3 },
     { id: "cave", label: "Crystal Cave", map: "cave", x: 18, y: 6.4, dir: 0 },
-    { id: "marsh", label: "Millpond", map: "marsh", x: 8, y: 12, dir: 0, fifthWater: true },
+    { id: "marsh", label: "Millpond", map: "marsh", x: 7.6, y: 12.2, dir: 0, fifthWater: true },
     { id: "pond", label: "Pond dock", map: "vale", x: 19.4, y: 24.6, dir: 1 },
     { id: "lake", label: "Lake dock", map: "vale", x: 42.5, y: 24.4, dir: 2 },
     { id: "wren", label: "Wren’s stall", map: "vale", x: 35.8, y: 26.8, dir: 0 },
@@ -230,7 +234,7 @@ const SPOTS = {
     name: "Misty Millpond",
     mood: "still",
     minigame: "timing",
-    flavor: "Quiet marsh water beyond the east raft.",
+    flavor: "Quiet millpond. Best at dawn and dusk; Pearl Carp likes glow after dark. Boat west to leave.",
   },
 };
 
@@ -346,6 +350,8 @@ const SHOP_CATALOG = [
     desc: "A little warmth in rain and frost." },
   { kind: "item", id: "lantern", name: "Lantern", price: 55, minRank: 5, requireBait: "crystal",
     desc: "A crystal for the lamp. Night is kinder while it burns." },
+  { kind: "item", id: "dayclock", name: "Cottage sundial", price: 22, minRank: 1,
+    desc: "Hang it on the cottage wall. It names dawn, day, dusk, and night." },
 ];
 
 const MEALS = {

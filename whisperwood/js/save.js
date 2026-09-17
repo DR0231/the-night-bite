@@ -74,7 +74,7 @@ const Save = {
       this._ingestOldJournal();
     }
     this._ensureFish();
-    this.syncCaught();
+    try { this.syncCaught(); } catch (e) { /* pack counts optional at boot */ }
     return this.data;
   },
 
@@ -239,17 +239,21 @@ const Save = {
   },
 
   loose() {
-    if (!this.data.inventory.loose) this.data.inventory.loose = [];
+    if (!this.data) return [];
+    if (!this.data.inventory) this.data.inventory = {};
+    if (!Array.isArray(this.data.inventory.loose)) this.data.inventory.loose = [];
     return this.data.inventory.loose;
   },
 
   cooler() {
-    if (!this.data.cottage.cooler) this.data.cottage.cooler = [];
+    if (!this.data) return [];
+    if (!this.data.cottage) this.data.cottage = {};
+    if (!Array.isArray(this.data.cottage.cooler)) this.data.cottage.cooler = [];
     return this.data.cottage.cooler;
   },
 
   stewCount() {
-    return (this.data.inventory.stew | 0);
+    return (this.data && this.data.inventory && this.data.inventory.stew) | 0;
   },
 
   coolerCap() {
@@ -268,6 +272,7 @@ const Save = {
 
   _syncCaughtOn(data) {
     if (!data || !data.journal) return;
+    if (!data.inventory) data.inventory = {};
     const loose = data.inventory.loose || [];
     const cooler = (data.cottage && data.cottage.cooler) || [];
     for (const f of FISH) {
