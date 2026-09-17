@@ -337,8 +337,38 @@ const Game = {
   sleepCool: 0,
   eating: null,
 
-  boot() {
+  boot(attempt) {
     if (this.booted) return;
+    attempt = attempt || 0;
+    const need = ["Input", "Save", "World", "Player", "Renderer", "UI", "Survival", "Camera", "CONFIG"];
+    const missing = need.filter((n) => typeof window[n] === "undefined");
+    if (missing.length) {
+      if (attempt < 8) {
+        setTimeout(() => this.boot(attempt + 1), 120 + attempt * 80);
+        return;
+      }
+      if (!sessionStorage.getItem("ww-boot-reloaded")) {
+        try { sessionStorage.setItem("ww-boot-reloaded", "1"); } catch (e) { /* ignore */ }
+        location.reload();
+        return;
+      }
+      const err = new Error("Missing scripts: " + missing.join(", ") + " (network hiccup — hard refresh)");
+      try {
+        const rec = document.getElementById("start-recap");
+        if (rec) rec.innerHTML = `<li>Boot failed: ${err.message}</li>`;
+        const btn = document.getElementById("btn-start");
+        if (btn) {
+          btn.textContent = "Retry boot";
+          btn.onclick = () => {
+            try { sessionStorage.removeItem("ww-boot-reloaded"); } catch (e) { /* ignore */ }
+            this.booted = false;
+            this.boot(0);
+          };
+        }
+      } catch (e) { /* ignore */ }
+      try { console.warn("boot failed", err); } catch (e) { /* ignore */ }
+      return;
+    }
     try {
       try { if (typeof Atlas !== "undefined") Atlas.load(); } catch (err) { /* sheets optional */ }
       Input.bind();
@@ -374,6 +404,7 @@ const Game = {
       this.last = performance.now();
       requestAnimationFrame((t) => this.loop(t));
       this.booted = true;
+      try { sessionStorage.removeItem("ww-boot-reloaded"); } catch (e) { /* ignore */ }
     } catch (err) {
       this.booted = false;
       try { console.warn("boot failed", err); } catch (e) { /* ignore */ }

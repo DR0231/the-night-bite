@@ -8,9 +8,26 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="play-page">
-  <p style="margin:0.5rem 1rem;font:14px/1.4 system-ui,sans-serif"><a href="../whisperwood.html" style="color:#c4a35a">← The Night Bite</a> · Whisperwood Vale (not the real lake)</p>
+  <script id="ww-script-guard">
+  /* One soft reload if a critical game script fails to load (GitHub Pages 503). */
+  (function () {
+    var reloaded = false;
+    try { reloaded = sessionStorage.getItem("ww-script-reloaded") === "1"; } catch (e) {}
+    window.addEventListener("error", function (ev) {
+      var t = ev && ev.target;
+      if (!t || t.tagName !== "SCRIPT") return;
+      var src = t.getAttribute("src") || "";
+      if (src.indexOf("js/") !== 0) return;
+      if (reloaded) return;
+      try { sessionStorage.setItem("ww-script-reloaded", "1"); } catch (e) {}
+      location.reload();
+    }, true);
+  })();
+  </script>
+
   <header class="site-nav site-nav--play">
     <a class="brand" href="index.html">Whisperwood Vale</a>
+    <a class="nb-back" href="../whisperwood.html" style="color:#c4a35a;font:14px/1.4 system-ui,sans-serif;margin-left:0.75rem">← Night Bite</a>
     <nav>
       <a href="index.html">Home</a>
       <a href="guide.html">Guide</a>
