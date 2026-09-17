@@ -341,7 +341,10 @@ const Game = {
     if (this.booted) return;
     attempt = attempt || 0;
     const need = ["Input", "Save", "World", "Player", "Renderer", "UI", "Survival", "Camera", "CONFIG"];
-    const missing = need.filter((n) => typeof window[n] === "undefined");
+    const missing = need.filter((n) => {
+      try { return Function("return typeof " + n)() === "undefined"; }
+      catch (e) { return true; }
+    });
     if (missing.length) {
       if (attempt < 8) {
         setTimeout(() => this.boot(attempt + 1), 120 + attempt * 80);

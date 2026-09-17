@@ -95,9 +95,9 @@ const Input = {
     if (val && !this.down[k]) this.pressed[k] = true;
     this.down[k] = !!val;
     if (!val || typeof Game === "undefined") return;
-    const overlayUp = UI.els.start && !UI.els.start.classList.contains("hidden");
-    if (overlayUp) {
-      Game.start({ clearUse: k === " " || k === "e" || k === "enter" });
+    const overlayUp = UI.els && UI.els.start && !UI.els.start.classList.contains("hidden");
+    if (overlayUp && (k === " " || k === "e" || k === "enter")) {
+      Game.start({ clearUse: true });
     }
   },
 
