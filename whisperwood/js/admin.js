@@ -92,12 +92,15 @@ const Admin = {
     if (give) {
       const baitBtns = Object.keys(BAIT).map((id) => this.btn("givebait", id, "+20 " + BAIT[id].name)).join("");
       const fishOpts = FISH.map((f) => `<option value="${f.id}">${f.name}</option>`).join("");
+      const decoBtns = SHOP_CATALOG.filter((it) => it.kind === "kit" || it.kind === "decor")
+        .map((it) => this.btn("hang", it.id, "Hang " + it.name)).join("");
       give.innerHTML = `<h3>Give</h3>
         ${this.btn("bait", null, "+30 all bait")}
         ${baitBtns}
         ${this.btn("coins", null, "+200 coins")}
         ${this.btn("gear", null, "All rods + cloak, lantern, tank")}
         ${this.btn("meals", null, "All meals ×3")}
+        ${decoBtns}
         ${this.btn("catch", null, "Land selected fish")}
         <select id="admin-fish">${fishOpts}</select>`;
     }
@@ -311,6 +314,8 @@ const Admin = {
     },
     unlock() {
       Save.data.flags.fifthWater = true;
+      Save.data.flags.millSpine = "done";
+      Save.data.flags.islandOpen = true;
       Save.data.flags.introComplete = true;
       Save.data.cottage.visited = true;
       Save.data.cottage.weeds = 0;
@@ -335,6 +340,9 @@ const Admin = {
       this._acts.gear.call(this);
       this._acts.meals.call(this);
       this._acts.bait.call(this);
+      for (const it of SHOP_CATALOG) {
+        if (it.kind === "kit" || it.kind === "decor") Cottage.grantCatalog(it);
+      }
       this.note("Everything unlocked.");
     },
     journal() {
@@ -358,6 +366,15 @@ const Admin = {
     millpond() {
       Save.data.flags.fifthWater = true;
       this.note("Millpond raft unlocked.");
+    },
+    hang(id) {
+      const it = SHOP_CATALOG.find((s) => s.id === id && (s.kind === "kit" || s.kind === "decor"));
+      if (!it || typeof Cottage === "undefined") {
+        this.note("Unknown cottage kit.");
+        return;
+      }
+      Cottage.grantCatalog(it);
+      this.note("Hung " + it.name + ".");
     },
     rank(arg) {
       let r = parseInt(arg, 10);
@@ -411,6 +428,11 @@ const Admin = {
         return;
       }
       if (w.fifthWater) Save.data.flags.fifthWater = true;
+      if (w.islandOpen) {
+        Save.data.flags.fifthWater = true;
+        Save.data.flags.millSpine = "done";
+        Save.data.flags.islandOpen = true;
+      }
       this.go(w.map, w.x * TILE_SIZE, w.y * TILE_SIZE, w.dir);
       this.note("Warped to " + w.label + ".");
     },

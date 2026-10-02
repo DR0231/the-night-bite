@@ -12,6 +12,18 @@ const Atlas = {
     fish: "assets/sprites/fish.png",
     props: "assets/sprites/props.png",
     npc: "assets/sprites/npc.png",
+    decoChair: "assets/sprites/deco/chair.png",
+    decoChairLeft: "assets/sprites/deco/chair-left.png",
+    decoChairRock: "assets/sprites/deco/chair-rock.png",
+    decoChairBack: "assets/sprites/deco/chair-back.png",
+    decoFlowerbox: "assets/sprites/deco/flowerbox.png",
+    decoFlowerbox3q: "assets/sprites/deco/flowerbox-3q.png",
+    decoLampshelf: "assets/sprites/deco/lampshelf.png",
+    decoLampshelfLeft: "assets/sprites/deco/lampshelf-left.png",
+    decoMat: "assets/sprites/deco/mat.png",
+    decoRug: "assets/sprites/deco/rug.png",
+    decoShelf: "assets/sprites/deco/shelf.png",
+    decoShelf3q: "assets/sprites/deco/shelf-3q.png",
   },
 
   /* 16px sheet rows in tiles-ground.png */
@@ -39,12 +51,13 @@ const Atlas = {
     ay: 72,
     cols: 6,
     rows: 4,
-    /* Rod tip offsets from feet; refreshed after 48x64 fishing pack */
+    /* Rod tip offsets from feet, measured on the col-5 fishing frames of player.png.
+       Row 3 (back view) holds the rod out to the upper-left, so the line never crosses the pack. */
     rod: [
-      { x: 32, y: -44 },
-      { x: -29, y: -41 },
-      { x: 39, y: -44 },
-      { x: -28, y: -40 },
+      { x: 31, y: -44, hx: 6, hy: -18 },
+      { x: -29, y: -41, hx: -8, hy: -16 },
+      { x: 39, y: -44, hx: 8, hy: -16 },
+      { x: -27, y: -45, hx: -7, hy: -14 },
     ],
   },
 
@@ -178,7 +191,7 @@ const Atlas = {
     let dir = (state && state.dir) | 0;
     if (dir < 0) dir = 0;
     if (dir > P.rows - 1) dir = P.rows - 1;
-    let col = 0;
+    let col = 1;
     if (state && state.fishing) col = 5;
     else if (state && state.moving) {
       const f = ((state.frame | 0) % 4 + 4) % 4;
@@ -188,15 +201,40 @@ const Atlas = {
     const sy = dir * P.h;
     if (sx + P.w > size.w || sy + P.h > size.h) return false;
     const hop = (state && state.hop) || 0;
+    const tug = Utils.clamp((state && state.tug) || 0, -1, 1);
     try {
       this.castShadow(ctx, x, y, 8, 2.2);
       ctx.drawImage(
         img,
         sx, sy, P.w, P.h,
-        (x - P.ax) | 0,
+        (x - P.ax + Math.round(tug * 2)) | 0,
         (y - P.ay - hop) | 0,
         P.w, P.h
       );
+      return true;
+    } catch (err) {
+      return false;
+    }
+  },
+
+  drawSheet(ctx, id, x, y, opt) {
+    const img = this.sheets[id];
+    if (!img || !ctx) return false;
+    const w = img.naturalWidth || img.width;
+    const h = img.naturalHeight || img.height;
+    if (!w || !h) return false;
+    opt = opt || {};
+    const ax = opt.ax != null ? opt.ax : w * 0.5;
+    const ay = opt.ay != null ? opt.ay : h;
+    try {
+      ctx.save();
+      ctx.translate(x | 0, y | 0);
+      if (opt.rot) ctx.rotate(opt.rot);
+      const sc = opt.scale != null ? opt.scale : 1;
+      if (opt.flip) ctx.scale(-sc, sc);
+      else if (sc !== 1) ctx.scale(sc, sc);
+      ctx.drawImage(img, -ax, -ay, w, h);
+      ctx.restore();
       return true;
     } catch (err) {
       return false;
@@ -462,7 +500,14 @@ const Atlas = {
       const origPlayer = Sprites.player;
       this._orig.player = origPlayer;
       Sprites.player = function (ctx, x, y, state) {
-        if (Atlas.drawPlayer(ctx, x, y, state)) return;
+        const drawn = Atlas.drawPlayer(ctx, x, y, state);
+        if (drawn) {
+          // Every facing has a painted rod on the sheet, so nothing is drawn over the sprite.
+          if (typeof Survival !== "undefined" && Survival.lanternLit && Survival.lanternLit() && Sprites.heldLantern) {
+            Sprites.heldLantern(ctx, x, y, state && state.dir);
+          }
+          return;
+        }
         return origPlayer.call(Sprites, ctx, x, y, state);
       };
     }

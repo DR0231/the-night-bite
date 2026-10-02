@@ -20,6 +20,7 @@ const World = {
     this.maps.cave = this._buildCave();
     this.maps.cottage = Cottage.build();
     this.maps.marsh = Marsh.build();
+    this.maps.island = Island.build();
     this.use("vale");
   },
 
@@ -70,8 +71,40 @@ const World = {
         }
       }
     };
+    /** Two-tile dirt path between tile points; never paints over water, docks, or rock. */
+    const paintPath = (x0, y0, x1, y1) => {
+      const n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0), 1);
+      for (let i = 0; i <= n; i++) {
+        const tx = Math.round(x0 + (x1 - x0) * (i / n));
+        const ty = Math.round(y0 + (y1 - y0) * (i / n));
+        for (let oy = 0; oy <= 1; oy++) {
+          for (let ox = 0; ox <= 1; ox++) {
+            const t = get(tx + ox, ty + oy);
+            if (WATER_TILES.has(t) || t === TILE.CAVE_WALL || t === TILE.DOCK || t === TILE.BRIDGE) continue;
+            set(tx + ox, ty + oy, TILE.DIRT);
+          }
+        }
+      }
+    };
+    /** Grass touching water becomes shore, so banks read as banks. */
+    const shoreAll = () => {
+      for (let y = 0; y < th; y++) {
+        for (let x = 0; x < tw; x++) {
+          if (get(x, y) !== TILE.GRASS) continue;
+          let w = false;
+          for (let oy = -1; oy <= 1 && !w; oy++) for (let ox = -1; ox <= 1; ox++) {
+            if (WATER_TILES.has(get(x + ox, y + oy))) { w = true; break; }
+          }
+          if (w) set(x, y, TILE.SHORE);
+        }
+      }
+    };
 
-    const spawn = paint({ tw, th, set, get, addSolid, addDeco, fillEllipse, spots, portals })
+    /** True when a world point sits inside a placed trunk/rock/wall footprint (pickup scatter uses it). */
+    const solidAt = (px, py) => solids.some((s) => s.kind !== "border"
+      && px >= s.x - 3 && px <= s.x + s.w + 3 && py >= s.y - 3 && py <= s.y + s.h + 3);
+
+    const spawn = paint({ tw, th, set, get, addSolid, addDeco, fillEllipse, paintPath, shoreAll, solidAt, spots, portals })
       || { x: tw * TILE_SIZE * 0.5, y: th * TILE_SIZE * 0.5 };
 
     for (let ty = 0; ty < th; ty++) {
@@ -86,6 +119,12 @@ const World = {
     addSolid(-8, 0, 10, th * TILE_SIZE, "border");
     addSolid(tw * TILE_SIZE - 2, 0, 12, th * TILE_SIZE, "border");
 
+    /* Safety net: a pickup that still sits inside a trunk, rock, or wall footprint is dropped. */
+    for (let i = decos.length - 1; i >= 0; i--) {
+      const d = decos[i];
+      if (d.type === "pickup" && solidAt(d.x, d.y)) decos.splice(i, 1);
+    }
+
     return {
       tiles, solids, decos, spots, portals, spawn, get,
       w: tw, h: th, pw: tw * TILE_SIZE, ph: th * TILE_SIZE,
@@ -94,7 +133,7 @@ const World = {
 
   _buildVale() {
     const tw = CONFIG.MAP_W, th = CONFIG.MAP_H;
-    return this._buildMap(tw, th, TILE.GRASS, ({ set, get, addSolid, addDeco, fillEllipse, spots, portals }) => {
+    return this._buildMap(tw, th, TILE.GRASS, ({ set, get, addSolid, addDeco, fillEllipse, solidAt, spots, portals }) => {
       const rng = mulberry32(0x57A1E);
 
       fillEllipse(13, 24, 8, 6, TILE.POND);
@@ -125,7 +164,8 @@ const World = {
         }
       };
       paintPath(20, 24, 42, 24);
-      paintPath(31, 11, 31, 35);
+      // North road: junction up to the bridge, then a short bank on the far side.
+      paintPath(31, 4, 31, 35);
 
       for (let y = 1; y < th - 1; y++) {
         for (let x = 1; x < tw - 1; x++) {
@@ -144,10 +184,9 @@ const World = {
 
       for (let x = 41; x <= 44; x++) set(x, 24, TILE.DOCK);
 
+      // The river bends here; the bridge runs bank to bank over the whole bend.
       for (let x = 31; x <= 33; x++) {
-        set(x, 7, TILE.BRIDGE);
-        set(x, 8, TILE.BRIDGE);
-        set(x, 9, TILE.BRIDGE);
+        for (let y = 6; y <= 12; y++) set(x, y, TILE.BRIDGE);
       }
 
       // South hill: solid rock with a north-facing mouth into Crystal Cave.
@@ -175,10 +214,11 @@ const World = {
       set(27, 24, TILE.DIRT);
       set(28, 24, TILE.DIRT);
 
+      // Trees keep two tiles off water so nobody fishes from behind a canopy.
       const nearPathOrWater = (tx, ty) => {
         for (let oy = -1; oy <= 1; oy++) for (let ox = -1; ox <= 1; ox++) {
           const t = get(tx + ox, ty + oy);
-          if (t === TILE.DIRT || t === TILE.DOCK || t === TILE.BRIDGE) return true;
+          if (t === TILE.DIRT || t === TILE.DOCK || t === TILE.BRIDGE || t === TILE.SHORE) return true;
           if (WATER_TILES.has(t)) return true;
           if (t === TILE.CAVE_FLOOR || t === TILE.CAVE_WALL || t === TILE.WOOD || t === TILE.STONE) return true;
         }
@@ -210,7 +250,8 @@ const World = {
         }
       }
 
-      addDeco("stump", 20 * TILE_SIZE, 21 * TILE_SIZE);
+      // Bramble's sitting stump on the pond's east shore. Interact.sit reads `sit`.
+      addDeco("stump", 20 * TILE_SIZE, 21 * TILE_SIZE, { sit: true });
       addSolid(20 * TILE_SIZE - 5, 21 * TILE_SIZE - 3, 10, 5, "stump");
       for (let i = 0; i < 18; i++) {
         addDeco("flower", (8 + rng() * 14) * TILE_SIZE, (19 + rng() * 12) * TILE_SIZE, { variant: i });
@@ -243,15 +284,19 @@ const World = {
       addDeco("fence", 35.8 * TILE_SIZE, 36.1 * TILE_SIZE, { horiz: true });
       addSolid(27.2 * TILE_SIZE, 36 * TILE_SIZE - 4, 8, 5, "fence");
       addSolid(35.2 * TILE_SIZE, 36 * TILE_SIZE - 4, 8, 5, "fence");
-      addDeco("sign", 29.2 * TILE_SIZE, 35.4 * TILE_SIZE);
+      addDeco("sign", 29.2 * TILE_SIZE, 35.4 * TILE_SIZE, { read: "Crystal Cave. Glow bait. The pool is still and the strikes are wild." });
       addSolid(29.2 * TILE_SIZE - 3, 35.4 * TILE_SIZE - 3, 6, 4, "sign");
 
-      addDeco("sign", 31.2 * TILE_SIZE, 24.6 * TILE_SIZE);
-      addDeco("sign", 34.8 * TILE_SIZE, 25.4 * TILE_SIZE);
-      addSolid(31.2 * TILE_SIZE - 3, 24.6 * TILE_SIZE - 3, 6, 4, "sign");
+      addDeco("sign", 30.4 * TILE_SIZE, 26.6 * TILE_SIZE, { read: "West: Calm Pond. East: Deep Misty Lake. North: Rocky River. South: Crystal Cave." });
+      addDeco("sign", 34.8 * TILE_SIZE, 25.4 * TILE_SIZE, { read: "Wren’s stall. Bait, rods, and cottage kits. The board lists today’s ask." });
+      addSolid(30.4 * TILE_SIZE - 3, 26.6 * TILE_SIZE - 3, 6, 4, "sign");
       addSolid(34.8 * TILE_SIZE - 3, 25.4 * TILE_SIZE - 3, 6, 4, "sign");
-      addDeco("crate", 17.4 * TILE_SIZE, 24.6 * TILE_SIZE);
-      addSolid(17.4 * TILE_SIZE - 5, 24.6 * TILE_SIZE - 4, 10, 6, "crate");
+      // Field cooler at the pond dock root, off the planks so the dock end stays for fishing.
+      addDeco("crate", 24.8 * TILE_SIZE, 23.4 * TILE_SIZE);
+      addSolid(24.8 * TILE_SIZE - 5, 23.4 * TILE_SIZE - 4, 10, 6, "crate");
+      // North bank: a marker where the road ends past the bridge.
+      addDeco("sign", 33.8 * TILE_SIZE, 4.6 * TILE_SIZE, { read: "North bank. The river runs east to the lake. Crickets on the hook; cast downstream." });
+      addSolid(33.8 * TILE_SIZE - 3, 4.6 * TILE_SIZE - 3, 6, 4, "sign");
 
       addDeco("cottage", 28 * TILE_SIZE, 24 * TILE_SIZE);
       for (let y = 20; y <= 22; y++) {
@@ -269,15 +314,23 @@ const World = {
       for (let x = 57; x <= 61; x++) set(x, 25, TILE.DOCK);
       set(58, 26, TILE.DOCK);
       set(59, 26, TILE.DOCK);
-      addDeco("raft", 59.2 * TILE_SIZE, 24.9 * TILE_SIZE);
-      addDeco("waterSign", 29.5 * TILE_SIZE, 23.8 * TILE_SIZE, { spot: "pond" });
-      addDeco("waterSign", 34.2 * TILE_SIZE, 10.2 * TILE_SIZE, { spot: "river" });
-      addDeco("waterSign", 43.6 * TILE_SIZE, 24.2 * TILE_SIZE, { spot: "lake" });
-      addSolid(29.5 * TILE_SIZE - 3, 23.8 * TILE_SIZE - 3, 6, 4, "sign");
-      addSolid(34.2 * TILE_SIZE - 3, 10.2 * TILE_SIZE - 3, 6, 4, "sign");
-      addSolid(43.6 * TILE_SIZE - 3, 24.2 * TILE_SIZE - 3, 6, 4, "sign");
+      // East boat to the millpond. Interact reads `boat`; the gate flag stays fifthWater.
+      addDeco("raft", 59.2 * TILE_SIZE, 24.9 * TILE_SIZE, {
+        boat: {
+          to: "marsh", spawn: { x: 9.2 * TILE_SIZE, y: 16.6 * TILE_SIZE }, dir: 2, gate: "fifthWater",
+          label: "Board the millpond boat", lashed: "The east boat is lashed. Come back with more of the vale.",
+          lashedNote: "The boat stays lashed until the vale knows you.",
+        },
+      });
+      // Water signs stand at each dock root, beside the path, so the planks stay for casting.
+      addDeco("waterSign", 22.5 * TILE_SIZE, 23.5 * TILE_SIZE, { spot: "pond" });
+      addDeco("waterSign", 33.6 * TILE_SIZE, 13.5 * TILE_SIZE, { spot: "river" });
+      addDeco("waterSign", 40.6 * TILE_SIZE, 26.5 * TILE_SIZE, { spot: "lake" });
+      addSolid(22.5 * TILE_SIZE - 3, 23.5 * TILE_SIZE - 3, 6, 4, "sign");
+      addSolid(33.6 * TILE_SIZE - 3, 13.5 * TILE_SIZE - 3, 6, 4, "sign");
+      addSolid(40.6 * TILE_SIZE - 3, 26.5 * TILE_SIZE - 3, 6, 4, "sign");
 
-      Pickups.scatter(addDeco, get, rng, tw, th, "vale");
+      Pickups.scatter(addDeco, get, rng, tw, th, "vale", solidAt);
 
       for (let i = 0; i < 40; i++) {
         const tx = 4 + Utils.irand(rng, 0, tw - 8);
@@ -332,7 +385,7 @@ const World = {
 
   _buildCave() {
     const tw = 36, th = 30;
-    return this._buildMap(tw, th, TILE.CAVE_WALL, ({ set, get, addSolid, addDeco, fillEllipse, spots, portals }) => {
+    return this._buildMap(tw, th, TILE.CAVE_WALL, ({ set, get, addSolid, addDeco, fillEllipse, solidAt, spots, portals }) => {
       const rng = mulberry32(0xCA7E);
 
       fillEllipse(18, 16, 14.2, 11.2, TILE.CAVE_FLOOR);
@@ -373,9 +426,7 @@ const World = {
       addDeco("waterSign", 20.2 * TILE_SIZE, 9.2 * TILE_SIZE, { spot: "cave" });
       addDeco("crate", 16.2 * TILE_SIZE, 8.6 * TILE_SIZE);
       addSolid(16.2 * TILE_SIZE - 5, 8.6 * TILE_SIZE - 4, 10, 6, "crate");
-      addDeco("sign", 20.6 * TILE_SIZE, 8.4 * TILE_SIZE);
-      addSolid(20.6 * TILE_SIZE - 3, 8.4 * TILE_SIZE - 3, 6, 4, "sign");
-      Pickups.scatter(addDeco, get, rng, tw, th, "cave");
+      Pickups.scatter(addDeco, get, rng, tw, th, "cave", solidAt);
 
       spots.push({
         ...SPOTS.cave,
@@ -465,6 +516,30 @@ const World = {
       if (px >= p.x && py >= p.y && px < p.x + p.w && py < p.y + p.h) return p;
     }
     return null;
+  },
+
+  /**
+   * Move a foot point out of any portal box and onto walkable ground.
+   * Tries the facing direction first (0 down, 1 left, 2 right, 3 up), then the
+   * others, then falls back to the map spawn so nobody loads into water or a door.
+   */
+  settlePoint(px, py, dir) {
+    const ok = (x, y) => !this.portalAt(x, y) && this.walkablePoint(x, y)
+      && x > 8 && y > 8 && x < this.pw - 8 && y < this.ph - 8;
+    if (ok(px, py)) return { x: px, y: py };
+    const dirs = [[0, 1], [0, -1], [-1, 0], [1, 0]];
+    const face = dirs[dir === 3 ? 1 : dir === 1 ? 2 : dir === 2 ? 3 : 0];
+    for (let step = 2; step <= 40; step += 2) {
+      const x = px + face[0] * step, y = py + face[1] * step;
+      if (ok(x, y)) return { x, y };
+    }
+    for (let step = 2; step <= 96; step += 2) {
+      for (const [dx, dy] of dirs) {
+        const x = px + dx * step, y = py + dy * step;
+        if (ok(x, y)) return { x, y };
+      }
+    }
+    return { x: this.spawn.x, y: this.spawn.y };
   },
 
   nearPortal(px, py, pad = 20) {

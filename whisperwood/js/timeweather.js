@@ -50,10 +50,12 @@ TimeCycle.update = function (dt) {
       Save.data.clock.day = dayNow;
       Save.data.clock.season = SEASONS[Math.floor((dayNow - 1) / DESIGN.seasonDays) % 4];
       Save.spoilLoose();
-      Weather.rollDay();
-      Quests.rollDay();
-      Shop.restock();
+      /* Each morning chore is independent — a flavor failure must not skip the rest of dawn. */
+      try { Weather.rollDay(); } catch (e) { /* forecast optional */ }
+      try { Quests.rollDay(); } catch (e) { /* board optional */ }
+      try { Shop.restock(); } catch (e) { /* stall optional */ }
       for (const id of Object.keys(Save.data.npcs)) Save.data.npcs[id].giftedToday = 0;
+      try { if (typeof Passer !== "undefined") Passer.sync(); } catch (e) { /* passer optional */ }
       Save.data.skills.repeatsToday = { total: 0 };
       Save.data.skills.speciesToday = {};
       Survival.clearFireIfDawn();
@@ -94,6 +96,7 @@ const Weather = {
     Save.data.clock.weatherUntil = TimeCycle.hour + 6 + rng() * 5;
     const spots = ["pond", "river", "lake", "cave"];
     if (Save.data.flags.fifthWater) spots.push("marsh");
+    if (Save.data.flags.islandOpen) spots.push("island");
     Save.data.clock.hotspot = Utils.pick(rng, spots);
     if (TimeCycle.season() === "winter" && Skills.rank() >= 4) Save.data.clock.hotspot = "lake";
   },

@@ -56,6 +56,8 @@ const Input = {
       ArrowLeft: "arrowleft", ArrowRight: "arrowright",
       Space: " ", KeyE: "e", KeyJ: "j", KeyI: "i", Escape: "escape", Enter: "enter",
       Digit1: "1", Digit2: "2", Digit3: "3", Digit4: "4", Digit5: "5",
+      KeyR: "r", KeyF: "f", KeyQ: "q", Minus: "-", Equal: "=",
+      BracketLeft: "[", BracketRight: "]",
     };
     if (e.code && codes[e.code]) return codes[e.code];
 
@@ -68,6 +70,7 @@ const Input = {
       " ": " ", space: " ", spacebar: " ",
       e: "e", j: "j", i: "i", escape: "escape", enter: "enter",
       "1": "1", "2": "2", "3": "3", "4": "4", "5": "5",
+      r: "r", f: "f", q: "q", "-": "-", "=": "=", "[": "[", "]": "]",
     };
     if (keys[key]) return keys[key];
 
@@ -77,6 +80,7 @@ const Input = {
       38: "arrowup", 40: "arrowdown", 37: "arrowleft", 39: "arrowright",
       32: " ", 69: "e", 74: "j", 73: "i", 27: "escape", 13: "enter",
       49: "1", 50: "2", 51: "3", 52: "4", 53: "5",
+      82: "r", 70: "f", 81: "q", 189: "-", 187: "=", 219: "[", 221: "]",
     };
     return codesByNumber[kc] || null;
   },
@@ -95,9 +99,9 @@ const Input = {
     if (val && !this.down[k]) this.pressed[k] = true;
     this.down[k] = !!val;
     if (!val || typeof Game === "undefined") return;
-    const overlayUp = UI.els && UI.els.start && !UI.els.start.classList.contains("hidden");
-    if (overlayUp && (k === " " || k === "e" || k === "enter")) {
-      Game.start({ clearUse: true });
+    const overlayUp = UI.els.start && !UI.els.start.classList.contains("hidden");
+    if (overlayUp) {
+      Game.start({ clearUse: k === " " || k === "e" || k === "enter" });
     }
   },
 
@@ -108,7 +112,11 @@ const Input = {
       if (typeof Admin !== "undefined" && Admin.typing()) return;
       const k = this._alias(e);
       if (!k) return;
-      if (this._isMove(k) || k === " " || k === "e" || k === "j" || k === "i" || k === "escape") {
+      const mod = e.ctrlKey || e.metaKey || e.altKey;
+      if (mod && val) return;
+      const decorKey = k === "r" || k === "f" || k === "q" || k === "-" || k === "=" || k === "[" || k === "]";
+      const decorLive = decorKey && typeof Cottage !== "undefined" && Cottage.decorOn() && World.id === "cottage";
+      if (!mod && (this._isMove(k) || k === " " || k === "e" || k === "j" || k === "i" || k === "escape" || decorLive)) {
         e.preventDefault();
         if (typeof e.stopPropagation === "function") e.stopPropagation();
       }
@@ -161,6 +169,14 @@ const Input = {
       fishBtn.addEventListener("pointerup", up);
       fishBtn.addEventListener("pointerleave", up);
       fishBtn.addEventListener("pointercancel", up);
+    }
+    const packBtn = document.getElementById("btn-packup");
+    if (packBtn) {
+      packBtn.addEventListener("pointerdown", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (typeof Fishing !== "undefined" && Fishing.state === "aim") Fishing.cancel();
+      });
     }
     this.syncPad();
     window.addEventListener("resize", () => this.syncPad());
@@ -347,8 +363,13 @@ const Particles = {
 const AudioFX = {
   ctx: null,
   ensure() {
-    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (this.ctx.state === "suspended") this.ctx.resume();
+    if (this.muted) return;
+    try {
+      if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      if (this.ctx.state === "suspended") this.ctx.resume();
+    } catch (err) {
+      this.ctx = null; /* no audio device: cues become silent, the game keeps going */
+    }
   },
   tone(freq, dur, type, vol, slide) {
     if (this.muted || !this.ctx) return;
@@ -385,6 +406,74 @@ const AudioFX = {
   nibble() {
     this.ensure();
     this.tone(340, 0.05, "sine", 0.03, 180);
+  },
+  /* Small world cues. All of them route through tone(), so mute silences everything. */
+  pickup() {
+    this.ensure();
+    this.tone(660, 0.05, "triangle", 0.03);
+    setTimeout(() => this.tone(880, 0.06, "triangle", 0.03), 55);
+  },
+  coin() {
+    this.ensure();
+    this.tone(1180, 0.05, "square", 0.018);
+    setTimeout(() => this.tone(1560, 0.09, "square", 0.016), 45);
+  },
+  page() {
+    this.ensure();
+    this.tone(220, 0.04, "triangle", 0.02, 300);
+  },
+  /* One tick when a spoil actually adds stew. Mute and a missing device stay silent. */
+  soft() {
+    this.ensure();
+    this.tone(140, 0.09, "sine", 0.015, 70);
+  },
+  _stopRain() {
+    const bed = this._rain;
+    this._rain = null;
+    if (!bed) return;
+    try {
+      if (bed.gain && this.ctx) bed.gain.gain.setTargetAtTime(0.0001, this.ctx.currentTime, 0.04);
+      setTimeout(() => { try { bed.src.stop(); } catch (e) { /* already stopped */ } }, 180);
+    } catch (err) { /* no device */ }
+  },
+  /** Quiet outdoor rain. Under the plop and the bite. Stops the moment the sky or the roof changes. */
+  syncRain(on) {
+    try {
+      if (!on || this.muted) { this._stopRain(); return; }
+      this.ensure();
+      if (!this.ctx || this._rain) return;
+      const ctx = this.ctx;
+      const seconds = 1.4;
+      const len = (ctx.sampleRate * seconds) | 0;
+      const fade = (ctx.sampleRate * 0.02) | 0;
+      const tmp = new Float32Array(len + fade);
+      let brown = 0;
+      for (let i = 0; i < tmp.length; i++) {
+        const white = Math.random() * 2 - 1;
+        brown = brown * 0.94 + white * 0.06;
+        tmp[i] = brown;
+      }
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < fade; i++) {
+        const t = i / fade;
+        data[i] = tmp[i] * t + tmp[len + i] * (1 - t);
+      }
+      for (let i = fade; i < len; i++) data[i] = tmp[i];
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 780;
+      const gain = ctx.createGain();
+      gain.gain.value = 0.011;
+      src.connect(filter).connect(gain).connect(ctx.destination);
+      src.start();
+      this._rain = { src, gain };
+    } catch (err) {
+      this._rain = null;
+    }
   },
   step() {
     this.ensure();

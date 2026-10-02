@@ -49,7 +49,7 @@ const Inventory = {
     if (left <= 0) {
       Save.data.inventory.equippedBait = "none";
       UI.toastNote(`${BAIT[id].name} is gone. Empty hook — pick bait in the pack (I).`);
-    } else if (left < 3) {
+    } else if (left < (DESIGN.baitLowWarn || 3)) {
       UI.toastNote(`${BAIT[id].name} running low (×${left}).`);
     }
     return id;
@@ -107,9 +107,10 @@ const Inventory = {
       const b = BAIT[id];
       const n = this.baitCount(id);
       const on = eq === id && n > 0;
-      const low = n > 0 && n < 3;
+      const low = n > 0 && n < (DESIGN.baitLowWarn || 3);
+      const key = i < 5 ? `<kbd>${i + 1}</kbd> ` : "";
       return `<button type="button" class="pack-bait${on ? " is-on" : ""}${low ? " is-low" : ""}" data-bait="${id}">
-        <kbd>${i + 1}</kbd> ${b.name} ×${n}${on ? " · on hook" : ""}${n === 0 ? " · out" : low ? " · low" : ""}
+        ${key}${b.name} ×${n}${on ? " · on hook" : ""}${n === 0 ? " · out" : low ? " · low" : ""}
       </button>`;
     }).join("");
     const emptyBtn = `<button type="button" class="pack-bait${emptyOn ? " is-on" : ""}" data-bait="none">Empty hook${emptyOn ? " · selected" : ""}</button>`;
@@ -137,10 +138,10 @@ const Inventory = {
       const g = looseGroups[id];
       const bits = [];
       if (g.fresh) bits.push(`<span class="ink-fresh">Fresh ×${g.fresh}</span>`);
-      if (g.soft) bits.push(`<span class="ink-soft">Aging ×${g.soft}</span>`);
+      if (g.soft) bits.push(`<span class="ink-soft">Soft ×${g.soft}</span>`);
       return `${f ? f.name : id}: ${bits.join(" · ")} <button type="button" data-eatfish="${id}">Eat</button>`;
     }).join("<br/>") || "No loose fish.";
-    const extras = ["berries", "crystal"].map((id) => `${BAIT[id].name} ×${this.baitCount(id)}`).join(" · ");
+    const extras = ["berries", "millreed", "saltberries", "crystal"].map((id) => `${BAIT[id].name} ×${this.baitCount(id)}`).join(" · ");
     const meal = Survival.meal();
     const mealLine = meal ? `Active meal: ${meal.name}` : "No meal in you.";
     const cooked = Object.keys(MEALS).map((id) => {
@@ -166,7 +167,7 @@ const Inventory = {
       <p class="pack-rank">${Skills.line()}</p>
       <p class="pack-coins">${this.coins()} coins</p>
       <p class="pack-hearts">${heartLine}</p>
-      <p class="pack-fish">${fishLines}<br/>Stew ×${Save.stewCount()}</p>
+      <p class="pack-fish">${fishLines}<br/>${Save.stewLine()}</p>
       <div class="pack-baits">${emptyBtn}${rows}</div>
       <p class="pack-extra">${extras}</p>
       <p class="pack-meal">${mealLine}</p>
@@ -296,7 +297,8 @@ const Pickups = {
     let n = best.n || 1;
     if (Skills.has("forager") && Math.random() < DESIGN.foragerChance) n += 1;
     Inventory.addBait(best.item, n);
-    UI.toastNote(`Picked ${BAIT[best.item] ? BAIT[best.item].name : best.item}.`);
+    try { AudioFX.pickup(); } catch (err) { /* cue optional */ }
+    UI.toastNote(`Picked ${BAIT[best.item] ? BAIT[best.item].name : best.item}${n > 1 ? ` ×${n}` : ""}.`);
     Save.mark();
     return true;
   },
@@ -311,18 +313,24 @@ const Pickups = {
     return null;
   },
 
-  scatter(addDeco, get, rng, tw, th, mapId) {
+  scatter(addDeco, get, rng, tw, th, mapId, solidAt) {
     const kinds = mapId === "cave"
       ? [["glow", 4, 1], ["crystal", 5, 1]]
-      : [["worms", 10, 1], ["crickets", 5, 1], ["berries", 6, 1]];
+      : mapId === "marsh"
+        ? [["millreed", 8, 1], ["berries", 2, 1]]
+        : mapId === "island"
+          ? [["saltberries", 8, 1], ["crickets", 3, 1]]
+          : [["worms", 10, 1], ["crickets", 5, 1], ["berries", 6, 1]];
     for (const [item, n, qty] of kinds) {
       let placed = 0, guard = 0;
-      while (placed < n && guard++ < 90) {
+      while (placed < n && guard++ < 400) {
         const tx = 3 + Utils.irand(rng, 0, tw - 8);
         const ty = 3 + Utils.irand(rng, 0, th - 8);
         const t = get(tx, ty);
         if (t !== TILE.GRASS && t !== TILE.SHORE && t !== TILE.CAVE_FLOOR && t !== TILE.DIRT) continue;
-        addDeco("pickup", tx * TILE_SIZE + 8, ty * TILE_SIZE + 10, { item, n: qty, taken: false });
+        const px = tx * TILE_SIZE + 8, py = ty * TILE_SIZE + 10;
+        if (solidAt && solidAt(px, py)) continue;
+        addDeco("pickup", px, py, { item, n: qty, taken: false });
         placed++;
       }
     }

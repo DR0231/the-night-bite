@@ -33,6 +33,32 @@ const Quests = {
       Save.data.quests.derby = { key, mood: rng() < 0.5 ? "still" : "moving", landed: 0, goal: 8 };
     }
     if (!key) Save.data.quests.derby.key = "";
+    MillSpine.tickHeard();
+    this._biasRumor(rng);
+  },
+
+  _biasRumor(rng) {
+    const spine = MillSpine.stage();
+    if (spine !== "heard" && spine !== "opened" && spine !== "visited") return;
+    if (rng() >= 0.5) return;
+    if (Save.data.flags.fifthWater) {
+      const marsh = FISH.filter((f) => f.spot === "marsh");
+      if (!marsh.length) return;
+      const rf = Utils.pick(rng, marsh);
+      Save.data.quests.rumor = {
+        day: Save.data.clock.day,
+        fish: rf.id,
+        spot: rf.spot,
+        text: `${rf.name} was seen at ${SPOTS[rf.spot].name}.`,
+      };
+      return;
+    }
+    Save.data.quests.rumor = {
+      day: Save.data.clock.day,
+      fish: "",
+      spot: "marsh",
+      text: MILL_SPINE_RUMOR_QUIET,
+    };
   },
 
   onLand(fish) {
@@ -57,6 +83,7 @@ const Quests = {
       UI.toastNote("The rumor was true.");
       bonus = true;
     }
+    MillSpine.onMillfin(fish);
     return bonus;
   },
 
@@ -97,7 +124,7 @@ const Quests = {
   refresh() {
     const el = document.getElementById("board-body");
     if (!el) return;
-    const f = (Save.data.clock.forecast || []).map((id) => WEATHERS[id].name).join(" → ");
+    const f = (Save.data.clock.forecast || []).filter((id) => WEATHERS[id]).map((id) => WEATHERS[id].name).join(" → ");
     el.innerHTML = `
       <p><strong>Today</strong> — ${this.dailyLine()}</p>
       <p><strong>Rumor</strong> — ${this.rumorLine()}</p>
@@ -108,6 +135,84 @@ const Quests = {
 };
 
 const Board = Quests;
+
+const MillSpine = {
+  _order: ["none", "heard", "opened", "visited", "done"],
+
+  stage() {
+    return (Save.data && Save.data.flags && Save.data.flags.millSpine) || "none";
+  },
+
+  atLeast(step) {
+    return this._order.indexOf(this.stage()) >= this._order.indexOf(step);
+  },
+
+  _set(step) {
+    if (this.atLeast(step)) return false;
+    Save.data.flags.millSpine = step;
+    return true;
+  },
+
+  keepFive() {
+    return this.stage() !== "none";
+  },
+
+  mailCap() {
+    return this.keepFive() ? 5 : 3;
+  },
+
+  pushLetter(beat) {
+    const text = MILL_SPINE_MAIL[beat];
+    if (!text || !Save.data || !Save.data.cottage) return;
+    let mail = Save.data.cottage.mail;
+    if (!Array.isArray(mail)) mail = Save.data.cottage.mail = [];
+    const at = mail.indexOf(text);
+    if (at >= 0) mail.splice(at, 1);
+    mail.unshift(text);
+    Save.data.cottage.mail = mail.slice(0, this.mailCap());
+  },
+
+  tickHeard() {
+    if (!Save.data) return;
+    if (this.stage() !== "none") return;
+    if (!Save.data.cottage.visited) return;
+    if ((Save.data.clock.day | 0) < 2) return;
+    this._set("heard");
+    this.pushLetter("heard");
+    Save.mark();
+  },
+
+  onOpened() {
+    if (!Save.data || !Save.data.flags.fifthWater) return;
+    if (this.atLeast("opened")) return;
+    this._set("opened");
+    this.pushLetter("opened");
+    UI.toastNote("The east boat is free. The mill is still silent.");
+    Save.mark();
+  },
+
+  onVisited() {
+    if (typeof World === "undefined" || World.id !== "marsh") return;
+    if (!this.atLeast("heard")) return;
+    if (this.atLeast("visited")) return;
+    this._set("visited");
+    this.pushLetter("visited");
+    Save.mark();
+  },
+
+  onMillfin(fish) {
+    if (!fish || fish.id !== "millfin") return;
+    if (!this.atLeast("visited")) return;
+    if (this.stage() === "done") return;
+    this._set("done");
+    this.pushLetter("done");
+    UI.toastNote("The mill keeps its silence — but you were there.");
+    try { if (typeof Stamps !== "undefined") Stamps.try("millQuiet"); } catch (e) { /* stamp optional */ }
+    try { if (typeof Island !== "undefined") Island.onQuiet(); } catch (e) { /* island optional */ }
+    Save.mark();
+  },
+};
+
 const Mail = {
   open: false,
   toggle() {
@@ -115,7 +220,10 @@ const Mail = {
     const el = document.getElementById("mail");
     if (!el) return;
     el.classList.toggle("hidden", !this.open);
-    if (this.open) this.refresh();
+    if (this.open) {
+      MillSpine.tickHeard();
+      this.refresh();
+    }
     else Save.mark();
   },
   close() {
@@ -141,7 +249,121 @@ const Mail = {
     const rec = (Save.data.recap || []).find((r) => r.reason === "passout");
     if (rec) notes.unshift("Wren: I found you in the reeds last night. The kettle’s still warm.");
     if ((Save.data.skills.rank | 0) > 1) notes.push(`Someone pinned a scrap: fisher rank ${Save.data.skills.rank}.`);
-    Save.data.cottage.mail = notes.slice(0, 3);
+    if (typeof Cottage !== "undefined" && Cottage.decorOn() && !Cottage.hasSlot("shelf")) {
+      notes.push("Wren: cottage goods on the counter — a wall shelf if you have forty coins.");
+    }
+    MillSpine.tickHeard();
+    Save.data.cottage.mail = notes.slice(0, MillSpine.mailCap());
+    const mail = Save.data.cottage.mail;
+    const beats = ["heard", "opened", "visited", "done"];
+    for (let i = 0; i < beats.length; i++) {
+      const beat = beats[i];
+      if (!MillSpine.atLeast(beat)) continue;
+      const text = MILL_SPINE_MAIL[beat];
+      if (!text) continue;
+      const at = mail.indexOf(text);
+      if (at >= 0) mail.splice(at, 1);
+      mail.unshift(text);
+    }
+    Save.data.cottage.mail = mail.slice(0, MillSpine.mailCap());
     Save.data.cottage.weeds = 4 + (Save.dayRng("weeds")() * 4) | 0;
   },
 };
+
+/*
+ * First-evening nudges. One quiet line each, fired by what the player has not yet
+ * done, spaced by DESIGN.onboardGap, and gone for good after DESIGN.onboardWindow
+ * seconds of play. Anything the player finds on their own is marked silently.
+ */
+const Onboard = {
+  cool: 0,
+  steps: [
+    {
+      id: "cast",
+      silent: () => Journal.count() >= 1,
+      ready: () => Journal.count() === 0 && !Fishing.active,
+      text: "Water is close. Stand at the edge and press E to cast.",
+    },
+    {
+      id: "journal",
+      silent: () => UI.journalOpen,
+      ready: () => Journal.count() >= 1,
+      text: "That one goes in the journal. Press J.",
+    },
+    {
+      id: "pack",
+      silent: () => Inventory.open,
+      ready: () => Journal.count() >= 1,
+      text: "Bait and rods live in the pack. Press I.",
+    },
+    {
+      id: "needs",
+      ready: () => {
+        const p = Save.data.player;
+        return Math.min(p.hunger, p.warmth, p.rest) < 60 || TimeCycle.phaseId() === "golden";
+      },
+      text: "Top right: hunger, warmth, rest. An evening outside can go poorly.",
+    },
+    {
+      id: "cottage",
+      silent: () => !!Save.data.cottage.visited,
+      ready: () => TimeCycle.phaseId() === "golden" || TimeCycle.phaseId() === "night",
+      text: "Your cottage is up the path, just north-west. The bed is warmer than the reeds.",
+    },
+  ],
+
+  _flags() {
+    const f = Save.data && Save.data.flags;
+    if (!f) return null;
+    if (!f.onboard || typeof f.onboard !== "object") f.onboard = {};
+    return f.onboard;
+  },
+
+  active() {
+    const f = this._flags();
+    if (!f || f.done) return false;
+    if ((Save.data.playTime || 0) > (DESIGN.onboardWindow || 600) || Journal.count() >= 4) {
+      f.done = true;
+      return false;
+    }
+    return true;
+  },
+
+  /** Runs every frame, even while a menu pauses the world, so an opened journal or pack counts. */
+  observe() {
+    if (!this.active()) return;
+    const f = this._flags();
+    for (const s of this.steps) {
+      if (!f[s.id] && s.silent && s.silent()) f[s.id] = true;
+    }
+  },
+
+  update(dt) {
+    if (!this.active()) return;
+    const f = this._flags();
+    this.cool -= dt;
+    if (this.cool > 0) return;
+    if ((Save.data.playTime || 0) < (DESIGN.onboardDelay || 0)) return;
+    if (UI.anyMenu() || Npcs.talkId || Game.fading || Game.sleeping || Fishing.active) return;
+    if (World.id !== "vale") return;
+    if (!this.steps.some((s) => !f[s.id])) { f.done = true; return; }
+    const next = this.steps.find((s) => !f[s.id] && s.ready());
+    if (!next) return;
+    f[next.id] = true;
+    UI.toastNote(next.text);
+    this.cool = DESIGN.onboardGap || 30;
+  },
+};
+
+(function _millSpineMapEnter() {
+  if (typeof World === "undefined" || !World.use) return;
+  const orig = World.use.bind(World);
+  World.use = function (id) {
+    const prev = World.id;
+    orig(id);
+    try {
+      if (id === "marsh" && prev !== "marsh" && typeof MillSpine !== "undefined") MillSpine.onVisited();
+    } catch (err) { /* warp still works if mail flavor fails */ }
+    try { if (typeof Passer !== "undefined") Passer.sync(); } catch (err) { /* passer optional */ }
+  };
+})();

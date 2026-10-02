@@ -69,7 +69,12 @@ const DESIGN = {
   needCrit: 10,
   hungerBarShrink: 20,
   passOutHunger: 15,
+  /* Waking in the reeds: share of the equipped bait Wren "lost" carrying you home (never journal, coins, rods, or flags), and where the needs settle. */
+  passOutBaitNibble: 0.2,
+  passOutNeeds: 60,
   emptyHookBite: 0.45,
+  /* "Running low" note once the equipped bait drops under this. At 0 the hook goes empty; nothing auto-swaps. */
+  baitLowWarn: 3,
   caveWrongBait: 0.42,
   preferBait: 1.25,
   wrongPreferBait: 0.72,
@@ -79,11 +84,19 @@ const DESIGN = {
   nightOwlBite: 1.15,
   nightOwlRest: 0.65,
   berryHunger: 12,
+  chairRest: 2.4,
+  /* Decor parked: needs a major rework (scales break the pixel grid, chair can block the bed). */
+  decorOn: false,
+  finchCost: 90,
+  spineCost: 220,
   eatFishHunger: 18,
   trophySlots: 2,
   lanternFuel: 6,
   lanternBurn: 0.12,
   lanternWarmth: 0.55,
+  lanternPeak: 0.35,      // centre alpha of the held lantern at full night outdoors and in caves
+  lanternIndoor: 0.16,    // centre alpha in the cottage, matches the lamp shelf glow
+  lanternNightA: 0.58,    // scene light alpha at midnight (TimeCycle.sample stop h:0)
   cloakWarmth: 0.7,
   weatheredWarmth: 0.65,
   foragerChance: 0.4,
@@ -92,17 +105,44 @@ const DESIGN = {
   seasonDays: 3,
   startCoins: 12,
   startBait: { worms: 8, crickets: 2, glow: 1 },
+  strBase: 0.82,
+  strPerRank: 0.04,
+  strWrist: 1.08,
+  strMin: 0.65,
+  strMax: 1.60,
+  /* Rank 4 lengthens the hook window. Rank 6 shortens the wait before the bite. They do not stack on the same number. */
+  rank4HookMul: 1.10,
+  rank6CastMul: 0.9,
   perkOffer: 2,
+  /* Interaction reach (px). E picks the nearest thing inside these before it fishes. */
+  castAimPad: 18,
+  aimSpeed: 70,
+  boatRange: 32,
+  signRange: 22,
+  crateRange: 22,
+  sitRange: 20,
+  npcWander: 10,
+  /* Quiet first-evening nudges: seconds of play before the first one, gap between them, and the play-time window after which none show. */
+  onboardDelay: 6,
+  onboardGap: 30,
+  onboardWindow: 600,
+  /* Parchment note timing: base seconds, extra per character, hard cap. Notes longer than toastLongChars drop to the small body line under a title. */
+  toastBase: 1.8,
+  toastPerChar: 0.04,
+  toastMax: 7,
+  toastLongChars: 56,
   warps: [
     { id: "vale", label: "Vale spawn", map: "vale", x: 32.5, y: 26.2, dir: 0 },
     { id: "cottage", label: "Cottage", map: "cottage", x: 11, y: 12.2, dir: 3 },
     { id: "cave", label: "Crystal Cave", map: "cave", x: 18, y: 6.4, dir: 0 },
-    { id: "marsh", label: "Millpond", map: "marsh", x: 7.6, y: 12.2, dir: 0, fifthWater: true },
-    { id: "pond", label: "Pond dock", map: "vale", x: 19.4, y: 24.6, dir: 1 },
-    { id: "lake", label: "Lake dock", map: "vale", x: 42.5, y: 24.4, dir: 2 },
+    { id: "marsh", label: "Millpond", map: "marsh", x: 9.2, y: 16.6, dir: 2, fifthWater: true },
+    { id: "island", label: "Windward Reach", map: "island", x: 12.5, y: 22.0, dir: 2, islandOpen: true },
+    { id: "pond", label: "Pond dock", map: "vale", x: 18.5, y: 24.6, dir: 1 },
+    { id: "river", label: "River bridge", map: "vale", x: 32, y: 13.4, dir: 3 },
+    { id: "lake", label: "Lake dock", map: "vale", x: 43.5, y: 24.4, dir: 2 },
     { id: "wren", label: "Wren’s stall", map: "vale", x: 35.8, y: 26.8, dir: 0 },
-    { id: "bramble", label: "Bramble", map: "vale", x: 19.4, y: 24.6, dir: 1 },
-    { id: "lark", label: "Lark", map: "vale", x: 42.5, y: 24.4, dir: 2 },
+    { id: "bramble", label: "Bramble", map: "vale", x: 23.4, y: 27.4, dir: 3 },
+    { id: "lark", label: "Lark", map: "vale", x: 39.6, y: 21.6, dir: 0 },
   ],
   phases: [
     { id: "dawn", label: "Dawn", hour: 6.2, range: [5, 8] },
@@ -236,6 +276,13 @@ const SPOTS = {
     minigame: "timing",
     flavor: "Quiet millpond. Best at dawn and dusk; Pearl Carp likes glow after dark. Boat west to leave.",
   },
+  island: {
+    id: "island",
+    name: "Windward Reach",
+    mood: "moving",
+    minigame: "tension",
+    flavor: "Open swell beyond the millpond. The wind leans on the line. Boat the dock to return.",
+  },
 };
 
 const FISH = [
@@ -254,7 +301,7 @@ const FISH = [
   { id: "rainpearl", name: "Rain Pearl", spot: "pond", rarity: "Uncommon",
     color: "#c8e8f0", desc: "A dewdrop of a fish that only stirs in rain.",
     size: [5, 10], sell: 16, rainOnly: true, bite: { dawn: 1, day: 1, golden: 1, night: 1 },
-    baitBias: { worms: 1.0, crickets: 0.7, glow: 0.5, berryblend: 1.4, glowplus: 0.4 } },
+    baitBias: { worms: 1.0, crickets: 0.7, glow: 0.5, berryblend: 1.4, glowplus: 0.4, rainworms: 1.6 } },
   { id: "stonetrout", name: "Stone Trout", spot: "river", rarity: "Common",
     color: "#8aa0b4", desc: "Speckled like river granite, quick as the current.",
     size: [7, 14], sell: 8, bite: { dawn: 1.1, day: 1, golden: 1, night: 0.6 },
@@ -303,6 +350,22 @@ const FISH = [
     color: "#e8d8c8", desc: "A pale rumor of the east marsh.",
     size: [11, 20], sell: 36, bite: { dawn: 0.5, day: 0.6, golden: 1.1, night: 1.4 },
     baitBias: { worms: 0.7, crickets: 0.5, glow: 1.5, berryblend: 1.0, glowplus: 1.8 } },
+  { id: "tideperch", name: "Tide Perch", spot: "island", rarity: "Common",
+    color: "#d4a05a", desc: "A warm-shore regular of the windward shallows.",
+    size: [5, 11], sell: 7, bite: { dawn: 1.1, day: 1.25, golden: 1.0, night: 0.45 },
+    baitBias: { worms: 2.1, crickets: 0.5, glow: 0.25, berryblend: 2.0, glowplus: 0.2 } },
+  { id: "skipjack", name: "Skipjack", spot: "island", rarity: "Common",
+    color: "#5aa8c8", desc: "A slim jumper that hits crickets in the swell.",
+    size: [6, 12], sell: 8, bite: { dawn: 1.0, day: 1.15, golden: 1.05, night: 0.5 },
+    baitBias: { worms: 0.7, crickets: 2.2, glow: 0.3, berryblend: 0.8, glowplus: 0.25 } },
+  { id: "duskrunner", name: "Dusk Runner", spot: "island", rarity: "Uncommon",
+    color: "#6a4a88", desc: "Runs the windward edge when the light goes copper.",
+    size: [8, 15], sell: 19, bite: { dawn: 0.55, day: 0.65, golden: 1.55, night: 1.45 },
+    baitBias: { worms: 0.5, crickets: 0.45, glow: 2.0, berryblend: 0.55, glowplus: 1.4 } },
+  { id: "galeor", name: "Galeor", spot: "island", rarity: "Rare",
+    color: "#c8b090", desc: "A heavy windward fish. The swell remembers its weight.",
+    size: [14, 26], sell: 40, bite: { dawn: 0.4, day: 0.45, golden: 1.15, night: 1.5 },
+    baitBias: { worms: 0.3, crickets: 0.25, glow: 1.4, berryblend: 0.35, glowplus: 2.4 } },
 ];
 
 const SEASONS = ["spring", "summer", "autumn", "winter"];
@@ -316,32 +379,39 @@ const WEATHERS = {
 };
 
 const RODS = {
-  willow: { id: "willow", name: "Willow Rod", bar: 1, speed: 1, tension: 1, reach: 1, caveLuck: 1,
+  willow: { id: "willow", name: "Willow Rod", bar: 1, speed: 1, tension: 0.70, reach: 1, caveLuck: 1,
     desc: "A balanced starter rod." },
-  finch: { id: "finch", name: "River Finch", bar: 0.82, speed: 1.28, tension: 0.92, reach: 0.84, caveLuck: 1,
-    desc: "A quicker bar, shorter casts.", cost: 120, requireFish: "swiftdarter" },
-  spine: { id: "spine", name: "Cave Spine", bar: 1.06, speed: 0.9, tension: 1.38, reach: 1, caveLuck: 1.35,
-    desc: "Steady hands in the dark.", cost: 160, requireFish: "crystalfin" },
+  finch: { id: "finch", name: "River Finch", bar: 0.82, speed: 1.28, tension: 1.05, reach: 0.84, caveLuck: 1,
+    desc: "Quicker timing bar, shorter casts. Eases river taps, not the heavy fights.",
+    cost: DESIGN.finchCost, requireFish: "swiftdarter" },
+  spine: { id: "spine", name: "Cave Spine", bar: 1.06, speed: 0.9, tension: 1.48, reach: 1, caveLuck: 1.35,
+    desc: "Steadies tension and cave luck. The big help on heavy fish.",
+    cost: DESIGN.spineCost, requireFish: "crystalfin" },
 };
 
 const BAIT = {
   worms: { id: "worms", name: "Worms", prefer: "pond", desc: "Everyday bait from the path edges." },
+  rainworms: { id: "rainworms", name: "Rain worms", prefer: "", desc: "Soft worms that turn up when the vale is wet.", guide: "Wren sells these only while it rains. Odds only, and only for the Rain Pearl." },
   crickets: { id: "crickets", name: "Crickets", prefer: "river", desc: "River hoppers love these." },
   glow: { id: "glow", name: "Glow bait", prefer: "cave", strong: true, desc: "A jar of cave-light paste." },
   berries: { id: "berries", name: "Vale berries", prefer: "", desc: "For the packing bench, not the hook." },
+  millreed: { id: "millreed", name: "Mill reeds", prefer: "", desc: "Marsh shoots. Only along the millpond shore." },
+  saltberries: { id: "saltberries", name: "Salt berries", prefer: "", desc: "Windward fruit. Only on the island." },
   crystal: { id: "crystal", name: "Crystal mote", prefer: "", desc: "A chip of cave-light." },
   berryblend: { id: "berryblend", name: "Berry blend", prefer: "pond", bonus: 1.22, desc: "Worms mashed with vale berries." },
   glowplus: { id: "glowplus", name: "Bright glow", prefer: "cave", strong: true, bonus: 1.28, desc: "Glow bait with a crystal mote." },
 };
 
-const HOOK_BAIT = ["worms", "crickets", "glow", "berryblend", "glowplus"];
+const HOOK_BAIT = ["worms", "crickets", "glow", "berryblend", "glowplus", "rainworms"];
 
 const SHOP_CATALOG = [
   { kind: "bait", id: "worms", price: 4, stock: 12 },
+  { kind: "bait", id: "rainworms", price: 5, stock: 10, rainOnly: true,
+    desc: "On the stall only while it rains." },
   { kind: "bait", id: "crickets", price: 6, stock: 8 },
   { kind: "bait", id: "glow", price: 10, stock: 4 },
-  { kind: "rod", id: "finch", price: 120, requireFish: "swiftdarter" },
-  { kind: "rod", id: "spine", price: 160, requireFish: "crystalfin" },
+  { kind: "rod", id: "finch", price: DESIGN.finchCost, requireFish: "swiftdarter" },
+  { kind: "rod", id: "spine", price: DESIGN.spineCost, requireFish: "crystalfin" },
   { kind: "upgrade", id: "tank", name: "Larger tank", requireFish: "moonfin",
     desc: "Donate a moonfin to widen the cottage aquarium." },
   { kind: "item", id: "campfireKit", name: "Campfire kit", price: 28, minRank: 3, stock: 1,
@@ -352,7 +422,29 @@ const SHOP_CATALOG = [
     desc: "A crystal for the lamp. Night is kinder while it burns." },
   { kind: "item", id: "dayclock", name: "Cottage sundial", price: 22, minRank: 1,
     desc: "Hang it on the cottage wall. It names dawn, day, dusk, and night." },
+  { kind: "kit", id: "hearthKit", name: "Hearth kit", price: 90, minRank: 3, slots: ["rug", "lampshelf"],
+    desc: "A cream rug and a warm lamp-shelf. Coins only." },
+  { kind: "kit", id: "windowKit", name: "Flower box", price: 70, minRank: 3, slots: ["flowerbox"],
+    desc: "A planter box of vale flowers. Coins only." },
+  { kind: "decor", id: "rockingChair", name: "Rocking chair", price: 55, minRank: 2, slots: ["chair"],
+    desc: "A quiet chair by the hearth rug." },
+  { kind: "decor", id: "wallShelf", name: "Wall shelf", price: 40, minRank: 1, slots: ["shelf"],
+    desc: "A small shelf beside the fisher certificate." },
+  { kind: "decor", id: "islandMat", name: "Island mat", price: 70, minRank: 4, slots: ["mat"],
+    desc: "A windward weave by the door. Sold even before the island boat." },
 ];
+
+/* Fixed cottage nails. Content draws only when cottage.decor[slot] is true. */
+const COTTAGE_DECOR = {
+  shelf:     { x: 6.2 * TILE_SIZE,   y: 4.05 * TILE_SIZE, sprite: "shelf",     floor: false, facing: 3 },
+  lampshelf: { x: 12.55 * TILE_SIZE, y: 4.05 * TILE_SIZE, sprite: "lampshelf", floor: false, facing: 2 },
+  rug:       { x: 11.2 * TILE_SIZE,  y: 8.6 * TILE_SIZE,  sprite: "rug",       floor: true,  facing: 0 },
+  flowerbox: { x: 3.5 * TILE_SIZE,   y: 8.1 * TILE_SIZE,  sprite: "flowerbox", floor: false, facing: 0 },
+  chair:     { x: 9.4 * TILE_SIZE,   y: 9.0 * TILE_SIZE,  sprite: "chair",     floor: false, facing: 2 },
+  mat:       { x: 15.4 * TILE_SIZE,  y: 13.1 * TILE_SIZE, sprite: "mat",       floor: true,  facing: 0 },
+};
+
+const DECOR_SCALES = [0.75, 1, 1.3];
 
 const MEALS = {
   panperch:    { id: "panperch",    name: "Pan perch",     need: { anyCommonFish: 1 }, hunger: 45, warmth: 8,  rest: 0,  buff: null,   desc: "Any common fish in the pan." },
@@ -360,9 +452,11 @@ const MEALS = {
   riverstew:   { id: "riverstew",   name: "River stew",    need: { stonetrout: 1, berries: 1 }, hunger: 40, warmth: 12, rest: 8, buff: "steady", desc: "Wider timing until you sleep." },
   cavebroth:   { id: "cavebroth",   name: "Cave broth",    need: { glowminnow: 1, crystal: 1 }, hunger: 30, warmth: 40, rest: 6, buff: "warm",   desc: "Holds warmth in cave and frost." },
   mistskillet: { id: "mistskillet", name: "Mist skillet",  need: { mistbass: 1 }, hunger: 42, warmth: 10, rest: 4,  buff: null,   desc: "Lake everyday fill." },
-  reedchowder: { id: "reedchowder", name: "Reed chowder",  need: { fogperch: 1, berries: 1 }, hunger: 38, warmth: 18, rest: 10, buff: "tea",    desc: "Marsh evening." },
+  reedchowder: { id: "reedchowder", name: "Reed chowder",  need: { fogperch: 1, millreed: 1 }, hunger: 38, warmth: 18, rest: 10, buff: "tea",    desc: "Millpond evening. Needs mill reeds." },
   amberpot:    { id: "amberpot",    name: "Amber pot",     need: { amberdace: 1, berries: 1 }, hunger: 36, warmth: 14, rest: 12, buff: "steady", desc: "River uncommon." },
   moonkettle:  { id: "moonkettle",  name: "Moon kettle",   need: { moonfin: 1, crystal: 1 }, hunger: 28, warmth: 20, rest: 22, buff: "warm",   desc: "Rare frost treat." },
+  saltskillet: { id: "saltskillet", name: "Salt skillet",  need: { tideperch: 1, saltberries: 1 }, hunger: 40, warmth: 12, rest: 6, buff: null, desc: "Windward perch and salt berries." },
+  galechowder: { id: "galechowder", name: "Gale chowder",  need: { skipjack: 1, saltberries: 1 }, hunger: 36, warmth: 16, rest: 10, buff: "tea", desc: "Island swell in a pan." },
 };
 
 const RANK_NEED = [80, 140, 220, 320, 440, 580, 740];
@@ -392,7 +486,7 @@ const NPC_DATA = [
   },
   {
     id: "bramble", name: "Bramble", role: "fisher",
-    x: 19.4 * 16, y: 24.6 * 16,
+    x: 23.4 * 16, y: 27.4 * 16,
     color: "#5a8a48",
     greet: "Pond’s kind if you wait. I like a patient neighbor.",
     hearts: [
@@ -403,7 +497,7 @@ const NPC_DATA = [
   },
   {
     id: "lark", name: "Lark", role: "rumor",
-    x: 42.5 * 16, y: 24.4 * 16,
+    x: 39.6 * 16, y: 21.6 * 16,
     color: "#7a6ab0",
     greet: "I collect almosts. The ones that got away still count.",
     hearts: [
@@ -421,6 +515,34 @@ const DAILY_ASKS = [
   { spot: "river", fish: "swiftdarter", text: "Land a Swift Darter before night." },
   { spot: "lake", fish: "mistbass", text: "A Mist Bass off the east dock." },
   { spot: "cave", fish: "glowminnow", text: "A Glow Minnow from the cave lake." },
+];
+
+/* Placeholder mill-spine mail. Ivy polish later. Boat gate stays flags.fifthWater. */
+const MILL_SPINE_MAIL = {
+  heard: "Lark: “The east mill went quiet. Used to hear the wheel from the lake path — now it doesn’t turn.”",
+  opened: "Bramble: “East boat’s free. Mill’s still silent, though. Take berries if you go.”",
+  visited: "The mill wheel doesn’t turn. Reeds keep the rest of the story.",
+  done: "The mill keeps its silence — but you were there. — Wren",
+};
+
+const MILL_SPINE_RUMOR_QUIET = "The east boat is still lashed. Folks say the mill went quiet.";
+const ISLAND_OPEN_MAIL = "A second boat is loose at the millpond. — Wren";
+const STEW_LETTER = "The first meal is on the hearth. The cottage smells like supper.";
+const COOLER_QUIET = "Ice keeps a fish. Time turns the rest to stew.";
+const MARSH_PASSER = {
+  line: "Just walking the south path. The boats aren’t mine.",
+  x: 28,
+  y: 25.2,
+};
+
+/* Quiet cottage certificates. Six visible stamps. Unlock predicates live on Stamps. */
+const STAMPS = [
+  { id: "tenSpecies", title: "Ten of the vale" },
+  { id: "firstRare", title: "First rare" },
+  { id: "firstCook", title: "First meal" },
+  { id: "firstPassOut", title: "Found in the reeds" },
+  { id: "marshOpen", title: "East boat free" },
+  { id: "millQuiet", title: "Mill keeps silence" },
 ];
 
 const SAVE_KEY = "whisperwood-save-v1";

@@ -133,6 +133,7 @@ const Sprites = {
       this.fill(ctx, x, y, 16, 16, PALETTE.caveHi);
       ctx.globalAlpha = 1;
     }
+    this._windwardSwell(ctx, x, y, kind, t, hi);
     if (golden && (kind === TILE.LAKE || kind === TILE.RIVER)) {
       ctx.globalAlpha = 0.18;
       const gy = y + 6 + ((Math.sin(x * 0.5 + t * 3) * 2) | 0);
@@ -159,12 +160,25 @@ const Sprites = {
       this.fill(ctx, x + 2, lineY2, 10, 1, hi);
     }
     ctx.globalAlpha = 1;
+    this._windwardSwell(ctx, x, y, kind, t, hi);
     if (golden && (kind === TILE.LAKE || kind === TILE.RIVER)) {
       ctx.globalAlpha = 0.16;
       const gy = y + 6 + ((Math.sin(x * 0.5 + t * 3) * 2) | 0);
       this.fill(ctx, x, gy, 16, 1, "#f0d080");
       ctx.globalAlpha = 1;
     }
+  },
+
+  _windwardSwell(ctx, x, y, kind, t, hi) {
+    if (typeof World === "undefined" || World.id !== "island") return;
+    if (kind !== TILE.LAKE) return;
+    const phase = x * 0.28 + y * 0.18 + t * 18;
+    ctx.globalAlpha = 0.32;
+    const y1 = y + 7 + ((Math.sin(phase) * 3.4 + 2) | 0);
+    this.fill(ctx, x, y1, 16, 1, hi || PALETTE.lakeHi);
+    const y2 = y + 12 + ((Math.sin(phase + 2.1) * 2.2 + 1) | 0);
+    this.fill(ctx, x + 1, y2, 12, 1, hi || PALETTE.lakeHi);
+    ctx.globalAlpha = 1;
   },
 
   /* ---------- world objects ---------- */
@@ -325,11 +339,13 @@ const Sprites = {
     const bob = state.idleBob || 0;
     const bite = state.fishState === "bite";
     const reel = state.fishState === "reel";
+    const tug = Utils.clamp(state.tug || 0, -1, 1);
+    const tugHard = Math.abs(tug) > 0.28;
 
     const bounce = walk ? (frame % 2 === 1 ? -2 : 0) : Math.round(bob);
-    const crouch = fishing ? (bite ? 3 : reel ? 2 + (Math.sin(state.rodPhase || 0) > 0 ? 1 : 0) : 2) : 0;
+    const crouch = fishing ? (bite || tugHard ? 3 : reel ? 2 + (Math.sin(state.rodPhase || 0) > 0 ? 1 : 0) : 2) : 0;
     const top = (y - 26 + bounce + crouch - hop) | 0;
-    const left = (x - 8) | 0;
+    const left = (x - 8 + Math.round(tug * (2 + 2 * (state.tugW || 0)))) | 0;
 
     this.ellipse(ctx, x + (walk && dir === 2 ? 1 : walk && dir === 1 ? -1 : 0), y + 1, 6, 2.4, "rgba(10, 18, 10, 0.4)");
 
@@ -353,7 +369,45 @@ const Sprites = {
       this._side(ctx, left, top, dir === 1, fishing, walk, frame);
     }
 
-    if (fishing) this._rod(ctx, x, y, dir, state.rodPhase || 0, state.windup, bite);
+    if (fishing) this._rod(ctx, x, y, dir, state.rodPhase || 0, state.windup, bite || tugHard);
+    if (typeof Survival !== "undefined" && Survival.lanternLit && Survival.lanternLit()) {
+      this.heldLantern(ctx, x, y, dir);
+    }
+  },
+
+  playerSit(ctx, cx, cy, state) {
+    const facing = (state && state.facing) | 0;
+    const dir = (state && state.dir) | 0;
+    const t = (state && state.t) || 0;
+    const sc = (state && state.scale) || 1;
+    const rock = Math.sin(t * 3.2) * (2.6 * sc);
+    let px = cx + rock;
+    let py = cy - 12 * sc;
+    if (facing === 1) px -= 2 * sc;
+    if (facing === 2) px += 2 * sc;
+    if (facing === 3) py -= 4 * sc;
+    const img = typeof Atlas !== "undefined" && Atlas.sheets && Atlas.sheets.player;
+    const P = typeof Atlas !== "undefined" && Atlas.PLAYER;
+    if (img && P) {
+      const col = 1;
+      const sx = col * P.w;
+      const sy = (dir > 3 ? 0 : dir) * P.h;
+      const crop = 50;
+      const sitSc = 0.58 * sc;
+      try {
+        ctx.drawImage(img, sx, sy, P.w, crop,
+          (px - P.ax * sitSc) | 0, (py - crop * sitSc) | 0,
+          (P.w * sitSc) | 0, (crop * sitSc) | 0);
+        return;
+      } catch (err) { /* fall through */ }
+    }
+    this.fill(ctx, px - 4, py - 16, 8, 8, PALETTE.shirt);
+    this.fill(ctx, px - 4, py - 22, 8, 8, PALETTE.skin);
+    this.fill(ctx, px - 5, py - 24, 10, 4, PALETTE.hair);
+  },
+
+  playerTug(ctx, x, y, state) {
+    this.player(ctx, x, y, state);
   },
 
   playerSleep(ctx, x, y) {
@@ -558,10 +612,28 @@ const Sprites = {
         handY: y + (rod.hy || -18),
       };
     }
+    // Procedural fallback. Facing away, the rod is held out past the left shoulder,
+    // so the line leaves from beside the body instead of through the pack.
+    if (dir === 3) return { x: x - 11, y: y - 40 + lift, handX: x - 6, handY: y - 17 };
     if (dir === 0) return { x: x + 11, y: y - 18 + lift, handX: x + 5, handY: y - 12 };
-    if (dir === 3) return { x: x - 2, y: y - 30 + lift, handX: x + 2, handY: y - 16 };
     if (dir === 1) return { x: x - 18, y: y - 21 + lift, handX: x - 6, handY: y - 12 };
     return { x: x + 18, y: y - 21 + lift, handX: x + 6, handY: y - 12 };
+  },
+
+  lanternPos(x, y, dir) {
+    if (dir === 0) return { x: x + 9, y: y - 8 };
+    if (dir === 3) return { x: x - 8, y: y - 10 };
+    if (dir === 1) return { x: x - 11, y: y - 9 };
+    return { x: x + 11, y: y - 9 };
+  },
+
+  heldLantern(ctx, x, y, dir) {
+    const p = this.lanternPos(x, y, dir | 0);
+    if (typeof Atlas !== "undefined" && Atlas.draw(ctx, "lanternHeld", p.x, p.y)) return;
+    this.fill(ctx, p.x - 3, p.y - 6, 6, 5, "#c4a05a");
+    this.fill(ctx, p.x - 2, p.y - 5, 4, 3, "#f0d060");
+    this.fill(ctx, p.x - 1, p.y - 8, 2, 2, PALETTE.woodLo);
+    this.pixel(ctx, p.x, p.y - 4, "#fff4c0");
   },
 
   bobber(ctx, x, y, dunk, bite) {
@@ -620,6 +692,11 @@ const Sprites = {
       return;
     }
     const c = silhouette ? "#2a241c" : color;
+    const id = fish && fish.id;
+    if (id === "tideperch" || id === "skipjack" || id === "duskrunner" || id === "galeor") {
+      this._islandFish(ctx, x, y, id, c, !!silhouette);
+      return;
+    }
     this.ellipse(ctx, x, y, 7, 4, c);
     ctx.fillStyle = c;
     ctx.beginPath();
@@ -627,6 +704,51 @@ const Sprites = {
     ctx.lineTo(x + 11, y - 4);
     ctx.lineTo(x + 11, y + 4);
     ctx.fill();
+    if (!silhouette) {
+      this.pixel(ctx, x - 4, y - 1, "#1a1a1a");
+      this.pixel(ctx, x + 1, y - 2, "#ffffff");
+    }
+  },
+
+  _islandFish(ctx, x, y, id, c, silhouette) {
+    if (id === "tideperch") {
+      this.ellipse(ctx, x, y, 6, 5, c);
+      this.fill(ctx, x - 1, y - 6, 3, 3, c);
+      ctx.fillStyle = c;
+      ctx.beginPath();
+      ctx.moveTo(x + 5, y);
+      ctx.lineTo(x + 10, y - 3);
+      ctx.lineTo(x + 10, y + 3);
+      ctx.fill();
+    } else if (id === "skipjack") {
+      this.ellipse(ctx, x, y, 9, 3, c);
+      ctx.fillStyle = c;
+      ctx.beginPath();
+      ctx.moveTo(x + 8, y);
+      ctx.lineTo(x + 13, y - 5);
+      ctx.lineTo(x + 11, y);
+      ctx.lineTo(x + 13, y + 5);
+      ctx.closePath();
+      ctx.fill();
+    } else if (id === "duskrunner") {
+      this.ellipse(ctx, x + 1, y, 8, 3, c);
+      this.fill(ctx, x - 2, y - 1, 8, 2, c);
+      ctx.fillStyle = c;
+      ctx.beginPath();
+      ctx.moveTo(x + 8, y + 1);
+      ctx.lineTo(x + 13, y + 6);
+      ctx.lineTo(x + 8, y + 3);
+      ctx.fill();
+    } else {
+      this.ellipse(ctx, x - 1, y, 8, 6, c);
+      this.fill(ctx, x - 7, y - 2, 4, 4, c);
+      ctx.fillStyle = c;
+      ctx.beginPath();
+      ctx.moveTo(x + 6, y);
+      ctx.lineTo(x + 10, y - 2);
+      ctx.lineTo(x + 10, y + 2);
+      ctx.fill();
+    }
     if (!silhouette) {
       this.pixel(ctx, x - 4, y - 1, "#1a1a1a");
       this.pixel(ctx, x + 1, y - 2, "#ffffff");
@@ -658,6 +780,8 @@ const Sprites = {
   pickup(ctx, x, y, item) {
     const c = item === "glow" || item === "crystal" ? "#6ae0ff"
       : item === "berries" ? "#c45a5a"
+      : item === "saltberries" ? "#d8c070"
+      : item === "millreed" ? "#5a8a48"
       : item === "crickets" ? "#8a7a30" : "#6a4a28";
     this.fill(ctx, x - 2, y - 3, 4, 4, c);
     this.pixel(ctx, x, y - 4, "#f3e2c4");
@@ -750,11 +874,15 @@ const Sprites = {
   },
 
   dayclock(ctx, x, y) {
-    this.fill(ctx, x - 8, y - 16, 16, 16, PALETTE.wood);
-    this.ellipse(ctx, x, y - 8, 6, 6, "#f3e2c4");
+    this.fill(ctx, x - 9, y - 18, 18, 18, PALETTE.wood);
+    this.fill(ctx, x - 9, y - 18, 18, 2, PALETTE.woodHi);
+    this.ellipse(ctx, x, y - 9, 7, 7, "#efe4c8");
+    this.ellipse(ctx, x, y - 9, 6, 6, "#f8f0dc");
     const ph = typeof TimeCycle !== "undefined" ? TimeCycle.phaseId() : "day";
     const col = ph === "night" ? "#d8e0f0" : ph === "golden" ? "#e07030" : ph === "dawn" ? "#f0a060" : "#f0d060";
-    this.ellipse(ctx, x + 1, y - 9, 3, 3, col);
+    this.ellipse(ctx, x + 2, y - 10, 3, 3, col);
+    this.fill(ctx, x, y - 9, 1, 4, "#5a381c");
+    this.fill(ctx, x, y - 9, 3, 1, "#8b6238");
   },
 
   mailtray(ctx, x, y) {
@@ -767,6 +895,132 @@ const Sprites = {
     this.fill(ctx, x - 6, y - 10, 12, 2, "#c4a05a");
     this.fill(ctx, x - 3, y - 6, 6, 1, "#8b6238");
     this.fill(ctx, x - 4, y - 3, 8, 1, "#8b6238");
+  },
+
+  /** Wax seal beside the certificate. Pixels mark which stamp came first. No stamp, no seal. */
+  hearthSeal(ctx, x, y) {
+    const s = (typeof Stamps !== "undefined" && Stamps.earliest) ? Stamps.earliest() : null;
+    if (!s) return;
+    this.ellipse(ctx, x, y - 8, 5, 5, "#7a3030");
+    this.ellipse(ctx, x, y - 8, 3, 3, "#e8d4a8");
+    const n = Math.max(1, Math.min(6, (s.index | 0) + 1));
+    for (let i = 0; i < n; i++) this.pixel(ctx, x - 4 + i * 2, y - 2, "#6a2820");
+  },
+
+  _sheet(id) {
+    return typeof Atlas !== "undefined" && Atlas.sheets && Atlas.sheets[id];
+  },
+
+  _deco(ctx, id, x, y, opt) {
+    if (!id || !this._sheet(id)) return false;
+    return Atlas.drawSheet(ctx, id, x, y, opt || {});
+  },
+
+  rug(ctx, x, y, facing, opt) {
+    opt = opt || {};
+    const rot = (facing === 1 || facing === 2) ? Math.PI / 2 : 0;
+    if (this._deco(ctx, "decoRug", x, y, { ax: 36, ay: 32, rot, flip: !!opt.flip, scale: opt.scale || 1 })) return;
+    this.fill(ctx, x - 22, y - 8, 44, 16, "#c4b08a");
+    this.fill(ctx, x - 20, y - 6, 40, 12, "#e8d8b8");
+    this.fill(ctx, x - 18, y - 4, 36, 8, "#d4c4a0");
+    this.fill(ctx, x - 10, y - 1, 20, 2, "#8a9a6a");
+  },
+
+  lampshelf(ctx, x, y, facing, opt) {
+    opt = opt || {};
+    const left = facing === 1;
+    const id = left && this._sheet("decoLampshelfLeft") ? "decoLampshelfLeft" : "decoLampshelf";
+    const flip = !!opt.flip || (left && id === "decoLampshelf");
+    if (this._deco(ctx, id, x, y, { flip, scale: opt.scale || 1 })) return;
+    this.fill(ctx, x - 10, y - 10, 20, 4, PALETTE.wood);
+    this.fill(ctx, x - 10, y - 10, 20, 1, PALETTE.woodHi);
+    this.fill(ctx, x - 8, y - 16, 4, 6, "#f3e2c4");
+    this.fill(ctx, x - 7, y - 18, 2, 3, "#f0c060");
+    this.pixel(ctx, x - 6, y - 20, "#f8e8a0");
+    this.fill(ctx, x + 2, y - 14, 6, 4, "#8aaa6a");
+  },
+
+  curtain(ctx, x, y, facing) {
+    const right = facing === 2;
+    const id = right && this._sheet("decoCurtainRight") ? "decoCurtainRight" : "decoCurtain";
+    if (this._deco(ctx, id, x, y, { flip: right && id === "decoCurtain" })) return;
+    this.fill(ctx, x - 8, y - 22, 16, 3, PALETTE.wood);
+    this.fill(ctx, x - 7, y - 19, 6, 22, "#efe4c8");
+    this.fill(ctx, x - 1, y - 19, 6, 22, "#e4d4b0");
+    this.fill(ctx, x - 7, y - 19, 12, 2, "#f8f0dc");
+  },
+
+  flowerbox(ctx, x, y, facing, opt) {
+    opt = opt || {};
+    const three = facing === 0 || facing === 2;
+    const id = three && this._sheet("decoFlowerbox3q") ? "decoFlowerbox3q" : "decoFlowerbox";
+    if (this._deco(ctx, id, x, y, { flip: !!opt.flip || facing === 1, scale: opt.scale || 1 })) return;
+    this.fill(ctx, x - 10, y - 6, 20, 8, PALETTE.wood);
+    this.fill(ctx, x - 9, y - 5, 18, 2, PALETTE.woodHi);
+    this.fill(ctx, x - 8, y - 10, 4, 5, "#6a8a4a");
+    this.fill(ctx, x - 2, y - 12, 4, 7, "#7a9a58");
+    this.fill(ctx, x + 4, y - 10, 4, 5, "#5a7a40");
+    this.pixel(ctx, x - 6, y - 12, "#d8c07a");
+    this.pixel(ctx, x + 5, y - 12, "#c4a05a");
+  },
+
+  chair(ctx, x, y, t, facing, opt) {
+    opt = opt || {};
+    const sc = opt.scale || 1;
+    const rock = t ? Math.sin(t * 3.2) * (2.6 * sc) : 0;
+    const cx = x + rock;
+    const flip = !!opt.flip || facing === 1;
+    let id = "decoChair";
+    if (t && this._sheet("decoChairRock")) id = "decoChairRock";
+    else if (facing === 3 && this._sheet("decoChairBack")) id = "decoChairBack";
+    else if (flip && this._sheet("decoChairLeft")) id = "decoChairLeft";
+    if (this._deco(ctx, id, cx, y, { flip: flip && id !== "decoChairLeft", scale: sc })) return;
+    this.fill(ctx, cx - 7, y - 4, 14, 6, PALETTE.wood);
+    this.fill(ctx, cx - 7, y - 4, 14, 1, PALETTE.woodHi);
+    this.fill(ctx, cx - 6, y - 16, 12, 12, "#e8d8b8");
+    this.fill(ctx, cx - 6, y - 16, 12, 2, PALETTE.wood);
+    this.fill(ctx, cx - 8, y + 2 + (rock > 0 ? 1 : 0), 3, 4, PALETTE.woodLo);
+    this.fill(ctx, cx + 5, y + 2 + (rock < 0 ? 1 : 0), 3, 4, PALETTE.woodLo);
+    this.fill(ctx, cx - 10, y + 4, 8, 2, PALETTE.wood);
+    this.fill(ctx, cx + 2, y + 4, 8, 2, PALETTE.wood);
+  },
+
+  mill(ctx, x, y) {
+    if (typeof Atlas !== "undefined" && Atlas.draw(ctx, "mill", x, y)) return;
+    this.fill(ctx, x - 18, y - 28, 36, 28, PALETTE.wood);
+    this.fill(ctx, x - 18, y - 28, 36, 4, PALETTE.woodHi);
+    ctx.fillStyle = "#6a3030";
+    ctx.beginPath();
+    ctx.moveTo(x - 22, y - 26);
+    ctx.lineTo(x, y - 44);
+    ctx.lineTo(x + 22, y - 26);
+    ctx.fill();
+    this.fill(ctx, x - 4, y - 14, 8, 14, "#2a1c12");
+    this.fill(ctx, x - 14, y - 18, 6, 6, "#c8e0f0");
+    this.ellipse(ctx, x + 20, y - 8, 8, 8, PALETTE.woodLo);
+    this.fill(ctx, x + 19, y - 16, 2, 16, PALETTE.wood);
+    this.fill(ctx, x + 12, y - 9, 16, 2, PALETTE.wood);
+  },
+
+  shelf(ctx, x, y, facing, opt) {
+    opt = opt || {};
+    const three = facing === 1 || facing === 2;
+    const id = three && this._sheet("decoShelf3q") ? "decoShelf3q" : "decoShelf";
+    if (this._deco(ctx, id, x, y, { flip: !!opt.flip || facing === 1, scale: opt.scale || 1 })) return;
+    this.fill(ctx, x - 12, y - 8, 24, 4, PALETTE.wood);
+    this.fill(ctx, x - 12, y - 8, 24, 1, PALETTE.woodHi);
+    this.fill(ctx, x - 10, y - 14, 6, 6, "#efe4c8");
+    this.fill(ctx, x - 2, y - 12, 5, 4, "#8aaa6a");
+    this.fill(ctx, x + 5, y - 13, 4, 5, "#c4a05a");
+  },
+
+  mat(ctx, x, y, facing, opt) {
+    opt = opt || {};
+    const rot = (facing === 1 || facing === 2) ? Math.PI / 2 : 0;
+    if (this._deco(ctx, "decoMat", x, y, { ax: 32, ay: 24, rot, flip: !!opt.flip, scale: opt.scale || 1 })) return;
+    this.fill(ctx, x - 14, y - 6, 28, 10, "#6a7a50");
+    this.fill(ctx, x - 12, y - 4, 24, 6, "#8a9a68");
+    this.fill(ctx, x - 10, y - 2, 20, 2, "#c4b08a");
   },
 
   campfire(ctx, x, y, t) {

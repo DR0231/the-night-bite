@@ -3,9 +3,10 @@
 const Save = {
   data: null,
   _timer: 0,
+  _keepData: false,
 
   blankJournalEntry() {
-    return { caught: 0, biggest: 0, firstAt: 0, lastAt: 0, hooked: 0, landed: 0, gotAway: 0, shiny: 0, favorite: false };
+    return { caught: 0, biggest: 0, firstAt: 0, lastAt: 0, hooked: 0, landed: 0, gotAway: 0, shiny: 0, favorite: false, firstDay: 0 };
   },
 
   fresh(seed) {
@@ -35,15 +36,16 @@ const Save = {
       inventory: {
         rodId: "willow", ownedRods: ["willow"],
         lineId: "gut", lureId: "",
-        bait: Object.assign({ worms: 0, crickets: 0, glow: 0, berries: 0, crystal: 0, berryblend: 0, glowplus: 0 }, DESIGN.startBait),
+        bait: Object.assign({ worms: 0, crickets: 0, glow: 0, berries: 0, millreed: 0, saltberries: 0, crystal: 0, berryblend: 0, glowplus: 0, rainworms: 0 }, DESIGN.startBait),
         equippedBait: "worms",
         items: { tank: 0, cloak: 0, lantern: 0, lanternFuel: 0, campfireKit: 0 },
-        meals: { panperch: 0, dawntea: 0, riverstew: 0, cavebroth: 0, mistskillet: 0, reedchowder: 0, amberpot: 0, moonkettle: 0 },
+        meals: { panperch: 0, dawntea: 0, riverstew: 0, cavebroth: 0, mistskillet: 0, reedchowder: 0, amberpot: 0, moonkettle: 0, saltskillet: 0, galechowder: 0 },
         mealId: "",
         mealUntilDay: 0,
         lanternOn: false,
         loose: [],
         stew: 0,
+        stewFrom: { plain: 0 },
       },
       skills: { rank: 1, xp: 0, perks: [], offered: [], repeatsToday: { total: 0 }, speciesToday: {}, sightXp: {} },
       journal,
@@ -55,7 +57,7 @@ const Save = {
         rumor: { day: 0, fish: "", spot: "", text: "" },
         derby: { key: "", mood: "still", landed: 0, goal: 8 },
       },
-      flags: { fifthWater: false, spotMastery: {}, introComplete: false, mute: false, campfire: false, passedOutDay: 0, cooked: {}, gotCampKit: false },
+      flags: { fifthWater: false, spotMastery: {}, introComplete: false, mute: false, campfire: false, passedOutDay: 0, cooked: {}, gotCampKit: false, millSpine: "none", stamps: {}, islandOpen: false, onboard: {}, stewLetter: false },
       recap: [],
     };
   },
@@ -74,6 +76,12 @@ const Save = {
       this._ingestOldJournal();
     }
     this._ensureFish();
+    /* Legacy journal import lands fish after migrate. A save that already fished does not get the first-evening nudges. */
+    if (this.data.cottage && this.data.cottage.visited) this.data.flags.onboard.done = true;
+    for (const id of Object.keys(this.data.journal)) {
+      const row = this.data.journal[id];
+      if (row && (row.landed | 0) > 0) { this.data.flags.onboard.done = true; break; }
+    }
     try { this.syncCaught(); } catch (e) { /* pack counts optional at boot */ }
     return this.data;
   },
@@ -118,11 +126,53 @@ const Save = {
     if (!Array.isArray(out.skills.offered)) out.skills.offered = [];
     if (!out.skills.rank) out.skills.rank = 1;
     out.cottage = Object.assign({}, base.cottage, d.cottage || {});
+    for (const k of ["aquarium", "trophies", "mail"]) {
+      if (!Array.isArray(out.cottage[k])) out.cottage[k] = [];
+    }
+    const srcDecor = (d.cottage && d.cottage.decor) || out.cottage.decor;
+    out.cottage.decor = (srcDecor && typeof srcDecor === "object" && !Array.isArray(srcDecor))
+      ? Object.assign({}, srcDecor)
+      : {};
+    if (typeof COTTAGE_DECOR !== "undefined") {
+      for (const id of Object.keys(out.cottage.decor)) {
+        const v = out.cottage.decor[id];
+        const def = COTTAGE_DECOR[id];
+        if (v === true && def) out.cottage.decor[id] = { x: def.x, y: def.y, facing: def.facing || 0 };
+        else if (v && typeof v === "object" && v.facing == null && def) v.facing = def.facing || 0;
+      }
+    }
     out.npcs = Object.assign({}, base.npcs, d.npcs || {});
+    for (const id of Object.keys(base.npcs)) {
+      out.npcs[id] = Object.assign({}, base.npcs[id], (d.npcs && d.npcs[id]) || {});
+    }
     out.quests = Object.assign({}, base.quests, d.quests || {});
+    for (const k of ["daily", "rumor", "derby"]) {
+      out.quests[k] = Object.assign({}, base.quests[k], (d.quests && d.quests[k]) || {});
+    }
+    if (!Array.isArray(out.quests.active)) out.quests.active = [];
+    if (!Array.isArray(out.quests.done)) out.quests.done = [];
     out.flags = Object.assign({}, base.flags, d.flags || {});
     out.flags.cooked = Object.assign({}, base.flags.cooked, (d.flags && d.flags.cooked) || {});
+    const spineOk = { none: 1, heard: 1, opened: 1, visited: 1, done: 1 };
+    if (!spineOk[out.flags.millSpine]) out.flags.millSpine = "none";
+    if (out.flags.islandOpen !== true) out.flags.islandOpen = false;
+    if (!out.flags.onboard || typeof out.flags.onboard !== "object") out.flags.onboard = {};
+    /* Older saves never saw the nudges; anyone who has played a while does not need them. */
+    if ((out.playTime || 0) > (DESIGN.onboardWindow || 600)) out.flags.onboard.done = true;
+    const cookedAny = out.flags.cooked && Object.keys(out.flags.cooked).some((k) => out.flags.cooked[k]);
+    if (cookedAny) out.flags.stewLetter = true;
+    else if (out.flags.stewLetter !== true) out.flags.stewLetter = false;
+    const srcStamps = (d.flags && d.flags.stamps) || out.flags.stamps;
+    out.flags.stamps = (srcStamps && typeof srcStamps === "object" && !Array.isArray(srcStamps))
+      ? Object.assign({}, srcStamps)
+      : {};
     out.journal = Object.assign(Object.create(null), base.journal, d.journal || {});
+    /* A cottage visit or any landed fish means the nudges would be late. Do not invent a first-land day for rows that never stored one. */
+    if (out.cottage && out.cottage.visited) out.flags.onboard.done = true;
+    for (const id of Object.keys(out.journal)) {
+      const row = out.journal[id];
+      if (row && (row.landed | 0) > 0) { out.flags.onboard.done = true; break; }
+    }
     if (!Array.isArray(out.inventory.ownedRods)) out.inventory.ownedRods = ["willow"];
     const srcInv = d.inventory || {};
     if (!Array.isArray(srcInv.loose)) {
@@ -133,11 +183,27 @@ const Save = {
         for (let i = 0; i < n; i++) out.inventory.loose.push({ id: f.id, day });
       }
       out.cottage.cooler = [];
-      out.inventory.stew = 0;
+      out.inventory.stew = srcInv.stew | 0;
     } else {
       if (!Array.isArray(out.cottage.cooler)) out.cottage.cooler = [];
       if (out.inventory.stew == null) out.inventory.stew = 0;
       out.inventory.stew = out.inventory.stew | 0;
+    }
+    /* Fresh data always has an empty stewFrom. Only a stewFrom that arrived on the save is real. */
+    const srcFrom = srcInv.stewFrom;
+    if (!srcFrom || typeof srcFrom !== "object" || Array.isArray(srcFrom)) {
+      out.inventory.stewFrom = { plain: out.inventory.stew | 0 };
+    } else {
+      const bag = {};
+      let sum = 0;
+      for (const k of Object.keys(srcFrom)) {
+        const n = srcFrom[k] | 0;
+        if (n > 0) bag[k] = n;
+        sum += n;
+      }
+      if (!Object.keys(bag).length) bag.plain = 0;
+      out.inventory.stewFrom = bag;
+      out.inventory.stew = sum;
     }
     this._syncCaughtOn(out);
     return out;
@@ -160,14 +226,17 @@ const Save = {
     TimeCycle.day = d.clock.day;
     if (d.player.map && World.maps[d.player.map]) World.use(d.player.map);
     if (d.player.x || d.player.y) {
-      Player.x = d.player.x;
-      Player.y = d.player.y;
       Player.dir = d.player.dir || 0;
+      // Maps can change between visits: never load into water, a wall, or a door box.
+      const p = World.settlePoint(d.player.x, d.player.y, Player.dir);
+      Player.x = p.x;
+      Player.y = p.y;
     }
     AudioFX.muted = !!d.flags.mute;
   },
 
   pullFromWorld() {
+    if (this._keepData) return;
     const d = this.data;
     d.clock.seconds = TimeCycle.seconds;
     d.clock.day = TimeCycle.day || d.clock.day;
@@ -212,8 +281,11 @@ const Save = {
   importJson(text) {
     const parsed = JSON.parse(text);
     this.data = this._migrate(parsed);
+    this._keepData = true;
     this._ensureFish();
     this.syncCaught();
+    try { if (typeof Stamps !== "undefined") Stamps.reconcile(); } catch (e) { /* stamps optional */ }
+    try { if (typeof Island !== "undefined") Island.sync(true); } catch (e) { /* island gate optional */ }
     this.write();
   },
 
@@ -221,6 +293,7 @@ const Save = {
     const mute = !!(this.data && this.data.flags && this.data.flags.mute);
     try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* ignore */ }
     this.data = this.fresh();
+    this._keepData = true;
     this.data.flags.mute = mute;
     AudioFX.muted = mute;
     this.write();
@@ -254,6 +327,57 @@ const Save = {
 
   stewCount() {
     return (this.data && this.data.inventory && this.data.inventory.stew) | 0;
+  },
+
+  stewBag() {
+    const inv = this.data && this.data.inventory;
+    if (!inv) return { plain: 0 };
+    if (!inv.stewFrom || typeof inv.stewFrom !== "object" || Array.isArray(inv.stewFrom)) {
+      inv.stewFrom = { plain: inv.stew | 0 };
+    }
+    return inv.stewFrom;
+  },
+
+  syncStewTotal() {
+    const bag = this.stewBag();
+    let n = 0;
+    for (const k of Object.keys(bag)) n += bag[k] | 0;
+    this.data.inventory.stew = n;
+    return n;
+  },
+
+  addStew(spot) {
+    const bag = this.stewBag();
+    const key = spot && typeof SPOTS !== "undefined" && SPOTS[spot] ? spot : "plain";
+    bag[key] = (bag[key] | 0) + 1;
+    return this.syncStewTotal();
+  },
+
+  /** Plain stock first, then any water. Total stays equal to the breakdown. */
+  spendStew(n) {
+    let left = n | 0;
+    const bag = this.stewBag();
+    const order = ["plain"].concat(Object.keys(typeof SPOTS !== "undefined" ? SPOTS : {}));
+    for (let i = 0; i < order.length && left > 0; i++) {
+      const k = order[i];
+      const have = bag[k] | 0;
+      const take = Math.min(have, left);
+      if (take > 0) { bag[k] = have - take; left -= take; }
+    }
+    return this.syncStewTotal();
+  },
+
+  stewLine() {
+    const bag = this.stewBag();
+    const bits = [];
+    if ((bag.plain | 0) > 0) bits.push("Stew ×" + (bag.plain | 0));
+    const keys = Object.keys(typeof SPOTS !== "undefined" ? SPOTS : {});
+    for (let i = 0; i < keys.length; i++) {
+      const n = bag[keys[i]] | 0;
+      if (n > 0) bits.push(SPOTS[keys[i]].name + " ×" + n);
+    }
+    if (!bits.length) bits.push("Stew ×0");
+    return bits.join(" · ");
   },
 
   coolerCap() {
@@ -343,9 +467,15 @@ const Save = {
     const dayNow = this.clockDay();
     const keep = [];
     let n = 0;
+    let spot = "";
+    let mixed = false;
     for (const u of this.loose()) {
       if (dayNow - (u.day | 0) >= 3) {
-        this.data.inventory.stew = (this.data.inventory.stew | 0) + 1;
+        const f = FISH.find((x) => x.id === u.id);
+        const id = f && f.spot ? f.spot : "plain";
+        this.addStew(id);
+        if (!n) spot = id;
+        else if (spot !== id) mixed = true;
         n++;
       } else {
         keep.push(u);
@@ -354,7 +484,11 @@ const Save = {
     this.data.inventory.loose = keep;
     this.syncCaught();
     if (n && typeof UI !== "undefined" && UI.toastNote) {
-      UI.toastNote("Some fish went soft — good for stew.");
+      const named = !mixed && spot && SPOTS[spot];
+      UI.toastNote(named ? `Some fish went soft — ${SPOTS[spot].name} stew.` : "Some fish went soft — good for stew.");
+    }
+    if (n) {
+      try { if (typeof AudioFX !== "undefined") AudioFX.soft(); } catch (e) { /* tick optional */ }
     }
     return n;
   },

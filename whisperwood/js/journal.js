@@ -24,10 +24,17 @@ const Journal = {
     e.hooked = (e.hooked | 0) + 1;
     e.lastAt = Date.now();
     if (!e.firstAt) e.firstAt = e.lastAt;
+    if (first) e.firstDay = Save.clockDay();
     if (record) e.biggest = inches;
     Save.pushLoose(fish.id);
     this._mastery(fish.spot);
     Save.mark("catch");
+    try {
+      if (typeof Stamps !== "undefined") {
+        if (Journal.count() >= 10) Stamps.try("tenSpecies");
+        if (fish.rarity === "Rare") Stamps.try("firstRare");
+      }
+    } catch (e) { /* stamps never block a land */ }
     return { first, record, inches };
   },
 
@@ -85,17 +92,36 @@ const Journal = {
     return bits.join(" · ");
   },
 
+  /** One short "when" for a species: peak phase, plus night-only / rain / season if set. */
+  whenLine(f) {
+    const names = { dawn: "dawn", day: "midday", golden: "dusk", night: "night" };
+    const bits = [];
+    if (f.nightOnly) bits.push("night only");
+    else if (f.bite) {
+      let peak = null, pv = -1;
+      for (const k of Object.keys(f.bite)) {
+        if ((f.bite[k] || 0) > pv) { pv = f.bite[k]; peak = k; }
+      }
+      if (peak && names[peak]) bits.push(names[peak]);
+    }
+    if (f.rainOnly) bits.push("rain");
+    if (f.season) bits.push(f.season);
+    return bits.join(", ");
+  },
+
+  /** Water sign: every species with its best hour, rares marked, then the water's own line. */
   signText(spotId) {
     const s = SPOTS[spotId];
     if (!s) return "";
     const list = FISH.filter((f) => f.spot === spotId);
     const names = list.map((f) => {
-      const tag = f.rarity === "Rare" ? (f.sell >= 30 || f.nightOnly ? " (ultra-rare)" : " (rare)") : "";
-      return f.name + tag;
-    }).join(", ");
-    const rares = list.filter((f) => f.rarity === "Rare");
-    const extra = rares.map((f) => `${f.name}: ${this.hintLine(f)}`).filter(Boolean).join(" · ");
-    return `${s.name}. Catch: ${names}. ${s.flavor}${extra ? " Hints — " + extra : ""}`;
+      const bits = [];
+      const when = this.whenLine(f);
+      if (when) bits.push(when);
+      if (f.rarity === "Rare") bits.push(f.sell >= 30 || f.nightOnly ? "ultra-rare" : "rare");
+      return `${f.name}${bits.length ? ` (${bits.join(" · ")})` : ""}`;
+    }).join("; ");
+    return `${names}. ${s.flavor}`;
   },
 
   bestAt(spotId) {
@@ -111,4 +137,123 @@ const Journal = {
 
   load() { /* Save.load owns persistence */ },
   save() { Save.write(); },
+};
+
+const Stamps = {
+  _pending: "",
+
+  _bag() {
+    if (!Save.data || !Save.data.flags) return {};
+    const bag = Save.data.flags.stamps;
+    if (!bag || typeof bag !== "object" || Array.isArray(bag)) {
+      Save.data.flags.stamps = {};
+      return Save.data.flags.stamps;
+    }
+    return bag;
+  },
+
+  _def(id) {
+    return (typeof STAMPS !== "undefined" ? STAMPS : []).find((s) => s.id === id) || null;
+  },
+
+  dayOf(id) {
+    const v = this._bag()[id];
+    return v == null ? 0 : (v | 0);
+  },
+
+  has(id) {
+    return this.dayOf(id) > 0;
+  },
+
+  list() {
+    const rows = typeof STAMPS !== "undefined" ? STAMPS : [];
+    return rows.map((s) => ({ id: s.id, title: s.title, day: this.dayOf(s.id) || 0 }));
+  },
+
+  unlockedCount() {
+    return this.list().filter((s) => s.day > 0).length;
+  },
+
+  /** Earliest unlocked stamp: lowest vale day, then table order. Null if none. */
+  earliest() {
+    const rows = typeof STAMPS !== "undefined" ? STAMPS : [];
+    let best = null;
+    for (let i = 0; i < rows.length; i++) {
+      const day = this.dayOf(rows[i].id);
+      if (!day) continue;
+      if (!best || day < best.day || (day === best.day && i < best.index)) {
+        best = { id: rows[i].id, title: rows[i].title, day, index: i };
+      }
+    }
+    return best;
+  },
+
+  _earned(id) {
+    if (!Save.data) return false;
+    if (id === "tenSpecies") return Journal.count() >= 10;
+    if (id === "firstRare") return FISH.some((f) => f.rarity === "Rare" && Journal.landed(f.id));
+    if (id === "firstCook") {
+      const cooked = Save.data.flags.cooked || {};
+      return Object.keys(cooked).some((k) => cooked[k]);
+    }
+    if (id === "firstPassOut") {
+      if ((Save.data.flags.passedOutDay | 0) > 0) return true;
+      return (Save.data.recap || []).some((r) => r.reason === "passout");
+    }
+    if (id === "marshOpen") return !!Save.data.flags.fifthWater;
+    if (id === "millQuiet") return Save.data.flags.millSpine === "done";
+    return false;
+  },
+
+  _fight() {
+    return typeof Fishing !== "undefined" && Fishing.state === "play";
+  },
+
+  _announce(id) {
+    const def = this._def(id);
+    if (!def) return;
+    if (this._fight()) {
+      this._pending = this._pending || id;
+      return;
+    }
+    if (typeof UI !== "undefined" && UI.toastT > 0) {
+      this._pending = this._pending || id;
+      return;
+    }
+    UI.toastNote("Certificate: " + def.title);
+  },
+
+  try(id) {
+    if (!this._def(id)) return false;
+    const bag = this._bag();
+    if (bag[id]) return false;
+    bag[id] = ((Save.data.clock && Save.data.clock.day) | 0) || 1;
+    Save.mark("stamp");
+    this._announce(id);
+    return true;
+  },
+
+  reconcile() {
+    const rows = typeof STAMPS !== "undefined" ? STAMPS : [];
+    const bag = this._bag();
+    let added = false;
+    for (let i = 0; i < rows.length; i++) {
+      const id = rows[i].id;
+      if (bag[id]) continue;
+      if (!this._earned(id)) continue;
+      bag[id] = ((Save.data.clock && Save.data.clock.day) | 0) || 1;
+      added = true;
+    }
+    if (added) Save.write();
+  },
+
+  flush() {
+    if (!this._pending) return;
+    if (this._fight()) return;
+    if (typeof UI !== "undefined" && UI.toastT > 0) return;
+    const id = this._pending;
+    this._pending = "";
+    const def = this._def(id);
+    if (def) UI.toastNote("Certificate: " + def.title);
+  },
 };

@@ -32,6 +32,17 @@ const Skills = {
     return this.has("ironwrist") ? 0.9 : 1;
   },
 
+  strength() {
+    const D = DESIGN || {};
+    const base = (D.strBase != null ? D.strBase : 0.82) + (D.strPerRank != null ? D.strPerRank : 0.04) * this.rank();
+    const rod = (typeof Inventory !== "undefined" && Inventory.rod()) || {};
+    const wrist = this.has("ironwrist") ? (D.strWrist != null ? D.strWrist : 1.08) : 1;
+    const raw = base * (rod.tension || 1) * wrist;
+    const lo = D.strMin != null ? D.strMin : 0.65;
+    const hi = D.strMax != null ? D.strMax : 1.60;
+    return Utils.clamp(raw, lo, hi);
+  },
+
   perkNames() {
     return ((this.data && this.data.perks) || []).map((id) => (PERKS[id] ? PERKS[id].name : id));
   },

@@ -66,7 +66,7 @@ const Renderer = {
     if (fire && fire.x != null && fire.map === World.id) {
       drawList.push({ type: "campfire", x: fire.x, y: fire.y });
     }
-    drawList.sort((a, b) => a.y - b.y);
+    drawList.sort((a, b) => this._sortY(a) - this._sortY(b));
     for (const d of drawList) this._deco(ctx, d, t, light);
 
     ctx.restore();
@@ -182,6 +182,15 @@ const Renderer = {
     }
   },
 
+  _sortY(d) {
+    let y = d.y;
+    if (d.slot && typeof Cottage !== "undefined" && Cottage.hasSlot(d.slot)) {
+      y = Cottage.slotPos(d.slot).y;
+    }
+    if (d.floor) y -= 24;
+    return y;
+  },
+
   _deco(ctx, d, t, light) {
     const sway = Math.sin(t * 1.3 + (d.seed || d.x * 0.05)) * 1.4;
     if (d.type === "player") { Player.draw(ctx); this._eatFx(ctx, d); return; }
@@ -201,6 +210,7 @@ const Renderer = {
     else if (d.type === "pickup") Sprites.pickup(ctx, d.x, d.y, d.item);
     else if (d.type === "cottage") Sprites.cottage(ctx, d.x, d.y);
     else if (d.type === "raft") Sprites.raft(ctx, d.x, d.y);
+    else if (d.type === "mill") Sprites.mill(ctx, d.x, d.y);
     else if (d.type === "bed") {
       Sprites.bed(ctx, d.x, d.y);
       if (Player.sleeping && World.id === "cottage") {
@@ -212,9 +222,31 @@ const Renderer = {
     else if (d.type === "bench") Sprites.bench(ctx, d.x, d.y);
     else if (d.type === "calendar") Sprites.calendar(ctx, d.x, d.y);
     else if (d.type === "mailtray") Sprites.mailtray(ctx, d.x, d.y);
-    else if (d.type === "certificate") Sprites.certificate(ctx, d.x, d.y);
+    else if (d.type === "certificate") { Sprites.certificate(ctx, d.x, d.y); Sprites.hearthSeal(ctx, d.x + 16, d.y + 2); }
     else if (d.type === "dayclock") {
       if (Save.data.inventory.items.dayclock) Sprites.dayclock(ctx, d.x, d.y);
+    }
+    else if (d.slot) {
+      if (typeof Cottage !== "undefined" && Cottage.hasSlot(d.slot) && Sprites[d.type]) {
+        const pos = Cottage.slotPos(d.slot);
+        let dx = pos.x, dy = pos.y;
+        if (Cottage.carry === d.slot) {
+          dx = Player.x;
+          dy = Player.y - 6;
+          ctx.save();
+          ctx.globalAlpha = 0.72;
+        }
+        const face = pos.facing | 0;
+        const opt = { flip: !!pos.flip, scale: pos.scale || 1 };
+        if (Cottage.carry === d.slot) {
+          opt.flip = Cottage.carryFlip;
+          opt.scale = Cottage.carryScale || 1;
+        }
+        if (d.type === "chair") Sprites.chair(ctx, dx, dy, Cottage.sitting ? Cottage.sitT : 0, Cottage.carry === d.slot ? Cottage.carryFacing : face, opt);
+        else if (d.type === "curtain") { /* removed in top-down */ }
+        else Sprites[d.type](ctx, dx, dy, Cottage.carry === d.slot ? Cottage.carryFacing : face, opt);
+        if (Cottage.carry === d.slot) ctx.restore();
+      }
     }
     else if (d.type === "campfire") Sprites.campfire(ctx, d.x, d.y, t);
   },
@@ -223,7 +255,16 @@ const Renderer = {
     if (World.id === "cottage") {
       ctx.fillStyle = "rgba(40, 24, 12, 0.22)";
       ctx.fillRect(0, 0, this.viewW, this.viewH);
-      this._lanternGlow(ctx, cam);
+      if (typeof Cottage !== "undefined" && Cottage.hasSlot("lampshelf") && typeof COTTAGE_DECOR !== "undefined") {
+        const lamp = Cottage.slotPos("lampshelf");
+        const gx = lamp.x - cam.x, gy = lamp.y - cam.y - 12;
+        const g = ctx.createRadialGradient(gx, gy, 4, gx, gy, 40);
+        g.addColorStop(0, "rgba(240, 180, 80, 0.16)");
+        g.addColorStop(1, "rgba(240, 180, 80, 0)");
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, this.viewW, this.viewH);
+      }
+      this._lanternGlow(ctx, cam, DESIGN.lanternIndoor);
       return;
     }
     if (World.inCave()) {
@@ -236,7 +277,7 @@ const Renderer = {
       glow.addColorStop(1, "rgba(8, 10, 22, 0.42)");
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, this.viewW, this.viewH);
-      this._lanternGlow(ctx, cam);
+      this._lanternGlow(ctx, cam, DESIGN.lanternPeak);
       return;
     }
 
@@ -264,7 +305,7 @@ const Renderer = {
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, this.viewW, this.viewH);
     this._weatherVeil(ctx);
-    this._lanternGlow(ctx, cam);
+    this._lanternGlow(ctx, cam, DESIGN.lanternPeak * Utils.clamp(light.color[3] / DESIGN.lanternNightA, 0, 1));
   },
 
   _weatherVeil(ctx) {
@@ -281,19 +322,24 @@ const Renderer = {
     ctx.restore();
   },
 
-  _lanternGlow(ctx, cam) {
+  _lanternGlow(ctx, cam, peak) {
     if (typeof Survival === "undefined" || !Survival.lanternLit()) return;
-    const sx = Player.x - (cam ? cam.x : 0);
-    const sy = Player.y - 20 - (cam ? cam.y : 0);
+    if (!(peak > 0.005)) return;
+    const hand = (typeof Sprites !== "undefined" && Sprites.lanternPos)
+      ? Sprites.lanternPos(Player.x, Player.y, Player.dir)
+      : { x: Player.x + 9, y: Player.y - 8 };
+    const sx = hand.x - (cam ? cam.x : 0);
+    const sy = hand.y - (cam ? cam.y : 0);
     ctx.save();
     ctx.globalCompositeOperation = "lighter";
-    const glow = ctx.createRadialGradient(sx, sy, 8, sx, sy, 128);
-    glow.addColorStop(0, "rgba(255, 220, 140, 0.7)");
-    glow.addColorStop(0.35, "rgba(255, 176, 80, 0.28)");
+    const glow = ctx.createRadialGradient(sx, sy, 4, sx, sy, 110);
+    glow.addColorStop(0, "rgba(255, 220, 140, " + peak + ")");
+    glow.addColorStop(0.18, "rgba(255, 190, 90, " + (peak * 0.4) + ")");
+    glow.addColorStop(0.5, "rgba(255, 160, 60, " + (peak * 0.18) + ")");
     glow.addColorStop(1, "rgba(0,0,0,0)");
     ctx.fillStyle = glow;
     ctx.beginPath();
-    ctx.arc(sx, sy, 128, 0, Math.PI * 2);
+    ctx.arc(sx, sy, 110, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   },

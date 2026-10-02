@@ -14,6 +14,8 @@ const Minigame = {
   hold: 0,
   need: 0.85,
   done: false,
+  pull: 0,
+  weight: 0,
 
   get active() { return Fishing.state === "play"; },
 
@@ -26,6 +28,8 @@ const Minigame = {
     this.hold = 0;
     this._tapHint = false;
     this._tapAt = null;
+    this.pull = 0;
+    this.weight = 0;
     this.need = 0.78 * Skills.needMult();
     let bar = (rod.bar || 1) * Skills.barMult() * Survival.barMult();
     bar = Math.min(1.45, bar);
@@ -41,8 +45,15 @@ const Minigame = {
     } else {
       this.value = 0.5;
       this.band = 0.5;
-      this.bandW = (kind === "tensionErratic" ? 0.11 : 0.15) * (rod.tension || 1) * Skills.tensionMult();
+      this.bandW = (kind === "tensionErratic" ? 0.11 : 0.15);
       this.speed = (kind === "tensionErratic" ? 1.6 : 1.05) * spd;
+      const inches = (typeof Fishing !== "undefined" && Fishing.fightInches) || 6;
+      const weight = Utils.clamp((inches - 3) / 17, 0.12, 1);
+      const str = Skills.strength();
+      this.weight = weight;
+      this.need = 0.78 * Skills.needMult() * (0.92 + 0.50 * weight) / Math.max(0.2, str);
+      this.bandW = Utils.clamp(this.bandW * str / (0.95 + 0.55 * weight), 0.06, 0.22);
+      this.speed = this.speed * (0.92 + 0.38 * weight) / Math.sqrt(Math.max(0.2, str));
     }
     Fishing.state = "play";
     Fishing.t = 0;
@@ -81,7 +92,7 @@ const Minigame = {
       this._tapAt = null;
       try { UI.toastNote("Hold E / Space to keep tension — don’t tap"); } catch (err) { /* hint still shows */ }
     }
-    this.value += (hold ? 0.72 : -0.55) * dt;
+    this.value += (hold ? 0.72 : -(0.60 + 0.32 * (this.weight || 0))) * dt;
     if (this.kind === "tensionErratic") {
       this.band += Math.sin(this.t * 3.2 * this.speed) * 0.55 * dt;
     } else {
@@ -89,6 +100,7 @@ const Minigame = {
     }
     this.band = Utils.clamp(this.band, 0.22, 0.78);
     this.value = Utils.clamp(this.value, 0, 1);
+    this.pull = Utils.clamp(this.value - this.band, -1, 1);
     if (Math.abs(this.value - this.band) <= this.bandW) this.hold += dt;
     else this.hold = Math.max(0, this.hold - dt * 0.35);
     if (this.hold >= this.need) this.finish(true);
@@ -109,6 +121,7 @@ const Minigame = {
 
   hint() {
     if (this.kind === "timing" || this.kind === "timingFast") return "Tap E / Space in the bright band";
+    if ((this.weight || 0) >= 0.7) return "Hold E / Space to keep tension — don’t tap. It’s heavy — keep the line steady.";
     return "Hold E / Space to keep tension — don’t tap";
   },
 

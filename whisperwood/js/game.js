@@ -12,6 +12,7 @@ const UI = {
       || (typeof Tank !== "undefined" && Tank.openFlag)
       || (typeof Cooler !== "undefined" && Cooler.openFlag)
       || (typeof Trophy !== "undefined" && Trophy.openFlag)
+      || (typeof Cert !== "undefined" && Cert.openFlag)
       || Skills.offering
       || (typeof Admin !== "undefined" && Admin.open);
   },
@@ -121,8 +122,9 @@ const UI = {
       li.classList.toggle("favorite", !!e.favorite);
       li.querySelector(".fish-name").textContent = known ? f.name : "???";
       const hint = Journal.hintLine(f);
+      const firstDay = (e.firstDay | 0) > 0 ? `<br/><span class="fish-hint">First landed, day ${e.firstDay | 0}</span>` : "";
       li.querySelector(".fish-meta").innerHTML = landed
-        ? `<i class="dot ${f.rarity.toLowerCase()}"></i> ${f.rarity} · ${SPOTS[f.spot].name} · ×${e.landed} · best ${e.biggest}"${hint ? `<br/><span class="fish-hint">${hint}</span>` : ""}`
+        ? `<i class="dot ${f.rarity.toLowerCase()}"></i> ${f.rarity} · ${SPOTS[f.spot].name} · ×${e.landed} · best ${e.biggest}"${hint ? `<br/><span class="fish-hint">${hint}</span>` : ""}${firstDay}`
         : `<i class="dot ${f.rarity.toLowerCase()}"></i> ${SPOTS[f.spot].name}${known ? " · sighted" : ""}${f.rarity === "Rare" && hint ? `<br/><span class="fish-hint">Hint: ${hint}</span>` : ""}`;
       const c = li.querySelector("canvas").getContext("2d");
       c.imageSmoothingEnabled = false;
@@ -135,7 +137,9 @@ const UI = {
     const cook = document.getElementById("journal-cook");
     if (cook) {
       const names = Object.keys(MEALS).map((id) => Save.data.flags.cooked[id] ? MEALS[id].name : "???");
-      cook.textContent = "Cookbook: " + names.join(" · ");
+      const stampN = typeof Stamps !== "undefined" ? Stamps.unlockedCount() : 0;
+      const stampMax = typeof STAMPS !== "undefined" ? STAMPS.length : 6;
+      cook.textContent = "Cookbook: " + names.join(" · ") + ` · Stamps ${stampN}/${stampMax}`;
     }
   },
 
@@ -145,6 +149,8 @@ const UI = {
     if (typeof Bench !== "undefined") Bench.close();
     if (typeof Tank !== "undefined") Tank.close();
     if (typeof Cooler !== "undefined") Cooler.close();
+    if (typeof Trophy !== "undefined") Trophy.close();
+    if (typeof Cert !== "undefined") Cert.close();
     // Journal pauses movement and world time, but is not a bite-timer exploit:
     // wait/nibble packs up the rod; an open minigame fails on the spot.
     if (Fishing.state === "wait" || Fishing.state === "nibble") Fishing.cancel();
@@ -172,6 +178,7 @@ const UI = {
     if (typeof Cooler !== "undefined") Cooler.close();
     if (typeof Admin !== "undefined") Admin.close();
     if (typeof Trophy !== "undefined") Trophy.close();
+    if (typeof Cert !== "undefined") Cert.close();
   },
 
   showCatch(fish, rec) {
@@ -222,20 +229,36 @@ const UI = {
     this.refreshJournal();
   },
 
-  toastNote(text) {
-    this.els.toast.classList.remove("miss");
-    this.els.toast.querySelector(".toast-kicker").textContent = "Vale";
-    this.els.toastName.textContent = text;
-    this.els.toastDesc.textContent = "";
-    this.els.toast.classList.remove("hidden");
-    this.els.toastArt.replaceChildren();
-    this.toastT = 1.8;
+  /**
+   * Plain parchment note. Long copy (signs, letters) passes a title so the body
+   * drops into the smaller desc line, and the toast stays up long enough to read.
+   */
+  toastNote(text, title) {
+    const el = this.els && this.els.toast;
+    if (!el || !this.els.toastName) return;
+    text = String(text == null ? "" : text);
+    const long = !!title || text.length > (DESIGN.toastLongChars || 56);
+    el.classList.remove("miss");
+    const kicker = el.querySelector(".toast-kicker");
+    if (kicker) kicker.textContent = "Vale";
+    this.els.toastName.textContent = long ? (title || "Note") : text;
+    if (this.els.toastDesc) this.els.toastDesc.textContent = long ? text : "";
+    el.classList.remove("hidden");
+    if (this.els.toastArt) this.els.toastArt.replaceChildren();
+    const base = DESIGN.toastBase || 1.8;
+    const per = DESIGN.toastPerChar || 0;
+    this.toastT = Math.min(DESIGN.toastMax || base, base + text.length * per);
   },
 
   update(dt) {
     if (this.toastT > 0) {
       this.toastT -= dt;
-      if (this.toastT <= 0) this.els.toast.classList.add("hidden");
+      if (this.toastT <= 0) {
+        if (this.els.toast) this.els.toast.classList.add("hidden");
+        if (typeof Stamps !== "undefined") Stamps.flush();
+      }
+    } else if (typeof Stamps !== "undefined") {
+      Stamps.flush();
     }
 
     this.els.clockText.textContent = TimeCycle.clockLabel();
@@ -269,7 +292,10 @@ const UI = {
     if (rodEl && typeof Inventory !== "undefined") {
       const eq = Inventory.equipped();
       const empty = eq === "none" || Inventory.baitCount(eq) <= 0;
-      const bait = empty ? "empty hook" : ((BAIT[eq] && BAIT[eq].name) || eq);
+      let bait = empty ? "empty hook" : ((BAIT[eq] && BAIT[eq].name) || eq);
+      if (!empty && BAIT[eq] && BAIT[eq].prefer && SPOTS[BAIT[eq].prefer]) {
+        bait += " · " + SPOTS[BAIT[eq].prefer].name;
+      }
       rodEl.textContent = Inventory.rod().name + " - " + bait;
     }
 
@@ -296,6 +322,9 @@ const UI = {
       } else if (World.id === "marsh") {
         this.els.regionTitle.textContent = "Misty Millpond";
         this.els.regionBlurb.textContent = "East of the lake, a quiet marsh remembers the old mill.";
+      } else if (World.id === "island") {
+        this.els.regionTitle.textContent = "Windward Reach";
+        this.els.regionBlurb.textContent = "Open swell past the millpond. One boat home, always.";
       } else {
         this.els.regionTitle.textContent = "Whisperwood Vale";
         this.els.regionBlurb.textContent = "A peaceful woodland valley with crystal-clear waters and abundant fish.";
@@ -324,6 +353,8 @@ const UI = {
     } else {
       this.els.prompt.classList.add("hidden");
     }
+    if (!this._packBtn) this._packBtn = document.getElementById("btn-packup");
+    if (this._packBtn) this._packBtn.classList.toggle("is-on", Fishing.state === "aim" && !this.anyMenu());
   },
 };
 
@@ -336,42 +367,10 @@ const Game = {
   sleeping: null,
   sleepCool: 0,
   eating: null,
+  sitting: false,
 
-  boot(attempt) {
+  boot() {
     if (this.booted) return;
-    attempt = attempt || 0;
-    const need = ["Input", "Save", "World", "Player", "Renderer", "UI", "Survival", "Camera", "CONFIG"];
-    const missing = need.filter((n) => {
-      try { return Function("return typeof " + n)() === "undefined"; }
-      catch (e) { return true; }
-    });
-    if (missing.length) {
-      if (attempt < 8) {
-        setTimeout(() => this.boot(attempt + 1), 120 + attempt * 80);
-        return;
-      }
-      if (!sessionStorage.getItem("ww-boot-reloaded")) {
-        try { sessionStorage.setItem("ww-boot-reloaded", "1"); } catch (e) { /* ignore */ }
-        location.reload();
-        return;
-      }
-      const err = new Error("Missing scripts: " + missing.join(", ") + " (network hiccup — hard refresh)");
-      try {
-        const rec = document.getElementById("start-recap");
-        if (rec) rec.innerHTML = `<li>Boot failed: ${err.message}</li>`;
-        const btn = document.getElementById("btn-start");
-        if (btn) {
-          btn.textContent = "Retry boot";
-          btn.onclick = () => {
-            try { sessionStorage.removeItem("ww-boot-reloaded"); } catch (e) { /* ignore */ }
-            this.booted = false;
-            this.boot(0);
-          };
-        }
-      } catch (e) { /* ignore */ }
-      try { console.warn("boot failed", err); } catch (e) { /* ignore */ }
-      return;
-    }
     try {
       try { if (typeof Atlas !== "undefined") Atlas.load(); } catch (err) { /* sheets optional */ }
       Input.bind();
@@ -380,15 +379,26 @@ const Game = {
       World.generate();
       Player.spawn();
       Save.applyToWorld();
+      try { if (typeof Stamps !== "undefined") Stamps.reconcile(); } catch (e) { /* stamps optional */ }
       if (!Save.data.quests.daily.day) {
-        Weather.rollDay();
-        Quests.rollDay();
+        try { Weather.rollDay(); } catch (e) { /* sky still works on the default forecast */ }
+        try { Quests.rollDay(); } catch (e) { /* board flavor must not block boot */ }
       }
-      if (Save.returning()) Mail.generateAway();
-      Shop.restock();
+      try { if (Save.returning()) Mail.generateAway(); } catch (e) { /* tray optional */ }
+      try { Shop.restock(); } catch (e) { /* stall optional */ }
       Renderer.init();
       UI.init();
+      try {
+        if (typeof MillSpine !== "undefined") {
+          MillSpine.tickHeard();
+          if (Save.data.flags.fifthWater) MillSpine.onOpened();
+          MillSpine.onVisited();
+        }
+      } catch (spineErr) { /* mail flavor must not block boot */ }
+      try { if (typeof Island !== "undefined") Island.sync(true); } catch (e) { /* island optional */ }
       Survival.refreshPips();
+      World.portalCool = 2.4;
+      this._nudgeOutOfPortal();
       const canvas = document.getElementById("game");
       const frame = document.getElementById("frame");
       if (frame) {
@@ -399,7 +409,7 @@ const Game = {
       window.addEventListener("visibilitychange", () => { if (document.hidden) Save.write(); });
       window.addEventListener("pagehide", () => Save.write());
       const hint = document.getElementById("hint");
-      if (hint) hint.textContent = "J Journal · I Pack · F8 Admin";
+      if (hint) hint.textContent = "J Journal · I Pack";
       Camera.x = Player.x - CONFIG.VIEW_W * 0.5;
       Camera.y = Player.y - CONFIG.VIEW_H * 0.58;
       Camera.clampToWorld(World.pw, World.ph);
@@ -407,7 +417,6 @@ const Game = {
       this.last = performance.now();
       requestAnimationFrame((t) => this.loop(t));
       this.booted = true;
-      try { sessionStorage.removeItem("ww-boot-reloaded"); } catch (e) { /* ignore */ }
     } catch (err) {
       this.booted = false;
       try { console.warn("boot failed", err); } catch (e) { /* ignore */ }
@@ -551,6 +560,24 @@ const Game = {
     this.sleepCool = 0.45;
   },
 
+  _updateSit(dt) {
+    if (!(typeof Cottage !== "undefined" && Cottage.sitting)) return;
+    if (Cottage.sitLock > 0) Cottage.sitLock -= dt;
+    const axis = Input.axis();
+    if (Cottage.sitLock <= 0 && (axis.x || axis.y || Input.use)) {
+      Cottage.stopSit();
+      return;
+    }
+    Cottage.sitT += dt;
+    Survival.add("rest", DESIGN.chairRest * dt);
+  },
+
+  _nudgeOutOfPortal() {
+    const p = World.settlePoint(Player.x, Player.y, Player.dir);
+    Player.x = p.x;
+    Player.y = p.y;
+  },
+
   warp(portal) {
     if (!portal || this.fading || this.sleeping) return;
     Fishing.cancel();
@@ -575,14 +602,11 @@ const Game = {
     Camera.y = Player.y - CONFIG.VIEW_H * 0.56;
     Camera.clampToWorld(World.pw, World.ph);
     World.portalCool = 1.85;
-    let guard = 0;
-    while (World.portalAt(Player.x, Player.y) && guard < 64) {
-      Player.y += 1;
-      guard++;
-    }
+    this._nudgeOutOfPortal();
     if (portal.to === "cottage") {
       Save.data.cottage.visited = true;
       Npcs._checkMarsh();
+      if (typeof MillSpine !== "undefined") MillSpine.tickHeard();
     }
     if (portal.passOut) Survival.wakeHome();
     Save.mark();
@@ -618,6 +642,7 @@ const Game = {
     if (Input.pressed["escape"]) {
       if (Skills.offering) { /* wait for a perk pick */ }
       else if (UI.anyMenu() || Npcs.talkId) UI.closeAll();
+      else if (typeof Cottage !== "undefined" && Cottage.sitting) Cottage.stopSit();
       else if (Fishing.active) Fishing.cancel();
     }
 
@@ -630,10 +655,19 @@ const Game = {
         World.update(dt);
         if (this.sleepCool > 0) this.sleepCool -= dt;
         this._updateEat(dt);
-        if (!this.fading && this.sleepCool <= 0 && !this.eating) {
+        if (typeof Cottage !== "undefined" && World.id === "cottage") {
+          Cottage.tweakCarry();
+          if (Input.pressed.q && !Cottage.carry && !Cottage.sitting) {
+            const q = Cottage.nearSlot("chair") ? "chair" : Cottage.nearAnySlot();
+            if (q) Cottage.pickUp(q);
+          }
+        }
+        if (typeof Cottage !== "undefined" && Cottage.sitting) {
+          this._updateSit(dt);
+        } else if (!this.fading && this.sleepCool <= 0 && !this.eating) {
           if (Input.use) Fishing.act();
         }
-        Player.update(dt);
+        if (!(typeof Cottage !== "undefined" && Cottage.sitting)) Player.update(dt);
         Fishing.update(dt);
         TimeCycle.update(dt);
         if (!this.fading) Survival.tick(dt);
@@ -647,9 +681,15 @@ const Game = {
         }
         if (Math.random() < dt * (World.inCave() ? 1.4 : 0.6)) this._nightFlies();
         Save.data.playTime += dt;
+        try { if (typeof Onboard !== "undefined") Onboard.update(dt); } catch (e) { /* nudges optional */ }
       }
     }
 
+    try { if (typeof Onboard !== "undefined") Onboard.observe(); } catch (e) { /* nudges optional */ }
+    try {
+      const rain = typeof TimeCycle !== "undefined" && TimeCycle.weatherId() === "rain" && !World.indoor();
+      if (typeof AudioFX !== "undefined") AudioFX.syncRain(!!rain);
+    } catch (e) { /* rain bed optional */ }
     UI.update(dt);
     Renderer.render(now);
     Input.endFrame();

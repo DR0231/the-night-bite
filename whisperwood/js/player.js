@@ -135,6 +135,17 @@ const Player = {
       Sprites.playerSleep(ctx, this.x, this.y);
       return;
     }
+    if (typeof Cottage !== "undefined" && Cottage.sitting) {
+      const p = Cottage.slotPos("chair");
+      Sprites.playerSit(ctx, p.x, p.y, {
+        dir: this.dir,
+        t: Cottage.sitT,
+        facing: p.facing,
+        scale: p.scale,
+        flip: p.flip,
+      });
+      return;
+    }
     Sprites.player(ctx, this.x, this.y, {
       dir: this.dir,
       frame: this.frame,
@@ -146,6 +157,9 @@ const Player = {
       blink: this.blink,
       rodPhase: Game.fishing.rodPhase,
       windup: Game.fishing.state === "cast" && Game.fishing.t < 0.14,
+      tug: (this.fishing && Game.fishing.state === "play" && (Minigame.kind === "tension" || Minigame.kind === "tensionErratic"))
+        ? (Minigame.pull || 0) : 0,
+      tugW: Minigame.weight || 0,
     });
   },
 };

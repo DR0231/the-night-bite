@@ -77,13 +77,15 @@ const AdminGuide = {
         <li><strong>Fish from land</strong> within ${CONFIG.FISH_RANGE}px of water. Cast distance ${CONFIG.CAST_DIST}px × rod reach. Bait is consumed when the bobber lands, not when you press Fish.</li>
         <li><strong>Nibble ≠ bite.</strong> Small dunks are nibbles — do not hook. A real bite yanks the bobber and starts the minigame immediately.</li>
         <li><strong>Land, then spend extras</strong> at Wren (sell), the packing bench (cook/craft), the tank (tuck), or as an NPC gift (one duplicate per person per day).</li>
-        <li><strong>Sleep in the cottage</strong> before warmth or rest hits 0 at night. Pass-out: warmth/rest at 0 during golden/night, or hunger below ${D.passOutHunger}. Once per calendar day. Wake at dawn, 60/60/60 needs, lose ~20% of hooked bait unless Soft landing.</li>
+        <li><strong>Sleep in the cottage</strong> before warmth or rest hits 0 at night. Pass-out: warmth/rest at 0 during golden/night, or hunger below ${D.passOutHunger}. Once per calendar day. Wake at dawn, needs ${D.passOutNeeds}/${D.passOutNeeds}/${D.passOutNeeds}, lose ${Math.round(D.passOutBaitNibble * 100)}% of hooked bait unless Soft landing.</li>
       </ol>
 
       <h3>Wait / nibble numbers</h3>
-      <p><strong>Still water</strong> (${Object.keys(SPOTS).filter((id) => SPOTS[id].mood === "still").map((id) => SPOTS[id].name).join(", ")}): wait ${still.waitMin}–${still.waitMax}s, ${still.nibbleCount[0]}–${still.nibbleCount[1]} nibbles, hook window ${still.hookWindow}s.</p>
-      <p><strong>Moving water</strong> (${Object.keys(SPOTS).filter((id) => SPOTS[id].mood === "moving").map((id) => SPOTS[id].name).join(", ")}): wait ${moving.waitMin}–${moving.waitMax}s, ${moving.nibbleCount[0]}–${moving.nibbleCount[1]} nibbles, hook window ${moving.hookWindow}s, bobber drifts.</p>
-      <p>Wait is divided by the bait multiplier (empty hook uses ×${D.emptyHookBite}). Today’s hotspot multiplies wait by ${D.hotspotWait} (faster bites).</p>
+      <p>Rank ${typeof Skills !== "undefined" ? Skills.rank() : 1}. Hook window ×${(typeof Skills !== "undefined" && Skills.rank() >= 4) ? D.rank4HookMul : 1} from rank 4 (${D.rank4HookMul} on DESIGN). Cast wait ×${(typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1} from rank 6 (${D.rank6CastMul} on DESIGN). The hook window is not multiplied again at rank 6.</p>
+      <p><strong>Still water</strong> (${Object.keys(SPOTS).filter((id) => SPOTS[id].mood === "still").map((id) => SPOTS[id].name).join(", ")}): wait ${this._secs(still.waitMin * ((typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1))}–${this._secs(still.waitMax * ((typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1))}s, ${still.nibbleCount[0]}–${still.nibbleCount[1]} nibbles, hook window ${this._secs(still.hookWindow * ((typeof Skills !== "undefined" && Skills.rank() >= 4) ? D.rank4HookMul : 1))}s.</p>
+      <p><strong>Moving water</strong> (${Object.keys(SPOTS).filter((id) => SPOTS[id].mood === "moving").map((id) => SPOTS[id].name).join(", ")}): wait ${this._secs(moving.waitMin * ((typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1))}–${this._secs(moving.waitMax * ((typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1))}s, ${moving.nibbleCount[0]}–${moving.nibbleCount[1]} nibbles, hook window ${this._secs(moving.hookWindow * ((typeof Skills !== "undefined" && Skills.rank() >= 4) ? D.rank4HookMul : 1))}s, bobber drifts.</p>
+      <p>Wait is divided by the bait multiplier (empty hook uses ×${D.emptyHookBite}). Today’s hotspot multiplies wait by ${D.hotspotWait} (faster bites). Reach: boat ${D.boatRange}px, sign ${D.signRange}px, cooler ${D.crateRange}px, stump ${D.sitRange}px, NPC wander ${D.npcWander}px. Aim speed ${D.aimSpeed}, cast pad ${D.castAimPad}.</p>
+      <p>Notes stay up ${D.toastBase}s plus ${D.toastPerChar}s per character, capped at ${D.toastMax}s. Longer than ${D.toastLongChars} characters, or a titled note, uses the small body line. First-evening nudges wait ${D.onboardDelay}s, then ${D.onboardGap}s apart, and stop after ${D.onboardWindow}s of play. Bait under ${D.baitLowWarn} says it is running low. Nothing auto-swaps.</p>
       <p>Opening the journal on wait/nibble packs the rod. Opening it during the minigame <strong>fails the fish</strong>.</p>
 
       <h3>Minigames (from each water’s <code>minigame</code> field)</h3>
@@ -131,16 +133,24 @@ const AdminGuide = {
         <li><strong>Crystal Cave</strong> — south hill mouth. Always open. Cave without a cave-prefer bait is ×${D.caveWrongBait} unless the bait is strong.</li>
         <li><strong>Shop gear</strong> (live catalog):<ul>${shopGates}</ul></li>
         <li><strong>Misty Millpond</strong> — land <strong>${D.millpondUnique} unique species</strong>, visit the cottage, and have <strong>any NPC at ${D.millpondHearts}+ hearts</strong>. Then the east raft works. Checked when you gift an NPC.</li>
+        <li><strong>Windward Reach</strong> — millpond open and mill spine <code>done</code>. Then <code>flags.islandOpen</code>. Tension fight-feel. Boat home from the island dock always works.</li>
       </ol>
       <h3>Fisher rank</h3>
-      <p>${ranks}. Cap 8. XP: first land +${D.xpFirstLand}, new size record +${D.xpRecord}, daily/rumor/derby +${D.xpQuest}, first of that species today +${D.xpSpeciesToday}, then +${D.xpRepeat} for the next ${D.xpRepeatCap} repeats. A miss on a never-landed fish +${D.xpSight} once. Each rank offers ${D.perkOffer} random unowned perks; pick one. First time you hit rank 3 you also get a campfire kit.</p>
+      <p>${ranks}. Cap 8. Fight ramp is ${D.strBase} + ${D.strPerRank} per rank (Iron wrist ×${D.strWrist}, clamped ${D.strMin}–${D.strMax}). Rank 4 hook window ×${D.rank4HookMul}. Rank 6 cast wait ×${D.rank6CastMul}. Those two do not stack on the same timer. XP: first land +${D.xpFirstLand}, new size record +${D.xpRecord}, daily/rumor/derby +${D.xpQuest}, first of that species today +${D.xpSpeciesToday}, then +${D.xpRepeat} for the next ${D.xpRepeatCap} repeats. A miss on a never-landed fish +${D.xpSight} once. Each rank offers ${D.perkOffer} random unowned perks; pick one. First time you hit rank 3 you also get a campfire kit.</p>
       <ul>${perks}</ul>
       <h3>People</h3>
       <ul>${people}</ul>
       <p>Gift: one per NPC per day, need a species with caught ≥ ${D.giftMinCaught} (keep your first). Hearts cap ${D.npcHeartCap}. Daily board complete: +${D.dailyCoins}c, +${D.dailyWorms} worms, +1 Wren heart.</p>
+      <h3>Cottage certificates</h3>
+      <p>Six quiet stamps on the wall parchment (STAMPS). Missing stamps never block the boat, cook, or cast. Reconcile on load grants earned stamps with no toast.</p>
+      <ul>${(typeof STAMPS !== "undefined" ? STAMPS : []).map((s) => `<li><strong>${s.title}</strong> (<code>${s.id}</code>)</li>`).join("")}</ul>
       <h3>Each day also rolls</h3>
       <p>Forecast of 3 weathers (${Object.keys(WEATHERS).map((id) => WEATHERS[id].name).join(", ")}), a hotspot among unlocked waters, daily board, rumor, shop restock, gift flags. Weekend or every 7th vale-day: derby of 8 still- or moving-water fish.</p>
     `;
+  },
+
+  _secs(n) {
+    return Math.round(n * 1000) / 1000;
   },
 
   _perkHow(id) {
@@ -190,7 +200,7 @@ const AdminGuide = {
         : " No lingering buff.";
       return `<li><strong>${m.name}</strong> — ${m.desc} Need ${need}. Eat: hunger +${m.hunger}, warmth +${m.warmth}, rest +${m.rest}.${buff}</li>`;
     }).join("");
-    const shopExtra = SHOP_CATALOG.filter((it) => it.kind === "item" || it.kind === "upgrade").map((it) =>
+    const shopExtra = SHOP_CATALOG.filter((it) => it.kind === "item" || it.kind === "upgrade" || it.kind === "kit" || it.kind === "decor").map((it) =>
       `<li><strong>${it.name}</strong> — ${it.desc || it.kind}${it.minRank ? " Rank " + it.minRank + "." : ""}${it.price != null ? " " + it.price + "c." : ""}</li>`
     ).join("");
     return `
@@ -219,9 +229,14 @@ const AdminGuide = {
       if (!bySpot[f.spot]) bySpot[f.spot] = [];
       bySpot[f.spot].push(f);
     }
-    const blocks = Object.keys(SPOTS).map((sid) => {
+    const blocks = Object.keys(SPOTS).filter((sid) => {
+      if (sid === "island" && !(Save.data && Save.data.flags && Save.data.flags.islandOpen)) return false;
+      return true;
+    }).map((sid) => {
       const s = SPOTS[sid];
       const feel = FISHING_FEEL[s.mood] || FISHING_FEEL.still;
+      const hookMul = (typeof Skills !== "undefined" && Skills.rank() >= 4) ? D.rank4HookMul : 1;
+      const waitMul = (typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1;
       const list = (bySpot[sid] || []).map((f) => {
         const rules = [];
         if (f.rainOnly) rules.push("RAIN ONLY");
@@ -239,7 +254,7 @@ const AdminGuide = {
           Best bait: ${bait}. Time weights: ${bite}.</li>`;
       }).join("") || "<li>No fish assigned to this water in FISH[].</li>";
       return `<h3>${s.name}</h3>
-        <p>${s.flavor} Mood <strong>${s.mood}</strong> (wait ${feel.waitMin}–${feel.waitMax}s, hook ${feel.hookWindow}s). Minigame <strong>${s.minigame}</strong>.</p>
+        <p>${s.flavor} Mood <strong>${s.mood}</strong> (wait ${this._secs(feel.waitMin * waitMul)}–${this._secs(feel.waitMax * waitMul)}s, hook ${this._secs(feel.hookWindow * hookMul)}s). Minigame <strong>${s.minigame}</strong>.</p>
         <ul>${list}</ul>`;
     }).join("");
     return `
@@ -281,9 +296,16 @@ const AdminGuide = {
       this._row(Skills.rank() >= 1, Skills.line(), "Rank missing."),
       this._row(!starved, `Hunger ${Math.round(p.hunger)}, warmth ${Math.round(p.warmth)}, rest ${Math.round(p.rest)}. Rares can bite.`, `Hunger is 0. Commons still bite; rares are blocked.`),
       this._row(d.cottage.visited, "Cottage visited (millpond gate).", "Cottage not visited — millpond cannot unlock."),
+      this._row(d.cottage.decor && typeof d.cottage.decor === "object" && !Array.isArray(d.cottage.decor),
+        "Cottage kits: " + (Object.keys(d.cottage.decor || {}).filter((k) => d.cottage.decor[k]).join(", ") || "none hung") + ".",
+        "cottage.decor missing — migrate should set {}."),
       this._row(unique >= D.millpondUnique, `${unique} / ${FISH.length} species landed (need ${D.millpondUnique} for millpond).`, `${unique} / ${FISH.length} landed. Millpond needs ${D.millpondUnique}.`),
       this._row(heartOk, `Hearts: ${hearts.join(", ")}. Someone is at ${D.millpondHearts}+.`, `Hearts: ${hearts.join(", ")}. Gift duplicates until someone reaches ${D.millpondHearts}.`),
       this._row(millOn || !millReady, millOn ? "Millpond raft unlocked." : "Millpond locked until the three gates pass, then gift so the game rechecks.", millOn && !millReady ? "Raft flag on while a gate looks incomplete (admin unlock is fine)." : "Millpond locked."),
+      this._row(!!d.flags.islandOpen, d.flags.islandOpen ? "Windward Reach boat untied (mill spine done)." : "Island boat lashed until millpond is open and mill spine is done.", ""),
+      this._row(true, typeof Stamps !== "undefined"
+        ? `Stamps ${Stamps.unlockedCount()}/${STAMPS.length}: ${Stamps.list().filter((s) => s.day).map((s) => s.title).join(", ") || "none yet"}.`
+        : "Stamps helper missing.", ""),
       this._row(Inventory.ownsRod("willow"), "Willow rod owned.", "Willow missing."),
     ].concat(rodRows).concat([
       this._row(!daily || true, daily && dailyFish ? `Daily: ${dailyFish.name} at ${SPOTS[daily.spot].name}${daily.done ? " — DONE (+" + D.dailyCoins + "c, +" + D.dailyWorms + " worms)." : " — open."}` : "No daily board.", ""),

@@ -13,6 +13,8 @@ const Fishing = {
   rodPhase: 0,
   sag: 6,
   biteFlash: 0,
+  fightInches: 0,
+  aim: null,
 
   get active() { return this.state !== "idle"; },
 
@@ -20,53 +22,104 @@ const Fishing = {
     this.state = "idle";
     Player.fishing = false;
     Player.locked = false;
+    this.fightInches = 0;
+    this.aim = null;
+    // Forget the last water so a later cast can't fly back to a spot across the map.
+    this.spot = null;
+    this.water = null;
+  },
+
+  beginAim() {
+    if (this.active) return false;
+    if (World.isWaterAt(Player.x, Player.y)) return false;
+    const water = World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE);
+    if (!water) return false;
+    const spot = World.spotAt(Player.x, Player.y) || this._spotFromTile(water.tile);
+    const target = this._castTarget(Player.x, Player.y, water, spot);
+    this.spot = spot;
+    this.water = water;
+    this.aim = { x: target.x, y: target.y };
+    this.state = "aim";
+    this.t = 0;
+    Player.fishing = true;
+    Player.locked = true;
+    Player.vx = 0;
+    Player.vy = 0;
+    Player.faceToward(this.aim.x, this.aim.y);
+    return true;
+  },
+
+  /** How far the aim ring may sit from the fisher's feet. */
+  aimRange() {
+    const rod = typeof Inventory !== "undefined" ? Inventory.rod() : null;
+    const reach = rod && rod.reach ? rod.reach : 1;
+    return CONFIG.FISH_RANGE + (DESIGN.castAimPad || 18) * reach;
+  },
+
+  _updateAim(dt) {
+    const axis = Input.axis();
+    const spd = DESIGN.aimSpeed || 70;
+    let nx = this.aim.x + axis.x * spd * dt;
+    let ny = this.aim.y + axis.y * spd * dt;
+    const maxR = this.aimRange();
+    if (Utils.dist(Player.x, Player.y, nx, ny) > maxR) {
+      const ang = Math.atan2(ny - Player.y, nx - Player.x);
+      nx = Player.x + Math.cos(ang) * maxR;
+      ny = Player.y + Math.sin(ang) * maxR;
+    }
+    if (World.isWaterAt(nx, ny)) {
+      this.aim.x = nx;
+      this.aim.y = ny;
+      Player.faceToward(this.aim.x, this.aim.y);
+    }
   },
 
   tryStart() {
-    if (this.active) return false;
-    const water = World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE);
-    if (!water) return false;
+    if (this.active && this.state !== "aim") return false;
+    const water = this.water || World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE);
+    if (!water && !(this.aim && World.isWaterAt(this.aim.x, this.aim.y))) return false;
     if (World.isWaterAt(Player.x, Player.y)) return false;
 
-    const spot = World.spotAt(Player.x, Player.y) || this._spotFromTile(water.tile);
-    const target = this._castTarget(Player.x, Player.y, water, spot);
+    const spot = this.spot || World.spotAt(Player.x, Player.y) || this._spotFromTile(water && water.tile);
+    const target = this.aim && World.isWaterAt(this.aim.x, this.aim.y)
+      ? { x: this.aim.x, y: this.aim.y }
+      : this._castTarget(Player.x, Player.y, water, spot);
     Player.faceToward(target.x, target.y);
     Player.fishing = true;
     Player.locked = true;
 
-    const dist = CONFIG.CAST_DIST * ((typeof Inventory !== "undefined" && Inventory.rod().reach) || 1);
-    const dx = target.x - Player.x;
-    const dy = target.y - Player.y;
-    const len = Math.hypot(dx, dy) || 1;
-    let tx = Player.x + (dx / len) * dist;
-    let ty = Player.y + (dy / len) * dist;
-    if (!World.isWaterAt(tx, ty)) {
-      tx = target.x;
-      ty = target.y;
-    }
-
     this.spot = spot;
     this.water = water;
     this.from = { x: Player.x, y: Player.y };
-    this.bobber.homeX = tx;
-    this.bobber.homeY = ty;
+    this.bobber.homeX = target.x;
+    this.bobber.homeY = target.y;
     this.bobber.x = Player.x;
     this.bobber.y = Player.y - 10;
     this.bobber.dunk = 0;
     this.state = "cast";
     this.t = 0;
     this.fish = null;
+    this.fightInches = 0;
     this.rodPhase = 0;
+    this.aim = null;
     AudioFX.plop();
     return true;
   },
 
   _castTarget(px, py, nearest, spot) {
+    // A water's favoured cast point is a direction, not a teleport: pull it in to arm's reach.
     if (spot && spot.cast && World.isWaterAt(spot.cast.x, spot.cast.y)) {
-      return { x: spot.cast.x, y: spot.cast.y };
+      const maxR = this.aimRange();
+      const d = Utils.dist(px, py, spot.cast.x, spot.cast.y);
+      if (d <= maxR) return { x: spot.cast.x, y: spot.cast.y };
+      const ang = Math.atan2(spot.cast.y - py, spot.cast.x - px);
+      for (let rr = maxR; rr >= 14; rr -= 4) {
+        const cx = px + Math.cos(ang) * rr, cy = py + Math.sin(ang) * rr;
+        if (World.isWaterAt(cx, cy)) return { x: cx, y: cy };
+      }
     }
     let best = nearest, bestScore = -999;
-    const r = 48;
+    const r = this.aimRange();
     const t0x = Math.floor((px - r) / TILE_SIZE);
     const t0y = Math.floor((py - r) / TILE_SIZE);
     const t1x = Math.floor((px + r) / TILE_SIZE);
@@ -90,6 +143,7 @@ const Fishing = {
   },
 
   _spotFromTile(tile) {
+    if (typeof World !== "undefined" && World.id === "island") return SPOTS.island;
     if (tile === TILE.POND) return SPOTS.pond;
     if (tile === TILE.RIVER) return SPOTS.river;
     if (tile === TILE.LAKE) return SPOTS.lake;
@@ -100,6 +154,13 @@ const Fishing = {
   _feel() {
     const mood = this.spot && this.spot.mood;
     return FISHING_FEEL[mood] || FISHING_FEEL.still;
+  },
+
+  /** 1 until the rank gate, then the DESIGN multiplier. Hook and cast wait do not share a gate. */
+  _rankMul(gate, key) {
+    if (typeof Skills === "undefined" || Skills.rank() < gate) return 1;
+    const m = DESIGN[key];
+    return m == null ? 1 : m;
   },
 
   _pickFish() {
@@ -143,6 +204,10 @@ const Fishing = {
 
   update(dt) {
     if (!this.active) return;
+    if (this.state === "aim") {
+      this._updateAim(dt);
+      return;
+    }
     this.t += dt;
     this.rodPhase += dt * 2.4;
     this.biteFlash = Math.max(0, this.biteFlash - dt);
@@ -168,7 +233,8 @@ const Fishing = {
         this.t = 0;
         const baitM = Inventory.biteMult(this.spot.id);
         const hot = TimeCycle.hotspot() === this.spot.id ? DESIGN.hotspotWait : 1;
-        this.wait = Utils.lerp(feel.waitMin, feel.waitMax, Math.random()) / Math.max(0.35, baitM) * hot;
+        const waitMul = this._rankMul(6, "rank6CastMul");
+        this.wait = Utils.lerp(feel.waitMin * waitMul, feel.waitMax * waitMul, Math.random()) / Math.max(0.35, baitM) * hot;
         let nib = Utils.irand(Math.random, feel.nibbleCount[0], feel.nibbleCount[1]);
         if (baitM < 0.6) nib = Math.max(1, nib - 1);
         this.nibblesLeft = nib;
@@ -221,6 +287,18 @@ const Fishing = {
     }
 
     if (this.state === "bite" || this.state === "play") {
+      const tensionPlay = this.state === "play" && (Minigame.kind === "tension" || Minigame.kind === "tensionErratic");
+      if (tensionPlay) {
+        Minigame.update(dt);
+        const pull = Minigame.pull || 0;
+        const w = Minigame.weight || 0.12;
+        const dip = Math.abs(pull);
+        this.sag = 8 + 10 * w * dip;
+        b.x = b.homeX + pull * (1.6 + 2.4 * w);
+        b.dunk = 2.4 + 5 * w * dip;
+        if (dip > 0.22) Player.hop = Math.max(Player.hop, 1 + 1.4 * w * dip);
+        return;
+      }
       const yank = Math.sin(this.t * 18) * feel.yank;
       b.x = b.homeX + yank;
       b.dunk = 4 + Math.sin(this.t * 22) * 1.4;
@@ -234,7 +312,7 @@ const Fishing = {
         this._hook();
         return;
       }
-      if (this.t >= feel.hookWindow) {
+      if (this.t >= feel.hookWindow * this._rankMul(4, "rank4HookMul")) {
         this._miss();
       }
       return;
@@ -269,6 +347,7 @@ const Fishing = {
 
   _startBite() {
     this.fish = this._pickFish();
+    this.fightInches = this._rollSize(this.fish);
     Journal.recordHook(this.fish);
     try { AudioFX.bite(); } catch (err) { /* minigame must still start */ }
     Camera.shake = 1.6;
@@ -301,8 +380,9 @@ const Fishing = {
   _land() {
     this.state = "catch";
     this.t = 0;
-    const inches = this._rollSize(this.fish);
+    const inches = this.fightInches || this._rollSize(this.fish);
     this.size = inches;
+    this.fightInches = 0;
     const rec = Journal.recordLand(this.fish, inches);
     this.catchMeta = rec;
     const questBonus = Quests.onLand(this.fish);
@@ -331,12 +411,27 @@ const Fishing = {
   act() {
     if (this.state === "play") { Minigame.press(); return; }
     if (this.state === "bite") { this._hook(); return; }
+    if (this.state === "aim") { this.tryStart(); return; }
     if (this.active) return;
     if (typeof Interact !== "undefined" && Interact.try()) return;
-    this.tryStart();
+    // No water in reach means E does nothing — never a cast toward the last water.
+    if (World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE)) this.beginAim();
   },
 
   drawBobber(ctx) {
+    if (this.state === "aim" && this.aim) {
+      const ax = this.aim.x, ay = this.aim.y;
+      ctx.save();
+      ctx.globalAlpha = 0.85;
+      Sprites.ellipse(ctx, ax, ay, 5, 2.4, "#f3e2c4");
+      ctx.strokeStyle = "#c4a05a";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(ax, ay - 1, 4, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+      return;
+    }
     if (!this.active || this.state === "catch") return;
     if (this.state === "cast" && this.t < 0.14) return;
     const b = this.bobber;
@@ -344,6 +439,11 @@ const Fishing = {
   },
 
   drawLine(ctx) {
+    if (this.state === "aim" && this.aim) {
+      const tip = Sprites.rodTip(Player.x, Player.y, Player.dir, 0, false, false);
+      Sprites.fishingLine(ctx, tip.x, tip.y, this.aim.x, this.aim.y, 4);
+      return;
+    }
     if (!this.active || this.state === "catch") return;
     const tip = Sprites.rodTip(
       Player.x, Player.y, Player.dir, this.rodPhase,
@@ -360,12 +460,14 @@ const Fishing = {
     if (this.state === "wait" || this.state === "nibble") {
       return "Watch the bobber…  Move to pack up";
     }
+    if (this.state === "aim") return "WASD aim · E or Fish to cast · Esc or Pack up to stop";
     if (this.state === "cast") return "Casting…";
     if (this.state === "reel") return "Reeling in…";
     if (this.state === "fail") return "It got away…";
     if (this.state === "catch") return "";
     if (typeof Npcs !== "undefined" && Npcs.at(Player.x, Player.y)) return "";
-    if (typeof Interact !== "undefined" && Interact.priorityHint()) return "";
+    // Whatever E would really do wins the prompt; the Fish line only shows when E fishes.
+    if (typeof Interact !== "undefined" && (Interact.priorityHint() || Interact.hint())) return "";
     const water = World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE);
     if (water) return "Fish · Space or E";
     return "";

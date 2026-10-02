@@ -8,23 +8,6 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="play-page">
-  <script id="ww-script-guard">
-  /* One soft reload if a critical game script fails to load (GitHub Pages 503). */
-  (function () {
-    var reloaded = false;
-    try { reloaded = sessionStorage.getItem("ww-script-reloaded") === "1"; } catch (e) {}
-    window.addEventListener("error", function (ev) {
-      var t = ev && ev.target;
-      if (!t || t.tagName !== "SCRIPT") return;
-      var src = t.getAttribute("src") || "";
-      if (src.indexOf("js/") !== 0) return;
-      if (reloaded) return;
-      try { sessionStorage.setItem("ww-script-reloaded", "1"); } catch (e) {}
-      location.reload();
-    }, true);
-  })();
-  </script>
-
   <header class="site-nav site-nav--play">
     <a class="brand" href="index.html">Whisperwood Vale</a>
     <a class="nb-back" href="../whisperwood.html" style="color:#c4a35a;font:14px/1.4 system-ui,sans-serif;margin-left:0.75rem">← Night Bite</a>
@@ -129,8 +112,8 @@
         <ul class="controls">
           <li><kbd>W A S D</kbd> or <kbd>Arrows</kbd> Move</li>
           <li><kbd>E</kbd> or <kbd>Space</kbd> Fish / interact / minigame</li>
-          <li><kbd>J</kbd> Journal · <kbd>I</kbd> Pack · <kbd>F8</kbd> Admin</li>
-          <li>Walk or <kbd>Esc</kbd> to pack up the rod</li>
+          <li><kbd>J</kbd> Journal · <kbd>I</kbd> Pack</li>
+          <li><kbd>Esc</kbd> or Pack up while aiming, or walk while the bobber waits, to pack up the rod</li>
           <li>Eat from the pack. Sleep at the cottage.</li>
         </ul>
         <button id="btn-start" type="button">Enter the Vale</button>
@@ -181,6 +164,17 @@
       <div class="journal-panel">
         <header><h2>Wall mount</h2><p class="journal-sub">Hang a personal best, or take one down</p></header>
         <div id="trophy-body"></div>
+        <button type="button" data-close>Close</button>
+      </div>
+    </div>
+
+    <div id="certificate" class="hidden overlay-panel">
+      <div class="journal-panel parchment-panel">
+        <header>
+          <h2>Fisher certificate</h2>
+          <p class="journal-sub" id="certificate-rank"></p>
+        </header>
+        <div id="certificate-body"></div>
         <button type="button" data-close>Close</button>
       </div>
     </div>
@@ -262,6 +256,7 @@
       <button type="button" data-move="left">◀</button>
       <button type="button" data-move="down">▼</button>
       <button type="button" data-move="right">▶</button>
+      <button type="button" id="btn-packup">Pack up</button>
       <button type="button" id="btn-fish">Fish</button>
     </div>
     </div>

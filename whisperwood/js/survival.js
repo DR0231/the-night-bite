@@ -83,6 +83,7 @@ const Survival = {
     p.hunger -= hunger * dt;
 
     let rest = cottage ? 0.02 : (Player.moving ? 0.09 : 0.04);
+    if (typeof Cottage !== "undefined" && Cottage.sitting) rest = 0;
     const fishingHard = Fishing.active && (Fishing.state === "play" || Fishing.state === "reel" || Fishing.state === "bite");
     if (fishingHard) rest = 0.30;
     if (meal && meal.buff === "tea") rest *= 0.7;
@@ -162,17 +163,19 @@ const Survival = {
     if (!Skills.has("softlanding")) {
       const id = Inventory.equipped();
       const n = Inventory.baitCount(id);
-      if (n > 0) Inventory.addBait(id, -Math.max(1, Math.ceil(n * 0.2)));
+      if (n > 0) Inventory.addBait(id, -Math.max(1, Math.ceil(n * DESIGN.passOutBaitNibble)));
     }
-    const mail = Save.data.cottage.mail || (Save.data.cottage.mail = []);
+    let mail = Save.data.cottage.mail;
+    if (!Array.isArray(mail)) mail = Save.data.cottage.mail = [];
     mail.unshift("Found you in the reeds. The kettle’s on. — Wren");
     Save.data.cottage.mail = mail.slice(0, 8);
     const p = this.p();
-    p.hunger = 60;
-    p.warmth = 60;
-    p.rest = 60;
+    p.hunger = DESIGN.passOutNeeds;
+    p.warmth = DESIGN.passOutNeeds;
+    p.rest = DESIGN.passOutNeeds;
     Save.data.flags.passedOutDay = Save.data.clock.day | 0;
     UI.toastNote("You woke in the cottage.");
+    try { if (typeof Stamps !== "undefined") Stamps.try("firstPassOut"); } catch (e) { /* stamp optional */ }
     Save.mark("passout");
     this.passing = false;
     this.refreshPips();
@@ -266,13 +269,15 @@ const Survival = {
   },
 
   _consumeNeed(need) {
+    let stewSpent = 0;
     for (const key of Object.keys(need)) {
       const n = need[key] | 0;
       if (key === "anyCommonFish") {
         for (let i = 0; i < n; i++) {
           if (Save.takeOldestCommon()) continue;
           if (Save.stewCount() < 1) return false;
-          Save.data.inventory.stew = Save.stewCount() - 1;
+          Save.spendStew(1);
+          stewSpent++;
         }
       } else if (BAIT[key]) {
         Inventory.addBait(key, -n);
@@ -283,16 +288,32 @@ const Survival = {
       }
     }
     Save.syncCaught();
-    return true;
+    return stewSpent;
+  },
+
+  _firstMealLetter() {
+    if (!Save.data || !Save.data.flags || Save.data.flags.stewLetter) return;
+    Save.data.flags.stewLetter = true;
+    const text = typeof STEW_LETTER !== "undefined" ? STEW_LETTER : "";
+    if (!text || !Save.data.cottage) return;
+    let mail = Save.data.cottage.mail;
+    if (!Array.isArray(mail)) mail = Save.data.cottage.mail = [];
+    if (mail.indexOf(text) < 0) mail.unshift(text);
+    const cap = typeof MillSpine !== "undefined" ? MillSpine.mailCap() : 5;
+    Save.data.cottage.mail = mail.slice(0, cap);
   },
 
   cook(id) {
     const meal = MEALS[id];
     if (!meal || !this.canCook(id)) return false;
-    if (!this._consumeNeed(meal.need)) return false;
+    const stewSpent = this._consumeNeed(meal.need);
+    if (stewSpent === false) return false;
     Save.data.inventory.meals[id] = (Save.data.inventory.meals[id] | 0) + 1;
     Save.data.flags.cooked[id] = true;
-    UI.toastNote(`Cooked ${meal.name}.`);
+    this._firstMealLetter();
+    if (stewSpent > 0) UI.toastNote(`Cooked ${meal.name} — spent stew stock ×${stewSpent}.`);
+    else UI.toastNote(`Cooked ${meal.name}.`);
+    try { if (typeof Stamps !== "undefined") Stamps.try("firstCook"); } catch (e) { /* stamp optional */ }
     Save.mark();
     return true;
   },
