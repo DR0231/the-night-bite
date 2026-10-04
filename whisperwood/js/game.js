@@ -202,6 +202,7 @@ const UI = {
     if (typeof Trophy !== "undefined") Trophy.close();
     if (typeof Cert !== "undefined") Cert.close();
     if (typeof MillEnd !== "undefined") MillEnd.close();
+    Inventory.closePaste();
     // Journal pauses movement and world time, but is not a bite-timer exploit:
     // wait/nibble packs up the rod; an open minigame fails on the spot.
     if (Fishing.state === "wait" || Fishing.state === "nibble") Fishing.cancel();
