@@ -519,7 +519,7 @@ const NPC_DATA = [
     hearts: [
       "A sunperch for the pan wouldn’t go amiss.",
       "You sit the way old fishers sit. I like that.",
-      "If the millpond opens, take berries. The marsh is shy.",
+      "If the millpond opens, pick mill reeds. Chowder wants them.",
     ],
   },
   {
@@ -555,7 +555,7 @@ const DAILY_ASKS = [
 /* Placeholder mill-spine mail. Ivy polish later. Boat gate stays flags.fifthWater. */
 const MILL_SPINE_MAIL = {
   heard: "Lark: “The east mill went quiet. Used to hear the wheel from the lake path.” The old millers say it turns again when someone lands the vale’s five rare fish.",
-  opened: "Bramble: “East boat’s free. Mill’s still silent, though. Take berries if you go.”",
+  opened: "Bramble: “East boat’s free. Mill’s still silent, though. Pick mill reeds along the shore.”",
   visited: "The mill wheel doesn’t turn. Reeds keep the rest of the story.",
   done: "Still quiet at the mill — but you were there. Someone’s untied the island boat. — Wren",
   turning: "Lark: “Heard the wheel from the lake path today. I’d nearly forgotten the sound.”",
