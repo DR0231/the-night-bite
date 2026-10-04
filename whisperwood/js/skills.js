@@ -52,7 +52,13 @@ const Skills = {
     rec = rec || {};
     let xp = 0;
     if (rec.first) xp += DESIGN.xpFirstLand;
-    if (rec.record) xp += DESIGN.xpRecord;
+    if (rec.record) {
+      const recs = this.data.recordToday || (this.data.recordToday = {});
+      if (!recs[fish.id]) {
+        xp += DESIGN.xpRecord;
+        recs[fish.id] = 1;
+      }
+    }
     if (questBonus) xp += DESIGN.xpQuest;
     const today = this.data.speciesToday || (this.data.speciesToday = {});
     if (!today[fish.id]) {

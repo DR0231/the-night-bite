@@ -47,7 +47,7 @@ const Save = {
         stew: 0,
         stewFrom: { plain: 0 },
       },
-      skills: { rank: 1, xp: 0, perks: [], offered: [], repeatsToday: { total: 0 }, speciesToday: {}, sightXp: {} },
+      skills: { rank: 1, xp: 0, perks: [], offered: [], repeatsToday: { total: 0 }, speciesToday: {}, recordToday: {}, sightXp: {} },
       journal,
       cottage: { aquarium: [], trophies: [], mail: [], weeds: 0, decor: {}, visited: false, cooler: [] },
       npcs,
@@ -57,7 +57,7 @@ const Save = {
         rumor: { day: 0, fish: "", spot: "", text: "" },
         derby: { key: "", mood: "still", landed: 0, goal: 8 },
       },
-      flags: { fifthWater: false, spotMastery: {}, introComplete: false, mute: false, campfire: false, passedOutDay: 0, cooked: {}, gotCampKit: false, millSpine: "none", stamps: {}, islandOpen: false, onboard: {}, stewLetter: false },
+      flags: { fifthWater: false, spotMastery: {}, introComplete: false, mute: false, campfire: false, passedOutDay: 0, cooked: {}, gotCampKit: false, millSpine: "none", millEndDay: 0, millEndSeen: false, stamps: {}, islandOpen: false, onboard: {}, stewLetter: false },
       recap: [],
     };
   },
@@ -121,9 +121,14 @@ const Save = {
     out.skills = Object.assign({}, base.skills, d.skills || {});
     out.skills.repeatsToday = Object.assign({ total: 0 }, (d.skills && d.skills.repeatsToday) || {});
     out.skills.speciesToday = Object.assign({}, (d.skills && d.skills.speciesToday) || {});
+    out.skills.recordToday = Object.assign({}, (d.skills && d.skills.recordToday) || {});
     out.skills.sightXp = Object.assign({}, (d.skills && d.skills.sightXp) || {});
     if (!Array.isArray(out.skills.perks)) out.skills.perks = [];
     if (!Array.isArray(out.skills.offered)) out.skills.offered = [];
+    out.skills.perks = out.skills.perks.map((id) => (id === "softlanding" ? "barehook" : id))
+      .filter((id, i, a) => PERKS[id] && a.indexOf(id) === i);
+    out.skills.offered = out.skills.offered.map((id) => (id === "softlanding" ? "barehook" : id))
+      .filter((id, i, a) => PERKS[id] && a.indexOf(id) === i && out.skills.perks.indexOf(id) < 0);
     if (!out.skills.rank) out.skills.rank = 1;
     out.cottage = Object.assign({}, base.cottage, d.cottage || {});
     for (const k of ["aquarium", "trophies", "mail"]) {
@@ -153,8 +158,10 @@ const Save = {
     if (!Array.isArray(out.quests.done)) out.quests.done = [];
     out.flags = Object.assign({}, base.flags, d.flags || {});
     out.flags.cooked = Object.assign({}, base.flags.cooked, (d.flags && d.flags.cooked) || {});
-    const spineOk = { none: 1, heard: 1, opened: 1, visited: 1, done: 1 };
+    const spineOk = { none: 1, heard: 1, opened: 1, visited: 1, done: 1, turning: 1 };
     if (!spineOk[out.flags.millSpine]) out.flags.millSpine = "none";
+    out.flags.millEndDay = out.flags.millEndDay | 0;
+    out.flags.millEndSeen = out.flags.millEndSeen === true;
     if (out.flags.islandOpen !== true) out.flags.islandOpen = false;
     if (!out.flags.onboard || typeof out.flags.onboard !== "object") out.flags.onboard = {};
     /* Older saves never saw the nudges; anyone who has played a while does not need them. */

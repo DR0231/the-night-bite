@@ -75,6 +75,13 @@ const Minigame = {
     return !!(Input.down["e"] || Input.down[" "] || this._padHold);
   },
 
+  rainLean() {
+    return this.active
+      && (this.kind === "tension" || this.kind === "tensionErratic")
+      && typeof TimeCycle !== "undefined" && TimeCycle.weatherId() === "rain"
+      && !(World.indoor && World.indoor());
+  },
+
   update(dt) {
     if (!this.active) return;
     this.t += dt;
@@ -92,7 +99,8 @@ const Minigame = {
       this._tapAt = null;
       try { UI.toastNote("Hold E / Space to keep tension — don’t tap"); } catch (err) { /* hint still shows */ }
     }
-    this.value += (hold ? 0.72 : -(0.60 + 0.32 * (this.weight || 0))) * dt;
+    const rain = this.rainLean() ? (DESIGN.rainPull || 0) : 0;
+    this.value += (hold ? 0.72 : -(0.60 + 0.32 * (this.weight || 0) + rain)) * dt;
     if (this.kind === "tensionErratic") {
       this.band += Math.sin(this.t * 3.2 * this.speed) * 0.55 * dt;
     } else {

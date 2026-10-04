@@ -53,6 +53,8 @@ const CONFIG = {
 const DESIGN = {
   millpondUnique: 10,
   millpondHearts: 2,
+  millEndRares: ["moonfin", "nighteel", "crystalfin", "pearlcarp", "galeor"],
+  millWheelStep: 0.35,
   npcHeartCap: 3,
   giftMinCaught: 2,
   xpFirstLand: 40,
@@ -69,10 +71,11 @@ const DESIGN = {
   needCrit: 10,
   hungerBarShrink: 20,
   passOutHunger: 15,
-  /* Waking in the reeds: share of the equipped bait Wren "lost" carrying you home (never journal, coins, rods, or flags), and where the needs settle. */
-  passOutBaitNibble: 0.2,
+  /* Waking in the reeds: where the needs settle. Losing the night is the whole cost; nothing is taken. */
   passOutNeeds: 60,
   emptyHookBite: 0.45,
+  /* Bare hook perk: an empty hook bites like a baited one. No bait bias, so it never changes which fish bites. */
+  bareHookBite: 0.72,
   /* "Running low" note once the equipped bait drops under this. At 0 the hook goes empty; nothing auto-swaps. */
   baitLowWarn: 3,
   caveWrongBait: 0.42,
@@ -110,6 +113,8 @@ const DESIGN = {
   strWrist: 1.08,
   strMin: 0.65,
   strMax: 1.60,
+  /* Rain leans on outdoor tension fights: extra slack drop per second while not holding. Reed: 0.05, ceiling 0.06. Not a multiplier on the fight ramp. */
+  rainPull: 0.05,
   /* Rank 4 lengthens the hook window. Rank 6 shortens the wait before the bite. They do not stack on the same number. */
   rank4HookMul: 1.10,
   rank6CastMul: 0.9,
@@ -316,7 +321,7 @@ const FISH = [
     baitBias: { worms: 0.8, crickets: 2.2, glow: 0.3, berryblend: 1.1, glowplus: 0.25 } },
   { id: "mistbass", name: "Mist Bass", spot: "lake", rarity: "Common",
     color: "#3a5a8a", desc: "Lurks under the lake fog until dusk.",
-    size: [8, 16], sell: 10, bite: { dawn: 0.7, day: 0.9, golden: 1.3, night: 1.1 },
+    size: [8, 16], sell: 10, bite: { dawn: 0.7, day: 0.5, golden: 1.6, night: 1.1 },
     baitBias: { worms: 1.7, crickets: 0.8, glow: 0.5, berryblend: 1.3, glowplus: 0.45 } },
   { id: "moonfin", name: "Moonfin", spot: "lake", rarity: "Rare",
     color: "#c8d8f0", desc: "Pale fins that catch starlight on open water.",
@@ -366,6 +371,10 @@ const FISH = [
     color: "#c8b090", desc: "A heavy windward fish. The swell remembers its weight.",
     size: [14, 26], sell: 40, bite: { dawn: 0.4, day: 0.45, golden: 1.15, night: 1.5 },
     baitBias: { worms: 0.3, crickets: 0.25, glow: 1.4, berryblend: 0.35, glowplus: 2.4 } },
+  { id: "hopperbream", name: "Hopper Bream", spot: "lake", rarity: "Uncommon",
+    color: "#a89a44", desc: "Rises at midday for crickets that blow off the bank grass.",
+    size: [6, 12], sell: 12, bite: { dawn: 1, day: 1.3, golden: 0.8, night: 0.3 },
+    baitBias: { worms: 0.7, crickets: 2.0, glow: 0.4, berryblend: 0.8, glowplus: 0.35 } },
 ];
 
 const SEASONS = ["spring", "summer", "autumn", "winter"];
@@ -469,7 +478,7 @@ const PERKS = {
   forager:     { id: "forager",     name: "Forager", desc: "Sometimes the path yields a little extra." },
   campcook:    { id: "campcook",    name: "Camp cook", desc: "Meals restore more and last an extra sleep." },
   homeshore:   { id: "homeshore",   name: "Home shore", desc: "Your favorite water bites like a mild hotspot." },
-  softlanding: { id: "softlanding", name: "Soft landing", desc: "Waking in the reeds costs no bait." },
+  barehook:    { id: "barehook",    name: "Bare hook",    desc: "An empty hook waits like a baited one." },
 };
 
 const NPC_DATA = [
@@ -477,6 +486,10 @@ const NPC_DATA = [
     id: "wren", name: "Wren", role: "shop",
     x: 35.8 * 16, y: 26.8 * 16,
     color: "#c45a5a",
+    fav: "stonetrout", favBait: ["crickets", 2],
+    giftFav: "{A}, still cold from the north river. You remembered.",
+    giftOther: "{A}. Kind of you. A Stone Trout would’ve had me grinning.",
+    turningLine: "The kettle’s on and the mill’s turning. Not a bad year.",
     greet: "Need bait? The board by my stall has today’s ask.",
     hearts: [
       "Bring me something river-bright and I’ll remember you.",
@@ -488,6 +501,10 @@ const NPC_DATA = [
     id: "bramble", name: "Bramble", role: "fisher",
     x: 23.4 * 16, y: 27.4 * 16,
     color: "#5a8a48",
+    fav: "sunperch",   favBait: ["worms", 3],
+    giftFav: "{A}! The pan’s already warm. You remembered.",
+    giftOther: "{A}. Kind of you. I’d still trade it for a Sunperch.",
+    turningLine: "Hear that wheel? Pond’s still kind, if you’re staying.",
     greet: "Pond’s kind if you wait. I like a patient neighbor.",
     hearts: [
       "A sunperch for the pan wouldn’t go amiss.",
@@ -499,6 +516,10 @@ const NPC_DATA = [
     id: "lark", name: "Lark", role: "rumor",
     x: 39.6 * 16, y: 21.6 * 16,
     color: "#7a6ab0",
+    fav: "mistbass",   favBait: ["glow", 1],
+    giftFav: "{A}, fog still on it. You remembered.",
+    giftOther: "{A}. I’ll write it down. A Mist Bass is what I keep hoping for.",
+    turningLine: "Used to hear the wheel from the lake path. Now I do again.",
     greet: "I collect almosts. The ones that got away still count.",
     hearts: [
       "Tell me if the lake coughs up a rumor.",
@@ -515,14 +536,34 @@ const DAILY_ASKS = [
   { spot: "river", fish: "swiftdarter", text: "Land a Swift Darter before night." },
   { spot: "lake", fish: "mistbass", text: "A Mist Bass off the east dock." },
   { spot: "cave", fish: "glowminnow", text: "A Glow Minnow from the cave lake." },
+  { spot: "marsh", fish: "fogperch", text: "A Fog Perch from the millpond reeds." },
+  { spot: "marsh", fish: "bogwhisker", text: "A Bog Whisker from the mill race, come evening." },
+  { spot: "island", fish: "tideperch", text: "A Tide Perch from the warm shallows." },
+  { spot: "island", fish: "duskrunner", text: "Land a Dusk Runner before the copper’s gone." },
 ];
 
 /* Placeholder mill-spine mail. Ivy polish later. Boat gate stays flags.fifthWater. */
 const MILL_SPINE_MAIL = {
-  heard: "Lark: “The east mill went quiet. Used to hear the wheel from the lake path — now it doesn’t turn.”",
+  heard: "Lark: “The east mill went quiet. Used to hear the wheel from the lake path.” The old millers say it turns again when someone lands the vale’s five rare fish.",
   opened: "Bramble: “East boat’s free. Mill’s still silent, though. Take berries if you go.”",
   visited: "The mill wheel doesn’t turn. Reeds keep the rest of the story.",
-  done: "The mill keeps its silence — but you were there. — Wren",
+  done: "Still quiet at the mill — but you were there. Someone’s untied the island boat. — Wren",
+  turning: "Lark: “Heard the wheel from the lake path today. I’d nearly forgotten the sound.”",
+};
+
+const MILL_END_COPY = {
+  kicker: "You’ve finished Whisperwood Vale",
+  title: "The wheel turns",
+  body: "Five rare fish, all landed. While you slept the east mill woke, and you can hear its wheel from the lake path.",
+  button: "Keep fishing",
+  finished: "Finished on day {N}",
+  startLine: "The mill wheel turns. You can hear it from the lake path.",
+  sign: "The wheel turns. The reeds lean with it.",
+  journal: "Five rares to turn the wheel",
+  journalDone: "The mill wheel turns again",
+  page: "Five shapes in the margin. Fill them and the wheel turns.",
+  hunger: "The rares won’t bite on an empty stomach. Supper first.",
+  note: "Mail in the tray. It’s about the mill.",
 };
 
 const MILL_SPINE_RUMOR_QUIET = "The east boat is still lashed. Folks say the mill went quiet.";

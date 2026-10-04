@@ -160,11 +160,6 @@ const Survival = {
     if (TimeCycle.phaseId() !== "dawn") Weather.skipTo("dawn");
     TimeCycle.day = 1 + Math.floor(TimeCycle.seconds / CONFIG.DAY_LENGTH);
     Save.data.clock.day = TimeCycle.day;
-    if (!Skills.has("softlanding")) {
-      const id = Inventory.equipped();
-      const n = Inventory.baitCount(id);
-      if (n > 0) Inventory.addBait(id, -Math.max(1, Math.ceil(n * DESIGN.passOutBaitNibble)));
-    }
     let mail = Save.data.cottage.mail;
     if (!Array.isArray(mail)) mail = Save.data.cottage.mail = [];
     mail.unshift("Found you in the reeds. The kettle’s on. — Wren");

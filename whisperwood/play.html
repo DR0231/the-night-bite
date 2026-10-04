@@ -94,6 +94,7 @@
             <span><i class="dot rare"></i> Rare</span>
           </div>
         </header>
+        <div id="journal-mill" class="journal-mill hidden"></div>
         <ul id="journal-list"></ul>
         <footer>
           Click a known fish to favorite it. J or Esc closes. Opening the journal packs a waiting line and fails a live minigame.
@@ -177,6 +178,18 @@
         </header>
         <div id="certificate-body"></div>
         <button type="button" data-close>Close</button>
+      </div>
+    </div>
+
+    <div id="mill-end" class="hidden overlay-panel">
+      <div class="journal-panel parchment-panel">
+        <header>
+          <p class="journal-sub" id="mill-end-kicker"></p>
+          <h2 id="mill-end-title"></h2>
+        </header>
+        <canvas id="mill-end-scene" width="96" height="48"></canvas>
+        <div id="mill-end-body"></div>
+        <button type="button" id="mill-end-btn" data-close></button>
       </div>
     </div>
 

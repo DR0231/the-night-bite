@@ -58,6 +58,7 @@ TimeCycle.update = function (dt) {
       try { if (typeof Passer !== "undefined") Passer.sync(); } catch (e) { /* passer optional */ }
       Save.data.skills.repeatsToday = { total: 0 };
       Save.data.skills.speciesToday = {};
+      Save.data.skills.recordToday = {};
       Survival.clearFireIfDawn();
       Save.mark("dawn");
     }

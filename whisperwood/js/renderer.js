@@ -98,6 +98,7 @@ const Renderer = {
       }
       ctx.restore();
     }
+    if (typeof MillEnd !== "undefined" && MillEnd.openFlag) MillEnd.drawScene(t);
   },
 
   _visibleTiles(cam) {
@@ -210,7 +211,7 @@ const Renderer = {
     else if (d.type === "pickup") Sprites.pickup(ctx, d.x, d.y, d.item);
     else if (d.type === "cottage") Sprites.cottage(ctx, d.x, d.y);
     else if (d.type === "raft") Sprites.raft(ctx, d.x, d.y);
-    else if (d.type === "mill") Sprites.mill(ctx, d.x, d.y);
+    else if (d.type === "mill") Sprites.mill(ctx, d.x, d.y, t);
     else if (d.type === "bed") {
       Sprites.bed(ctx, d.x, d.y);
       if (Player.sleeping && World.id === "cottage") {

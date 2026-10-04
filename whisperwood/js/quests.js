@@ -5,7 +5,8 @@ const Quests = {
 
   rollDay() {
     const rng = Save.dayRng("quests");
-    const ask = Utils.pick(rng, DAILY_ASKS);
+    const pool = DAILY_ASKS.filter((a) => this._askOpen(a.spot));
+    const ask = Utils.pick(rng, pool.length ? pool : DAILY_ASKS);
     Save.data.quests.daily = {
       day: Save.data.clock.day,
       fish: ask.fish,
@@ -35,6 +36,13 @@ const Quests = {
     if (!key) Save.data.quests.derby.key = "";
     MillSpine.tickHeard();
     this._biasRumor(rng);
+  },
+
+  _askOpen(spot) {
+    const f = (Save.data && Save.data.flags) || {};
+    if (spot === "marsh") return !!f.fifthWater;
+    if (spot === "island") return typeof Island !== "undefined" && Island.open();
+    return true;
   },
 
   _biasRumor(rng) {
@@ -137,7 +145,7 @@ const Quests = {
 const Board = Quests;
 
 const MillSpine = {
-  _order: ["none", "heard", "opened", "visited", "done"],
+  _order: ["none", "heard", "opened", "visited", "done", "turning"],
 
   stage() {
     return (Save.data && Save.data.flags && Save.data.flags.millSpine) || "none";
@@ -179,7 +187,17 @@ const MillSpine = {
     if ((Save.data.clock.day | 0) < 2) return;
     this._set("heard");
     this.pushLetter("heard");
+    this._heardNote = true;
     Save.mark();
+  },
+
+  flushNote() {
+    if (!this._heardNote) return;
+    if (typeof Game !== "undefined" && Game.sleeping) return;
+    if (typeof UI !== "undefined" && UI.toastT > 0) return;
+    if (typeof Stamps !== "undefined" && Stamps._fight()) return;
+    this._heardNote = false;
+    UI.toastNote(MILL_END_COPY.note);
   },
 
   onOpened() {
@@ -203,13 +221,134 @@ const MillSpine = {
   onMillfin(fish) {
     if (!fish || fish.id !== "millfin") return;
     if (!this.atLeast("visited")) return;
-    if (this.stage() === "done") return;
+    if (this.atLeast("done")) return;
     this._set("done");
     this.pushLetter("done");
     UI.toastNote("The mill keeps its silence — but you were there.");
     try { if (typeof Stamps !== "undefined") Stamps.try("millQuiet"); } catch (e) { /* stamp optional */ }
     try { if (typeof Island !== "undefined") Island.onQuiet(); } catch (e) { /* island optional */ }
     Save.mark();
+  },
+
+  tickTurning() {
+    if (!Save.data || this.stage() !== "done") return;
+    const ids = DESIGN.millEndRares || [];
+    for (let i = 0; i < ids.length; i++) {
+      if (typeof Journal === "undefined" || !Journal.landed(ids[i])) return;
+    }
+    this._set("turning");
+    Save.data.flags.millEndDay = Save.clockDay();
+    Save.data.flags.millEndSeen = false;
+    this.pushLetter("turning");
+    Save.mark();
+    MillEnd.open();
+  },
+};
+
+const MillEnd = {
+  openFlag: false,
+
+  open() {
+    this.openFlag = true;
+    if (typeof UI !== "undefined") UI.closeJournal();
+    if (typeof Inventory !== "undefined") Inventory.close();
+    if (typeof Shop !== "undefined") Shop.close();
+    if (typeof Board !== "undefined") Board.close();
+    if (typeof Mail !== "undefined") Mail.close();
+    if (typeof Bench !== "undefined") Bench.close();
+    if (typeof Tank !== "undefined") Tank.close();
+    if (typeof Cooler !== "undefined") Cooler.close();
+    if (typeof Trophy !== "undefined") Trophy.close();
+    if (typeof Cert !== "undefined") Cert.close();
+    const el = document.getElementById("mill-end");
+    if (el) el.classList.remove("hidden");
+    this.refresh();
+  },
+
+  close() {
+    if (!this.openFlag) return;
+    this.openFlag = false;
+    const el = document.getElementById("mill-end");
+    if (el) el.classList.add("hidden");
+    if (Save.data && Save.data.flags && Save.data.flags.millEndSeen !== true) {
+      Save.data.flags.millEndSeen = true;
+      Save.mark();
+    }
+  },
+
+  refresh() {
+    const C = MILL_END_COPY;
+    const kicker = document.getElementById("mill-end-kicker");
+    const title = document.getElementById("mill-end-title");
+    const btn = document.getElementById("mill-end-btn");
+    if (kicker) kicker.textContent = C.kicker;
+    if (title) title.textContent = C.title;
+    if (btn) btn.textContent = C.button;
+    const el = document.getElementById("mill-end-body");
+    if (!el) return;
+    const rares = (DESIGN.millEndRares || []).map((id) => {
+      const f = FISH.find((x) => x.id === id);
+      const e = Journal.ensure(id);
+      const day = e.firstDay | 0;
+      const daySpan = day > 0 ? `<span class="stamp-day">Day ${day}</span>` : "";
+      return `<li class="stamp-open"><span class="stamp-seal is-ink" aria-hidden="true"></span><span class="stamp-title">${f ? f.name : id}</span>${daySpan}</li>`;
+    }).join("");
+    let landedSum = 0;
+    let bestName = "";
+    let best = -1;
+    for (const f of FISH) {
+      const e = Journal.ensure(f.id);
+      landedSum += e.landed | 0;
+      if ((e.biggest || 0) > best) {
+        best = e.biggest || 0;
+        bestName = e.biggest ? f.name : bestName;
+      }
+    }
+    if (!bestName) {
+      for (const f of FISH) {
+        const e = Journal.ensure(f.id);
+        if ((e.landed | 0) > 0) { bestName = f.name; best = e.biggest || 0; break; }
+      }
+    }
+    const stats = [
+      C.finished.replace("{N}", Save.data.flags.millEndDay | 0),
+      `${Journal.count()} / ${FISH.length} species in the book`,
+      `${landedSum} fish landed`,
+      `Biggest: ${bestName}, ${best}"`,
+    ].map((s) => `<p class="ink-soft">${s}</p>`).join("");
+    el.innerHTML = `<p>${C.body}</p><ul class="stamp-list">${rares}</ul>${stats}`;
+  },
+
+  drawScene(t) {
+    const canvas = document.getElementById("mill-end-scene");
+    if (!canvas) return;
+    const c = canvas.getContext("2d");
+    if (!c) return;
+    const time = t || 0;
+    const frame = Math.floor(time / (DESIGN.millWheelStep || 0.35)) % 4;
+    c.imageSmoothingEnabled = false;
+    Sprites.fill(c, 0, 0, 96, 48, "#d8c0a0");
+    Sprites.fill(c, 0, 31, 96, 5, "#6a7a50");
+    Sprites.fill(c, 0, 31, 96, 1, "#8a9a68");
+    Sprites.fill(c, 0, 6, 34, 32, PALETTE.wood);
+    Sprites.fill(c, 0, 6, 34, 3, PALETTE.woodHi);
+    for (let y = 13; y <= 37; y += 6) Sprites.fill(c, 0, y, 34, 1, PALETTE.woodLo);
+    for (let row = 0; row <= 7; row++) {
+      Sprites.fill(c, 0, row, Math.min(40, 36 + row) + 1, 1, "#6a3030");
+    }
+    Sprites.fill(c, 10, 16, 7, 7, "#2a1c12");
+    Sprites.fill(c, 11, 17, 5, 5, "#c8e0f0");
+    Sprites.fill(c, 13, 17, 1, 5, "#2a1c12");
+    Sprites.fill(c, 34, 25, 24, 2, PALETTE.woodLo);
+    Sprites.millWheel(c, 60, 26, 15, time);
+    Sprites.fill(c, 0, 38, 96, 10, "#3a5a48");
+    Sprites.fill(c, 0, 38, 96, 1, "#5a7a68");
+    for (let i = 0; i < 5; i++) {
+      Sprites.fill(c, 48 + ((i * 5 + frame) % 22), 39 + ((i + frame) % 2), 2, 1, "#c8e0f0");
+    }
+    const fall = Math.floor((time * 10) % 7);
+    Sprites.fill(c, 75, 39 + fall, 1, 2, "#9fc6e0");
+    Sprites.fill(c, 77, 39 + ((fall + 3) % 7), 1, 2, "#9fc6e0");
   },
 };
 
@@ -255,12 +394,14 @@ const Mail = {
     MillSpine.tickHeard();
     Save.data.cottage.mail = notes.slice(0, MillSpine.mailCap());
     const mail = Save.data.cottage.mail;
-    const beats = ["heard", "opened", "visited", "done"];
+    const beats = ["heard", "opened", "visited", "done", "turning"];
+    let latest = "";
     for (let i = 0; i < beats.length; i++) {
-      const beat = beats[i];
-      if (!MillSpine.atLeast(beat)) continue;
-      const text = MILL_SPINE_MAIL[beat];
-      if (!text) continue;
+      if (!MillSpine.atLeast(beats[i])) continue;
+      if (MILL_SPINE_MAIL[beats[i]]) latest = beats[i];
+    }
+    if (latest) {
+      const text = MILL_SPINE_MAIL[latest];
       const at = mail.indexOf(text);
       if (at >= 0) mail.splice(at, 1);
       mail.unshift(text);

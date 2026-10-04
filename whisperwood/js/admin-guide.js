@@ -77,7 +77,7 @@ const AdminGuide = {
         <li><strong>Fish from land</strong> within ${CONFIG.FISH_RANGE}px of water. Cast distance ${CONFIG.CAST_DIST}px × rod reach. Bait is consumed when the bobber lands, not when you press Fish.</li>
         <li><strong>Nibble ≠ bite.</strong> Small dunks are nibbles — do not hook. A real bite yanks the bobber and starts the minigame immediately.</li>
         <li><strong>Land, then spend extras</strong> at Wren (sell), the packing bench (cook/craft), the tank (tuck), or as an NPC gift (one duplicate per person per day).</li>
-        <li><strong>Sleep in the cottage</strong> before warmth or rest hits 0 at night. Pass-out: warmth/rest at 0 during golden/night, or hunger below ${D.passOutHunger}. Once per calendar day. Wake at dawn, needs ${D.passOutNeeds}/${D.passOutNeeds}/${D.passOutNeeds}, lose ${Math.round(D.passOutBaitNibble * 100)}% of hooked bait unless Soft landing.</li>
+        <li><strong>Sleep in the cottage</strong> before warmth or rest hits 0 at night. Pass-out: warmth/rest at 0 during golden/night, or hunger below ${D.passOutHunger}. Once per calendar day. Wake at dawn, needs ${D.passOutNeeds}/${D.passOutNeeds}/${D.passOutNeeds}. Nothing is taken.</li>
       </ol>
 
       <h3>Wait / nibble numbers</h3>
@@ -163,7 +163,7 @@ const AdminGuide = {
       forager: ` Ground pickups: ${Math.round(D.foragerChance * 100)}% chance +1 extra.`,
       campcook: ` Meals restore ×${D.campcookRestore} and the buff lasts until the day after you eat.`,
       homeshore: ` Favorite journal water counts as a mild hotspot (×${D.homeShoreBite}) when it is not already the day’s hotspot (×${D.hotspotBite}).`,
-      softlanding: " Pass-out no longer steals bait.",
+      barehook: ` Empty hook bite ×${D.bareHookBite} instead of ×${D.emptyHookBite}. No bait bias.`,
     };
     return extra[id] || "";
   },

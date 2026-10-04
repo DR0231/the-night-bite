@@ -35,7 +35,9 @@ const Npcs = {
     const spine = typeof MillSpine !== "undefined" ? MillSpine.stage() : "none";
     const visits = (st.talks = (st.talks | 0) + 1);
     let line;
-    if ((n.id === "bramble" || n.id === "lark") && spine !== "none" && spine !== "done" && visits % 2 === 1) {
+    if (typeof MillSpine !== "undefined" && MillSpine.stage() === "turning" && n.turningLine && visits % 2 === 1) {
+      line = n.turningLine;
+    } else if ((n.id === "bramble" || n.id === "lark") && spine !== "none" && !(typeof MillSpine !== "undefined" && MillSpine.atLeast("done")) && visits % 2 === 1) {
       line = "The east mill’s gone quiet.";
     } else if (st.lastCatchRemembered && visits % 3 === 0) {
       line = `That ${st.lastCatchRemembered} still sits with me.`;
@@ -64,16 +66,36 @@ const Npcs = {
       this._show(n.name, "One gift a day is plenty.", n);
       return;
     }
-    const extra = FISH.find((f) => Save.countLoose(f.id) >= DESIGN.giftMinCaught);
-    if (!extra) {
-      this._show(n.name, "Keep the first of each. Bring me a duplicate sometime.", n);
+    const min = DESIGN.giftMinCaught;
+    const favFish = n.fav ? FISH.find((f) => f.id === n.fav) : null;
+    let give = null;
+    if (favFish && Save.countLoose(favFish.id) >= min) give = favFish;
+    if (!give) {
+      let best = 0;
+      for (const f of FISH) {
+        if (f.rarity === "Rare") continue;
+        const c = Save.countLoose(f.id);
+        if (c >= min && c > best) { best = c; give = f; }
+      }
+    }
+    if (!give) {
+      this._show(n.name, favFish ? `Keep the first of each. Bring me a spare ${favFish.name} sometime.` : "Keep the first of each. Bring me a duplicate sometime.", n);
       return;
     }
-    Save.takeOldestLoose(extra.id);
+    Save.takeOldestLoose(give.id);
     Save.syncCaught();
     st.giftedToday = 1;
     st.hearts = Math.min(DESIGN.npcHeartCap, (st.hearts | 0) + 1);
-    this._show(n.name, n.hearts[st.hearts - 1] || "That’s kind.", n);
+    let line;
+    const article = Utils.an(give.name, true);
+    if (favFish && give.id === favFish.id) {
+      const fb = n.favBait;
+      if (fb && BAIT[fb[0]]) Inventory.addBait(fb[0], fb[1] | 0);
+      line = (n.giftFav || "{A}! You remembered.").replace("{A}", article) + (fb && BAIT[fb[0]] ? ` Take ${fb[1] === 1 ? "this" : "these"} ${BAIT[fb[0]].name.toLowerCase()}.` : "");
+    } else {
+      line = (n.giftOther || "{A}. Kind of you.").replace("{A}", article);
+    }
+    this._show(n.name, line, n);
     Save.mark("gift");
     this._checkMarsh();
   },
@@ -240,7 +262,9 @@ const Interact = {
     if (World.id !== "cottage") {
       for (const d of World.decos) {
         const dist = Utils.dist(px, py, d.x, d.y);
-        if (d.type === "waterSign" || d.type === "sign") offer("sign", dist, DESIGN.signRange, d);
+        if (d.type === "waterSign" || d.type === "sign") {
+          if (!this._signYields(d)) offer("sign", dist, DESIGN.signRange, d);
+        }
         else if (d.type === "crate") offer("crate", dist, DESIGN.crateRange, d);
         else if (d.type === "raft" && d.boat) offer("boat", dist, DESIGN.boatRange, d);
         else if (d.type === "stump" && d.sit) offer("sit", dist, DESIGN.sitRange, d);
@@ -252,6 +276,17 @@ const Interact = {
     return best;
   },
 
+  /* With water in casting reach, a sign only takes E when the player faces it. Facing water always means fish. */
+  _signYields(d) {
+    if (!World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE)) return false;
+    const dx = d.x - Player.x, dy = d.y - Player.y;
+    const ax = Math.abs(dx), ay = Math.abs(dy);
+    const dir = Player.dir; // 0 down, 1 left, 2 right, 3 up
+    const facing = (dir === 0 && dy > 0 && ay >= ax) || (dir === 3 && dy < 0 && ay >= ax)
+      || (dir === 1 && dx < 0 && ax >= ay) || (dir === 2 && dx > 0 && ax >= ay);
+    return !facing;
+  },
+
   _readSign(d) {
     if (!d) return false;
     try { AudioFX.page(); } catch (err) { /* cue optional */ }
@@ -259,7 +294,8 @@ const Interact = {
       const s = SPOTS[d.spot];
       UI.toastNote(Journal.signText(d.spot), s ? s.name : "Water");
     } else {
-      UI.toastNote(d.read || "The paint has worn away.", d.title || "Sign");
+      const turning = d.readTurning && typeof MillSpine !== "undefined" && MillSpine.stage() === "turning";
+      UI.toastNote(turning ? d.readTurning : (d.read || "The paint has worn away."), d.title || "Sign");
     }
     return true;
   },

@@ -601,7 +601,8 @@ const Sprites = {
   rodTip(x, y, dir, phase, windup, bite) {
     let lift = Math.sin(phase) * 1.2;
     if (windup) lift -= 6;
-    if (bite) lift += 4 + Math.sin(phase * 8) * 2;
+    const bob = (typeof Minigame !== "undefined" && Minigame.rainLean && Minigame.rainLean()) ? 3 : 2;
+    if (bite) lift += 4 + Math.sin(phase * 8) * bob;
     const sheet = typeof Atlas !== "undefined" && Atlas.sheets && Atlas.sheets.player;
     const rod = sheet && Atlas.PLAYER && Atlas.PLAYER.rod && Atlas.PLAYER.rod[dir];
     if (rod) {
@@ -985,7 +986,7 @@ const Sprites = {
     this.fill(ctx, cx + 2, y + 4, 8, 2, PALETTE.wood);
   },
 
-  mill(ctx, x, y) {
+  mill(ctx, x, y, t) {
     if (typeof Atlas !== "undefined" && Atlas.draw(ctx, "mill", x, y)) return;
     this.fill(ctx, x - 18, y - 28, 36, 28, PALETTE.wood);
     this.fill(ctx, x - 18, y - 28, 36, 4, PALETTE.woodHi);
@@ -998,8 +999,43 @@ const Sprites = {
     this.fill(ctx, x - 4, y - 14, 8, 14, "#2a1c12");
     this.fill(ctx, x - 14, y - 18, 6, 6, "#c8e0f0");
     this.ellipse(ctx, x + 20, y - 8, 8, 8, PALETTE.woodLo);
-    this.fill(ctx, x + 19, y - 16, 2, 16, PALETTE.wood);
-    this.fill(ctx, x + 12, y - 9, 16, 2, PALETTE.wood);
+    if (!(typeof MillSpine !== "undefined" && MillSpine.stage() === "turning")) {
+      this.fill(ctx, x + 19, y - 16, 2, 16, PALETTE.wood);
+      this.fill(ctx, x + 12, y - 9, 16, 2, PALETTE.wood);
+      return;
+    }
+    const frame = Math.floor((t || 0) / (DESIGN.millWheelStep || 0.35)) % 4;
+    const a0 = frame * Math.PI / 8;
+    this.fill(ctx, x + 19, y - 9, 2, 2, PALETTE.wood);
+    for (let k = 0; k < 4; k++) {
+      const a = a0 + k * Math.PI / 2;
+      this.fill(ctx, Math.round(x + 20 + Math.cos(a) * 4) - 1, Math.round(y - 8 + Math.sin(a) * 4) - 1, 2, 2, PALETTE.wood);
+      this.fill(ctx, Math.round(x + 20 + Math.cos(a) * 7) - 1, Math.round(y - 8 + Math.sin(a) * 7) - 1, 3, 3, PALETTE.woodHi);
+    }
+    this.fill(ctx, x + 22, Math.round(y - 1 + ((t || 0) * 10) % 6), 1, 2, "#9fc6e0");
+  },
+
+  millWheel(ctx, cx, cy, r, t) {
+    const frame = Math.floor((t || 0) / (DESIGN.millWheelStep || 0.35)) % 4;
+    const a0 = frame * Math.PI / 16;
+    for (let i = 0; i < 360; i++) {
+      const a = i * Math.PI / 180;
+      const co = Math.cos(a);
+      const sn = Math.sin(a);
+      this.fill(ctx, Math.round(cx + co * r), Math.round(cy + sn * r), 1, 1, PALETTE.woodLo);
+      this.fill(ctx, Math.round(cx + co * (r - 1)), Math.round(cy + sn * (r - 1)), 1, 1, PALETTE.woodLo);
+    }
+    for (let k = 0; k < 8; k++) {
+      const a = a0 + k * Math.PI / 4;
+      const co = Math.cos(a);
+      const sn = Math.sin(a);
+      for (let rad = 3; rad <= r - 2; rad++) {
+        this.fill(ctx, Math.round(cx + co * rad), Math.round(cy + sn * rad), 1, 1, PALETTE.wood);
+      }
+      this.fill(ctx, Math.round(cx + co * (r + 1)) - 1, Math.round(cy + sn * (r + 1)) - 1, 3, 3, PALETTE.woodHi);
+    }
+    this.fill(ctx, Math.round(cx) - 2, Math.round(cy) - 2, 4, 4, PALETTE.woodLo);
+    this.fill(ctx, Math.round(cx) - 1, Math.round(cy) - 1, 2, 2, PALETTE.woodHi);
   },
 
   shelf(ctx, x, y, facing, opt) {

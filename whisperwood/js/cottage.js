@@ -622,7 +622,10 @@ const Marsh = {
 
       addDeco("mill", 22 * TILE_SIZE, 8.6 * TILE_SIZE);
       addSolid(20 * TILE_SIZE, 7 * TILE_SIZE, 36, 14, "wall");
-      addDeco("sign", 18.6 * TILE_SIZE, 8.6 * TILE_SIZE, { read: "The mill wheel is still. Reeds keep the rest of the story." });
+      addDeco("sign", 18.6 * TILE_SIZE, 8.6 * TILE_SIZE, {
+        read: "The mill wheel is still. Reeds keep the rest of the story.",
+        readTurning: MILL_END_COPY.sign,
+      });
       addSolid(18.6 * TILE_SIZE - 3, 8.6 * TILE_SIZE - 3, 6, 4, "sign");
 
       // Reeds fringe the shore; mist sits on the water.
@@ -713,7 +716,7 @@ const Marsh = {
 const Island = {
   unlocked() {
     const f = Save.data && Save.data.flags;
-    return !!(f && f.fifthWater && f.millSpine === "done");
+    return !!(f && f.fifthWater && typeof MillSpine !== "undefined" && MillSpine.atLeast("done"));
   },
 
   open() {
@@ -726,7 +729,7 @@ const Island = {
       Save.data.flags.islandOpen = false;
       return;
     }
-    if (Save.data.flags.millSpine !== "done") return;
+    if (typeof MillSpine === "undefined" || !MillSpine.atLeast("done")) return;
     if (Save.data.flags.islandOpen) return;
     Save.data.flags.islandOpen = true;
     if (silent) {

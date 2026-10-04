@@ -201,7 +201,7 @@ const Stamps = {
       return (Save.data.recap || []).some((r) => r.reason === "passout");
     }
     if (id === "marshOpen") return !!Save.data.flags.fifthWater;
-    if (id === "millQuiet") return Save.data.flags.millSpine === "done";
+    if (id === "millQuiet") return typeof MillSpine !== "undefined" && MillSpine.atLeast("done");
     return false;
   },
 

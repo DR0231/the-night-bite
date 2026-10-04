@@ -56,7 +56,9 @@ const Inventory = {
   },
 
   biteMult(spotId) {
-    if (this.baitCount(this.equipped()) <= 0) return DESIGN.emptyHookBite;
+    if (this.baitCount(this.equipped()) <= 0) {
+      return (typeof Skills !== "undefined" && Skills.has("barehook")) ? (DESIGN.bareHookBite || 0.72) : DESIGN.emptyHookBite;
+    }
     const id = this.equipped();
     const bait = BAIT[id] || BAIT.worms;
     let m = bait.bonus || 1;

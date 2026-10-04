@@ -33,6 +33,7 @@ const Utils = {
     ];
   },
   rgba(c) { return `rgba(${c[0]},${c[1]},${c[2]},${c[3]})`; },
+  an(s, cap) { return (/^[aeiou]/i.test(s) ? (cap ? "An" : "an") : (cap ? "A" : "a")) + " " + String(s); },
 };
 
 function mulberry32(seed) {
@@ -160,7 +161,6 @@ const Input = {
         if (typeof Game !== "undefined") Game.start({ clearUse: false });
         if (typeof Minigame !== "undefined") Minigame._padHold = true;
         Input.setKey("e", true, false);
-        Fishing.act();
       });
       const up = () => {
         if (typeof Minigame !== "undefined") Minigame._padHold = false;

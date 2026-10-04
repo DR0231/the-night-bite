@@ -506,6 +506,7 @@ html, body {
   font-size: 24px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  color: var(--ink);
 }
 
 .journal-sub {
@@ -814,7 +815,8 @@ kbd {
 #tank-body button,
 #cooler-body button,
 #rank-up-body button,
-.dialog-actions button {
+.dialog-actions button,
+#mill-end-btn {
   display: block;
   width: 100%;
   margin: 6px 0;
@@ -825,6 +827,12 @@ kbd {
   font: 13px Georgia, serif;
   cursor: pointer;
   text-align: left;
+}
+
+#mill-end-btn {
+  display: block;
+  width: auto;
+  margin: 10px auto 0;
 }
 
 #bench-body p {
@@ -870,6 +878,15 @@ kbd {
 .shop-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 #journal-list li.favorite { outline: 2px solid #c4a05a; }
 .journal-cook { margin-top: 8px; font-size: 12px; color: #5a3a22; }
+#mill-end-scene { display: block; width: 192px; height: 96px; margin: 6px auto; image-rendering: pixelated; }
+.journal-mill { display: flex; flex-wrap: wrap; margin: 0 0 10px; gap: 2px 8px; font-size: 12px; }
+.journal-mill.hidden { display: none; }
+.journal-mill > p { flex: 1 0 100%; margin: 4px 0 0; font-style: italic; }
+.journal-mill > p:first-child { font: 700 13px Georgia, serif; margin: 0; }
+.journal-mill .mill-rare { flex: 1 0 100%; width: auto; display: flex; align-items: center; gap: 8px; text-align: left; padding: 2px 0; border-bottom: 1px dotted #c4a05a; }
+.journal-mill .mill-rare canvas { flex: none; }
+.journal-mill .mill-rare > div:nth-of-type(1) { min-width: 84px; font-weight: 700; font-size: 13px; }
+.journal-mill .mill-rare .ink-soft { font-size: 11px; }
 
 .parchment-panel {
   background: #f3e6c8;

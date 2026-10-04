@@ -314,7 +314,7 @@ const Admin = {
     },
     unlock() {
       Save.data.flags.fifthWater = true;
-      Save.data.flags.millSpine = "done";
+      if (!(typeof MillSpine !== "undefined" && MillSpine.atLeast("done"))) Save.data.flags.millSpine = "done";
       Save.data.flags.islandOpen = true;
       Save.data.flags.introComplete = true;
       Save.data.cottage.visited = true;
@@ -430,7 +430,7 @@ const Admin = {
       if (w.fifthWater) Save.data.flags.fifthWater = true;
       if (w.islandOpen) {
         Save.data.flags.fifthWater = true;
-        Save.data.flags.millSpine = "done";
+        if (!(typeof MillSpine !== "undefined" && MillSpine.atLeast("done"))) Save.data.flags.millSpine = "done";
         Save.data.flags.islandOpen = true;
       }
       this.go(w.map, w.x * TILE_SIZE, w.y * TILE_SIZE, w.dir);
