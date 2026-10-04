@@ -74,7 +74,7 @@ Home · Species · Water · Log · Tournaments · Gear · Dockside · About
 
 ## SAMPLE private log entries
 
-Seeded in `js/log.js` (`SAMPLE_TRIPS`) and noscript fallback in `log.html`. Storage key: `nightbite-log-v1`.
+Log shows exactly one SAMPLE card. It normally comes from `data/community-log.json`; `js/log.js` (`SAMPLE_TRIPS`) only renders its copy when that JSON fails to load, and `log.html` has a noscript copy. SAMPLE demos are never stored. Storage key: `nightbite-log-v1` (user entries only).
 
 ## Water numbers
 

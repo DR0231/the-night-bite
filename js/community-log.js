@@ -73,6 +73,20 @@
       .join("");
   }
 
+  // Tell js/log.js whether the JSON loaded, so its SAMPLE fallback
+  // only shows when this list could not (exactly one SAMPLE card on Log).
+  function announce(status) {
+    window.__nightbiteCommunityLog = status;
+    var ev;
+    try {
+      ev = new CustomEvent("nightbite:community-log", { detail: { status: status } });
+    } catch (e) {
+      ev = document.createEvent("CustomEvent");
+      ev.initCustomEvent("nightbite:community-log", false, false, { status: status });
+    }
+    document.dispatchEvent(ev);
+  }
+
   function loadCommunity() {
     if (!listEl) return;
     fetch("data/community-log.json")
@@ -82,10 +96,12 @@
       })
       .then(function (data) {
         renderTrips((data && data.trips) || []);
+        announce("ok");
       })
       .catch(function () {
         listEl.innerHTML =
           '<div class="empty-log"><p>Could not load community log (open via a local server, not file://). None shown.</p></div>';
+        announce("failed");
       });
   }
 

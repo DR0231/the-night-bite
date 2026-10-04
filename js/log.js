@@ -1,11 +1,16 @@
 /**
  * The Night Bite — trip log (localStorage only)
  * Key: nightbite-log-v1
- * Samples are seeded once; user entries can be cleared without wiping samples.
+ * Only the user's own entries are stored. The one SAMPLE demo card normally
+ * comes from data/community-log.json (js/community-log.js); SAMPLE_TRIPS below
+ * is a fallback shown here only when that JSON fails to load, so the page
+ * always shows exactly one SAMPLE card.
  */
 (function () {
   var STORAGE_KEY = "nightbite-log-v1";
   var SAMPLES_SEEDED_KEY = "nightbite-samples-seeded-v2";
+  // null = community log not loaded yet, "ok" = JSON loaded, "failed" = fetch failed
+  var communityStatus = window.__nightbiteCommunityLog || null;
 
   var SAMPLE_TRIPS = [
     {
@@ -25,7 +30,9 @@
       var raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return [];
       var parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
+      if (!Array.isArray(parsed)) return [];
+      // SAMPLE demos are never stored; drop any seeded by older versions
+      return parsed.filter(function (e) { return e && !e.sample; });
     } catch (e) {
       return [];
     }
@@ -35,23 +42,24 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
   }
 
-  function ensureSamples() {
+  function purgeStoredSamples() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw && raw.indexOf('"sample":true') !== -1) {
+        saveEntries(loadEntries());
+      }
+      localStorage.removeItem(SAMPLES_SEEDED_KEY);
+    } catch (e) {
+      /* storage unavailable: nothing to purge */
+    }
+  }
+
+  function entriesToShow() {
     var entries = loadEntries();
-    var allowedSampleIds = {};
-    SAMPLE_TRIPS.forEach(function (s) { allowedSampleIds[s.id] = true; });
-    // Drop legacy SAMPLE demos not in the current one-entry set
-    entries = entries.filter(function (e) {
-      if (e.sample && !allowedSampleIds[e.id]) return false;
-      return true;
-    });
-    var ids = {};
-    entries.forEach(function (e) { ids[e.id] = true; });
-    SAMPLE_TRIPS.forEach(function (s) {
-      if (!ids[s.id]) entries.push(Object.assign({}, s));
-    });
-    saveEntries(entries);
-    localStorage.setItem(SAMPLES_SEEDED_KEY, "1");
-    return loadEntries();
+    if (communityStatus === "failed") {
+      SAMPLE_TRIPS.forEach(function (s) { entries.push(Object.assign({}, s)); });
+    }
+    return entries;
   }
 
   function formatDate(iso) {
@@ -66,7 +74,7 @@
   function renderList() {
     var list = document.getElementById("log-list");
     if (!list) return;
-    var entries = ensureSamples();
+    var entries = entriesToShow();
     // Sort by date descending
     entries.sort(function (a, b) {
       return (b.date || "").localeCompare(a.date || "");
@@ -132,13 +140,12 @@
   }
 
   function clearUserEntries() {
-    var entries = loadEntries().filter(function (e) { return e.sample; });
-    saveEntries(entries);
+    saveEntries([]);
     renderList();
   }
 
   function addEntry(data) {
-    var entries = ensureSamples();
+    var entries = loadEntries();
     entries.push({
       id: "user-" + Date.now(),
       sample: false,
@@ -179,7 +186,7 @@
     var clearBtn = document.getElementById("clear-user-entries");
     if (clearBtn) {
       clearBtn.addEventListener("click", function () {
-        if (window.confirm("Remove all your personal entries? The SAMPLE trip stays.")) {
+        if (window.confirm("Remove all your personal entries?")) {
           clearUserEntries();
         }
       });
@@ -193,7 +200,14 @@
 
   // Boot
   if (document.getElementById("log-list")) {
+    purgeStoredSamples();
     renderList();
     initForm();
+    // community-log.js reports whether data/community-log.json loaded;
+    // the SAMPLE fallback above only renders when it failed.
+    document.addEventListener("nightbite:community-log", function (ev) {
+      communityStatus = ev.detail && ev.detail.status;
+      renderList();
+    });
   }
 })();
