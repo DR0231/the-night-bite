@@ -528,8 +528,10 @@ const AudioFX = {
       return vol * (1 - (d - DESIGN.millSoundNear) / (DESIGN.millSoundFar - DESIGN.millSoundNear));
     }
     const d = Math.hypot(tx - 59.2, ty - 24.9);
-    const vol = DESIGN.millSoundValeVol * (1 - d / DESIGN.millSoundValeRange);
-    return vol > 0 ? vol : 0;
+    const vol = DESIGN.millSoundValeVol;
+    if (d <= DESIGN.millSoundValeNear) return vol;
+    if (d >= DESIGN.millSoundValeRange) return 0;
+    return vol * (1 - (d - DESIGN.millSoundValeNear) / (DESIGN.millSoundValeRange - DESIGN.millSoundValeNear));
   },
   syncMill(t) {
     try {
