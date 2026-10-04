@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-# No sitemap claimed yet
+Sitemap: https://nightbiteoh.com/sitemap.xml
