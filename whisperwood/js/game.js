@@ -748,6 +748,7 @@ const Game = {
       const rain = typeof TimeCycle !== "undefined" && TimeCycle.weatherId() === "rain" && !World.indoor();
       if (typeof AudioFX !== "undefined") AudioFX.syncRain(!!rain);
     } catch (e) { /* rain bed optional */ }
+    try { if (typeof AudioFX !== "undefined") AudioFX.syncMill(now / 1000); } catch (e) { /* mill bed optional */ }
     UI.update(dt);
     Renderer.render(now);
     Input.endFrame();

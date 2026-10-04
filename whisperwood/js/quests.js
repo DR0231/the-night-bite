@@ -250,6 +250,7 @@ const MillEnd = {
 
   open() {
     this.openFlag = true;
+    try { if (typeof AudioFX !== "undefined") AudioFX.millStart(); } catch (e) { /* mill cue optional */ }
     if (typeof UI !== "undefined") UI.closeJournal();
     if (typeof Inventory !== "undefined") Inventory.close();
     if (typeof Shop !== "undefined") Shop.close();

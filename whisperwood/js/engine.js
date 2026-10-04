@@ -475,6 +475,101 @@ const AudioFX = {
       this._rain = null;
     }
   },
+  _mill: null,
+  _millBeat: -1,
+  _millCreak(out, vol) {
+    if (!this.ctx || !out) return;
+    const t0 = this.ctx.currentTime;
+    const tri = this.ctx.createOscillator();
+    const tg = this.ctx.createGain();
+    tri.type = "triangle";
+    tri.frequency.setValueAtTime(140, t0);
+    tri.frequency.exponentialRampToValueAtTime(95, t0 + 0.22);
+    tg.gain.setValueAtTime(vol, t0);
+    tg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.22);
+    tri.connect(tg).connect(out);
+    tri.start(t0);
+    tri.stop(t0 + 0.24);
+    const sq = this.ctx.createOscillator();
+    const sg = this.ctx.createGain();
+    sq.type = "square";
+    sq.frequency.setValueAtTime(72, t0);
+    sq.frequency.exponentialRampToValueAtTime(60, t0 + 0.12);
+    sg.gain.setValueAtTime(vol * 0.4, t0);
+    sg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.12);
+    sq.connect(sg).connect(out);
+    sq.start(t0);
+    sq.stop(t0 + 0.14);
+  },
+  _millDrip(out, vol) {
+    if (!this.ctx || !out) return;
+    const t0 = this.ctx.currentTime + 0.18;
+    const o = this.ctx.createOscillator();
+    const g = this.ctx.createGain();
+    o.type = "sine";
+    o.frequency.setValueAtTime(900, t0);
+    o.frequency.exponentialRampToValueAtTime(1400, t0 + 0.05);
+    g.gain.setValueAtTime(vol * 0.5, t0);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.05);
+    o.connect(g).connect(out);
+    o.start(t0);
+    o.stop(t0 + 0.07);
+  },
+  _millTarget() {
+    if (typeof World === "undefined" || typeof Player === "undefined") return 0;
+    if (World.id !== "marsh" && World.id !== "vale") return 0;
+    const tx = Player.x / TILE_SIZE;
+    const ty = Player.y / TILE_SIZE;
+    if (World.id === "marsh") {
+      const d = Math.hypot(tx - 22, ty - 8.6);
+      const vol = DESIGN.millSoundVol;
+      if (d <= DESIGN.millSoundNear) return vol;
+      if (d >= DESIGN.millSoundFar) return 0;
+      return vol * (1 - (d - DESIGN.millSoundNear) / (DESIGN.millSoundFar - DESIGN.millSoundNear));
+    }
+    const d = Math.hypot(tx - 59.2, ty - 24.9);
+    const vol = DESIGN.millSoundValeVol * (1 - d / DESIGN.millSoundValeRange);
+    return vol > 0 ? vol : 0;
+  },
+  syncMill(t) {
+    try {
+      const turning = typeof MillSpine !== "undefined" && MillSpine.stage() === "turning";
+      const place = typeof World !== "undefined" && !World.indoor() && World.id !== "island";
+      if (this.muted || !turning || !place) {
+        if (this._mill && this.ctx) {
+          const now = this.ctx.currentTime;
+          this._mill.gain.cancelScheduledValues(now);
+          this._mill.gain.setValueAtTime(0, now);
+        }
+        this._millBeat = -1;
+        return;
+      }
+      if (!this.ctx) this.ensure();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      if (!this._mill) {
+        this._mill = this.ctx.createGain();
+        this._mill.gain.setValueAtTime(0, now);
+        this._mill.connect(this.ctx.destination);
+      }
+      const target = this._millTarget();
+      this._mill.gain.setTargetAtTime(target, now, DESIGN.millSoundFade);
+      const beat = Math.floor((t || 0) / (DESIGN.millWheelStep * DESIGN.millSoundBeats));
+      if (beat !== this._millBeat) {
+        if (this._millBeat !== -1 && target > 0) {
+          this._millCreak(this._mill, 1);
+          if (beat % 2 === 0) this._millDrip(this._mill, 1);
+        }
+        this._millBeat = beat;
+      }
+    } catch (err) { /* mill bed optional */ }
+  },
+  millStart() {
+    this.ensure();
+    if (this.muted || !this.ctx) return;
+    this._millCreak(this.ctx.destination, DESIGN.millStartVol);
+    this._millDrip(this.ctx.destination, DESIGN.millStartVol);
+  },
   step() {
     this.ensure();
     const t = typeof World !== "undefined" && World.tileAt ? World.tileAt(Player.x, Player.y) : TILE.GRASS;
