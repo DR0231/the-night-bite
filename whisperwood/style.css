@@ -816,7 +816,8 @@ kbd {
 #cooler-body button,
 #rank-up-body button,
 .dialog-actions button,
-#mill-end-btn {
+#mill-end-btn,
+#paste-save-btn {
   display: block;
   width: 100%;
   margin: 6px 0;
@@ -829,10 +830,20 @@ kbd {
   text-align: left;
 }
 
-#mill-end-btn {
+#mill-end-btn,
+#paste-save-btn {
   display: block;
   width: auto;
   margin: 10px auto 0;
+}
+
+.vale-desktop .site-nav { display: none; }
+
+#paste-save-text {
+  width: 100%;
+  color: var(--ink);
+  background: #f3e2c4;
+  border: 1px solid #8b6238;
 }
 
 #bench-body p {

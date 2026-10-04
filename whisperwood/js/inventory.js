@@ -2,6 +2,7 @@
 
 const Inventory = {
   open: false,
+  pasteOpen: false,
 
   baitCount(id) { return Save.data.inventory.bait[id] | 0; },
 
@@ -77,6 +78,7 @@ const Inventory = {
     const el = document.getElementById("pack");
     if (el) el.classList.toggle("hidden", !this.open);
     if (this.open) {
+      this.closePaste();
       UI.closeJournal();
       Shop.close();
       Board.close();
@@ -237,15 +239,38 @@ const Inventory = {
     if (reset) reset.addEventListener("click", () => this.fullReset());
     const exp = el.querySelector("#btn-export");
     if (exp) exp.addEventListener("click", () => {
-      navigator.clipboard.writeText(Save.exportJson()).catch(() => {});
-      UI.toastNote("Save copied to clipboard.");
+      const fail = () => UI.toastNote("Couldn't reach the clipboard. Try Download save.");
+      let text = "";
+      try { text = Save.exportJson(); } catch (e) { fail(); return; }
+      try {
+        navigator.clipboard.writeText(text).then(
+          () => UI.toastNote("Save copied to clipboard."),
+          fail
+        );
+      } catch (e) { fail(); }
     });
     const imp = el.querySelector("#btn-import");
-    if (imp) imp.addEventListener("click", () => {
-      const text = window.prompt("Paste a Whisperwood save JSON");
-      if (!text) return;
-      try { Save.importJson(text); location.reload(); } catch (e) { UI.toastNote("That save could not be read."); }
-    });
+    if (imp) imp.addEventListener("click", () => this.openPaste());
+  },
+
+  openPaste() {
+    this.close();
+    const el = document.getElementById("paste-save");
+    if (el) el.classList.remove("hidden");
+    this.pasteOpen = true;
+    const text = document.getElementById("paste-save-text");
+    const err = document.getElementById("paste-save-err");
+    if (err) err.classList.add("hidden");
+    if (text) {
+      text.value = "";
+      text.focus();
+    }
+  },
+
+  closePaste() {
+    const el = document.getElementById("paste-save");
+    if (el) el.classList.add("hidden");
+    this.pasteOpen = false;
   },
 
   numberKey(n) {
@@ -338,3 +363,25 @@ const Pickups = {
     }
   },
 };
+
+(function bindPasteSave() {
+  const btn = document.getElementById("paste-save-btn");
+  const text = document.getElementById("paste-save-text");
+  if (btn) btn.addEventListener("click", () => {
+    const raw = text ? text.value.trim() : "";
+    if (!raw) return;
+    const err = document.getElementById("paste-save-err");
+    try {
+      Save.importJson(raw);
+      location.reload();
+    } catch (e) {
+      if (err) err.classList.remove("hidden");
+    }
+  });
+  if (text) text.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      Inventory.closePaste();
+    }
+  });
+})();

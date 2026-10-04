@@ -16,7 +16,8 @@ const UI = {
       || (typeof Cert !== "undefined" && Cert.openFlag)
       || (typeof MillEnd !== "undefined" && MillEnd.openFlag)
       || Skills.offering
-      || (typeof Admin !== "undefined" && Admin.open);
+      || (typeof Admin !== "undefined" && Admin.open)
+      || (typeof Inventory !== "undefined" && Inventory.pasteOpen);
   },
 
   init() {
@@ -230,6 +231,7 @@ const UI = {
     if (typeof Trophy !== "undefined") Trophy.close();
     if (typeof Cert !== "undefined") Cert.close();
     if (typeof MillEnd !== "undefined") MillEnd.close();
+    Inventory.closePaste();
   },
 
   showCatch(fish, rec) {
@@ -436,6 +438,7 @@ const Game = {
   boot() {
     if (this.booted) return;
     try {
+      if (window.valeDesktop) document.documentElement.classList.add("vale-desktop");
       try { if (typeof Atlas !== "undefined") Atlas.load(); } catch (err) { /* sheets optional */ }
       Input.bind();
       Input.bindPad();
@@ -472,6 +475,7 @@ const Game = {
       }
       window.addEventListener("visibilitychange", () => { if (document.hidden) Save.write(); });
       window.addEventListener("pagehide", () => Save.write());
+      if (window.valeDesktop) window.valeDesktop.onSaveRequest(() => Save.write());
       const hint = document.getElementById("hint");
       if (hint) hint.textContent = "J Journal · I Pack";
       Camera.x = Player.x - CONFIG.VIEW_W * 0.5;

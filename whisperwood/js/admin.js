@@ -16,6 +16,8 @@ const Admin = {
     if (this._bound) return;
     this._bound = true;
     window.addEventListener("keydown", (e) => {
+      if (window.valeDesktop && !window.valeDesktop.devMode) return;
+      if (typeof Inventory !== "undefined" && Inventory.pasteOpen) return;
       if (e.repeat) return;
       if (e.code === "F8" || (e.code === "Backquote" && !this.typing())) {
         e.preventDefault();

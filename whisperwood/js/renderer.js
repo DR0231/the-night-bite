@@ -16,7 +16,7 @@ const Renderer = {
 
   resize() {
     const host = document.getElementById("stage") || document.getElementById("frame") || this.canvas.parentElement;
-    const pad = 24;
+    const pad = window.valeDesktop ? 0 : 24;
     const maxW = Math.max(320, (host.clientWidth || window.innerWidth) - pad);
     const maxH = Math.max(180, (host.clientHeight || window.innerHeight) - pad);
     let s = Math.floor(Math.min(maxW / this.viewW, maxH / this.viewH));
