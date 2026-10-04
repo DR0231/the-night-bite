@@ -480,26 +480,27 @@ const AudioFX = {
   _millCreak(out, vol) {
     if (!this.ctx || !out) return;
     const t0 = this.ctx.currentTime;
+    const v = vol * (DESIGN.millCreakGain || 0.5);
     const tri = this.ctx.createOscillator();
     const tg = this.ctx.createGain();
     tri.type = "triangle";
-    tri.frequency.setValueAtTime(140, t0);
-    tri.frequency.exponentialRampToValueAtTime(95, t0 + 0.22);
-    tg.gain.setValueAtTime(vol, t0);
+    tri.frequency.setValueAtTime(280, t0);
+    tri.frequency.exponentialRampToValueAtTime(190, t0 + 0.22);
+    tg.gain.setValueAtTime(v, t0);
     tg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.22);
     tri.connect(tg).connect(out);
     tri.start(t0);
     tri.stop(t0 + 0.24);
-    const sq = this.ctx.createOscillator();
-    const sg = this.ctx.createGain();
-    sq.type = "square";
-    sq.frequency.setValueAtTime(72, t0);
-    sq.frequency.exponentialRampToValueAtTime(60, t0 + 0.12);
-    sg.gain.setValueAtTime(vol * 0.4, t0);
-    sg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.12);
-    sq.connect(sg).connect(out);
-    sq.start(t0);
-    sq.stop(t0 + 0.14);
+    const body = this.ctx.createOscillator();
+    const bg = this.ctx.createGain();
+    body.type = "sine";
+    body.frequency.setValueAtTime(140, t0);
+    body.frequency.exponentialRampToValueAtTime(110, t0 + 0.18);
+    bg.gain.setValueAtTime(v * 0.35, t0);
+    bg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.18);
+    body.connect(bg).connect(out);
+    body.start(t0);
+    body.stop(t0 + 0.20);
   },
   _millDrip(out, vol) {
     if (!this.ctx || !out) return;
