@@ -318,6 +318,7 @@ const Save = {
 
   importJson(text) {
     const parsed = JSON.parse(text);
+    if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("unreadable");
     this.data = this._migrate(parsed);
     this._writeBlocked = false;
     this._keepData = true;
