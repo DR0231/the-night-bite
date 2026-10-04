@@ -3,6 +3,7 @@
 const UI = {
   journalOpen: false,
   toastT: 0,
+  toastHoldT: 0,
 
   els: {},
 
@@ -232,6 +233,7 @@ const UI = {
   },
 
   showCatch(fish, rec) {
+    if (this.toastHoldT > 0) { this.refreshJournal(); return; }
     rec = rec || {};
     const el = this.els.toast;
     if (!el) return;
@@ -264,6 +266,7 @@ const UI = {
   },
 
   showMiss(fish) {
+    if (this.toastHoldT > 0) { this.refreshJournal(); return; }
     const el = this.els.toast;
     if (!el) return;
     el.classList.add("miss");
@@ -284,6 +287,7 @@ const UI = {
    * drops into the smaller desc line, and the toast stays up long enough to read.
    */
   toastNote(text, title) {
+    if (this.toastHoldT > 0) return;
     const el = this.els && this.els.toast;
     if (!el || !this.els.toastName) return;
     text = String(text == null ? "" : text);
@@ -300,7 +304,15 @@ const UI = {
     this.toastT = Math.min(DESIGN.toastMax || base, base + text.length * per);
   },
 
+  toastWarn(text) {
+    this.toastHoldT = 0;
+    this.toastNote(text);
+    this.toastT = DESIGN.toastMax || 7;
+    this.toastHoldT = this.toastT;
+  },
+
   update(dt) {
+    if (this.toastHoldT > 0) this.toastHoldT -= dt;
     if (this.toastT > 0) {
       this.toastT -= dt;
       if (this.toastT <= 0) {
@@ -492,6 +504,7 @@ const Game = {
       Input.pressed["enter"] = false;
     }
     if (UI.els.start) UI.els.start.classList.add("hidden");
+    if (Save._loadWarn) { const w = Save._loadWarn; Save._loadWarn = ""; try { UI.toastWarn(w); } catch (e) {} }
     Save.data.flags.introComplete = true;
     try { if ((Save.data.skills.offered || []).length && !Skills.offering) Skills._showOffer(); } catch (e) { /* offer optional */ }
     try {

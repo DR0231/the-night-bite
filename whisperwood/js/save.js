@@ -1,9 +1,13 @@
 /* One localStorage blob. Migrates whisperwood-journal on first load. */
 
+const SAVE_UNREADABLE_KEY = "whisperwood-save-v1-unreadable";
+
 const Save = {
   data: null,
   _timer: 0,
   _keepData: false,
+  _writeBlocked: false,
+  _loadWarn: "",
 
   blankJournalEntry() {
     return { caught: 0, biggest: 0, firstAt: 0, lastAt: 0, hooked: 0, landed: 0, gotAway: 0, shiny: 0, favorite: false, firstDay: 0 };
@@ -67,8 +71,11 @@ const Save = {
     try { raw = localStorage.getItem(SAVE_KEY); } catch (e) { raw = null; }
     if (raw) {
       try {
-        this.data = this._migrate(JSON.parse(raw));
+        const parsed = JSON.parse(raw);
+        if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("unreadable");
+        this.data = this._migrate(parsed);
       } catch (e) {
+        this._keepUnreadable(raw);
         this.data = this.fresh();
       }
     } else {
@@ -84,6 +91,29 @@ const Save = {
     }
     try { this.syncCaught(); } catch (e) { /* pack counts optional at boot */ }
     return this.data;
+  },
+
+  _keepUnreadable(raw) {
+    let side = null;
+    try { side = localStorage.getItem(SAVE_UNREADABLE_KEY); } catch (e) {}
+    if (side === null) {
+      try {
+        localStorage.setItem(SAVE_UNREADABLE_KEY, raw);
+        this._loadWarn = "Your save was too damp to read. A copy is kept safe.";
+      } catch (e) {
+        this._blockWrites("could not store unreadable copy (quota)");
+      }
+    } else if (side === raw) {
+      this._loadWarn = "Your save was too damp to read. A copy is kept safe.";
+    } else {
+      this._blockWrites("a different unreadable save; earlier copy kept");
+    }
+  },
+
+  _blockWrites(reason) {
+    this._writeBlocked = true;
+    this._loadWarn = "Your save was too damp to read. Not saving for now.";
+    try { console.warn("Save writes paused:", reason); } catch (e) {}
   },
 
   _ingestOldJournal() {
@@ -255,6 +285,7 @@ const Save = {
   },
 
   write() {
+    if (this._writeBlocked) return;
     try {
       this.pullFromWorld();
       localStorage.setItem(SAVE_KEY, JSON.stringify(this.data));
@@ -288,6 +319,7 @@ const Save = {
   importJson(text) {
     const parsed = JSON.parse(text);
     this.data = this._migrate(parsed);
+    this._writeBlocked = false;
     this._keepData = true;
     this._ensureFish();
     this.syncCaught();
@@ -303,6 +335,7 @@ const Save = {
     this._keepData = true;
     this.data.flags.mute = mute;
     AudioFX.muted = mute;
+    this._writeBlocked = false;
     this.write();
   },
 
