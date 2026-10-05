@@ -103,6 +103,7 @@ const Input = {
     const overlayUp = UI.els.start && !UI.els.start.classList.contains("hidden");
     if (overlayUp) {
       Game.start({ clearUse: k === " " || k === "e" || k === "enter" });
+      if (k === "escape") this.pressed.escape = false;
     }
   },
 

@@ -9,6 +9,7 @@ const Admin = {
     const el = document.activeElement;
     if (!el) return false;
     const tag = (el.tagName || "").toLowerCase();
+    if (tag === "input" && (el.type || "").toLowerCase() === "checkbox") return false;
     return tag === "input" || tag === "textarea" || tag === "select";
   },
 

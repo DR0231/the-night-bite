@@ -846,7 +846,10 @@ kbd {
 #pause-menu button.desktop-only { display: none; }
 .vale-desktop #pause-menu button.desktop-only { display: block; }
 
-#pause-reset-yes { color: #8b6238; background: none; }
+#pause-menu #pause-reset-yes { background: none; border-color: transparent; color: #8b6238; }
+#pause-menu button { min-width: 168px; text-align: center; }
+#pause-menu label { display: block; }
+#pause-menu label, #pause-reset-confirm p, #pause-credits p { font: 13px Georgia, serif; text-align: center; }
 
 #pause-reset-confirm p,
 #pause-credits p {
