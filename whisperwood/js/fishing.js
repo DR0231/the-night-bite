@@ -15,6 +15,7 @@ const Fishing = {
   biteFlash: 0,
   fightInches: 0,
   aim: null,
+  castBait: "none",
 
   get active() { return this.state !== "idle"; },
 
@@ -27,6 +28,20 @@ const Fishing = {
     // Forget the last water so a later cast can't fly back to a spot across the map.
     this.spot = null;
     this.water = null;
+  },
+
+  inFight() { return this.state === "bite" || this.state === "play" || this.state === "reel"; },
+
+  reelIn() {
+    const bobberOut = this.state === "cast" || this.state === "wait" || this.state === "nibble";
+    const back = (this.state === "wait" || this.state === "nibble") ? this.castBait : "none";
+    this.cancel();
+    if (back !== "none" && !(typeof Admin !== "undefined" && Admin.god)) {
+      Inventory.addBait(back, 1);
+      if (Save.data.inventory.equippedBait === "none") Save.data.inventory.equippedBait = back;
+    }
+    this.castBait = "none";
+    if (bobberOut) UI.toastNote("Reeled in.");
   },
 
   beginAim() {
@@ -228,7 +243,7 @@ const Fishing = {
       this.sag = 2 + (1 - ease) * 4;
       if (u >= 1) {
         b.x = b.homeX; b.y = b.homeY;
-        Inventory.consumeCastBait();
+        this.castBait = Inventory.consumeCastBait();
         this.state = "wait";
         this.t = 0;
         const baitM = Inventory.biteMult(this.spot.id);

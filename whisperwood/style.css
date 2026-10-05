@@ -850,6 +850,7 @@ kbd {
 #pause-menu button { min-width: 168px; text-align: center; }
 #pause-menu label { display: block; }
 #pause-menu label, #pause-reset-confirm p, #pause-credits p { font: 13px Georgia, serif; text-align: center; }
+#pause-reset-confirm { margin: 12px 0 4px; padding: 8px 0; border-top: 1px dotted #8b6238; border-bottom: 1px dotted #8b6238; }
 
 #pause-reset-confirm p,
 #pause-credits p {

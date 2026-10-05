@@ -478,6 +478,13 @@ const Game = {
         });
       }
       window.addEventListener("visibilitychange", () => { if (document.hidden) Save.write(); });
+      const leave = () => {
+        if (UI.anyMenu() || Npcs.talkId || Game.sleeping || Game.fading) return;
+        if (typeof Minigame !== "undefined") Minigame._padHold = false;
+        Pause.open();
+      };
+      window.addEventListener("blur", leave);
+      document.addEventListener("visibilitychange", () => { if (document.hidden) leave(); });
       window.addEventListener("pagehide", () => Save.write());
       if (window.valeDesktop) window.valeDesktop.onSaveRequest(() => Save.write());
       const hint = document.getElementById("hint");
@@ -710,8 +717,9 @@ const Game = {
     this.last = now;
 
     if (!(typeof Admin !== "undefined" && Admin.open)) {
-      if (Input.pressed["j"] && !Skills.offering && !this.sleeping) UI.toggleJournal();
-      if (Input.pressed["i"] && !Skills.offering && !this.sleeping) Inventory.toggle();
+      const fightHeld = typeof Pause !== "undefined" && Pause.openFlag && Fishing.inFight();
+      if (Input.pressed["j"] && !Skills.offering && !this.sleeping && !fightHeld) UI.toggleJournal();
+      if (Input.pressed["i"] && !Skills.offering && !this.sleeping && !fightHeld) Inventory.toggle();
     }
     if (Input.pressed["1"]) Inventory.numberKey(1);
     if (Input.pressed["2"]) Inventory.numberKey(2);
@@ -722,7 +730,8 @@ const Game = {
       if (Skills.offering) { /* wait for a perk pick */ }
       else if (UI.anyMenu() || Npcs.talkId) UI.closeAll();
       else if (typeof Cottage !== "undefined" && Cottage.sitting) Cottage.stopSit();
-      else if (Fishing.active) Fishing.cancel();
+      else if (Fishing.inFight()) Pause.open();
+      else if (Fishing.active) Fishing.reelIn();
       else if (!this.sleeping && !this.fading) Pause.open();
     }
 
