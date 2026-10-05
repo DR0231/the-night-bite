@@ -127,7 +127,10 @@ const Input = {
     const opts = { capture: true, passive: false };
     window.addEventListener("keydown", (e) => on(e, true), opts);
     window.addEventListener("keyup", (e) => on(e, false), opts);
-    window.addEventListener("blur", () => { this.down = Object.create(null); });
+    window.addEventListener("blur", () => {
+      this.down = Object.create(null);
+      this._clearPadKeys();
+    });
   },
 
   bindPad() {
@@ -189,6 +192,212 @@ const Input = {
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     const narrow = window.matchMedia("(max-width: 720px)").matches;
     pad.classList.toggle("is-touch", coarse || narrow);
+  },
+
+  _padWasOn: false,
+  _padOwned: Object.create(null),
+  _padPrevBtn: Object.create(null),
+  _padFocus: -1,
+  _padFocusRoot: null,
+  _padALock: false,
+
+  _padPressed(pad, i) {
+    const b = pad && pad.buttons && pad.buttons[i];
+    if (!b) return false;
+    if (b.pressed) return true;
+    return (b.value || 0) >= 0.5;
+  },
+
+  _syncPadKey(k, on) {
+    if (on) {
+      if (this._padOwned[k]) {
+        this.down[k] = true;
+        return;
+      }
+      if (this.down[k]) return;
+      this._padOwned[k] = true;
+      this.setKey(k, true, false);
+      return;
+    }
+    if (!this._padOwned[k]) return;
+    this.setKey(k, false, false);
+    delete this._padOwned[k];
+  },
+
+  _clearPadKeys() {
+    const keys = Object.keys(this._padOwned);
+    for (let i = 0; i < keys.length; i++) this.setKey(keys[i], false, false);
+    this._padOwned = Object.create(null);
+    if (typeof Minigame !== "undefined") Minigame._padHold = false;
+  },
+
+  _padMenuOpen() {
+    return typeof UI !== "undefined" && (UI.anyMenu() || (typeof Npcs !== "undefined" && Npcs.talkId));
+  },
+
+  _padElHidden(el) {
+    for (let n = el; n; n = n.parentElement) {
+      if (n.classList && n.classList.contains("hidden")) return true;
+    }
+    return false;
+  },
+
+  _padFocusRootEl() {
+    const ids = ["rank-up", "pause-menu", "paste-save", "mill-end", "certificate", "pack", "shop", "board", "mail", "bench", "trophy", "tank", "cooler", "journal", "admin", "dialog", "start-screen"];
+    for (let i = 0; i < ids.length; i++) {
+      const el = document.getElementById(ids[i]);
+      if (el && !this._padElHidden(el)) return el;
+    }
+    return null;
+  },
+
+  _padFocusables(root) {
+    if (!root) return [];
+    const nodes = root.querySelectorAll("button, input[type=checkbox]");
+    const out = [];
+    for (let i = 0; i < nodes.length; i++) {
+      const el = nodes[i];
+      if (el.disabled || el.hidden) continue;
+      if (el.closest("#move-pad")) continue;
+      if (el.id === "btn-fish" || el.id === "btn-packup") continue;
+      const type = (el.getAttribute("type") || "").toLowerCase();
+      if (type === "file") continue;
+      if (el.classList.contains("hidden") || el.closest(".hidden")) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) continue;
+      out.push(el);
+    }
+    return out;
+  },
+
+  _padApplyFocus(items) {
+    const prev = document.querySelectorAll(".pad-focus");
+    for (let i = 0; i < prev.length; i++) prev[i].classList.remove("pad-focus");
+    if (!items || !items.length) return;
+    if (this._padFocus < 0 || this._padFocus >= items.length) this._padFocus = 0;
+    items[this._padFocus].classList.add("pad-focus");
+  },
+
+  _padClearFocus() {
+    const prev = document.querySelectorAll(".pad-focus");
+    for (let i = 0; i < prev.length; i++) prev[i].classList.remove("pad-focus");
+    this._padFocus = -1;
+    this._padFocusRoot = null;
+  },
+
+  _padMoveFocus(dir) {
+    const root = this._padFocusRootEl();
+    if (!root) { this._padClearFocus(); return; }
+    const items = this._padFocusables(root);
+    if (!items.length) { this._padClearFocus(); return; }
+    if (this._padFocusRoot !== root) {
+      this._padFocusRoot = root;
+      this._padFocus = 0;
+    } else {
+      const n = items.length;
+      const i = this._padFocus < 0 ? 0 : this._padFocus;
+      this._padFocus = (i + dir + n * 2) % n;
+    }
+    this._padApplyFocus(items);
+  },
+
+  _padClickFocus() {
+    const items = this._padFocusables(this._padFocusRootEl());
+    const el = items[this._padFocus];
+    if (el) el.click();
+    this._padALock = true;
+    if (this._padOwned.e) {
+      this.setKey("e", false, false);
+      delete this._padOwned.e;
+    }
+    if (typeof Minigame !== "undefined") Minigame._padHold = false;
+  },
+
+  _padSeedFocus() {
+    const root = this._padFocusRootEl();
+    if (!root) { this._padClearFocus(); return; }
+    if (this._padFocus < 0 || this._padFocusRoot !== root) {
+      this._padFocusRoot = root;
+      this._padFocus = 0;
+    }
+    this._padApplyFocus(this._padFocusables(root));
+  },
+
+  pollPad() {
+    if (typeof Admin !== "undefined" && Admin.typing()) return;
+    let pad = null;
+    try {
+      const list = navigator.getGamepads ? navigator.getGamepads() : null;
+      if (list) {
+        for (let i = 0; i < list.length; i++) {
+          if (list[i]) { pad = list[i]; break; }
+        }
+      }
+    } catch (e) { pad = null; }
+    if (!pad) {
+      if (this._padWasOn) {
+        this._clearPadKeys();
+        this._padClearFocus();
+        this._padWasOn = false;
+        this._padALock = false;
+        this._padPrevBtn = Object.create(null);
+        const busy = (typeof UI !== "undefined" && UI.anyMenu())
+          || (typeof Npcs !== "undefined" && Npcs.talkId)
+          || (typeof Game !== "undefined" && (Game.sleeping || Game.fading));
+        if (!busy && typeof Pause !== "undefined") Pause.open();
+      }
+      return;
+    }
+    this._padWasOn = true;
+    const watch = [0, 1, 2, 3, 9, 12, 13, 14, 15];
+    const now = Object.create(null);
+    for (let i = 0; i < watch.length; i++) now[watch[i]] = this._padPressed(pad, watch[i]);
+    const rise = (i) => now[i] && !this._padPrevBtn[i];
+    if (!now[0]) this._padALock = false;
+    if (this._padMenuOpen()) {
+      this._syncPadKey("arrowup", false);
+      this._syncPadKey("arrowdown", false);
+      this._syncPadKey("arrowleft", false);
+      this._syncPadKey("arrowright", false);
+      if (rise(12) || rise(14)) this._padMoveFocus(-1);
+      if (rise(13) || rise(15)) this._padMoveFocus(1);
+      if (!(rise(12) || rise(14) || rise(13) || rise(15))) this._padSeedFocus();
+      if (rise(0)) this._padClickFocus();
+      if (this._padOwned.e) {
+        this.setKey("e", false, false);
+        delete this._padOwned.e;
+        if (typeof Minigame !== "undefined") Minigame._padHold = false;
+      }
+      this._syncPadKey("escape", !!(now[1] || now[9]));
+      this._syncPadKey("j", !!now[3]);
+      this._syncPadKey("i", !!now[2]);
+    } else {
+      this._padClearFocus();
+      const ax = pad.axes && pad.axes.length ? (pad.axes[0] || 0) : 0;
+      const ay = pad.axes && pad.axes.length > 1 ? (pad.axes[1] || 0) : 0;
+      const dead = 0.35;
+      this._syncPadKey("arrowleft", ax < -dead || !!now[14]);
+      this._syncPadKey("arrowright", ax > dead || !!now[15]);
+      this._syncPadKey("arrowup", ay < -dead || !!now[12]);
+      this._syncPadKey("arrowdown", ay > dead || !!now[13]);
+      if (this._padALock) {
+        if (this._padOwned.e) {
+          this.setKey("e", false, false);
+          delete this._padOwned.e;
+        }
+        if (typeof Minigame !== "undefined") Minigame._padHold = false;
+      } else if (now[0]) {
+        this._syncPadKey("e", true);
+        if (typeof Minigame !== "undefined") Minigame._padHold = true;
+      } else if (this._padOwned.e) {
+        this._syncPadKey("e", false);
+        if (typeof Minigame !== "undefined") Minigame._padHold = false;
+      }
+      this._syncPadKey("escape", !!(now[1] || now[9]));
+      this._syncPadKey("j", !!now[3]);
+      this._syncPadKey("i", !!now[2]);
+    }
+    this._padPrevBtn = now;
   },
 
   get use() {

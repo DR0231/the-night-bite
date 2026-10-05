@@ -852,6 +852,9 @@ kbd {
 #pause-menu label, #pause-reset-confirm p, #pause-credits p { font: 13px Georgia, serif; text-align: center; }
 #pause-reset-confirm { margin: 12px 0 4px; padding: 8px 0; border-top: 1px dotted #8b6238; border-bottom: 1px dotted #8b6238; }
 
+.pad-focus { outline: 2px solid #c4a05a; outline-offset: 2px; }
+button:focus-visible, input[type=checkbox]:focus-visible { outline: 2px solid #c4a05a; outline-offset: 2px; }
+
 #pause-reset-confirm p,
 #pause-credits p {
   color: var(--ink);

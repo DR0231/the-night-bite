@@ -716,6 +716,7 @@ const Game = {
     const dt = Math.min(0.05, (now - this.last) / 1000);
     this.last = now;
 
+    Input.pollPad();
     if (!(typeof Admin !== "undefined" && Admin.open)) {
       const fightHeld = typeof Pause !== "undefined" && Pause.openFlag && Fishing.inFight();
       if (Input.pressed["j"] && !Skills.offering && !this.sleeping && !fightHeld) UI.toggleJournal();
