@@ -817,7 +817,8 @@ kbd {
 #rank-up-body button,
 .dialog-actions button,
 #mill-end-btn,
-#paste-save-btn {
+#paste-save-btn,
+#pause-menu button {
   display: block;
   width: 100%;
   margin: 6px 0;
@@ -831,13 +832,26 @@ kbd {
 }
 
 #mill-end-btn,
-#paste-save-btn {
+#paste-save-btn,
+#pause-menu button {
   display: block;
   width: auto;
   margin: 10px auto 0;
 }
 
 .vale-desktop .site-nav { display: none; }
+
+.desktop-only { display: none; }
+.vale-desktop .desktop-only { display: block; }
+#pause-menu button.desktop-only { display: none; }
+.vale-desktop #pause-menu button.desktop-only { display: block; }
+
+#pause-reset-yes { color: #8b6238; background: none; }
+
+#pause-reset-confirm p,
+#pause-credits p {
+  color: var(--ink);
+}
 
 #paste-save-text {
   width: 100%;

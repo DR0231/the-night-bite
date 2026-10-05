@@ -79,6 +79,7 @@ const Inventory = {
     if (el) el.classList.toggle("hidden", !this.open);
     if (this.open) {
       this.closePaste();
+      if (typeof Pause !== "undefined") Pause.close();
       UI.closeJournal();
       Shop.close();
       Board.close();
@@ -178,15 +179,7 @@ const Inventory = {
       <div class="pack-eats">${cooked}</div>
       <div class="pack-tools">${tools.join("")}</div>
       <p class="pack-craft">Bench: berries + worm → berry blend · crystal + worm → bright glow · meals in the pan</p>
-      <label class="pack-mute"><input type="checkbox" id="chk-mute" ${Save.data.flags.mute ? "checked" : ""}/> Mute audio</label>
-      <div class="pack-io">
-        <button type="button" id="btn-download">Download save</button>
-        <button type="button" id="btn-load">Load save</button>
-        <input type="file" id="pack-load-file" accept="application/json,.json" hidden />
-        <button type="button" id="btn-reset">Full reset</button>
-        <button type="button" id="btn-export">Copy save</button>
-        <button type="button" id="btn-import">Paste save</button>
-      </div>`;
+      <label class="pack-mute"><input type="checkbox" id="chk-mute" ${Save.data.flags.mute ? "checked" : ""}/> Mute audio</label>`;
     el.querySelectorAll("[data-bait]").forEach((btn) => {
       btn.addEventListener("click", () => { this.equip(btn.dataset.bait); this.refresh(); });
     });
@@ -215,46 +208,14 @@ const Inventory = {
     if (mute) mute.addEventListener("change", () => {
       Save.data.flags.mute = mute.checked;
       AudioFX.muted = mute.checked;
+      const other = document.getElementById("pause-mute");
+      if (other) other.checked = mute.checked;
     });
-    const dl = el.querySelector("#btn-download");
-    if (dl) dl.addEventListener("click", () => this.downloadSave());
-    const loadBtn = el.querySelector("#btn-load");
-    const fileIn = el.querySelector("#pack-load-file");
-    if (loadBtn && fileIn) {
-      loadBtn.addEventListener("click", () => fileIn.click());
-      fileIn.addEventListener("change", () => {
-        const file = fileIn.files && fileIn.files[0];
-        fileIn.value = "";
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = () => {
-          try { Save.importJson(String(reader.result || "")); location.reload(); }
-          catch (e) { UI.toastNote("That save could not be read."); }
-        };
-        reader.onerror = () => UI.toastNote("That save could not be read.");
-        reader.readAsText(file);
-      });
-    }
-    const reset = el.querySelector("#btn-reset");
-    if (reset) reset.addEventListener("click", () => this.fullReset());
-    const exp = el.querySelector("#btn-export");
-    if (exp) exp.addEventListener("click", () => {
-      const fail = () => UI.toastNote("Couldn't reach the clipboard. Try Download save.");
-      let text = "";
-      try { text = Save.exportJson(); } catch (e) { fail(); return; }
-      try {
-        navigator.clipboard.writeText(text).then(
-          () => UI.toastNote("Save copied to clipboard."),
-          fail
-        );
-      } catch (e) { fail(); }
-    });
-    const imp = el.querySelector("#btn-import");
-    if (imp) imp.addEventListener("click", () => this.openPaste());
   },
 
   openPaste() {
     this.close();
+    if (typeof Pause !== "undefined") Pause.close();
     const el = document.getElementById("paste-save");
     if (el) el.classList.remove("hidden");
     this.pasteOpen = true;
@@ -288,13 +249,6 @@ const Inventory = {
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 500);
-  },
-
-  fullReset() {
-    if (!window.confirm("Wipe this vale and start fresh?")) return;
-    if (!window.confirm("Really erase whisperwood-save-v1?")) return;
-    Save.resetFreshKeepingMute();
-    location.reload();
   },
 
   craft(kind) {
@@ -363,6 +317,44 @@ const Pickups = {
     }
   },
 };
+
+(function bindSaveTools() {
+  const dl = document.getElementById("btn-download");
+  if (dl) dl.addEventListener("click", () => Inventory.downloadSave());
+  const loadBtn = document.getElementById("btn-load");
+  const fileIn = document.getElementById("pack-load-file");
+  if (loadBtn && fileIn) {
+    loadBtn.addEventListener("click", () => fileIn.click());
+    fileIn.addEventListener("change", () => {
+      const file = fileIn.files && fileIn.files[0];
+      fileIn.value = "";
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try { Save.importJson(String(reader.result || "")); location.reload(); }
+        catch (e) { UI.toastNote("That save could not be read."); }
+      };
+      reader.onerror = () => UI.toastNote("That save could not be read.");
+      reader.readAsText(file);
+    });
+  }
+  const reset = document.getElementById("btn-reset");
+  if (reset) reset.addEventListener("click", () => Pause.askReset());
+  const exp = document.getElementById("btn-export");
+  if (exp) exp.addEventListener("click", () => {
+    const fail = () => UI.toastNote("Couldn't reach the clipboard. Try Download save.");
+    let text = "";
+    try { text = Save.exportJson(); } catch (e) { fail(); return; }
+    try {
+      navigator.clipboard.writeText(text).then(
+        () => UI.toastNote("Save copied to clipboard."),
+        fail
+      );
+    } catch (e) { fail(); }
+  });
+  const imp = document.getElementById("btn-import");
+  if (imp) imp.addEventListener("click", () => Inventory.openPaste());
+})();
 
 (function bindPasteSave() {
   const btn = document.getElementById("paste-save-btn");

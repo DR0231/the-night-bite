@@ -114,7 +114,8 @@
         <ul class="controls">
           <li><kbd>W A S D</kbd> or <kbd>Arrows</kbd> Move</li>
           <li><kbd>E</kbd> or <kbd>Space</kbd> Fish / interact / minigame</li>
-          <li><kbd>J</kbd> Journal · <kbd>I</kbd> Pack</li>
+          <li><kbd>J</kbd> Journal · <kbd>I</kbd> Pack · <kbd>Esc</kbd> Menu</li>
+          <li class="desktop-only"><kbd>F11</kbd> Fullscreen</li>
           <li><kbd>Esc</kbd> or Pack up while aiming, or walk while the bobber waits, to pack up the rod</li>
           <li>Eat from the pack. Sleep at the cottage.</li>
         </ul>
@@ -132,10 +133,37 @@
 
     <div id="paste-save" class="hidden overlay-panel">
       <div class="journal-panel parchment-panel">
-        <header><h2>Paste save</h2></header>
+        <header><h2>Paste save</h2><p class="journal-sub">From Copy save on another vale.</p></header>
         <textarea id="paste-save-text" rows="8" spellcheck="false"></textarea>
         <p id="paste-save-err" class="hidden">That save could not be read.</p>
         <button type="button" id="paste-save-btn">Load this save</button>
+        <footer>Esc to close.</footer>
+      </div>
+    </div>
+
+    <div id="pause-menu" class="hidden overlay-panel">
+      <div class="journal-panel parchment-panel">
+        <header><h2>Paused</h2></header>
+        <label><input type="checkbox" id="pause-mute"/> Mute audio</label>
+        <button type="button" id="pause-resume">Keep fishing</button>
+        <button type="button" id="pause-fullscreen" class="desktop-only">Fullscreen</button>
+        <button type="button" id="btn-download">Download save</button>
+        <button type="button" id="btn-load">Load save</button>
+        <input type="file" id="pack-load-file" accept="application/json,.json" hidden />
+        <button type="button" id="btn-reset">Full reset</button>
+        <button type="button" id="btn-export">Copy save</button>
+        <button type="button" id="btn-import">Paste save</button>
+        <button type="button" id="pause-credits-btn">Credits</button>
+        <button type="button" id="pause-quit" class="desktop-only">Quit</button>
+        <div id="pause-reset-confirm" class="hidden">
+          <p>Reset the whole vale?</p>
+          <button type="button" id="pause-reset-no">Keep fishing</button>
+          <button type="button" id="pause-reset-yes">Reset the vale</button>
+        </div>
+        <div id="pause-credits" class="hidden">
+          <p>Whisperwood Vale, made by Whisperwood Vale Studios.</p>
+          <p class="desktop-only">The desktop build runs on Electron (MIT License).</p>
+        </div>
         <footer>Esc to close.</footer>
       </div>
     </div>
@@ -304,6 +332,7 @@
   <script src="js/cottage.js"></script>
   <script src="js/journal.js"></script>
   <script src="js/renderer.js"></script>
+  <script src="js/pause.js"></script>
   <script src="js/game.js"></script>
   <script src="js/admin.js"></script>
   <script src="js/admin-guide.js"></script>

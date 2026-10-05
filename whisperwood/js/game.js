@@ -17,7 +17,9 @@ const UI = {
       || (typeof MillEnd !== "undefined" && MillEnd.openFlag)
       || Skills.offering
       || (typeof Admin !== "undefined" && Admin.open)
-      || (typeof Inventory !== "undefined" && Inventory.pasteOpen);
+      || (typeof Inventory !== "undefined" && Inventory.pasteOpen)
+      || (typeof Pause !== "undefined" && Pause.openFlag)
+      || (this.els.start && !this.els.start.classList.contains("hidden"));
   },
 
   init() {
@@ -78,7 +80,6 @@ const UI = {
     }
     if (rec) {
       const bits = [
-        `<li>${TimeCycle.weatherLine()}</li>`,
         `<li>${Quests.dailyLine()}</li>`,
         `<li>${Quests.rumorLine()}</li>`,
       ];
@@ -203,6 +204,7 @@ const UI = {
     if (typeof Cert !== "undefined") Cert.close();
     if (typeof MillEnd !== "undefined") MillEnd.close();
     Inventory.closePaste();
+    if (typeof Pause !== "undefined") Pause.close();
     // Journal pauses movement and world time, but is not a bite-timer exploit:
     // wait/nibble packs up the rod; an open minigame fails on the spot.
     if (Fishing.state === "wait" || Fishing.state === "nibble") Fishing.cancel();
@@ -233,6 +235,7 @@ const UI = {
     if (typeof Cert !== "undefined") Cert.close();
     if (typeof MillEnd !== "undefined") MillEnd.close();
     Inventory.closePaste();
+    if (typeof Pause !== "undefined") Pause.close();
   },
 
   showCatch(fish, rec) {
@@ -720,6 +723,7 @@ const Game = {
       else if (UI.anyMenu() || Npcs.talkId) UI.closeAll();
       else if (typeof Cottage !== "undefined" && Cottage.sitting) Cottage.stopSit();
       else if (Fishing.active) Fishing.cancel();
+      else if (!this.sleeping && !this.fading) Pause.open();
     }
 
     const pauseWorld = UI.anyMenu();
