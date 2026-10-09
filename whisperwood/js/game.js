@@ -420,8 +420,15 @@ const UI = {
       this.els.prompt.textContent = prompt;
       this.els.prompt.classList.remove("hidden");
       this.els.prompt.classList.toggle("bite", Fishing.state === "bite" || Fishing.state === "play");
+      if (Fishing.state === "play") {
+        const scale = (typeof Renderer !== "undefined" && Renderer.scale) || 2;
+        this.els.prompt.style.bottom = (36 * scale + 8) + "px";
+      } else {
+        this.els.prompt.style.bottom = "";
+      }
     } else {
       this.els.prompt.classList.add("hidden");
+      this.els.prompt.style.bottom = "";
     }
     if (!this._packBtn) this._packBtn = document.getElementById("btn-packup");
     if (this._packBtn) this._packBtn.classList.toggle("is-on", Fishing.state === "aim" && !this.anyMenu());
@@ -468,7 +475,7 @@ const Game = {
       } catch (spineErr) { /* mail flavor must not block boot */ }
       try { if (typeof Island !== "undefined") Island.sync(true); } catch (e) { /* island optional */ }
       Survival.refreshPips();
-      World.portalCool = 2.4;
+      World.portalCool = (typeof DESIGN !== "undefined" && DESIGN.doorCool > 0) ? DESIGN.doorCool : 0.35;
       this._nudgeOutOfPortal();
       const canvas = document.getElementById("game");
       const frame = document.getElementById("frame");
@@ -583,8 +590,21 @@ const Game = {
     }
   },
 
+  sleepReady() {
+    const hours = (typeof DESIGN !== "undefined" && (DESIGN.sleepAwakeHours | 0)) || 0;
+    if (hours <= 0) return true;
+    const wake = (Save.data && Save.data.flags && +Save.data.flags.sleepWakeAt) || 0;
+    if (wake <= 0) return true;
+    const need = wake + (hours / 24) * CONFIG.DAY_LENGTH;
+    return TimeCycle.seconds + 0.05 >= need;
+  },
+
   startSleep() {
     if (this.sleeping || this.fading) return;
+    if (!this.sleepReady()) {
+      UI.toastNote("The bed can wait. Stay up a while.");
+      return;
+    }
     Fishing.cancel();
     Player.locked = true;
     Player.sleeping = true;
@@ -634,6 +654,7 @@ const Game = {
     if (!this.sleeping.applied) {
       Weather.advance();
       Survival.fillSleep();
+      if (Save.data && Save.data.flags) Save.data.flags.sleepWakeAt = TimeCycle.seconds;
       UI.toastNote(this.sleeping.toast);
       Save.mark("sleep");
       this.sleeping.applied = true;
@@ -687,7 +708,6 @@ const Game = {
     Camera.x = Player.x - CONFIG.VIEW_W * 0.5;
     Camera.y = Player.y - CONFIG.VIEW_H * 0.56;
     Camera.clampToWorld(World.pw, World.ph);
-    World.portalCool = 1.85;
     this._nudgeOutOfPortal();
     if (portal.to === "cottage") {
       Save.data.cottage.visited = true;
@@ -707,6 +727,7 @@ const Game = {
       this.fading.t = 0;
     } else if (this.fading.phase === "in" && this.fading.t >= this.fading.dur) {
       Player.locked = false;
+      World.portalCool = (typeof DESIGN !== "undefined" && DESIGN.doorCool > 0) ? DESIGN.doorCool : 0.35;
       this.fading = null;
     }
   },
@@ -746,6 +767,7 @@ const Game = {
         if (this.sleepCool > 0) this.sleepCool -= dt;
         this._updateEat(dt);
         if (typeof Cottage !== "undefined" && World.id === "cottage") {
+          Cottage.freeFromBed();
           Cottage.tweakCarry();
           if (Input.pressed.q && !Cottage.carry && !Cottage.sitting) {
             const q = Cottage.nearSlot("chair") ? "chair" : Cottage.nearAnySlot();

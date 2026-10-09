@@ -55,8 +55,26 @@ const Minigame = {
       this.bandW = Utils.clamp(this.bandW * str / (0.95 + 0.55 * weight), 0.06, 0.22);
       this.speed = this.speed * (0.92 + 0.38 * weight) / Math.sqrt(Math.max(0.2, str));
     }
+    this._hintThisFight = this.showingHint();
+    this.noteHint();
     Fishing.state = "play";
     Fishing.t = 0;
+  },
+
+  hintCap() {
+    return (typeof DESIGN !== "undefined" && (DESIGN.fightHintCasts | 0)) || 3;
+  },
+
+  showingHint() {
+    const flags = (typeof Save !== "undefined" && Save.data && Save.data.flags) || null;
+    return ((flags && flags.fightHints) | 0) < this.hintCap();
+  },
+
+  noteHint() {
+    const flags = (typeof Save !== "undefined" && Save.data && Save.data.flags) || null;
+    if (!flags) return;
+    const n = flags.fightHints | 0;
+    if (n < this.hintCap()) flags.fightHints = n + 1;
   },
 
   press() {

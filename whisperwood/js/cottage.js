@@ -75,6 +75,17 @@ const Cottage = {
     Save.data.player.dir = Player.dir;
   },
 
+  /* A refused sleep used to leave the fisher inside the bed solid. Step back out. */
+  freeFromBed() {
+    if (World.id !== "cottage" || Player.sleeping) return;
+    if (typeof Game !== "undefined" && Game.sleeping) return;
+    const bed = World.solids && World.solids.find((s) => s.kind === "bed");
+    if (!bed) return;
+    const c = Player.col();
+    const hit = c.x < bed.x + bed.w && c.x + c.w > bed.x && c.y < bed.y + bed.h && c.y + c.h > bed.y;
+    if (hit) this.wakeBesideBed();
+  },
+
   hint() {
     if (World.id !== "cottage") return "";
     if (this.carry) return "E place · R rotate · F flip · -/+ size";
@@ -82,7 +93,11 @@ const Cottage = {
     if (this.nearSlot("chair")) return "E sit · Q pick up";
     const slot = this.nearAnySlot();
     if (slot) return "E or Q to pick up";
-    if (this.near("bed")) return "Press E to sleep until dusk or dawn";
+    if (this.near("bed")) {
+      return (typeof Game !== "undefined" && Game.sleepReady && !Game.sleepReady())
+        ? "The bed can wait. Stay up a while."
+        : "Press E to sleep until dusk or dawn";
+    }
     if (this.near("bench")) return "Press E — packing bench (cook & bait)";
     if (this.near("crate")) return "Press E — cottage cooler";
     if (this.near("calendar")) return "Press E to read the forecast board";
@@ -259,6 +274,10 @@ const Cottage = {
     }
     if (this.near("bed")) {
       if (Game.sleeping) return true;
+      if (!Game.sleepReady()) {
+        UI.toastNote("The bed can wait. Stay up a while.");
+        return true;
+      }
       this.snapToBed();
       Game.startSleep();
       return true;

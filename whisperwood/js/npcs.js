@@ -235,7 +235,11 @@ const Interact = {
     if (first) return first;
     const near = this._nearest();
     if (near) {
-      if (near.kind === "sit") return "Press E to sit on the stump until dusk or dawn";
+      if (near.kind === "sit") {
+        return this._stumpCooling()
+          ? "The stump is resting until tomorrow."
+          : "Press E to sit on the stump until dusk or dawn";
+      }
       if (near.kind === "weeds") return "Press E to clear weeds";
       if (near.kind === "boat") {
         const b = near.deco.boat;
@@ -304,9 +308,29 @@ const Interact = {
     return Survival.plantFire();
   },
 
+  _valeDay() {
+    return 1 + Math.floor(TimeCycle.seconds / CONFIG.DAY_LENGTH);
+  },
+
+  _stumpCooling() {
+    const days = (typeof DESIGN !== "undefined" && (DESIGN.stumpDays | 0)) || 0;
+    if (days <= 0) return false;
+    const until = (Save.data && Save.data.flags && Save.data.flags.stumpUntil) | 0;
+    return this._valeDay() <= until;
+  },
+
   _sit() {
+    if (this._stumpCooling()) {
+      UI.toastNote("The stump is resting until tomorrow.");
+      return true;
+    }
     const night = TimeCycle.phaseId() === "night";
     Weather.skipTo(night ? "dawn" : "golden");
+    const days = (typeof DESIGN !== "undefined" && (DESIGN.stumpDays | 0)) || 0;
+    if (days > 0 && Save.data && Save.data.flags) {
+      Save.data.flags.stumpUntil = this._valeDay() + days - 1;
+      Save.mark();
+    }
     Survival.add("rest", 35);
     Survival.add("warmth", 15);
     UI.toastNote(night ? "You dozed until dawn." : "You sat until golden hour.");

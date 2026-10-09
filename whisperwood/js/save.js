@@ -61,7 +61,7 @@ const Save = {
         rumor: { day: 0, fish: "", spot: "", text: "" },
         derby: { key: "", mood: "still", landed: 0, goal: 8 },
       },
-      flags: { fifthWater: false, spotMastery: {}, introComplete: false, mute: false, campfire: false, passedOutDay: 0, cooked: {}, gotCampKit: false, millSpine: "none", millEndDay: 0, millEndSeen: false, stamps: {}, islandOpen: false, onboard: {}, stewLetter: false },
+      flags: { fifthWater: false, spotMastery: {}, introComplete: false, mute: false, campfire: false, passedOutDay: 0, cooked: {}, gotCampKit: false, millSpine: "none", millEndDay: 0, millEndSeen: false, stamps: {}, islandOpen: false, onboard: {}, stewLetter: false, fightHints: 0, stumpUntil: 0, sleepWakeAt: 0 },
       recap: [],
     };
   },
@@ -199,6 +199,20 @@ const Save = {
     const cookedAny = out.flags.cooked && Object.keys(out.flags.cooked).some((k) => out.flags.cooked[k]);
     if (cookedAny) out.flags.stewLetter = true;
     else if (out.flags.stewLetter !== true) out.flags.stewLetter = false;
+    const hintCap = (typeof DESIGN !== "undefined" && (DESIGN.fightHintCasts | 0)) || 3;
+    const hintStored = d.flags && Object.prototype.hasOwnProperty.call(d.flags, "fightHints");
+    if (hintStored) {
+      out.flags.fightHints = Math.max(0, d.flags.fightHints | 0);
+    } else {
+      let taught = (out.playTime || 0) > ((typeof DESIGN !== "undefined" && DESIGN.onboardWindow) || 600);
+      if (!taught && out.journal) {
+        for (const id of Object.keys(out.journal)) {
+          const row = out.journal[id];
+          if (row && (row.landed | 0) > 0) { taught = true; break; }
+        }
+      }
+      out.flags.fightHints = taught ? hintCap : 0;
+    }
     const srcStamps = (d.flags && d.flags.stamps) || out.flags.stamps;
     out.flags.stamps = (srcStamps && typeof srcStamps === "object" && !Array.isArray(srcStamps))
       ? Object.assign({}, srcStamps)

@@ -1,4 +1,4 @@
-/* Top-down player: planted movement, facing lock, walk cycle, wall slide. */
+/* Top-down player: movement, facing lock, walk cycle, wall slide. */
 
 const Player = {
   x: 0,
@@ -44,12 +44,15 @@ const Player = {
     if (this.locked || this.fishing) {
       this.vx = 0; this.vy = 0;
       this.moving = false;
+      this.frame = 0;
+      this.animT = 0;
       this.idleT += dt;
       this.blink = (this.idleT % 3.6) < 0.12;
       return;
     }
 
-    const wantSpeed = CONFIG.PLAYER_SPEED * ((Save.data && Save.data.player.hunger <= 0) ? 0.9 : 1);
+    const hunger = (Save.data && Save.data.player.hunger <= 0) ? 0.9 : 1;
+    const wantSpeed = CONFIG.PLAYER_SPEED * hunger;
     const wantX = axis.x * wantSpeed;
     const wantY = axis.y * wantSpeed;
     const accel = wantsMove ? CONFIG.PLAYER_ACCEL : CONFIG.PLAYER_FRICTION;
@@ -69,20 +72,57 @@ const Player = {
       this.idleT += dt;
       this.blink = (this.idleT % 3.6) < 0.12;
     } else {
-      this.moving = speed > 1;
       this._face(this.vx, this.vy, wantsMove, axis);
-      this.animT += dt * Utils.clamp(speed / Math.max(1, wantSpeed), 0.45, 1.2) * 8.4;
-      this.frame = (this.animT | 0) % 4;
       this.idleT = 0;
       this.blink = false;
-      if (this.moving && (this.frame === 1 || this.frame === 3) && this.lastStep !== this.frame) {
-        Particles.dust(this.x, this.y);
-        if (Math.random() < 0.45) AudioFX.step();
-        this.lastStep = this.frame;
-      }
     }
 
+    const x0 = this.x, y0 = this.y;
     this._move(this.vx * dt, this.vy * dt);
+    const moved = Math.hypot(this.x - x0, this.y - y0);
+    if (!this.moving && !wantsMove) return;
+    // A wall stops the cycle on the contact pose. Cycling in place would slide the feet.
+    if (moved <= 0) {
+      this.moving = false;
+      return;
+    }
+    this.moving = true;
+    this._advance(dt, moved, wantSpeed);
+  },
+
+  /* Four walk drawings, in order: stride, feet together, opposite stride, feet together.
+     The body lifts on the strides. Left is a flip of the east row. */
+  _seq() {
+    return {
+      cols: [1, 2, 3, 4],
+      bob: [1, 0, 1, 0],
+      gait: ["stride", "passA", "passB", "contact"],
+    };
+  },
+
+  _pose() {
+    if (!this.moving || this.fishing) return { col: 0, bob: 0, gait: "contact" };
+    const seq = this._seq();
+    const n = seq.cols.length;
+    const i = ((this.frame % n) + n) % n;
+    return { col: seq.cols[i], bob: seq.bob[i], gait: seq.gait[i] };
+  },
+
+  _advance(dt, moved, wantSpeed) {
+    const n = this._seq().cols.length;
+    const speed = dt > 0 ? moved / dt : 0;
+    const prev = this.frame;
+    this.animT += dt * Utils.clamp(speed / Math.max(1, wantSpeed), 0.45, 1.2) * 8.4;
+    this.frame = (this.animT | 0) % n;
+    if (this.frame !== prev) this._footfall();
+  },
+
+  _footfall() {
+    const pose = this._pose();
+    if (!pose.bob || this.lastStep === this.frame) return;
+    Particles.dust(this.x, this.y);
+    if (Math.random() < 0.45) AudioFX.step();
+    this.lastStep = this.frame;
   },
 
   _face(vx, vy, fromInput, axis) {
@@ -146,9 +186,13 @@ const Player = {
       });
       return;
     }
+    const pose = this._pose();
     Sprites.player(ctx, this.x, this.y, {
       dir: this.dir,
       frame: this.frame,
+      col: pose.col,
+      stepUp: pose.bob,
+      gait: pose.gait,
       moving: this.moving,
       fishing: this.fishing,
       fishState: Game.fishing.state,

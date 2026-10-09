@@ -59,6 +59,7 @@ const Input = {
       Digit1: "1", Digit2: "2", Digit3: "3", Digit4: "4", Digit5: "5",
       KeyR: "r", KeyF: "f", KeyQ: "q", Minus: "-", Equal: "=",
       BracketLeft: "[", BracketRight: "]",
+      ShiftLeft: "shift", ShiftRight: "shift",
     };
     if (e.code && codes[e.code]) return codes[e.code];
 
@@ -72,6 +73,7 @@ const Input = {
       e: "e", j: "j", i: "i", escape: "escape", enter: "enter",
       "1": "1", "2": "2", "3": "3", "4": "4", "5": "5",
       r: "r", f: "f", q: "q", "-": "-", "=": "=", "[": "[", "]": "]",
+      shift: "shift",
     };
     if (keys[key]) return keys[key];
 
@@ -82,6 +84,7 @@ const Input = {
       32: " ", 69: "e", 74: "j", 73: "i", 27: "escape", 13: "enter",
       49: "1", 50: "2", 51: "3", 52: "4", 53: "5",
       82: "r", 70: "f", 81: "q", 189: "-", 187: "=", 219: "[", 221: "]",
+      16: "shift",
     };
     return codesByNumber[kc] || null;
   },
@@ -371,6 +374,7 @@ const Input = {
       this._syncPadKey("escape", !!(now[1] || now[9]));
       this._syncPadKey("j", !!now[3]);
       this._syncPadKey("i", !!now[2]);
+      this._syncPadKey("shift", false);
     } else {
       this._padClearFocus();
       const ax = pad.axes && pad.axes.length ? (pad.axes[0] || 0) : 0;
@@ -380,6 +384,7 @@ const Input = {
       this._syncPadKey("arrowright", ax > dead || !!now[15]);
       this._syncPadKey("arrowup", ay < -dead || !!now[12]);
       this._syncPadKey("arrowdown", ay > dead || !!now[13]);
+      this._syncPadKey("shift", this._padPressed(pad, 4));
       if (this._padALock) {
         if (this._padOwned.e) {
           this.setKey("e", false, false);

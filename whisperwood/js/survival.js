@@ -168,6 +168,7 @@ const Survival = {
     p.hunger = DESIGN.passOutNeeds;
     p.warmth = DESIGN.passOutNeeds;
     p.rest = DESIGN.passOutNeeds;
+    if (Save.data.flags) Save.data.flags.sleepWakeAt = TimeCycle.seconds;
     Save.data.flags.passedOutDay = Save.data.clock.day | 0;
     UI.toastNote("You woke in the cottage.");
     try { if (typeof Stamps !== "undefined") Stamps.try("firstPassOut"); } catch (e) { /* stamp optional */ }

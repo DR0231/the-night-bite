@@ -369,10 +369,11 @@ const World = {
         hint: "Walk in to enter Crystal Cave",
       });
       portals.push({
+        // Step in front of the door. The cottage foot is tile (28, 24); this strip is the ground just south of it.
         x: 27.15 * TILE_SIZE,
-        y: 23.15 * TILE_SIZE,
+        y: 24.02 * TILE_SIZE,
         w: 1.7 * TILE_SIZE,
-        h: 0.85 * TILE_SIZE,
+        h: 0.42 * TILE_SIZE,
         to: "cottage",
         spawn: { x: 11 * TILE_SIZE, y: 12.2 * TILE_SIZE },
         dir: 3,

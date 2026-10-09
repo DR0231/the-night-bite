@@ -335,21 +335,21 @@ const Sprites = {
     const fishing = state.fishing;
     const hop = state.hop || 0;
     const walk = state.moving;
-    const frame = state.frame | 0;
     const bob = state.idleBob || 0;
     const bite = state.fishState === "bite";
     const reel = state.fishState === "reel";
     const tug = Utils.clamp(state.tug || 0, -1, 1);
     const tugHard = Math.abs(tug) > 0.28;
 
-    const bounce = walk ? (frame % 2 === 1 ? -2 : 0) : Math.round(bob);
+    const gait = state.gait || "contact";
+    const bounce = walk && state.stepUp ? -1 : (walk ? 0 : Math.round(bob));
     const crouch = fishing ? (bite || tugHard ? 3 : reel ? 2 + (Math.sin(state.rodPhase || 0) > 0 ? 1 : 0) : 2) : 0;
     const top = (y - 26 + bounce + crouch - hop) | 0;
     const left = (x - 8 + Math.round(tug * (2 + 2 * (state.tugW || 0)))) | 0;
 
     this.ellipse(ctx, x + (walk && dir === 2 ? 1 : walk && dir === 1 ? -1 : 0), y + 1, 6, 2.4, "rgba(10, 18, 10, 0.4)");
 
-    const stride = walk ? frame : 0;
+    const stride = walk ? gait : "contact";
 
     if (dir === 3) {
       this._backpack(ctx, left + 3, top + 11);
@@ -366,7 +366,7 @@ const Sprites = {
       this._legs(ctx, left, top, dir, fishing, stride);
       this._straps(ctx, left + 5, top + 12);
     } else {
-      this._side(ctx, left, top, dir === 1, fishing, walk, frame);
+      this._side(ctx, left, top, dir === 1, fishing, walk, stride);
     }
 
     if (fishing) this._rod(ctx, x, y, dir, state.rodPhase || 0, state.windup, bite || tugHard);
@@ -389,15 +389,21 @@ const Sprites = {
     const img = typeof Atlas !== "undefined" && Atlas.sheets && Atlas.sheets.player;
     const P = typeof Atlas !== "undefined" && Atlas.PLAYER;
     if (img && P) {
-      const col = 1;
+      // Each idle master already faces its row, including left.
+      const row = dir > 3 ? 0 : dir;
+      const col = 0;
       const sx = col * P.w;
-      const sy = (dir > 3 ? 0 : dir) * P.h;
+      const sy = row * P.h;
       const crop = 50;
       const sitSc = 0.58 * sc;
+      const dw = (P.w * sitSc) | 0;
+      const dh = (crop * sitSc) | 0;
       try {
-        ctx.drawImage(img, sx, sy, P.w, crop,
-          (px - P.ax * sitSc) | 0, (py - crop * sitSc) | 0,
-          (P.w * sitSc) | 0, (crop * sitSc) | 0);
+        ctx.save();
+        ctx.imageSmoothingEnabled = false;
+        ctx.translate(px | 0, py | 0);
+        ctx.drawImage(img, sx, sy, P.w, crop, -((P.ax * sitSc) | 0), -dh, dw, dh);
+        ctx.restore();
         return;
       } catch (err) { /* fall through */ }
     }
@@ -512,44 +518,51 @@ const Sprites = {
     this.pixel(ctx, x + 8, y + 4, PALETTE.packHi);
   },
 
-  _legs(ctx, left, top, dir, fishing, stride) {
+  _gaitFwd(gait) {
+    if (gait === "stride") return 2;
+    if (gait === "passA") return 1;
+    if (gait === "passB") return -1;
+    return 0;
+  },
+
+  _legs(ctx, left, top, dir, fishing, gait) {
     const ly = top + 20;
-    const aOff = fishing ? 0 : (stride === 0 || stride === 1 ? 2 : -1);
-    const bOff = fishing ? 0 : (stride === 2 || stride === 3 ? 2 : -1);
-    const aY = fishing ? 0 : (stride === 0 ? 1 : stride === 2 ? -1 : 0);
-    const bY = fishing ? 0 : (stride === 2 ? 1 : stride === 0 ? -1 : 0);
-    const a = 4 - aOff;
-    const b = 8 + bOff;
-    this.fill(ctx, left + a, ly + aY, 3, 4, PALETTE.pants);
-    this.fill(ctx, left + b, ly + bY, 3, 4, PALETTE.pantsLo);
-    this.fill(ctx, left + a, ly + 3 + aY, 3, 3, PALETTE.boot);
-    this.fill(ctx, left + b, ly + 3 + bY, 3, 3, PALETTE.bootLo);
+    // Feet stay under the hips. One foot lifts along the walk; the other stays planted.
+    const fwd = fishing ? 0 : this._gaitFwd(gait);
+    const liftA = fwd > 0 ? -Math.min(2, fwd) : 0;
+    const liftB = fwd < 0 ? -1 : 0;
+    const a = 4;
+    const b = 8;
+    this.fill(ctx, left + a, ly + liftA, 3, 4, PALETTE.pants);
+    this.fill(ctx, left + b, ly + liftB, 3, 4, PALETTE.pantsLo);
+    this.fill(ctx, left + a, ly + 3 + liftA, 3, 3, PALETTE.boot);
+    this.fill(ctx, left + b, ly + 3 + liftB, 3, 3, PALETTE.bootLo);
     this.fill(ctx, left + 5, ly - 1, 6, 2, PALETTE.pants);
   },
 
-  _armsFront(ctx, left, top, fishing, stride) {
+  _armsFront(ctx, left, top, fishing, gait) {
     if (fishing) {
-      this.fill(ctx, left + 3, top + 14, 3, 3, PALETTE.skin);
-      this.fill(ctx, left + 10, top + 14, 3, 3, PALETTE.skin);
+      this.fill(ctx, left + 5, top + 14, 3, 3, PALETTE.skin);
+      this.fill(ctx, left + 8, top + 15, 3, 3, PALETTE.skinLo);
       return;
     }
-    const swing = stride === 0 || stride === 1 ? 1 : -1;
-    this.fill(ctx, left + 2, top + 13 + swing, 2, 5, PALETTE.skinLo);
-    this.fill(ctx, left + 12, top + 13 - swing, 2, 5, PALETTE.skin);
+    const fwd = this._gaitFwd(gait);
+    this.fill(ctx, left + 3, top + 13 - fwd, 2, 5, PALETTE.skinLo);
+    this.fill(ctx, left + 11, top + 13 + fwd, 2, 5, PALETTE.skin);
   },
 
-  _armsBack(ctx, left, top, fishing, stride) {
+  _armsBack(ctx, left, top, fishing, gait) {
     if (fishing) {
-      this.fill(ctx, left + 4, top + 13, 2, 4, PALETTE.skinLo);
-      this.fill(ctx, left + 10, top + 13, 2, 4, PALETTE.skin);
+      this.fill(ctx, left + 6, top + 12, 2, 3, PALETTE.skinLo);
+      this.fill(ctx, left + 8, top + 12, 2, 3, PALETTE.skin);
       return;
     }
-    const swing = stride === 0 || stride === 1 ? 1 : -1;
-    this.fill(ctx, left + 2, top + 13 - swing, 2, 5, PALETTE.skinLo);
-    this.fill(ctx, left + 12, top + 13 + swing, 2, 5, PALETTE.skin);
+    const fwd = this._gaitFwd(gait);
+    this.fill(ctx, left + 2, top + 13 + fwd, 2, 5, PALETTE.skinLo);
+    this.fill(ctx, left + 12, top + 13 - fwd, 2, 5, PALETTE.skin);
   },
 
-  _side(ctx, left, top, flip, fishing, walk, frame) {
+  _side(ctx, left, top, flip, fishing, walk, gait) {
     const f = flip ? -1 : 1;
     const cx = left + 8;
     const lean = walk ? f : 0;
@@ -565,8 +578,9 @@ const Sprites = {
     this.fill(ctx, cx - 2 + lean, top, 6, 2, PALETTE.hairHi);
     this.pixel(ctx, cx + (flip ? -2 : 2) + lean, top + 7, "#1a120c");
 
-    const step = walk ? (frame % 2 === 0 ? 2 : -2) * f : 0;
-    const lift = walk && frame % 2 === 0 ? -1 : 0;
+    const along = (!walk || fishing) ? 0 : this._gaitFwd(gait);
+    const step = along * f;
+    const lift = along ? -1 : 0;
     this.fill(ctx, cx - 2 + step + lean, top + 20 + lift, 3, 4, PALETTE.pants);
     this.fill(ctx, cx - 2 - step + lean, top + 20, 3, 3, PALETTE.pantsLo);
     this.fill(ctx, cx - 2 + step + lean, top + 23 + lift, 4, 3, PALETTE.boot);
@@ -575,7 +589,7 @@ const Sprites = {
     if (fishing) {
       this.fill(ctx, cx + f * 5 + lean, top + 13, 6, 2, PALETTE.skin);
     } else {
-      const arm = walk ? (frame % 2 === 0 ? -1 : 1) : 0;
+      const arm = along ? -Math.sign(along) : 0;
       this.fill(ctx, cx + f * 3 + lean, top + 14 + arm, 2, 5, PALETTE.skinLo);
     }
   },
@@ -604,19 +618,21 @@ const Sprites = {
     const bob = (typeof Minigame !== "undefined" && Minigame.rainLean && Minigame.rainLean()) ? 3 : 2;
     if (bite) lift += 4 + Math.sin(phase * 8) * bob;
     const sheet = typeof Atlas !== "undefined" && Atlas.sheets && Atlas.sheets.player;
-    const rod = sheet && Atlas.PLAYER && Atlas.PLAYER.rod && Atlas.PLAYER.rod[dir];
+    const rods = sheet && Atlas.PLAYER && Atlas.PLAYER.rod;
+    const rod = rods && rods[dir === 1 ? 2 : dir];
     if (rod) {
+      const mirror = dir === 1 ? -1 : 1;
       return {
-        x: x + rod.x,
+        x: x + rod.x * mirror,
         y: y + rod.y + lift,
-        handX: x + (rod.hx || 0),
+        handX: x + (rod.hx || 0) * mirror,
         handY: y + (rod.hy || -18),
       };
     }
-    // Procedural fallback. Facing away, the rod is held out past the left shoulder,
-    // so the line leaves from beside the body instead of through the pack.
-    if (dir === 3) return { x: x - 11, y: y - 40 + lift, handX: x - 6, handY: y - 17 };
-    if (dir === 0) return { x: x + 11, y: y - 18 + lift, handX: x + 5, handY: y - 12 };
+    // Procedural fallback, used only when player.png is missing.
+    // South aims down past the boots. North aims up from the crown.
+    if (dir === 3) return { x: x, y: y - 32 + lift, handX: x, handY: y - 20 };
+    if (dir === 0) return { x: x, y: y - 4 + lift, handX: x, handY: y - 14 };
     if (dir === 1) return { x: x - 18, y: y - 21 + lift, handX: x - 6, handY: y - 12 };
     return { x: x + 18, y: y - 21 + lift, handX: x + 6, handY: y - 12 };
   },

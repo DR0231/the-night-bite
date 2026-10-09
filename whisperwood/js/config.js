@@ -136,11 +136,19 @@ const DESIGN = {
   signRange: 22,
   crateRange: 22,
   sitRange: 20,
+  /* Pond stump may skip to dusk or dawn once, then not again until this many vale days have passed. The day you land on counts. */
+  stumpDays: 1,
+  /* Vale hours awake after sleep or a pass-out before the bed works again. Staying up longer is always allowed. 0 turns the wait off. */
+  sleepAwakeHours: 8,
+  /* Seconds after a door fade before another door can fire. Long enough to step off the mat, not a wait in the doorway. */
+  doorCool: 0.35,
   npcWander: 10,
   /* Quiet first-evening nudges: seconds of play before the first one, gap between them, and the play-time window after which none show. */
   onboardDelay: 6,
   onboardGap: 30,
   onboardWindow: 600,
+  /* Hook fights that still show the E / Space line above the bar. After this the bar is the cue. */
+  fightHintCasts: 3,
   /* Parchment note timing: base seconds, extra per character, hard cap. Notes longer than toastLongChars drop to the small body line under a title. */
   toastBase: 1.8,
   toastPerChar: 0.04,

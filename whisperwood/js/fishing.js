@@ -470,7 +470,7 @@ const Fishing = {
   },
 
   prompt() {
-    if (this.state === "play") return Minigame.hint();
+    if (this.state === "play") return Minigame._hintThisFight ? Minigame.hint() : "";
     if (this.state === "bite") return "Press E / Space to hook!";
     if (this.state === "wait" || this.state === "nibble") {
       return "Watch the bobber…  Move to pack up";

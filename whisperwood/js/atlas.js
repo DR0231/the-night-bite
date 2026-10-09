@@ -51,13 +51,13 @@ const Atlas = {
     ay: 72,
     cols: 6,
     rows: 4,
-    /* Rod tip offsets from feet, measured on the col-5 fishing frames of player.png.
-       Row 3 (back view) holds the rod out to the upper-left, so the line never crosses the pack. */
+    /* Rod tip offsets from the feet, measured on the col-5 cast frames.
+       South points down the front, between the boots. North points up from the crown. */
     rod: [
-      { x: 31, y: -44, hx: 6, hy: -18 },
+      { x: 0, y: -2, hx: 0, hy: -16 },
       { x: -29, y: -41, hx: -8, hy: -16 },
       { x: 39, y: -44, hx: 8, hy: -16 },
-      { x: -27, y: -45, hx: -7, hy: -14 },
+      { x: 0, y: -55, hx: 0, hy: -43 },
     ],
   },
 
@@ -191,28 +191,47 @@ const Atlas = {
     let dir = (state && state.dir) | 0;
     if (dir < 0) dir = 0;
     if (dir > P.rows - 1) dir = P.rows - 1;
-    let col = 1;
+    // Left walk and cast use the east row, mirrored around the feet.
+    // The idle is the authored left stand, which already faces left.
+    let flip = dir === 1;
+    let row = flip ? 2 : dir;
+    let col = 0;
     if (state && state.fishing) col = 5;
+    else if (state && state.col != null) col = state.col | 0;
     else if (state && state.moving) {
       const f = ((state.frame | 0) % 4 + 4) % 4;
       col = 1 + f;
     }
+    if (flip && col === 0) {
+      row = 1;
+      flip = false;
+    }
+    if (col < 0) col = 0;
+    if (col > P.cols - 1) col = P.cols - 1;
     const sx = col * P.w;
-    const sy = dir * P.h;
+    const sy = row * P.h;
     if (sx + P.w > size.w || sy + P.h > size.h) return false;
     const hop = (state && state.hop) || 0;
     const tug = Utils.clamp((state && state.tug) || 0, -1, 1);
+    // Up on the passing step. Separate from hop, so a cast jump still lands on its own.
+    const bob = (state && state.moving && !state.fishing && state.stepUp) ? 1 : 0;
+    this.castShadow(ctx, x, y, 8, 2.2);
+    ctx.save();
     try {
-      this.castShadow(ctx, x, y, 8, 2.2);
+      ctx.imageSmoothingEnabled = false;
+      ctx.translate(x | 0, (y - hop - bob) | 0);
+      if (flip) ctx.scale(-1, 1);
       ctx.drawImage(
         img,
         sx, sy, P.w, P.h,
-        (x - P.ax + Math.round(tug * 2)) | 0,
-        (y - P.ay - hop) | 0,
+        (-P.ax + Math.round(tug * 2)) | 0,
+        -P.ay | 0,
         P.w, P.h
       );
+      ctx.restore();
       return true;
     } catch (err) {
+      ctx.restore();
       return false;
     }
   },
