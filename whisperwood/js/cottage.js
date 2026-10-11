@@ -95,7 +95,7 @@ const Cottage = {
     if (slot) return "E or Q to pick up";
     if (this.near("bed")) {
       return (typeof Game !== "undefined" && Game.sleepReady && !Game.sleepReady())
-        ? "The bed can wait. Stay up a while."
+        ? Game.sleepRefusal()
         : "Press E to sleep until dusk or dawn";
     }
     if (this.near("bench")) return "Press E — packing bench (cook & bait)";
@@ -275,7 +275,7 @@ const Cottage = {
     if (this.near("bed")) {
       if (Game.sleeping) return true;
       if (!Game.sleepReady()) {
-        UI.toastNote("The bed can wait. Stay up a while.");
+        UI.toastNote(Game.sleepRefusal());
         return true;
       }
       this.snapToBed();

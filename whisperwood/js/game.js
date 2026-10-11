@@ -599,10 +599,23 @@ const Game = {
     return TimeCycle.seconds + 0.05 >= need;
   },
 
+  sleepRefusal() {
+    const hours = (typeof DESIGN !== "undefined" && (DESIGN.sleepAwakeHours | 0)) || 0;
+    const wake = (Save.data && Save.data.flags && +Save.data.flags.sleepWakeAt) || 0;
+    if (hours <= 0 || wake <= 0) return "The bed can wait. Stay up a while.";
+    const need = wake + (hours / 24) * CONFIG.DAY_LENGTH;
+    const raw = ((need / CONFIG.DAY_LENGTH) * 24 % 24) * 60;
+    const mins = Math.ceil(raw - 1e-6) % 1440;
+    const hh = Math.floor(mins / 60), mm = mins % 60;
+    const ap = hh >= 12 ? "PM" : "AM";
+    const h12 = ((hh + 11) % 12) + 1;
+    return `The bed opens at ${h12}:${String(mm).padStart(2, "0")} ${ap}. Stay up a while.`;
+  },
+
   startSleep() {
     if (this.sleeping || this.fading) return;
     if (!this.sleepReady()) {
-      UI.toastNote("The bed can wait. Stay up a while.");
+      UI.toastNote(this.sleepRefusal());
       return;
     }
     Fishing.cancel();
