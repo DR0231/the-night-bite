@@ -1,9 +1,27 @@
-/* Hidden testing menu. F8 or ` — not part of the guest loop. */
+/* Hidden testing menu. F8 or ` — only when admin is enabled (see enabled()). */
 
 const Admin = {
   open: false,
   god: false,
   _bound: false,
+
+  /* Off by default. On for: desktop --vale-dev, localStorage whisperwood-admin-dev=1,
+     or ?dev=1 on localhost / 127.0.0.1 / [::1] / file:. Never on nightbiteoh.com alone. */
+  enabled() {
+    if (window.valeDesktop) return !!window.valeDesktop.devMode;
+    try {
+      if (localStorage.getItem("whisperwood-admin-dev") === "1") return true;
+    } catch (err) { /* storage blocked */ }
+    try {
+      const host = (location.hostname || "").toLowerCase();
+      const local = location.protocol === "file:"
+        || host === "localhost"
+        || host === "127.0.0.1"
+        || host === "[::1]";
+      if (local && new URLSearchParams(location.search).get("dev") === "1") return true;
+    } catch (err) { /* bad URL */ }
+    return false;
+  },
 
   typing() {
     const el = document.activeElement;
@@ -14,10 +32,11 @@ const Admin = {
   },
 
   bind() {
+    if (!this.enabled()) return;
     if (this._bound) return;
     this._bound = true;
     window.addEventListener("keydown", (e) => {
-      if (window.valeDesktop && !window.valeDesktop.devMode) return;
+      if (!this.enabled()) return;
       if (typeof Inventory !== "undefined" && Inventory.pasteOpen) return;
       if (e.repeat) return;
       if (e.code === "F8" || (e.code === "Backquote" && !this.typing())) {
@@ -55,11 +74,13 @@ const Admin = {
   },
 
   toggle() {
+    if (!this.enabled()) return;
     if (this.open) this.close();
     else this.show();
   },
 
   show() {
+    if (!this.enabled()) return;
     UI.closeAll();
     this.open = true;
     const el = document.getElementById("admin");
