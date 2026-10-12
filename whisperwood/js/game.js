@@ -432,6 +432,30 @@ const UI = {
     }
     if (!this._packBtn) this._packBtn = document.getElementById("btn-packup");
     if (this._packBtn) this._packBtn.classList.toggle("is-on", Fishing.state === "aim" && !this.anyMenu());
+    const onTitle = !!(this.els.start && !this.els.start.classList.contains("hidden"));
+    const menuUp = this.anyMenu();
+    const release = (pad, all) => {
+      const btns = pad.querySelectorAll(all ? "button" : "button.is-held");
+      for (let i = 0; i < btns.length; i++) btns[i].dispatchEvent(new Event("pointercancel"));
+    };
+    if (!this._movePad) this._movePad = document.getElementById("move-pad");
+    if (!this._menuPad) this._menuPad = document.getElementById("menu-pad");
+    const mp = this._movePad, np = this._menuPad;
+    if (mp) {
+      const hide = menuUp && !onTitle;
+      if (hide !== mp.classList.contains("menu-hide")) {
+        if (hide && mp.classList.contains("is-touch")) {
+          release(mp, false);
+          const fish = document.getElementById("btn-fish");
+          if (fish && typeof Minigame !== "undefined" && Minigame._padHold) fish.dispatchEvent(new Event("pointercancel"));
+        }
+        mp.classList.toggle("menu-hide", hide);
+      }
+    }
+    if (np && menuUp !== np.classList.contains("menu-hide")) {
+      if (menuUp) release(np, true);
+      np.classList.toggle("menu-hide", menuUp);
+    }
   },
 };
 

@@ -187,16 +187,31 @@ const Input = {
         if (typeof Fishing !== "undefined" && Fishing.state === "aim") Fishing.cancel();
       });
     }
+    const tapKey = (id, key) => {
+      const b = document.getElementById(id);
+      if (!b) return;
+      b.addEventListener("pointerdown", (ev) => { ev.preventDefault(); ev.stopPropagation(); this.setKey(key, true, false); });
+      const up = () => this.setKey(key, false, false);
+      b.addEventListener("pointerup", up);
+      b.addEventListener("pointerleave", up);
+      b.addEventListener("pointercancel", up);
+    };
+    tapKey("btn-journal", "j");
+    tapKey("btn-pack", "i");
+    tapKey("btn-menu", "escape");
     this.syncPad();
     window.addEventListener("resize", () => this.syncPad());
   },
 
   syncPad() {
     const pad = document.getElementById("move-pad");
-    if (!pad) return;
+    const menu = document.getElementById("menu-pad");
+    if (!pad && !menu) return;
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     const narrow = window.matchMedia("(max-width: 720px)").matches;
-    pad.classList.toggle("is-touch", coarse || narrow);
+    const on = coarse || narrow;
+    if (pad) pad.classList.toggle("is-touch", on);
+    if (menu) menu.classList.toggle("is-touch", on);
   },
 
   _padWasOn: false,
@@ -263,7 +278,7 @@ const Input = {
     for (let i = 0; i < nodes.length; i++) {
       const el = nodes[i];
       if (el.disabled || el.hidden) continue;
-      if (el.closest("#move-pad")) continue;
+      if (el.closest("#move-pad, #menu-pad")) continue;
       if (el.id === "btn-fish" || el.id === "btn-packup") continue;
       const type = (el.getAttribute("type") || "").toLowerCase();
       if (type === "file") continue;
