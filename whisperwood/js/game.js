@@ -421,7 +421,7 @@ const UI = {
       this.els.prompt.classList.remove("hidden");
       this.els.prompt.classList.toggle("bite", Fishing.state === "bite" || Fishing.state === "play");
       if (Fishing.state === "play") {
-        const scale = (typeof Renderer !== "undefined" && Renderer.scale) || 2;
+        const scale = (typeof Renderer !== "undefined" && Renderer.cssScale) || 2;
         this.els.prompt.style.bottom = (36 * scale + 8) + "px";
       } else {
         this.els.prompt.style.bottom = "";
@@ -541,6 +541,17 @@ const Game = {
       this.last = performance.now();
       requestAnimationFrame((t) => this.loop(t));
     }
+    this.portraitHint();
+  },
+
+  portraitHint() {
+    if (this._portraitTold) return;
+    const st = document.getElementById("start-screen");
+    if (!st || !st.classList.contains("hidden")) return;
+    if (!window.matchMedia("(orientation: portrait) and (pointer: coarse)").matches) return;
+    if (UI.toastHoldT > 0) return;
+    this._portraitTold = true;
+    UI.toastNote("Turn sideways for the full vale.");
   },
 
   _nightFlies() {

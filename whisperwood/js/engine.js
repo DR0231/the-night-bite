@@ -165,6 +165,7 @@ const Input = {
       fishBtn.addEventListener("pointerdown", (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
+        try { fishBtn.setPointerCapture(ev.pointerId); } catch (e) {}
         if (typeof Game !== "undefined") Game.start({ clearUse: false });
         if (typeof Minigame !== "undefined") Minigame._padHold = true;
         Input.setKey("e", true, false);
@@ -176,6 +177,7 @@ const Input = {
       fishBtn.addEventListener("pointerup", up);
       fishBtn.addEventListener("pointerleave", up);
       fishBtn.addEventListener("pointercancel", up);
+      fishBtn.addEventListener("lostpointercapture", up);
     }
     const packBtn = document.getElementById("btn-packup");
     if (packBtn) {

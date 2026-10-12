@@ -4,6 +4,7 @@ const Renderer = {
   canvas: null,
   ctx: null,
   scale: 4,
+  cssScale: 4,
   viewW: CONFIG.VIEW_W,
   viewH: CONFIG.VIEW_H,
 
@@ -11,24 +12,42 @@ const Renderer = {
     this.canvas = document.getElementById("game");
     this.ctx = this.canvas.getContext("2d");
     this.resize();
-    window.addEventListener("resize", () => this.resize());
+    const again = () => {
+      if (this._resizeQueued) return;
+      this._resizeQueued = true;
+      requestAnimationFrame(() => { this._resizeQueued = false; this.resize(); });
+    };
+    window.addEventListener("resize", again);
+    window.addEventListener("orientationchange", again);
+    if (window.visualViewport) window.visualViewport.addEventListener("resize", again);
   },
 
   resize() {
     const host = document.getElementById("stage") || document.getElementById("frame") || this.canvas.parentElement;
-    const pad = window.valeDesktop ? 0 : 24;
-    const maxW = Math.max(320, (host.clientWidth || window.innerWidth) - pad);
-    const maxH = Math.max(180, (host.clientHeight || window.innerHeight) - pad);
-    let s = Math.floor(Math.min(maxW / this.viewW, maxH / this.viewH));
-    s = Utils.clamp(s, 2, 6);
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    const fitIn = (pad) => Math.min(
+      Math.max(320, (host.clientWidth || window.innerWidth) - pad) / this.viewW,
+      Math.max(180, (host.clientHeight || window.innerHeight) - pad) / this.viewH);
+    let s = Math.floor(fitIn(window.valeDesktop ? 0 : 24));
+    let css;
+    if (s >= 2 || !coarse) {
+      s = Utils.clamp(s, 2, 6);
+      css = s;
+    } else {
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      s = Math.max(1, Math.floor(fitIn(0) * dpr));
+      css = s / dpr;
+    }
     this.scale = s;
+    this.cssScale = css;
     this.canvas.width = this.viewW * s;
     this.canvas.height = this.viewH * s;
-    this.canvas.style.width = `${this.viewW * s}px`;
-    this.canvas.style.height = `${this.viewH * s}px`;
+    this.canvas.style.width = `${this.viewW * css}px`;
+    this.canvas.style.height = `${this.viewH * css}px`;
     const ctx = this.ctx;
     ctx.setTransform(s, 0, 0, s, 0, 0);
     ctx.imageSmoothingEnabled = false;
+    if (typeof Game !== "undefined" && Game.portraitHint) Game.portraitHint();
   },
 
   render(now) {

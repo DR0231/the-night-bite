@@ -1213,3 +1213,25 @@ input[type=checkbox]:focus-visible,
 #move-pad #btn-packup { display: none; grid-column: 1; grid-row: 1; width: 44px; height: 44px; font-size: 16px; line-height: 16px; white-space: normal; padding: 0; background: var(--parchment); color: var(--ink); border: 2px solid #8b6238; }
 #move-pad #btn-packup.is-on { display: block; }
 #move-pad #btn-packup.is-held, #move-pad #btn-packup:active { background: var(--parchment-dark); }
+
+#game, #move-pad, #move-pad button { touch-action: none; }
+#move-pad { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+
+@media (max-width: 720px), (max-height: 480px) {
+  .play-page .site-nav { display: none; }
+  #clock { width: 168px; top: max(6px, env(safe-area-inset-top)); right: max(6px, env(safe-area-inset-right)); }
+  #clock-rod { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .need-row { grid-template-columns: 46px 16px minmax(0, 1fr); column-gap: 2px; }
+  .need-icon { width: 16px; height: 16px; }
+  .need-pips { gap: 2px; }
+  .need-row .need-pips span { min-height: 10px; min-width: 6px; }
+  #prompt { bottom: calc(120px + env(safe-area-inset-bottom)); }
+  #move-pad.is-touch { left: max(16px, env(safe-area-inset-left)); bottom: max(16px, env(safe-area-inset-bottom)); }
+  .overlay-panel { position: fixed; }
+  .journal-panel { width: min(560px, 92vw); max-height: calc(100vh - 16px); max-height: calc(100dvh - 16px); overflow: auto; box-sizing: border-box; }
+  @media (pointer: coarse) {
+    #move-pad.is-touch { grid-template-rows: 44px 44px 44px; }
+    #btn-fish { height: 44px !important; }
+    #pause-menu button, .journal-panel button { min-height: 44px; }
+  }
+}
