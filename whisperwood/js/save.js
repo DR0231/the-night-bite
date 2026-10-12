@@ -1,6 +1,8 @@
 /* One localStorage blob. Migrates whisperwood-journal on first load. */
 
 const SAVE_UNREADABLE_KEY = "whisperwood-save-v1-unreadable";
+const SAVE_VERSION = 1;
+const NO_CORNER = "There's no dry corner for your newer vale. Copy save first.";
 
 const Save = {
   data: null,
@@ -8,6 +10,8 @@ const Save = {
   _keepData: false,
   _writeBlocked: false,
   _loadWarn: "",
+  _newerRaw: "",
+  _writeWarned: false,
 
   blankJournalEntry() {
     return { caught: 0, biggest: 0, firstAt: 0, lastAt: 0, hooked: 0, landed: 0, gotAway: 0, shiny: 0, favorite: false, firstDay: 0 };
@@ -73,6 +77,12 @@ const Save = {
       try {
         const parsed = JSON.parse(raw);
         if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("unreadable");
+        if ((parsed.version | 0) > SAVE_VERSION) {
+          this._newerRaw = raw;
+          this._writeBlocked = true;
+          this._loadWarn = "This save is from a newer vale. Playing it, but not saving.";
+          try { console.warn("Save writes paused: newer save version", parsed.version); } catch (e) {}
+        }
         this.data = this._migrate(parsed);
       } catch (e) {
         this._keepUnreadable(raw);
@@ -257,6 +267,9 @@ const Save = {
       out.inventory.stew = sum;
     }
     this._syncCaughtOn(out);
+    const from = (d.version | 0) || 1;   // missing or junk version counts as 1
+    /* Ordered steps go here when SAVE_VERSION rises, e.g. if (from < 2) { ...v1 to v2 reshape... } */
+    out.version = Math.max(from, SAVE_VERSION);
     return out;
   },
 
@@ -303,7 +316,14 @@ const Save = {
     try {
       this.pullFromWorld();
       localStorage.setItem(SAVE_KEY, JSON.stringify(this.data));
-    } catch (e) { /* quota */ }
+      this._writeWarned = false;
+    } catch (e) {
+      try { console.warn("Save write failed:", e); } catch (e2) {}
+      if (!this._writeWarned) {
+        this._writeWarned = true;
+        try { if (typeof UI !== "undefined") UI.toastWarn("The vale couldn't dry your save. This evening isn't saving for now."); } catch (e3) {}
+      }
+    }
   },
 
   mark(reason) {
@@ -326,15 +346,30 @@ const Save = {
   },
 
   exportJson() {
+    if (this._newerRaw) return this._newerRaw;
     this.pullFromWorld();
     return JSON.stringify(this.data, null, 2);
+  },
+
+  _stashNewer() {
+    const raw = this._newerRaw;
+    if (!raw) return true;
+    let side = null;
+    try { side = localStorage.getItem(SAVE_UNREADABLE_KEY); } catch (e) { return false; }
+    if (side === raw) return true;
+    if (side !== null) return false;            // a different damp save is there; keep it
+    try { localStorage.setItem(SAVE_UNREADABLE_KEY, raw); } catch (e) { return false; }
+    try { return localStorage.getItem(SAVE_UNREADABLE_KEY) === raw; } catch (e) { return false; }
   },
 
   importJson(text) {
     const parsed = JSON.parse(text);
     if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("unreadable");
+    if ((parsed.version | 0) > SAVE_VERSION) throw new Error("newer");
+    if (!this._stashNewer()) throw new Error("nocorner");
     this.data = this._migrate(parsed);
     this._writeBlocked = false;
+    this._newerRaw = "";
     this._keepData = true;
     this._ensureFish();
     this.syncCaught();
@@ -344,6 +379,7 @@ const Save = {
   },
 
   resetFreshKeepingMute() {
+    if (!this._stashNewer()) return false;
     const mute = !!(this.data && this.data.flags && this.data.flags.mute);
     try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* ignore */ }
     this.data = this.fresh();
@@ -351,7 +387,9 @@ const Save = {
     this.data.flags.mute = mute;
     AudioFX.muted = mute;
     this._writeBlocked = false;
+    this._newerRaw = "";
     this.write();
+    return true;
   },
 
   dayRng(salt) {

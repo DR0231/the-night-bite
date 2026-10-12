@@ -48,8 +48,10 @@ const Pause = {
   });
   const yes = document.getElementById("pause-reset-yes");
   if (yes) yes.addEventListener("click", () => {
-    Save.resetFreshKeepingMute();
-    location.reload();
+    if (Save.resetFreshKeepingMute() !== false) { location.reload(); return; }
+    const confirm = document.getElementById("pause-reset-confirm");
+    if (confirm) confirm.classList.add("hidden");
+    UI.toastWarn(NO_CORNER);
   });
   const creditsBtn = document.getElementById("pause-credits-btn");
   if (creditsBtn) creditsBtn.addEventListener("click", () => {

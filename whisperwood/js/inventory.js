@@ -332,7 +332,10 @@ const Pickups = {
       const reader = new FileReader();
       reader.onload = () => {
         try { Save.importJson(String(reader.result || "")); location.reload(); }
-        catch (e) { UI.toastNote("That save could not be read."); }
+        catch (e) {
+          UI.toastNote(e && e.message === "newer" ? "That save is from a newer vale."
+            : e && e.message === "nocorner" ? NO_CORNER : "That save could not be read.");
+        }
       };
       reader.onerror = () => UI.toastNote("That save could not be read.");
       reader.readAsText(file);
@@ -367,7 +370,11 @@ const Pickups = {
       Save.importJson(raw);
       location.reload();
     } catch (e) {
-      if (err) err.classList.remove("hidden");
+      if (err) {
+        err.textContent = e && e.message === "newer" ? "That save is from a newer vale."
+          : e && e.message === "nocorner" ? NO_CORNER : "That save could not be read.";
+        err.classList.remove("hidden");
+      }
     }
   });
   if (text) text.addEventListener("keydown", (e) => {
