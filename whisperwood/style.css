@@ -468,6 +468,8 @@ button, input, textarea, select, kbd, code, pre, table, th, td, h1, h2, h3, h4, 
   box-shadow: inset 2px 2px 0 var(--paper-hi), inset -2px -2px 0 var(--paper-lo);
 }
 
+@media (pointer: coarse) { #hint { display: none; } }
+
 .hidden {
   display: none !important;
 }
@@ -931,7 +933,8 @@ kbd {
 #mill-end-btn:hover,
 #paste-save-btn:hover,
 #pause-menu button:hover,
-.journal-panel > button[data-close]:hover {
+.journal-panel > button[data-close]:hover,
+.journal-panel > #shop-gift:hover {
   background: #fff6e0;
 }
 
@@ -947,7 +950,8 @@ kbd {
 #mill-end-btn:active,
 #paste-save-btn:active,
 #pause-menu button:active,
-.journal-panel > button[data-close]:active {
+.journal-panel > button[data-close]:active,
+.journal-panel > #shop-gift:active {
   box-shadow: inset 2px 2px 0 var(--paper-lo), inset -2px -2px 0 var(--paper-hi);
 }
 
@@ -958,7 +962,8 @@ input[type=checkbox]:focus-visible,
   outline-offset: 2px;
 }
 
-.journal-panel > button[data-close] {
+.journal-panel > button[data-close],
+.journal-panel > #shop-gift {
   display: block;
   margin: 12px auto 0;
   min-width: 120px;
@@ -1245,6 +1250,7 @@ input[type=checkbox]:focus-visible,
     #btn-fish { height: 44px !important; }
     #pause-menu button, .journal-panel button { min-height: 44px; }
     #menu-pad button { height: 44px; }
-    .journal-panel > button.touch-close { display: block; }
+    .journal-panel > button.touch-close { display: block; position: sticky; top: 0; z-index: 2; margin: 0 0 -44px auto; min-width: 0; }
+    .journal-panel > button.touch-close + header { padding-right: 88px; }
   }
 }

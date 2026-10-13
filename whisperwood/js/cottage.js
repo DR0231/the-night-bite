@@ -957,6 +957,7 @@ const Shop = {
       if (it.rainOnly && TimeCycle.weatherId() !== "rain") return;
       Inventory.addCoins(-it.price);
       Inventory.addBait(id, 1);
+      if (Save.data.inventory.equippedBait === "none") Save.data.inventory.equippedBait = id;
       this.stock[id]--;
     } else if (kind === "rod") {
       const rod = RODS[id];

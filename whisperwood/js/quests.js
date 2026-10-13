@@ -422,7 +422,7 @@ const Onboard = {
   steps: [
     {
       id: "cast",
-      silent: () => Journal.count() >= 1,
+      silent: () => Journal.count() >= 1 || (Fishing.active && Fishing.state !== "aim"),
       ready: () => Journal.count() === 0 && !Fishing.active,
       text: "Water is close. Stand at the edge and press E to cast.",
     },

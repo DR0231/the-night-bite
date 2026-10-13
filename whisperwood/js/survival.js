@@ -50,7 +50,7 @@ const Survival = {
   fillSleep() {
     const p = this.p();
     p.rest = 100;
-    p.warmth = Utils.clamp((p.warmth || 0) + 10, 0, 100);
+    p.warmth = Utils.clamp(Math.max((p.warmth || 0) + 10, DESIGN.sleepWarmFloor || 60), 0, 100);
     const inv = Save.data.inventory;
     const dayNow = 1 + Math.floor(TimeCycle.seconds / CONFIG.DAY_LENGTH);
     if (inv.mealId && (inv.mealUntilDay | 0) < dayNow) {
@@ -123,7 +123,7 @@ const Survival = {
     this.refreshPips();
 
     this.needPrompt = "";
-    if (p.warmth < DESIGN.needWarn) this.needPrompt = "You’re shivering. Cottage or tea.";
+    if (p.warmth < DESIGN.needWarn) this.needPrompt = World.id === "cottage" ? "You’re shivering. Tea." : "You’re shivering. Cottage or tea.";
     else if (p.rest < DESIGN.needWarn) this.needPrompt = "You’re worn out.";
     else if (p.hunger < DESIGN.needWarn) this.needPrompt = "You’re hungry.";
 

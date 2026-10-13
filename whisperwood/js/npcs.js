@@ -48,7 +48,7 @@ const Npcs = {
     } else {
       line = (hearts > 0 && n.hearts[hearts - 1]) || n.greet;
     }
-    if (n.role === "shop") Shop.open();
+    if (n.role === "shop") { Shop.open(); this._stall(`${dots} ${rank}. ${line}`, n); return; }
     this._show(n.name, `${dots} ${rank}. ${line}`, n);
   },
 
@@ -63,7 +63,7 @@ const Npcs = {
   gift(n) {
     const st = this.state(n.id);
     if (st.giftedToday) {
-      this._show(n.name, "One gift a day is plenty.", n);
+      this._say(n, "One gift a day is plenty.");
       return;
     }
     const min = DESIGN.giftMinCaught;
@@ -79,7 +79,7 @@ const Npcs = {
       }
     }
     if (!give) {
-      this._show(n.name, favFish ? `Keep the first of each. Bring me a spare ${favFish.name} sometime.` : "Keep the first of each. Bring me a duplicate sometime.", n);
+      this._say(n, favFish ? `Keep the first of each. Bring me a spare ${favFish.name} sometime.` : "Keep the first of each. Bring me a duplicate sometime.");
       return;
     }
     Save.takeOldestLoose(give.id);
@@ -95,7 +95,7 @@ const Npcs = {
     } else {
       line = (n.giftOther || "{A}. Kind of you.").replace("{A}", article);
     }
-    this._show(n.name, line, n);
+    this._say(n, line);
     Save.mark("gift");
     this._checkMarsh();
   },
@@ -110,6 +110,18 @@ const Npcs = {
     if (Save.data.flags.fifthWater && typeof Stamps !== "undefined") {
       try { Stamps.try("marshOpen"); } catch (e) { /* stamp optional */ }
     }
+  },
+
+  _stall(line, n) {
+    const sub = document.getElementById("shop-line");
+    if (sub) sub.textContent = line;
+    const g = document.getElementById("shop-gift");
+    if (g) g.onclick = () => this.gift(n);
+  },
+
+  _say(n, line) {
+    if (n && n.role === "shop" && Shop.openFlag) { this._stall(line, n); Shop.refresh(); }
+    else this._show(n.name, line, n);
   },
 
   _show(name, line, n) {

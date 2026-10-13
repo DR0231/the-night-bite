@@ -83,6 +83,8 @@ const DESIGN = {
   passOutHunger: 15,
   /* Waking in the reeds: where the needs settle. Losing the night is the whole cost; nothing is taken. */
   passOutNeeds: 60,
+  /* Waking in your own bed never leaves you colder than waking in the reeds. */
+  sleepWarmFloor: 60,
   emptyHookBite: 0.45,
   /* Bare hook perk: an empty hook bites like a baited one. No bait bias, so it never changes which fish bites. */
   bareHookBite: 0.72,

@@ -84,6 +84,7 @@
 
     <div id="journal" class="hidden">
       <div class="journal-panel">
+        <button type="button" class="touch-close" data-close>Close</button>
         <header>
           <h2>Fish Collection</h2>
           <p class="journal-sub">Freshwater friends &amp; magical wonders</p>
@@ -100,7 +101,6 @@
           Click a known fish to favorite it. J or Esc closes. Opening the journal packs a waiting line and fails a live minigame.
           <p id="journal-cook" class="journal-cook"></p>
         </footer>
-        <button type="button" class="touch-close" data-close>Close</button>
       </div>
     </div>
 
@@ -127,10 +127,10 @@
 
     <div id="pack" class="hidden overlay-panel">
       <div class="journal-panel pack-panel">
+        <button type="button" class="touch-close" data-close>Close</button>
         <header><h2>Pack</h2><p class="journal-sub">Rod, bait, and a little coin</p></header>
         <div id="pack-body"></div>
         <footer>I or Esc to close. Numbers 1–5 equip bait.</footer>
-        <button type="button" class="touch-close" data-close>Close</button>
       </div>
     </div>
 
@@ -174,8 +174,10 @@
 
     <div id="shop" class="hidden overlay-panel">
       <div class="journal-panel">
-        <header><h2>Wren’s stall</h2><p class="journal-sub">Bait, rods, and a wider tank</p></header>
+        <button type="button" class="touch-close" data-close>Close</button>
+        <header><h2>Wren’s stall</h2><p class="journal-sub" id="shop-line">Bait, rods, and a wider tank</p></header>
         <div id="shop-body"></div>
+        <button type="button" id="shop-gift">Give a duplicate fish</button>
         <button type="button" data-close>Close</button>
       </div>
     </div>
