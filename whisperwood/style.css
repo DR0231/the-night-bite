@@ -750,6 +750,11 @@ kbd {
   box-shadow: inset 2px 2px 0 #245428, inset -2px -2px 0 #6aab4e, 0 0 0 2px var(--frame);
 }
 
+#btn-fullscreen { display: none; }
+.web-fs #pause-menu #pause-fullscreen,
+.web-fs #btn-fullscreen { display: block; min-height: 44px; }
+.web-fs #btn-fullscreen { margin: 8px auto 0; min-width: 138px; white-space: nowrap; }
+
 .start-panel .weather-line {
   color: var(--ink-soft);
   margin-bottom: 8px;
@@ -1256,6 +1261,8 @@ input[type=checkbox]:focus-visible,
   #start-screen { position: fixed; }
   .start-panel { max-height: calc(100vh - 16px); max-height: calc(100dvh - 16px); overflow: auto; box-sizing: border-box; padding: 12px 16px; }
   #btn-start { position: sticky; bottom: 0; }
+  .web-fs #btn-start { bottom: 52px; }
+  .web-fs #btn-fullscreen { position: sticky; bottom: 4px; z-index: 1; }
   @media (pointer: coarse) {
     #move-pad.is-touch { grid-template-rows: 44px 44px 44px; }
     #btn-fish { height: 44px !important; }
@@ -1274,11 +1281,17 @@ input[type=checkbox]:focus-visible,
     #clock:not(.expanded) .need-row em,
     #clock:not(.expanded) .need-pips { display: none; }
     #clock:not(.expanded) #clock-text { font-size: 16px; line-height: 16px; white-space: nowrap; }
-    #clock:not(.expanded) #needs { display: flex; flex-direction: row; gap: 4px; width: auto; }
-    #clock:not(.expanded) .need-row { display: block; width: 16px; height: 16px; padding: 0; gap: 0; min-height: 0; background: none; outline: none; animation: none; }
+    #clock:not(.expanded) #needs { display: flex; flex-direction: row; gap: 3px; width: auto; }
+    #clock:not(.expanded) .need-row { display: block; width: 16px; height: 16px; padding: 0; gap: 0; min-height: 0; background: none; outline: none; animation: none; flex: none; }
     #clock:not(.expanded) .need-icon { width: 16px; height: 16px; outline: 2px solid var(--ink); display: block; }
     #clock:not(.expanded) .need-row.warn .need-icon { background: var(--brass); outline: 2px solid var(--brass); }
     #clock:not(.expanded) .need-row.crit .need-icon { background: #e23a3a; outline: 2px solid #e23a3a; }
+    #clock:not(.expanded) .need-row.warn,
+    #clock:not(.expanded) .need-row.crit { width: 20px; height: 20px; padding: 2px; margin: -2px; box-sizing: border-box; outline: 1px solid var(--ink); }
+    #clock:not(.expanded) .need-row.warn { background: var(--brass); }
+    #clock:not(.expanded) .need-row.crit { background: #e23a3a; }
+    #clock:not(.expanded) .need-row.warn .need-icon,
+    #clock:not(.expanded) .need-row.crit .need-icon { outline: none; }
     #clock.expanded { position: fixed; top: calc(8px + env(safe-area-inset-top)); right: calc(8px + env(safe-area-inset-right)); width: 168px; height: auto; display: flex; flex-direction: column; align-items: stretch; }
     #catch-toast { position: fixed; top: calc(8px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); max-width: min(60vw, calc(100vw - 528px)); height: 28px; }
     #catch-toast .toast-inner { min-width: 0; padding: 4px 10px; height: 28px; box-sizing: border-box; display: flex; align-items: center; }
@@ -1287,6 +1300,9 @@ input[type=checkbox]:focus-visible,
     #catch-toast .toast-kicker, #catch-toast #toast-name, #catch-toast #toast-desc { font-size: 16px; line-height: 16px; margin: 0; }
     #catch-toast #toast-desc { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
     #catch-toast .toast-kicker, #catch-toast #toast-name { flex: none; }
+    #catch-toast #toast-name { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    #shop .journal-panel > #shop-gift { position: sticky; bottom: 0; z-index: 2; background: var(--parchment); }
+    .nb-links a { min-height: 44px; display: inline-flex; align-items: center; padding: 0 12px; }
     #region-card { position: fixed; top: calc(8px + env(safe-area-inset-top)); left: calc(8px + env(safe-area-inset-left)); max-width: 240px; padding: 4px 8px; }
     #region-card h1 { font-size: 16px; line-height: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     #region-card p { display: none; }
@@ -1294,6 +1310,10 @@ input[type=checkbox]:focus-visible,
     @media (orientation: portrait) and (max-width: 720px) {
       #catch-toast { top: calc(52px + env(safe-area-inset-top)); max-width: calc(100vw - 16px); }
       #prompt { bottom: calc(160px + env(safe-area-inset-bottom)); }
+      #shop.overlay-panel { align-items: flex-start; padding-top: calc(8px + env(safe-area-inset-top)); box-sizing: border-box; }
+    }
+    @media (orientation: landscape) {
+      #prompt { bottom: calc(8px + env(safe-area-inset-bottom)); height: 28px; padding: 4px 14px; box-sizing: border-box; font-size: 16px; line-height: 16px; max-width: min(50vw, calc(100vw - 2 * var(--gutter, 200px))); }
     }
   }
 }

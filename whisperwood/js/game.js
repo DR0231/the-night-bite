@@ -16,10 +16,32 @@ const UI = {
   _regionLast: "",
   _regionAt: 0,
 
+  _fishVerb: "",
   touch() { return this._mq.coarse.matches; },
   phone() { return this.touch() && this._mq.small.matches; },
   phonePortrait() { return this.phone() && this._mq.portrait.matches; },
   tt(desk, touch) { return this.touch() ? touch : desk; },
+  fishVerb(prompt) {
+    const text = prompt || "";
+    const state = typeof Fishing !== "undefined" ? Fishing.state : "";
+    if (state === "bite") return "Hook";
+    if (state && state !== "idle") return "Fish";
+    if (text.indexOf("Tap Fish to hook") === 0) return "Hook";
+    if (!text || text === "Tap Fish to cast") return "Fish";
+    if (text.indexOf("Pick") === 0) return "Pick";
+    if (text.indexOf("Talk") === 0) return "Talk";
+    if (text.indexOf("Greet") === 0) return "Greet";
+    if (text.indexOf("Sit") === 0) return "Sit";
+    if (text.indexOf("Stand") === 0) return "Stand";
+    if (text.indexOf("Sleep") === 0) return "Sleep";
+    if (text.indexOf("Read") === 0 || text === "The sundial") return "Read";
+    if (text.indexOf("Board") === 0 || text.indexOf("Boat back") === 0) return "Board";
+    if (text.indexOf("Clear") === 0) return "Clear";
+    if (text.indexOf("Set a campfire") === 0) return "Camp";
+    if (text.indexOf("Packing bench") === 0) return "Cook";
+    if (text.indexOf("cooler") !== -1 || text.indexOf("Check the mail tray") === 0 || text.indexOf("Manage the tank") === 0 || text.indexOf("Manage the wall mount") === 0) return "Open";
+    return "Fish";
+  },
 
   anyMenu() {
     return this.journalOpen || Inventory.open || Shop.openFlag || Board.open || Mail.open
@@ -479,6 +501,16 @@ const UI = {
     } else {
       this.els.prompt.classList.add("hidden");
       this.els.prompt.style.bottom = "";
+    }
+    if (this.touch()) {
+      if (!this._fishBtn) this._fishBtn = document.getElementById("btn-fish");
+      if (this._fishBtn) {
+        const verb = this.fishVerb(prompt);
+        if (verb !== this._fishVerb) {
+          this._fishBtn.textContent = verb;
+          this._fishVerb = verb;
+        }
+      }
     }
     if (this.anyMenu() && this.els.clock) this.els.clock.classList.remove("expanded");
     if (!this._packBtn) this._packBtn = document.getElementById("btn-packup");

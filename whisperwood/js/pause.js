@@ -58,10 +58,70 @@ const Pause = {
     const credits = document.getElementById("pause-credits");
     if (credits) credits.classList.toggle("hidden");
   });
+  const fsWeb = !window.valeDesktop
+    && typeof document.documentElement.requestFullscreen === "function"
+    && document.fullscreenEnabled !== false
+    && matchMedia("(pointer: coarse)").matches;
+  if (fsWeb) document.documentElement.classList.add("web-fs");
+  const releaseFsHold = () => {
+    const pads = [document.getElementById("move-pad"), document.getElementById("menu-pad")];
+    for (let p = 0; p < pads.length; p++) {
+      const pad = pads[p];
+      if (!pad) continue;
+      const btns = pad.querySelectorAll("button");
+      for (let i = 0; i < btns.length; i++) btns[i].dispatchEvent(new Event("pointercancel"));
+    }
+    const fish = document.getElementById("btn-fish");
+    if (fish) fish.dispatchEvent(new Event("pointercancel"));
+    if (typeof Input !== "undefined") {
+      Input.down = Object.create(null);
+      if (typeof Input._clearPadKeys === "function") Input._clearPadKeys();
+    }
+    if (typeof Minigame !== "undefined") Minigame._padHold = false;
+  };
+  const toggleFs = (ev) => {
+    if (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+    if (window.valeDesktop) {
+      window.valeDesktop.toggleFullscreen();
+      return;
+    }
+    if (document.fullscreenElement) {
+      const exiting = document.exitFullscreen();
+      if (exiting && typeof exiting.catch === "function") exiting.catch(() => {});
+      return;
+    }
+    let entered;
+    try {
+      entered = document.documentElement.requestFullscreen();
+    } catch (err) {
+      return;
+    }
+    const lockLand = () => {
+      try {
+        if (screen.orientation && typeof screen.orientation.lock === "function") {
+          const locked = screen.orientation.lock("landscape");
+          if (locked && typeof locked.catch === "function") locked.catch(() => {});
+        }
+      } catch (err) { /* ignore */ }
+    };
+    if (entered && typeof entered.then === "function") entered.then(lockLand).catch(() => {});
+    else lockLand();
+  };
   const full = document.getElementById("pause-fullscreen");
-  if (full) full.addEventListener("click", () => {
-    if (window.valeDesktop) window.valeDesktop.toggleFullscreen();
-  });
+  if (full) full.addEventListener("click", toggleFs);
+  const fullTitle = document.getElementById("btn-fullscreen");
+  if (fullTitle) fullTitle.addEventListener("click", toggleFs);
+  if (fsWeb) {
+    document.addEventListener("fullscreenchange", () => {
+      const label = document.fullscreenElement ? "Leave full screen" : "Full screen";
+      if (full) full.textContent = label;
+      if (fullTitle) fullTitle.textContent = label;
+      releaseFsHold();
+    });
+  }
   const quit = document.getElementById("pause-quit");
   if (quit) quit.addEventListener("click", () => window.close());
 })();
