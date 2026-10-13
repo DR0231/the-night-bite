@@ -1354,3 +1354,61 @@ li { margin-bottom: 0.35rem; }
 .condensed-list li { margin-bottom: 0.25rem; }
 
 .latest-log-body { font-size: 0.95rem; }
+
+/* —— Mobile browser pass (safe areas, dvh, tap targets) —— */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { min-height: 100vh; min-height: 100dvh; }
+.header-inner {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+main {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+.site-footer {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-bottom: max(1.5rem, calc(1rem + env(safe-area-inset-bottom)));
+}
+a, button, label, summary { -webkit-tap-highlight-color: rgba(240, 168, 48, 0.18); }
+button, .btn, .site-nav a, .nav-more-btn, .species-subnav a, .gear-sticky-nav a { touch-action: manipulation; }
+@media (max-width: 900px) {
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.3rem;
+    justify-content: center;
+  }
+  .site-nav ul { overflow: visible; }
+  .nav-more-btn { min-width: 44px; }
+  .nav-more-panel {
+    position: fixed;
+    top: auto;
+    right: max(0.5rem, env(safe-area-inset-right));
+    max-height: 70dvh;
+    overflow-y: auto;
+  }
+  .nav-more-panel a { min-height: 44px; display: flex; align-items: center; justify-content: flex-start; padding: 0 0.9rem; }
+  .species-subnav a, .gear-sticky-nav a { min-height: 44px; min-width: 44px; justify-content: center; }
+  .footer-inner nav { gap: 0.25rem 0.5rem; }
+  .footer-inner a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.4rem;
+  }
+  .pack-list label { display: block; padding: 0.35rem 0; min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+@media (max-width: 559px) {
+  .pool-lead { font-size: 0.8rem; white-space: normal; overflow: visible; }
+}
+@media (max-width: 420px) {
+  .header-inner { gap: 0.5rem; }
+  .site-nav ul { gap: 0 0.2rem; }
+  .site-nav a { padding: 0 0.25rem; }
+}

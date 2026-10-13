@@ -1,0 +1,9 @@
+{
+  "name": "The Night Bite",
+  "short_name": "Night Bite",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0a1628",
+  "theme_color": "#0a1628",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
