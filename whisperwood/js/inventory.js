@@ -49,7 +49,7 @@ const Inventory = {
     const left = this.baitCount(id);
     if (left <= 0) {
       Save.data.inventory.equippedBait = "none";
-      UI.toastNote(`${BAIT[id].name} is gone. Empty hook — pick bait in the pack (I).`);
+      UI.toastNote((typeof UI !== "undefined" && UI.tt ? UI.tt(`${BAIT[id].name} is gone. Empty hook — pick bait in the pack (I).`, `${BAIT[id].name} is gone. Empty hook — pick bait in the Pack.`) : `${BAIT[id].name} is gone. Empty hook — pick bait in the pack (I).`));
     } else if (left < (DESIGN.baitLowWarn || 3)) {
       UI.toastNote(`${BAIT[id].name} running low (×${left}).`);
     }

@@ -87,32 +87,33 @@ const Cottage = {
   },
 
   hint() {
+    const tt = (desk, touch) => (typeof UI !== "undefined" && UI.tt ? UI.tt(desk, touch) : desk);
     if (World.id !== "cottage") return "";
     if (this.carry) return "E place · R rotate · F flip · -/+ size";
-    if (this.sitting) return "Press E to stand";
+    if (this.sitting) return tt("Press E to stand", "Stand up");
     if (this.nearSlot("chair")) return "E sit · Q pick up";
     const slot = this.nearAnySlot();
-    if (slot) return "E or Q to pick up";
+    if (slot) return tt("E or Q to pick up", "Pick up");
     if (this.near("bed")) {
       return (typeof Game !== "undefined" && Game.sleepReady && !Game.sleepReady())
         ? Game.sleepRefusal()
-        : "Press E to sleep until dusk or dawn";
+        : tt("Press E to sleep until dusk or dawn", "Sleep until dusk or dawn");
     }
-    if (this.near("bench")) return "Press E — packing bench (cook & bait)";
-    if (this.near("crate")) return "Press E — cottage cooler";
-    if (this.near("calendar")) return "Press E to read the forecast board";
-    if (this.near("mailtray")) return "Press E to check the mail tray";
+    if (this.near("bench")) return tt("Press E — packing bench (cook & bait)", "Packing bench (cook & bait)");
+    if (this.near("crate")) return tt("Press E — cottage cooler", "Cottage cooler");
+    if (this.near("calendar")) return tt("Press E to read the forecast board", "Read the forecast board");
+    if (this.near("mailtray")) return tt("Press E to check the mail tray", "Check the mail tray");
     if (this.near("tank")) {
       const aq = Save.data.cottage.aquarium || [];
-      if (aq.length || this.tuckable()) return "Press E to manage the tank";
+      if (aq.length || this.tuckable()) return tt("Press E to manage the tank", "Manage the tank");
     }
-    if (this.near("certificate")) return "Press E to read your fisher certificate";
+    if (this.near("certificate")) return tt("Press E to read your fisher certificate", "Read your fisher certificate");
     if (this.near("dayclock")) {
       return Save.data.inventory.items.dayclock
-        ? "Press E — the sundial"
+        ? tt("Press E — the sundial", "The sundial")
         : "A blank nail. Wren sells a cottage sundial.";
     }
-    if (this.near("trophy")) return "Press E to manage the wall mount";
+    if (this.near("trophy")) return tt("Press E to manage the wall mount", "Manage the wall mount");
     return "";
   },
 
@@ -228,7 +229,7 @@ const Cottage = {
     Player.x = p.x;
     Player.y = face === 3 ? p.y - 1 : p.y + 2;
     Player.dir = face === 1 ? 1 : face === 2 ? 2 : face === 3 ? 3 : 0;
-    UI.toastNote("The chair creaks. Rest comes slow. E or walk to stand.");
+    UI.toastNote((typeof UI !== "undefined" && UI.tt ? UI.tt("The chair creaks. Rest comes slow. E or walk to stand.", "The chair creaks. Rest comes slow. Walk or tap Fish to stand.") : "The chair creaks. Rest comes slow. E or walk to stand."));
     return true;
   },
 
@@ -705,7 +706,7 @@ const Marsh = {
       addDeco("raft", 4.2 * TILE_SIZE, 16.3 * TILE_SIZE, {
         boat: {
           to: "vale", spawn: { x: 59.2 * TILE_SIZE, y: 26.4 * TILE_SIZE }, dir: 1,
-          label: "Press E to boat back to the vale",
+          label: (typeof UI !== "undefined" && UI.tt ? UI.tt("Press E to boat back to the vale", "Boat back to the vale") : "Press E to boat back to the vale"),
         },
       });
       // East landing: the island boat. Gate stays Island.open() (millpond + mill spine done).
@@ -852,7 +853,7 @@ const Island = {
       addDeco("raft", 8.3 * TILE_SIZE, 22.2 * TILE_SIZE, {
         boat: {
           to: "marsh", spawn: { x: 39.0 * TILE_SIZE, y: 16.6 * TILE_SIZE }, dir: 1,
-          label: "Press E to boat back to the millpond",
+          label: (typeof UI !== "undefined" && UI.tt ? UI.tt("Press E to boat back to the millpond", "Boat back to the millpond") : "Press E to boat back to the millpond"),
         },
       });
       Pickups.scatter(addDeco, get, rng, tw, th, "island", solidAt);

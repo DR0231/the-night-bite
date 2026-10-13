@@ -233,16 +233,18 @@ const Interact = {
 
   /** Talk, pickup, and cottage beat the idle Fish line. */
   priorityHint() {
+    const tt = (desk, touch) => (typeof UI !== "undefined" && UI.tt ? UI.tt(desk, touch) : desk);
     if (World.id === "cottage") return Cottage.hint();
     const pick = Pickups.near();
-    if (pick) return `Press E to pick ${pick}`;
+    if (pick) return tt(`Press E to pick ${pick}`, `Pick ${pick}`);
     const n = Npcs.at(Player.x, Player.y);
-    if (n) return `Press E to talk to ${n.name}`;
-    if (typeof Passer !== "undefined" && Passer.near()) return "Press E to greet the passer-by";
+    if (n) return tt(`Press E to talk to ${n.name}`, `Talk to ${n.name}`);
+    if (typeof Passer !== "undefined" && Passer.near()) return tt("Press E to greet the passer-by", "Greet the passer-by");
     return "";
   },
 
   hint() {
+    const tt = (desk, touch) => (typeof UI !== "undefined" && UI.tt ? UI.tt(desk, touch) : desk);
     const first = this.priorityHint();
     if (first) return first;
     const near = this._nearest();
@@ -250,18 +252,18 @@ const Interact = {
       if (near.kind === "sit") {
         return this._stumpCooling()
           ? "The stump is resting until tomorrow."
-          : "Press E to sit on the stump until dusk or dawn";
+          : tt("Press E to sit on the stump until dusk or dawn", "Sit on the stump until dusk or dawn");
       }
-      if (near.kind === "weeds") return "Press E to clear weeds";
+      if (near.kind === "weeds") return tt("Press E to clear weeds", "Clear weeds");
       if (near.kind === "boat") {
         const b = near.deco.boat;
-        return this._boatOpen(b) ? (b.label || "Press E to board the boat") : (b.lashed || "The boat stays lashed.");
+        return this._boatOpen(b) ? (b.label || tt("Press E to board the boat", "Board the boat")) : (b.lashed || "The boat stays lashed.");
       }
-      if (near.kind === "crate") return "Press E — field cooler";
-      if (near.kind === "sign") return near.deco.type === "waterSign" ? "Press E to read the water sign" : "Press E to read the sign";
+      if (near.kind === "crate") return tt("Press E — field cooler", "Field cooler");
+      if (near.kind === "sign") return near.deco.type === "waterSign" ? tt("Press E to read the water sign", "Read the water sign") : tt("Press E to read the sign", "Read the sign");
     }
     if (Survival.atFire() && !World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE)) return "Sit by the fire";
-    if (Survival.canPlantFire()) return "Press E to set a campfire";
+    if (Survival.canPlantFire()) return tt("Press E to set a campfire", "Set a campfire");
     return "";
   },
 

@@ -7,6 +7,20 @@ const UI = {
 
   els: {},
 
+  _mq: {
+    coarse: matchMedia("(pointer: coarse)"),
+    small: matchMedia("(max-width: 720px), (max-height: 480px)"),
+    portrait: matchMedia("(orientation: portrait) and (max-width: 720px)"),
+  },
+  _noteQ: [],
+  _regionLast: "",
+  _regionAt: 0,
+
+  touch() { return this._mq.coarse.matches; },
+  phone() { return this.touch() && this._mq.small.matches; },
+  phonePortrait() { return this.phone() && this._mq.portrait.matches; },
+  tt(desk, touch) { return this.touch() ? touch : desk; },
+
   anyMenu() {
     return this.journalOpen || Inventory.open || Shop.openFlag || Board.open || Mail.open
       || (typeof Bench !== "undefined" && Bench.openFlag)
@@ -51,6 +65,13 @@ const UI = {
       start.addEventListener("pointerdown", (e) => {
         if (e.target.closest("button") || e.target.closest("#move-pad")) return;
         Game.start({ clearUse: true });
+      });
+    }
+    const clock = this.els.clock;
+    if (clock) {
+      clock.addEventListener("click", () => {
+        if (!this.phone()) return;
+        clock.classList.toggle("expanded");
       });
     }
     this.buildJournal();
@@ -292,11 +313,25 @@ const UI = {
    * Plain parchment note. Long copy (signs, letters) passes a title so the body
    * drops into the smaller desc line, and the toast stays up long enough to read.
    */
-  toastNote(text, title) {
+  toastNote(text, title, now) {
     if (this.toastHoldT > 0) return;
     const el = this.els && this.els.toast;
     if (!el || !this.els.toastName) return;
     text = String(text == null ? "" : text);
+    if (this.toastT > 0 && now !== true) {
+      const titleKey = title || "";
+      const last = this._noteQ[this._noteQ.length - 1];
+      const desc = this.els.toastDesc ? this.els.toastDesc.textContent : "";
+      const name = this.els.toastName.textContent;
+      const sameLast = !!(last && last.text === text && (last.title || "") === titleKey);
+      const sameShow = desc
+        ? text === desc && (titleKey ? name === titleKey : name === "Note" || name === "Vale")
+        : text === name && !titleKey;
+      if (sameLast || sameShow) return;
+      if (this._noteQ.length >= 3) this._noteQ.shift();
+      this._noteQ.push({ text, title });
+      return;
+    }
     const long = !!title || text.length > (DESIGN.toastLongChars || 56);
     el.classList.remove("miss");
     const kicker = el.querySelector(".toast-kicker");
@@ -312,7 +347,7 @@ const UI = {
 
   toastWarn(text) {
     this.toastHoldT = 0;
-    this.toastNote(text);
+    this.toastNote(text, undefined, true);
     this.toastT = DESIGN.toastMax || 7;
     this.toastHoldT = this.toastT;
   },
@@ -323,6 +358,10 @@ const UI = {
       this.toastT -= dt;
       if (this.toastT <= 0) {
         if (this.els.toast) this.els.toast.classList.add("hidden");
+        if (this._noteQ.length && this.toastHoldT <= 0) {
+          const next = this._noteQ.shift();
+          this.toastNote(next.text, next.title, true);
+        }
         if (typeof Stamps !== "undefined") Stamps.flush();
         try { if (typeof MillSpine !== "undefined") MillSpine.flushNote(); } catch (e) { /* mill note optional */ }
       }
@@ -383,22 +422,33 @@ const UI = {
     }
 
     if (this.els.regionTitle) {
+      let title = "Whisperwood Vale";
+      let blurb = "A peaceful woodland valley with crystal-clear waters and abundant fish.";
       if (World.id === "cave") {
-        this.els.regionTitle.textContent = "Crystal Cave";
-        this.els.regionBlurb.textContent = "A hidden lake glows under the southern hill. Still water, and fish like lanterns.";
+        title = "Crystal Cave";
+        blurb = "A hidden lake glows under the southern hill. Still water, and fish like lanterns.";
       } else if (World.id === "cottage") {
-        this.els.regionTitle.textContent = "Cottage";
-        this.els.regionBlurb.textContent = "Bed, tank, bench, and the daily board. Home, when the vale lets you rest.";
+        title = "Cottage";
+        blurb = "Bed, tank, bench, and the daily board. Home, when the vale lets you rest.";
       } else if (World.id === "marsh") {
-        this.els.regionTitle.textContent = "Misty Millpond";
-        this.els.regionBlurb.textContent = "East of the lake, a quiet marsh remembers the old mill.";
+        title = "Misty Millpond";
+        blurb = "East of the lake, a quiet marsh remembers the old mill.";
       } else if (World.id === "island") {
-        this.els.regionTitle.textContent = "Windward Reach";
-        this.els.regionBlurb.textContent = "Open swell past the millpond. One boat home, always.";
-      } else {
-        this.els.regionTitle.textContent = "Whisperwood Vale";
-        this.els.regionBlurb.textContent = "A peaceful woodland valley with crystal-clear waters and abundant fish.";
+        title = "Windward Reach";
+        blurb = "Open swell past the millpond. One boat home, always.";
       }
+      const card = document.getElementById("region-card");
+      if (title !== this._regionLast) {
+        this._regionLast = title;
+        this._regionAt = performance.now();
+        if (card) card.classList.remove("region-away");
+      }
+      if (this.els.start && !this.els.start.classList.contains("hidden")) this._regionAt = performance.now();
+      if (card && !card.classList.contains("region-away") && performance.now() - this._regionAt >= 4000) {
+        card.classList.add("region-away");
+      }
+      this.els.regionTitle.textContent = title;
+      this.els.regionBlurb.textContent = blurb;
     }
 
     let prompt = "";
@@ -420,7 +470,7 @@ const UI = {
       this.els.prompt.textContent = prompt;
       this.els.prompt.classList.remove("hidden");
       this.els.prompt.classList.toggle("bite", Fishing.state === "bite" || Fishing.state === "play");
-      if (Fishing.state === "play") {
+      if (Fishing.state === "play" && !this.phonePortrait()) {
         const scale = (typeof Renderer !== "undefined" && Renderer.cssScale) || 2;
         this.els.prompt.style.bottom = (36 * scale + 8) + "px";
       } else {
@@ -430,6 +480,7 @@ const UI = {
       this.els.prompt.classList.add("hidden");
       this.els.prompt.style.bottom = "";
     }
+    if (this.anyMenu() && this.els.clock) this.els.clock.classList.remove("expanded");
     if (!this._packBtn) this._packBtn = document.getElementById("btn-packup");
     if (this._packBtn) this._packBtn.classList.toggle("is-on", Fishing.state === "aim" && !this.anyMenu());
     const onTitle = !!(this.els.start && !this.els.start.classList.contains("hidden"));

@@ -424,19 +424,19 @@ const Onboard = {
       id: "cast",
       silent: () => Journal.count() >= 1 || (Fishing.active && Fishing.state !== "aim"),
       ready: () => Journal.count() === 0 && !Fishing.active,
-      text: "Water is close. Stand at the edge and press E to cast.",
+      get text() { return (typeof UI !== "undefined" && UI.tt ? UI.tt("Water is close. Stand at the edge and press E to cast.", "Water is close. Stand at the edge and tap Fish to cast.") : "Water is close. Stand at the edge and press E to cast."); },
     },
     {
       id: "journal",
       silent: () => UI.journalOpen,
       ready: () => Journal.count() >= 1,
-      text: "That one goes in the journal. Press J.",
+      get text() { return (typeof UI !== "undefined" && UI.tt ? UI.tt("That one goes in the journal. Press J.", "That one goes in the journal. Tap Journal.") : "That one goes in the journal. Press J."); },
     },
     {
       id: "pack",
       silent: () => Inventory.open,
       ready: () => Journal.count() >= 1,
-      text: "Bait and rods live in the pack. Press I.",
+      get text() { return (typeof UI !== "undefined" && UI.tt ? UI.tt("Bait and rods live in the pack. Press I.", "Bait and rods live in the pack. Tap Pack.") : "Bait and rods live in the pack. Press I."); },
     },
     {
       id: "needs",

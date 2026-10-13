@@ -115,7 +115,7 @@ const Minigame = {
     else if (this._tapAt != null && !this.done && this.t - this._tapAt > 0.18 && !this._tapHint) {
       this._tapHint = true;
       this._tapAt = null;
-      try { UI.toastNote("Hold E / Space to keep tension — don’t tap"); } catch (err) { /* hint still shows */ }
+      try { UI.toastNote(typeof UI !== "undefined" && UI.tt ? UI.tt("Hold E / Space to keep tension — don’t tap", "Hold Fish to keep tension — don’t tap") : "Hold E / Space to keep tension — don’t tap"); } catch (err) { /* hint still shows */ }
     }
     const rain = this.rainLean() ? (DESIGN.rainPull || 0) : 0;
     this.value += (hold ? 0.72 : -(0.60 + 0.32 * (this.weight || 0) + rain)) * dt;
@@ -146,9 +146,10 @@ const Minigame = {
   },
 
   hint() {
-    if (this.kind === "timing" || this.kind === "timingFast") return "Tap E / Space in the bright band";
-    if ((this.weight || 0) >= 0.7) return "Hold E / Space to keep tension — don’t tap. It’s heavy — keep the line steady.";
-    return "Hold E / Space to keep tension — don’t tap";
+    const tt = (desk, touch) => (typeof UI !== "undefined" && UI.tt ? UI.tt(desk, touch) : desk);
+    if (this.kind === "timing" || this.kind === "timingFast") return tt("Tap E / Space in the bright band", "Tap Fish in the bright band");
+    if ((this.weight || 0) >= 0.7) return tt("Hold E / Space to keep tension — don’t tap. It’s heavy — keep the line steady.", "Hold Fish to keep tension — don’t tap. It’s heavy — keep the line steady.");
+    return tt("Hold E / Space to keep tension — don’t tap", "Hold Fish to keep tension — don’t tap");
   },
 
   draw(ctx, vw, vh) {
