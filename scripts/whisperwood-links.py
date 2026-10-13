@@ -22,5 +22,9 @@ for name in ["play.html", "index.html", "guide.html"]:
         t, n = re.subn(r'(\n(\s*)<a href="guide.html">Guide</a>\n)', r'\1\2<a class="nb-feedback" href="' + FORM + r'" target="_blank" rel="noopener">Feedback</a>\n', t, count=1)
         if n == 0:
             t = t.replace("</nav>", '  <a class="nb-feedback" href="' + FORM + '" target="_blank" rel="noopener">Feedback</a>\n    </nav>', 1)
+    if name == "play.html":
+        slot = '<div id="nb-links" class="nb-links"></div>'
+        if slot in t:
+            t = t.replace(slot, '<div id="nb-links" class="nb-links"><a class="nb-back" href="../whisperwood.html">← Night Bite</a><a class="nb-feedback" href="' + FORM + '" target="_blank" rel="noopener">Feedback</a></div>', 1)
     p.write_text(t, encoding="utf-8")
 print("links ok")
