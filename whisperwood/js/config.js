@@ -151,10 +151,11 @@ const DESIGN = {
   onboardWindow: 600,
   /* Hook fights that still show the E / Space line above the bar. After this the bar is the cue. */
   fightHintCasts: 3,
-  /* Parchment note timing: base seconds, extra per character, hard cap. Notes longer than toastLongChars drop to the small body line under a title. */
+  /* Parchment note timing: base seconds, extra per character. Plain notes cap at noteHoldMax milliseconds. Warnings cap at toastMax seconds. Notes longer than toastLongChars drop to the small body line under a title. */
   toastBase: 1.8,
   toastPerChar: 0.04,
   toastMax: 7,
+  noteHoldMax: 9000,
   toastLongChars: 56,
   warps: [
     { id: "vale", label: "Vale spawn", map: "vale", x: 32.5, y: 26.2, dir: 0 },

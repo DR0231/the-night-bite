@@ -287,6 +287,7 @@ const UI = {
     const el = this.els.toast;
     if (!el) return;
     el.classList.remove("miss");
+    el.classList.remove("note");
     const kickerEl = el.querySelector(".toast-kicker");
     let kicker = "Caught!";
     if (rec.first) kicker = "First catch!";
@@ -319,6 +320,7 @@ const UI = {
     const el = this.els.toast;
     if (!el) return;
     el.classList.add("miss");
+    el.classList.remove("note");
     const kickerEl = el.querySelector(".toast-kicker");
     if (kickerEl) kickerEl.textContent = "Miss";
     if (this.els.toastName) this.els.toastName.textContent = fish ? `${fish.name} got away…` : "It got away…";
@@ -356,6 +358,7 @@ const UI = {
     }
     const long = !!title || text.length > (DESIGN.toastLongChars || 56);
     el.classList.remove("miss");
+    el.classList.add("note");
     const kicker = el.querySelector(".toast-kicker");
     if (kicker) kicker.textContent = "Vale";
     this.els.toastName.textContent = long ? (title || "Note") : text;
@@ -364,7 +367,7 @@ const UI = {
     if (this.els.toastArt) this.els.toastArt.replaceChildren();
     const base = DESIGN.toastBase || 1.8;
     const per = DESIGN.toastPerChar || 0;
-    this.toastT = Math.min(DESIGN.toastMax || base, base + text.length * per);
+    this.toastT = Math.min(DESIGN.noteHoldMax / 1000, base + text.length * per);
   },
 
   toastWarn(text) {
