@@ -338,7 +338,10 @@ const Input = {
         if (canScroll(nodes[i])) { target = nodes[i]; break; }
       }
     }
-    if (target) target.scrollTop += dir === "down" ? 48 : -48;
+    if (target) {
+      const step = Math.max(48, Math.round(target.clientHeight * 0.8));
+      target.scrollTop += dir === "down" ? step : -step;
+    }
   },
 
   /* Up and down walk the list. Left and right pick the nearest control. No wrap. */
@@ -427,13 +430,20 @@ const Input = {
   _padSeedFocus() {
     const root = this._padFocusRootEl();
     if (!root) { this._padClearFocus(); return; }
-    if (this._padFocus < 0 || this._padFocusRoot !== root) {
+    const items = this._padFocusables(root);
+    const fresh = this._padScrollRoot !== root;
+    if (fresh) {
+      this._padFocusRoot = root;
+      this._padFocus = 0;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].id === "pause-resume") { this._padFocus = i; break; }
+      }
+    } else if (this._padFocus < 0 || this._padFocusRoot !== root) {
       this._padFocusRoot = root;
       this._padFocus = 0;
     }
-    const items = this._padFocusables(root);
     this._padApplyFocus(items);
-    if (this._padScrollRoot !== root) {
+    if (fresh) {
       this._padScrollRoot = root;
       this._padScrollFocus(items);
     }
