@@ -324,12 +324,33 @@ const Input = {
     if (el) el.scrollIntoView({ block: "nearest", inline: "nearest" });
   },
 
+  /* Scroll the menu panel when the list itself has nowhere to move. */
+  _padScrollPanel(root, dir) {
+    if (!root || (dir !== "up" && dir !== "down")) return;
+    const canScroll = (el) => {
+      const oy = getComputedStyle(el).overflowY;
+      return (oy === "auto" || oy === "scroll") && el.scrollHeight > el.clientHeight;
+    };
+    let target = canScroll(root) ? root : null;
+    if (!target) {
+      const nodes = root.querySelectorAll("*");
+      for (let i = 0; i < nodes.length; i++) {
+        if (canScroll(nodes[i])) { target = nodes[i]; break; }
+      }
+    }
+    if (target) target.scrollTop += dir === "down" ? 48 : -48;
+  },
+
   /* Up and down walk the list. Left and right pick the nearest control. No wrap. */
   _padMoveFocus(dir) {
     const root = this._padFocusRootEl();
     if (!root) { this._padClearFocus(); return; }
     const items = this._padFocusables(root);
-    if (!items.length) { this._padClearFocus(); return; }
+    if (!items.length) {
+      this._padClearFocus();
+      this._padScrollPanel(root, dir);
+      return;
+    }
     if (this._padFocusRoot !== root || this._padFocus < 0 || this._padFocus >= items.length) {
       this._padFocusRoot = root;
       this._padFocus = 0;
@@ -338,7 +359,10 @@ const Input = {
     }
     if (dir === "up" || dir === "down") {
       const next = this._padFocus + (dir === "down" ? 1 : -1);
-      if (next < 0 || next >= items.length) return;
+      if (next < 0 || next >= items.length) {
+        this._padScrollPanel(root, dir);
+        return;
+      }
       this._padFocus = next;
       this._padApplyFocus(items);
       this._padScrollFocus(items);
@@ -364,28 +388,28 @@ const Input = {
     this._padScrollFocus(items);
   },
 
-  /* Left stick past 0.5, once on the edge and again every 250 ms while held. */
+  /* Lock the stick at 0.5. Ignore flips until both axes fall under 0.3. Repeat every 250 ms. */
   _padStickEdge(ax, ay) {
-    const thresh = 0.5;
     const axA = Math.abs(ax);
     const ayA = Math.abs(ay);
-    let dir = "";
-    if (axA >= thresh || ayA >= thresh) {
-      dir = axA >= ayA ? (ax < 0 ? "left" : "right") : (ay < 0 ? "up" : "down");
-    }
-    if (!dir) {
-      this._padStickDir = "";
-      this._padStickAt = 0;
+    if (this._padStickDir) {
+      if (axA < 0.3 && ayA < 0.3) {
+        this._padStickDir = "";
+        this._padStickAt = 0;
+        return "";
+      }
+      const t = performance.now();
+      if (this._padStickAt && t - this._padStickAt >= 250) {
+        this._padStickAt = t;
+        return this._padStickDir;
+      }
       return "";
     }
-    const t = performance.now();
-    const same = dir === this._padStickDir;
-    if (!same || (this._padStickAt && t - this._padStickAt >= 250)) {
-      this._padStickDir = dir;
-      this._padStickAt = t;
-      return dir;
-    }
-    return "";
+    if (axA < 0.5 && ayA < 0.5) return "";
+    const dir = axA >= ayA ? (ax < 0 ? "left" : "right") : (ay < 0 ? "up" : "down");
+    this._padStickDir = dir;
+    this._padStickAt = performance.now();
+    return dir;
   },
 
   _padClickFocus() {
