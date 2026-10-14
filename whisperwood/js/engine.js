@@ -134,6 +134,12 @@ const Input = {
       this.down = Object.create(null);
       this._clearPadKeys();
     });
+    const hidePadRing = () => {
+      document.documentElement.classList.remove("pad-input");
+      this._padClearFocus();
+    };
+    window.addEventListener("pointerdown", hidePadRing, true);
+    window.addEventListener("keydown", hidePadRing, true);
   },
 
   bindPad() {
@@ -220,6 +226,8 @@ const Input = {
   _padFocus: -1,
   _padFocusRoot: null,
   _padALock: false,
+  _padStickDir: "",
+  _padStickAt: 0,
 
   _padPressed(pad, i) {
     const b = pad && pad.buttons && pad.buttons[i];
@@ -273,7 +281,7 @@ const Input = {
 
   _padFocusables(root) {
     if (!root) return [];
-    const nodes = root.querySelectorAll("button, input[type=checkbox]");
+    const nodes = root.querySelectorAll("button, a[href], [data-buy], input[type=checkbox]");
     const out = [];
     for (let i = 0; i < nodes.length; i++) {
       const el = nodes[i];
@@ -305,20 +313,68 @@ const Input = {
     this._padFocusRoot = null;
   },
 
+  _padCenter(el) {
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width * 0.5, y: r.top + r.height * 0.5 };
+  },
+
+  /* Nearest control in one direction. No wrap: stay put when that side is empty. */
   _padMoveFocus(dir) {
     const root = this._padFocusRootEl();
     if (!root) { this._padClearFocus(); return; }
     const items = this._padFocusables(root);
     if (!items.length) { this._padClearFocus(); return; }
-    if (this._padFocusRoot !== root) {
+    if (this._padFocusRoot !== root || this._padFocus < 0 || this._padFocus >= items.length) {
       this._padFocusRoot = root;
       this._padFocus = 0;
-    } else {
-      const n = items.length;
-      const i = this._padFocus < 0 ? 0 : this._padFocus;
-      this._padFocus = (i + dir + n * 2) % n;
+      this._padApplyFocus(items);
+      return;
     }
+    const cur = this._padCenter(items[this._padFocus]);
+    let best = -1;
+    let bestD = Infinity;
+    for (let i = 0; i < items.length; i++) {
+      if (i === this._padFocus) continue;
+      const p = this._padCenter(items[i]);
+      const dx = p.x - cur.x;
+      const dy = p.y - cur.y;
+      let along = 0;
+      if (dir === "up") along = -dy;
+      else if (dir === "down") along = dy;
+      else if (dir === "left") along = -dx;
+      else if (dir === "right") along = dx;
+      else continue;
+      if (along <= 0.5) continue;
+      const d = dx * dx + dy * dy;
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    if (best < 0) return;
+    this._padFocus = best;
     this._padApplyFocus(items);
+  },
+
+  /* Left stick past 0.5, once on the edge and again every 250 ms while held. */
+  _padStickEdge(ax, ay) {
+    const thresh = 0.5;
+    const axA = Math.abs(ax);
+    const ayA = Math.abs(ay);
+    let dir = "";
+    if (axA >= thresh || ayA >= thresh) {
+      dir = axA >= ayA ? (ax < 0 ? "left" : "right") : (ay < 0 ? "up" : "down");
+    }
+    if (!dir) {
+      this._padStickDir = "";
+      this._padStickAt = 0;
+      return "";
+    }
+    const t = performance.now();
+    const same = dir === this._padStickDir;
+    if (!same || (this._padStickAt && t - this._padStickAt >= 250)) {
+      this._padStickDir = dir;
+      this._padStickAt = t;
+      return dir;
+    }
+    return "";
   },
 
   _padClickFocus() {
@@ -360,6 +416,8 @@ const Input = {
         this._padClearFocus();
         this._padWasOn = false;
         this._padALock = false;
+        this._padStickDir = "";
+        this._padStickAt = 0;
         this._padPrevBtn = Object.create(null);
         const busy = (typeof UI !== "undefined" && UI.anyMenu())
           || (typeof Npcs !== "undefined" && Npcs.talkId)
@@ -373,30 +431,38 @@ const Input = {
     const now = Object.create(null);
     for (let i = 0; i < watch.length; i++) now[watch[i]] = this._padPressed(pad, watch[i]);
     const rise = (i) => now[i] && !this._padPrevBtn[i];
+    const ax = pad.axes && pad.axes.length ? (pad.axes[0] || 0) : 0;
+    const ay = pad.axes && pad.axes.length > 1 ? (pad.axes[1] || 0) : 0;
+    const dead = 0.35;
     if (!now[0]) this._padALock = false;
     if (this._padMenuOpen()) {
       this._syncPadKey("arrowup", false);
       this._syncPadKey("arrowdown", false);
       this._syncPadKey("arrowleft", false);
       this._syncPadKey("arrowright", false);
-      if (rise(12) || rise(14)) this._padMoveFocus(-1);
-      if (rise(13) || rise(15)) this._padMoveFocus(1);
-      if (!(rise(12) || rise(14) || rise(13) || rise(15))) this._padSeedFocus();
+      const stickDir = this._padStickEdge(ax, ay);
+      let moved = false;
+      if (rise(12)) { this._padMoveFocus("up"); moved = true; }
+      else if (rise(13)) { this._padMoveFocus("down"); moved = true; }
+      else if (rise(14)) { this._padMoveFocus("left"); moved = true; }
+      else if (rise(15)) { this._padMoveFocus("right"); moved = true; }
+      else if (stickDir) { this._padMoveFocus(stickDir); moved = true; }
+      if (!moved) this._padSeedFocus();
       if (rise(0)) this._padClickFocus();
       if (this._padOwned.e) {
         this.setKey("e", false, false);
         delete this._padOwned.e;
         if (typeof Minigame !== "undefined") Minigame._padHold = false;
       }
+      /* B closes a menu. Start always sends escape, including mid-fight. */
       this._syncPadKey("escape", !!(now[1] || now[9]));
       this._syncPadKey("j", !!now[3]);
       this._syncPadKey("i", !!now[2]);
       this._syncPadKey("shift", false);
     } else {
       this._padClearFocus();
-      const ax = pad.axes && pad.axes.length ? (pad.axes[0] || 0) : 0;
-      const ay = pad.axes && pad.axes.length > 1 ? (pad.axes[1] || 0) : 0;
-      const dead = 0.35;
+      this._padStickDir = "";
+      this._padStickAt = 0;
       this._syncPadKey("arrowleft", ax < -dead || !!now[14]);
       this._syncPadKey("arrowright", ax > dead || !!now[15]);
       this._syncPadKey("arrowup", ay < -dead || !!now[12]);
@@ -415,9 +481,17 @@ const Input = {
         this._syncPadKey("e", false);
         if (typeof Minigame !== "undefined") Minigame._padHold = false;
       }
-      this._syncPadKey("escape", !!(now[1] || now[9]));
+      /* B does nothing with no menu. Start still pauses. */
+      this._syncPadKey("escape", !!now[9]);
       this._syncPadKey("j", !!now[3]);
       this._syncPadKey("i", !!now[2]);
+    }
+    if (Math.abs(ax) >= dead || Math.abs(ay) >= dead || this._padPressed(pad, 4)) {
+      document.documentElement.classList.add("pad-input");
+    } else {
+      for (let i = 0; i < watch.length; i++) {
+        if (now[watch[i]]) { document.documentElement.classList.add("pad-input"); break; }
+      }
     }
     this._padPrevBtn = now;
   },

@@ -973,6 +973,10 @@ input[type=checkbox]:focus-visible,
   outline-offset: 2px;
 }
 
+html:not(.pad-input) .pad-focus {
+  outline: none;
+}
+
 .journal-panel > button[data-close],
 .journal-panel > #shop-gift {
   display: block;
