@@ -1,6 +1,6 @@
 ---
 name: verify-whisperwood
-description: "Drive Whisperwood Vale's web game the way a player does — play.html menus and the guide page — on an isolated static server. Use when proving a play, journal, pack, pause, save, or guide change, or when asked to verify the vale in a browser."
+description: "Drive Whisperwood Vale's web game the way a player does — play.html menus, a cast, the stall, the cottage, the daily board, a 915px phone, and the guide page — on an isolated static server. Use when proving a play, journal, pack, pause, save, cast, stall, cottage, board, phone, or guide change, or when asked to verify the vale in a browser."
 ---
 
 # Verify Whisperwood Vale
@@ -84,7 +84,32 @@ Read `localStorage` key `whisperwood-save-v1` with `browser_cdp` method `Runtime
 
 That is the save the game writes. Do not call `Save.write` or any admin command. F8 admin is not a guest path.
 
-The starter map does not include casting, the stall, the cottage, or the daily board. Do not report those as verified.
+Casting, the stall, the cottage, and the daily board are verified only by `cast-fight`, `stall`, `cottage`, `board`, and `phone-915`. Do not report them from `enter-vale`.
+
+Walking holds a direction key and polls `#prompt` until the expected text appears. Release the key when it matches. A timer is not arrival. If the player is blocked, step perpendicular and hold the original direction again.
+
+A new recipe that needs a specific room pastes a save: Pause, scroll `#btn-import` into view, fill `#paste-save-text`, click `#paste-save-btn`. The page reloads. Before that paste, copy the current `whisperwood-save-v1` into the evidence folder. Use a fresh `VALE_VERIFY_RUN` per new recipe. Do not restore an earlier save onto that origin.
+
+Wait until `#catch-toast` has class `hidden` before the next action. If it becomes visible again, wait until it is hidden once more. Notes can hold about 9 seconds.
+
+While an overlay is open, read `#clock-text`, then read it again after about two seconds. The text may match or move one displayed minute. A second minute means the clock was not frozen.
+
+Match overlay copy with `innerText`. A label inside `strong` still reads as plain words.
+
+## Recipes
+
+Landed fish is random. None of these recipes measure real-device feel, Electron-only paths, or the limits of touch emulation.
+
+- `enter-vale` proves the start button and a keypress dismiss the title and show the HUD. Viewport 1280×720. It cannot verify a later day or a saved return.
+- `journal` proves the fish collection opens and closes, and that close writes the save. Viewport 1280×720. It cannot verify a landed fish.
+- `pack` proves the pack opens and that close writes the starter rod and bait on a fresh origin. Viewport 1280×720. It cannot verify a bought rod.
+- `pause` proves Esc opens the menu and Keep fishing closes it. Viewport 1280×720. It cannot verify the blur path.
+- `guide` proves the how-to-play page from Home, the play nav, and its own URL. Viewport 1280×720. It cannot verify the Electron window.
+- `cast-fight` proves a Calm Pond cast reaches the bright-band line and ends in a catch or miss toast. Viewport 1280×720. It cannot verify which fish lands. The hook prompt is not reached.
+- `stall` proves Wren's stall opens and buying worms drops coins and raises bait. Viewport 1280×720. It cannot verify other catalog rows or gifts.
+- `cottage` proves the bench, wall mount, empty mail tray, tank toast, and sleep. Viewport 1280×720. It cannot verify a letter or a tank that already holds a fish. Sleep is not an overlay.
+- `board` proves the cottage forecast board shows Today, Rumor, and Forecast. Viewport 1280×720. It is not in the vale and cannot verify a particular forecast.
+- `phone-915` proves coarse-pointer verbs, a sign note that shows Sign and wraps to at most three lines, and the sundial buy toast. Viewport 915×412. It cannot verify a real phone. Sundial Read requires the item to be owned.
 
 ## Evidence
 
