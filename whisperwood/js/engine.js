@@ -228,6 +228,7 @@ const Input = {
   _padALock: false,
   _padStickDir: "",
   _padStickAt: 0,
+  _padScrollRoot: null,
 
   _padPressed(pad, i) {
     const b = pad && pad.buttons && pad.buttons[i];
@@ -318,7 +319,12 @@ const Input = {
     return { x: r.left + r.width * 0.5, y: r.top + r.height * 0.5 };
   },
 
-  /* Nearest control in one direction. No wrap: stay put when that side is empty. */
+  _padScrollFocus(items) {
+    const el = items[this._padFocus];
+    if (el) el.scrollIntoView({ block: "nearest", inline: "nearest" });
+  },
+
+  /* Up and down walk the list. Left and right pick the nearest control. No wrap. */
   _padMoveFocus(dir) {
     const root = this._padFocusRootEl();
     if (!root) { this._padClearFocus(); return; }
@@ -330,6 +336,15 @@ const Input = {
       this._padApplyFocus(items);
       return;
     }
+    if (dir === "up" || dir === "down") {
+      const next = this._padFocus + (dir === "down" ? 1 : -1);
+      if (next < 0 || next >= items.length) return;
+      this._padFocus = next;
+      this._padApplyFocus(items);
+      this._padScrollFocus(items);
+      return;
+    }
+    if (dir !== "left" && dir !== "right") return;
     const cur = this._padCenter(items[this._padFocus]);
     let best = -1;
     let bestD = Infinity;
@@ -338,12 +353,7 @@ const Input = {
       const p = this._padCenter(items[i]);
       const dx = p.x - cur.x;
       const dy = p.y - cur.y;
-      let along = 0;
-      if (dir === "up") along = -dy;
-      else if (dir === "down") along = dy;
-      else if (dir === "left") along = -dx;
-      else if (dir === "right") along = dx;
-      else continue;
+      const along = dir === "left" ? -dx : dx;
       if (along <= 0.5) continue;
       const d = dx * dx + dy * dy;
       if (d < bestD) { bestD = d; best = i; }
@@ -351,6 +361,7 @@ const Input = {
     if (best < 0) return;
     this._padFocus = best;
     this._padApplyFocus(items);
+    this._padScrollFocus(items);
   },
 
   /* Left stick past 0.5, once on the edge and again every 250 ms while held. */
@@ -396,7 +407,12 @@ const Input = {
       this._padFocusRoot = root;
       this._padFocus = 0;
     }
-    this._padApplyFocus(this._padFocusables(root));
+    const items = this._padFocusables(root);
+    this._padApplyFocus(items);
+    if (this._padScrollRoot !== root) {
+      this._padScrollRoot = root;
+      this._padScrollFocus(items);
+    }
   },
 
   pollPad() {
@@ -461,6 +477,7 @@ const Input = {
       this._syncPadKey("shift", false);
     } else {
       this._padClearFocus();
+      this._padScrollRoot = null;
       this._padStickDir = "";
       this._padStickAt = 0;
       this._syncPadKey("arrowleft", ax < -dead || !!now[14]);
