@@ -144,7 +144,7 @@ const Inventory = {
       const bits = [];
       if (g.fresh) bits.push(`<span class="ink-fresh">Fresh ×${g.fresh}</span>`);
       if (g.soft) bits.push(`<span class="ink-soft">Soft ×${g.soft}</span>`);
-      return `${f ? f.name : id}: ${bits.join(" · ")} <button type="button" data-eatfish="${id}">Eat</button>`;
+      return `${f ? f.name : id}: ${bits.join(" · ")} <button type="button" data-eatfish="${id}">Eat ${f ? f.name : id}</button>`;
     }).join("<br/>") || "No loose fish.";
     const extras = ["berries", "millreed", "saltberries", "crystal"].map((id) => `${BAIT[id].name} ×${this.baitCount(id)}`).join(" · ");
     const meal = Survival.meal();
@@ -179,7 +179,7 @@ const Inventory = {
       <div class="pack-eats">${cooked}</div>
       <div class="pack-tools">${tools.join("")}</div>
       <p class="pack-craft">Bench: berries + worm → berry blend · crystal + worm → bright glow · meals in the pan</p>
-      <label class="pack-mute"><input type="checkbox" id="chk-mute" ${Save.data.flags.mute ? "checked" : ""}/> Mute audio</label>`;
+      <label class="pack-mute">Mute audio (pack) <input type="checkbox" id="chk-mute" aria-label="Mute audio" ${Save.data.flags.mute ? "checked" : ""}/></label>`;
     el.querySelectorAll("[data-bait]").forEach((btn) => {
       btn.addEventListener("click", () => { this.equip(btn.dataset.bait); this.refresh(); });
     });
