@@ -431,16 +431,17 @@ const Input = {
     const root = this._padFocusRootEl();
     if (!root) { this._padClearFocus(); return; }
     const items = this._padFocusables(root);
+    let pauseResume = 0;
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].id === "pause-resume") { pauseResume = i; break; }
+    }
     const fresh = this._padScrollRoot !== root;
     if (fresh) {
       this._padFocusRoot = root;
-      this._padFocus = 0;
-      for (let i = 0; i < items.length; i++) {
-        if (items[i].id === "pause-resume") { this._padFocus = i; break; }
-      }
+      this._padFocus = pauseResume;
     } else if (this._padFocus < 0 || this._padFocusRoot !== root) {
       this._padFocusRoot = root;
-      this._padFocus = 0;
+      this._padFocus = pauseResume;
     }
     this._padApplyFocus(items);
     if (fresh) {
