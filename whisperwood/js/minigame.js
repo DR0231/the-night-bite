@@ -152,6 +152,13 @@ const Minigame = {
     return tt("Hold E / Space to keep tension — don’t tap", "Hold Fish to keep tension — don’t tap");
   },
 
+  shortHint() {
+    const tt = (desk, touch) => (typeof UI !== "undefined" && UI.tt ? UI.tt(desk, touch) : desk);
+    if (this.kind === "timing" || this.kind === "timingFast") return tt("Tap E / Space", "Tap Fish");
+    if (this.kind === "tension" || this.kind === "tensionErratic") return tt("Hold E / Space", "Hold Fish");
+    return tt("Hold E / Space", "Hold Fish");
+  },
+
   draw(ctx, vw, vh) {
     if (!this.active) return;
     const x = 72, y = vh - 28, w = vw - 144, h = 10;

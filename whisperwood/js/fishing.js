@@ -471,8 +471,7 @@ const Fishing = {
 
   prompt() {
     const tt = (desk, touch) => (typeof UI !== "undefined" && UI.tt ? UI.tt(desk, touch) : desk);
-    if (this.state === "play") return Minigame._hintThisFight ? Minigame.hint() : "";
-    if (this.state === "bite") return tt("Press E / Space to hook!", "Tap Fish to hook!");
+    if (this.state === "play") return Minigame._hintThisFight ? Minigame.hint() : Minigame.shortHint();
     if (this.state === "wait" || this.state === "nibble") {
       return "Watch the bobber…  Move to pack up";
     }
