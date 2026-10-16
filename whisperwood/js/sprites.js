@@ -1004,31 +1004,68 @@ const Sprites = {
 
   mill(ctx, x, y, t) {
     if (typeof Atlas !== "undefined" && Atlas.draw(ctx, "mill", x, y)) return;
-    this.fill(ctx, x - 18, y - 28, 36, 28, PALETTE.wood);
-    this.fill(ctx, x - 18, y - 28, 36, 4, PALETTE.woodHi);
-    ctx.fillStyle = "#6a3030";
-    ctx.beginPath();
-    ctx.moveTo(x - 22, y - 26);
-    ctx.lineTo(x, y - 44);
-    ctx.lineTo(x + 22, y - 26);
-    ctx.fill();
-    this.fill(ctx, x - 4, y - 14, 8, 14, "#2a1c12");
-    this.fill(ctx, x - 14, y - 18, 6, 6, "#c8e0f0");
-    this.ellipse(ctx, x + 20, y - 8, 8, 8, PALETTE.woodLo);
-    if (!(typeof MillSpine !== "undefined" && MillSpine.stage() === "turning")) {
-      this.fill(ctx, x + 19, y - 16, 2, 16, PALETTE.wood);
-      this.fill(ctx, x + 12, y - 9, 16, 2, PALETTE.wood);
-      return;
+    const outline = PALETTE.bootLo;
+    this.fill(ctx, x - 20, y - 26, 34, 26, PALETTE.wood);
+    for (let i = 0; i < 26; i += 5) {
+      const ly = y - 26 + i;
+      this.fill(ctx, x - 20, ly, 34, Math.min(2, 26 - i), PALETTE.woodHi);
+      if (i + 2 < 26) this.fill(ctx, x - 20, ly + 2, 34, 1, PALETTE.woodLo);
     }
-    const frame = Math.floor((t || 0) / (DESIGN.millWheelStep || 0.35)) % 4;
+    this.fill(ctx, x - 19, y - 25, 1, 24, PALETTE.woodHi);
+    this.fill(ctx, x + 12, y - 25, 1, 24, PALETTE.woodLo);
+    for (let row = 0; row <= 24; row++) {
+      const left = (x - 4) + Math.round(row * -16 / 24);
+      const right = (x - 3) + Math.round(row * 16 / 24);
+      const rowY = y - 50 + row;
+      const ridgeL = x - 4;
+      if (left < ridgeL) this.fill(ctx, left, rowY, ridgeL - left, 1, "#8a2c16");
+      if (right > ridgeL + 1) this.fill(ctx, ridgeL + 2, rowY, right - ridgeL - 1, 1, "#5c1e10");
+      if (ridgeL >= left && ridgeL + 1 <= right) this.fill(ctx, ridgeL, rowY, 2, 1, PALETTE.hairHi);
+      this.pixel(ctx, left, rowY, outline);
+      if (right !== left) this.pixel(ctx, right, rowY, outline);
+    }
+    this.fill(ctx, x - 20, y - 25, 1, 25, outline);
+    this.fill(ctx, x + 13, y - 25, 1, 25, outline);
+    this.fill(ctx, x - 20, y - 1, 34, 1, outline);
+    this.fill(ctx, x - 7, y - 13, 8, 13, "#2a1c12");
+    this.fill(ctx, x - 17, y - 24, 8, 8, PALETTE.woodLo);
+    this.fill(ctx, x - 16, y - 23, 6, 6, "#8ed3e6");
+    this.pixel(ctx, x - 16, y - 23, PALETTE.bobberWhite);
+    const turning = typeof MillSpine !== "undefined" && MillSpine.stage() === "turning";
+    const frame = turning ? Math.floor((t || 0) / (DESIGN.millWheelStep || 0.35)) % 4 : 0;
     const a0 = frame * Math.PI / 8;
-    this.fill(ctx, x + 19, y - 9, 2, 2, PALETTE.wood);
-    for (let k = 0; k < 4; k++) {
-      const a = a0 + k * Math.PI / 2;
-      this.fill(ctx, Math.round(x + 20 + Math.cos(a) * 4) - 1, Math.round(y - 8 + Math.sin(a) * 4) - 1, 2, 2, PALETTE.wood);
-      this.fill(ctx, Math.round(x + 20 + Math.cos(a) * 7) - 1, Math.round(y - 8 + Math.sin(a) * 7) - 1, 3, 3, PALETTE.woodHi);
+    const cx = x + 23;
+    const cy = y - 11;
+    const r = 10;
+    for (let i = 0; i < 360; i++) {
+      const a = i * Math.PI / 180;
+      const co = Math.cos(a);
+      const sn = Math.sin(a);
+      this.fill(ctx, Math.round(cx + co * r), Math.round(cy + sn * r), 1, 1, PALETTE.woodLo);
+      this.fill(ctx, Math.round(cx + co * (r - 1)), Math.round(cy + sn * (r - 1)), 1, 1, PALETTE.woodLo);
     }
-    this.fill(ctx, x + 22, Math.round(y - 1 + ((t || 0) * 10) % 6), 1, 2, "#9fc6e0");
+    for (let i = 0; i < 360; i++) {
+      const a = i * Math.PI / 180;
+      this.fill(ctx, Math.round(cx + Math.cos(a) * r), Math.round(cy + Math.sin(a) * r), 1, 1, outline);
+    }
+    for (let k = 0; k < 8; k++) {
+      const a = a0 + k * Math.PI / 4;
+      const co = Math.cos(a);
+      const sn = Math.sin(a);
+      for (let rad = 3; rad <= r - 2; rad++) {
+        this.fill(ctx, Math.round(cx + co * rad), Math.round(cy + sn * rad), 1, 1, PALETTE.wood);
+      }
+      this.fill(ctx, Math.round(cx + co * (r + 1)) - 1, Math.round(cy + sn * (r + 1)) - 1, 3, 3, PALETTE.woodHi);
+    }
+    this.fill(ctx, Math.round(cx) - 2, Math.round(cy) - 2, 4, 4, PALETTE.woodLo);
+    this.fill(ctx, Math.round(cx) - 1, Math.round(cy) - 1, 2, 2, PALETTE.woodHi);
+    if (!turning) return;
+    const drop = Math.round(((t || 0) * 10) % 6);
+    const px = Math.round(cx + Math.cos(Math.PI / 4) * (r + 1));
+    const py = Math.round(cy + Math.sin(Math.PI / 4) * (r + 1));
+    this.pixel(ctx, px, py + drop, PALETTE.riverHi);
+    this.pixel(ctx, px, py + drop + 1, PALETTE.riverHi);
+    this.pixel(ctx, px + 1, py + drop + 1, PALETTE.lakeHi);
   },
 
   millWheel(ctx, cx, cy, r, t) {
