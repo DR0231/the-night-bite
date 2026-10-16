@@ -518,8 +518,18 @@ const UI = {
       this.els.prompt.classList.remove("hidden");
       this.els.prompt.classList.toggle("bite", Fishing.state === "bite" || Fishing.state === "play");
       if (Fishing.state === "play" && !this.phonePortrait()) {
-        const scale = (typeof Renderer !== "undefined" && Renderer.cssScale) || 2;
-        this.els.prompt.style.bottom = (36 * scale + 8) + "px";
+        const canvas = (typeof Renderer !== "undefined" && Renderer.canvas) || document.getElementById("game");
+        const rect = canvas ? canvas.getBoundingClientRect() : null;
+        const vh = typeof Renderer !== "undefined" ? Renderer.viewH : 0;
+        if (rect && rect.height && vh) {
+          const parent = this.els.prompt.offsetParent;
+          const baseBottom = parent ? parent.getBoundingClientRect().bottom : window.innerHeight;
+          const pxPerGame = rect.height / vh;
+          this.els.prompt.style.bottom = Math.round((baseBottom - rect.bottom) + 36 * pxPerGame + 6) + "px";
+        } else {
+          const scale = (typeof Renderer !== "undefined" && Renderer.cssScale) || 2;
+          this.els.prompt.style.bottom = (36 * scale + 8) + "px";
+        }
       } else {
         this.els.prompt.style.bottom = "";
       }
