@@ -44,12 +44,25 @@ const UI = {
   },
   padText(text) {
     if (this.touch() || !document.documentElement.classList.contains("pad-input")) return text;
-    return String(text)
-      .replace(/\bE \/ Space\b/g, "A")
-      .replace(/\bPress E\b/g, "Press A")
-      .replace(/\bpress E\b/g, "press A")
-      .replace(/\bHold E\b/g, "Hold A")
-      .replace(/\bTap E\b/g, "Tap A");
+    const verb = (word) => (match) => (match.charAt(0) === match.charAt(0).toLowerCase() ? word.toLowerCase() : word) + " A";
+    const rules = [
+      [/\bPress Space\b/gi, verb("Press")],
+      [/\bHold Space\b/gi, verb("Hold")],
+      [/\bSpace or E\b/gi, "A"],
+      [/\bE or Space\b/gi, "A"],
+      [/\bE \/ Space\b/gi, "A"],
+      [/\bSpace \/ E\b/gi, "A"],
+      [/\bTap Space\b/gi, verb("Tap")],
+      [/\bE or Fish\b/gi, "A"],
+      [/\bE\/Space\b/gi, "A"],
+      [/\bSpace\/E\b/gi, "A"],
+      [/\bPress E\b/gi, verb("Press")],
+      [/\bHold E\b/gi, verb("Hold")],
+      [/\bTap E\b/gi, verb("Tap")],
+    ];
+    let out = String(text);
+    for (let i = 0; i < rules.length; i++) out = out.replace(rules[i][0], rules[i][1]);
+    return out;
   },
 
   anyMenu() {
