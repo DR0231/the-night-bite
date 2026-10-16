@@ -916,24 +916,123 @@ const Sprites = {
     this.fill(ctx, x - 14, y - 18, 6, 6, "#c8e0f0");
   },
 
-  raft(ctx, x, y) {
+  raft(ctx, x, y, deco) {
+    const island = !!(deco && deco.boat && (deco.boat.to === "island" || (typeof World !== "undefined" && World.id === "island")));
     this.ellipse(ctx, x, y + 6, 18, 6, "rgba(20, 40, 50, 0.3)");
-    ctx.fillStyle = PALETTE.woodLo;
-    ctx.beginPath();
-    ctx.moveTo(x - 18, y);
-    ctx.lineTo(x - 11, y - 8);
-    ctx.lineTo(x + 11, y - 8);
-    ctx.lineTo(x + 18, y);
-    ctx.lineTo(x + 11, y + 7);
-    ctx.lineTo(x - 11, y + 7);
-    ctx.closePath();
-    ctx.fill();
-    this.fill(ctx, x - 10, y - 7, 20, 2, PALETTE.woodHi);
-    this.fill(ctx, x - 9, y - 1, 18, 1, PALETTE.wood);
-    this.fill(ctx, x - 8, y + 3, 16, 1, PALETTE.wood);
-    this.fill(ctx, x - 1, y - 6, 2, 11, PALETTE.woodLo);
-    this.fill(ctx, x + 8, y - 11, 11, 2, PALETTE.woodLo);
-    this.fill(ctx, x + 17, y - 12, 4, 3, "#d8c8a0");
+    const ink = "#241610";
+    const hi = PALETTE.woodHi;
+    const mid = PALETTE.wood;
+    const lo = PALETTE.woodLo;
+    const rows = [
+      [-8, 1, 12],
+      [-7, -6, 14],
+      [-6, -12, 15],
+      [-5, -16, 16],
+      [-4, -18, 16],
+      [-3, -18, 16],
+      [-2, -18, 16],
+      [-1, -18, 16],
+      [0, -18, 17],
+      [1, -18, 16],
+      [2, -18, 16],
+      [3, -18, 16],
+      [4, -16, 15],
+      [5, -12, 13],
+      [6, -6, 11],
+    ];
+    const span = {};
+    for (let i = 0; i < rows.length; i++) span[rows[i][0]] = [rows[i][1], rows[i][2]];
+    const hull = (dx, dy) => {
+      const r = span[dy];
+      return !!r && dx >= r[0] && dx <= r[1];
+    };
+    const edge = (dx, dy) => !hull(dx - 1, dy) || !hull(dx + 1, dy) || !hull(dx, dy - 1) || !hull(dx, dy + 1);
+    for (let dy = -8; dy <= 6; dy++) {
+      const r = span[dy];
+      if (!r) continue;
+      for (let dx = r[0]; dx <= r[1]; dx++) {
+        if (edge(dx, dy)) continue;
+        let above = 0;
+        for (let k = dy - 1; hull(dx, k) && !edge(dx, k); k--) above++;
+        let below = 0;
+        for (let k = dy + 1; hull(dx, k) && !edge(dx, k); k++) below++;
+        this.pixel(ctx, x + dx, y + dy, (above < 2 || below === 0) ? hi : lo);
+      }
+    }
+    for (let dy = -8; dy <= 6; dy++) {
+      const r = span[dy];
+      if (!r) continue;
+      for (let dx = r[0]; dx <= r[1]; dx++) {
+        if (edge(dx, dy)) this.pixel(ctx, x + dx, y + dy, ink);
+      }
+    }
+    const deck = (dx, dy) => {
+      if (!hull(dx, dy) || edge(dx, dy)) return false;
+      let above = 0;
+      for (let k = dy - 1; hull(dx, k) && !edge(dx, k); k--) above++;
+      let below = 0;
+      for (let k = dy + 1; hull(dx, k) && !edge(dx, k); k++) below++;
+      return above >= 2 && below > 0;
+    };
+    const across = (dx, color) => {
+      for (let dy = -8; dy <= 6; dy++) {
+        if (deck(dx, dy)) this.pixel(ctx, x + dx, y + dy, color);
+      }
+    };
+    across(-6, mid);
+    across(-5, mid);
+    across(-2, mid);
+    across(0, mid);
+    across(2, mid);
+    across(4, mid);
+    across(5, mid);
+    if (island) {
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = 3; dx <= 5; dx++) {
+          if (deck(dx, dy)) this.pixel(ctx, x + dx, y + dy, lo);
+        }
+      }
+      const sail = ["...###", ".#####", "######", ".#####", "...###"];
+      const ox = 8;
+      const oy = -6;
+      const on = (sx, sy) => sy >= 0 && sy < sail.length && sx >= 0 && sx < 6 && sail[sy][sx] === "#";
+      for (let sy = 0; sy < 5; sy++) {
+        for (let sx = 0; sx < 6; sx++) {
+          if (!on(sx, sy)) continue;
+          this.pixel(ctx, x + ox + sx, y + oy + sy, on(sx, sy - 1) ? "#f3e2c4" : "#efe3c4");
+        }
+      }
+      for (let sy = -1; sy <= 5; sy++) {
+        for (let sx = -1; sx <= 6; sx++) {
+          if (on(sx, sy)) continue;
+          let touch = false;
+          for (let ny = -1; ny <= 1 && !touch; ny++) {
+            for (let nx = -1; nx <= 1; nx++) {
+              if ((nx || ny) && on(sx + nx, sy + ny)) touch = true;
+            }
+          }
+          if (!touch) continue;
+          const px = ox + sx;
+          const py = oy + sy;
+          if (px < -19 || px > 19 || py < -12 || py > 8 || py >= -1) continue;
+          if (!deck(px, py)) continue;
+          this.pixel(ctx, x + px, y + py, ink);
+        }
+      }
+      for (let dx = 6; dx <= 16; dx++) {
+        if (deck(dx, -1)) this.pixel(ctx, x + dx, y - 1, hi);
+        if (deck(dx, 1)) this.pixel(ctx, x + dx, y + 1, hi);
+      }
+      for (let dx = 5; dx <= 16; dx++) this.pixel(ctx, x + dx, y, "#5a381c");
+    } else {
+      const shaft = [
+        [-1, 2], [0, 2], [1, 3], [2, 3], [3, 3],
+        [4, 4], [5, 4], [6, 4], [7, 5], [8, 5],
+        [9, 5], [10, 6], [11, 6], [12, 6],
+      ];
+      for (let i = 0; i < shaft.length; i++) this.pixel(ctx, x + shaft[i][0], y + shaft[i][1], "#a56b3c");
+      this.fill(ctx, x + 13, y + 7, 3, 2, hi);
+    }
   },
 
   bed(ctx, x, y) {
