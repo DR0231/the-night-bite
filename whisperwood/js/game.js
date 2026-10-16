@@ -42,6 +42,15 @@ const UI = {
     if (text.indexOf("cooler") !== -1 || text.indexOf("Check the mail tray") === 0 || text.indexOf("Manage the tank") === 0 || text.indexOf("Manage the wall mount") === 0) return "Open";
     return "Fish";
   },
+  padText(text) {
+    if (this.touch() || !document.documentElement.classList.contains("pad-input")) return text;
+    return String(text)
+      .replace(/\bE \/ Space\b/g, "A")
+      .replace(/\bPress E\b/g, "Press A")
+      .replace(/\bpress E\b/g, "press A")
+      .replace(/\bHold E\b/g, "Hold A")
+      .replace(/\bTap E\b/g, "Tap A");
+  },
 
   anyMenu() {
     return this.journalOpen || Inventory.open || Shop.openFlag || Board.open || Mail.open
@@ -492,7 +501,7 @@ const UI = {
       }
     }
     if (prompt && !this.anyMenu()) {
-      this.els.prompt.textContent = prompt;
+      this.els.prompt.textContent = this.padText(prompt);
       this.els.prompt.classList.remove("hidden");
       this.els.prompt.classList.toggle("bite", Fishing.state === "bite" || Fishing.state === "play");
       if (Fishing.state === "play" && !this.phonePortrait()) {
