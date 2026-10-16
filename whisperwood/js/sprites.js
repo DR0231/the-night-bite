@@ -1132,7 +1132,7 @@ const Sprites = {
     this.pixel(ctx, x - 16, y - 23, PALETTE.bobberWhite);
     const turning = typeof MillSpine !== "undefined" && MillSpine.stage() === "turning";
     const frame = turning ? Math.floor((t || 0) / (DESIGN.millWheelStep || 0.35)) % 4 : 0;
-    const a0 = frame * Math.PI / 8;
+    const a0 = frame * Math.PI / 16;
     const cx = x + 23;
     const cy = y - 11;
     const r = 10;
