@@ -804,6 +804,105 @@ const Sprites = {
     this.pixel(ctx, x, y - 4, "#f3e2c4");
   },
 
+  pickupSaltBerries(ctx, x, y) {
+    const body = "#c4a05a";
+    const lit = "#e4c896";
+    const shade = PALETTE.dirt;
+    const speck = "#fbf3de";
+    const leaf = PALETTE.grass;
+    const leafHi = PALETTE.grassHi;
+    const leafLo = PALETTE.grassLo;
+    const dots = [];
+    const plot = (px, py, color) => { dots.push(px, py, color); };
+    const berry = (bx, by, salt) => {
+      plot(bx + 1, by, lit);
+      plot(bx + 2, by, lit);
+      plot(bx, by + 1, lit);
+      plot(bx + 1, by + 1, salt ? speck : body);
+      plot(bx + 2, by + 1, body);
+      plot(bx + 3, by + 1, body);
+      plot(bx, by + 2, body);
+      plot(bx + 1, by + 2, body);
+      plot(bx + 2, by + 2, shade);
+      plot(bx + 3, by + 2, shade);
+      plot(bx + 1, by + 3, shade);
+      plot(bx + 2, by + 3, shade);
+    };
+    plot(x - 7, y - 8, leafHi);
+    plot(x - 6, y - 7, leafHi);
+    plot(x - 6, y - 6, leaf);
+    plot(x - 5, y - 6, leaf);
+    plot(x - 6, y - 5, leafLo);
+    plot(x + 5, y - 7, leafHi);
+    plot(x + 5, y - 6, leaf);
+    plot(x + 6, y - 6, leafHi);
+    plot(x + 6, y - 5, leaf);
+    plot(x + 5, y - 5, leafLo);
+    berry(x - 2, y - 10, true);
+    berry(x - 5, y - 7, true);
+    berry(x + 1, y - 7, false);
+    berry(x - 2, y - 4, true);
+    const filled = new Set();
+    for (let i = 0; i < dots.length; i += 3) filled.add(dots[i] + "," + dots[i + 1]);
+    const edge = [];
+    const seen = new Set(filled);
+    for (let i = 0; i < dots.length; i += 3) {
+      const px = dots[i];
+      const py = dots[i + 1];
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          if (!dx && !dy) continue;
+          const nx = px + dx;
+          const ny = py + dy;
+          if (nx < x - 8 || nx > x + 7 || ny < y - 14 || ny > y) continue;
+          const key = nx + "," + ny;
+          if (seen.has(key)) continue;
+          seen.add(key);
+          edge.push(nx, ny);
+        }
+      }
+    }
+    for (let i = 0; i < edge.length; i += 2) this.pixel(ctx, edge[i], edge[i + 1], PALETTE.bootLo);
+    for (let i = 0; i < dots.length; i += 3) this.pixel(ctx, dots[i], dots[i + 1], dots[i + 2]);
+    this.fill(ctx, x - 4, y + 1, 8, 1, "rgba(12,18,10,0.35)");
+  },
+
+  pickupMillReed(ctx, x, y) {
+    const hi = PALETTE.grassHi;
+    const mid = PALETTE.grass;
+    const lo = PALETTE.grassMid;
+    const seedHi = PALETTE.dirtHi;
+    const seedLo = PALETTE.dirt;
+    const ink = PALETTE.bootLo;
+    const tones = [hi, hi, mid, mid, lo];
+    const bases = [x - 7, x - 4, x - 1, x + 2, x + 5];
+    for (let i = 0; i < 5; i++) {
+      const base = bases[i];
+      const tone = tones[i];
+      this.pixel(ctx, base, y - 17, seedHi);
+      this.pixel(ctx, base + 1, y - 17, seedHi);
+      this.pixel(ctx, base, y - 16, seedHi);
+      this.pixel(ctx, base + 1, y - 16, seedLo);
+      for (let py = y - 15; py <= y - 1; py++) {
+        const tip = py <= y - 8;
+        this.pixel(ctx, base + (tip ? 1 : 0), py, tone);
+        if (!tip) this.pixel(ctx, base + 1, py, tone);
+      }
+    }
+    this.fill(ctx, x - 7, y - 6, 14, 2, seedLo);
+    for (let i = 0; i < 5; i++) {
+      this.pixel(ctx, bases[i], y - 18, ink);
+      this.pixel(ctx, bases[i] + 1, y - 18, ink);
+      this.pixel(ctx, bases[i], y, ink);
+      this.pixel(ctx, bases[i] + 1, y, ink);
+    }
+    for (let py = y - 18; py <= y; py++) {
+      this.pixel(ctx, x - 8, py, ink);
+      this.pixel(ctx, x + 7, py, ink);
+    }
+    this.fill(ctx, x - 6, y + 1, 13, 1, "rgba(12,18,10,0.35)");
+  },
+
   cottage(ctx, x, y) {
     this.fill(ctx, x - 22, y - 28, 44, 28, PALETTE.wood);
     this.fill(ctx, x - 22, y - 28, 44, 6, PALETTE.woodHi);

@@ -397,6 +397,8 @@ const Atlas = {
   },
 
   drawPickup(ctx, x, y, item) {
+    if (item === "saltberries" && typeof Sprites !== "undefined" && Sprites.pickupSaltBerries) { Sprites.pickupSaltBerries(ctx, x, y); return true; }
+    if (item === "millreed" && typeof Sprites !== "undefined" && Sprites.pickupMillReed) { Sprites.pickupMillReed(ctx, x, y); return true; }
     const map = {
       glow: "pickupGlow", worms: "pickupWorms", berries: "pickupBerries",
       crickets: "pickupCrickets", crystal: "pickupCrystal",
