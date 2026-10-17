@@ -1,6 +1,7 @@
 /* One localStorage blob. Migrates whisperwood-journal on first load. */
 
 const SAVE_UNREADABLE_KEY = "whisperwood-save-v1-unreadable";
+const SAVE_AT_KEY = "whisperwood-save-v1-at";
 const SAVE_VERSION = 1;
 const NO_CORNER = "There's no dry corner for your newer vale. Copy save first.";
 
@@ -73,6 +74,27 @@ const Save = {
   load() {
     let raw = null;
     try { raw = localStorage.getItem(SAVE_KEY); } catch (e) { raw = null; }
+    const isObj = (t) => { try { const p = JSON.parse(t); return !!p && typeof p === "object" && !Array.isArray(p); } catch (e) { return false; } };
+    let fileRec = null;
+    try {
+      const vd = typeof window !== "undefined" && window.valeDesktop;
+      const txt = vd && vd.readSave ? vd.readSave() : null;
+      if (txt) {
+        const rec = JSON.parse(txt);
+        if (rec && typeof rec.raw === "string" && isObj(rec.raw)) fileRec = rec;
+      }
+    } catch (e) { fileRec = null; }
+    if (fileRec) {
+      let lsAt = 0;
+      try { lsAt = Number(localStorage.getItem(SAVE_AT_KEY)) || 0; } catch (e) {}
+      const fileAt = Number(fileRec.at) || 0;
+      const lsOk = !!raw && isObj(raw);
+      if (!raw) raw = fileRec.raw;
+      else if (!lsOk || (lsAt && fileAt > lsAt)) {
+        if (!lsOk) this._keepUnreadable(raw);
+        raw = fileRec.raw;
+      }
+    }
     if (raw) {
       try {
         const parsed = JSON.parse(raw);
@@ -315,7 +337,11 @@ const Save = {
     if (this._writeBlocked) return;
     try {
       this.pullFromWorld();
-      localStorage.setItem(SAVE_KEY, JSON.stringify(this.data));
+      const json = JSON.stringify(this.data);
+      localStorage.setItem(SAVE_KEY, json);
+      const at = Date.now();
+      try { localStorage.setItem(SAVE_AT_KEY, String(at)); } catch (e) {}
+      try { const vd = typeof window !== "undefined" && window.valeDesktop; if (vd && vd.writeSave) vd.writeSave(json, at); } catch (e) {}
       this._writeWarned = false;
     } catch (e) {
       try { console.warn("Save write failed:", e); } catch (e2) {}
