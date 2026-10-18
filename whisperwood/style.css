@@ -1013,6 +1013,10 @@ html:not(.pad-input) .pad-focus {
 
 .touch-only { display: none; }
 @media (pointer: coarse) { .desk-only { display: none; } .touch-only { display: inline; } }
+.pad-text { display: none; }
+html.pad-input .key-text { display: none; }
+html.pad-input .pad-text { display: inline; }
+@media (pointer: coarse) { html.pad-input .key-text { display: inline; } html.pad-input .pad-text { display: none; } }
 .nb-links { display: none; }
 .desktop-only { display: none; }
 .vale-desktop .desktop-only { display: block; }
