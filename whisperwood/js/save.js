@@ -91,7 +91,10 @@ const Save = {
       const lsOk = !!raw && isObj(raw);
       if (!raw) raw = fileRec.raw;
       else if (!lsOk || (lsAt && fileAt > lsAt)) {
-        if (!lsOk) this._keepUnreadable(raw);
+        if (!lsOk) {
+          this._keepUnreadable(raw);
+          if (!this._writeBlocked) this._loadWarn = "";
+        }
         raw = fileRec.raw;
       }
     }
