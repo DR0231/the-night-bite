@@ -475,7 +475,7 @@ const Fishing = {
     if (this.state === "wait" || this.state === "nibble") {
       return "Watch the bobber…  Move to pack up";
     }
-    if (this.state === "aim") return tt("WASD aim · E or Fish to cast · Esc or Pack up to stop", "Arrows aim · Fish to cast · Pack up to stop");
+    if (this.state === "aim") return (typeof UI !== "undefined" && UI.touch && !UI.touch() && document.documentElement.classList.contains("pad-input")) ? "Stick aim · A to cast · Start to stop" : tt("WASD aim · E or Fish to cast · Esc or Pack up to stop", "Arrows aim · Fish to cast · Pack up to stop");
     if (this.state === "cast") return "Casting…";
     if (this.state === "reel") return "Reeling in…";
     if (this.state === "fail") return "It got away…";
