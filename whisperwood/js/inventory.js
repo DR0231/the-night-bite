@@ -224,7 +224,7 @@ const Inventory = {
     if (err) err.classList.add("hidden");
     if (text) {
       text.value = "";
-      text.focus();
+      if (!document.documentElement.classList.contains("pad-input")) text.focus();
     }
   },
 
