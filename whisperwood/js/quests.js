@@ -424,19 +424,28 @@ const Onboard = {
       id: "cast",
       silent: () => Journal.count() >= 1 || (Fishing.active && Fishing.state !== "aim"),
       ready: () => Journal.count() === 0 && !Fishing.active,
-      get text() { return (typeof UI !== "undefined" && UI.tt ? UI.tt("Water is close. Stand at the edge and press E to cast.", "Water is close. Stand at the edge and tap Fish to cast.") : "Water is close. Stand at the edge and press E to cast."); },
+      get text() {
+        const line = (typeof UI !== "undefined" && UI.tt ? UI.tt("Water is close. Stand at the edge and press E to cast.", "Water is close. Stand at the edge and tap Fish to cast.") : "Water is close. Stand at the edge and press E to cast.");
+        return (typeof UI !== "undefined" && UI.padText) ? UI.padText(line) : line;
+      },
     },
     {
       id: "journal",
       silent: () => UI.journalOpen,
       ready: () => Journal.count() >= 1,
-      get text() { return (typeof UI !== "undefined" && UI.tt ? UI.tt("That one goes in the journal. Press J.", "That one goes in the journal. Tap Journal.") : "That one goes in the journal. Press J."); },
+      get text() {
+        if (typeof UI !== "undefined" && !UI.touch() && document.documentElement.classList.contains("pad-input")) return "That one goes in the journal. Press Y.";
+        return (typeof UI !== "undefined" && UI.tt ? UI.tt("That one goes in the journal. Press J.", "That one goes in the journal. Tap Journal.") : "That one goes in the journal. Press J.");
+      },
     },
     {
       id: "pack",
       silent: () => Inventory.open,
       ready: () => Journal.count() >= 1,
-      get text() { return (typeof UI !== "undefined" && UI.tt ? UI.tt("Bait and rods live in the pack. Press I.", "Bait and rods live in the pack. Tap Pack.") : "Bait and rods live in the pack. Press I."); },
+      get text() {
+        if (typeof UI !== "undefined" && !UI.touch() && document.documentElement.classList.contains("pad-input")) return "Bait and rods live in the pack. Press X.";
+        return (typeof UI !== "undefined" && UI.tt ? UI.tt("Bait and rods live in the pack. Press I.", "Bait and rods live in the pack. Tap Pack.") : "Bait and rods live in the pack. Press I.");
+      },
     },
     {
       id: "needs",

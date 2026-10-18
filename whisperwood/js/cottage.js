@@ -229,7 +229,9 @@ const Cottage = {
     Player.x = p.x;
     Player.y = face === 3 ? p.y - 1 : p.y + 2;
     Player.dir = face === 1 ? 1 : face === 2 ? 2 : face === 3 ? 3 : 0;
-    UI.toastNote((typeof UI !== "undefined" && UI.tt ? UI.tt("The chair creaks. Rest comes slow. E or walk to stand.", "The chair creaks. Rest comes slow. Walk or tap Fish to stand.") : "The chair creaks. Rest comes slow. E or walk to stand."));
+    UI.toastNote((typeof UI !== "undefined" && !UI.touch() && document.documentElement.classList.contains("pad-input"))
+      ? "The chair creaks. Rest comes slow. A or walk to stand."
+      : (typeof UI !== "undefined" && UI.tt ? UI.tt("The chair creaks. Rest comes slow. E or walk to stand.", "The chair creaks. Rest comes slow. Walk or tap Fish to stand.") : "The chair creaks. Rest comes slow. E or walk to stand."));
     return true;
   },
 
