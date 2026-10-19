@@ -591,8 +591,10 @@ const Camera = {
     this.y = Utils.smooth(this.y, targetY, dt, 0.018);
     this.clampToWorld(worldW, worldH);
     if (this.shake > 0) {
-      this.x += (Math.random() - 0.5) * this.shake;
-      this.y += (Math.random() - 0.5) * this.shake;
+      if (Settings.shake) {
+        this.x += (Math.random() - 0.5) * this.shake;
+        this.y += (Math.random() - 0.5) * this.shake;
+      }
       this.shake = Utils.approach(this.shake, 0, dt * 16);
     }
   },
@@ -718,16 +720,71 @@ const Particles = {
   },
 };
 
+const Settings = {
+  KEY: "whisperwood-settings-v1",
+  volume: 100,
+  shake: true,
+  load() {
+    let saved = null;
+    try {
+      const raw = localStorage.getItem(this.KEY);
+      if (raw) saved = JSON.parse(raw);
+    } catch (err) {
+      saved = null;
+    }
+    const vol = saved && Number.isFinite(saved.volume) ? saved.volume : 100;
+    this.volume = Math.round(Math.min(100, Math.max(0, vol)) / 10) * 10;
+    if (saved && typeof saved.shake === "boolean") this.shake = saved.shake;
+    else {
+      let reduce = false;
+      try {
+        reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+      } catch (err) {
+        reduce = false;
+      }
+      this.shake = !reduce;
+    }
+  },
+  save() {
+    try {
+      localStorage.setItem(this.KEY, JSON.stringify({ volume: this.volume, shake: this.shake }));
+    } catch (err) {}
+  },
+  setVolume(n) {
+    const v = Number(n);
+    this.volume = Math.round(Math.min(100, Math.max(0, Number.isFinite(v) ? v : 0)) / 10) * 10;
+    this.save();
+    AudioFX.applyVolume();
+  },
+  setShake(on) {
+    this.shake = !!on;
+    this.save();
+  },
+};
+Settings.load();
+
 const AudioFX = {
   ctx: null,
+  _out: null,
   ensure() {
     if (this.muted) return;
     try {
       if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
       if (this.ctx.state === "suspended") this.ctx.resume();
+      if (this.ctx && !this._out) {
+        this._out = this.ctx.createGain();
+        this._out.gain.value = Settings.volume / 100;
+        this._out.connect(this.ctx.destination);
+      }
     } catch (err) {
       this.ctx = null; /* no audio device: cues become silent, the game keeps going */
     }
+  },
+  _dest() {
+    return this._out || this.ctx.destination;
+  },
+  applyVolume() {
+    if (this._out && this.ctx) this._out.gain.setValueAtTime(Settings.volume / 100, this.ctx.currentTime);
   },
   tone(freq, dur, type, vol, slide) {
     if (this.muted || !this.ctx) return;
@@ -739,7 +796,7 @@ const AudioFX = {
     if (slide) o.frequency.exponentialRampToValueAtTime(slide, t0 + dur);
     g.gain.setValueAtTime(vol || 0.05, t0);
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-    o.connect(g).connect(this.ctx.destination);
+    o.connect(g).connect(this._dest());
     o.start(t0); o.stop(t0 + dur + 0.02);
   },
   plop() {
@@ -826,7 +883,7 @@ const AudioFX = {
       filter.frequency.value = 780;
       const gain = ctx.createGain();
       gain.gain.value = 0.011;
-      src.connect(filter).connect(gain).connect(ctx.destination);
+      src.connect(filter).connect(gain).connect(this._dest());
       src.start();
       this._rain = { src, gain };
     } catch (err) {
@@ -911,7 +968,7 @@ const AudioFX = {
       if (!this._mill) {
         this._mill = this.ctx.createGain();
         this._mill.gain.setValueAtTime(0, now);
-        this._mill.connect(this.ctx.destination);
+        this._mill.connect(this._dest());
       }
       const target = this._millTarget();
       this._mill.gain.setTargetAtTime(target, now, DESIGN.millSoundFade);
@@ -928,8 +985,8 @@ const AudioFX = {
   millStart() {
     this.ensure();
     if (this.muted || !this.ctx) return;
-    this._millCreak(this.ctx.destination, DESIGN.millStartVol);
-    this._millDrip(this.ctx.destination, DESIGN.millStartVol);
+    this._millCreak(this._dest(), DESIGN.millStartVol);
+    this._millDrip(this._dest(), DESIGN.millStartVol);
   },
   step() {
     this.ensure();
