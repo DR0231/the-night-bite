@@ -1017,6 +1017,8 @@ html:not(.pad-input) .pad-focus {
 html.pad-input .key-text { display: none; }
 html.pad-input .pad-text { display: inline; }
 @media (pointer: coarse) { html.pad-input .key-text { display: inline; } html.pad-input .pad-text { display: none; } }
+html.pad-input .pack-bait kbd { display: none; }
+@media (pointer: coarse) { html.pad-input .pack-bait kbd { display: inline-block; } }
 .nb-links { display: none; }
 .desktop-only { display: none; }
 .vale-desktop .desktop-only { display: block; }
