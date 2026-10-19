@@ -498,6 +498,14 @@ const UI = {
       this.els.regionBlurb.textContent = blurb;
     }
 
+    const padHint = !this.touch() && document.documentElement.classList.contains("pad-input");
+    const hintText = padHint ? "Y Journal · X Pack" : "J Journal · I Pack";
+    if (this._hintEl === undefined) this._hintEl = document.getElementById("hint");
+    if (this._hintEl && this._hintText !== hintText) {
+      this._hintEl.textContent = hintText;
+      this._hintText = hintText;
+    }
+
     let prompt = "";
     if (!this.anyMenu()) {
       if (Fishing.state !== "idle") {
