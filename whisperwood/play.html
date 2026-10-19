@@ -162,8 +162,15 @@
         </div>
         <button type="button" id="btn-export">Copy save</button>
         <button type="button" id="btn-import">Paste save</button>
+        <button type="button" id="pause-settings-btn">Settings</button>
         <button type="button" id="pause-credits-btn">Credits</button>
         <button type="button" id="pause-quit" class="desktop-only">Quit</button>
+        <div id="pause-settings" class="hidden">
+          <p><span id="pause-volume-text">Sound 100%</span></p>
+          <button type="button" id="pause-volume-down" aria-label="Quieter">−</button>
+          <button type="button" id="pause-volume-up" aria-label="Louder">+</button>
+          <label><input type="checkbox" id="pause-shake"/> Screen shake</label>
+        </div>
         <div id="pause-credits" class="hidden">
           <p>Whisperwood Vale, made by Whisperwood Vale Studios.</p>
           <p>Font: m6x11 by Daniel Linssen.</p>

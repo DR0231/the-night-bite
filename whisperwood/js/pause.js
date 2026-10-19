@@ -11,18 +11,31 @@ const Pause = {
     if (mute) mute.checked = !!(Save.data.flags && Save.data.flags.mute);
     const confirm = document.getElementById("pause-reset-confirm");
     const credits = document.getElementById("pause-credits");
+    const settings = document.getElementById("pause-settings");
     if (confirm) confirm.classList.add("hidden");
     if (credits) credits.classList.add("hidden");
+    if (settings) settings.classList.add("hidden");
+    this.refreshSettings();
   },
 
   close() {
     const menu = document.getElementById("pause-menu");
     const confirm = document.getElementById("pause-reset-confirm");
     const credits = document.getElementById("pause-credits");
+    const settings = document.getElementById("pause-settings");
     if (menu) menu.classList.add("hidden");
     if (confirm) confirm.classList.add("hidden");
     if (credits) credits.classList.add("hidden");
+    if (settings) settings.classList.add("hidden");
     this.openFlag = false;
+  },
+
+  refreshSettings() {
+    if (typeof Settings === "undefined") return;
+    const text = document.getElementById("pause-volume-text");
+    if (text) text.textContent = "Sound " + Settings.volume + "%";
+    const shake = document.getElementById("pause-shake");
+    if (shake) shake.checked = Settings.shake;
   },
 
   askReset() {
@@ -57,6 +70,26 @@ const Pause = {
   if (creditsBtn) creditsBtn.addEventListener("click", () => {
     const credits = document.getElementById("pause-credits");
     if (credits) credits.classList.toggle("hidden");
+  });
+  const settingsBtn = document.getElementById("pause-settings-btn");
+  if (settingsBtn && typeof Settings !== "undefined") settingsBtn.addEventListener("click", () => {
+    const settings = document.getElementById("pause-settings");
+    if (settings) settings.classList.toggle("hidden");
+    Pause.refreshSettings();
+  });
+  const volDown = document.getElementById("pause-volume-down");
+  if (volDown && typeof Settings !== "undefined") volDown.addEventListener("click", () => {
+    Settings.setVolume(Settings.volume - 10);
+    Pause.refreshSettings();
+  });
+  const volUp = document.getElementById("pause-volume-up");
+  if (volUp && typeof Settings !== "undefined") volUp.addEventListener("click", () => {
+    Settings.setVolume(Settings.volume + 10);
+    Pause.refreshSettings();
+  });
+  const shake = document.getElementById("pause-shake");
+  if (shake && typeof Settings !== "undefined") shake.addEventListener("change", () => {
+    Settings.setShake(shake.checked);
   });
   const fsWeb = !window.valeDesktop
     && typeof document.documentElement.requestFullscreen === "function"
