@@ -109,18 +109,20 @@ const Journal = {
     return bits.join(", ");
   },
 
-  /** Water sign: every species with its best hour, rares marked, then the water's own line. */
+  /** Water sign: common and uncommon species with their best hour, a hush for rares, then the water's own line. */
   signText(spotId) {
     const s = SPOTS[spotId];
     if (!s) return "";
-    const list = FISH.filter((f) => f.spot === spotId);
-    const names = list.map((f) => {
+    const here = FISH.filter((f) => f.spot === spotId);
+    const names = here.filter((f) => f.rarity !== "Rare").map((f) => {
       const bits = [];
       const when = this.whenLine(f);
       if (when) bits.push(when);
-      if (f.rarity === "Rare") bits.push(f.sell >= 30 || f.nightOnly ? "ultra-rare" : "rare");
       return `${f.name}${bits.length ? ` (${bits.join(" · ")})` : ""}`;
     }).join("; ");
+    const hush = here.some((f) => f.rarity === "Rare");
+    if (!names) return hush ? `Something rarer stirs here. ${s.flavor}` : s.flavor;
+    if (hush) return `${names}. Something rarer stirs here. ${s.flavor}`;
     return `${names}. ${s.flavor}`;
   },
 
