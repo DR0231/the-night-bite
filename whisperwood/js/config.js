@@ -300,7 +300,7 @@ const SPOTS = {
     name: "Misty Millpond",
     mood: "still",
     minigame: "timing",
-    flavor: "Quiet millpond. Best at dawn and dusk; Pearl Carp likes glow after dark. Boat west to leave.",
+    flavor: "Quiet millpond. Best at dawn and dusk; something pale likes the glow after dark. Boat west to leave.",
   },
   island: {
     id: "island",
