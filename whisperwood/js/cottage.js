@@ -12,13 +12,17 @@ const Cottage = {
       addDeco("bed", 7.2 * TILE_SIZE, 6.2 * TILE_SIZE);
       addSolid(5.0 * TILE_SIZE, 4.8 * TILE_SIZE, 60, 20, "bed");
       addDeco("tank", 16 * TILE_SIZE, 5.2 * TILE_SIZE);
+      addSolid(234, 32, 44, 50, "tank");
       addDeco("trophy", 11 * TILE_SIZE, 3.6 * TILE_SIZE);
+      addSolid(162, 32, 28, 24, "trophy");
       addDeco("certificate", 8.4 * TILE_SIZE, 4.2 * TILE_SIZE);
+      addSolid(124, 32, 20, 34, "certificate");
       addDeco("dayclock", 14.2 * TILE_SIZE, 4.0 * TILE_SIZE);
       addDeco("bench", 5.5 * TILE_SIZE, 11 * TILE_SIZE);
-      addSolid(4.6 * TILE_SIZE, 10.2 * TILE_SIZE, 22, 10, "bench");
+      addSolid(70, 160, 36, 14, "bench");
       addDeco("calendar", 16.5 * TILE_SIZE, 11 * TILE_SIZE);
       addDeco("mailtray", 12.5 * TILE_SIZE, 11.2 * TILE_SIZE);
+      addSolid(189, 168, 22, 10, "mailtray");
       addDeco("crate", 18.2 * TILE_SIZE, 12.4 * TILE_SIZE);
       addSolid(18.2 * TILE_SIZE - 5, 12.4 * TILE_SIZE - 4, 10, 6, "crate");
       if (typeof COTTAGE_DECOR !== "undefined") {

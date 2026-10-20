@@ -235,7 +235,9 @@ const World = {
           const px = tx * TILE_SIZE + 8 + Utils.irand(rng, -3, 3);
           const py = ty * TILE_SIZE + 12 + Utils.irand(rng, -2, 2);
           const pine = rng() < 0.45;
-          addDeco(pine ? "pine" : "oak", px, py, { seed: rng() * 20 });
+          const seed = rng() * 20;
+          if (tx >= 25 && tx <= 30 && ty >= 18 && ty <= 23) continue;
+          addDeco(pine ? "pine" : "oak", px, py, { seed });
           addSolid(px - 4, py - 3, 8, 5, "tree");
         }
       }
@@ -299,10 +301,8 @@ const World = {
       addSolid(33.8 * TILE_SIZE - 3, 4.6 * TILE_SIZE - 3, 6, 4, "sign");
 
       addDeco("cottage", 28 * TILE_SIZE, 24 * TILE_SIZE);
-      for (let y = 20; y <= 22; y++) {
-        for (let x = 26; x <= 29; x++) {
-          addSolid(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, "wall");
-        }
+      for (let x = 26; x <= 29; x++) {
+        addSolid(x * TILE_SIZE, 22 * TILE_SIZE, TILE_SIZE, TILE_SIZE, "wall");
       }
       addSolid(26 * TILE_SIZE, 23 * TILE_SIZE, TILE_SIZE, TILE_SIZE, "wall");
       addSolid(29 * TILE_SIZE, 23 * TILE_SIZE, TILE_SIZE, TILE_SIZE, "wall");
