@@ -479,6 +479,7 @@ const World = {
     for (const [px, py] of pts) {
       if (!this.walkablePoint(px, py)) return false;
     }
+    if (typeof Npcs !== "undefined" && Npcs.blocksRect(x, y, w, h)) return false;
     return true;
   },
 

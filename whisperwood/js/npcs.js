@@ -1,5 +1,11 @@
 /* Three vale NPCs, gifts, talk, shop hook. */
 
+const NPC_BUMP = {
+  wren: ["Easy there.", "Mind the stall.", "Room enough for two, I think.", "Careful, the jars rattle."],
+  bramble: ["Mind the line, friend.", "Steady. Fish spook.", "Slow feet catch more.", "Watch the rod tip."],
+  lark: ["Oh! Didn't see you.", "Easy, I'm listening for birds.", "Pardon. After you.", "The wind's pushing us both."],
+};
+
 const Npcs = {
   talkId: null,
   _acc: 0,
@@ -144,19 +150,87 @@ const Npcs = {
     this.talkId = null;
   },
 
+  box(n) {
+    return { x: n.x - 4, y: n.y - 4, w: 8, h: 4 };
+  },
+
+  blocksRect(x, y, w, h) {
+    if (typeof World === "undefined" || World.id !== "vale") return false;
+    const rect = { x, y, w, h };
+    const feet = Player.col();
+    for (const n of NPC_DATA) {
+      if (n._ghost) continue;
+      const box = this.box(n);
+      if (this._over(box, feet)) continue;
+      if (this._over(box, rect)) return true;
+    }
+    return false;
+  },
+
+  _over(a, b) {
+    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+  },
+
+  _pad(r, p) {
+    return { x: r.x - p, y: r.y - p, w: r.w + p * 2, h: r.h + p * 2 };
+  },
+
+  _bumps(dt) {
+    const dialog = document.getElementById("dialog");
+    if (dialog && !dialog.classList.contains("hidden")) return;
+    if (typeof Shop !== "undefined" && Shop.openFlag) return;
+    this._t = (this._t || 0) + dt;
+    const feet = Player.col();
+    const touch = this._pad(feet, 2);
+    const axis = Input.axis();
+    const moving = !!(axis.x || axis.y) && !Player.locked && !Player.fishing;
+    for (const n of NPC_DATA) {
+      const box = this.box(n);
+      if (this._over(touch, box) && moving) {
+        if (!n._push && this._t >= (n._bumpAt || 0)) {
+          const lines = NPC_BUMP[n.id] || [];
+          if (lines.length) UI.toastNote(lines[(Math.random() * lines.length) | 0], n.name);
+          n._bumpAt = this._t + 8;
+        }
+        n._push = (n._push || 0) + dt;
+      } else n._push = 0;
+      if (n._push >= 1) {
+        const steps = [[n.x + 12, n.y], [n.x - 12, n.y], [n.x, n.y + 10], [n.x, n.y - 10]];
+        let aside = false;
+        for (const [sx, sy] of steps) {
+          if (!World.walkablePoint(sx, sy) || World.isWaterAt(sx, sy)) continue;
+          const next = { x: sx - 4, y: sy - 4, w: 8, h: 4 };
+          if (this._over(next, touch)) continue;
+          n.x = sx;
+          n.y = sy;
+          aside = true;
+          break;
+        }
+        if (!aside) n._ghost = true;
+        n._push = 0;
+      }
+      if (n._ghost && !this._over(this._pad(feet, 4), this.box(n))) n._ghost = false;
+    }
+  },
+
   update(dt) {
     if (World.id !== "vale") return;
+    this._bumps(dt);
     this._acc += dt;
     if (this._acc < 2.4) return;
     this._acc = 0;
     const leash = DESIGN.npcWander || 10;
+    const wide = this._pad(Player.col(), 4);
     for (const n of NPC_DATA) {
       if (n.homeX == null) { n.homeX = n.x; n.homeY = n.y; }
       if (Math.random() >= 0.35) continue;
       // Shuffle in place, but stay on a leash and on dry, open ground.
       const nx = Utils.clamp(n.x + (Math.random() - 0.5) * 10, n.homeX - leash, n.homeX + leash);
       const ny = Utils.clamp(n.y + (Math.random() - 0.5) * 8, n.homeY - leash * 0.6, n.homeY + leash * 0.6);
-      if (World.walkablePoint(nx, ny) && !World.isWaterAt(nx, ny)) { n.x = nx; n.y = ny; }
+      if (!World.walkablePoint(nx, ny) || World.isWaterAt(nx, ny)) continue;
+      if (this._over({ x: nx - 4, y: ny - 4, w: 8, h: 4 }, wide)) continue;
+      n.x = nx;
+      n.y = ny;
     }
   },
 
