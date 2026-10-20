@@ -371,7 +371,7 @@ const UI = {
       const name = this.els.toastName.textContent;
       const sameLast = !!(last && last.text === text && (last.title || "") === titleKey);
       const sameShow = desc
-        ? text === desc && (titleKey ? name === titleKey : name === "Note" || name === "Vale")
+        ? text === desc && (titleKey ? name === titleKey : name === "Note")
         : text === name && !titleKey;
       if (sameLast || sameShow) return;
       if (this._noteQ.length >= 3) this._noteQ.shift();
@@ -382,7 +382,7 @@ const UI = {
     el.classList.remove("miss");
     el.classList.add("note");
     const kicker = el.querySelector(".toast-kicker");
-    if (kicker) kicker.textContent = "Vale";
+    if (kicker) kicker.textContent = "";
     this.els.toastName.textContent = long ? (title || "Note") : text;
     if (this.els.toastDesc) this.els.toastDesc.textContent = long ? text : "";
     el.classList.remove("hidden");
