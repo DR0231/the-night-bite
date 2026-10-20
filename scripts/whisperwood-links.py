@@ -7,11 +7,25 @@ from pathlib import Path
 FORM = "https://docs.google.com/forms/d/e/1FAIpQLSeL7vIXUSW5PActv19YB5Et4H61p-zzsZfIHhfAe3Of2R8ocw/viewform"
 ww = Path("whisperwood")
 
+# Game-page CSP (Vale Security audit 2026-10-20, H2). The game runs only its own
+# scripts (no inline JS), uses inline style attributes, canvas/data:/blob: images,
+# a self-hosted font, Web Audio, and localStorage. Outbound links are not limited by CSP.
+GAME_CSP = ("default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob: data:; "
+            "manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; "
+            "worker-src 'none'; upgrade-insecure-requests")
+SEC_META = ('\n  <meta http-equiv="Content-Security-Policy" content="' + GAME_CSP + '" />'
+            '\n  <meta name="referrer" content="strict-origin-when-cross-origin" />')
+
 for name in ["play.html", "index.html", "guide.html"]:
     p = ww / name
     if not p.exists():
         continue
     t = p.read_text(encoding="utf-8", errors="replace")
+    if 'http-equiv="Content-Security-Policy"' not in t:
+        t, n = re.subn(r"(<meta\s+charset=[^>]*>)", lambda m: m.group(1) + SEC_META, t, count=1, flags=re.I)
+        if n == 0:
+            t = re.sub(r"(<head[^>]*>)", lambda m: m.group(1) + SEC_META, t, count=1, flags=re.I)
     if "../whisperwood.html" not in t:
         brand = '<a class="brand" href="index.html">Whisperwood Vale</a>'
         if name == "play.html" and brand in t:
