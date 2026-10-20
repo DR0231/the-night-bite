@@ -184,8 +184,6 @@ const Sprites = {
   /* ---------- world objects ---------- */
   treeOak(ctx, x, y, sway, shade) {
     const s = sway | 0;
-    if (typeof Atlas !== "undefined" && Atlas.castShadow) Atlas.castShadow(ctx, x, y, 13, 3.2);
-    else this.ellipse(ctx, x + (shade && shade.x || 0) * 1.1, y + 3, 14, 5, "rgba(12, 24, 12, 0.38)");
     this.fill(ctx, x - 2, y - 22, 4, 24, "#5a3a22");
     this.fill(ctx, x - 1, y - 22, 2, 24, "#7a5632");
     this.blob(ctx, x + s, y - 42, 18, "#1e4a24");
@@ -198,8 +196,6 @@ const Sprites = {
 
   treePine(ctx, x, y, sway, shade) {
     const s = sway | 0;
-    if (typeof Atlas !== "undefined" && Atlas.castShadow) Atlas.castShadow(ctx, x, y, 10, 3.2);
-    else this.ellipse(ctx, x + (shade && shade.x || 0), y + 3, 11, 4, "rgba(12, 24, 12, 0.38)");
     this.fill(ctx, x - 2, y - 16, 4, 18, "#4a3220");
     this.fill(ctx, x - 1, y - 16, 2, 18, "#6a4a2c");
     const layers = [

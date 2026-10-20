@@ -86,6 +86,12 @@ const Renderer = {
     if (fire && fire.x != null && fire.map === World.id) {
       drawList.push({ type: "campfire", x: fire.x, y: fire.y });
     }
+    if (typeof Atlas !== "undefined" && Atlas.castShadow) {
+      for (const d of World.decos) {
+        if (d.type === "oak") Atlas.castShadow(ctx, d.x, d.y - 2, 13, 3);
+        else if (d.type === "pine") Atlas.castShadow(ctx, d.x, d.y - 1, 10, 3);
+      }
+    }
     drawList.sort((a, b) => this._sortY(a) - this._sortY(b));
     for (const d of drawList) this._deco(ctx, d, t, light);
 

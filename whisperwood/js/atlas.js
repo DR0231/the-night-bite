@@ -307,11 +307,11 @@ const Atlas = {
     const h = f.h || TILE_SIZE;
     if (f.sx + w > size.w || f.sy + h > size.h) return false;
     try {
-      const planted = name === "treeOak" || name === "treePine" || name === "cottage" ||
+      const planted = name === "cottage" ||
         name === "stump" || name === "sign" || name === "crate" || name === "rock" ||
         name === "fence" || name === "fenceH" || name === "fenceV" || name === "calendar";
       if (planted) {
-        const rx = name === "treeOak" ? 13 : name === "cottage" ? 16 : name === "treePine" ? 10 : 6;
+        const rx = name === "cottage" ? 16 : 6;
         this.castShadow(ctx, x, y, rx, 3.2);
       }
       let dx = (x - (f.ax || 0)) | 0;
@@ -331,15 +331,9 @@ const Atlas = {
     const sh = light && light.shadow;
     if (!sh || typeof Sprites === "undefined" || !Sprites.ellipse) return;
     const ox = sh.x || 0;
-    const oy = Math.max(1.4, (sh.y || 3) * 0.32);
-    const alpha = sh.alpha != null ? sh.alpha : 0.28;
-    const len = Math.hypot(ox, oy);
-    ctx.save();
-    ctx.translate(x + ox, y + oy);
-    if (len > 0.4) ctx.rotate(Math.atan2(oy, ox));
-    const stretch = Math.min(2.5, 0.8 + len * 0.11);
-    Sprites.ellipse(ctx, 0, 0, rx * stretch, Math.max(2, ry * 0.5), `rgba(8, 14, 10, ${alpha})`);
-    ctx.restore();
+    const a = sh.alpha != null ? sh.alpha : 0.28;
+    const alpha = a <= 0.1 ? a : Math.max(0.24, a);
+    Sprites.ellipse(ctx, Math.round(x + ox * 0.5), Math.round(y + 1), Math.round(rx + Math.abs(ox) * 0.6), Math.max(2, Math.round(ry)), `rgba(8, 14, 10, ${alpha})`);
   },
 
   _fishIndex(fish) {
