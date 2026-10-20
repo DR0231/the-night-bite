@@ -735,8 +735,8 @@ const Game = {
     return this.fading.phase === "out" ? u : 1 - u;
   },
 
-  holdFood(fish) {
-    this.eating = { t: 0, dur: 1.15, fish: fish || null };
+  holdFood(fish, meal) {
+    this.eating = { t: 0, dur: 1.15, fish: fish || null, meal: meal || null };
     Player.locked = true;
     Player.vx = 0;
     Player.vy = 0;
