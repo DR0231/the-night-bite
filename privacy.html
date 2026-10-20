@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a1628">
+  <link rel="manifest" href="site.webmanifest">
+  <title>Privacy — The Night Bite</title>
+  <meta name="description" content="Privacy on The Night Bite and Whisperwood Vale: no accounts, no cookies, no analytics. What stays in your browser, and what Google, GitHub and USGS see.">
+  <link rel="canonical" href="https://nightbiteoh.com/privacy.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/lantern.svg" alt="" width="28" height="42" class="lantern-glow">
+        <span class="logo-text">The Night Bite</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li class="nav-core"><a href="index.html">Home</a></li>
+          <li class="nav-core"><a href="species/index.html"><span class="nav-label-full">Species</span><span class="nav-label-short">Fish</span></a></li>
+          <li class="nav-core"><a href="water.html"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="log.html">Log</a></li>
+          <li class="nav-extra"><a href="tournaments.html">Tournaments</a></li>
+          <li class="nav-extra"><a href="gear.html">Gear</a></li>
+          <li class="nav-extra"><a href="dockside.html">Dockside</a></li>
+          <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra"><a href="about.html">About</a></li>
+          <li class="nav-more-item">
+            <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
+            <div id="nav-more-panel" class="nav-more-panel" hidden>
+              <a href="gear.html">Gear</a>
+              <a href="tournaments.html">Tournaments</a>
+              <a href="whisperwood.html">Whisperwood Vale</a>
+              <a href="dockside.html">Dockside</a>
+              <a href="about.html">About</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <h1>Privacy</h1>
+    <p class="lead">
+      The Night Bite and Whisperwood Vale have no accounts, no cookies, no ads, and no analytics or tracking scripts.
+      Most of what you do here stays in your own browser.
+    </p>
+    <p class="meta">Last updated October 20, 2026.</p>
+
+    <h2>What stays in your browser</h2>
+    <p>
+      A few features save small notes in your browser&rsquo;s <code>localStorage</code> so they are still there next visit.
+      They are not sent to The Night Bite. Clearing this site&rsquo;s data in your browser removes them.
+    </p>
+    <ul>
+      <li><strong>The Log:</strong> your personal trip entries (<code>nightbite-log-v1</code>) and a flag for the sample trips (<code>nightbite-samples-seeded-v2</code>).</li>
+      <li><strong>Gear:</strong> your packing checklist ticks (<code>nightbite-pack-v1</code>) and the bank / boat toggle (<code>nightbite-mode-v1</code>).</li>
+      <li><strong>Whisperwood Vale:</strong> your game save (<code>whisperwood-save-v1</code> and related keys), journal and settings. If you export or import a save file, that file stays wherever you put it.</li>
+    </ul>
+    <p>Don&rsquo;t type secrets, card numbers, or home addresses into trip notes.</p>
+
+    <h2>Whisperwood feedback (Google Forms)</h2>
+    <p>
+      The <a href="whisperwood.html">Whisperwood Vale</a> feedback button opens a Google Form. It asks for a rating,
+      optional notes, and an optional email if you&rsquo;d like a reply. No sign-in is required.
+      Google handles the form under the
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>,
+      and responses go to The Night Bite&rsquo;s Google account.
+    </p>
+
+    <h2>Trip and tournament submissions</h2>
+    <ul>
+      <li><strong>Email draft:</strong> the forms on <a href="log.html">Log</a> and <a href="tournaments.html">Tournaments</a> only build a draft in your own email app. Nothing is sent unless you send it.</li>
+      <li><strong>GitHub issue:</strong> issues on GitHub are public and handled under GitHub&rsquo;s privacy statement.</li>
+    </ul>
+
+    <h2>Hosting</h2>
+    <p>
+      This site is hosted on GitHub Pages. GitHub logs the IP address of every visit for security purposes
+      (<a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection" target="_blank" rel="noopener">GitHub Pages data collection</a>,
+      <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>).
+      The Night Bite doesn&rsquo;t receive those logs.
+    </p>
+
+    <h2>Live water readings (USGS)</h2>
+    <p>
+      The Home and Water pages ask USGS (<code>waterservices.usgs.gov</code>) for the latest Hoover gauge reading
+      straight from your browser, so USGS sees that request like any other website visit. No personal data is sent with it.
+    </p>
+
+    <h2>Fonts and other sites</h2>
+    <p>
+      Fonts are served from this site, not from a font service. Links to ODNR, USGS, Columbus, Google, and GitHub
+      take you to those sites, which have their own privacy policies.
+    </p>
+
+    <h2>Contact</h2>
+    <p>Questions about privacy? Email <strong>CONTACT_EMAIL_PENDING</strong>.</p>
+    <p class="meta">If anything here changes, for example adding analytics, this page will be updated first.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="species/index.html">Species</a>
+        <a href="water.html">Water</a>
+        <a href="log.html">Log</a>
+        <a href="tournaments.html">Tournaments</a>
+        <a href="gear.html">Gear</a>
+        <a href="dockside.html">Dockside</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="whisperwood.html">Whisperwood Vale</a>
+      </nav>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
+    </div>
+  </footer>
+  <script src="js/nav.js"></script>
+
+</body>
+</html>

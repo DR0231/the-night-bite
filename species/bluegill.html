@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
   <link rel="manifest" href="../site.webmanifest">
@@ -9,10 +11,8 @@
   <meta name="description" content="Bluegill and sunfish at Hoover Reservoir, Ohio: good bluegill fishing for bank sessions, and bait for the cooler where legal. Season, where, gear, bait.">
   <link rel="canonical" href="https://nightbiteoh.com/species/bluegill.html">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,17,400;0,17,600;1,17,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,17,400;0,17,600;1,17,400&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" href="../assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../css/styles.css">
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Species", "item": "https://nightbiteoh.com/species/"}, {"@type": "ListItem", "position": 3, "name": "Bluegill / sunfish", "item": "https://nightbiteoh.com/species/bluegill.html"}]}
@@ -182,6 +182,7 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
         <a href="../gear.html">Gear</a>
         <a href="../dockside.html">Dockside</a>
         <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
         <a href="../whisperwood.html">Whisperwood Vale</a>
       </nav>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>

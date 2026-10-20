@@ -29,11 +29,16 @@
         return (a.date || "").localeCompare(b.date || "");
       })
       .map(function (e) {
-        var url = e.url
-          ? '<p><a href="' +
-            escapeHtml(e.url) +
-            '" target="_blank" rel="noopener">Event info</a></p>'
-          : "";
+        var rawUrl = typeof e.url === "string" ? e.url.trim() : "";
+        var url = "";
+        if (rawUrl) {
+          // Only https:// links are clickable; anything else shows as plain text.
+          url = /^https:\/\//i.test(rawUrl)
+            ? '<p><a href="' +
+              escapeHtml(rawUrl) +
+              '" target="_blank" rel="noopener">Event info</a></p>'
+            : "<p>Event info: " + escapeHtml(rawUrl) + "</p>";
+        }
         return (
           '<article class="card">' +
           "<h3>" +
