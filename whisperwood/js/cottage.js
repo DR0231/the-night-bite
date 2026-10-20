@@ -21,6 +21,7 @@ const Cottage = {
       addDeco("bench", 5.5 * TILE_SIZE, 11 * TILE_SIZE);
       addSolid(70, 160, 36, 14, "bench");
       addDeco("calendar", 16.5 * TILE_SIZE, 11 * TILE_SIZE);
+      addSolid(254, 164, 20, 11, "calendar");
       addDeco("mailtray", 12.5 * TILE_SIZE, 11.2 * TILE_SIZE);
       addSolid(189, 168, 22, 10, "mailtray");
       addDeco("crate", 18.2 * TILE_SIZE, 12.4 * TILE_SIZE);
