@@ -341,7 +341,7 @@ const Survival = {
       const f = FISH.find((x) => x.id === key);
       if (f) { held = f; break; }
     }
-    if (typeof Game !== "undefined" && Game.holdFood) Game.holdFood(held);
+    if (typeof Game !== "undefined" && Game.holdFood) Game.holdFood(held, id);
     return true;
   },
 
@@ -366,7 +366,7 @@ const Survival = {
     UI.toastNote("A handful of vale berries.");
     Save.mark();
     if (Inventory.open) Inventory.close();
-    if (typeof Game !== "undefined" && Game.holdFood) Game.holdFood(null);
+    if (typeof Game !== "undefined" && Game.holdFood) Game.holdFood(null, "berries");
     return true;
   },
 
