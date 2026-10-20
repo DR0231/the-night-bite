@@ -57,7 +57,13 @@ const Atlas = {
       { x: 0, y: -2, hx: 0, hy: -16 },
       { x: -29, y: -41, hx: -8, hy: -16 },
       { x: 39, y: -44, hx: 8, hy: -16 },
-      { x: 0, y: -55, hx: 0, hy: -43 },
+      { x: 10, y: -55, hx: 4, hy: -22 },
+    ],
+    lantern: [
+      [[7, -12], [8, -13], [8, -13], [8, -11], [8, -13], [0, -13]],
+      [[2, -12], [10, -13], [2, -11], [-7, -17], [2, -11], [-12, -17]],
+      [[-2, -12], [-11, -13], [-3, -11], [6, -17], [-3, -11], [11, -17]],
+      [[-9, -13], [-10, -13], [-10, -14], [-9, -17], [-10, -14], [-10, -14]],
     ],
   },
 
@@ -106,6 +112,19 @@ const Atlas = {
     pickupBerries: { sheet: "props", sx: 156, sy: 104, w: 16, h: 20, ax: 8,  ay: 18 },
     pickupCrickets:{ sheet: "props", sx: 172, sy: 104, w: 20, h: 16, ax: 10, ay: 14 },
     pickupCrystal: { sheet: "props", sx: 192, sy: 104, w: 16, h: 20, ax: 8,  ay: 18 },
+    lanternHeld:   { sheet: "props", sx: 0,   sy: 152, w: 7,  h: 11, ax: 3,  ay: 0 },
+    caveMouth:     { sheet: "props", sx: 0,   sy: 176, w: 48, h: 40, ax: 24, ay: 40 },
+    meal_dawntea:      { sheet: "props", sx: 0,   sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
+    meal_panperch:     { sheet: "props", sx: 16,  sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
+    meal_riverstew:    { sheet: "props", sx: 32,  sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
+    meal_cavebroth:    { sheet: "props", sx: 48,  sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
+    meal_mistskillet:  { sheet: "props", sx: 64,  sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
+    meal_reedchowder:  { sheet: "props", sx: 80,  sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
+    meal_amberpot:     { sheet: "props", sx: 96,  sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
+    meal_moonkettle:   { sheet: "props", sx: 112, sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
+    meal_saltskillet:  { sheet: "props", sx: 128, sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
+    meal_galechowder:  { sheet: "props", sx: 144, sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
+    meal_berries:      { sheet: "props", sx: 160, sy: 136, w: 16, h: 16, ax: 8, ay: 8 },
   },
 
   load() {
@@ -181,6 +200,23 @@ const Atlas = {
     const img = this._img(f.sheet);
     return !!(img && this._wh(img).w);
   },
+
+  lanternAnchor(x, y, state) {
+    const P = this.PLAYER;
+    let dir = Utils.clamp((state && state.dir) | 0, 0, 3);
+    let col = 0;
+    if (state && state.fishing) col = 5;
+    else if (state && state.col != null) col = state.col | 0;
+    else if (state && state.moving) col = 1 + (((state.frame | 0) % 4 + 4) % 4);
+    col = Utils.clamp(col, 0, 5);
+    const g = P.lantern[dir][col];
+    const hop = (state && state.hop) || 0;
+    const bob = (state && state.moving && !state.fishing && state.stepUp) ? 1 : 0;
+    const tug = Utils.clamp((state && state.tug) || 0, -1, 1);
+    const sx = (dir === 1 && col !== 0) ? -1 : 1;
+    return { x: (x | 0) + g[0] + sx * Math.round(tug * 2), y: ((y - hop - bob) | 0) + g[1], dir };
+  },
+  drawLantern(ctx, a) { return !!(a && this.draw(ctx, "lanternHeld", a.x, a.y)); },
 
   drawPlayer(ctx, x, y, state) {
     const img = this.sheets.player;
@@ -460,6 +496,14 @@ const Atlas = {
     if (e && !n && !s) this._blitCell(ctx, img, 3, row, x, y, 1);
     if (s && !e && !w) this._blitCell(ctx, img, 3, row, x, y, 2);
     if (w && !s && !n) this._blitCell(ctx, img, 3, row, x, y, 3);
+    const nw = !this._sameTile(tx - 1, ty - 1, tile, water);
+    const ne = !this._sameTile(tx + 1, ty - 1, tile, water);
+    const se = !this._sameTile(tx + 1, ty + 1, tile, water);
+    const sw = !this._sameTile(tx - 1, ty + 1, tile, water);
+    if (!n && !w && nw) this._blitCell(ctx, img, 5, row, x, y, 0);
+    if (!n && !e && ne) this._blitCell(ctx, img, 5, row, x, y, 1);
+    if (!s && !e && se) this._blitCell(ctx, img, 5, row, x, y, 2);
+    if (!s && !w && sw) this._blitCell(ctx, img, 5, row, x, y, 3);
   },
 
   drawGround(ctx, tile, tx, ty, x, y, h) {
@@ -521,14 +565,16 @@ const Atlas = {
       const origPlayer = Sprites.player;
       this._orig.player = origPlayer;
       Sprites.player = function (ctx, x, y, state) {
-        const drawn = Atlas.drawPlayer(ctx, x, y, state);
-        if (drawn) {
-          // Every facing has a painted rod on the sheet, so nothing is drawn over the sprite.
-          if (typeof Survival !== "undefined" && Survival.lanternLit && Survival.lanternLit() && Sprites.heldLantern) {
-            Sprites.heldLantern(ctx, x, y, state && state.dir);
-          }
+        const lit = typeof Survival !== "undefined" && Survival.lanternLit && Survival.lanternLit();
+        const lamp = lit && Atlas.sheets.player && Atlas.ok("lanternHeld") ? Atlas.lanternAnchor(x, y, state) : null;
+        Atlas.lanternGlowAt = lamp ? { x: lamp.x, y: lamp.y + 6 } : null;
+        if (lamp && lamp.dir === 3) Atlas.drawLantern(ctx, lamp);
+        if (Atlas.drawPlayer(ctx, x, y, state)) {
+          if (lamp && lamp.dir !== 3) Atlas.drawLantern(ctx, lamp);
+          else if (!lamp && lit && Sprites.heldLantern) Sprites.heldLantern(ctx, x, y, state && state.dir);
           return;
         }
+        Atlas.lanternGlowAt = null;
         return origPlayer.call(Sprites, ctx, x, y, state);
       };
     }
@@ -561,7 +607,6 @@ const Atlas = {
       this._orig.crate = origCrate;
       Sprites.crate = function (ctx, x, y) {
         if (!Atlas.draw(ctx, "crate", x, y)) origCrate.call(Sprites, ctx, x, y);
-        else if (Sprites.crateIce) Sprites.crateIce(ctx, x, y);
       };
     }
   },
