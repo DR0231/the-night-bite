@@ -25,7 +25,7 @@ Any static server works (`npx serve`, VS Code Live Server, etc.).
 3. Keep asset paths relative (`css/`, `js/`, `assets/`, `data/`).
 4. Optional: `.nojekyll` at site root if Jekyll interferes.
 
-**Do not commit secrets or PATs.** This site has no API keys. Mailto uses placeholder `nightbite@local` until a public contact is set.
+**Do not commit secrets or PATs.** This site has no API keys. Mailto and the privacy page use the public contact `contact@nightbiteoh.com`.
 
 ## Nav
 

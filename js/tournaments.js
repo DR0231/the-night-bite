@@ -2,7 +2,7 @@
  * The Night Bite — tournaments from data/tournaments.json + mailto submit
  */
 (function () {
-  var MAILTO = "nightbite@local";
+  var MAILTO = "contact@nightbiteoh.com";
   var listEl = document.getElementById("tournaments-list");
   var emptyEl = document.getElementById("tournaments-empty");
   var form = document.getElementById("tournament-form");

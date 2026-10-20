@@ -4,7 +4,7 @@
  * No accounts. Photos Phase 2.
  */
 (function () {
-  var MAILTO = "nightbite@local";
+  var MAILTO = "contact@nightbiteoh.com";
   var listEl = document.getElementById("community-log-list");
   var form = document.getElementById("community-trip-form");
   var preview = document.getElementById("submit-preview");
@@ -152,7 +152,7 @@
         statusEl.innerHTML =
           'Email draft ready for <code>' +
           escapeHtml(MAILTO) +
-          '</code> (placeholder contact). <a href="' +
+          '</code>. <a href="' +
           href +
           '">Open mail app</a>. Or use GitHub issue / markdown.';
       }

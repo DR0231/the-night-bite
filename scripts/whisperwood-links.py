@@ -40,5 +40,10 @@ for name in ["play.html", "index.html", "guide.html"]:
         slot = '<div id="nb-links" class="nb-links"></div>'
         if slot in t:
             t = t.replace(slot, '<div id="nb-links" class="nb-links"><a class="nb-back" href="../whisperwood.html">← Night Bite</a><a class="nb-feedback" href="' + FORM + '" target="_blank" rel="noopener">Feedback</a></div>', 1)
+    if name == "play.html":
+        # Privacy link right after each Feedback link (top nav + #nb-links slot). Idempotent.
+        PRIV = '<a class="nb-privacy" href="../privacy.html">Privacy</a>'
+        fb = re.compile(r'(\n([ \t]*))?(<a class="nb-feedback"[^>]*>Feedback</a>)(?!\s*<a class="nb-privacy")')
+        t = fb.sub(lambda m: (m.group(1) or "") + m.group(3) + ((m.group(1) or "") + PRIV if m.group(1) else PRIV), t)
     p.write_text(t, encoding="utf-8")
 print("links ok")
