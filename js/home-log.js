@@ -18,23 +18,27 @@
       var trip = trips.slice().sort(function (a, b) {
         return String(b.date).localeCompare(String(a.date));
       })[0];
-      var sample = trip.sample
-        ? '<span class="sample-badge">SAMPLE</span> '
+      var badge = trip.sample
+        ? '<span class="sample-badge" title="Demo entry, not a live bite report">Example entry</span>'
         : "";
+      var details = [trip.date, trip.ramp, trip.bait]
+        .filter(Boolean)
+        .map(escapeHtml)
+        .join(" · ");
       body.innerHTML =
-        sample +
-        "<strong>" +
+        badge +
+        '<p class="log-value">' +
         escapeHtml(trip.species || "Trip") +
-        "</strong> · " +
-        escapeHtml(trip.date || "") +
-        "<br><span class=\"meta\">" +
-        escapeHtml(trip.ramp || "") +
-        (trip.bait ? " · " + escapeHtml(trip.bait) : "") +
-        "</span>";
+        "</p>" +
+        '<p class="meta">' +
+        details +
+        "</p>";
     })
     .catch(function () {
       body.innerHTML =
-        '<span class="sample-badge">SAMPLE</span> <strong>Channel catfish</strong> · 2026-08-15<br><span class="meta">Oxbow · Cut shad — open the log for more.</span>';
+        '<span class="sample-badge" title="Demo entry, not a live bite report">Example entry</span>' +
+        '<p class="log-value">Channel catfish</p>' +
+        '<p class="meta">2026-08-15 · Oxbow · Cut shad</p>';
     });
 
   function escapeHtml(s) {

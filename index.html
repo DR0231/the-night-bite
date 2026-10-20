@@ -58,7 +58,7 @@
     </div>
   </header>
 
-  <main id="main">
+  <main id="main" class="home">
     <section class="hero" aria-labelledby="home-title">
       <div class="hero-art" aria-hidden="true">
         <img src="assets/moon.svg" alt="" width="40" height="40" class="hero-moon">
@@ -105,21 +105,25 @@
 
       <a class="bento-card bento-maps" href="water.html#maps">
         <h3>Water / maps</h3>
-        <p class="meta">ODNR contours @ 894, city ramp map, USGS gauge, pool correction.</p>
+        <p class="card-text">ODNR contours @ 894, city ramp map, USGS gauge, pool correction.</p>
+        <span class="card-cue" aria-hidden="true">Open maps</span>
       </a>
       <a class="bento-card bento-species" href="species/index.html">
         <h3>Species</h3>
-        <p class="meta">Cats, bass, panfish, saugeye — season, where, limits, gear.</p>
+        <p class="card-text">Cats, bass, panfish, saugeye — season, where, limits, gear.</p>
+        <span class="card-cue" aria-hidden="true">Browse species</span>
       </a>
       <a class="bento-card bento-whisper" href="whisperwood/play.html">
         <h3>Play Whisperwood</h3>
-        <p class="meta">Cozy pixel fishing game — fiction, not the real lake.</p>
+        <p class="card-text">Cozy pixel fishing game — fiction, not the real lake.</p>
+        <span class="card-cue" aria-hidden="true">Play in the browser</span>
       </a>
       <a class="bento-card bento-log" id="latest-log-card" href="log.html">
         <h3>Latest log</h3>
         <div class="latest-log-body">
-          <span class="sample-badge">SAMPLE</span> Loading newest trip…
+          <p class="meta log-loading">Opening the notebook…</p>
         </div>
+        <span class="card-cue" aria-hidden="true">Open the log</span>
       </a>
     </div>
 
@@ -129,7 +133,7 @@
     <ul class="condensed-list">
       <li>Unofficial Hoover-only fishing hub with night-dock atmosphere</li>
       <li>Species pages with limit reminders — verify HuntFish OH / ODNR 2026–27</li>
-      <li>One sample log entry stamped <span class="sample-badge">SAMPLE</span> · not ODNR / City / USGS</li>
+      <li>One example log entry, marked <span class="sample-badge">Example</span> · not ODNR / City / USGS</li>
     </ul>
 
     <div class="callout warn">
@@ -157,6 +161,7 @@
   </footer>
   <script src="js/nav.js"></script>
   <script src="js/usgs.js"></script>
+  <script src="js/pool-readout.js"></script>
   <script src="js/home-log.js"></script>
 </body>
 </html>
