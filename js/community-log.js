@@ -41,7 +41,7 @@
       })
       .map(function (e) {
         var badge = e.sample
-          ? '<span class="sample-badge" title="Demo sample — not a live bite report">SAMPLE</span>'
+          ? '<span class="sample-badge" title="Demo entry — not a live bite report">Example</span>'
           : '<span class="meta">Community</span>';
         return (
           '<article class="paper-card">' +
@@ -131,7 +131,7 @@
       "- **Keep / release:** " + d.keep_release,
       "- **Notes:** " + (d.notes || "(none)"),
       "",
-      "_Submitted via The Night Bite Phase 1 form. Public access only._"
+      "_Submitted via The Night Bite log form. Public access only._"
     ].join("\n");
   }
 

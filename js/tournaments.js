@@ -20,7 +20,7 @@
     if (!listEl) return;
     if (!events || !events.length) {
       listEl.innerHTML =
-        '<div class="empty-log"><p>None listed — submit one.</p></div>';
+        '<div class="empty-log"><p>No events listed right now. Know of one? <a href="#submit-tournament">Submit it below</a>.</p></div>';
       return;
     }
     listEl.innerHTML = events
@@ -75,7 +75,7 @@
     .catch(function () {
       if (listEl) {
         listEl.innerHTML =
-          '<div class="empty-log"><p>Could not load tournaments.json (use a local server). None listed.</p></div>';
+          '<div class="empty-log"><p>The event list couldn’t load right now. Refresh to try again.</p></div>';
       }
     });
 

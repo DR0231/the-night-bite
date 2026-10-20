@@ -21,7 +21,7 @@
       bait: "Cut shad",
       species: "Channel catfish",
       disposition: "Released",
-      notes: "Two keeper-size channels before midnight. Warm humid night, light breeze off the upper end. SAMPLE trip for demo only."
+      notes: "Two keeper-size channels before midnight. Warm humid night, light breeze off the upper end. Example trip for demo only."
     }
   ];
 
@@ -87,7 +87,7 @@
 
     list.innerHTML = entries.map(function (e) {
       var badge = e.sample
-        ? '<span class="sample-badge" title="Demo sample — not a live bite report">SAMPLE</span>'
+        ? '<span class="sample-badge" title="Demo entry — not a live bite report">Example</span>'
         : '<span class="meta">Your entry</span>';
       var delBtn = e.sample
         ? ""

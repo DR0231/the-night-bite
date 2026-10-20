@@ -54,7 +54,7 @@
     <h1>The Log</h1>
     <p class="lead">
       Cream-paper trip cards from Hoover nights. Private notes stay in this browser.
-      Community trips load from the notebook JSON — SAMPLE stamps mean demos, not live bite reports.
+      Community trips load from the notebook JSON — entries marked Example are demos, not live bite reports.
     </p>
 
     <details class="how-to-read" id="how-submit-works">
@@ -62,8 +62,8 @@
       <div class="how-to-read-body">
         <ul>
           <li>Community list reads <code>data/community-log.json</code> in the repo.</li>
-          <li>Phase 1 submit: mailto draft or GitHub issue markdown — no accounts to read.</li>
-          <li>Photos, likes, Instagram, and logins are <strong>Phase 2</strong> — not here yet.</li>
+          <li>Submit by mailto draft or GitHub issue markdown — no account needed to read.</li>
+          <li>Text trip notes only for now: no photos, likes, Instagram, or logins.</li>
           <li>Public ramp names only. No secret GPS, no private property.</li>
         </ul>
       </div>
@@ -71,13 +71,13 @@
 
     <h2>Community log</h2>
     <p class="meta">
-      Loaded from <code>data/community-log.json</code>. Empty or SAMPLE demos only until real submits land in the repo.
+      Loaded from <code>data/community-log.json</code>. Reviewed trips are added here; entries marked Example are demos.
     </p>
     <div id="community-log-list" aria-live="polite">
       <div class="empty-log"><p>Loading community trips…</p></div>
     </div>
 
-    <h2 id="add-trip">Submit a trip (Phase 1)</h2>
+    <h2 id="add-trip">Submit a trip</h2>
     <p class="meta">
       Builds a mailto draft or shows markdown for a GitHub issue. Public ramp/area names only — no secret GPS, no private property.
     </p>
@@ -164,15 +164,15 @@
     <hr class="divider">
 
     <h2>Your private trips (this browser)</h2>
-    <p class="lead" style="font-size:1rem;">
+    <p class="lead">
       Add your own notes below; they stay in <code>localStorage</code> only.
-      The one <span class="sample-badge">SAMPLE</span> trip on this page is a demo — not a live bite report.
+      The one trip marked <span class="sample-badge">Example</span> is a demo — not a live bite report.
     </p>
 
     <div id="log-list" aria-live="polite">
       <noscript>
         <article class="paper-card">
-          <span class="sample-badge">SAMPLE</span>
+          <span class="sample-badge">Example</span>
           <h3>Channel catfish</h3>
           <dl class="trip-dl">
             <dt>Date</dt><dd>Jul 12, 2025</dd>
@@ -180,7 +180,7 @@
             <dt>Bait</dt><dd>Cut shad</dd>
             <dt>Keep?</dt><dd>Released</dd>
           </dl>
-          <p>Two keeper-size channels before midnight. SAMPLE trip for demo only.</p>
+          <p>Two keeper-size channels before midnight. Example trip for demo only.</p>
         </article>
         <p class="meta">Enable JavaScript to add your own trips and save them on this device.</p>
       </noscript>
