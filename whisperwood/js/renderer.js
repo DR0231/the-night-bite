@@ -68,6 +68,7 @@ const Renderer = {
     this._water(ctx, cam, t, light);
     this._liliesAndMist(ctx, t);
     Fishing.drawBobber(ctx);
+    if (Player.dir === 3) Fishing.drawLine(ctx);
 
     const drawList = [];
     for (const d of World.decos) {
@@ -95,7 +96,7 @@ const Renderer = {
     // Line stays above the lighting pass so it never gets lost in dusk/night tint.
     ctx.save();
     ctx.translate(-Math.round(cam.x), -Math.round(cam.y));
-    Fishing.drawLine(ctx);
+    if (Player.dir !== 3) Fishing.drawLine(ctx);
     ctx.restore();
 
     this._particles(ctx, cam);
@@ -345,9 +346,11 @@ const Renderer = {
   _lanternGlow(ctx, cam, peak) {
     if (typeof Survival === "undefined" || !Survival.lanternLit()) return;
     if (!(peak > 0.005)) return;
-    const hand = (typeof Sprites !== "undefined" && Sprites.lanternPos)
-      ? Sprites.lanternPos(Player.x, Player.y, Player.dir)
-      : { x: Player.x + 9, y: Player.y - 8 };
+    const hand = (typeof Atlas !== "undefined" && Atlas.lanternGlowAt)
+      ? Atlas.lanternGlowAt
+      : (typeof Sprites !== "undefined" && Sprites.lanternPos)
+        ? Sprites.lanternPos(Player.x, Player.y, Player.dir)
+        : { x: Player.x + 9, y: Player.y - 8 };
     const sx = hand.x - (cam ? cam.x : 0);
     const sy = hand.y - (cam ? cam.y : 0);
     ctx.save();
@@ -374,11 +377,9 @@ const Renderer = {
     ctx.globalAlpha = u < 0.75 ? 1 : 1 - (u - 0.75) / 0.25;
     ctx.translate(d.x + 10, d.y - 18 + bob);
     ctx.scale(scale, scale);
-    if (eat.fish) Sprites.fishIcon(ctx, 0, 0, eat.fish, false);
-    else {
-      ctx.fillStyle = "#c45a5a";
-      ctx.fillRect(-4, -4, 8, 8);
-    }
+    if (eat.meal) {
+      if (typeof Atlas !== "undefined") Atlas.draw(ctx, "meal_" + eat.meal, 0, 0);
+    } else if (eat.fish) Sprites.fishIcon(ctx, 0, 0, eat.fish, false);
     ctx.restore();
   },
 
