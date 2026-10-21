@@ -199,6 +199,7 @@ const Save = {
     for (const k of ["aquarium", "trophies", "mail"]) {
       if (!Array.isArray(out.cottage[k])) out.cottage[k] = [];
     }
+    out.cottage.mail = out.cottage.mail.filter((n) => typeof n === "string").map((n) => n.slice(0, 500)).slice(0, 50);
     const srcDecor = (d.cottage && d.cottage.decor) || out.cottage.decor;
     out.cottage.decor = (srcDecor && typeof srcDecor === "object" && !Array.isArray(srcDecor))
       ? Object.assign({}, srcDecor)
