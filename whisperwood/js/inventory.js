@@ -132,20 +132,6 @@ const Inventory = {
       const rank = h >= 3 ? "dear" : h >= 2 ? "friend" : h >= 1 ? "acquaintance" : "stranger";
       return `${n.name} ${dots} (${rank})`;
     }).join(" · ");
-    const looseGroups = Object.create(null);
-    for (const u of Save.loose()) {
-      if (!looseGroups[u.id]) looseGroups[u.id] = { fresh: 0, soft: 0 };
-      if (Save.freshness(u) === "soft") looseGroups[u.id].soft++;
-      else looseGroups[u.id].fresh++;
-    }
-    const fishLines = Object.keys(looseGroups).map((id) => {
-      const f = FISH.find((x) => x.id === id);
-      const g = looseGroups[id];
-      const bits = [];
-      if (g.fresh) bits.push(`<span class="ink-fresh">Fresh ×${g.fresh}</span>`);
-      if (g.soft) bits.push(`<span class="ink-soft">Soft ×${g.soft}</span>`);
-      return `${f ? f.name : id}: ${bits.join(" · ")} <button type="button" data-eatfish="${id}">Eat ${f ? f.name : id}</button>`;
-    }).join("<br/>") || "No loose fish.";
     const extras = ["berries", "millreed", "saltberries", "crystal"].map((id) => `${BAIT[id].name} ×${this.baitCount(id)}`).join(" · ");
     const meal = Survival.meal();
     const mealLine = meal ? `Active meal: ${meal.name}` : "No meal in you.";
@@ -172,7 +158,7 @@ const Inventory = {
       <p class="pack-rank">${Skills.line()}</p>
       <p class="pack-coins">${this.coins()} coins</p>
       <p class="pack-hearts">${heartLine}</p>
-      <p class="pack-fish">${fishLines}<br/>${Save.stewLine()}</p>
+      <p class="pack-fish"></p>
       <div class="pack-baits">${emptyBtn}${rows}</div>
       <p class="pack-extra">${extras}</p>
       <p class="pack-meal">${mealLine}</p>
@@ -180,6 +166,45 @@ const Inventory = {
       <div class="pack-tools">${tools.join("")}</div>
       <p class="pack-craft">Bench: berries + worm → berry blend · crystal + worm → bright glow · meals in the pan</p>
       <label class="pack-mute">Mute audio (pack) <input type="checkbox" id="chk-mute" aria-label="Mute audio" ${Save.data.flags.mute ? "checked" : ""}/></label>`;
+    const fishP = el.querySelector(".pack-fish");
+    if (fishP) {
+      const looseGroups = Object.create(null);
+      for (const u of Save.loose()) {
+        if (!looseGroups[u.id]) looseGroups[u.id] = { fresh: 0, soft: 0 };
+        if (Save.freshness(u) === "soft") looseGroups[u.id].soft++;
+        else looseGroups[u.id].fresh++;
+      }
+      const ids = Object.keys(looseGroups);
+      if (!ids.length) fishP.appendChild(document.createTextNode("No loose fish."));
+      ids.forEach((id, i) => {
+        if (i) fishP.appendChild(document.createElement("br"));
+        const f = FISH.find((x) => x.id === id);
+        const g = looseGroups[id];
+        const name = f ? f.name : String(id);
+        fishP.appendChild(document.createTextNode(name + ": "));
+        if (g.fresh) {
+          const fresh = document.createElement("span");
+          fresh.className = "ink-fresh";
+          fresh.textContent = "Fresh ×" + g.fresh;
+          fishP.appendChild(fresh);
+        }
+        if (g.fresh && g.soft) fishP.appendChild(document.createTextNode(" · "));
+        if (g.soft) {
+          const soft = document.createElement("span");
+          soft.className = "ink-soft";
+          soft.textContent = "Soft ×" + g.soft;
+          fishP.appendChild(soft);
+        }
+        fishP.appendChild(document.createTextNode(" "));
+        const eat = document.createElement("button");
+        eat.type = "button";
+        eat.dataset.eatfish = String(id);
+        eat.textContent = "Eat " + name;
+        fishP.appendChild(eat);
+      });
+      fishP.appendChild(document.createElement("br"));
+      fishP.appendChild(document.createTextNode(Save.stewLine()));
+    }
     el.querySelectorAll("[data-bait]").forEach((btn) => {
       btn.addEventListener("click", () => { this.equip(btn.dataset.bait); this.refresh(); });
     });
