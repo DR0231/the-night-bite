@@ -194,7 +194,7 @@ const Save = {
       .filter((id, i, a) => PERKS[id] && a.indexOf(id) === i);
     out.skills.offered = out.skills.offered.map((id) => (id === "softlanding" ? "barehook" : id))
       .filter((id, i, a) => PERKS[id] && a.indexOf(id) === i && out.skills.perks.indexOf(id) < 0);
-    if (!out.skills.rank) out.skills.rank = 1;
+    if (!(Number.isInteger(out.skills.rank) && out.skills.rank >= 1 && out.skills.rank <= 8)) out.skills.rank = base.skills.rank;
     out.cottage = Object.assign({}, base.cottage, d.cottage || {});
     for (const k of ["aquarium", "trophies", "mail"]) {
       if (!Array.isArray(out.cottage[k])) out.cottage[k] = [];
@@ -254,6 +254,15 @@ const Save = {
       ? Object.assign({}, srcStamps)
       : {};
     out.journal = Object.assign(Object.create(null), base.journal, d.journal || {});
+    const JOURNAL_NUM = ["caught", "biggest", "firstAt", "lastAt", "hooked", "landed", "gotAway", "shiny", "firstDay"];
+    for (const id of Object.keys(out.journal)) {
+      const row = out.journal[id];
+      if (!row || typeof row !== "object" || Array.isArray(row)) continue;
+      for (const key of JOURNAL_NUM) {
+        if (!Object.prototype.hasOwnProperty.call(row, key)) continue;
+        row[key] = (typeof row[key] === "number" && Number.isFinite(row[key])) ? row[key] : 0;
+      }
+    }
     /* A cottage visit or any landed fish means the nudges would be late. Do not invent a first-land day for rows that never stored one. */
     if (out.cottage && out.cottage.visited) out.flags.onboard.done = true;
     for (const id of Object.keys(out.journal)) {

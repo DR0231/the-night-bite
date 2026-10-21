@@ -144,13 +144,15 @@ const UI = {
       w.textContent = line;
     }
     if (rec) {
-      const bits = [
-        `<li>${Quests.dailyLine()}</li>`,
-        `<li>${Quests.rumorLine()}</li>`,
-      ];
-      if ((Save.data.skills.rank | 0) > 1) bits.push(`<li>Fisher rank ${Save.data.skills.rank}.</li>`);
-      if ((Save.data.recap || []).some((r) => r.reason === "passout")) bits.push("<li>Wren found you in the reeds once. The kettle was on.</li>");
-      rec.innerHTML = bits.join("");
+      rec.textContent = "";
+      const lines = [Quests.dailyLine(), Quests.rumorLine()];
+      if ((Save.data.skills.rank | 0) > 1) lines.push("Fisher rank " + Save.data.skills.rank + ".");
+      if ((Save.data.recap || []).some((r) => r.reason === "passout")) lines.push("Wren found you in the reeds once. The kettle was on.");
+      for (const line of lines) {
+        const li = document.createElement("li");
+        li.textContent = line;
+        rec.appendChild(li);
+      }
     }
     const returning = Save.data.playTime > 20 || Journal.count() > 0 || Save.data.flags.introComplete;
     if (btn) btn.textContent = returning ? "Return to the Vale" : "Enter the Vale";
