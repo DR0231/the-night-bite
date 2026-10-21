@@ -427,13 +427,34 @@ const Cert = {
     if (rank) rank.textContent = typeof Skills !== "undefined" ? Skills.line() : "";
     const el = document.getElementById("certificate-body");
     if (!el) return;
-    const rows = (typeof Stamps !== "undefined" ? Stamps.list() : []).map((s) => {
+    el.textContent = "";
+    const ul = document.createElement("ul");
+    ul.className = "stamp-list";
+    const rows = typeof Stamps !== "undefined" ? Stamps.list() : [];
+    for (const s of rows) {
+      const li = document.createElement("li");
+      const seal = document.createElement("span");
+      seal.className = "stamp-seal";
+      seal.setAttribute("aria-hidden", "true");
+      const title = document.createElement("span");
+      title.className = "stamp-title";
+      li.appendChild(seal);
+      li.appendChild(title);
       if (!s.day) {
-        return `<li class="stamp-locked"><span class="stamp-seal" aria-hidden="true"></span><span class="stamp-title">—</span></li>`;
+        li.className = "stamp-locked";
+        title.textContent = "—";
+      } else {
+        li.className = "stamp-open";
+        seal.classList.add("is-ink");
+        title.textContent = s.title;
+        const day = document.createElement("span");
+        day.className = "stamp-day";
+        day.textContent = "Day " + s.day;
+        li.appendChild(day);
       }
-      return `<li class="stamp-open"><span class="stamp-seal is-ink" aria-hidden="true"></span><span class="stamp-title">${s.title}</span><span class="stamp-day">Day ${s.day}</span></li>`;
-    }).join("");
-    el.innerHTML = `<ul class="stamp-list">${rows}</ul>`;
+      ul.appendChild(li);
+    }
+    el.appendChild(ul);
   },
 };
 

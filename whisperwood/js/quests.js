@@ -327,8 +327,14 @@ const MillEnd = {
       `${Journal.count()} / ${FISH.length} species in the book`,
       `${landedSum} fish landed`,
       `Biggest: ${bestName}, ${best}"`,
-    ].map((s) => `<p class="ink-soft">${s}</p>`).join("");
-    el.innerHTML = `<p>${C.body}</p><ul class="stamp-list">${rares}</ul>${stats}`;
+    ];
+    el.innerHTML = `<p>${C.body}</p><ul class="stamp-list">${rares}</ul>`;
+    for (const s of stats) {
+      const p = document.createElement("p");
+      p.className = "ink-soft";
+      p.textContent = s;
+      el.appendChild(p);
+    }
   },
 
   drawScene(t) {
