@@ -440,14 +440,17 @@ const Atlas = {
   drawTank(ctx, x, y, t) {
     if (!this.draw(ctx, "tank", x, y)) return false;
     const aq = (typeof Save !== "undefined" && Save.data && Save.data.cottage && Save.data.cottage.aquarium) || [];
-    const waterY = y - 16;
     for (let i = 0; i < aq.length; i++) {
       const spec = typeof FISH !== "undefined" ? FISH.find((k) => k.id === aq[i]) : null;
-      const ox = Math.sin((t || 0) * 1.4 + i) * 10;
-      const flip = Math.cos((t || 0) * 1.4 + i) < 0;
-      if (!this.drawFish(ctx, spec || aq[i], x + ox, waterY, { scale: 0.5, flip })) {
+      const tt = t || 0;
+      const sp = 1.4 + (i % 4) * 0.15;
+      const ph = tt * sp + i * 1.7;
+      const ox = Math.round(Math.sin(ph) * 10);
+      const flip = Math.cos(ph) < 0;
+      const fy = y - 20 + (i % 3) * 4;
+      if (!this.drawFish(ctx, spec || aq[i], x + ox, fy, { scale: 0.5, flip })) {
         if (typeof Sprites !== "undefined" && Sprites.fishIcon) {
-          Sprites.fishIcon(ctx, x + ox, waterY, spec || "#8ad", false);
+          Sprites.fishIcon(ctx, x + ox, fy, spec || "#8ad", false);
         }
       }
     }
