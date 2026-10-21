@@ -324,8 +324,7 @@ const Cottage = {
   },
 
   tuckable() {
-    const aq = Save.data.cottage.aquarium || [];
-    return FISH.find((f) => Save.countLoose(f.id) > 0 && aq.indexOf(f.id) < 0) || null;
+    return FISH.find((f) => Save.countLoose(f.id) > 0) || null;
   },
 
   _tank() {
@@ -337,19 +336,20 @@ const Cottage = {
     Tank.open();
   },
 
-  _tuck() {
+  _tuck(id) {
+    if (!id) id = (this.tuckable() || {}).id;
     const aq = Save.data.cottage.aquarium;
     if (aq.length >= this.tankCap()) {
       UI.toastNote("The tank is full.");
       return false;
     }
-    const extra = this.tuckable();
-    if (!extra) { UI.toastNote("Catch a fish to keep."); return false; }
-    const unit = Save.takeOldestLoose(extra.id);
-    if (!unit) return false;
-    aq.push(extra.id);
+    const f = FISH.find((x) => x.id === id);
+    if (!f) { UI.toastNote("No loose fish to tuck."); return false; }
+    const unit = Save.takeOldestLoose(id);
+    if (!unit) { UI.toastNote("No loose fish to tuck."); return false; }
+    aq.push(id);
     Save.syncCaught();
-    UI.toastNote(`${extra.name} now lives in the tank.`);
+    UI.toastNote(`${f.name} now lives in the tank.`);
     Save.mark();
     return true;
   },
@@ -544,31 +544,60 @@ const Tank = {
     const el = document.getElementById("tank-body");
     if (!el) return;
     const aq = Save.data.cottage.aquarium || [];
-    const rows = aq.map((id, i) => {
-      const f = FISH.find((x) => x.id === id);
-      const name = f ? f.name : id;
-      return `<button type="button" data-take="${i}">Take out ${name}</button>`;
-    }).join("") || "<p>The tank is empty.</p>";
-    const extra = Cottage.tuckable();
-    const room = aq.length < Cottage.tankCap();
-    const tuck = extra && room
-      ? `<button type="button" id="btn-tuck">Tuck a fish (${extra.name})</button>`
-      : (aq.length >= Cottage.tankCap() ? "<p>The tank is full.</p>" : "");
-    el.innerHTML = `${rows}${tuck}`;
-    el.querySelectorAll("[data-take]").forEach((b) => b.addEventListener("click", () => {
-      Cottage._takeOut(b.dataset.take | 0);
-      const left = Save.data.cottage.aquarium || [];
-      if (!left.length && !Cottage.tuckable()) {
-        this.close();
-        return;
-      }
-      this.refresh();
-    }));
-    const tuckBtn = el.querySelector("#btn-tuck");
-    if (tuckBtn) tuckBtn.addEventListener("click", () => {
-      Cottage._tuck();
-      this.refresh();
-    });
+    const cap = Cottage.tankCap();
+    el.textContent = "";
+    const head = document.createElement("p");
+    head.textContent = "Tank " + aq.length + " / " + cap;
+    el.appendChild(head);
+    if (!aq.length) {
+      const empty = document.createElement("p");
+      empty.textContent = "The tank is empty.";
+      el.appendChild(empty);
+    } else {
+      aq.forEach((id, i) => {
+        const f = FISH.find((x) => x.id === id);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.take = String(i);
+        btn.textContent = "Take out " + (f ? f.name : id);
+        btn.addEventListener("click", () => {
+          Cottage._takeOut(btn.dataset.take | 0);
+          const left = Save.data.cottage.aquarium || [];
+          if (!left.length && !Cottage.tuckable()) {
+            this.close();
+            return;
+          }
+          this.refresh();
+        });
+        el.appendChild(btn);
+      });
+    }
+    if (aq.length >= cap) {
+      const full = document.createElement("p");
+      full.textContent = "The tank is full.";
+      el.appendChild(full);
+      return;
+    }
+    const counts = Object.create(null);
+    for (const u of Save.loose()) counts[u.id] = (counts[u.id] || 0) + 1;
+    const looseIds = FISH.filter((f) => counts[f.id] > 0);
+    if (!Object.keys(counts).length) {
+      const none = document.createElement("p");
+      none.textContent = "No loose fish to tuck.";
+      el.appendChild(none);
+      return;
+    }
+    for (const f of looseIds) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.dataset.tuck = f.id;
+      btn.textContent = "Tuck " + f.name + " · ×" + counts[f.id];
+      btn.addEventListener("click", () => {
+        Cottage._tuck(btn.dataset.tuck);
+        this.refresh();
+      });
+      el.appendChild(btn);
+    }
   },
 };
 
