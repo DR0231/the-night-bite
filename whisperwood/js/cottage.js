@@ -480,38 +480,65 @@ const Trophy = {
     const el = document.getElementById("trophy-body");
     if (!el) return;
     const wall = Save.data.cottage.trophies || (Save.data.cottage.trophies = []);
-    const mounted = wall.map((id, i) => {
-      const f = FISH.find((x) => x.id === id);
-      return `<button type="button" data-off="${i}">Take down ${f ? f.name : id}</button>`;
-    }).join("") || "<p>The mount is empty.</p>";
     const cap = (DESIGN.trophySlots | 0) || 2;
-    const cands = FISH.filter((f) => Journal.landed(f.id) && wall.indexOf(f.id) < 0);
-    const mount = cands.map((f) => {
-      const e = Journal.ensure(f.id);
-      const full = wall.length >= cap;
-      return `<button type="button" data-on="${f.id}" ${full ? "disabled" : ""}>Mount ${f.name} (best ${e.biggest}")</button>`;
-    }).join("") || "<p>Land a fish, then hang it here.</p>";
-    const fullNote = wall.length >= cap ? "<p>Take one down to hang another.</p>" : "";
-    el.innerHTML = `<p>On the wall (${wall.length}/${cap})</p>${mounted}<p>Pack</p>${mount}${fullNote}`;
-    el.querySelectorAll("[data-off]").forEach((b) => b.addEventListener("click", () => {
-      wall.splice(b.dataset.off | 0, 1);
-      UI.toastNote("Taken down. Hang another whenever you like.");
-      Save.mark();
-      this.refresh();
-    }));
-    el.querySelectorAll("[data-on]").forEach((b) => {
-      b.addEventListener("click", () => {
-        if (wall.length >= cap) {
-          UI.toastNote("Take one down first.");
-          return;
-        }
-        wall.push(b.dataset.on);
-        const f = FISH.find((x) => x.id === b.dataset.on);
-        UI.toastNote(`${f ? f.name : "Fish"} is on the wall.`);
-        Save.mark();
-        this.refresh();
+    el.textContent = "";
+    const head = document.createElement("p");
+    head.textContent = "On the wall (" + wall.length + "/" + cap + ")";
+    el.appendChild(head);
+    if (!wall.length) {
+      const empty = document.createElement("p");
+      empty.textContent = "The mount is empty.";
+      el.appendChild(empty);
+    } else {
+      wall.forEach((id, i) => {
+        const f = FISH.find((x) => x.id === id);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.off = String(i);
+        btn.textContent = "Take down " + (f ? f.name : String(id));
+        btn.addEventListener("click", () => {
+          wall.splice(i, 1);
+          UI.toastNote("Taken down. Hang another whenever you like.");
+          Save.mark();
+          this.refresh();
+        });
+        el.appendChild(btn);
       });
-    });
+    }
+    const pack = document.createElement("p");
+    pack.textContent = "Pack";
+    el.appendChild(pack);
+    const cands = FISH.filter((f) => Journal.landed(f.id) && wall.indexOf(f.id) < 0);
+    if (!cands.length) {
+      const none = document.createElement("p");
+      none.textContent = "Land a fish, then hang it here.";
+      el.appendChild(none);
+    } else {
+      for (const f of cands) {
+        const e = Journal.ensure(f.id);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.on = f.id;
+        btn.disabled = wall.length >= cap;
+        btn.textContent = "Mount " + f.name + " (best " + String(e.biggest) + "\")";
+        btn.addEventListener("click", () => {
+          if (wall.length >= cap) {
+            UI.toastNote("Take one down first.");
+            return;
+          }
+          wall.push(f.id);
+          UI.toastNote(`${f.name} is on the wall.`);
+          Save.mark();
+          this.refresh();
+        });
+        el.appendChild(btn);
+      }
+    }
+    if (wall.length >= cap) {
+      const note = document.createElement("p");
+      note.textContent = "Take one down to hang another.";
+      el.appendChild(note);
+    }
   },
 };
 
