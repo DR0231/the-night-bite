@@ -454,6 +454,24 @@ const Atlas = {
     return true;
   },
 
+  drawTrophies(ctx, x, y) {
+    ctx.fillStyle = "#292214"; ctx.fillRect(x - 11, y - 29, 22, 20);   // always, even when empty
+    const all = (typeof Save !== "undefined" && Save.data && Save.data.cottage && Save.data.cottage.trophies) || [];
+    const n = (typeof DESIGN !== "undefined" && DESIGN.trophySlots) || 2;
+    const list = [];
+    for (const id of all.slice(0, n)) {
+      const f = typeof FISH !== "undefined" ? FISH.find((k) => k.id === id) : null;
+      if (f) list.push(f);          // unknown ids are skipped
+    }
+    const ys = list.length === 1 ? [y - 20] : [y - 24, y - 15];
+    list.forEach((f, i) => {
+      const cx = x, cy = ys[i];
+      if (!this.drawFish(ctx, f, cx, cy, { scale: 0.5 })) {
+        if (typeof Sprites !== "undefined" && Sprites.fishIcon) Sprites.fishIcon(ctx, cx - 6, cy - 4, f, false);
+      }
+    });
+  },
+
   _blitCell(ctx, img, col, row, x, y, rot) {
     const sx = col * 16, sy = row * 16;
     const size = this._wh(img);
@@ -553,6 +571,13 @@ const Atlas = {
         const id = horiz ? "fenceH" : "fenceV";
         if (Atlas.draw(ctx, id, x, y) || Atlas.draw(ctx, "fence", x, y)) return;
         return origFence.call(Sprites, ctx, x, y, horiz);
+      };
+    }
+    if (typeof Sprites.trophyWall === "function") {
+      const origWall = Sprites.trophyWall;   // this is the generic wrapper; keep it as the fallback
+      Sprites.trophyWall = function (ctx, x, y) {
+        if (!Atlas.draw(ctx, "trophyWall", x, y)) return origWall.call(Sprites, ctx, x, y);
+        Atlas.drawTrophies(ctx, x, y);
       };
     }
     if (typeof Sprites.player === "function") {
