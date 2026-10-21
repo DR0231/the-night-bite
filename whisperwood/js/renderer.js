@@ -28,11 +28,15 @@ const Renderer = {
     const fitIn = (pad) => Math.min(
       Math.max(320, (host.clientWidth || window.innerWidth) - pad) / this.viewW,
       Math.max(180, (host.clientHeight || window.innerHeight) - pad) / this.viewH);
-    let s = Math.floor(fitIn(window.valeDesktop ? 0 : 24));
+    const pad = window.valeDesktop ? 0 : 24;
+    let s = Math.floor(fitIn(pad));
     let css;
-    if (s >= 2 || !coarse) {
+    if (s >= 2) {
       s = Utils.clamp(s, 2, 6);
       css = s;
+    } else if (!coarse) {
+      s = 2;
+      css = Math.max(1, fitIn(pad));
     } else {
       const dpr = Math.max(1, window.devicePixelRatio || 1);
       s = Math.max(1, Math.floor(fitIn(0) * dpr));
