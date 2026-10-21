@@ -133,12 +133,23 @@ const Quests = {
     const el = document.getElementById("board-body");
     if (!el) return;
     const f = (Save.data.clock.forecast || []).filter((id) => WEATHERS[id]).map((id) => WEATHERS[id].name).join(" → ");
-    el.innerHTML = `
-      <p><strong>Today</strong> — ${this.dailyLine()}</p>
-      <p><strong>Rumor</strong> — ${this.rumorLine()}</p>
-      <p><strong>Forecast</strong> — ${f}</p>
-      <p><strong>Hotspot</strong> — ${SPOTS[TimeCycle.hotspot()].name} is alive today.</p>
-      ${this.derbyLine() ? `<p><strong>Derby</strong> — ${this.derbyLine()}</p>` : ""}`;
+    const lines = [
+      ["Today", this.dailyLine()],
+      ["Rumor", this.rumorLine()],
+      ["Forecast", f],
+      ["Hotspot", `${SPOTS[TimeCycle.hotspot()].name} is alive today.`],
+    ];
+    const derby = this.derbyLine();
+    if (derby) lines.push(["Derby", derby]);
+    el.textContent = "";
+    for (const [label, value] of lines) {
+      const p = document.createElement("p");
+      const strong = document.createElement("strong");
+      strong.textContent = label;
+      p.appendChild(strong);
+      p.appendChild(document.createTextNode(" — " + value));
+      el.appendChild(p);
+    }
   },
 };
 
@@ -377,7 +388,14 @@ const Mail = {
     if (!el) return;
     const notes = Save.data.cottage.mail || [];
     if (!notes.length) el.innerHTML = "<p>The tray is empty.</p>";
-    else el.innerHTML = notes.map((n) => `<p>${n}</p>`).join("");
+    else {
+      el.textContent = "";
+      for (const n of notes) {
+        const p = document.createElement("p");
+        p.textContent = String(n);
+        el.appendChild(p);
+      }
+    }
   },
   generateAway() {
     const notes = [];
