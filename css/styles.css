@@ -531,8 +531,7 @@ code {
   flex-wrap: nowrap;
 }
 .hero-art img {
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  image-rendering: pixelated; /* 16px sprites at 2x, lantern 16x24 at 2x */
   flex-shrink: 0;
 }
 
@@ -946,10 +945,16 @@ a.sr-only:focus-visible {
 .icon-inline {
   display: inline-block;
   vertical-align: middle;
-  width: 1.5rem;
-  height: auto;
+  width: 32px;   /* 16px sprite at 2x — whole-number scale */
+  height: 32px;
   image-rendering: pixelated;
-  margin-right: 0.25rem;
+  margin-right: var(--space-xs, 0.5rem);
+}
+/* Species page mark: 16px fish at 3x beside the h1 */
+.species-title { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.species-mark {
+  width: 48px; height: 48px; flex-shrink: 0;
+  image-rendering: pixelated;
 }
 
 .divider {
@@ -1251,6 +1256,8 @@ a.sr-only:focus-visible {
   cursor: pointer;
   transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
+.mode-toggle [role="radio"] { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; }
+.mode-icon { width: 16px; height: 16px; image-rendering: pixelated; } /* 16px sprite at 1x */
 .mode-toggle [role="radio"]:hover { color: var(--cream); }
 .mode-toggle [role="radio"].is-active,
 .mode-toggle [role="radio"][aria-checked="true"] { background: var(--navy-light); color: var(--amber); }
