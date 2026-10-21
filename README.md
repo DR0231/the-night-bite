@@ -1,6 +1,6 @@
 # The Night Bite
 
-Static website: **Hoover Reservoir** fishing hub (Delaware / Franklin County, Ohio) — species pages, water/maps, trip log, tournaments, gear kits, and dockside vegan snacks. Cozy cabin-notebook look. Night fishing still a strength. Unofficial personal project — **not ODNR, not City of Columbus, not USGS**.
+Static website: **Hoover Reservoir** fishing hub (Delaware / Franklin County, Ohio) — species pages, water/maps, trip log, tournaments, and gear kits. Cozy cabin-notebook look. Night fishing still a strength. Unofficial personal project — **not ODNR, not City of Columbus, not USGS**.
 
 **Site name spelling:** *The Night Bite* (Night, not Nite).  
 **Live domain:** `nightbiteoh.com` (CNAME in repo). Serve over **HTTPS** in production.
@@ -29,7 +29,7 @@ Any static server works (`npx serve`, VS Code Live Server, etc.).
 
 ## Nav
 
-Home · Species · Water · Log · Tournaments · Gear · Dockside · About  
+Home · Species · Water · Log · Tournaments · Gear · About  
 (Whisperwood stays footer-linked / mentioned on About.)
 
 ## Adding a community trip
@@ -95,7 +95,6 @@ Limit tables are **reminders only** — confirm on [HuntFish OH / ODNR licenses]
 | `log.html` | Community JSON + private localStorage + submit |
 | `tournaments.html` | Static JSON list + submit |
 | `gear.html` | Short kits (affiliate placeholders) |
-| `dockside.html` | Vegan recipes (kept) |
 | `whisperwood.html` | Game teaser (kept) |
 | `about.html` | Disclaimer, safety, regs reminders |
 
