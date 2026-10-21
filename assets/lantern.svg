@@ -1,10 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 48" width="32" height="48" role="img" aria-label="Lantern">
-  <rect x="13" y="2" width="6" height="4" fill="#8b6914"/>
-  <path d="M10 6h12l2 4H8l2-4z" fill="#c4a35a"/>
-  <rect x="8" y="10" width="16" height="22" rx="2" fill="#1a1208" stroke="#c4a35a" stroke-width="1.5"/>
-  <rect x="11" y="13" width="10" height="14" fill="#f0a830" opacity="0.9"/>
-  <rect x="13" y="15" width="6" height="8" fill="#ffe08a"/>
-  <path d="M8 32h16l-2 6H10l-2-6z" fill="#8b6914"/>
-  <rect x="14" y="38" width="4" height="6" fill="#5c4a1e"/>
-  <ellipse cx="16" cy="44" rx="5" ry="2" fill="#3d3010"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 18" width="12" height="18" shape-rendering="crispEdges" role="img" aria-label="Lantern"><path fill="#0a1628" d="M4 0h4v1h-4zM3 1h1v2h-1zM8 1h1v2h-1zM5 2h2v1h-2zM2 3h1v1h-1zM9 3h1v1h-1zM1 4h1v9h-1zM10 4h1v9h-1zM2 13h1v1h-1zM9 13h1v1h-1zM3 14h1v1h-1zM8 14h1v1h-1zM2 15h1v1h-1zM9 15h1v1h-1zM3 16h6v1h-6z"/><path fill="#c48420" d="M4 1h2v1h-2zM4 2h1v1h-1zM3 3h4v1h-4zM2 4h6v1h-6zM9 5h1v7h-1zM3 9h1v2h-1zM3 11h2v1h-2zM2 12h6v1h-6zM3 13h4v1h-4zM4 14h2v1h-2zM3 15h4v1h-4z"/><path fill="#f0a830" d="M6 1h2v1h-2zM7 2h1v1h-1zM7 3h2v1h-2zM8 4h2v1h-2zM3 5h6v1h-6zM3 6h4v1h-4zM8 6h1v3h-1zM3 7h3v1h-3zM3 8h2v1h-2zM4 9h1v1h-1zM7 9h2v2h-2zM4 10h2v1h-2zM5 11h4v1h-4zM8 12h2v1h-2zM7 13h2v1h-2zM6 14h2v1h-2zM7 15h2v1h-2z"/><path fill="#1a2e4a" d="M2 5h1v7h-1z"/><path fill="#f5edd8" d="M7 6h1v1h-1zM6 7h2v1h-2zM5 8h2v1h-2zM5 9h1v1h-1z"/><path fill="#e8d5a3" d="M7 8h1v1h-1zM6 9h1v2h-1z"/></svg>

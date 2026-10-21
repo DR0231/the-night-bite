@@ -272,7 +272,7 @@ button, .btn, .site-nav a, .nav-more-btn, .species-subnav a, .gear-sticky-nav a,
   flex-shrink: 0;
 }
 .logo:hover { color: var(--amber); }
-.logo img { width: 24px; height: auto; }
+.logo img { width: 24px; height: auto; image-rendering: pixelated; } /* 12x18 lantern at 2x */
 
 .logo-text {
   font-family: var(--font-display);
@@ -535,14 +535,42 @@ code {
   flex-shrink: 0;
 }
 
-/* Integer pixel multiples keep the 2px pixel grid crisp */
-.hero .hero-art .hero-moon { width: 32px; height: 32px; align-self: flex-start; margin-top: -0.5rem; }
-.hero .hero-art .hero-hoover { width: 124px; height: 30px; opacity: 0.9; }
-.hero .hero-art .hero-lantern { width: 32px; height: 48px; }
+/* Moonlit horizon: a seamless 240px tree-line tile (repeat-x, so no edge at any width)
+   under a centred 160px piece (moon, dock, one amber light). 2x on phones, 3x from 720px. */
+body:has(.hero-horizon) { overflow-x: clip; }   /* the strip is full-bleed (100vw) */
+.hero-horizon {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: 92px;
+  margin-bottom: var(--space-lg);
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  background: url("../assets/horizon-tile.png") left top / 480px 92px repeat-x;
+  image-rendering: pixelated;
+}
+.hero-horizon img {
+  width: 320px;
+  height: 92px;
+  max-width: none;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+}
+/* the 2x2 dock light (native x50, y25 of the centre piece) gets its quiet glow from this layer */
+.hero-dock-light {
+  position: absolute;
+  top: 50px;
+  left: calc(50% - 60px);
+  width: 4px;
+  height: 4px;
+  background: var(--amber);
+  filter: drop-shadow(0 0 3px rgba(240, 168, 48, 0.8)) drop-shadow(0 0 8px rgba(240, 168, 48, 0.35));
+}
 @media (min-width: 720px) {
-  .hero .hero-art .hero-moon { width: 48px; height: 48px; margin-top: -1rem; }
-  .hero .hero-art .hero-hoover { width: 186px; height: 45px; }
-  .hero .hero-art .hero-lantern { width: 40px; height: 60px; }
+  .hero-horizon { height: 138px; background-size: 720px 138px; }
+  .hero-horizon img { width: 480px; height: 138px; }
+  .hero-dock-light { top: 75px; left: calc(50% - 90px); width: 6px; height: 6px; }
 }
 
 .hero h1 {
@@ -1405,6 +1433,45 @@ a.bento-card:hover .card-cue::after { transform: translateX(2px); }
 .bento-pool #usgs-live-status { margin: 0 0 0 !important; }
 .bento-pool #correction-checked time { color: var(--cream-dark); font-variant-numeric: tabular-nums; }
 .bento-pool .how-to-read { margin-top: var(--space-md); }
+/* Hoover chart: traced shoreline, 143x48 drawn at 2x (north is left; the sprite carries a pixel "<-N") */
+.pool-chart {
+  margin: var(--space-md) 0 0;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--navy-light);
+}
+.pool-chart img {
+  width: 286px;
+  height: 96px;
+  max-width: none;
+  margin-inline: auto;
+  image-rendering: pixelated;
+}
+@media (max-width: 359px) { .pool-chart img { width: 143px; height: 48px; } } /* 1x where 2x won't fit */
+.pool-chart figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-top: var(--space-xs);
+  font-family: var(--font-display);
+  font-size: var(--text-label);
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.pool-chart-name { color: var(--cream-dark); text-transform: uppercase; }
+.pool-chart-key { display: inline-flex; align-items: center; gap: 0.5rem; }
+.pool-chart-key > span:first-child { margin-right: 0.5rem; }
+.pool-chart-legend { display: inline-flex; align-items: center; gap: 0.5rem; }
+.pool-chart-dot { width: 6px; height: 6px; background: var(--amber); flex-shrink: 0; }
+/* Wide pool card: caption beside the chart keeps the card (and the cards next to it) shorter */
+@media (min-width: 1000px) {
+  .pool-chart { display: flex; align-items: flex-end; gap: var(--space-md); }
+  .pool-chart img { margin: 0; }
+  .pool-chart figcaption { flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 0.375rem; margin: 0; }
+  .pool-chart-key { flex-direction: column; align-items: flex-start; gap: 0.375rem; }
+  .pool-chart-key > span:first-child { margin-right: 0; }
+}
 
 /* Water page readout (same markup hooks, non-bento card) */
 .card .pool-lead { font-size: var(--text-lg); }
