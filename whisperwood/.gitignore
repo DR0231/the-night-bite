@@ -1,7 +1,0 @@
-*.zip
-.env
-.env.*
-*.key
-*.pem
-.cursor/mcp.json
-secrets/
