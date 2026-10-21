@@ -658,11 +658,35 @@ const Cooler = {
     if (!el) return;
     const slots = Save.cooler();
     const cap = Save.coolerCap();
-    const kept = slots.map((u, i) => {
-      const f = FISH.find((x) => x.id === u.id);
-      const name = f ? f.name : u.id;
-      return `<button type="button" data-take="${i}">Take out ${name}</button>`;
-    }).join("") || "<p>The cooler is empty.</p>";
+    const quiet = typeof COOLER_QUIET !== "undefined" ? COOLER_QUIET : "";
+    el.textContent = "";
+    const head = document.createElement("p");
+    head.textContent = "Cooler " + slots.length + " / " + cap;
+    el.appendChild(head);
+    const quietP = document.createElement("p");
+    quietP.textContent = quiet;
+    el.appendChild(quietP);
+    if (!slots.length) {
+      const empty = document.createElement("p");
+      empty.textContent = "The cooler is empty.";
+      el.appendChild(empty);
+    } else {
+      slots.forEach((u, i) => {
+        const f = FISH.find((x) => x.id === u.id);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.take = String(i);
+        btn.textContent = "Take out " + (f ? f.name : String(u.id));
+        btn.addEventListener("click", () => {
+          Cottage._coolerTake(i);
+          this.refresh();
+        });
+        el.appendChild(btn);
+      });
+    }
+    const looseP = document.createElement("p");
+    looseP.textContent = "Loose";
+    el.appendChild(looseP);
     const groups = Object.create(null);
     for (const u of Save.loose()) {
       if (!groups[u.id]) groups[u.id] = { fresh: 0, soft: 0 };
@@ -670,26 +694,50 @@ const Cooler = {
       else groups[u.id].fresh++;
     }
     const ids = Object.keys(groups);
-    const room = slots.length < cap;
-    const tuck = ids.map((id) => {
-      const f = FISH.find((x) => x.id === id);
-      const g = groups[id];
-      const bits = [];
-      if (g.fresh) bits.push(`<span class="ink-fresh">Fresh ×${g.fresh}</span>`);
-      if (g.soft) bits.push(`<span class="ink-soft">Soft ×${g.soft}</span>`);
-      return `<button type="button" data-tuck="${id}">Tuck ${f ? f.name : id} · ${bits.join(" · ")}</button>`;
-    }).join("") || "<p>No loose fish to tuck.</p>";
-    const full = !room ? "<p>The cooler is full.</p>" : "";
-    const quiet = typeof COOLER_QUIET !== "undefined" ? COOLER_QUIET : "";
-    el.innerHTML = `<p>Cooler ${slots.length} / ${cap}</p><p>${quiet}</p>${kept}<p>Loose</p>${tuck}${full}<p>${Save.stewLine()}</p>`;
-    el.querySelectorAll("[data-take]").forEach((b) => b.addEventListener("click", () => {
-      Cottage._coolerTake(b.dataset.take | 0);
-      this.refresh();
-    }));
-    el.querySelectorAll("[data-tuck]").forEach((b) => b.addEventListener("click", () => {
-      Cottage._coolerTuck(b.dataset.tuck);
-      this.refresh();
-    }));
+    if (!ids.length) {
+      const none = document.createElement("p");
+      none.textContent = "No loose fish to tuck.";
+      el.appendChild(none);
+    } else {
+      for (const id of ids) {
+        const f = FISH.find((x) => x.id === id);
+        const g = groups[id];
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.tuck = id;
+        btn.appendChild(document.createTextNode("Tuck " + (f ? f.name : String(id)) + " · "));
+        const marks = [];
+        if (g.fresh) {
+          const span = document.createElement("span");
+          span.className = "ink-fresh";
+          span.textContent = "Fresh ×" + g.fresh;
+          marks.push(span);
+        }
+        if (g.soft) {
+          const span = document.createElement("span");
+          span.className = "ink-soft";
+          span.textContent = "Soft ×" + g.soft;
+          marks.push(span);
+        }
+        marks.forEach((span, n) => {
+          if (n) btn.appendChild(document.createTextNode(" · "));
+          btn.appendChild(span);
+        });
+        btn.addEventListener("click", () => {
+          Cottage._coolerTuck(id);
+          this.refresh();
+        });
+        el.appendChild(btn);
+      }
+    }
+    if (slots.length >= cap) {
+      const full = document.createElement("p");
+      full.textContent = "The cooler is full.";
+      el.appendChild(full);
+    }
+    const stew = document.createElement("p");
+    stew.textContent = Save.stewLine();
+    el.appendChild(stew);
   },
 };
 
