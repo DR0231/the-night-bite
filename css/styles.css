@@ -193,6 +193,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "kern", "liga";
+  overflow-x: clip;   /* full-bleed horizon strips use 100vw */
 }
 
 /* Watery night background — static, no animation */
@@ -478,7 +479,7 @@ p { margin-bottom: 1em; }
 p, li { text-wrap: pretty; }
 ul, ol { margin: 0 0 1.25rem 1.25rem; }
 li { margin-bottom: 0.45rem; }
-li::marker { color: var(--amber-dim); }
+li::marker { color: var(--muted); }
 strong { font-weight: 600; }
 code {
   font-size: 0.875em;
@@ -537,7 +538,6 @@ code {
 
 /* Moonlit horizon: a seamless 240px tree-line tile (repeat-x, so no edge at any width)
    under a centred 160px piece (moon, dock, one amber light). 2x on phones, 3x from 720px. */
-body:has(.hero-horizon) { overflow-x: clip; }   /* the strip is full-bleed (100vw) */
 .hero-horizon {
   position: relative;
   width: 100vw;
@@ -573,6 +573,15 @@ body:has(.hero-horizon) { overflow-x: clip; }   /* the strip is full-bleed (100v
   .hero-dock-light { top: 75px; left: calc(50% - 90px); width: 6px; height: 6px; }
 }
 
+/* Inner pages: a quiet tree-line strip (no moon or dock) heads every page */
+.page-horizon {
+  width: 100vw;
+  margin: calc(-1 * var(--space-xs)) 0 var(--space-lg) calc(50% - 50vw);
+  height: 44px;
+  background: url("../assets/horizon-thin.png") left top / 480px 44px repeat-x;
+  image-rendering: pixelated;
+}
+
 .hero h1 {
   font-size: var(--text-hero);
   line-height: 1.05;
@@ -598,7 +607,6 @@ body:has(.hero-horizon) { overflow-x: clip; }   /* the strip is full-bleed (100v
 
 /* Lantern glow — a still warm halo, no flicker */
 .lantern-glow { filter: drop-shadow(0 0 6px rgba(240, 168, 48, 0.35)); }
-.hero .lantern-glow { filter: drop-shadow(0 0 12px rgba(240, 168, 48, 0.4)); }
 
 /* ==========================================================================
    Status chips / notes
@@ -953,7 +961,7 @@ a.sr-only:focus-visible {
 }
 
 .callout {
-  border-left: 2px solid var(--amber);
+  border-left: 2px solid var(--muted);
   padding: var(--space-md) var(--card-pad);
   background: var(--navy-mid);
   border-radius: 0 var(--radius) var(--radius) 0;
@@ -962,7 +970,7 @@ a.sr-only:focus-visible {
   color: var(--cream-dark);
   max-width: var(--measure);
 }
-.callout.warn { border-left-color: var(--danger); }
+.callout.warn { border-left-color: var(--cream-dark); }
 
 /* Log empty states read as calm notebook pages */
 .empty-log {
@@ -977,6 +985,14 @@ a.sr-only:focus-visible {
 .empty-log a { font-style: normal; }
 
 #log-list .paper-card, #community-log-list .paper-card { margin-bottom: var(--space-md); }
+/* Reserve one trip card while the community JSON loads, so the form below does not jump (CLS) */
+#community-log-list > .empty-log:only-child {
+  min-height: 21rem;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .trip-actions { margin-top: 0.75rem; display: flex; gap: 0.5rem; }
 .trip-actions .btn { font-size: var(--text-label); padding: 0.45rem 0.8rem; min-height: 44px; }
 
@@ -1013,7 +1029,7 @@ a.sr-only:focus-visible {
   padding: 0.85rem 1rem 0.85rem 1.25rem;
   margin-bottom: 0.5rem;
   background: var(--navy-mid);
-  border-left: 2px solid var(--amber-dim);
+  border-left: 2px solid var(--navy-light);
   border-radius: 0 var(--radius) var(--radius) 0;
 }
 .notebook-list li strong { color: var(--cream-dark); }
@@ -1124,7 +1140,7 @@ a.sr-only:focus-visible {
 .regs-tag {
   font-family: var(--font-display);
   font-size: var(--text-label);
-  color: var(--amber);
+  color: var(--muted);
   letter-spacing: 0.04em;
   font-weight: 400;
 }
@@ -1318,7 +1334,7 @@ a.sr-only:focus-visible {
   .bento-grid { grid-template-columns: 1fr 1fr; }
   .bento-grid .bento-pool, .bento-grid .bento-wide { grid-column: 1 / -1; }
 }
-@media (min-width: 760px) {
+@media (min-width: 1000px) {
   .bento-grid { grid-template-columns: 1.15fr 1fr; }
   .bento-grid .bento-pool { grid-column: 1; grid-row: 1 / span 2; }
   .bento-grid .bento-maps { grid-column: 2; grid-row: 1; }
@@ -1435,7 +1451,7 @@ a.bento-card:hover .card-cue::after { transform: translateX(2px); }
 .pool-chart-legend { display: inline-flex; align-items: center; gap: 0.5rem; }
 .pool-chart-dot { width: 6px; height: 6px; background: var(--amber); flex-shrink: 0; }
 /* Wide pool card: caption beside the chart keeps the card (and the cards next to it) shorter */
-@media (min-width: 1000px) {
+@media (min-width: 560px) {
   .pool-chart { display: flex; align-items: flex-end; gap: var(--space-md); }
   .pool-chart img { margin: 0; }
   .pool-chart figcaption { flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 0.375rem; margin: 0; }
