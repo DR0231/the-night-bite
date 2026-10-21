@@ -57,7 +57,7 @@
           "</dl>" +
           (e.notes ? "<p>" + escapeHtml(e.notes) + "</p>" : "") +
           url +
-          '<p class="meta">Third-party listing — not hosted by The Night Bite.</p>' +
+          '<p class="meta">Third-party listing, not hosted by The Night Bite.</p>' +
           "</article>"
         );
       })
@@ -84,7 +84,7 @@
       e.preventDefault();
       var fd = new FormData(form);
       var lines = [
-        "Tournament submission — The Night Bite",
+        "Tournament submission: The Night Bite",
         "",
         "Name: " + (fd.get("name") || ""),
         "Date: " + (fd.get("date") || ""),

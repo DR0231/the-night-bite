@@ -4,13 +4,14 @@
  * refreshed by js/usgs.js) and mirrors it as a three-cell instrument readout.
  * Purely visual: the original line stays in the DOM for screen readers and is
  * shown again whenever its text doesn't match the expected format
- * (for example "unavailable — check USGS"). Never computes or invents values.
+ * (for example "unavailable, check USGS"). Never computes or invents values.
+ * The temp slot accepts "no temp" and, for older routine output, "temp —".
  */
 (function () {
   var line = document.getElementById("correction-line");
   if (!line || !window.MutationObserver) return;
 
-  var RE = /^\s*([\d.]+)\s*ft\s*·\s*(?:(-?\d+(?:\.\d+)?)\s*°F|temp —)\s*·\s*~?([\d.]+)\s*ft\s+(above|below)\s+full pool\s*$/;
+  var RE = /^\s*([\d.]+)\s*ft\s*·\s*(?:(-?\d+(?:\.\d+)?)\s*°F|no temp|temp —)\s*·\s*~?([\d.]+)\s*ft\s+(above|below)\s+full pool\s*$/;
   var readout = document.createElement("div");
   readout.className = "pool-readout";
   readout.setAttribute("aria-hidden", "true");
@@ -46,7 +47,7 @@
     }
     readout.textContent = "";
     readout.appendChild(cell("Pool", m[1], "ft"));
-    readout.appendChild(cell("Water", m[2] !== undefined ? m[2] : "—", m[2] !== undefined ? "°F" : ""));
+    readout.appendChild(cell("Water", m[2] !== undefined ? m[2] : "n/a", m[2] !== undefined ? "°F" : ""));
     readout.appendChild(cell(m[4] === "above" ? "Above full pool" : "Below full pool", "~" + m[3], "ft"));
     readout.hidden = false;
     line.classList.add("is-mirrored");

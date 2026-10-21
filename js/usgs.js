@@ -2,7 +2,7 @@
  * The Night Bite — USGS IV refresh for pool (62614) and water temp (00010).
  * Site: 03228400 (Hoover Reservoir at Central College, OH).
  * Human lead: "892.97 ft · 83°F · ~1.0 ft below full pool"
- * On failure: “unavailable — check USGS” + link. Never invent readings.
+ * On failure: “unavailable, check USGS” + link. Never invent readings.
  */
 (function () {
   if (window.__nightbiteUsgsLoaded) return;
@@ -103,7 +103,7 @@
     var tempPart =
       typeof tempF === "number" && isFinite(tempF)
         ? Math.round(tempF) + "°F"
-        : "temp —";
+        : "no temp";
     return (
       poolStr +
       " ft · " +
@@ -123,11 +123,11 @@
       '" target="_blank" rel="noopener">USGS</a>';
     if (statusEl) {
       statusEl.innerHTML =
-        (msg || "unavailable — check USGS") + " · " + link + ".";
+        (msg || "unavailable, check USGS") + " · " + link + ".";
     }
     if (lineEl) {
       lineEl.innerHTML =
-        'unavailable — check <a href="' +
+        'unavailable, check <a href="' +
         GAUGE_URL +
         '" target="_blank" rel="noopener">USGS</a>';
       lineEl.setAttribute("data-live-failed", "1");
@@ -195,7 +195,7 @@
       var temp = parseSeries(json, PARAM_TEMP);
       var ok = applyPoolAndTemp(pool, temp);
       if (!ok) {
-        unavailable("unavailable — check USGS");
+        unavailable("unavailable, check USGS");
         return;
       }
       if (statusEl) {
@@ -212,13 +212,13 @@
             statusEl.textContent +
             " · " +
             miss +
-            ' unavailable — check <a href="' +
+            ' unavailable, check <a href="' +
             GAUGE_URL +
             '" target="_blank" rel="noopener">USGS</a>.';
         }
       }
     })
     .catch(function () {
-      unavailable("unavailable — check USGS");
+      unavailable("unavailable, check USGS");
     });
 })();

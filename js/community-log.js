@@ -31,7 +31,7 @@
     if (!listEl) return;
     if (!trips || !trips.length) {
       listEl.innerHTML =
-        '<div class="empty-log"><p>None yet — submit a trip below (mailto or GitHub issue).</p></div>';
+        '<div class="empty-log"><p>None yet. Submit a trip below (mailto or GitHub issue).</p></div>';
       return;
     }
     listEl.innerHTML = trips
@@ -41,7 +41,7 @@
       })
       .map(function (e) {
         var badge = e.sample
-          ? '<span class="sample-badge" title="Demo entry — not a live bite report">Example</span>'
+          ? '<span class="sample-badge" title="Demo entry, not a live bite report">Example</span>'
           : '<span class="meta">Community</span>';
         return (
           '<article class="paper-card">' +

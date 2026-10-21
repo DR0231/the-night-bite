@@ -81,13 +81,13 @@
     });
 
     if (entries.length === 0) {
-      list.innerHTML = '<div class="empty-log"><p>No trips yet. Add one below — saved only on this device.</p></div>';
+      list.innerHTML = '<div class="empty-log"><p>No trips yet. Add one below; it’s saved only on this device.</p></div>';
       return;
     }
 
     list.innerHTML = entries.map(function (e) {
       var badge = e.sample
-        ? '<span class="sample-badge" title="Demo entry — not a live bite report">Example</span>'
+        ? '<span class="sample-badge" title="Demo entry, not a live bite report">Example</span>'
         : '<span class="meta">Your entry</span>';
       var delBtn = e.sample
         ? ""
