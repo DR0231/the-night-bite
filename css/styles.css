@@ -55,6 +55,22 @@
   src: url(../assets/fonts/pixelify-sans-latin.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* Night Bite Pixel: original pixel face for headings + pool numbers (see assets/fonts/README.md).
+   100-599 -> Regular, 600-900 -> Bold, so weight 500 never gets faux bold. */
+@font-face {
+  font-family: 'Night Bite Pixel';
+  font-style: normal;
+  font-weight: 100 599;
+  font-display: swap;
+  src: url(../assets/fonts/night-bite-pixel-regular.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Night Bite Pixel';
+  font-style: normal;
+  font-weight: 600 900;
+  font-display: swap;
+  src: url(../assets/fonts/night-bite-pixel-bold.woff2) format('woff2');
+}
 /* Source Serif 4 latin-ext */
 @font-face {
   font-family: 'Source Serif 4';
@@ -128,6 +144,7 @@
   --focus: #ffe08a;
   --radius: 4px;
   --font-display: "Pixelify Sans", "Courier New", monospace;
+  --font-heading: "Night Bite Pixel", "Pixelify Sans", "Courier New", monospace;  /* headings + pool numbers */
   --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
   --max: 720px;
   --max-wide: 960px;
@@ -1599,4 +1616,57 @@ a.bento-card:hover .log-value { color: var(--amber); }
   .pool-readout-cell:first-child { grid-column: 1 / -1; }
   .pool-readout-cell:first-child .pool-readout-value { font-size: calc(var(--text-readout) * 1.2); }
   .pool-readout-cell:nth-child(2) { padding-left: 0; box-shadow: none; }
+}
+
+/* ==========================================================================
+   Night Bite Pixel: headings + pool readout numbers only.
+   Pixel-snapped: every size and line-height is a multiple of 10px (the font
+   is 100 units per pixel on a 10px em), stepping at 360 / 420 / 560 / 1000px.
+   Small UI (nav, wordmark, labels, chips, buttons, units) stays Pixelify Sans.
+   ========================================================================== */
+h1, h2, h3,
+.pool-readout-value,
+.pool-lead {
+  font-family: var(--font-heading);
+  font-synthesis: none;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: auto;
+  font-smooth: never;
+  letter-spacing: 0;
+}
+/* the uppercase card eyebrow is small UI: back to Pixelify's rendering */
+.bento-card h3 { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-synthesis: weight style; }
+.pool-readout-unit {
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: weight style;
+}
+
+h1 { font-size: 30px; line-height: 40px; }
+h2 { font-size: 20px; line-height: 30px; }
+h3 { font-size: 20px; line-height: 30px; }
+.hero h1 { font-size: 40px; line-height: 50px; font-weight: 400; }
+.pool-lead { font-size: 30px; line-height: 40px; }
+.card .pool-lead { font-size: 20px; line-height: 30px; }
+.pool-readout-value,
+.card .pool-readout-value { font-size: 30px; line-height: 30px; }
+
+@media (max-width: 359px) {
+  .hero h1 { font-size: 30px; line-height: 40px; }
+}
+@media (max-width: 419px) {
+  .pool-readout-cell:first-child .pool-readout-value { font-size: 40px; line-height: 40px; }
+}
+@media (min-width: 420px) {
+  /* whole-pixel columns so the middle and right cells never sit on half pixels */
+  .pool-readout { grid-template-columns: repeat(3, round(down, calc((100% - 2 * var(--space-sm)) / 3), 1px)); }
+}
+@media (min-width: 560px) {
+  .hero h1 { font-size: 50px; line-height: 60px; font-weight: 700; }
+}
+@media (min-width: 1000px) {
+  h1 { font-size: 40px; line-height: 50px; }
+  h2 { font-size: 30px; line-height: 40px; }
+  .hero h1 { font-size: 60px; line-height: 70px; }
 }
