@@ -1288,41 +1288,34 @@ a.sr-only:focus-visible {
 .mode-toggle [role="radio"][aria-checked="true"] { background: var(--navy-light); color: var(--amber); }
 .mode-panel[hidden] { display: none !important; }
 
-/* Rig figures — 48x36 pixel diagrams at 4x, numbered legend in HTML */
+/* Rig figures: 280x200 vector picture diagrams on the card surface, scaled to the column */
 .rig-figure {
   margin: var(--space-md) 0 var(--space-lg);
   padding: var(--card-pad);
   background: var(--navy-mid);
   box-shadow: inset 0 1px 0 var(--hairline);
   border-radius: var(--radius);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--space-md);
+  min-width: 0;
 }
 .rig-figure img {
-  width: 192px; height: 144px; flex-shrink: 0;
-  image-rendering: pixelated;
   display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  aspect-ratio: 280 / 200;
+  margin: 0 auto;
 }
-.rig-figure figcaption { flex: 1 1 9rem; min-width: 0; }
-.rig-title {
-  display: block;
+.rig-figure figcaption {
   font-family: var(--font-display); font-variant-ligatures: none;
   font-size: var(--text-label);
   letter-spacing: 0.04em;
-  color: var(--cream);
-  margin-bottom: 0.5rem;
-}
-.rig-legend {
-  margin: 0; padding-left: 1.5rem;
-  font-size: var(--text-sm);
   color: var(--cream-dark);
-  line-height: 1.5;
+  margin-top: var(--space-xs);
+  text-align: center;
 }
-.rig-legend li::marker { font-family: var(--font-display); font-variant-ligatures: none; color: var(--cream-dark); }
 .rig-row { display: grid; gap: var(--space-md); margin: var(--space-md) 0 var(--space-lg); }
 .rig-row .rig-figure { margin: 0; }
+@media (min-width: 560px) { .rig-row { grid-template-columns: 1fr 1fr; } }
 
 /* Shore spots (Water) — labeled tiles; real photos only, never stock */
 .photo-slots {
