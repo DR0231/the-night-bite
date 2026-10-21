@@ -104,4 +104,4 @@ Limit tables are **reminders only** — confirm on [HuntFish OH / ODNR licenses]
 
 ## License note
 
-Hand-authored SVG icons in `assets/`. Recipe text is original for this project.
+Pixel icons in `assets/` (16px set, palette-only, built from `nb-palette.gpl`). Text is original for this project.
