@@ -120,14 +120,11 @@
   --amber: #f0a830;
   --amber-dim: #c48420;
   --amber-glow: rgba(240, 168, 48, 0.25);
-  --green: #3d7a4d;
-  --green-bright: #5a9a6a;
   --cream: #f5edd8;
   --cream-dark: #e8d5a3;
   --ink: #1a1208;
-  --paper: #faf6eb;
+  --paper: #f5edd8;          /* = cream; paper cards stay on the palette */
   --muted: #8a9aaa;
-  --danger: #c44;
   --focus: #ffe08a;
   --radius: 4px;
   --font-display: "Pixelify Sans", "Courier New", monospace;
@@ -203,8 +200,7 @@ body::before {
   inset: 0;
   background:
     radial-gradient(ellipse 80% 50% at 70% 0%, rgba(240,168,48,0.06), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 20% 100%, rgba(61,122,77,0.08), transparent 45%),
-    linear-gradient(180deg, #0a1628 0%, #0d1c30 40%, #0a1828 100%);
+    linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 40%, var(--navy) 100%);
   z-index: -1;
   pointer-events: none;
 }
@@ -627,7 +623,6 @@ code {
   text-align: center;
   min-width: 5.5rem;
 }
-.chip-go { background: rgba(61,122,77,0.2); border-color: var(--green); color: var(--green-bright); }
 .chip-nights { background: rgba(240,168,48,0.12); border-color: var(--amber-dim); color: var(--amber); }
 .chip-wait { background: rgba(138,154,170,0.12); border-color: var(--muted); color: var(--muted); }
 .chip .chip-label { display: block; font-size: var(--text-label); opacity: 0.85; margin-top: 0.2rem; }
@@ -688,8 +683,8 @@ a.card:hover,
   box-shadow: 0 2px 0 rgba(0,0,0,0.25);
 }
 .paper-card h3 { color: var(--ink); margin-top: 0.25rem; }
-.paper-card a { color: #7a4f0e; }
-.paper-card .meta { color: #5a5040; }
+.paper-card a { color: var(--ink); text-decoration-color: var(--amber-dim); text-decoration-thickness: 2px; }
+.paper-card .meta { color: var(--navy-light); }
 .paper-card > p:last-child { margin-bottom: 0; }
 
 /* "Example" stamp: a deliberate notebook label, not an alarm */
@@ -718,8 +713,8 @@ a.card:hover,
   height: 4px;
   background: var(--amber);
 }
-.paper-card .sample-badge { color: #5a5040; border-color: rgba(90, 80, 64, 0.45); }
-.paper-card .sample-badge::before { background: #9a6412; }
+.paper-card .sample-badge { color: var(--navy-light); border-color: var(--navy-light); }
+.paper-card .sample-badge::before { background: var(--amber-dim); }
 
 .trip-dl {
   display: grid;
@@ -733,7 +728,7 @@ a.card:hover,
   font-size: var(--text-label);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #5a5040;
+  color: var(--navy-light);
   align-self: center;
 }
 .card .trip-dl dt { color: var(--muted); }
@@ -772,7 +767,7 @@ a.card:hover,
   border-radius: var(--radius);
   transition: border-color var(--dur) var(--ease);
 }
-.form-row input:hover, .form-row select:hover, .form-row textarea:hover { border-color: #2a4266; }
+.form-row input:hover, .form-row select:hover, .form-row textarea:hover { border-color: var(--muted); }
 .form-row input::placeholder, .form-row textarea::placeholder { color: var(--muted); opacity: 1; }
 .form-row textarea { min-height: 6rem; resize: vertical; }
 .form-actions { display: flex; flex-wrap: wrap; gap: 0.625rem; margin-top: 1.25rem; }
@@ -798,10 +793,21 @@ a.card:hover,
 .btn:hover { background: var(--cream-dark); border-color: var(--cream-dark); color: var(--navy); }
 .btn-ghost { background: transparent; color: var(--amber); border-color: rgba(240, 168, 48, 0.55); }
 .btn-ghost:hover { background: var(--navy-light); border-color: var(--amber); color: var(--cream); }
-.btn-danger { border-color: var(--danger); background: transparent; color: #f88; }
-.btn-danger:hover { background: rgba(204,68,68,0.15); border-color: #f88; color: #f88; }
-.paper-card .btn-danger { color: #8f2020; border-color: #a33; }
-.paper-card .btn-danger:hover { background: rgba(170,51,51,0.1); color: #8f2020; }
+/* Destructive: palette only. Cream outline, a "!" warning mark, inverts on hover. */
+.btn-danger { border: 2px dashed var(--cream); background: transparent; color: var(--cream); gap: 0.5em; }
+.btn-danger::before {
+  content: "!";
+  display: inline-grid; place-items: center;
+  width: 1.25em; height: 1.25em; flex-shrink: 0;
+  background: var(--cream); color: var(--navy);
+  font-family: var(--font-display); font-variant-ligatures: none; line-height: 1;
+}
+.btn-danger:hover { background: var(--cream); border-color: var(--cream); color: var(--navy); }
+.btn-danger:hover::before { background: var(--navy); color: var(--cream); }
+.paper-card .btn-danger { border-color: var(--ink); color: var(--ink); }
+.paper-card .btn-danger::before { background: var(--ink); color: var(--cream); }
+.paper-card .btn-danger:hover { background: var(--ink); color: var(--cream); }
+.paper-card .btn-danger:hover::before { background: var(--cream); color: var(--ink); }
 
 /* ==========================================================================
    Water stats
@@ -868,8 +874,7 @@ a.card:hover,
   pointer-events: none;
   z-index: -1;
   background:
-    radial-gradient(ellipse 70% 60% at 50% 40%, rgba(245, 237, 216, 0.05), transparent 65%),
-    radial-gradient(ellipse 50% 40% at 80% 20%, rgba(61, 122, 77, 0.1), transparent 50%);
+    radial-gradient(ellipse 70% 60% at 50% 40%, rgba(245, 237, 216, 0.05), transparent 65%);
 }
 
 /* ==========================================================================
@@ -1072,6 +1077,21 @@ a.sr-only:focus-visible {
 }
 .access-table tbody tr:last-child td { border-bottom: none; }
 .access-table a { color: var(--amber); }
+@media (max-width: 559px) {
+  .access-table { min-width: 0; }
+  .access-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .access-table, .access-table tbody, .access-table tr, .access-table td { display: block; width: 100%; }
+  .access-table tr { padding: 0.75rem 0.875rem; border-bottom: 1px solid var(--navy-light); }
+  .access-table tbody tr:last-child { border-bottom: none; }
+  .access-table td { padding: 0; border: none; }
+  .access-table td:first-child { font-weight: 600; color: var(--cream); margin-bottom: 0.25rem; }
+  .access-table td[data-label] { margin-top: 0.25rem; }
+  .access-table td[data-label]::before {
+    content: attr(data-label) ": ";
+    font-family: var(--font-display); font-variant-ligatures: none;
+    font-size: var(--text-label); letter-spacing: 0.04em; color: var(--muted);
+  }
+}
 
 /* ==========================================================================
    Species hub, sticky subnav, filters
