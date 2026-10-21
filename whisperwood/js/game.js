@@ -192,10 +192,36 @@ const UI = {
       li.classList.toggle("favorite", !!e.favorite);
       li.querySelector(".fish-name").textContent = known ? f.name : "???";
       const hint = Journal.hintLine(f);
-      const firstDay = (e.firstDay | 0) > 0 ? `<br/><span class="fish-hint">First landed, day ${e.firstDay | 0}</span>` : "";
-      li.querySelector(".fish-meta").innerHTML = landed
-        ? `<i class="dot ${f.rarity.toLowerCase()}"></i> ${f.rarity} · ${SPOTS[f.spot].name} · ×${e.landed} · best ${e.biggest}"${hint ? `<br/><span class="fish-hint">${hint}</span>` : ""}${firstDay}`
-        : `<i class="dot ${f.rarity.toLowerCase()}"></i> ${SPOTS[f.spot].name}${known ? " · sighted" : ""}${f.rarity === "Rare" && hint ? `<br/><span class="fish-hint">Hint: ${hint}</span>` : ""}`;
+      const meta = li.querySelector(".fish-meta");
+      meta.textContent = "";
+      const dot = document.createElement("i");
+      dot.className = "dot " + f.rarity.toLowerCase();
+      meta.appendChild(dot);
+      if (landed) {
+        meta.appendChild(document.createTextNode(" " + f.rarity + " · " + SPOTS[f.spot].name + " · ×" + String(e.landed) + " · best " + String(e.biggest) + "\""));
+      } else {
+        meta.appendChild(document.createTextNode(" " + SPOTS[f.spot].name + (known ? " · sighted" : "")));
+      }
+      if (landed && hint) {
+        meta.appendChild(document.createElement("br"));
+        const span = document.createElement("span");
+        span.className = "fish-hint";
+        span.textContent = hint;
+        meta.appendChild(span);
+      } else if (!landed && f.rarity === "Rare" && hint) {
+        meta.appendChild(document.createElement("br"));
+        const span = document.createElement("span");
+        span.className = "fish-hint";
+        span.textContent = "Hint: " + hint;
+        meta.appendChild(span);
+      }
+      if (landed && (e.firstDay | 0) > 0) {
+        meta.appendChild(document.createElement("br"));
+        const span = document.createElement("span");
+        span.className = "fish-hint";
+        span.textContent = "First landed, day " + (e.firstDay | 0);
+        meta.appendChild(span);
+      }
       const c = li.querySelector("canvas").getContext("2d");
       c.imageSmoothingEnabled = false;
       c.clearRect(0, 0, 40, 26);
