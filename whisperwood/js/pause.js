@@ -93,7 +93,7 @@ const Pause = {
   });
   const fsWeb = !window.valeDesktop
     && typeof document.documentElement.requestFullscreen === "function"
-    && document.fullscreenEnabled !== false
+    && document.fullscreenEnabled === true
     && matchMedia("(pointer: coarse)").matches;
   if (fsWeb) document.documentElement.classList.add("web-fs");
   const releaseFsHold = () => {
@@ -121,6 +121,7 @@ const Pause = {
       window.valeDesktop.toggleFullscreen();
       return;
     }
+    if (!fsWeb) return;
     if (document.fullscreenElement) {
       const exiting = document.exitFullscreen();
       if (exiting && typeof exiting.catch === "function") exiting.catch(() => {});
