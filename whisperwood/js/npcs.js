@@ -368,7 +368,7 @@ const Interact = {
     return best;
   },
 
-  /* With water in casting reach, a sign only takes E when the player faces it. Facing water always means fish. */
+  /* With water in casting reach, a sign takes E when the player faces it or stands right beside it. Otherwise facing water means fish. */
   _signYields(d) {
     if (!World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE)) return false;
     const dx = d.x - Player.x, dy = d.y - Player.y;
@@ -376,7 +376,11 @@ const Interact = {
     const dir = Player.dir; // 0 down, 1 left, 2 right, 3 up
     const facing = (dir === 0 && dy > 0 && ay >= ax) || (dir === 3 && dy < 0 && ay >= ax)
       || (dir === 1 && dx < 0 && ax >= ay) || (dir === 2 && dx > 0 && ax >= ay);
-    return !facing;
+    const beside = Math.hypot(dx, dy) <= TILE_SIZE && (
+      (dir === 0 && dy >= -4) || (dir === 3 && dy <= 4)
+      || (dir === 1 && dx <= 4) || (dir === 2 && dx >= -4)
+    );
+    return !(facing || beside);
   },
 
   _readSign(d) {
