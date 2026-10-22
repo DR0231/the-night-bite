@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
@@ -30,7 +30,7 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li class="nav-core"><a href="./">Home</a></li>
-          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Fish</span></a></li>
+          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
           <li class="nav-core"><a href="water.html"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
           <li class="nav-core"><a href="log.html">Log</a></li>
           <li class="nav-extra"><a href="tournaments.html">Tournaments</a></li>
@@ -111,6 +111,8 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Whisperwood Vale is fiction, not Hoover Reservoir.</p>
     </div>
   </footer>
+  <script src="js/refresh.js"></script>
+  <script src="js/alerts.js"></script>
   <script src="js/nav.js"></script>
 </body>
 </html>

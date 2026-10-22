@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
+  <meta name="apple-mobile-web-app-title" content="Night Bite">
   <link rel="manifest" href="site.webmanifest">
   <title>Privacy | The Night Bite</title>
   <meta name="description" content="Privacy on The Night Bite and Whisperwood Vale: no accounts, no cookies, no analytics. What stays in your browser, and what Google, GitHub and USGS see.">
@@ -30,7 +31,7 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li class="nav-core"><a href="./">Home</a></li>
-          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Fish</span></a></li>
+          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
           <li class="nav-core"><a href="water.html"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
           <li class="nav-core"><a href="log.html">Log</a></li>
           <li class="nav-extra"><a href="tournaments.html">Tournaments</a></li>
@@ -58,7 +59,7 @@
       The Night Bite and Whisperwood Vale have no accounts, no cookies, no ads, and no analytics or tracking scripts.
       Most of what you do here stays in your own browser.
     </p>
-    <p class="meta">Last updated October 20, 2026.</p>
+    <p class="meta">Last updated October 22, 2026.</p>
 
     <h2>What stays in your browser</h2>
     <p>
@@ -68,8 +69,14 @@
     <ul>
       <li><strong>The Log:</strong> your personal trip entries (<code>nightbite-log-v1</code>) and a flag for the example trips (<code>nightbite-samples-seeded-v2</code>).</li>
       <li><strong>Gear:</strong> your packing checklist ticks (<code>nightbite-pack-v1</code>) and the bank / boat toggle (<code>nightbite-mode-v1</code>).</li>
+      <li><strong>Offline readings:</strong> the last pool reading, 7 day pool trend and weather forecast your browser fetched (<code>nb-usgs-last</code>, <code>nb-trend-last</code>, <code>nb-cond-last</code>), so Home can show them, marked &ldquo;Offline&rdquo;, when you have no signal.</li>
+      <li><strong>Add to home screen tip:</strong> whether you closed it (<code>nb-install-tip-v1</code>).</li>
       <li><strong>Whisperwood Vale:</strong> your game save (<code>whisperwood-save-v1</code> and related keys), journal and settings. If you export or import a save file, that file stays wherever you put it.</li>
     </ul>
+    <p>
+      The site also keeps copies of its own pages, styles, fonts and pictures in your browser&rsquo;s cache (a service worker),
+      so they open at the lake without signal. Whisperwood Vale is never saved this way. Clearing this site&rsquo;s data removes the copies too.
+    </p>
     <p>Don&rsquo;t type secrets, card numbers, or home addresses into trip notes.</p>
 
     <h2>Whisperwood feedback (Google Forms)</h2>
@@ -99,6 +106,7 @@
     <p>
       The Home and Water pages ask USGS (<code>waterservices.usgs.gov</code>) for the latest Hoover gauge reading
       straight from your browser, so USGS sees that request like any other website visit. No personal data is sent with it.
+      The Home page asks the National Weather Service (<code>api.weather.gov</code>) for the Hoover forecast and alerts the same way.
     </p>
 
     <h2>Fonts and other sites</h2>
@@ -128,6 +136,9 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
     </div>
   </footer>
+  <script src="js/refresh.js"></script>
+  <script src="js/sw-register.js"></script>
+  <script src="js/alerts.js"></script>
   <script src="js/nav.js"></script>
 
 </body>

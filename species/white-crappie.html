@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
+  <meta name="apple-mobile-web-app-title" content="Night Bite">
   <link rel="manifest" href="../site.webmanifest">
   <title>White crappie at Hoover Reservoir | The Night Bite</title>
   <meta name="description" content="White crappie at Hoover Reservoir, Ohio: shares the lake with black crappie, same spring bank push and deeper summer brush. Limits, gear, and bait.">
@@ -33,7 +34,7 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li class="nav-core"><a href="../">Home</a></li>
-          <li class="nav-core"><a href="../species/" aria-current="page"><span class="nav-label-full">Species</span><span class="nav-label-short">Fish</span></a></li>
+          <li class="nav-core"><a href="../species/" aria-current="page"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
           <li class="nav-core"><a href="../water.html"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
           <li class="nav-core"><a href="../log.html">Log</a></li>
           <li class="nav-extra"><a href="../tournaments.html">Tournaments</a></li>
@@ -190,6 +191,9 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
     </div>
   </footer>
+  <script src="../js/refresh.js"></script>
+  <script src="../js/sw-register.js"></script>
+  <script src="../js/alerts.js"></script>
   <script src="../js/nav.js"></script>
   <script src="../js/sticky-nav.js"></script>
   <script src="../js/mode-toggle.js"></script>

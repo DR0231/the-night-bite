@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
+  <meta name="apple-mobile-web-app-title" content="Night Bite">
   <link rel="manifest" href="site.webmanifest">
   <title>The Night Bite: Hoover Reservoir fishing hub</title>
   <meta name="description" content="Unofficial Hoover Reservoir fishing hub: species, water maps, trip log, gear. Delaware / Franklin County, Ohio.">
@@ -41,7 +42,7 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li class="nav-core"><a href="./" aria-current="page">Home</a></li>
-          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Fish</span></a></li>
+          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
           <li class="nav-core"><a href="water.html"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
           <li class="nav-core"><a href="log.html">Log</a></li>
           <li class="nav-extra"><a href="tournaments.html">Tournaments</a></li>
@@ -93,9 +94,20 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           Provisional snapshot; your browser may refresh it from USGS. Never invented.
         </p>
+        <div class="pool-trend" id="pool-trend" hidden>
+          <div class="pool-trend-head">
+            <span class="pool-trend-label">Pool, last 7 days</span>
+            <span class="pool-trend-read"><span class="pool-trend-delta" id="pool-trend-delta"></span><span class="pool-trend-word" id="pool-trend-word"></span></span>
+          </div>
+          <svg class="pool-trend-svg" role="img" aria-label="Pool level over the last 7 days" preserveAspectRatio="none"></svg>
+          <div class="pool-trend-axis" aria-hidden="true"><span class="pool-trend-from"></span><span>Now</span></div>
+        </div>
         <figure class="pool-chart">
-          <img src="assets/hoover-chart.png" alt="Chart-style outline of Hoover Reservoir with north to the left; the Hoover Dam park and dock is marked in amber at the south end." width="143" height="48">
-          <figcaption><span class="pool-chart-name">Hoover Reservoir</span><span class="pool-chart-key"><span>&larr; North</span><span class="pool-chart-legend"><span class="pool-chart-dot" aria-hidden="true"></span>Dam park &amp; dock</span></span></figcaption>
+          <button type="button" class="pool-chart-open" id="map-open" aria-haspopup="dialog" aria-controls="hoover-map">
+            <img src="assets/hoover-chart.png" alt="" width="143" height="48">
+            <span class="sr-only">Open the Hoover map with boat ramps and bait shops</span>
+          </button>
+          <figcaption><span class="pool-chart-name">Hoover Reservoir</span><span class="pool-chart-key"><span>&larr; North</span><span class="pool-chart-legend"><span class="pool-chart-dot" aria-hidden="true"></span>Dam park &amp; dock</span></span><span class="pool-chart-cue" aria-hidden="true">Tap the map for ramps &amp; bait</span></figcaption>
         </figure>
         <details class="how-to-read" id="how-to-read">
           <summary>How to read this</summary>
@@ -109,6 +121,21 @@
             </ul>
           </div>
         </details>
+      </section>
+
+      <section class="bento-card bento-conditions" id="conditions" aria-labelledby="conditions-title" data-state="loading">
+        <h2 id="conditions-title">Tonight at Hoover</h2>
+        <div class="cond-grid">
+          <div class="cond-cell" data-cond="wind" data-empty><span class="cond-label">Wind</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
+          <div class="cond-cell" data-cond="air" data-empty><span class="cond-label">Air</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
+          <div class="cond-cell" data-cond="rain" data-empty><span class="cond-label">Rain chance</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
+          <div class="cond-cell" data-cond="pressure" data-empty><span class="cond-label">Pressure</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
+          <div class="cond-cell" data-cond="sunset" data-empty><span class="cond-label">Sunset</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
+          <div class="cond-cell" data-cond="moonrise" data-empty><span class="cond-label">Moonrise</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
+        </div>
+        <p class="cond-summary"></p>
+        <p class="meta cond-status">Loading the National Weather Service forecast…</p>
+        <p class="meta cond-note">Sun and moon times are worked out on your phone and can be off by a few minutes.</p>
       </section>
 
       <a class="bento-card bento-maps" href="water.html#maps">
@@ -150,6 +177,33 @@
     </div>
   </main>
 
+
+  <dialog class="map-dialog" id="hoover-map" aria-labelledby="map-title">
+    <div class="map-panel">
+      <div class="map-head">
+        <span class="map-grab" aria-hidden="true"></span>
+        <h2 id="map-title">Ramps &amp; bait at Hoover</h2>
+        <button type="button" class="map-close" aria-label="Close map"><span aria-hidden="true"></span></button>
+      </div>
+      <ul class="map-legend" aria-label="Map key">
+        <li><img src="assets/map/pin-ramp.png" alt="" width="9" height="11">Public boat ramp</li>
+        <li><img src="assets/map/pin-shop.png" alt="" width="9" height="11">Bait shop</li>
+        <li><img src="assets/map/pin-access.png" alt="" width="9" height="11">Boardwalk, shore access</li>
+        <li class="map-legend-hint">Tap a pin for details</li>
+      </ul>
+      <div class="map-stage">
+        <div class="map-canvas">
+          <img src="assets/map/hoover-map-tall.png" alt="Outline map of Hoover Reservoir with pins for public boat ramps and bait shops. Each pin is a button below." width="96" height="324">
+        </div>
+      </div>
+      <div class="map-card" id="map-card" role="region" hidden></div>
+      <details class="map-notes map-foot">
+        <summary>Park hours and notes</summary>
+        <p>City park hours are 7 a.m. to 11 p.m. (Columbus Rec and Parks); check posted signs before a night trip. Shoreline traced from a map, not for navigation.</p>
+      </details>
+    </div>
+  </dialog>
+
   <footer class="site-footer">
     <div class="footer-inner">
       <nav aria-label="Footer">
@@ -166,8 +220,17 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
     </div>
   </footer>
+  <script src="js/refresh.js"></script>
+  <script src="js/sw-register.js"></script>
+  <script src="js/alerts.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/usgs.js"></script>
   <script src="js/home-log.js"></script>
+  <script src="js/astro.js"></script>
+  <script src="js/conditions.js"></script>
+  <script src="js/pool-trend.js"></script>
+  <script src="js/hoover-map-data.js"></script>
+  <script src="js/hoover-map.js"></script>
+  <script src="js/install-tip.js"></script>
 </body>
 </html>
