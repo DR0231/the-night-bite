@@ -2,7 +2,10 @@
  * The Night Bite: sunset and moonrise for Hoover Reservoir, computed in the browser.
  * Compact port of the SunCalc formulas (c) Vladimir Agafonkin, BSD 2-Clause
  * (https://github.com/mourner/suncalc). No network, no CDN.
- * Exposes window.NightBiteAstro = { sunset(date, lat, lng), moonrise(date, lat, lng), etMidnight(date) }.
+ * Exposes window.NightBiteAstro = { sunset(date, lat, lng), moonrise(date, lat, lng), etMidnight(date),
+ *   moonIllumination(date), moonTonight(now) }.
+ * Moon phase uses extra lunar longitude terms (Meeus, Astronomical Algorithms ch. 47) and refers the Sun to the
+ * equinox of date, which puts phase instants within about 15 minutes of USNO for 2026 and 2027.
  */
 (function () {
   var PI = Math.PI, sin = Math.sin, cos = Math.cos, tan = Math.tan, asin = Math.asin, atan = Math.atan2, acos = Math.acos;
@@ -67,6 +70,59 @@
     return rise === null ? null : new Date(t + rise * 36e5);
   }
 
+  /* ---- moon phase ---- */
+  // Sun's geocentric ecliptic longitude, referred to the equinox of date (adds precession and aberration)
+  function sunLongitudeOfDate(d) { return eclipticLongitude(solarMeanAnomaly(d)) + rad * (3.8246e-5 * d - 0.0057); }
+  function moonEcliptic(d) {
+    var L = rad * (218.316 + 13.176396 * d), M = rad * (134.963 + 13.064993 * d), F = rad * (93.272 + 13.22935 * d);
+    var D = rad * (297.850 + 12.190749 * d), Ms = solarMeanAnomaly(d);
+    var l = L + rad * (6.288774 * sin(M) + 1.274027 * sin(2 * D - M) + 0.658314 * sin(2 * D) + 0.213618 * sin(2 * M) -
+      0.185116 * sin(Ms) - 0.114332 * sin(2 * F) + 0.058793 * sin(2 * D - 2 * M) + 0.057066 * sin(2 * D - Ms - M) +
+      0.053322 * sin(2 * D + M) + 0.045758 * sin(2 * D - Ms) - 0.040923 * sin(Ms - M) - 0.034720 * sin(D) - 0.030383 * sin(Ms + M));
+    return { l: l, b: rad * 5.128 * sin(F), dist: 385001 - 20905 * cos(M) };
+  }
+  /* fraction: lit part of the disc, 0 to 1. phase: 0 new, 0.25 first quarter, 0.5 full, 0.75 last quarter. */
+  function moonIllumination(date) {
+    var d = toDays(date), ls = sunLongitudeOfDate(d), m = moonEcliptic(d);
+    var el = (m.l - ls) % (2 * PI);
+    if (el < 0) el += 2 * PI;
+    var psi = acos(cos(m.b) * cos(m.l - ls)), sd = 149598000;
+    var inc = atan(sd * sin(psi), m.dist - sd * cos(psi));
+    return { fraction: (1 + cos(inc)) / 2, phase: el / (2 * PI) };
+  }
+  // instant near `t` (ms) where the phase reaches `target` (bisection over +/- 4 days), or null
+  function phaseInstant(t, target) {
+    function f(x) { var v = moonIllumination(new Date(x)).phase - target; return v > 0.5 ? v - 1 : v < -0.5 ? v + 1 : v; }
+    var a = t - 4 * dayMs, b = t + 4 * dayMs;
+    if (f(a) > 0 || f(b) < 0) return null;
+    for (var i = 0; i < 40; i++) { var mid = (a + b) / 2; if (f(mid) <= 0) a = mid; else b = mid; }
+    return (a + b) / 2;
+  }
+  var PRINCIPAL = [[0, "New"], [0.25, "First quarter"], [0.5, "Full"], [0.75, "Last quarter"]];
+  /* Tonight's moon for the ET calendar day of `now`.
+     A principal phase (New, First quarter, Full, Last quarter) is named on the ET date that holds its exact instant,
+     as moon phase calendars (USNO, timeanddate) do; any other date gets the intermediate name.
+     Illumination is for the midnight ET that ends this evening. */
+  function moonTonight(now) {
+    now = now || new Date();
+    var from = etMidnight(now).valueOf(), to = etMidnight(new Date(from + 36 * 36e5)).valueOf(), mid = to;  // DST safe
+    var ill = moonIllumination(new Date(mid)), name = null, index;
+    for (var i = 0; i < PRINCIPAL.length && !name; i++) {
+      var dp = ill.phase - PRINCIPAL[i][0];
+      if (dp > 0.5) dp -= 1;
+      if (dp < -0.5) dp += 1;
+      if (Math.abs(dp) > 0.06) continue;
+      var at = phaseInstant(mid, PRINCIPAL[i][0]);
+      if (at !== null && at >= from && at < to) { name = PRINCIPAL[i][1]; index = i * 2; }
+    }
+    if (!name) {
+      var p = ill.phase;
+      index = p < 0.25 ? 1 : p < 0.5 ? 3 : p < 0.75 ? 5 : 7;
+      name = ["", "Waxing crescent", "", "Waxing gibbous", "", "Waning gibbous", "", "Waning crescent"][index];
+    }
+    return { name: name, index: index, fraction: ill.fraction, phase: ill.phase, at: new Date(mid) };
+  }
+
   /* The instant of 00:00 America/New_York on the ET calendar day of `date`. */
   function etMidnight(date) {
     var p = {};
@@ -77,5 +133,6 @@
     return new Date(Date.UTC(+p.year, +p.month - 1, +p.day) - offset);
   }
 
-  window.NightBiteAstro = { sunset: sunset, moonrise: moonrise, etMidnight: etMidnight };
+  window.NightBiteAstro = { sunset: sunset, moonrise: moonrise, etMidnight: etMidnight,
+    moonIllumination: moonIllumination, moonTonight: moonTonight };
 })();

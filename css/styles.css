@@ -1751,6 +1751,43 @@ h3 { font-size: 20px; line-height: 30px; }
   margin-left: 0.35em;
   white-space: nowrap;
 }
+.cond-cell[data-noreading] .cond-value {
+  font-family: var(--font-display); font-variant-ligatures: none;
+  -webkit-font-smoothing: antialiased;
+  font-size: var(--text-base);
+  color: var(--cream-dark);
+}
+/* Wind: 13 px arrow pointing where the wind blows to (8 steps), plus calm and variable frames */
+.cond-wind-row { display: flex; align-items: center; gap: 0.375rem; min-width: 0; }
+.cond-wind-row .cond-value { min-width: 0; }
+.wind-sprite {
+  --wind-scale: 2;
+  flex-shrink: 0;
+  width: calc(13px * var(--wind-scale));
+  height: calc(13px * var(--wind-scale));
+  background: url("../assets/wind/wind-arrows.png") no-repeat;
+  background-size: calc(130px * var(--wind-scale)) calc(13px * var(--wind-scale));
+  background-position: calc(-13px * var(--wind-scale) * var(--wind-i, 0)) 0;
+  image-rendering: pixelated;
+}
+.cond-wind[data-empty] .wind-sprite { visibility: hidden; }
+/* Moon tonight: full row under the other stats so 7 cells stay tidy in 2 and 3 columns */
+.cond-moon { grid-column: 1 / -1; }
+.cond-moon-row { display: flex; align-items: center; gap: var(--space-sm); min-width: 0; }
+.cond-moon-text { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.moon-sprite {
+  /* 13 px sprites, 8 phases in one sheet, drawn at a whole number scale */
+  --moon-scale: 2;
+  flex-shrink: 0;
+  width: calc(13px * var(--moon-scale));
+  height: calc(13px * var(--moon-scale));
+  background: url("../assets/moon/moon-phases.png") no-repeat;
+  background-size: calc(104px * var(--moon-scale)) calc(13px * var(--moon-scale));
+  background-position: calc(-13px * var(--moon-scale) * var(--moon-i, 0)) 0;
+  image-rendering: pixelated;
+}
+.cond-moon[data-empty] .moon-sprite { visibility: hidden; }
+@media (min-width: 768px) { .moon-sprite { --moon-scale: 3; } }
 .cond-summary { margin: 0 0 var(--space-xs); color: var(--cream-dark); font-size: var(--text-base); }
 .cond-summary:empty { display: none; }
 .bento-conditions .meta { margin: 0 0 0.375rem; }
