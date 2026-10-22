@@ -2287,3 +2287,53 @@ html.map-open { overflow: hidden; }
   .install-tip-btn { transition: none; }
 }
 
+
+/* ---- Get the app (Home #get-the-app) + footer link on every page ---- */
+.get-app { margin-top: var(--space-md); }
+.get-app-head { display: flex; align-items: flex-start; gap: var(--space-sm); }
+.get-app-icon { width: 32px; height: 32px; flex-shrink: 0; image-rendering: pixelated; margin-top: 2px; }
+.get-app-intro { min-width: 0; max-width: var(--measure); }
+.get-app h2 { margin-bottom: 0.25rem; }
+.get-app-lead,
+.get-app-using { margin: 0; font-size: var(--text-sm); line-height: 1.55; color: var(--cream-dark); }
+.get-app-using { color: var(--cream); }
+.get-app-lead[hidden], .get-app-using[hidden], .get-app-install[hidden], .get-app-steps[hidden] { display: none; }
+.get-app-install { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs) var(--space-sm); margin-top: var(--space-sm); }
+.get-app-install .meta { margin: 0; }
+.get-app-status { margin: 0; }
+.get-app-status:empty { display: none; }
+.get-app-steps { display: grid; gap: var(--space-xs); margin-top: var(--space-sm); }
+.get-app-steps .how-to-read { margin-top: 0; }
+.get-app-list { margin: 0; padding-left: 1.4rem; color: var(--cream-dark); font-size: var(--text-sm); line-height: 1.55; }
+.get-app-list li { margin-bottom: 0.35rem; }
+.get-app-list li::marker { font-family: var(--font-display); color: var(--amber); }
+.get-app-note { margin: 0 0 1rem; font-size: var(--text-sm); line-height: 1.55; color: var(--muted); }
+.get-app-os[data-os="android"] .get-app-list { padding-bottom: 1rem; margin-bottom: 0; }
+.get-app-os[data-os="android"] .get-app-list li:last-child { margin-bottom: 0; }
+.get-app-dots {
+  /* 4 x 14 pixel vertical three dots, cream */
+  display: inline-block;
+  width: 4px;
+  height: 14px;
+  vertical-align: -2px;
+  margin: 0 2px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 14' shape-rendering='crispEdges'%3E%3Cpath fill='%23f5edd8' d='M1 1h2v2h-2zM1 6h2v2h-2zM1 11h2v2h-2z'/%3E%3C/svg%3E") no-repeat 0 0 / 4px 14px;
+}
+@media (min-width: 768px) {
+  .get-app-steps { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+.footer-app { margin: 0 0 var(--space-xs); }
+.footer-inner .footer-app a { gap: 0.5rem; }
+.footer-app-icon {
+  /* the pixel Share glyph from the install tip, tinted with the link colour */
+  display: inline-block;
+  width: 12px;
+  height: 14px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 14' shape-rendering='crispEdges'%3E%3Cpath d='M5 0h2v9h-2zM4 1h4v1h-4zM3 2h6v1h-6zM0 5h4v1h-4zM8 5h4v1h-4zM0 6h1v7h-1zM11 6h1v7h-1zM0 13h12v1h-12z'/%3E%3C/svg%3E") no-repeat 0 0 / 12px 14px;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 14' shape-rendering='crispEdges'%3E%3Cpath d='M5 0h2v9h-2zM4 1h4v1h-4zM3 2h6v1h-6zM0 5h4v1h-4zM8 5h4v1h-4zM0 6h1v7h-1zM11 6h1v7h-1zM0 13h12v1h-12z'/%3E%3C/svg%3E") no-repeat 0 0 / 12px 14px;
+}
+/* already on the home screen: nothing to add */
+@media (display-mode: standalone), (display-mode: fullscreen) {
+  .footer-app { display: none; }
+}

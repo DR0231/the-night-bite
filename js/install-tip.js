@@ -4,6 +4,7 @@
  *  · iOS Safari: shows the Share, then "Add to Home Screen" steps.
  *  · Never shows when already running from the home screen, or after it's been closed or used once
  *    (localStorage nb-install-tip-v1).
+ *  · Shares the install prompt with the Get the app card (get-app.js) through window.nbInstallEvent.
  */
 (function () {
   var KEY = "nb-install-tip-v1";
@@ -57,9 +58,11 @@
       install.className = "install-tip-btn is-primary";
       install.textContent = "Install";
       install.addEventListener("click", function () {
-        if (!deferred) return close("dismissed");
-        var ev = deferred;
+        var ev = window.nbInstallEvent || deferred;
         deferred = null;
+        window.nbInstallEvent = null;
+        document.dispatchEvent(new CustomEvent("nb-install-change"));
+        if (!ev) return close("dismissed");
         ev.prompt();
         (ev.userChoice || Promise.resolve({})).then(function (c) {
           close(c && c.outcome === "accepted" ? "installed" : "dismissed");
@@ -92,10 +95,15 @@
   }
 
   window.addEventListener("beforeinstallprompt", function (e) {
+    window.nbInstallEvent = e;
     if (done()) return;
     e.preventDefault();   // show our own one time tip instead of the browser's mini bar
     deferred = e;
     build("android");
+  });
+  // the Get the app card used the prompt: the tip's Install button has nothing left to open
+  document.addEventListener("nb-install-change", function () {
+    if (!window.nbInstallEvent && tip && tip.getAttribute("data-kind") === "android") close("dismissed");
   });
   window.addEventListener("appinstalled", function () { close("installed"); });
   if (iosSafari) {

@@ -162,6 +162,41 @@
       </a>
     </div>
 
+    <section class="bento-card get-app" id="get-the-app" aria-labelledby="get-app-title">
+      <div class="get-app-head">
+        <img class="get-app-icon" src="favicon.svg" alt="" width="32" height="32">
+        <div class="get-app-intro">
+          <h2 id="get-app-title">Get the app</h2>
+          <p class="get-app-lead">Add The Night Bite to your home screen. It opens full screen with the lantern icon, and the pages you&rsquo;ve opened still work with no signal.</p>
+          <p class="get-app-using" hidden>You&rsquo;re using the app. Pages you&rsquo;ve opened still work with no signal.</p>
+        </div>
+      </div>
+      <div class="get-app-install" hidden>
+        <button type="button" class="install-tip-btn is-primary get-app-btn">Install app</button>
+        <span class="meta">Your browser asks before adding it.</span>
+      </div>
+      <p class="meta get-app-status" role="status"></p>
+      <div class="get-app-steps">
+        <details class="how-to-read get-app-os" data-os="ios">
+          <summary>iPhone</summary>
+          <ol class="get-app-list">
+            <li>In Safari, tap <span class="install-tip-share" role="img" aria-label="the Share icon"></span> Share.</li>
+            <li>Tap &ldquo;Add to Home Screen&rdquo;. Scroll the menu if you don&rsquo;t see it.</li>
+            <li>Tap Add.</li>
+          </ol>
+          <p class="get-app-note">On newer iOS, Chrome&rsquo;s Share menu has it too.</p>
+        </details>
+        <details class="how-to-read get-app-os" data-os="android">
+          <summary>Android</summary>
+          <ol class="get-app-list">
+            <li>In Chrome, tap the menu <span class="get-app-dots" role="img" aria-label="(three dots)"></span>.</li>
+            <li>Tap &ldquo;Install app&rdquo; or &ldquo;Add to Home screen&rdquo;.</li>
+            <li>Or tap the Install button when it shows.</li>
+          </ol>
+        </details>
+      </div>
+    </section>
+
     <hr class="divider">
 
     <h2>What this site is</h2>
@@ -217,6 +252,7 @@
         <a href="privacy.html">Privacy</a>
         <a href="whisperwood.html">Whisperwood Vale</a>
       </nav>
+      <p class="footer-app"><a href="#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
     </div>
   </footer>
@@ -232,5 +268,6 @@
   <script src="js/hoover-map-data.js"></script>
   <script src="js/hoover-map.js"></script>
   <script src="js/install-tip.js"></script>
+  <script src="js/get-app.js"></script>
 </body>
 </html>

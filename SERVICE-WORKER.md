@@ -19,7 +19,7 @@ Promoted from the preview copy (DR0231/night-bite-preview) on 2026-10-22.
 * Live readings are not cached by the service worker. The page keeps the last good USGS reading, 7 day trend and NWS
   forecast in localStorage (`nb-usgs-last`, `nb-trend-last`, `nb-cond-last`) and, with no signal, shows them with
   "Offline. Last updated HH:MM ET." Values only ever come from a real fetch.
-* Cache name is `PREFIX + VERSION`: `nb-live-v1-2026-10-22` on nightbiteoh.com (`nb-preview-` on the preview).
+* Cache name is `PREFIX + VERSION`: `nb-live-v2-2026-10-22` on nightbiteoh.com (`nb-preview-` on the preview).
   Activate deletes caches with the same prefix only.
 * Pages that load `sw-register.js` have `worker-src 'self'` in their CSP meta. whisperwood.html keeps `worker-src 'none'`.
 
