@@ -458,7 +458,7 @@ const Atlas = {
   },
 
   drawTrophies(ctx, x, y) {
-    ctx.fillStyle = "#292214"; ctx.fillRect(x - 11, y - 29, 22, 20);   // always, even when empty
+    ctx.fillStyle = "#58473a"; ctx.fillRect(x - 11, y - 29, 22, 20);   // always, even when empty
     const all = (typeof Save !== "undefined" && Save.data && Save.data.cottage && Save.data.cottage.trophies) || [];
     const n = (typeof DESIGN !== "undefined" && DESIGN.trophySlots) || 2;
     const list = [];
