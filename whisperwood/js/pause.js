@@ -30,14 +30,30 @@ const Pause = {
     this.openFlag = false;
   },
 
+  showTab(name) {
+    const tabs = document.querySelectorAll("#pause-settings [data-tab]");
+    for (let i = 0; i < tabs.length; i++) {
+      const tab = tabs[i];
+      const on = tab.dataset.tab === name;
+      tab.setAttribute("aria-selected", on ? "true" : "false");
+      const panel = document.getElementById("pause-panel-" + tab.dataset.tab);
+      if (panel) panel.classList.toggle("hidden", !on);
+    }
+  },
+
   refreshSettings() {
     if (typeof Settings === "undefined") return;
-    const text = document.getElementById("pause-volume-text");
-    if (text) text.textContent = "Sound " + Settings.volume + "%";
-    const buses = [["music", "Music"], ["amb", "Ambience"], ["sfx", "Effects"], ["ui", "Interface"]];
+    const vol = document.querySelector("#pause-settings input[data-vol]");
+    if (vol) vol.value = Settings.volume;
+    const volOut = document.getElementById("pause-vol-out");
+    if (volOut) volOut.textContent = String(Settings.volume);
+    const buses = ["music", "amb", "sfx", "ui"];
     for (let i = 0; i < buses.length; i++) {
-      const el = document.getElementById("pause-bus-" + buses[i][0] + "-text");
-      if (el) el.textContent = buses[i][1] + " " + Settings[buses[i][0]] + "%";
+      const name = buses[i];
+      const slider = document.querySelector("#pause-settings input[data-bus=\"" + name + "\"]");
+      if (slider) slider.value = Settings[name];
+      const out = document.getElementById("pause-bus-" + name + "-out");
+      if (out) out.textContent = String(Settings[name]);
     }
     const shake = document.getElementById("pause-shake");
     if (shake) shake.checked = Settings.shake;
@@ -79,25 +95,33 @@ const Pause = {
   const settingsBtn = document.getElementById("pause-settings-btn");
   if (settingsBtn && typeof Settings !== "undefined") settingsBtn.addEventListener("click", () => {
     const settings = document.getElementById("pause-settings");
-    if (settings) settings.classList.toggle("hidden");
+    if (settings) {
+      const opening = settings.classList.contains("hidden");
+      settings.classList.toggle("hidden");
+      if (opening) Pause.showTab("general");
+    }
     Pause.refreshSettings();
   });
-  const volDown = document.getElementById("pause-volume-down");
-  if (volDown && typeof Settings !== "undefined") volDown.addEventListener("click", () => {
-    Settings.setVolume(Settings.volume - 10);
-    Pause.refreshSettings();
-  });
-  const volUp = document.getElementById("pause-volume-up");
-  if (volUp && typeof Settings !== "undefined") volUp.addEventListener("click", () => {
-    Settings.setVolume(Settings.volume + 10);
-    Pause.refreshSettings();
-  });
-  if (typeof Settings !== "undefined" && typeof Settings.setBus === "function") {
-    const busBtns = document.querySelectorAll("#pause-settings button[data-bus]");
-    for (let i = 0; i < busBtns.length; i++) {
-      const btn = busBtns[i];
-      btn.addEventListener("click", () => {
-        Settings.setBus(btn.dataset.bus, Settings[btn.dataset.bus] + Number(btn.dataset.step));
+  const tabBtns = document.querySelectorAll("#pause-settings [data-tab]");
+  for (let t = 0; t < tabBtns.length; t++) {
+    const tab = tabBtns[t];
+    tab.addEventListener("click", () => Pause.showTab(tab.dataset.tab));
+  }
+  if (typeof Settings !== "undefined") {
+    const sliders = document.querySelectorAll("#pause-settings input[type=range]");
+    for (let i = 0; i < sliders.length; i++) {
+      const slider = sliders[i];
+      slider.addEventListener("input", () => {
+        const n = Number(slider.value);
+        if (slider.hasAttribute("data-vol")) Settings.volume = n;
+        else if (slider.dataset.bus) Settings[slider.dataset.bus] = n;
+        if (typeof AudioFX !== "undefined" && typeof AudioFX.applyVolume === "function") AudioFX.applyVolume();
+        const out = slider.parentElement && slider.parentElement.querySelector("output");
+        if (out) out.textContent = String(n);
+      });
+      slider.addEventListener("change", () => {
+        if (slider.hasAttribute("data-vol") && typeof Settings.setVolume === "function") Settings.setVolume(slider.value);
+        else if (slider.dataset.bus && typeof Settings.setBus === "function") Settings.setBus(slider.dataset.bus, slider.value);
         Pause.refreshSettings();
       });
     }

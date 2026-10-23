@@ -1035,6 +1035,23 @@ html.pad-input .pack-bait kbd { display: none; }
 #pause-reset-confirm { margin: 12px 0 4px; padding: 8px 0; border-top: 2px dotted #8b6238; border-bottom: 2px dotted #8b6238; }
 #pause-credits { margin-top: 12px; padding-top: 8px; border-top: 2px solid var(--paper-lo); }
 
+#pause-menu .pause-tabs { display: flex; gap: 6px; }
+#pause-menu .pause-tabs button { flex: 1 1 0; min-width: 0; width: auto; margin: 0; }
+#pause-menu .pause-tabs button[aria-selected="true"] { outline: 2px solid var(--brass); outline-offset: 2px; }
+#pause-menu label.pause-slider { display: grid; grid-template-columns: 5.5em 160px 2.5em; justify-content: center; align-items: center; text-align: left; }
+#pause-menu .pause-slider output { color: var(--ink); }
+#pause-menu .pause-slider input[type=range] { -webkit-appearance: none; appearance: none; width: 160px; height: 16px; margin: 0; background: transparent; }
+#pause-menu .pause-slider input[type=range]::-webkit-slider-runnable-track { height: 6px; background: var(--paper-lo); border: 2px solid var(--edge); border-radius: 0; }
+#pause-menu .pause-slider input[type=range]::-moz-range-track { height: 6px; background: var(--paper-lo); border: 2px solid var(--edge); border-radius: 0; }
+#pause-menu .pause-slider input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 16px; margin-top: -7px; background: var(--brass); border: 2px solid var(--edge); border-radius: 0; box-shadow: inset 0 -2px 0 var(--frame); }
+#pause-menu .pause-slider input[type=range]::-moz-range-thumb { width: 10px; height: 16px; background: var(--brass); border: 2px solid var(--edge); border-radius: 0; box-shadow: inset 0 -2px 0 var(--frame); }
+#pause-menu .pause-slider input[type=range].pad-focus, #pause-menu .pause-slider input[type=range]:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+@media (pointer: coarse) {
+  #pause-menu .pause-slider input[type=range] { height: 44px; }
+  #pause-menu .pause-slider input[type=range]::-webkit-slider-thumb { width: 20px; height: 28px; margin-top: -13px; }
+  #pause-menu .pause-slider input[type=range]::-moz-range-thumb { width: 20px; height: 28px; }
+}
+
 #pause-reset-confirm p,
 #pause-credits p {
   color: var(--ink);

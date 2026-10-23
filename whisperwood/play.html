@@ -176,22 +176,20 @@
         <button type="button" id="pause-credits-btn">Credits</button>
         <button type="button" id="pause-quit" class="desktop-only">Quit</button>
         <div id="pause-settings" class="hidden">
-          <p><span id="pause-volume-text" aria-live="polite">Sound 100%</span></p>
-          <button type="button" id="pause-volume-down" aria-label="Quieter">−</button>
-          <button type="button" id="pause-volume-up" aria-label="Louder">+</button>
-          <p><span id="pause-bus-music-text" aria-live="polite">Music 70%</span></p>
-          <button type="button" data-bus="music" data-step="-10" aria-label="Music quieter">−</button>
-          <button type="button" data-bus="music" data-step="10" aria-label="Music louder">+</button>
-          <p><span id="pause-bus-amb-text" aria-live="polite">Ambience 60%</span></p>
-          <button type="button" data-bus="amb" data-step="-10" aria-label="Ambience quieter">−</button>
-          <button type="button" data-bus="amb" data-step="10" aria-label="Ambience louder">+</button>
-          <p><span id="pause-bus-sfx-text" aria-live="polite">Effects 80%</span></p>
-          <button type="button" data-bus="sfx" data-step="-10" aria-label="Effects quieter">−</button>
-          <button type="button" data-bus="sfx" data-step="10" aria-label="Effects louder">+</button>
-          <p><span id="pause-bus-ui-text" aria-live="polite">Interface 60%</span></p>
-          <button type="button" data-bus="ui" data-step="-10" aria-label="Interface quieter">−</button>
-          <button type="button" data-bus="ui" data-step="10" aria-label="Interface louder">+</button>
-          <label><input type="checkbox" id="pause-shake"/> Screen shake</label>
+          <div class="pause-tabs" role="tablist">
+            <button type="button" role="tab" id="pause-tab-general" data-tab="general" aria-selected="true">General</button>
+            <button type="button" role="tab" id="pause-tab-audio" data-tab="audio" aria-selected="false">Audio</button>
+          </div>
+          <div id="pause-panel-general" role="tabpanel" aria-labelledby="pause-tab-general">
+            <label><input type="checkbox" id="pause-shake"/> Screen shake</label>
+          </div>
+          <div id="pause-panel-audio" role="tabpanel" aria-labelledby="pause-tab-audio" class="hidden">
+            <label class="pause-slider"><span>Sound</span><input type="range" min="0" max="100" step="5" data-vol><output id="pause-vol-out">100</output></label>
+            <label class="pause-slider"><span>Music</span><input type="range" min="0" max="100" step="5" data-bus="music"><output id="pause-bus-music-out">70</output></label>
+            <label class="pause-slider"><span>Ambience</span><input type="range" min="0" max="100" step="5" data-bus="amb"><output id="pause-bus-amb-out">60</output></label>
+            <label class="pause-slider"><span>Effects</span><input type="range" min="0" max="100" step="5" data-bus="sfx"><output id="pause-bus-sfx-out">80</output></label>
+            <label class="pause-slider"><span>Interface</span><input type="range" min="0" max="100" step="5" data-bus="ui"><output id="pause-bus-ui-out">60</output></label>
+          </div>
         </div>
         <div id="pause-credits" class="hidden">
           <p>Whisperwood Vale by Night Bite.</p>
