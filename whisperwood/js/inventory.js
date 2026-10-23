@@ -232,7 +232,7 @@ const Inventory = {
     const mute = el.querySelector("#chk-mute");
     if (mute) mute.addEventListener("change", () => {
       Save.data.flags.mute = mute.checked;
-      AudioFX.muted = mute.checked;
+      AudioFX.setMuted(mute.checked);
       const other = document.getElementById("pause-mute");
       if (other) other.checked = mute.checked;
     });

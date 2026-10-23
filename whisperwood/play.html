@@ -176,9 +176,21 @@
         <button type="button" id="pause-credits-btn">Credits</button>
         <button type="button" id="pause-quit" class="desktop-only">Quit</button>
         <div id="pause-settings" class="hidden">
-          <p><span id="pause-volume-text">Sound 100%</span></p>
+          <p><span id="pause-volume-text" aria-live="polite">Sound 100%</span></p>
           <button type="button" id="pause-volume-down" aria-label="Quieter">−</button>
           <button type="button" id="pause-volume-up" aria-label="Louder">+</button>
+          <p><span id="pause-bus-music-text" aria-live="polite">Music 70%</span></p>
+          <button type="button" data-bus="music" data-step="-10" aria-label="Music quieter">−</button>
+          <button type="button" data-bus="music" data-step="10" aria-label="Music louder">+</button>
+          <p><span id="pause-bus-amb-text" aria-live="polite">Ambience 60%</span></p>
+          <button type="button" data-bus="amb" data-step="-10" aria-label="Ambience quieter">−</button>
+          <button type="button" data-bus="amb" data-step="10" aria-label="Ambience louder">+</button>
+          <p><span id="pause-bus-sfx-text" aria-live="polite">Effects 80%</span></p>
+          <button type="button" data-bus="sfx" data-step="-10" aria-label="Effects quieter">−</button>
+          <button type="button" data-bus="sfx" data-step="10" aria-label="Effects louder">+</button>
+          <p><span id="pause-bus-ui-text" aria-live="polite">Interface 60%</span></p>
+          <button type="button" data-bus="ui" data-step="-10" aria-label="Interface quieter">−</button>
+          <button type="button" data-bus="ui" data-step="10" aria-label="Interface louder">+</button>
           <label><input type="checkbox" id="pause-shake"/> Screen shake</label>
         </div>
         <div id="pause-credits" class="hidden">

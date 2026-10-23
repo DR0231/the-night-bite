@@ -34,6 +34,11 @@ const Pause = {
     if (typeof Settings === "undefined") return;
     const text = document.getElementById("pause-volume-text");
     if (text) text.textContent = "Sound " + Settings.volume + "%";
+    const buses = [["music", "Music"], ["amb", "Ambience"], ["sfx", "Effects"], ["ui", "Interface"]];
+    for (let i = 0; i < buses.length; i++) {
+      const el = document.getElementById("pause-bus-" + buses[i][0] + "-text");
+      if (el) el.textContent = buses[i][1] + " " + Settings[buses[i][0]] + "%";
+    }
     const shake = document.getElementById("pause-shake");
     if (shake) shake.checked = Settings.shake;
   },
@@ -48,7 +53,7 @@ const Pause = {
   const mute = document.getElementById("pause-mute");
   if (mute) mute.addEventListener("change", () => {
     Save.data.flags.mute = mute.checked;
-    AudioFX.muted = mute.checked;
+    AudioFX.setMuted(mute.checked);
     const pack = document.getElementById("chk-mute");
     if (pack) pack.checked = mute.checked;
   });
@@ -87,6 +92,16 @@ const Pause = {
     Settings.setVolume(Settings.volume + 10);
     Pause.refreshSettings();
   });
+  if (typeof Settings !== "undefined" && typeof Settings.setBus === "function") {
+    const busBtns = document.querySelectorAll("#pause-settings button[data-bus]");
+    for (let i = 0; i < busBtns.length; i++) {
+      const btn = busBtns[i];
+      btn.addEventListener("click", () => {
+        Settings.setBus(btn.dataset.bus, Settings[btn.dataset.bus] + Number(btn.dataset.step));
+        Pause.refreshSettings();
+      });
+    }
+  }
   const shake = document.getElementById("pause-shake");
   if (shake && typeof Settings !== "undefined") shake.addEventListener("change", () => {
     Settings.setShake(shake.checked);
