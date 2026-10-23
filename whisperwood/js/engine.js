@@ -117,6 +117,9 @@ const Input = {
       if (typeof Admin !== "undefined" && Admin.typing()) return;
       const k = this._alias(e);
       if (!k) return;
+      const range = e.target && (e.target.tagName || "").toLowerCase() === "input"
+        && (e.target.type || "").toLowerCase() === "range";
+      if (range && (k === "arrowleft" || k === "arrowright" || k === "arrowup" || k === "arrowdown")) return;
       const mod = e.ctrlKey || e.metaKey || e.altKey;
       if (mod && val) return;
       const decorKey = k === "r" || k === "f" || k === "q" || k === "-" || k === "=" || k === "[" || k === "]";
@@ -282,7 +285,7 @@ const Input = {
 
   _padFocusables(root) {
     if (!root) return [];
-    const nodes = root.querySelectorAll("button, a[href], [data-buy], input[type=checkbox]");
+    const nodes = root.querySelectorAll("button, a[href], [data-buy], input[type=checkbox], input[type=range]");
     const out = [];
     for (let i = 0; i < nodes.length; i++) {
       const el = nodes[i];
@@ -372,6 +375,22 @@ const Input = {
       return;
     }
     if (dir !== "left" && dir !== "right") return;
+    const focused = items[this._padFocus];
+    if (focused && (focused.tagName || "").toLowerCase() === "input" && (focused.type || "").toLowerCase() === "range") {
+      const step = Number(focused.step || 1);
+      const min = focused.min === "" ? 0 : Number(focused.min);
+      const max = focused.max === "" ? 100 : Number(focused.max);
+      const curVal = Number(focused.value);
+      let next = curVal + (dir === "left" ? -step : step);
+      if (Number.isFinite(min)) next = Math.max(min, next);
+      if (Number.isFinite(max)) next = Math.min(max, next);
+      if (next !== curVal) {
+        focused.value = String(next);
+        focused.dispatchEvent(new Event("input", { bubbles: true }));
+        focused.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      return;
+    }
     const cur = this._padCenter(items[this._padFocus]);
     let best = -1;
     let bestD = Infinity;
@@ -738,10 +757,10 @@ const Settings = {
       saved = null;
     }
     const vol = saved && Number.isFinite(saved.volume) ? saved.volume : 100;
-    this.volume = Math.round(Math.min(100, Math.max(0, vol)) / 10) * 10;
+    this.volume = Math.round(Math.min(100, Math.max(0, vol)) / 5) * 5;
     for (const name of Object.keys(this.BUS_DEFAULTS)) {
       const raw = saved && Number.isFinite(saved[name]) ? saved[name] : this.BUS_DEFAULTS[name];
-      this[name] = Math.round(Math.min(100, Math.max(0, raw)) / 10) * 10;
+      this[name] = Math.round(Math.min(100, Math.max(0, raw)) / 5) * 5;
     }
     if (saved && typeof saved.shake === "boolean") this.shake = saved.shake;
     else {
@@ -764,14 +783,14 @@ const Settings = {
   },
   setVolume(n) {
     const v = Number(n);
-    this.volume = Math.round(Math.min(100, Math.max(0, Number.isFinite(v) ? v : 0)) / 10) * 10;
+    this.volume = Math.round(Math.min(100, Math.max(0, Number.isFinite(v) ? v : 0)) / 5) * 5;
     this.save();
     AudioFX.applyVolume();
   },
   setBus(name, n) {
     if (!Object.prototype.hasOwnProperty.call(this.BUS_DEFAULTS, name)) return;
     const v = Number(n);
-    this[name] = Math.round(Math.min(100, Math.max(0, Number.isFinite(v) ? v : 0)) / 10) * 10;
+    this[name] = Math.round(Math.min(100, Math.max(0, Number.isFinite(v) ? v : 0)) / 5) * 5;
     this.save();
     AudioFX.applyVolume();
   },
