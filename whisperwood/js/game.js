@@ -1007,7 +1007,7 @@ const Game = {
     } catch (e) { /* rain bed optional */ }
     try { if (typeof AudioFX !== "undefined") AudioFX.syncMill(now / 1000); } catch (e) { /* mill bed optional */ }
     try {
-      const want = (typeof MillEnd !== "undefined" && MillEnd.openFlag) ? "ending" : World.id === "cottage" ? "cottage" : World.inCave() ? "cave" : TimeCycle.weatherId() === "rain" ? "rain" : "day";
+      const want = (typeof MillEnd !== "undefined" && MillEnd.openFlag) ? "ending" : World.id === "cottage" ? "cottage" : TimeCycle.weatherId() === "rain" ? "rain" : "day";
       if (typeof AudioFX !== "undefined") AudioFX.syncMusic(want, Fishing.inFight());
     } catch (e) { /* music optional */ }
     UI.update(dt);

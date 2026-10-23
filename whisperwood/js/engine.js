@@ -741,10 +741,10 @@ const Particles = {
 
 const Settings = {
   KEY: "whisperwood-settings-v1",
-  BUS_DEFAULTS: { music: 70, amb: 60, sfx: 80, ui: 60 },
+  BUS_DEFAULTS: { music: 50, amb: 60, sfx: 80, ui: 60 },
   volume: 100,
   shake: true,
-  music: 70,
+  music: 50,
   amb: 60,
   sfx: 80,
   ui: 60,
@@ -801,7 +801,7 @@ const Settings = {
 };
 Settings.load();
 
-const MUSIC = { day: 2791545, rain: 3388883, cave: 2798782, cottage: 3045368, ending: 864360 };
+const MUSIC = { day: 2791545, rain: 3388883, cottage: 3045368, ending: 864360 };
 
 const AudioFX = {
   ctx: null,
@@ -1221,20 +1221,37 @@ const AudioFX = {
     this._musicPlay[name] = node;
     this._musicCurve(node.gain, seconds, true);
   },
-  _musicTo(want) {
-    if (this._musicCurrent === want && this._musicPlay[want]) return;
-    const prev = this._musicCurrent;
-    const dayRain = (prev === "day" && want === "rain") || (prev === "rain" && want === "day");
-    const seconds = dayRain ? 4 : 1.5;
+  _musicBegin(want, seconds) {
     if (this._musicFade[want]) this._musicFadeUp(want, seconds);
     else if (!this._musicPlay[want]) {
       const node = this._musicStart(want, true);
-      if (!node) return;
+      if (!node) return false;
       this._musicPlay[want] = node;
       this._musicCurve(node.gain, seconds, true);
     }
-    if (prev && prev !== want) this._musicFadeDown(prev, seconds);
     this._musicCurrent = want;
+    return true;
+  },
+  _musicTo(want) {
+    if (this._musicGap) {
+      const gap = this._musicGap;
+      if (want === gap.to && this.ctx.currentTime < gap.at) return;
+      this._musicGap = null;
+      this._musicBegin(want, 1.5);
+      return;
+    }
+    if (this._musicCurrent === want && this._musicPlay[want]) return;
+    const prev = this._musicCurrent;
+    if (prev && prev !== want && (prev === "cottage" || want === "cottage")) {
+      this._musicFadeDown(prev, 1.5);
+      this._musicGap = { from: prev, to: want, at: this.ctx.currentTime + 2.5 };
+      this._musicCurrent = null;
+      return;
+    }
+    const dayRain = (prev === "day" && want === "rain") || (prev === "rain" && want === "day");
+    const seconds = dayRain ? 4 : 1.5;
+    if (!this._musicBegin(want, seconds)) return;
+    if (prev && prev !== want) this._musicFadeDown(prev, seconds);
   },
   _musicEnding() {
     if (this._endingHold) return;
@@ -1272,6 +1289,7 @@ const AudioFX = {
       this._musicDuckOn = false;
       this._endingHold = false;
       this._endingWait = 0;
+      this._musicGap = null;
     }
     this._musicWant = want;
     const duckGain = this._musicEnsureDuck();
@@ -1281,6 +1299,7 @@ const AudioFX = {
       duckGain.gain.setTargetAtTime(duckOn ? 0.398 : 1, this.ctx.currentTime, duckOn ? 0.04 : 0.5);
     }
     if (want === "ending") {
+      this._musicGap = null;
       this._musicEnding();
       return;
     }
@@ -1288,6 +1307,7 @@ const AudioFX = {
     this._endingWait = 0;
     if (this._musicPlay.ending) this._musicFadeDown("ending", 1.5);
     if (!want) {
+      this._musicGap = null;
       if (this._musicCurrent) this._musicFadeDown(this._musicCurrent, 1.5);
       this._musicCurrent = null;
       return;
