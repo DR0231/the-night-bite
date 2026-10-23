@@ -782,6 +782,8 @@ const Settings = {
 };
 Settings.load();
 
+const MUSIC = { day: 2791545, rain: 3388883, cave: 2798782, cottage: 3045368, ending: 864360 };
+
 const AudioFX = {
   ctx: null,
   muted: false,
@@ -799,7 +801,9 @@ const AudioFX = {
         this._bus = { music: null, amb: null, sfx: null, ui: null };
         for (const name of Object.keys(this._bus)) {
           const g = this.ctx.createGain();
-          g.gain.value = Settings[name] / Settings.BUS_DEFAULTS[name];
+          g.gain.value = name === "music"
+            ? Math.min(1, Math.max(0, Settings.music / 100))
+            : Settings[name] / Settings.BUS_DEFAULTS[name];
           g.connect(this._out);
           this._bus[name] = g;
         }
@@ -819,7 +823,11 @@ const AudioFX = {
     if (!this._bus) return;
     for (const name of Object.keys(this._bus)) {
       const g = this._bus[name];
-      if (g) g.gain.setTargetAtTime(Settings[name] / Settings.BUS_DEFAULTS[name], now, 0.01);
+      if (!g) continue;
+      const level = name === "music"
+        ? Math.min(1, Math.max(0, Settings.music / 100))
+        : Settings[name] / Settings.BUS_DEFAULTS[name];
+      g.gain.setTargetAtTime(level, now, 0.01);
     }
   },
   setMuted(on) {
@@ -1063,5 +1071,212 @@ const AudioFX = {
     } else {
       this.tone(100 + jitter * 20, 0.04, "sine", 0.016);
     }
+  },
+  /* Music beds. Sample counts are the loop length at 44100. A 1024-sample head is the crossfade tail, not part of the loop. */
+  _musicExt() {
+    if (this._musicExtPick) return this._musicExtPick;
+    let ogg = false;
+    try {
+      ogg = !!new Audio().canPlayType('audio/ogg; codecs="vorbis"');
+    } catch (err) {
+      ogg = false;
+    }
+    this._musicExtPick = ogg ? "ogg" : "m4a";
+    return this._musicExtPick;
+  },
+  _musicDecode(ab) {
+    const ctx = this.ctx;
+    try {
+      const ret = ctx.decodeAudioData(ab);
+      if (ret && typeof ret.then === "function") return ret;
+    } catch (err) { /* callback form */ }
+    return new Promise((resolve, reject) => {
+      ctx.decodeAudioData(ab.slice(0), resolve, reject);
+    });
+  },
+  _musicLoad(name) {
+    if (!Object.prototype.hasOwnProperty.call(MUSIC, name)) return;
+    if (this._musicBuf[name] || this._musicFail[name] || this._musicBusy[name] || !this.ctx) return;
+    this._musicBusy[name] = true;
+    const url = "assets/audio/music/" + name + "." + this._musicExt();
+    fetch(url).then((res) => {
+      if (!res.ok) throw new Error("music " + name);
+      return res.arrayBuffer();
+    }).then((ab) => this._musicDecode(ab)).then((buf) => {
+      this._musicBuf[name] = buf;
+      this._musicBusy[name] = false;
+    }).catch((err) => {
+      this._musicFail[name] = true;
+      this._musicBusy[name] = false;
+      if (!this._musicWarned[name]) {
+        this._musicWarned[name] = true;
+        console.warn("music " + name, err);
+      }
+    });
+  },
+  _musicEnsureDuck() {
+    if (this._musicDuck) return this._musicDuck;
+    this._musicDuck = this.ctx.createGain();
+    this._musicDuck.gain.value = 1;
+    this._musicDuck.connect(this._dest("music"));
+    return this._musicDuck;
+  },
+  _musicCurve(gainNode, seconds, fadeIn) {
+    const v = gainNode.gain.value;
+    const now = this.ctx.currentTime;
+    const n = Math.max(2, Math.round(seconds * 60));
+    const data = new Float32Array(n);
+    const last = n - 1;
+    for (let i = 0; i < n; i++) {
+      const x = i / last;
+      data[i] = fadeIn ? v + (1 - v) * Math.sin(x * Math.PI / 2) : v * Math.cos(x * Math.PI / 2);
+    }
+    gainNode.gain.cancelScheduledValues(now);
+    try {
+      gainNode.gain.setValueCurveAtTime(data, now, seconds);
+    } catch (err) {
+      /* A curve that already started is not cleared by cancel at `now`. */
+      gainNode.gain.cancelScheduledValues(0);
+      gainNode.gain.setValueAtTime(v, now);
+      gainNode.gain.setValueCurveAtTime(data, now, seconds);
+    }
+  },
+  _musicPoints(name, buf) {
+    const N = MUSIC[name];
+    const off = buf.duration >= (N + 1024) / 44100 - 0.001 ? 1024 : 0;
+    return { off: off, start: off / 44100, end: (off + N) / 44100 };
+  },
+  _musicStart(name, loop) {
+    const buf = this._musicBuf[name];
+    if (!buf) return null;
+    const pts = this._musicPoints(name, buf);
+    const src = this.ctx.createBufferSource();
+    const gain = this.ctx.createGain();
+    src.buffer = buf;
+    gain.gain.value = loop ? 0 : 1;
+    src.connect(gain).connect(this._musicEnsureDuck());
+    const node = { src: src, gain: gain, stopTimer: 0, gone: false };
+    if (loop) {
+      src.loop = true;
+      src.loopStart = pts.start;
+      src.loopEnd = pts.end;
+      src.start(this.ctx.currentTime, pts.start);
+    } else {
+      src.loop = false;
+      src.start(this.ctx.currentTime, pts.start, MUSIC[name] / 44100);
+      src.onended = () => this._musicRelease(name, node);
+    }
+    return node;
+  },
+  _musicRelease(name, node) {
+    if (!node || node.gone) return;
+    if (this._musicFade[name] !== node && this._musicPlay[name] !== node) return;
+    node.gone = true;
+    if (node.stopTimer) clearTimeout(node.stopTimer);
+    try { node.src.stop(); } catch (err) { /* already stopped */ }
+    try { node.src.disconnect(); } catch (err) { /* already stopped */ }
+    try { node.gain.disconnect(); } catch (err) { /* already stopped */ }
+    if (this._musicFade[name] === node) delete this._musicFade[name];
+    if (this._musicPlay[name] === node) delete this._musicPlay[name];
+    if (this._musicCurrent === name) this._musicCurrent = null;
+    const want = this._musicWant;
+    if (name === want) return;
+    if ((want === "day" || want === "rain") && (name === "day" || name === "rain")) return;
+    delete this._musicBuf[name];
+  },
+  _musicFadeDown(name, seconds) {
+    const node = this._musicPlay[name];
+    if (!node) return;
+    delete this._musicPlay[name];
+    this._musicFade[name] = node;
+    this._musicCurve(node.gain, seconds, false);
+    if (node.stopTimer) clearTimeout(node.stopTimer);
+    node.stopTimer = setTimeout(() => this._musicRelease(name, node), seconds * 1000);
+  },
+  _musicFadeUp(name, seconds) {
+    const node = this._musicFade[name];
+    if (!node) return;
+    if (node.stopTimer) clearTimeout(node.stopTimer);
+    node.stopTimer = 0;
+    delete this._musicFade[name];
+    this._musicPlay[name] = node;
+    this._musicCurve(node.gain, seconds, true);
+  },
+  _musicTo(want) {
+    if (this._musicCurrent === want && this._musicPlay[want]) return;
+    const prev = this._musicCurrent;
+    const dayRain = (prev === "day" && want === "rain") || (prev === "rain" && want === "day");
+    const seconds = dayRain ? 4 : 1.5;
+    if (this._musicFade[want]) this._musicFadeUp(want, seconds);
+    else if (!this._musicPlay[want]) {
+      const node = this._musicStart(want, true);
+      if (!node) return;
+      this._musicPlay[want] = node;
+      this._musicCurve(node.gain, seconds, true);
+    }
+    if (prev && prev !== want) this._musicFadeDown(prev, seconds);
+    this._musicCurrent = want;
+  },
+  _musicEnding() {
+    if (this._endingHold) return;
+    if (!this._musicBuf.ending && !this._musicFail.ending) this._musicLoad("ending");
+    if (!this._endingWait) {
+      if (this._musicCurrent) this._musicFadeDown(this._musicCurrent, 2);
+      this._musicCurrent = null;
+      this._endingWait = this.ctx.currentTime + 2;
+    }
+    if (this.ctx.currentTime < this._endingWait) return;
+    if (this._musicFail.ending) {
+      this._endingHold = true;
+      return;
+    }
+    if (!this._musicBuf.ending) return;
+    if (!this._musicPlay.ending) {
+      const node = this._musicStart("ending", false);
+      if (!node) return;
+      this._musicPlay.ending = node;
+    }
+    this._endingHold = true;
+  },
+  syncMusic(want, duck) {
+    if (this.muted) return;
+    this.ensure();
+    if (!this.ctx) return;
+    if (!this._musicPlay) {
+      this._musicPlay = {};
+      this._musicFade = {};
+      this._musicBuf = {};
+      this._musicFail = {};
+      this._musicBusy = {};
+      this._musicWarned = {};
+      this._musicCurrent = null;
+      this._musicDuckOn = false;
+      this._endingHold = false;
+      this._endingWait = 0;
+    }
+    this._musicWant = want;
+    const duckGain = this._musicEnsureDuck();
+    const duckOn = !!duck;
+    if (duckOn !== this._musicDuckOn) {
+      this._musicDuckOn = duckOn;
+      duckGain.gain.setTargetAtTime(duckOn ? 0.398 : 1, this.ctx.currentTime, duckOn ? 0.04 : 0.5);
+    }
+    if (want === "ending") {
+      this._musicEnding();
+      return;
+    }
+    this._endingHold = false;
+    this._endingWait = 0;
+    if (this._musicPlay.ending) this._musicFadeDown("ending", 1.5);
+    if (!want) {
+      if (this._musicCurrent) this._musicFadeDown(this._musicCurrent, 1.5);
+      this._musicCurrent = null;
+      return;
+    }
+    if (!this._musicBuf[want]) {
+      if (!this._musicFail[want]) this._musicLoad(want);
+      return;
+    }
+    this._musicTo(want);
   },
 };
