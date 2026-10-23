@@ -331,7 +331,7 @@ const Save = {
       Player.x = p.x;
       Player.y = p.y;
     }
-    AudioFX.muted = !!d.flags.mute;
+    AudioFX.setMuted(!!d.flags.mute);
   },
 
   pullFromWorld() {
@@ -424,7 +424,7 @@ const Save = {
     this.data = this.fresh();
     this._keepData = true;
     this.data.flags.mute = mute;
-    AudioFX.muted = mute;
+    AudioFX.setMuted(mute);
     this._writeBlocked = false;
     this._newerRaw = "";
     this.write();

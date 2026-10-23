@@ -670,6 +670,7 @@ const Game = {
       };
       window.addEventListener("blur", leave);
       document.addEventListener("visibilitychange", () => { if (document.hidden) leave(); });
+      document.addEventListener("visibilitychange", () => AudioFX.setHidden(document.hidden));
       window.addEventListener("pagehide", () => Save.write());
       if (window.valeDesktop) window.valeDesktop.onSaveRequest(() => Save.write());
       const hint = document.getElementById("hint");

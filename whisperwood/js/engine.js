@@ -722,8 +722,13 @@ const Particles = {
 
 const Settings = {
   KEY: "whisperwood-settings-v1",
+  BUS_DEFAULTS: { music: 70, amb: 60, sfx: 80, ui: 60 },
   volume: 100,
   shake: true,
+  music: 70,
+  amb: 60,
+  sfx: 80,
+  ui: 60,
   load() {
     let saved = null;
     try {
@@ -734,6 +739,10 @@ const Settings = {
     }
     const vol = saved && Number.isFinite(saved.volume) ? saved.volume : 100;
     this.volume = Math.round(Math.min(100, Math.max(0, vol)) / 10) * 10;
+    for (const name of Object.keys(this.BUS_DEFAULTS)) {
+      const raw = saved && Number.isFinite(saved[name]) ? saved[name] : this.BUS_DEFAULTS[name];
+      this[name] = Math.round(Math.min(100, Math.max(0, raw)) / 10) * 10;
+    }
     if (saved && typeof saved.shake === "boolean") this.shake = saved.shake;
     else {
       let reduce = false;
@@ -747,12 +756,22 @@ const Settings = {
   },
   save() {
     try {
-      localStorage.setItem(this.KEY, JSON.stringify({ volume: this.volume, shake: this.shake }));
+      localStorage.setItem(this.KEY, JSON.stringify({
+        volume: this.volume, shake: this.shake,
+        music: this.music, amb: this.amb, sfx: this.sfx, ui: this.ui,
+      }));
     } catch (err) {}
   },
   setVolume(n) {
     const v = Number(n);
     this.volume = Math.round(Math.min(100, Math.max(0, Number.isFinite(v) ? v : 0)) / 10) * 10;
+    this.save();
+    AudioFX.applyVolume();
+  },
+  setBus(name, n) {
+    if (!Object.prototype.hasOwnProperty.call(this.BUS_DEFAULTS, name)) return;
+    const v = Number(n);
+    this[name] = Math.round(Math.min(100, Math.max(0, Number.isFinite(v) ? v : 0)) / 10) * 10;
     this.save();
     AudioFX.applyVolume();
   },
@@ -765,28 +784,69 @@ Settings.load();
 
 const AudioFX = {
   ctx: null,
+  muted: false,
   _out: null,
+  _bus: null,
   ensure() {
     if (this.muted) return;
     try {
       if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-      if (this.ctx.state === "suspended") this.ctx.resume();
+      if (this.ctx.state === "suspended" && !document.hidden) this.ctx.resume();
       if (this.ctx && !this._out) {
         this._out = this.ctx.createGain();
-        this._out.gain.value = Settings.volume / 100;
+        this._out.gain.value = this.muted ? 0 : Settings.volume / 100;
         this._out.connect(this.ctx.destination);
+        this._bus = { music: null, amb: null, sfx: null, ui: null };
+        for (const name of Object.keys(this._bus)) {
+          const g = this.ctx.createGain();
+          g.gain.value = Settings[name] / Settings.BUS_DEFAULTS[name];
+          g.connect(this._out);
+          this._bus[name] = g;
+        }
       }
     } catch (err) {
       this.ctx = null; /* no audio device: cues become silent, the game keeps going */
     }
   },
-  _dest() {
-    return this._out || this.ctx.destination;
+  _dest(bus) {
+    const name = bus || "sfx";
+    return (this._bus && this._bus[name]) || this._out || (this.ctx && this.ctx.destination);
   },
   applyVolume() {
-    if (this._out && this.ctx) this._out.gain.setValueAtTime(Settings.volume / 100, this.ctx.currentTime);
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    if (this._out) this._out.gain.setTargetAtTime(this.muted ? 0 : Settings.volume / 100, now, 0.01);
+    if (!this._bus) return;
+    for (const name of Object.keys(this._bus)) {
+      const g = this._bus[name];
+      if (g) g.gain.setTargetAtTime(Settings[name] / Settings.BUS_DEFAULTS[name], now, 0.01);
+    }
   },
-  tone(freq, dur, type, vol, slide) {
+  setMuted(on) {
+    this.muted = !!on;
+    if (this._out && this.ctx) {
+      const now = this.ctx.currentTime;
+      this._out.gain.cancelScheduledValues(now);
+      this._out.gain.setTargetAtTime(this.muted ? 0 : Settings.volume / 100, now, 0.01);
+    }
+    if (this.muted) {
+      this._stopRain();
+      if (this._mill && this.ctx) {
+        const now = this.ctx.currentTime;
+        this._mill.gain.cancelScheduledValues(now);
+        this._mill.gain.setValueAtTime(0, now);
+      }
+      this._millBeat = -1;
+    }
+  },
+  setHidden(hidden) {
+    if (!this.ctx) return;
+    try {
+      const done = hidden ? this.ctx.suspend() : this.ctx.resume();
+      if (done && typeof done.catch === "function") done.catch(() => {});
+    } catch (err) { /* context already closed */ }
+  },
+  tone(freq, dur, type, vol, slide, bus) {
     if (this.muted || !this.ctx) return;
     const t0 = this.ctx.currentTime;
     const o = this.ctx.createOscillator();
@@ -796,7 +856,7 @@ const AudioFX = {
     if (slide) o.frequency.exponentialRampToValueAtTime(slide, t0 + dur);
     g.gain.setValueAtTime(vol || 0.05, t0);
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-    o.connect(g).connect(this._dest());
+    o.connect(g).connect(this._dest(bus));
     o.start(t0); o.stop(t0 + dur + 0.02);
   },
   plop() {
@@ -830,12 +890,12 @@ const AudioFX = {
   },
   coin() {
     this.ensure();
-    this.tone(1180, 0.05, "square", 0.018);
-    setTimeout(() => this.tone(1560, 0.09, "square", 0.016), 45);
+    this.tone(1180, 0.05, "square", 0.018, 0, "ui");
+    setTimeout(() => this.tone(1560, 0.09, "square", 0.016, 0, "ui"), 45);
   },
   page() {
     this.ensure();
-    this.tone(220, 0.04, "triangle", 0.02, 300);
+    this.tone(220, 0.04, "triangle", 0.02, 300, "ui");
   },
   /* One tick when a spoil actually adds stew. Mute and a missing device stay silent. */
   soft() {
@@ -883,7 +943,7 @@ const AudioFX = {
       filter.frequency.value = 780;
       const gain = ctx.createGain();
       gain.gain.value = 0.011;
-      src.connect(filter).connect(gain).connect(this._dest());
+      src.connect(filter).connect(gain).connect(this._dest("amb"));
       src.start();
       this._rain = { src, gain };
     } catch (err) {
@@ -968,7 +1028,7 @@ const AudioFX = {
       if (!this._mill) {
         this._mill = this.ctx.createGain();
         this._mill.gain.setValueAtTime(0, now);
-        this._mill.connect(this._dest());
+        this._mill.connect(this._dest("amb"));
       }
       const target = this._millTarget();
       this._mill.gain.setTargetAtTime(target, now, DESIGN.millSoundFade);
@@ -985,8 +1045,8 @@ const AudioFX = {
   millStart() {
     this.ensure();
     if (this.muted || !this.ctx) return;
-    this._millCreak(this._dest(), DESIGN.millStartVol);
-    this._millDrip(this._dest(), DESIGN.millStartVol);
+    this._millCreak(this._dest("amb"), DESIGN.millStartVol);
+    this._millDrip(this._dest("amb"), DESIGN.millStartVol);
   },
   step() {
     this.ensure();
