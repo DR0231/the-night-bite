@@ -744,6 +744,7 @@ const Settings = {
   BUS_DEFAULTS: { music: 50, amb: 60, sfx: 80, ui: 60 },
   volume: 100,
   shake: true,
+  fullscreen: false,
   music: 50,
   amb: 60,
   sfx: 80,
@@ -772,11 +773,12 @@ const Settings = {
       }
       this.shake = !reduce;
     }
+    this.fullscreen = saved && typeof saved.fullscreen === "boolean" ? saved.fullscreen : false;
   },
   save() {
     try {
       localStorage.setItem(this.KEY, JSON.stringify({
-        volume: this.volume, shake: this.shake,
+        volume: this.volume, shake: this.shake, fullscreen: this.fullscreen,
         music: this.music, amb: this.amb, sfx: this.sfx, ui: this.ui,
       }));
     } catch (err) {}
@@ -798,8 +800,22 @@ const Settings = {
     this.shake = !!on;
     this.save();
   },
+  setFullscreen(on) {
+    this.fullscreen = !!on;
+    this.save();
+    if (window.valeDesktop && typeof window.valeDesktop.setFullscreen === "function") {
+      window.valeDesktop.setFullscreen(this.fullscreen);
+    }
+  },
 };
 Settings.load();
+if (window.valeDesktop && typeof window.valeDesktop.onFullscreenChange === "function") {
+  window.valeDesktop.onFullscreenChange((on) => {
+    Settings.fullscreen = !!on;
+    Settings.save();
+    if (typeof Pause !== "undefined" && typeof Pause.refreshSettings === "function") Pause.refreshSettings();
+  });
+}
 
 const MUSIC = { day: 2791545, rain: 3388883, cottage: 3045368, ending: 864360 };
 
