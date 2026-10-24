@@ -55,7 +55,7 @@ const DESIGN = {
   millpondHearts: 2,
   millEndRares: ["moonfin", "nighteel", "crystalfin", "pearlcarp", "galeor"],
   millWheelStep: 0.35,
-  millRollSeconds: 45,
+  millRollSeconds: 30,
   millSoundBeats: 4,
   millSoundVol: 0.025,
   millSoundNear: 4,
