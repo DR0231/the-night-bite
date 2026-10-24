@@ -741,14 +741,15 @@ const Particles = {
 
 const Settings = {
   KEY: "whisperwood-settings-v1",
-  BUS_DEFAULTS: { music: 50, amb: 60, sfx: 80, ui: 60 },
+  BUS_UNITY: { amb: 60, sfx: 80, ui: 60 },
+  BUS_DEFAULTS: { music: 5, amb: 20, sfx: 20, ui: 30 },
   volume: 100,
   shake: true,
   fullscreen: false,
-  music: 50,
-  amb: 60,
-  sfx: 80,
-  ui: 60,
+  music: 5,
+  amb: 20,
+  sfx: 20,
+  ui: 30,
   load() {
     let saved = null;
     try {
@@ -848,7 +849,7 @@ const AudioFX = {
           const g = this.ctx.createGain();
           g.gain.value = name === "music"
             ? Math.min(1, Math.max(0, Settings.music / 100))
-            : Settings[name] / Settings.BUS_DEFAULTS[name];
+            : Settings[name] / Settings.BUS_UNITY[name];
           g.connect(this._out);
           this._bus[name] = g;
         }
@@ -872,7 +873,7 @@ const AudioFX = {
       if (!g) continue;
       const level = name === "music"
         ? Math.min(1, Math.max(0, Settings.music / 100))
-        : Settings[name] / Settings.BUS_DEFAULTS[name];
+        : Settings[name] / Settings.BUS_UNITY[name];
       g.gain.setTargetAtTime(level, now, 0.01);
     }
   },
