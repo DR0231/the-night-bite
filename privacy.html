@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
   <meta name="apple-mobile-web-app-title" content="Night Bite">
   <link rel="manifest" href="site.webmanifest">
   <title>Privacy | The Night Bite</title>
-  <meta name="description" content="Privacy on The Night Bite and Whisperwood Vale: no accounts, no cookies, no analytics. What stays in your browser, and what Google, GitHub and USGS see.">
+  <meta name="description" content="Privacy on The Night Bite and Whisperwood Vale: no accounts, no cookies, just cookie free visit counts. What stays in your browser, and what Google, GitHub and USGS see.">
   <link rel="canonical" href="https://nightbiteoh.com/privacy.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32">
@@ -56,10 +56,10 @@
     <div class="page-horizon" aria-hidden="true"></div>
     <h1>Privacy</h1>
     <p class="lead">
-      The Night Bite and Whisperwood Vale have no accounts, no cookies, no ads, and no analytics or tracking scripts.
+      The Night Bite and Whisperwood Vale have no accounts, no cookies, and no ads. The only analytics is Cloudflare Web Analytics, which counts visits without cookies.
       Most of what you do here stays in your own browser.
     </p>
-    <p class="meta">Last updated October 22, 2026.</p>
+    <p class="meta">Last updated October 23, 2026.</p>
 
     <h2>What stays in your browser</h2>
     <p>
@@ -102,6 +102,15 @@
       The Night Bite doesn&rsquo;t receive those logs.
     </p>
 
+    <h2>Visit counts (Cloudflare Web Analytics)</h2>
+    <p>
+      The Night Bite pages load a small Cloudflare Web Analytics script so we can see which pages anglers use.
+      It sets no cookies, doesn&rsquo;t use your browser&rsquo;s storage, and doesn&rsquo;t follow you to other sites.
+      Cloudflare sees the page address, referrer, browser type and load timing, handled under the
+      <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare Privacy Policy</a>.
+      The Whisperwood Vale game pages don&rsquo;t load it.
+    </p>
+
     <h2>Live water readings (USGS)</h2>
     <p>
       The Home and Water pages ask USGS (<code>waterservices.usgs.gov</code>) for the latest Hoover gauge reading
@@ -117,7 +126,7 @@
 
     <h2>Contact</h2>
     <p>Questions about privacy? Email <a href="mailto:contact@nightbiteoh.com">contact@nightbiteoh.com</a>.</p>
-    <p class="meta">If anything here changes, for example adding analytics, this page will be updated first.</p>
+    <p class="meta">If anything here changes, this page will be updated first.</p>
   </main>
 
   <footer class="site-footer">
@@ -142,5 +151,6 @@
   <script src="js/alerts.js"></script>
   <script src="js/nav.js"></script>
 
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
