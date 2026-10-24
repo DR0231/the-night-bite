@@ -825,6 +825,7 @@ const SFX_FILES = {
   bite: [["sfx_bite_01", 30869], ["sfx_bite_02", 19845]],
   catch: [["sfx_catch_01", 37485], ["sfx_catch_02", 33075]],
   fail: [["sfx_fail_01", 18522], ["sfx_fail_02", 31752]],
+  land: [["sfx_plop_01", 14553], ["sfx_plop_02", 6615]],
 };
 const SFX_TRIM = 0.35;
 
@@ -916,6 +917,10 @@ const AudioFX = {
   plop() {
     this.ensure();
     this.tone(180, 0.12, "sine", 0.06, 70);
+  },
+  land() {
+    this.ensure();
+    if (!this._sfxPlay("land")) this.tone(180, 0.12, "sine", 0.06, 70);
   },
   bite() {
     this.ensure();
