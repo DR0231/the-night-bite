@@ -818,6 +818,8 @@ if (window.valeDesktop && typeof window.valeDesktop.onFullscreenChange === "func
 }
 
 const MUSIC = { day: 2791545, rain: 3388883, cottage: 3045368, ending: 864360 };
+const AMBIENCE = { dawn: ["amb_dawn_birds_loop", 2778300], day: ["amb_day_leaves_loop", 2425500], golden: ["amb_dusk_crickets_loop", 2646000], night: ["amb_night_bed_loop", 2646000] };
+const AMB_OWLS = [["amb_night_owl_01", 72765], ["amb_night_owl_02", 94815], ["amb_night_owl_03", 81586], ["amb_night_owl_04", 77175]];
 
 const AudioFX = {
   ctx: null,
@@ -880,6 +882,7 @@ const AudioFX = {
         this._mill.gain.setValueAtTime(0, now);
       }
       this._millBeat = -1;
+      this._stopAmbience();
     }
   },
   setHidden(hidden) {
@@ -1333,5 +1336,268 @@ const AudioFX = {
       return;
     }
     this._musicTo(want);
+  },
+  _ambInit() {
+    if (this._ambBuf) return;
+    this._ambPlay = {};
+    this._ambFade = {};
+    this._ambBuf = {};
+    this._ambFail = {};
+    this._ambBusy = {};
+    this._ambWarned = {};
+    this._ambCurrent = null;
+    this._ambWant = null;
+    this._ambLevel = 1;
+    this._ambOwlNext = 0;
+    this._ambOwlLast = "";
+    this._ambOwl = null;
+    this._ambOwlArmed = false;
+  },
+  _ambLoad(file) {
+    if (!file || !this.ctx || !this._ambBuf) return;
+    if (this._ambBuf[file] || this._ambFail[file] || this._ambBusy[file]) return;
+    this._ambBusy[file] = true;
+    const url = "assets/audio/ambience/" + file + "." + this._musicExt();
+    fetch(url).then((res) => {
+      if (!res.ok) throw new Error("ambience " + file);
+      return res.arrayBuffer();
+    }).then((ab) => this._musicDecode(ab)).then((buf) => {
+      this._ambBuf[file] = buf;
+      this._ambBusy[file] = false;
+    }).catch((err) => {
+      this._ambFail[file] = true;
+      this._ambBusy[file] = false;
+      if (!this._ambWarned[file]) {
+        this._ambWarned[file] = true;
+        console.warn("ambience " + file, err);
+      }
+    });
+  },
+  _ambPoints(N, buf) {
+    const off = buf.length >= N + 1024 ? 1024 : 0;
+    return { off: off, start: off / 44100, end: (off + N) / 44100 };
+  },
+  _ambStart(name, level) {
+    const pair = AMBIENCE[name];
+    const buf = pair && this._ambBuf[pair[0]];
+    if (!buf) return null;
+    const pts = this._ambPoints(pair[1], buf);
+    const src = this.ctx.createBufferSource();
+    const gain = this.ctx.createGain();
+    const levelGain = this.ctx.createGain();
+    src.buffer = buf;
+    src.loop = true;
+    src.loopStart = pts.start;
+    src.loopEnd = pts.end;
+    gain.gain.value = 0;
+    levelGain.gain.value = level;
+    src.connect(gain);
+    gain.connect(levelGain);
+    levelGain.connect(this._dest("amb"));
+    const node = { name: name, file: pair[0], src: src, gain: gain, level: levelGain, stopTimer: 0, gone: false };
+    try {
+      src.start(this.ctx.currentTime, pts.start);
+    } catch (err) {
+      try { src.disconnect(); } catch (e) { /* already stopped */ }
+      try { gain.disconnect(); } catch (e) { /* already stopped */ }
+      try { levelGain.disconnect(); } catch (e) { /* already stopped */ }
+      return null;
+    }
+    return node;
+  },
+  _ambRelease(name, node) {
+    if (!node || node.gone) return;
+    if (this._ambFade[name] !== node && this._ambPlay[name] !== node) return;
+    node.gone = true;
+    if (node.stopTimer) clearTimeout(node.stopTimer);
+    try { node.src.stop(); } catch (err) { /* already stopped */ }
+    try { node.src.disconnect(); } catch (err) { /* already stopped */ }
+    try { node.gain.disconnect(); } catch (err) { /* already stopped */ }
+    try { if (node.level) node.level.disconnect(); } catch (err) { /* already stopped */ }
+    if (this._ambFade[name] === node) delete this._ambFade[name];
+    if (this._ambPlay[name] === node) delete this._ambPlay[name];
+    if (this._ambCurrent === name && !this._ambPlay[name]) this._ambCurrent = null;
+    const wantFile = this._ambWant && AMBIENCE[this._ambWant] ? AMBIENCE[this._ambWant][0] : "";
+    if (node.file !== wantFile) delete this._ambBuf[node.file];
+  },
+  _ambFadeDown(name, seconds) {
+    const node = this._ambPlay[name];
+    if (!node) return;
+    delete this._ambPlay[name];
+    this._ambFade[name] = node;
+    this._musicCurve(node.gain, seconds, false);
+    if (node.stopTimer) clearTimeout(node.stopTimer);
+    node.stopTimer = setTimeout(() => this._ambRelease(name, node), seconds * 1000);
+  },
+  _ambFadeUp(name, seconds) {
+    const node = this._ambFade[name];
+    if (!node) return;
+    if (node.stopTimer) clearTimeout(node.stopTimer);
+    node.stopTimer = 0;
+    delete this._ambFade[name];
+    this._ambPlay[name] = node;
+    this._musicCurve(node.gain, seconds, true);
+  },
+  _ambSetLevel(node, level) {
+    if (!node || !node.level || this._ambLevel === level) return;
+    try {
+      node.level.gain.setTargetAtTime(level, this.ctx.currentTime, 0.7);
+    } catch (err) { /* level ramp is optional */ }
+    this._ambLevel = level;
+  },
+  _ambBegin(name, level, seconds) {
+    if (this._ambFade[name]) this._ambFadeUp(name, seconds);
+    else if (!this._ambPlay[name]) {
+      const node = this._ambStart(name, level);
+      if (!node) return false;
+      this._ambPlay[name] = node;
+      this._musicCurve(node.gain, seconds, true);
+    }
+    this._ambCurrent = name;
+    this._ambSetLevel(this._ambPlay[name], level);
+    if (!this._ambPlay[name] || !this._ambPlay[name].level) this._ambLevel = level;
+    else if (this._ambPlay[name].level.gain.value === level) this._ambLevel = level;
+    return true;
+  },
+  _ambCueOwl(file, N) {
+    const buf = this._ambBuf[file];
+    if (!buf) return;
+    const pts = this._ambPoints(N, buf);
+    const src = this.ctx.createBufferSource();
+    const gain = this.ctx.createGain();
+    src.buffer = buf;
+    gain.gain.value = 1;
+    src.connect(gain).connect(this._dest("amb"));
+    const node = { src: src, gain: gain, file: file, gone: false };
+    const now = this.ctx.currentTime;
+    try {
+      src.start(now, pts.start, N / 44100);
+    } catch (err) {
+      try { src.disconnect(); } catch (e) { /* already stopped */ }
+      try { gain.disconnect(); } catch (e) { /* already stopped */ }
+      return false;
+    }
+    src.onended = () => {
+      if (node.gone) return;
+      node.gone = true;
+      try { src.disconnect(); } catch (e) { /* already stopped */ }
+      try { gain.disconnect(); } catch (e) { /* already stopped */ }
+      if (this._ambOwl === node) this._ambOwl = null;
+    };
+    this._ambOwl = node;
+    return true;
+  },
+  _ambOwls(want) {
+    const playing = !!(this._ambPlay.night && !this._ambPlay.night.gone);
+    if (want !== "night" || !playing) {
+      if (want !== "night") this._ambOwlNext = 0;
+      return;
+    }
+    if (!this._ambOwlArmed) {
+      this._ambOwlArmed = true;
+      for (let i = 0; i < AMB_OWLS.length; i++) this._ambLoad(AMB_OWLS[i][0]);
+    }
+    const now = this.ctx.currentTime;
+    if (!this._ambOwlNext) {
+      this._ambOwlNext = now + 25 + Math.random() * 35;
+      return;
+    }
+    if (now < this._ambOwlNext) return;
+    const ready = [];
+    let pending = false;
+    for (let i = 0; i < AMB_OWLS.length; i++) {
+      const file = AMB_OWLS[i][0];
+      if (this._ambBuf[file]) {
+        if (file !== this._ambOwlLast) ready.push(AMB_OWLS[i]);
+      } else if (!this._ambFail[file]) pending = true;
+    }
+    if (!ready.length) {
+      if (!pending) this._ambOwlNext = now + 25 + Math.random() * 35;
+      return;
+    }
+    const pick = ready[(Math.random() * ready.length) | 0];
+    if (!this._ambCueOwl(pick[0], pick[1])) {
+      this._ambOwlNext = now + 1;
+      return;
+    }
+    this._ambOwlLast = pick[0];
+    this._ambOwlNext = now + 25 + Math.random() * 35;
+  },
+  _stopAmbience() {
+    try {
+      const now = this.ctx ? this.ctx.currentTime : 0;
+      const nodes = [];
+      const take = (map) => {
+        if (!map) return;
+        for (const k of Object.keys(map)) {
+          if (map[k]) nodes.push(map[k]);
+        }
+      };
+      take(this._ambPlay);
+      take(this._ambFade);
+      if (this._ambOwl) nodes.push(this._ambOwl);
+      for (const node of nodes) {
+        if (!node || node.gone) continue;
+        node.gone = true;
+        if (node.stopTimer) {
+          clearTimeout(node.stopTimer);
+          node.stopTimer = 0;
+        }
+        try {
+          const g = node.gain.gain;
+          g.cancelScheduledValues(0);
+          g.setValueAtTime(g.value, now);
+          g.setTargetAtTime(0.0001, now, 0.04);
+        } catch (err) { /* a running curve must not escape mute */ }
+      }
+      if (this._ambPlay) this._ambPlay = {};
+      if (this._ambFade) this._ambFade = {};
+      this._ambCurrent = null;
+      this._ambOwl = null;
+      this._ambOwlNext = 0;
+      setTimeout(() => {
+        for (const node of nodes) {
+          try { node.src.stop(); } catch (err) { /* already stopped */ }
+          try { node.src.disconnect(); } catch (err) { /* already stopped */ }
+          try { node.gain.disconnect(); } catch (err) { /* already stopped */ }
+          try { if (node.level) node.level.disconnect(); } catch (err) { /* already stopped */ }
+        }
+      }, 180);
+    } catch (err) { /* mute must not throw, even mid-fade */ }
+  },
+  syncAmbience(want, level) {
+    if (this.muted) return;
+    this.ensure();
+    if (!this.ctx) return;
+    this._ambInit();
+    if (want && !Object.prototype.hasOwnProperty.call(AMBIENCE, want)) want = null;
+    const lv = level === 0.6 ? 0.6 : 1;
+    this._ambWant = want;
+    if (want) this._ambLoad(AMBIENCE[want][0]);
+    const file = want ? AMBIENCE[want][0] : "";
+    if (want && !this._ambBuf[file]) {
+      this._ambOwls(want);
+      return;
+    }
+    if (want && this._ambPlay[want]) {
+      this._ambSetLevel(this._ambPlay[want], lv);
+      this._ambCurrent = want;
+      this._ambOwls(want);
+      return;
+    }
+    if (!want) {
+      if (this._ambCurrent && this._ambPlay[this._ambCurrent]) this._ambFadeDown(this._ambCurrent, 1.5);
+      this._ambCurrent = null;
+      this._ambOwls(null);
+      return;
+    }
+    const prev = this._ambCurrent;
+    const seconds = prev && prev !== want && this._ambPlay[prev] ? 8 : 3;
+    if (!this._ambBegin(want, lv, seconds)) {
+      this._ambOwls(want);
+      return;
+    }
+    if (prev && prev !== want) this._ambFadeDown(prev, seconds);
+    this._ambOwls(want);
   },
 };

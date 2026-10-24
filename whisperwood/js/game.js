@@ -1015,6 +1015,17 @@ const Game = {
       const want = (typeof MillEnd !== "undefined" && MillEnd.openFlag) ? "ending" : World.id === "cottage" ? "cottage" : TimeCycle.weatherId() === "rain" ? "rain" : "day";
       if (typeof AudioFX !== "undefined") AudioFX.syncMusic(want, Fishing.inFight());
     } catch (e) { /* music optional */ }
+    try {
+      const outdoor = World.id === "vale" || World.id === "marsh" || World.id === "island";
+      const rain = typeof TimeCycle !== "undefined" && TimeCycle.weatherId() === "rain";
+      let amb = outdoor && !rain ? TimeCycle.phaseId() : null;
+      let level = 1;
+      if (amb && typeof TimeCycle !== "undefined" && TimeCycle.season() === "winter") {
+        if (amb === "golden") amb = "day";
+        if (amb === "dawn") level = 0.6;
+      }
+      if (typeof AudioFX !== "undefined" && typeof AudioFX.syncAmbience === "function") AudioFX.syncAmbience(amb, level);
+    } catch (e) { /* ambience optional */ }
     UI.update(dt);
     Renderer.render(now);
     Input.endFrame();
