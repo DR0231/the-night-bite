@@ -942,9 +942,14 @@ const Game = {
 
     Input.pollPad();
     if (!(typeof Admin !== "undefined" && Admin.open)) {
+      const millUp = typeof MillEnd !== "undefined" && MillEnd.openFlag;
+      if (millUp && MillEnd.rolling) {
+        if (Input.pressed["e"] || Input.pressed[" "]) MillEnd.close();
+        else if (typeof MillEnd.tickRoll === "function") MillEnd.tickRoll(dt);
+      }
       const fightHeld = typeof Pause !== "undefined" && Pause.openFlag && Fishing.inFight();
-      if (Input.pressed["j"] && !Skills.offering && !this.sleeping && !fightHeld) UI.toggleJournal();
-      if (Input.pressed["i"] && !Skills.offering && !this.sleeping && !fightHeld) Inventory.toggle();
+      if (Input.pressed["j"] && !Skills.offering && !this.sleeping && !fightHeld && !millUp) UI.toggleJournal();
+      if (Input.pressed["i"] && !Skills.offering && !this.sleeping && !fightHeld && !millUp) Inventory.toggle();
     }
     if (Input.pressed["1"]) Inventory.numberKey(1);
     if (Input.pressed["2"]) Inventory.numberKey(2);
