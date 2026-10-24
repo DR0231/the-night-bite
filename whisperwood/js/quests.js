@@ -258,6 +258,9 @@ const MillSpine = {
 
 const MillEnd = {
   openFlag: false,
+  rolling: false,
+  _rollT: 0,
+  _skipBound: false,
 
   open() {
     this.openFlag = true;
@@ -275,17 +278,70 @@ const MillEnd = {
     const el = document.getElementById("mill-end");
     if (el) el.classList.remove("hidden");
     this.refresh();
+    this.rolling = false;
+    if (el) el.classList.remove("is-rolling");
+    const roll = document.getElementById("mill-roll");
+    if (roll) roll.classList.add("hidden");
   },
 
   close() {
     if (!this.openFlag) return;
-    this.openFlag = false;
+    if (!this.rolling && Save.data.flags.millEndSeen !== true) { this.startRoll(); return; }
+    const wasRolling = this.rolling;
+    this.rolling = false;
     const el = document.getElementById("mill-end");
+    if (el) el.classList.remove("is-rolling");
+    const roll = document.getElementById("mill-roll");
+    if (roll) roll.classList.add("hidden");
+    this.openFlag = false;
     if (el) el.classList.add("hidden");
     if (Save.data && Save.data.flags && Save.data.flags.millEndSeen !== true) {
       Save.data.flags.millEndSeen = true;
       Save.mark();
     }
+    if (wasRolling) {
+      const w = (DESIGN.warps || []).find((x) => x.id === "lake");
+      if (w && typeof Game !== "undefined") Game.warp({ to: w.map, spawn: { x: w.x * TILE_SIZE, y: w.y * TILE_SIZE }, dir: w.dir | 0 });
+    }
+  },
+
+  startRoll() {
+    this.rolling = true;
+    this._rollT = 0;
+    const card = document.getElementById("mill-end");
+    if (card) card.classList.add("is-rolling");
+    const roll = document.getElementById("mill-roll");
+    if (roll) roll.classList.remove("hidden");
+    const track = document.getElementById("mill-roll-track");
+    const credits = document.getElementById("pause-credits");
+    if (track && credits) track.innerHTML = credits.innerHTML;
+    const win = document.getElementById("mill-roll-window");
+    const windowHeight = win ? win.clientHeight : window.innerHeight;
+    if (track) track.style.transform = "translateY(" + windowHeight + "px)";
+    if (!this._skipBound) {
+      const skip = document.getElementById("mill-roll-skip");
+      if (skip) {
+        skip.addEventListener("click", () => this.close());
+        this._skipBound = true;
+      }
+    }
+  },
+
+  tickRoll(dt) {
+    if (!this.rolling) return;
+    this._rollT += dt;
+    const dur = DESIGN.millRollSeconds || 45;
+    const p = Math.min(1, this._rollT / dur);
+    const win = document.getElementById("mill-roll-window");
+    const track = document.getElementById("mill-roll-track");
+    const H = win ? win.clientHeight : 0;
+    const h = track ? track.offsetHeight : 0;
+    const reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    if (track) {
+      const y = reduce ? Math.max(0, Math.round((H - h) / 2)) : Math.round(H - p * (H + h));
+      track.style.transform = "translateY(" + y + "px)";
+    }
+    if (p >= 1) this.close();
   },
 
   refresh() {
