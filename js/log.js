@@ -257,10 +257,20 @@
     });
   }
 
+  // the GitHub trip form opens with this lake already picked (its Lake dropdown uses the full lake names)
+  function issueLake() {
+    var name = LK && LK.cfg && LK.cfg.name;
+    if (!name) return;
+    document.querySelectorAll('a[href*="template=trip-report.yml"]').forEach(function (a) {
+      try { var u = new URL(a.href); u.searchParams.set("lake", name); a.href = u.href; } catch (e) {}
+    });
+  }
+
   if (document.getElementById("log-list")) {
     window.NightBiteLogFilter = window.NightBiteLogFilter || "lake";
     migrateLakes();
     lakeSpots();
+    issueLake();
     initLakeFilter();
     purgeStoredSamples();
     renderList();

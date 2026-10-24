@@ -1,13 +1,23 @@
 name: Trip report
-description: Submit a Hoover Reservoir trip for the community log (Phase 1).
+description: Submit a trip at Hoover Reservoir, Alum Creek Lake or Buckeye Lake for the community log.
 title: "Trip: "
 labels: ["trip-report"]
 body:
   - type: markdown
     attributes:
       value: |
-        Public info only — no secret GPS, no private property, no personal addresses.
-        Photos are Phase 2. Confirm you fished public access at Hoover Reservoir (OH).
+        Public info only: no secret GPS, no private property, no personal addresses.
+        Photos are Phase 2. Confirm you fished public access at Hoover Reservoir, Alum Creek Lake or Buckeye Lake (OH).
+  - type: dropdown
+    id: lake
+    attributes:
+      label: Lake
+      options:
+        - Hoover Reservoir
+        - Alum Creek Lake
+        - Buckeye Lake
+    validations:
+      required: true
   - type: input
     id: date
     attributes:
@@ -34,6 +44,9 @@ body:
         - Walleye
         - Common carp
         - Longnose gar
+        - Muskellunge
+        - Yellow perch
+        - Bullhead
         - Other
     validations:
       required: true
@@ -41,7 +54,7 @@ body:
     id: ramp
     attributes:
       label: Ramp / area (public)
-      description: Public names only (Oxbow, Redbank, Walnut Road, Maxtown, bank, etc.)
+      description: Public names only (for example Oxbow at Hoover, Cheshire at Alum Creek, North Shore at Buckeye Lake, or bank).
     validations:
       required: true
   - type: dropdown
@@ -83,7 +96,7 @@ body:
     attributes:
       label: Confirm
       options:
-        - label: This was at Hoover Reservoir on public access; no private property or secret pins.
+        - label: This was at the lake above on public access; no private property or secret pins.
           required: true
         - label: I understand regs must be verified on HuntFish OH / ODNR (this site is unofficial).
           required: true
