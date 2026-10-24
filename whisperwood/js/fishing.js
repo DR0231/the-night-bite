@@ -254,7 +254,7 @@ const Fishing = {
         if (baitM < 0.6) nib = Math.max(1, nib - 1);
         this.nibblesLeft = nib;
         Particles.splash(b.x, b.y, 10, this._splashColor());
-        AudioFX.plop();
+        if (typeof AudioFX.land === "function") AudioFX.land(); else AudioFX.plop();
       }
       return;
     }
