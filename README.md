@@ -61,6 +61,7 @@ Home · Species · Water · Log · Tournaments · Gear · About
 
 ```json
 {
+  "lake": "hoover",
   "name": "Example club night",
   "date": "2026-10-01",
   "ramp": "Walnut Road (public)",
@@ -69,6 +70,8 @@ Home · Species · Water · Log · Tournaments · Gear · About
   "notes": "Third-party only."
 }
 ```
+
+`lake` is `hoover`, `alum` or `buckeye` (missing means `hoover`). Each lake view lists only its own events.
 
 3. **Zero invented events.** Empty list is the honest default. This site is not a tournament director.
 

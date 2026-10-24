@@ -7,19 +7,23 @@
 (function () {
   if (window.__nightbiteUsgsLoaded) return;
   window.__nightbiteUsgsLoaded = true;
-  var SITE = "03228400";
-  var PARAM_POOL = "62614";
-  var PARAM_TEMP = "00010";
-  var MAP_POOL_FT = 894;
-  var GAUGE_URL =
+  // lake settings from js/lakes.js; the fallbacks are Hoover's original values
+  var LK = window.NightBiteLake;
+  var LP = (LK && LK.cfg && LK.cfg.pool) || null;
+  var SITE = (LP && LP.site) || "03228400";
+  var PARAM_POOL = (LP && LP.param) || "62614";
+  var PARAM_TEMP = LP ? LP.temp : "00010";        // null: this lake has no public water temp gauge
+  var MAP_POOL_FT = LP ? LP.fullPool : 894;
+  var SRC_NAME = (LP && LP.srcName) || "USGS";
+  var CWMS = !!(LP && LP.src === "cwms");
+  var GAUGE_URL = (LP && LP.gaugeUrl) ||
     "https://waterdata.usgs.gov/monitoring-location/USGS-03228400/";
   var IV_URL =
     "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=" +
     SITE +
     "&parameterCd=" +
     PARAM_POOL +
-    "," +
-    PARAM_TEMP;
+    (PARAM_TEMP ? "," + PARAM_TEMP : "");
 
   var lineEl = document.getElementById("correction-line");
   var checkedEl = document.getElementById("correction-checked");
@@ -120,16 +124,16 @@
     var link =
       '<a href="' +
       GAUGE_URL +
-      '" target="_blank" rel="noopener">USGS</a>';
+      '" target="_blank" rel="noopener">' + SRC_NAME + '</a>';
     if (statusEl) {
       statusEl.innerHTML =
-        (msg || "unavailable, check USGS") + " · " + link + ".";
+        (msg || "unavailable, check " + SRC_NAME) + " · " + link + ".";
     }
     if (lineEl) {
       lineEl.innerHTML =
         'unavailable, check <a href="' +
         GAUGE_URL +
-        '" target="_blank" rel="noopener">USGS</a>';
+        '" target="_blank" rel="noopener">' + SRC_NAME + '</a>';
       lineEl.setAttribute("data-live-failed", "1");
     }
   }
@@ -163,7 +167,7 @@
         "</time>. " +
         '<a href="' +
         GAUGE_URL +
-        '" target="_blank" rel="noopener">Live USGS gauge</a>.';
+        '" target="_blank" rel="noopener">Live ' + SRC_NAME + ' gauge</a>.';
     }
 
     if (tempEl && tempF !== null) {
@@ -192,7 +196,7 @@
   }
 
   var hadLive = false;
-  var SAVE_KEY = "nb-usgs-last";
+  var SAVE_KEY = LK ? LK.key("nb-usgs-last") : "nb-usgs-last";
   var OFF = window.NightBiteOffline;
 
   // offline: show the last saved live reading if it's newer than the snapshot baked into the page
@@ -213,15 +217,29 @@
     return true;
   }
 
-  function load() {
-    fetch(IV_URL)
+  // { pool, temp } from the lake's gauge: USGS IV (Hoover, Buckeye) or the Corps CWMS API (Alum Creek)
+  function getReadings() {
+    if (CWMS) {
+      return LK.cwms(3).then(function (pts) {
+        var last = pts[pts.length - 1];
+        return { pool: last ? { value: last.v, dateTime: last.iso } : null, temp: null };
+      });
+    }
+    return fetch(IV_URL)
       .then(function (res) {
         if (!res.ok) throw new Error("usgs http " + res.status);
         return res.json();
       })
       .then(function (json) {
-        var pool = parseSeries(json, PARAM_POOL);
-        var temp = parseSeries(json, PARAM_TEMP);
+        return { pool: parseSeries(json, PARAM_POOL), temp: PARAM_TEMP ? parseSeries(json, PARAM_TEMP) : null };
+      });
+  }
+
+  function load() {
+    getReadings()
+      .then(function (r) {
+        var pool = r.pool;
+        var temp = r.temp;
         var ok = applyPoolAndTemp(pool, temp);
         if (ok) hadLive = true;
         if (ok && OFF && pool) OFF.save(SAVE_KEY, { pool: pool, temp: temp });
@@ -233,7 +251,7 @@
           return;
         }
         if (!ok) {
-          unavailable("unavailable, check USGS");
+          unavailable("unavailable, check " + SRC_NAME);
           return;
         }
         if (statusEl) {
@@ -241,9 +259,11 @@
           if (pool) bits.push("pool");
           if (temp) bits.push("temp");
           statusEl.textContent =
-            "Live USGS refresh updated " + bits.join(" + ") + " (provisional).";
+            "Live " + SRC_NAME + " refresh updated " + bits.join(" + ") + " (provisional).";
         }
-        if (!pool || !temp) {
+        if (!PARAM_TEMP && pool && statusEl) {
+          statusEl.textContent += " No public water temp gauge on this lake.";
+        } else if (!pool || !temp) {
           var miss = !pool ? "pool" : "temp";
           if (statusEl) {
             statusEl.innerHTML =
@@ -252,7 +272,7 @@
               miss +
               ' unavailable, check <a href="' +
               GAUGE_URL +
-              '" target="_blank" rel="noopener">USGS</a>.';
+              '" target="_blank" rel="noopener">' + SRC_NAME + '</a>.';
           }
         }
       })
@@ -267,10 +287,10 @@
         }
         if (hadLive && statusEl) {
           // a failed auto refresh keeps the last live reading on screen
-          statusEl.innerHTML = 'Refresh failed, check <a href="' + GAUGE_URL + '" target="_blank" rel="noopener">USGS</a>. Showing the last reading.';
+          statusEl.innerHTML = 'Refresh failed, check <a href="' + GAUGE_URL + '" target="_blank" rel="noopener">' + SRC_NAME + '</a>. Showing the last reading.';
           return;
         }
-        unavailable("unavailable, check USGS");
+        unavailable("unavailable, check " + SRC_NAME);
       });
   }
 

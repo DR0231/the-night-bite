@@ -1,5 +1,5 @@
 {
   "updated": "2026-09-04",
-  "note": "Third-party Hoover events only. The Night Bite is not a tournament director. Empty list is intentional until someone submits.",
+  "note": "Third-party events only. Give each event a lake: hoover, alum or buckeye (no lake means hoover); each lake view lists only its own events. The Night Bite is not a tournament director. Empty list is intentional until someone submits.",
   "events": []
 }

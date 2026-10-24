@@ -11,11 +11,17 @@
   var SAMPLES_SEEDED_KEY = "nightbite-samples-seeded-v2";
   // null = community log not loaded yet, "ok" = JSON loaded, "failed" = fetch failed
   var communityStatus = window.__nightbiteCommunityLog || null;
+  // lakes (js/lakes.js): every entry carries a lake; entries saved before lakes existed are Hoover trips
+  var LK = window.NightBiteLake, LAKES = window.NightBiteLakes;
+  var LAKE = LK ? LK.id : "hoover";
+  function lakeShort(id) { return (LAKES && LAKES.all[id] && LAKES.all[id].short) || "Hoover"; }
+  function showAll() { return window.NightBiteLogFilter === "all"; }
 
   var SAMPLE_TRIPS = [
     {
       id: "sample-1",
       sample: true,
+      lake: "hoover",
       date: "2025-07-12",
       location: "Oxbow (upper ramp)",
       bait: "Cut shad",
@@ -32,7 +38,10 @@
       var parsed = JSON.parse(raw);
       if (!Array.isArray(parsed)) return [];
       // SAMPLE demos are never stored; drop any seeded by older versions
-      return parsed.filter(function (e) { return e && !e.sample; });
+      return parsed.filter(function (e) { return e && !e.sample; }).map(function (e) {
+        if (!e.lake) e.lake = "hoover";   // nightbite-log-v1 entries from before lakes: all Hoover
+        return e;
+      });
     } catch (e) {
       return [];
     }
@@ -59,7 +68,17 @@
     if (communityStatus === "failed") {
       SAMPLE_TRIPS.forEach(function (s) { entries.push(Object.assign({}, s)); });
     }
-    return entries;
+    return showAll() ? entries : entries.filter(function (e) { return e.lake === LAKE; });
+  }
+  // write the lake field into old entries once, so the stored notebook is tagged too
+  function migrateLakes() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw && /"date"/.test(raw)) {
+        var parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.some(function (e) { return e && !e.sample && !e.lake; })) saveEntries(loadEntries());
+      }
+    } catch (e) { /* storage unavailable */ }
   }
 
   function formatDate(iso) {
@@ -81,7 +100,9 @@
     });
 
     if (entries.length === 0) {
-      list.innerHTML = '<div class="empty-log"><p>No trips yet. Add one below; it’s saved only on this device.</p></div>';
+      list.innerHTML = showAll() || LAKE === "hoover"
+        ? '<div class="empty-log"><p>No trips yet. Add one below; it’s saved only on this device.</p></div>'
+        : '<div class="empty-log"><p>No ' + escapeHtml(lakeShort(LAKE)) + ' trips yet. Add one below; it’s saved only on this device.</p></div>';
       return;
     }
 
@@ -97,6 +118,7 @@
       return (
         '<article class="paper-card" data-id="' + escapeAttr(e.id) + '">' +
         badge +
+        ' <span class="lake-tag">' + escapeHtml(lakeShort(e.lake)) + "</span>" +
         "<h3>" + escapeHtml(e.species || "Unknown") + "</h3>" +
         '<dl class="trip-dl">' +
         "<dt>Date</dt><dd>" + escapeHtml(formatDate(e.date)) + "</dd>" +
@@ -149,6 +171,7 @@
     entries.push({
       id: "user-" + Date.now(),
       sample: false,
+      lake: LAKE,
       date: data.date,
       location: data.location,
       bait: data.bait,
@@ -199,7 +222,46 @@
   }
 
   // Boot
+  // "This lake" and "All lakes" chips: one filter for the community list and your private trips
+  function initLakeFilter() {
+    var chips = document.querySelectorAll("[data-log-filter]");
+    chips.forEach(function (c) {
+      c.addEventListener("click", function () {
+        window.NightBiteLogFilter = c.getAttribute("data-log-filter");
+        chips.forEach(function (o) { o.setAttribute("aria-pressed", o === c ? "true" : "false"); });
+        renderList();
+        try { document.dispatchEvent(new CustomEvent("nightbite:log-filter")); } catch (e) {}
+      });
+    });
+  }
+  // the spot list follows the lake (Hoover keeps the list in the page markup)
+  function lakeSpots() {
+    if (LAKE === "hoover" || !LK) return;
+    [["location", "Other / not sure"], ["c-ramp", "Other public / not sure"]].forEach(function (pair) {
+      var sel = document.getElementById(pair[0]);
+      if (!sel) return;
+      sel.textContent = "";
+      var o = document.createElement("option"); o.value = ""; o.textContent = "Choose…"; sel.appendChild(o);
+      LK.cfg.spots.concat([pair[1]]).forEach(function (name) {
+        var op = document.createElement("option"); op.textContent = name; sel.appendChild(op);
+      });
+    });
+    ["species", "c-species"].forEach(function (id) {
+      var sel = document.getElementById(id);
+      if (!sel || !LAKES.speciesNames) return;
+      sel.textContent = "";
+      var o = document.createElement("option"); o.value = ""; o.textContent = "Choose…"; sel.appendChild(o);
+      LK.cfg.species.map(function (k) { return LAKES.speciesNames[k]; }).concat(["Other"]).forEach(function (name) {
+        var op = document.createElement("option"); op.textContent = name; sel.appendChild(op);
+      });
+    });
+  }
+
   if (document.getElementById("log-list")) {
+    window.NightBiteLogFilter = window.NightBiteLogFilter || "lake";
+    migrateLakes();
+    lakeSpots();
+    initLakeFilter();
     purgeStoredSamples();
     renderList();
     initForm();

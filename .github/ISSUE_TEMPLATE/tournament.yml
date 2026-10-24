@@ -1,5 +1,5 @@
 name: Tournament listing
-description: Submit a third-party Hoover tournament for the static list (Phase 1).
+description: Submit a third-party tournament at Hoover, Alum Creek or Buckeye Lake for the static list.
 title: "Tournament: "
 labels: ["tournament"]
 body:
@@ -7,11 +7,21 @@ body:
     attributes:
       value: |
         The Night Bite is **not** an official tournament director.
-        Public details only. Zero invented events — submit real club/third-party info.
+        Public details only. Zero invented events: submit real club or third-party info.
   - type: input
     id: name
     attributes:
       label: Event name
+    validations:
+      required: true
+  - type: dropdown
+    id: lake
+    attributes:
+      label: Lake
+      options:
+        - Hoover
+        - Alum Creek
+        - Buckeye Lake
     validations:
       required: true
   - type: input
@@ -45,5 +55,5 @@ body:
     attributes:
       label: Confirm
       options:
-        - label: This is a real third-party event at Hoover; I am not claiming Night Bite hosts it.
+        - label: This is a real third-party event at the lake above; I am not claiming Night Bite hosts it.
           required: true

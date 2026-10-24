@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
   <meta name="apple-mobile-web-app-title" content="Night Bite">
   <link rel="manifest" href="site.webmanifest">
-  <title>Hoover Reservoir tournaments | The Night Bite</title>
-  <meta name="description" content="Third-party Hoover Reservoir fishing tournaments. Submit via mailto or GitHub. Not an official tournament director.">
+  <title>Tournaments at Hoover, Alum Creek and Buckeye Lake | The Night Bite</title>
+  <meta name="description" content="Third-party fishing tournaments at Hoover, Alum Creek and Buckeye Lake. Submit via mailto or GitHub. Not an official tournament director.">
   <link rel="canonical" href="https://nightbiteoh.com/tournaments.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32">
@@ -17,7 +17,8 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=v6-2026-10-24">
+  <script src="js/lakes.js?v=v6-2026-10-24"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -27,6 +28,7 @@
         <img src="assets/lantern.svg" alt="" width="24" height="36" class="lantern-glow">
         <span class="logo-text">The Night Bite</span>
       </a>
+      <button type="button" class="lake-pill"><span class="lake-pill-label">Choose a lake</span><span class="lake-pill-chip" aria-hidden="true"><span class="lake-pill-dot"></span><span class="lake-pill-name"></span><span class="lake-pill-chev"></span></span></button>
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
@@ -56,7 +58,7 @@
     <div class="page-horizon" aria-hidden="true"></div>
     <h1>Tournaments</h1>
     <p class="lead">
-      Third-party club events at Hoover, listed only when someone submits one.
+      Third-party club events at <span data-lk="short">Hoover</span>, listed only when someone submits one.
       The Night Bite is <strong>not</strong> an official tournament director, not ODNR, and not a club host.
     </p>
     <p class="note">
@@ -125,14 +127,15 @@
         <a href="whisperwood.html">Whisperwood Vale</a>
       </nav>
       <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
-      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js"></script>
-  <script src="js/sw-register.js"></script>
-  <script src="js/alerts.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/tournaments.js"></script>
+  <script src="js/refresh.js?v=v6-2026-10-24"></script>
+  <script src="js/sw-update.js?v=v6-2026-10-24"></script>
+  <script src="js/alerts.js?v=v6-2026-10-24"></script>
+  <script src="js/nav.js?v=v6-2026-10-24"></script>
+  <script src="js/lake-picker.js?v=v6-2026-10-24"></script>
+  <script src="js/tournaments.js?v=v6-2026-10-24"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

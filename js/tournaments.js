@@ -1,8 +1,11 @@
 /**
- * The Night Bite — tournaments from data/tournaments.json + mailto submit
+ * The Night Bite: tournaments from data/tournaments.json + mailto submit.
+ * Each event carries a "lake" id (hoover, alum, buckeye); events with no lake are Hoover events.
+ * Only the selected lake's events are listed, so a Hoover event never shows on the Alum or Buckeye view.
  */
 (function () {
   var MAILTO = "contact@nightbiteoh.com";
+  var LK = window.NightBiteLake, LAKE = (LK && LK.id) || "hoover", LC = (LK && LK.cfg) || null;
   var listEl = document.getElementById("tournaments-list");
   var emptyEl = document.getElementById("tournaments-empty");
   var form = document.getElementById("tournament-form");
@@ -20,7 +23,7 @@
     if (!listEl) return;
     if (!events || !events.length) {
       listEl.innerHTML =
-        '<div class="empty-log"><p>No events listed right now. Know of one? <a href="#submit-tournament">Submit it below</a>.</p></div>';
+        '<div class="empty-log"><p>No ' + (LAKE !== "hoover" && LC ? LC.short + " " : "") + 'events listed right now. Know of one? <a href="#submit-tournament">Submit it below</a>.</p></div>';
       return;
     }
     listEl.innerHTML = events
@@ -70,7 +73,7 @@
       return res.json();
     })
     .then(function (data) {
-      render((data && data.events) || []);
+      render(((data && data.events) || []).filter(function (e) { return (e.lake || "hoover") === LAKE; }));
     })
     .catch(function () {
       if (listEl) {
@@ -79,6 +82,10 @@
       }
     });
 
+  // the ramp example names a Hoover ramp; other lakes get a neutral hint
+  var ramp = document.getElementById("t-ramp");
+  if (ramp && LAKE !== "hoover") ramp.placeholder = "e.g. a public ramp at " + ((LC && LC.short) || "the lake");
+
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -86,6 +93,7 @@
       var lines = [
         "Tournament submission: The Night Bite",
         "",
+        "Lake: " + ((LC && LC.name) || "Hoover Reservoir"),
         "Name: " + (fd.get("name") || ""),
         "Date: " + (fd.get("date") || ""),
         "Ramp: " + (fd.get("ramp") || ""),

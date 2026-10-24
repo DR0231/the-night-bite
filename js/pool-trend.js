@@ -6,7 +6,10 @@
 (function () {
   var box = document.getElementById("pool-trend");
   if (!box || !window.fetch) return;
-  var URL = "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=03228400&parameterCd=62614&period=P7D";
+  var LK = window.NightBiteLake, LP = LK && LK.cfg && LK.cfg.pool;   // js/lakes.js; Hoover if missing
+  var CWMS = !!(LP && LP.src === "cwms");
+  var URL = "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=" + ((LP && LP.site) || "03228400") +
+    "&parameterCd=" + ((LP && LP.param) || "62614") + "&period=P7D";
   var NS = "http://www.w3.org/2000/svg";
   var W = 280, H = 56, PAD = 4;
 
@@ -19,11 +22,12 @@
     return new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short" }).format(new Date(iso));
   }
 
-  var SAVE_KEY = "nb-trend-last";
+  var SAVE_KEY = LK ? LK.key("nb-trend-last") : "nb-trend-last";
   var OFF = window.NightBiteOffline;
 
-  function load() {
-  return fetch(URL)
+  function points() {
+    if (CWMS) return LK.cwms(7 * 24);   // Corps lake level, every 15 minutes
+    return fetch(URL)
     .then(function (r) { if (!r.ok) throw new Error("usgs " + r.status); return r.json(); })
     .then(function (json) {
       var ts = json.value.timeSeries[0].values[0].value;
@@ -32,6 +36,13 @@
         var n = parseFloat(v.value);
         if (isFinite(n) && n > -9999) pts.push({ t: new Date(v.dateTime).valueOf(), v: n, iso: v.dateTime });
       });
+      return pts;
+    });
+  }
+
+  function load() {
+  return points()
+    .then(function (pts) {
       if (pts.length < 12) throw new Error("too few");
       if (OFF) OFF.save(SAVE_KEY, { pts: pts.filter(function (p, i) { return i % 4 === 0 || i === pts.length - 1; }) });   // hourly is plenty for the chart
       draw(pts);

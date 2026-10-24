@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
   <meta name="apple-mobile-web-app-title" content="Night Bite">
   <link rel="manifest" href="../site.webmanifest">
   <title>Flathead catfish at Hoover Reservoir | The Night Bite</title>
-  <meta name="description" content="Flathead catfish at Hoover Reservoir, Ohio: live or fresh bait near wood, rock, and channel structure after dark. Season, where, limits, gear, bait.">
+  <meta name="description" content="Flathead catfish at Hoover Reservoir, Ohio: live or fresh bait near wood, rock, and channel structure after dark. Not on the ODNR list for Alum Creek or Buckeye Lake.">
   <link rel="canonical" href="https://nightbiteoh.com/species/flathead-catfish.html">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="icon" href="../favicon.ico" sizes="16x16 32x32">
@@ -17,7 +17,8 @@
   <link rel="preload" href="../assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/styles.css?v=v6-2026-10-24">
+  <script src="../js/lakes.js?v=v6-2026-10-24"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Species", "item": "https://nightbiteoh.com/species/"}, {"@type": "ListItem", "position": 3, "name": "Flathead catfish", "item": "https://nightbiteoh.com/species/flathead-catfish.html"}]}
   </script>
@@ -30,6 +31,7 @@
         <img src="../assets/lantern.svg" alt="" width="24" height="36" class="lantern-glow">
         <span class="logo-text">The Night Bite</span>
       </a>
+      <button type="button" class="lake-pill"><span class="lake-pill-label">Choose a lake</span><span class="lake-pill-chip" aria-hidden="true"><span class="lake-pill-dot"></span><span class="lake-pill-name"></span><span class="lake-pill-chev"></span></span></button>
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
@@ -60,6 +62,8 @@
     <p class="breadcrumb"><a href="./">Species</a> · Flathead catfish</p>
     <h1 class="species-title"><img class="species-mark" src="../assets/icons/fish-flathead-catfish.svg" alt="" width="48" height="48"> Flathead catfish</h1>
     <p class="lead">Strong flathead presence. Live or fresh bait near wood, rock, and channel structure after dark.</p>
+    <p class="lake-note" data-for="alum">Not a regular at Alum Creek: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
+    <p class="lake-note" data-for="buckeye">Not a regular at Buckeye Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
 
     <nav class="species-subnav" aria-label="On this page">
       <a href="#season">Season</a>
@@ -87,7 +91,9 @@
     </section>
 
     <section id="where" class="species-section">
-      <h2>Where on Hoover</h2>
+      <h2>Where on <span data-lk="short">Hoover</span></h2>
+      <!-- lakes:where -->
+      <div data-for="hoover">
       <div class="mode-panel" data-mode="bank">
       <ul>
         <li>Timber, rock, and channel bends on the ODNR contour map (public water only).</li>
@@ -106,6 +112,9 @@
         <a href="../water.html#maps">Water maps</a> ·
         <a href="https://ohiodnr.gov/static/documents/wildlife/maps/hooverreservoir2.pdf" target="_blank" rel="noopener">ODNR depth PDF (2001 @ 894 ft)</a>
       </p>
+      </div>
+      <p data-for="alum">Not a regular at Alum Creek, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
+      <p data-for="buckeye">Not a regular at Buckeye Lake, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
     </section>
 
     <section id="limits" class="species-section">
@@ -128,7 +137,9 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
 
     <section id="gear" class="species-section">
       <h2>Gear</h2>
-      <p class="meta">Sized for bank reality and ≤10 hp boats. Hoover is a drinking-water reservoir.</p>
+      <p class="meta" data-for="hoover">Sized for bank reality and ≤10 hp boats. Hoover is a drinking-water reservoir.</p>
+      <p class="meta" data-for="alum">Sized for bank reality and small boats. Alum Creek allows unlimited horsepower on the south main lake, so expect wakes there; the north end is no wake.</p>
+      <p class="meta" data-for="buckeye">Sized for bank reality and small boats. Buckeye is shallow with stumps: idle near shore (no wake within 300 ft).</p>
       <div class="mode-panel" data-mode="bank">
       <ul>
         <li>Heavy baitcasting, strong hooks, wire or heavy mono leaders if needed.</li>
@@ -170,7 +181,7 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
     </div>
 
     <div class="callout">
-      Unofficial notebook only, not ODNR, the City of Columbus or USGS. License required ages 16+. Confirm regs before you keep fish.
+      Unofficial notebook only, not ODNR, the City of Columbus, USGS or the US Army Corps of Engineers. License required ages 16+. Confirm regs before you keep fish.
     </div>
   </main>
 
@@ -188,15 +199,16 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
         <a href="../whisperwood.html">Whisperwood Vale</a>
       </nav>
       <p class="footer-app"><a href="../#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
-      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="../js/refresh.js"></script>
-  <script src="../js/sw-register.js"></script>
-  <script src="../js/alerts.js"></script>
-  <script src="../js/nav.js"></script>
-  <script src="../js/sticky-nav.js"></script>
-  <script src="../js/mode-toggle.js"></script>
+  <script src="../js/refresh.js?v=v6-2026-10-24"></script>
+  <script src="../js/sw-update.js?v=v6-2026-10-24"></script>
+  <script src="../js/alerts.js?v=v6-2026-10-24"></script>
+  <script src="../js/nav.js?v=v6-2026-10-24"></script>
+  <script src="../js/lake-picker.js?v=v6-2026-10-24"></script>
+  <script src="../js/sticky-nav.js?v=v6-2026-10-24"></script>
+  <script src="../js/mode-toggle.js?v=v6-2026-10-24"></script>
 
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

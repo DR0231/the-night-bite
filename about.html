@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
   <meta name="apple-mobile-web-app-title" content="Night Bite">
   <link rel="manifest" href="site.webmanifest">
   <title>About | The Night Bite</title>
-  <meta name="description" content="Disclaimer for The Night Bite: unofficial Hoover hub, safety, license, regs reminders. Confirm on HuntFish OH.">
+  <meta name="description" content="Disclaimer for The Night Bite: unofficial night fishing hub for Hoover Reservoir, Alum Creek Lake and Buckeye Lake. Safety, license, regs reminders. Confirm on HuntFish OH.">
   <link rel="canonical" href="https://nightbiteoh.com/about.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32">
@@ -17,7 +17,8 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=v6-2026-10-24">
+  <script src="js/lakes.js?v=v6-2026-10-24"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -27,6 +28,7 @@
         <img src="assets/lantern.svg" alt="" width="24" height="36" class="lantern-glow">
         <span class="logo-text">The Night Bite</span>
       </a>
+      <button type="button" class="lake-pill"><span class="lake-pill-label">Choose a lake</span><span class="lake-pill-chip" aria-hidden="true"><span class="lake-pill-dot"></span><span class="lake-pill-name"></span><span class="lake-pill-chev"></span></span></button>
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
@@ -56,34 +58,45 @@
     <div class="page-horizon" aria-hidden="true"></div>
     <h1>About &amp; disclaimer</h1>
     <p class="lead">
-      The Night Bite is a personal, unofficial Hoover Reservoir fishing hub with a night-dock look:
-      species pages, water maps, trip log, and gear
-      (Delaware / Franklin County, Ohio). Night is especially useful for channel and flathead cats
-      (blues too); it is not the best approach for every species.
+      The Night Bite is a personal, unofficial central Ohio night fishing hub with a night-dock look,
+      covering three lakes: Hoover Reservoir (Delaware / Franklin County), Alum Creek Lake (Delaware County)
+      and Buckeye Lake (Licking, Fairfield and Perry Counties). Species pages, water maps, trip log, and gear
+      for each one; pick a lake with <strong>Choose a lake</strong> at the top of any page.
+      Night is especially useful for catfish (channel and flathead, plus blues at Hoover); it is not the best approach for every species.
     </p>
 
     <h2>Not official</h2>
     <ul>
       <li>Not the Ohio Department of Natural Resources (ODNR).</li>
       <li>Not the City of Columbus.</li>
-      <li>Not USGS. Gauge snapshots are provisional and labeled; optional refresh never invents numbers.</li>
-      <li>Depth contours linked from Water are ODNR 2001 / 894-ft pool, for reference only and not for navigation. No Garmin/Navionics.</li>
+      <li>Not USGS and not the US Army Corps of Engineers. Gauge snapshots are provisional and labeled; optional refresh never invents numbers.</li>
+      <li>Depth contours linked from Water are ODNR fishing maps: Hoover 2001 / 894-ft pool, Alum Creek 2001 / 888-ft pool, Buckeye 1998 / 891.75-ft pool. For reference only and not for navigation. No Garmin/Navionics.</li>
       <li>Example log trips are fiction for layout demos, marked <span class="sample-badge">Example</span>.</li>
       <li>Tournaments listed only when submitted. This site is not a tournament director.</li>
     </ul>
 
     <h2>Hub scope</h2>
     <ul>
-      <li>Hoover Reservoir only (Delaware / Franklin OH).</li>
+      <li>Three central Ohio lakes: Hoover Reservoir, Alum Creek Lake and Buckeye Lake. Hoover is the default.</li>
       <li>Public access names only: no secret GPS, no private property tips.</li>
-      <li>10 hp / drinking-water / safety notes stay on Water, gear, and species pages.</li>
+      <li>Each lake keeps its own boating and safety notes on Water, gear, and species pages: 10 hp at Hoover,
+        unlimited horsepower on Alum Creek&rsquo;s south main lake with no wake on the north end,
+        no wake within 300 ft of any land mass at Buckeye.</li>
+    </ul>
+
+    <h2>Where the numbers come from</h2>
+    <ul>
+      <li><strong>Hoover:</strong> USGS gauge 03228400 for pool level and water temperature.</li>
+      <li><strong>Alum Creek:</strong> US Army Corps of Engineers lake level gauge. No public water temperature gauge, so none is shown.</li>
+      <li><strong>Buckeye:</strong> USGS lake gauge 395540082291600 for level only. No public water temperature gauge, so none is shown.</li>
+      <li>Forecast, barometer and alerts for each lake come from the National Weather Service. All gauge readings are provisional.</li>
     </ul>
 
     <h2>Safety</h2>
     <div class="callout warn">
       Fishing after dark can be dangerous. Storms, lightning, heat, cold, slick ramps, and low visibility are real risks.
       Turn back when weather turns. Use lights, tell someone your plan, and wear a life jacket when appropriate.
-      Hoover is a drinking-water reservoir. Pack out trash and follow posted rules.
+      Hoover and Alum Creek are drinking-water reservoirs. At every lake, pack out trash and follow posted rules.
     </div>
 
     <h2>License</h2>
@@ -100,7 +113,7 @@
     <p class="meta">
       Plain-language reminders from the statewide inland pattern in
       <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27 (verify current)</a>.
-      <strong>Confirm on HuntFish OH before you keep fish.</strong> Some waters differ (e.g. Hoover crappie 9″ note).
+      <strong>Confirm on HuntFish OH before you keep fish.</strong> Some waters differ (e.g. the crappie 9″ rule at all three lakes).
     </p>
     <ul>
       <li><strong>Channel cat:</strong> under 28″ no daily limit; 28″+ daily 1</li>
@@ -108,9 +121,11 @@
       <li><strong>Flathead:</strong> under 35″ no daily limit; 35″+ daily 1</li>
       <li><strong>Largemouth / smallmouth / spotted:</strong> 5 combined, 12″ min</li>
       <li><strong>Striped / hybrid striped / white bass:</strong> 30 combined; no more than 4 over 15″</li>
-      <li><strong>Walleye / sauger / saugeye:</strong> 6 combined; no minimum size at Hoover (a 15″ minimum applies only on six other lakes)</li>
-      <li><strong>Crappie at Hoover:</strong> 30 a day, black and white combined, 9″ minimum (Hoover site-specific rule). ODNR has proposed dropping the 9″ minimum from March 1, 2027</li>
-      <li><strong>Bluegill / sunfish, carp, gar:</strong> not on the statewide limits table, and Hoover has no site-specific rule for them</li>
+      <li><strong>Walleye / sauger / saugeye:</strong> 6 combined; no minimum size at Hoover, Alum Creek or Buckeye (a 15″ minimum applies only on six other lakes)</li>
+      <li><strong>Crappie at all three lakes:</strong> 30 a day, black and white combined, 9″ minimum (site-specific rule for Hoover, Alum Creek and Buckeye). ODNR has proposed dropping the 9″ minimum at Hoover from March 1, 2027</li>
+      <li><strong>Muskellunge (Alum Creek):</strong> 1 a day, statewide rule; no minimum length listed statewide</li>
+      <li><strong>Yellow perch (Buckeye):</strong> 30 a day, statewide rule</li>
+      <li><strong>Bluegill / sunfish, carp, gar, bullhead:</strong> not on the statewide limits table, and none of the three lakes has a site-specific rule for them</li>
     </ul>
 
     <h2>Privacy on The Log</h2>
@@ -122,7 +137,7 @@
     <h2>Whisperwood Vale</h2>
     <p>
       <a href="whisperwood.html">Whisperwood Vale</a> is a cozy pixel fishing game beside this notebook,
-      fiction, not a map of Hoover. <a href="whisperwood/play.html">Play in the browser</a>.
+      fiction, not a map of any of these lakes. <a href="whisperwood/play.html">Play in the browser</a>.
     </p>
 
     <details class="how-to-read" id="build-notes">
@@ -151,13 +166,14 @@
         <a href="whisperwood.html">Whisperwood Vale</a>
       </nav>
       <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
-      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js"></script>
-  <script src="js/sw-register.js"></script>
-  <script src="js/alerts.js"></script>
-  <script src="js/nav.js"></script>
+  <script src="js/refresh.js?v=v6-2026-10-24"></script>
+  <script src="js/sw-update.js?v=v6-2026-10-24"></script>
+  <script src="js/alerts.js?v=v6-2026-10-24"></script>
+  <script src="js/nav.js?v=v6-2026-10-24"></script>
+  <script src="js/lake-picker.js?v=v6-2026-10-24"></script>
 
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

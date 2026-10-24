@@ -5,7 +5,10 @@
  *
  *  · HTML: network first, falls back to the saved copy (then to offline.html) when there's no signal.
  *  · data/*.json (log, tournaments): network first, saved copy when offline.
- *  · CSS, JS, fonts, images: stale while revalidate (instant from cache, refreshed in the background).
+ *  · CSS and JS: network first too, saved copy when offline or slow, so a page never mixes this deploy's HTML
+ *    with last deploy's styles or scripts. (Up to v11 these were cache first, which showed the multi-lake
+ *    picker unstyled and the old Hoover-only map script after a deploy.) Pages ask for them with ?v=VERSION.
+ *  · Fonts, images: stale while revalidate (instant from cache, refreshed in the background).
  *  · Whisperwood is never touched: nothing under whisperwood/ (or whisperwood.html) is cached or intercepted.
  *  · Cross origin requests (NWS, USGS, links out) pass straight through. The page itself keeps the last good
  *    readings in localStorage and labels them "Offline. Last updated ..." (js/refresh.js, NightBiteOffline).
@@ -15,7 +18,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v5-2026-10-24";
+var VERSION = "v6-2026-10-24";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
@@ -46,9 +49,13 @@ var PRECACHE = [
   "species/walleye.html",
   "species/white-bass.html",
   "species/white-crappie.html",
+  "species/muskellunge.html",
+  "species/yellow-perch.html",
+  "species/bullhead.html",
   "js/alerts.js",
   "js/astro.js",
   "js/biting-data.js",
+  "js/biting-data-lakes.js",
   "js/biting.js",
   "js/community-log.js",
   "js/conditions.js",
@@ -57,6 +64,11 @@ var PRECACHE = [
   "js/hoover-map-data.js",
   "js/hoover-map.js",
   "js/install-tip.js",
+  "js/lake-map-data-alum.js",
+  "js/lake-map-data-buckeye.js",
+  "js/lake-picker.js",
+  "js/lake-snapshot.js",
+  "js/lakes.js",
   "js/log.js",
   "js/mode-toggle.js",
   "js/nav.js",
@@ -66,7 +78,7 @@ var PRECACHE = [
   "js/refresh.js",
   "js/species-filter.js",
   "js/sticky-nav.js",
-  "js/sw-register.js",
+  "js/sw-update.js",
   "js/tournaments.js",
   "js/usgs.js",
   "js/water.js",
@@ -81,6 +93,8 @@ var PRECACHE = [
   "assets/lantern.svg",
   "assets/lantern-hero.svg",
   "assets/hoover-chart.png",
+  "assets/alum-chart.png",
+  "assets/buckeye-chart.png",
   "assets/horizon-center.png",
   "assets/horizon-thin.png",
   "assets/horizon-tile.png",
@@ -101,18 +115,25 @@ var PRECACHE = [
   "assets/icons/fish-walleye.svg",
   "assets/icons/fish-white-bass.svg",
   "assets/icons/fish-white-crappie.svg",
+  "assets/icons/fish-muskellunge.svg",
+  "assets/icons/fish-yellow-perch.svg",
+  "assets/icons/fish-bullhead.svg",
   "assets/icons/icon-192.png",
   "assets/icons/icon-512.png",
   "assets/icons/icon-maskable-192.png",
   "assets/icons/icon-maskable-512.png",
   "assets/icons/moon.svg",
-  "assets/moon/moon-phases.png",
-  "assets/wind/wind-arrows.png",
   "assets/map/hoover-map-tall.png",
   "assets/map/hoover-map-wide.png",
+  "assets/map/alum-map-tall.png",
+  "assets/map/alum-map-wide.png",
+  "assets/map/buckeye-map-tall.png",
+  "assets/map/buckeye-map-wide.png",
   "assets/map/pin-access.png",
   "assets/map/pin-ramp.png",
   "assets/map/pin-shop.png",
+  "assets/moon/moon-phases.png",
+  "assets/wind/wind-arrows.png",
   "assets/rigs/carolina.svg",
   "assets/rigs/floating-hover.svg",
   "assets/rigs/slip-float.svg",
@@ -250,6 +271,10 @@ self.addEventListener("fetch", function (event) {
     return;
   }
   if (rel(url).indexOf("data/") === 0) {                // community log and tournaments: freshest first
+    event.respondWith(networkFirst(event, url, false));
+    return;
+  }
+  if (/\.(css|js)$/i.test(url.pathname)) {               // styles and scripts: always the same deploy as the page
     event.respondWith(networkFirst(event, url, false));
     return;
   }

@@ -6,9 +6,11 @@
  */
 (function () {
   if (!window.fetch) return;
-  var URL = "https://api.weather.gov/alerts/active?zone=OHC041,OHC049,OHZ046,OHZ055";
-  var MORE = "https://forecast.weather.gov/MapClick.php?lat=40.11&lon=-82.88";
-  var CACHE_KEY = "nb-alerts-v1", CACHE_MS = 5 * 60 * 1000, HIDE_KEY = "nb-alerts-hidden";
+  var LK = window.NightBiteLake, LC = (LK && LK.cfg) || null;   // js/lakes.js; Hoover if missing
+  var URL = "https://api.weather.gov/alerts/active?zone=" + ((LC && LC.alerts.zones) || "OHC041,OHC049,OHZ046,OHZ055");
+  var MORE = (LC && LC.nws.page) || "https://forecast.weather.gov/MapClick.php?lat=40.11&lon=-82.88";
+  var COUNTIES = (LC && LC.alerts.counties) || "Delaware or Franklin County";
+  var CACHE_KEY = LK ? LK.key("nb-alerts-v1") : "nb-alerts-v1", CACHE_MS = 5 * 60 * 1000, HIDE_KEY = "nb-alerts-hidden";
 
   function fmt(iso) {
     var d = new Date(iso);
@@ -61,7 +63,7 @@
     text.appendChild(lead);
     var rest = list[0].until ? " until " + fmt(list[0].until) : "";
     if (list.length > 1) rest += ", plus " + (list.length - 1) + " more";
-    text.appendChild(document.createTextNode(rest + " for Delaware or Franklin County. "));
+    text.appendChild(document.createTextNode(rest + " for " + COUNTIES + ". "));
     var a = document.createElement("a");
     a.href = MORE;
     a.target = "_blank";

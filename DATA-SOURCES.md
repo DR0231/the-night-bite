@@ -63,6 +63,50 @@ Left out:
 
 These are typical seasonal patterns, not a fishing report. Winter months add a line to check ice and cold water safety.
 
+## Lakes: Alum Creek Lake and Buckeye Lake
+
+Hoover stays the default. The active lake comes from `?lake=hoover|alum|buckeye`, then localStorage `nb-lake`, then Hoover. Per lake settings live in `js/lakes.js`. Readings, saved snapshots and caches for other lakes use their own storage keys (`-alum`, `-buckeye` suffix), so they never mix with Hoover.
+
+| Setting | Alum Creek Lake | Buckeye Lake |
+|---|---|---|
+| Lake level | US Army Corps of Engineers, Huntington District (LRH), CWMS Data API time series `AlumCr-Lake.Elev.Inst.15Minutes.0.OBS`, https://cwms-data.usace.army.mil/cwms-data/timeseries (public, CORS open, provisional). Page: https://water.usace.army.mil/overview/lrh/locations/alumcr . There is no USGS gauge on the lake. | USGS 395540082291600, Buckeye Lake, param 62614 (lake elevation, provisional), https://waterdata.usgs.gov/monitoring-location/USGS-395540082291600/ |
+| Water temp | None. No public lake temp gauge (the Corps temp sensor is in the outflow below the dam), so the site says "No public water temp gauge". | None. The USGS gauge measures level only. |
+| Map pool (contour datum) | 888 ft normal summer pool, 5 ft contours, surveyed 2001, 3,330 acres: ODNR fishing map https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/alumcreeklake2.pdf | 891.75 ft normal summer pool, 2 ft contours, surveyed 1998, 2,873 acres, 300 ft no wake zone: ODNR fishing map https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf |
+| Tonight forecast | NWS grid ILN 85,94 (https://api.weather.gov/points/40.24,-82.97) | NWS grid ILN 103,81 (https://api.weather.gov/points/39.93,-82.49) |
+| Barometer / observations | KDLZ, Delaware airport (sea level pressure is null there, so the existing fallback to station pressure is used) | KVTA, Newark airport (same fallback) |
+| Alerts | Delaware County: OHC041, OHZ046 | Licking, Fairfield, Perry: OHC089, OHC045, OHC127, OHZ056, OHZ065, OHZ066 |
+| Wind wording | Same north to south wording as Hoover (the lake also runs north to south) | Own list: the lake runs west southwest to east northeast |
+| Boating rules shown | Unlimited horsepower on the south main lake, no wake north of Cheshire Road (USACE Alum Creek recreation page; follow the buoys) | No wake within 300 ft of any land mass and in marked areas (ODNR fishing map) |
+| Species shown | saugeye, walleye, muskellunge, largemouth and smallmouth bass, white and black crappie, white bass, bluegill, channel catfish (ODNR Alum Creek Lake Fishing Area, https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-lake-fishing-area) | saugeye, largemouth bass, white and black crappie, bluegill, yellow perch, channel catfish, bullhead (ODNR Buckeye Lake State Park, https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park) |
+
+Regulations (2026–27): ODNR Fishing Regulations 2026–27 (https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf) and the Ohio Administrative Code. Alum Creek Lake and Buckeye Lake appear only in the crappie rules: 30 crappie a day, OAC 1501:31-13-08(L), and a 9″ minimum, OAC 1501:31-13-09(H) (https://codes.ohio.gov/ohio-administrative-code/rule-1501:31-13-08 and rule-1501:31-13-09). Everything else is statewide: muskellunge 1 a day (13-08(B)), no muskie length rule in 13-09; yellow perch 30 a day (13-08(H)); bass 5 a day, 12″; walleye, sauger and saugeye 6 combined, no minimum at either lake; bullhead not on the limits table.
+
+Map pins (`js/lake-map-data-alum.js`, `js/lake-map-data-buckeye.js`, built by a local script from the sources below; shorelines traced from OpenStreetMap, not for navigation):
+
+| Lake | Pin | Address | Sources |
+|---|---|---|---|
+| Alum Creek | New Galena ramp (ramp) | 4550 Africa Rd, Galena, OH 43021 | USACE Alum Creek Lake recreation page (five ramps, four public; life jacket loaners at New Galena, Cheshire and Marina) ; Destination Delaware County, New Galena Boat Ramp (address, parking, south end access) ; OpenStreetMap slipway node 1729423321 (coordinates) |
+| Alum Creek | Marina ramp (Hollenback Rd) (ramp) | Hollenback Rd, west side of the lake | USACE Alum Creek Lake recreation page (The Marina on Hollenback Road ramp, life jacket loaners) ; ODNR Alum Creek State Park page (full service marina on Hollenback Road, west side, (740) 548-6056) ; OpenStreetMap slipway way 1156487629 (coordinates) |
+| Alum Creek | Cheshire ramp (ramp) | Off Africa Rd, just north of the Cheshire Rd bridge (east side) | USACE Alum Creek Lake recreation page (Cheshire ramp, no wake north of Cheshire Road, life jacket loaners) ; Public Lands, Paddling Alum Creek Lake (just above the Cheshire Road bridge off Africa Road, paved parking, restrooms, docks) ; OpenStreetMap slipway way 396982092 (coordinates) |
+| Alum Creek | Howard ramp (ramp) | Howard Rd, east side | USACE Alum Creek Lake recreation page (Howard Boat Ramp, Howard Road) ; Public Lands, Paddling Alum Creek Lake (Howard Road launch, paved parking, restrooms, docks) ; OpenStreetMap slipway way 1339955300 and parking way 1339955303 (coordinates) |
+| Alum Creek | Cheshire Market bait shop (shop) | 5094 Cheshire Rd, Galena, OH 43021 | Cheshire Market website, Bait Shop page (live bait, tackle, phone, pickup and delivery) ; Columbus on the Cheap, Alum Creek State Park guide (5094 Cheshire Rd, Galena) ; US Census Geocoder (coordinates from the street address) |
+| Alum Creek | Alum Creek Drive Thru (shop) | 6999 OH-37, Sunbury, OH 43074 | Google Business Profile via ohiofishing.guide (name, bait shop, address, phone) ; US Census Geocoder (coordinates from the street address) |
+| Buckeye Lake | North Shore ramp (ramp) | Village of Buckeye Lake, north shore | ODNR Buckeye Lake State Park page (three launch ramps: North Shore, Liebs Island, Fairfield Beach) ; ODNR Buckeye Lake fishing map (boat ramp symbols) ; OpenStreetMap slipway node 2051781951 (coordinates) |
+| Buckeye Lake | Liebs Island ramp (ramp) | Liebs Island Rd NE, Millersport, OH 43046 (near the park office) | ODNR Buckeye Lake State Park page (Liebs Island ramp near the park office) ; OpenStreetMap slipway way 1394453434 (coordinates) ; US Census Geocoder (park office address) |
+| Buckeye Lake | Fairfield Beach ramp (ramp) | 5300 Lake Shore Dr NE, Thornville, OH 43076 | ODNR Buckeye Lake State Park page (Fairfield Beach ramp, south side) ; Visit Buckeye Lake listing, Fairfield Beach Boat Ramp (address) ; US Census Geocoder (coordinates from the street address, approximate) |
+| Buckeye Lake | Mud Island fishing access (access) | Mud Island, off Lakeside Rd, Millersport | ODNR Buckeye Lake State Park page (fishing pier on Mud Island) ; ODNR Buckeye Lake fishing map (fishing access and parking symbols at Mud Island) ; OpenStreetMap peninsula way 38132617 (Mud Island coordinates) |
+| Buckeye Lake | North Shore Bait & Tackle (shop) | 5187 Walnut Rd, Buckeye Lake, OH 43008 | Escape to Buckeye Lake directory, North Shore Bait & Tackle (address, phone) ; MapQuest listing (address) ; US Census Geocoder (coordinates from the street address) |
+| Buckeye Lake | Millersport Drive Thru, Deli & Bait Shop (shop) | 12325 Lancaster St, Millersport, OH 43046 | Visit Fairfield County listing (live bait, tackle, address, phone, hours) ; US Census Geocoder (coordinates from the street address) |
+
+What's biting now and species "Where" notes for these lakes (`js/biting-data-lakes.js`, species pages): ODNR lake pages above; Outdoor News, Jan 27, 2026, https://www.outdoornews.com/2026/01/27/alum-creeks-big-water-worth-the-angling-effort-in-delaware-county-ohio/ (coves north of the Cheshire Road bridge); Mount Vernon News, Mar 29, 2025, https://mountvernonnews.com/central-ohio-spring-fishing-forecast-buckeye-lake-alum-creek-knox-lake-and-pleasant-hill-lake (Buckeye warms first, crappie and saugeye in under 2 ft; Alum smallmouth move up early); Best Fishing in America lake guides (https://www.bestfishinginamerica.com/ohio-alum-creek-lake-fishing.html, https://www.bestfishinginamerica.com/ohio-buckeye-lake-fishing.html), used for typical structure only. Typical patterns, not a fishing report.
+
+Gaps (said on the site, never filled in):
+- No public water temperature for either lake.
+- Alum Creek's lake level is the Corps of Engineers reading, not USGS; values are provisional.
+- Ramp lighting, restrooms and shop hours are not shown unless a source says so.
+- No community trips logged at either lake yet; the sample trip is Hoover's.
+- Structure notes for these lakes are reference notes, not first-hand nights.
+
 ## Offline and Add to Home Screen
 
-No new data. The service worker (`sw.js`) caches this site's own files only; live NWS and USGS requests are never cached by it. The last good live readings are kept in the browser (localStorage) and shown offline with "Offline. Last updated HH:MM ET". Details and the plan for the live site are in SERVICE-WORKER.md.
+No new data. The service worker (`sw.js`) caches this site's own files only; live NWS, USGS and Corps of Engineers requests are never cached by it. The last good live readings are kept in the browser (localStorage) and shown offline with "Offline. Last updated HH:MM ET". Details and the plan for the live site are in SERVICE-WORKER.md.

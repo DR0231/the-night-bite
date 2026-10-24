@@ -13,14 +13,17 @@
 (function () {
   var card = document.getElementById("conditions");
   if (!card || !window.fetch) return;
-  var LAT = 40.11, LNG = -82.88;
-  var HOURLY = "https://api.weather.gov/gridpoints/ILN/89,88/forecast/hourly";
-  var POINT = "https://api.weather.gov/points/40.11,-82.88";
-  var GRID = "https://api.weather.gov/gridpoints/ILN/89,88";
-  var STATION = "KCMH";
-  var STATION_NAME = "Columbus airport (KCMH)";
-  var WX_PAGE = "https://forecast.weather.gov/MapClick.php?lat=40.11&lon=-82.88";
-  var CACHE_KEY = "nb-cond-v3", CACHE_MS = 10 * 60 * 1000;   // shorter than the 15 minute refresh, and refreshes skip it
+  // lake settings from js/lakes.js; the fallbacks are Hoover's original values
+  var LK = window.NightBiteLake, LC = (LK && LK.cfg) || null, NW = (LC && LC.nws) || {};
+  var LAT = LC ? LC.lat : 40.11, LNG = LC ? LC.lng : -82.88;
+  var HOURLY = NW.hourly || "https://api.weather.gov/gridpoints/ILN/89,88/forecast/hourly";
+  var POINT = NW.point || "https://api.weather.gov/points/40.11,-82.88";
+  var GRID = NW.grid || "https://api.weather.gov/gridpoints/ILN/89,88";
+  var STATION = NW.station || "KCMH";
+  var STATION_NAME = NW.stationName || "Columbus airport (KCMH)";
+  var WX_PAGE = NW.page || "https://forecast.weather.gov/MapClick.php?lat=40.11&lon=-82.88";
+  var LAKE_SHORT = (LC && LC.short) || "Hoover";
+  var CACHE_KEY = LK ? LK.key("nb-cond-v3") : "nb-cond-v3", CACHE_MS = 10 * 60 * 1000;   // shorter than the 15 minute refresh, and refreshes skip it
 
   var grid = card.querySelector(".cond-grid");
   var statusEl = card.querySelector(".cond-status");
@@ -235,16 +238,16 @@
   }
   /* returns true when a reading is on screen; `saved` skips the age check for the offline copy */
   function applyPressure(json, saved) {
-    if (!json) return noReading("KCMH unavailable");
+    if (!json) return noReading(STATION + " unavailable");
     var feats = json.features || [];
     var sl = pressureSeries(feats, "seaLevelPressure"), bp = pressureSeries(feats, "barometricPressure");
     var newest = Math.max(sl.length ? sl[0].t : 0, bp.length ? bp[0].t : 0);
     var field = sl.length && newest - sl[0].t <= 90 * 6e4 ? "seaLevelPressure" : "barometricPressure";
     var pts = field === "seaLevelPressure" ? sl : bp;
-    if (!pts.length) return noReading("KCMH sent no pressure");
+    if (!pts.length) return noReading(STATION + " sent no pressure");
     var latest = pts[0];
     // NWS can post KCMH a few hours late; past 6 hours the number is no use for tonight
-    if (!saved && Date.now() - latest.t > 6 * 36e5) return noReading("KCMH reading too old");
+    if (!saved && Date.now() - latest.t > 6 * 36e5) return noReading(STATION + " reading too old");
     pressureAt = new Date(latest.t);
     /* change over the last 3 hours: the reading closest to 3 h before the newest one, if it is 2 to 4 h older.
        Steady band +/- 0.02 inHg (about 0.7 hPa); 0.06 inHg or more in 3 h counts as fast (about 2 hPa, a front moving through). */
@@ -470,6 +473,7 @@
      Hoover runs north to south, so east and west winds name a bank and north and south winds name an end. */
   var PUSH = ["toward the south end", "into the southwest bank", "into the west bank", "into the northwest bank",
     "toward the north end", "into the northeast bank", "into the east bank", "into the southeast bank"];   // wind FROM N, NE, E ...
+  if (LC && LC.push) PUSH = LC.push;   // lakes that don't run north to south (Buckeye) name their own shores
   function extra(key, label, value) {
     var row = extraEl && extraEl.querySelector('[data-x="' + key + '"]');
     if (!row) return;
@@ -533,7 +537,7 @@
     var t = timeEt(when || new Date());
     if (statusEl) {
       var b = pressureAt && timeEt(pressureAt);
-      statusEl.innerHTML = "NWS hourly forecast for Hoover, barometer from " + STATION_NAME + (b ? " at " + b.value + " " + b.unit : "") +
+      statusEl.innerHTML = "NWS hourly forecast for " + LAKE_SHORT + ", barometer from " + STATION_NAME + (b ? " at " + b.value + " " + b.unit : "") +
         ". Checked " + t.value + " " + t.unit +
         ' ET. <a href="' + WX_PAGE + '" target="_blank" rel="noopener">Full forecast</a>.';
     }
@@ -551,7 +555,7 @@
   }
 
   var hasData = false, lastOk = null;
-  var SAVE_KEY = "nb-cond-last", SAVE_MAX = 3 * 864e5;   // last good forecast, for offline visits
+  var SAVE_KEY = LK ? LK.key("nb-cond-last") : "nb-cond-last", SAVE_MAX = 3 * 864e5;   // last good forecast, for offline visits
   var OFF = window.NightBiteOffline;
 
   // offline (or NWS down on the very first load): show the last saved forecast, labelled with its time
@@ -559,7 +563,7 @@
     var saved = OFF && OFF.load(SAVE_KEY, SAVE_MAX);
     if (!saved) return false;
     try { applyHourly(saved.hourly, "Saved"); } catch (e) { return false; }
-    try { applyPressure(saved.obs, true); } catch (e) { noReading("KCMH unavailable"); }
+    try { applyPressure(saved.obs, true); } catch (e) { noReading(STATION + " unavailable"); }
     try { applyWind(saved.obs || {}); } catch (e) {}
     st.thunder = saved.thunder || null;
     render();
@@ -632,7 +636,7 @@
           if (o) obs = slimObs(o);
           if (!cached && obs) writeCache(slimHourly(h), obs, st.thunder);
         } catch (e) {
-          noReading("KCMH unavailable");
+          noReading(STATION + " unavailable");
         }
         render();
         if (!cached && !offline && OFF) OFF.save(SAVE_KEY, { hourly: slimHourly(h), obs: obs, thunder: st.thunder });

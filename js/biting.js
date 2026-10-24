@@ -5,7 +5,8 @@
  */
 (function () {
   var card = document.getElementById("biting");
-  var data = window.NightBiteBiting;
+  var LKID = window.NightBiteLake ? window.NightBiteLake.id : "hoover";
+  var data = LKID === "alum" ? window.NightBiteBitingAlum : LKID === "buckeye" ? window.NightBiteBitingBuckeye : window.NightBiteBiting;
   if (!card || !data) return;
   var NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 

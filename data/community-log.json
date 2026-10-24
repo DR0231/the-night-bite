@@ -1,10 +1,11 @@
 {
   "updated": "2026-09-08",
-  "note": "Community trips for The Night Bite. Phase 1: edit this file via PR or after reviewing GitHub issues / email. No accounts required to read. SAMPLE entries are demos only.",
+  "note": "Community trips for The Night Bite. Each trip has a lake: hoover, alum or buckeye (missing means hoover). Phase 1: edit this file via PR or after reviewing GitHub issues / email. No accounts required to read. SAMPLE entries are demos only.",
   "trips": [
     {
       "id": "community-sample-1",
       "sample": true,
+      "lake": "hoover",
       "date": "2026-08-15",
       "species": "Channel catfish",
       "ramp": "Oxbow (upper ramp)",

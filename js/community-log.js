@@ -9,6 +9,12 @@
   var form = document.getElementById("community-trip-form");
   var preview = document.getElementById("submit-preview");
   var statusEl = document.getElementById("mailto-status");
+  // lakes (js/lakes.js): a trip with no lake field is a Hoover trip
+  var LK = window.NightBiteLake, LAKES = window.NightBiteLakes;
+  var LAKE = LK ? LK.id : "hoover";
+  function lakeShort(id) { return (LAKES && LAKES.all[id] && LAKES.all[id].short) || "Hoover"; }
+  function lakeName(id) { return (LAKES && LAKES.all[id] && LAKES.all[id].name) || "Hoover Reservoir"; }
+  var allTrips = null;
 
   function escapeHtml(str) {
     return String(str)
@@ -29,9 +35,11 @@
 
   function renderTrips(trips) {
     if (!listEl) return;
-    if (!trips || !trips.length) {
-      listEl.innerHTML =
-        '<div class="empty-log"><p>None yet. Submit a trip below (mailto or GitHub issue).</p></div>';
+    trips = (trips || []).filter(function (t) { return window.NightBiteLogFilter === "all" || (t.lake || "hoover") === LAKE; });
+    if (!trips.length) {
+      listEl.innerHTML = LAKE === "hoover" || window.NightBiteLogFilter === "all"
+        ? '<div class="empty-log"><p>None yet. Submit a trip below (mailto or GitHub issue).</p></div>'
+        : '<div class="empty-log"><p>No community trips at ' + escapeHtml(lakeShort(LAKE)) + ' yet. Submit one below (mailto or GitHub issue).</p></div>';
       return;
     }
     listEl.innerHTML = trips
@@ -46,6 +54,7 @@
         return (
           '<article class="paper-card">' +
           badge +
+          ' <span class="lake-tag">' + escapeHtml(lakeShort(e.lake || "hoover")) + "</span>" +
           "<h3>" +
           escapeHtml(e.species || "Unknown") +
           "</h3>" +
@@ -95,7 +104,8 @@
         return res.json();
       })
       .then(function (data) {
-        renderTrips((data && data.trips) || []);
+        allTrips = (data && data.trips) || [];
+        renderTrips(allTrips);
         announce("ok");
       })
       .catch(function () {
@@ -109,6 +119,7 @@
     if (!form) return null;
     var fd = new FormData(form);
     return {
+      lake: lakeName(LAKE),
       date: fd.get("date") || "",
       species: fd.get("species") || "",
       ramp: fd.get("ramp") || "",
@@ -123,6 +134,7 @@
     return [
       "## Trip report",
       "",
+      "- **Lake:** " + d.lake,
       "- **Date:** " + d.date,
       "- **Species:** " + d.species,
       "- **Ramp / area (public):** " + d.ramp,
@@ -180,5 +192,6 @@
     }
   }
 
+  document.addEventListener("nightbite:log-filter", function () { if (allTrips) renderTrips(allTrips); });
   loadCommunity();
 })();

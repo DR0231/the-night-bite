@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
   <meta name="apple-mobile-web-app-title" content="Night Bite">
   <link rel="manifest" href="site.webmanifest">
-  <title>Hoover Reservoir gear guide | The Night Bite</title>
-  <meta name="description" content="Hoover Reservoir gear guide for catfish, crappie, bass, and saugeye: kits, rig buy lists, bank vs boat, and packing checklists. Unofficial Night Bite notebook.">
+  <title>Gear guide for Hoover, Alum Creek and Buckeye Lake | The Night Bite</title>
+  <meta name="description" content="Gear guide for Hoover, Alum Creek and Buckeye Lake: catfish, crappie, bass and saugeye kits, rig buy lists, bank vs boat, and packing checklists.">
   <link rel="canonical" href="https://nightbiteoh.com/gear.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32">
@@ -17,7 +17,8 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=v6-2026-10-24">
+  <script src="js/lakes.js?v=v6-2026-10-24"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -27,6 +28,7 @@
         <img src="assets/lantern.svg" alt="" width="24" height="36" class="lantern-glow">
         <span class="logo-text">The Night Bite</span>
       </a>
+      <button type="button" class="lake-pill"><span class="lake-pill-label">Choose a lake</span><span class="lake-pill-chip" aria-hidden="true"><span class="lake-pill-dot"></span><span class="lake-pill-name"></span><span class="lake-pill-chev"></span></span></button>
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
@@ -54,9 +56,9 @@
 
   <main id="main" class="gear-guide">
     <div class="page-horizon" aria-hidden="true"></div>
-    <h1>Hoover gear guide</h1>
+    <h1><span data-lk="short">Hoover</span> gear guide</h1>
     <p class="lead">
-      Phone-first kits for Hoover Reservoir: cats, crappie, bass, saugeye.
+      Phone-first kits for <span data-lk="name">Hoover Reservoir</span>: cats, crappie, bass, saugeye.
       Bank vs boat cards, short buy lists, and packing checklists.
     </p>
     <p class="note">
@@ -77,7 +79,7 @@
 
     <section id="overview" class="species-section gear-section" aria-labelledby="overview-title">
       <h2 id="overview-title">Overview</h2>
-      <div class="card">
+      <div class="card" data-for="hoover">
         <p>
           <strong>Hoover Reservoir</strong> (Westerville / Delaware–Franklin) is one of Ohio’s best multi-species lakes,
           especially for catfish. About <strong>2,884 acres</strong> of water and <strong>45 miles</strong> of shoreline on the ODNR lake map,
@@ -88,7 +90,41 @@
           kayaks and small boats work well. Night helps channel and flathead (blues too); it is not best for every species.
         </p>
       </div>
-      <div class="card card-follow" id="dutchman">
+      <div class="card" data-for="alum">
+        <p>
+          <strong>Alum Creek Lake</strong> (Delaware County) is about <strong>3,330 acres</strong> on the ODNR fishing map, a long, narrow
+          Corps of Engineers reservoir with saugeye, muskie, smallmouth and largemouth, and crappie.
+        </p>
+        <p>
+          <strong>Unlimited horsepower on the south main lake, no wake on the north end</strong> above Cheshire Road. It’s a drinking-water reservoir.
+          Kayaks and small boats fit the no wake coves best; expect big boat wakes by day on the south end.
+        </p>
+      </div>
+      <div class="card" data-for="buckeye">
+        <p>
+          <strong>Buckeye Lake</strong> (Licking, Fairfield and Perry Counties) is about <strong>2,873 acres</strong> on the ODNR fishing map,
+          an old canal feeder lake that is shallow everywhere, with saugeye, crappie, panfish and channel cats.
+        </p>
+        <p>
+          <strong>No wake within 300 ft of any land mass</strong> and in marked areas. Shallow water and stumps reward slow, careful boating,
+          and the lake warms first in spring. Check Ohio’s BeachGuard for algae advisories in summer.
+        </p>
+      </div>
+      <div class="card card-follow" data-for="alum">
+        <p>
+          <strong>Cheshire Market</strong>, 5094 Cheshire Rd, Galena: live bait, lures, line, hooks, rods and reels.
+          <strong>Alum Creek Drive Thru</strong>, 6999 OH-37, Sunbury, is listed as a bait shop; call ahead for live bait.
+        </p>
+        <p class="meta meta-last">Shop notes from public listings, not paid ads.</p>
+      </div>
+      <div class="card card-follow" data-for="buckeye">
+        <p>
+          <strong>North Shore Bait &amp; Tackle</strong>, 5187 Walnut Rd, Buckeye Lake: live bait and tackle.
+          <strong>Millersport Drive Thru, Deli &amp; Bait Shop</strong>, 12325 Lancaster St, Millersport: live bait, tackle and marine supplies.
+        </p>
+        <p class="meta meta-last">Shop notes from public listings, not paid ads.</p>
+      </div>
+      <div class="card card-follow" id="dutchman" data-for="hoover">
         <p>
           <strong>Old Dutchman Bait &amp; Tackle</strong>, 904 S Sunbury Rd, Westerville. Cut shad,
           shrimp, liver, crawlers, goldfish, live bluegill, floating-rig parts.
@@ -114,19 +150,19 @@
           <tbody>
             <tr>
               <td>Crappie</td>
-              <td><strong>30</strong> a day (black and white combined), <strong>9″</strong> minimum. Hoover site-specific rule; ODNR has proposed dropping the 9″ minimum from March 1, 2027</td>
+              <td><strong>30</strong> a day (black and white combined), <strong>9″</strong> minimum. <span data-lk="short">Hoover</span> site-specific rule; ODNR has proposed dropping the 9″ minimum from March 1, 2027</td>
             </tr>
             <tr>
               <td>Bass LM/SM</td>
-              <td><strong>5</strong> a day combined, <strong>12″</strong> minimum (statewide; no Hoover exception)</td>
+              <td><strong>5</strong> a day combined, <strong>12″</strong> minimum (statewide; no <span data-lk="short">Hoover</span> exception)</td>
             </tr>
             <tr>
               <td>Walleye / saugeye / sauger</td>
-              <td><strong>6</strong> a day combined, no minimum size at Hoover (the 15″ rule covers only a few other lakes)</td>
+              <td><strong>6</strong> a day combined, no minimum size at <span data-lk="short">Hoover</span> (the 15″ rule covers only a few other lakes)</td>
             </tr>
             <tr>
               <td>Cats</td>
-              <td>No limit under the trophy lines. One channel cat <strong>28″</strong> or longer, and one each of blue and flathead <strong>35″</strong> or longer, per day (statewide; Hoover has no catfish exception)</td>
+              <td>No limit under the trophy lines. One channel cat <strong>28″</strong> or longer, and one each of blue and flathead <strong>35″</strong> or longer, per day (statewide; <span data-lk="short">Hoover</span> has no catfish exception)</td>
             </tr>
           </tbody>
         </table>
@@ -135,7 +171,19 @@
 
     <section id="local-intel" class="species-section gear-section" aria-labelledby="intel-title">
       <h2 id="intel-title">Local intel</h2>
-      <div class="card">
+      <div class="card" data-for="alum">
+        <p class="meta meta-last">
+          The coves north of the Cheshire Road bridge are the usual spring crappie, bass and saugeye water; muskie push in fall.
+          Bait shops: see Overview.
+        </p>
+      </div>
+      <div class="card" data-for="buckeye">
+        <p class="meta meta-last">
+          Buckeye warms first in central Ohio, so spring crappie and saugeye come early and shallow, often in under 2 ft of water.
+          Bait shops: see Overview.
+        </p>
+      </div>
+      <div class="card" data-for="hoover">
         <p class="meta meta-last">
           North end (Oxbow / Twin Bridges / above Sunbury Rd) often cited for bigger blues.
           Bait shop: see <a href="#dutchman">Old Dutchman</a> in Overview.
@@ -192,6 +240,8 @@
     <!-- ========== CATFISH ========== -->
     <section id="catfish" class="species-section gear-section" aria-labelledby="cats-title">
       <h2 id="cats-title">1. Catfish: channel, blue, flathead</h2>
+      <p class="lake-note" data-for="alum">At Alum Creek the cat to target is the channel catfish; ODNR doesn't list blues or flatheads there. The blue and flathead notes below are Hoover fish.</p>
+      <p class="lake-note" data-for="buckeye">At Buckeye the cats are channel catfish (abundant, 3 to 5 lb is typical) and bullhead; ODNR doesn't list blues or flatheads there. The blue and flathead notes below are Hoover fish.</p>
       <p>
         Headline Hoover fishery. ODNR says some of the older blues already top <strong>30 lb</strong>, and in 2019 Hoover gave up more 35″+ Fish Ohio blues than any other Ohio water.
         Night is strong for channel and flathead (blues too); daytime boat work still scores.
@@ -284,7 +334,7 @@
         <article class="card bank-boat-card">
           <h3>Bank</h3>
           <ul>
-            <li>Public shoreline near Oxbow, Redbank, Walnut flats</li>
+            <li><span data-for="hoover">Public shoreline near Oxbow, Redbank, Walnut flats</span><span data-for="alum buckeye">Public shoreline and the access listed on <a href="water.html#access-title">Water</a></span></li>
             <li>Night: multiple rods in holders, quiet lights</li>
             <li>Watch private docks; public only</li>
             <li class="gear-tip">Fishing a boardwalk or bridge, like the rebuilt Hoover Mudflats Boardwalk in Galena? Bring a pier net (bridge net) to lift fish up to the deck.</li>
@@ -306,7 +356,7 @@
     <!-- ========== CRAPPIE ========== -->
     <section id="crappie" class="species-section gear-section" aria-labelledby="crappie-title">
       <h2 id="crappie-title">2. Crappie</h2>
-      <p class="meta"><strong>9″ minimum, 30 a day</strong> at Hoover in the 2026–27 rules. ODNR has proposed removing the 9″ minimum from March 1, 2027, so check before you keep fish.</p>
+      <p class="meta"><strong>9″ minimum, 30 a day</strong> at <span data-lk="short">Hoover</span> in the 2026–27 rules. ODNR has proposed removing the 9″ minimum from March 1, 2027, so check before you keep fish.</p>
 
       <article class="card gear-kit">
         <h3>Optimal kit</h3>
@@ -363,7 +413,9 @@
     <!-- ========== BASS ========== -->
     <section id="bass" class="species-section gear-section" aria-labelledby="bass-title">
       <h2 id="bass-title">3. Bass</h2>
-      <p>Largemouth primary on Hoover; smallmouth show in rockier / clearer stretches. Stick worms are a Hoover staple.</p>
+      <p data-for="hoover">Largemouth primary on Hoover; smallmouth show in rockier / clearer stretches. Stick worms are a Hoover staple.</p>
+      <p data-for="alum">Alum Creek is a real smallmouth lake: jerkbaits and cranks as they move up in spring, tubes and ned rigs slow. Largemouth in the coves.</p>
+      <p data-for="buckeye">Largemouth around docks, weeds and stumps in shallow water. Weedless baits save tackle.</p>
 
       <article class="card gear-kit">
         <h3>Optimal kit</h3>
@@ -416,8 +468,10 @@
     <section id="saugeye" class="species-section gear-section" aria-labelledby="saugeye-title">
       <h2 id="saugeye-title">4. Saugeye / Walleye</h2>
       <p>
-        Hoover’s saugeye and walleye come from ODNR stocking (walleye were added in 2019 for a study against saugeye).
-        Daily limit is <strong>6 combined</strong> walleye, sauger and saugeye, with <strong>no minimum size</strong> at Hoover (2026–27 rules).
+        <span data-for="hoover">Hoover’s saugeye and walleye come from ODNR stocking (walleye were added in 2019 for a study against saugeye).</span>
+        <span data-for="alum">A main Alum Creek target: dam riprap, causeway rock and channel ledges, best at dusk and after dark.</span>
+        <span data-for="buckeye">Buckeye’s signature fish, stocked by ODNR: riprap, hard bottom and old towpath drop-offs, jigs with minnows.</span>
+        Daily limit is <strong>6 combined</strong> walleye, sauger and saugeye, with <strong>no minimum size</strong> at <span data-lk="short">Hoover</span> (2026–27 rules).
       </p>
 
       <article class="card gear-kit">
@@ -507,18 +561,31 @@
     </section>
 
     <section id="practical" class="species-section gear-section" aria-labelledby="practical-title">
-      <h2 id="practical-title">Practical Hoover notes</h2>
-      <ul class="notebook-list">
+      <h2 id="practical-title">Practical <span data-lk="short">Hoover</span> notes</h2>
+      <ul class="notebook-list" data-for="hoover">
         <li>Night is better for channel and flathead (blues too). It isn’t a rule for crappie or bass every trip.</li>
         <li>Wind piles bait on windward banks and points.</li>
         <li>North end often cited for trophy blues (Oxbow / Twin Bridges / above Sunbury Rd).</li>
         <li>Catch bait on an ultralight when legal and practical.</li>
         <li>10 HP limit → a kayak covers a lot of lake without racing elsewhere.</li>
       </ul>
+      <ul class="notebook-list" data-for="alum">
+        <li>Night helps saugeye and channel cats. Muskie and crappie are mostly low light and daytime fish.</li>
+        <li>Wind piles bait on windward banks and points.</li>
+        <li>Kayaks belong in the no wake north end; the south main lake gets big boat wakes by day.</li>
+        <li>Big muskie baits need a heavy rod and a big net. Don't fish them on bass gear.</li>
+      </ul>
+      <ul class="notebook-list" data-for="buckeye">
+        <li>Night helps saugeye and channel cats. Crappie and perch are mostly daytime fish.</li>
+        <li>Wind stirs up a shallow lake fast. Muddy water can push fish to cleaner edges.</li>
+        <li>Idle near shore (300 ft no wake) and watch for stumps after dark.</li>
+        <li>Bobbers and minnows cover most of the spring bite.</li>
+      </ul>
     </section>
 
     <div class="callout">
-      Gear lists are notebook suggestions for Hoover’s 10 hp and bank reality, not sponsorships (yet).
+      <span data-for="hoover">Gear lists are notebook suggestions for Hoover’s 10 hp and bank reality, not sponsorships (yet).</span>
+      <span data-for="alum buckeye">Gear lists are notebook suggestions for bank and small boat reality, not sponsorships (yet).</span>
       License 16+ · <a href="https://ohiodnr.gov/buy-and-apply/hunting-and-fishing-licenses" target="_blank" rel="noopener">ODNR / HuntFish OH</a>.
     </div>
   </main>
@@ -537,16 +604,17 @@
         <a href="whisperwood.html">Whisperwood Vale</a>
       </nav>
       <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
-      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, or USGS.</p>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js"></script>
-  <script src="js/sw-register.js"></script>
-  <script src="js/alerts.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/sticky-nav.js"></script>
-  <script src="js/mode-toggle.js"></script>
-  <script src="js/pack-list.js"></script>
+  <script src="js/refresh.js?v=v6-2026-10-24"></script>
+  <script src="js/sw-update.js?v=v6-2026-10-24"></script>
+  <script src="js/alerts.js?v=v6-2026-10-24"></script>
+  <script src="js/nav.js?v=v6-2026-10-24"></script>
+  <script src="js/lake-picker.js?v=v6-2026-10-24"></script>
+  <script src="js/sticky-nav.js?v=v6-2026-10-24"></script>
+  <script src="js/mode-toggle.js?v=v6-2026-10-24"></script>
+  <script src="js/pack-list.js?v=v6-2026-10-24"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

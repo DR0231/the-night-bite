@@ -1,7 +1,7 @@
 {
   "name": "The Night Bite",
   "short_name": "Night Bite",
-  "description": "Unofficial night fishing notebook for Hoover Reservoir: pool level, tonight's weather, ramps and species.",
+  "description": "Unofficial night fishing notebook for Hoover, Alum Creek and Buckeye Lake: pool level, tonight's weather, ramps and species.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

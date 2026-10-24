@@ -6,7 +6,9 @@
  * Pixel art is shown at whole-number scales only.
  */
 (function () {
-  var data = window.NightBiteMapData;
+  // the active lake's map (js/lakes.js picks it; Hoover's js/hoover-map-data.js if anything is missing)
+  var LK = window.NightBiteLake;
+  var data = (LK && LK.cfg.map && window[LK.cfg.map.data]) || window.NightBiteMapData;
   var openBtn = document.getElementById("map-open");
   var dlg = document.getElementById("hoover-map");
   if (!data || !openBtn || !dlg || typeof dlg.showModal !== "function") return;
@@ -28,7 +30,7 @@
   var SHORT = { ramp: "Ramp", shop: "Bait shop", access: "Boardwalk" };
   var PIN = { ramp: "assets/map/pin-ramp.png", shop: "assets/map/pin-shop.png", access: "assets/map/pin-access.png" };
   var foot = dlg.querySelector(".map-foot");
-  var NOTES = "City park hours are 7 a.m. to 11 p.m. (Columbus Rec and Parks); check posted signs before a night trip. Shoreline traced from a map, not for navigation.";
+  var NOTES = data.notes || "City park hours are 7 a.m. to 11 p.m. (Columbus Rec and Parks); check posted signs before a night trip. Shoreline traced from a map, not for navigation.";
   var group = null;   // ids that share the pin the current card came from
 
   function mapsUrl(ll) {
@@ -52,8 +54,9 @@
     });
     // phones in portrait: never below 2x on the tall map, the stage scrolls instead
     if (best.s < 2) {
-      var tall = data.maps["hoover-map-tall"];
-      best = { k: "hoover-map-tall", s: Math.max(1, Math.min(2, Math.floor(availW / tall.w))) };
+      var tallKey = Object.keys(data.maps).filter(function (k) { return /-tall$/.test(k); })[0];
+      var tall = data.maps[tallKey];
+      best = { k: tallKey, s: Math.max(1, Math.min(2, Math.floor(availW / tall.w))) };
     }
     if (best.k !== variant || best.s !== scale) {
       variant = best.k; scale = best.s;
@@ -104,7 +107,7 @@
         b.setAttribute("aria-label", g.items.length + " places: " + g.items.map(function (p) { return p.name; }).join(" and "));
         b.dataset.ids = g.items.map(function (p) { return p.id; }).join(",");
       } else {
-        b.setAttribute("aria-label", g.items[0].name + ", " + TYPE[g.items[0].type].toLowerCase());
+        b.setAttribute("aria-label", g.items[0].name + ", " + (g.items[0].typeLabel || TYPE[g.items[0].type]).toLowerCase());
         b.dataset.ids = g.items[0].id;
       }
       b.addEventListener("click", function () { select(b); });
@@ -154,9 +157,9 @@
       b.type = "button";
       b.className = "map-switch-btn";
       var dup = types.filter(function (t) { return t === q.type; }).length > 1;
-      b.textContent = dup ? q.name : SHORT[q.type];
+      b.textContent = dup ? q.name : (q.shortLabel || SHORT[q.type]);
       b.setAttribute("aria-pressed", id === current.id ? "true" : "false");
-      if (!dup) b.setAttribute("aria-label", SHORT[q.type] + ": " + q.name);
+      if (!dup) b.setAttribute("aria-label", (q.shortLabel || SHORT[q.type]) + ": " + q.name);
       b.addEventListener("click", function () {
         if (id === current.id) return;
         showPlace(q);
@@ -168,7 +171,7 @@
     return wrap;
   }
   function showPlace(p) {
-    var h = cardShell(p.name, TYPE[p.type]);
+    var h = cardShell(p.name, p.typeLabel || TYPE[p.type]);
     card.setAttribute("data-type", p.type);
     if (group && group.length > 1 && group.indexOf(p.id) >= 0) card.insertBefore(switcher(p), card.firstChild);
     var dl = document.createElement("dl"); dl.className = "map-card-facts";
@@ -211,7 +214,7 @@
       var p = byId[id], li = document.createElement("li"), b = document.createElement("button");
       b.type = "button"; b.className = "map-pick-btn";
       b.textContent = p.name;
-      var t = document.createElement("span"); t.textContent = TYPE[p.type]; b.appendChild(t);
+      var t = document.createElement("span"); t.textContent = p.typeLabel || TYPE[p.type]; b.appendChild(t);
       b.addEventListener("click", function () { showPlace(p); });
       li.appendChild(b); ul.appendChild(li);
     });
