@@ -259,13 +259,20 @@
 
     <div id="mill-end" class="hidden overlay-panel">
       <div class="journal-panel parchment-panel">
-        <header>
-          <p class="journal-sub" id="mill-end-kicker"></p>
-          <h2 id="mill-end-title"></h2>
-        </header>
-        <canvas id="mill-end-scene" width="96" height="48"></canvas>
-        <div id="mill-end-body"></div>
-        <button type="button" id="mill-end-btn" data-close></button>
+        <div id="mill-card">
+          <header>
+            <p class="journal-sub" id="mill-end-kicker"></p>
+            <h2 id="mill-end-title"></h2>
+          </header>
+          <canvas id="mill-end-scene" width="96" height="48"></canvas>
+          <div id="mill-end-body"></div>
+          <button type="button" id="mill-end-btn" data-close></button>
+        </div>
+        <div id="mill-roll" class="hidden">
+          <div id="mill-roll-window"><div id="mill-roll-track"></div></div>
+          <p class="mill-roll-hint"><span class="key-text">E, Space or Esc to skip</span><span class="pad-text">A or B to skip</span></p>
+          <button type="button" id="mill-roll-skip">Skip</button>
+        </div>
       </div>
     </div>
 

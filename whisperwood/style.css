@@ -918,6 +918,7 @@ kbd {
 #rank-up-body button,
 .dialog-actions button,
 #mill-end-btn,
+#mill-roll-skip,
 #paste-save-btn,
 #pause-menu button {
   display: block;
@@ -944,6 +945,7 @@ kbd {
 #rank-up-body button:hover,
 .dialog-actions button:hover,
 #mill-end-btn:hover,
+#mill-roll-skip:hover,
 #paste-save-btn:hover,
 #pause-menu button:hover,
 .journal-panel > button[data-close]:hover,
@@ -961,6 +963,7 @@ kbd {
 #rank-up-body button:active,
 .dialog-actions button:active,
 #mill-end-btn:active,
+#mill-roll-skip:active,
 #paste-save-btn:active,
 #pause-menu button:active,
 .journal-panel > button[data-close]:active,
@@ -1004,6 +1007,7 @@ html:not(.pad-input) .pad-focus {
 #start-screen, #journal { z-index: 40; }
 
 #mill-end-btn,
+#mill-roll-skip,
 #paste-save-btn,
 #pause-menu button {
   display: block;
@@ -1110,6 +1114,12 @@ html.pad-input .pack-bait kbd { display: none; }
 #journal-list li.favorite { outline: 2px solid var(--brass); }
 .journal-cook { margin-top: 8px; font-size: 16px; color: var(--ink-soft); }
 #mill-end-scene { display: block; width: 192px; height: 96px; margin: 6px auto; image-rendering: pixelated; border: 2px solid var(--frame); }
+#mill-end.is-rolling #mill-card { display: none; }
+#mill-roll-window { position: relative; height: 240px; overflow: hidden; }
+#mill-roll-track { position: absolute; left: 0; right: 0; top: 0; text-align: center; }
+#mill-roll-track p { font-size: 16px; line-height: 24px; margin: 0 0 16px; }
+.mill-roll-hint { font-size: 16px; text-align: center; color: var(--ink-soft); margin: 8px 0 0; }
+@media (pointer: coarse) { #mill-roll-window { height: 50vh; } }
 .journal-mill { display: flex; flex-wrap: wrap; margin: 0 0 10px; gap: 2px 8px; font-size: 16px; }
 .journal-mill.hidden { display: none; }
 .journal-mill > p { flex: 1 0 100%; margin: 4px 0 0; }
