@@ -820,6 +820,13 @@ if (window.valeDesktop && typeof window.valeDesktop.onFullscreenChange === "func
 const MUSIC = { day: 2791545, rain: 3388883, cottage: 3045368, ending: 864360 };
 const AMBIENCE = { dawn: ["amb_dawn_birds_loop", 2778300], day: ["amb_day_leaves_loop", 2425500], golden: ["amb_dusk_crickets_loop", 2646000], night: ["amb_night_bed_loop", 2646000] };
 const AMB_OWLS = [["amb_night_owl_01", 72765], ["amb_night_owl_02", 94815], ["amb_night_owl_03", 81586], ["amb_night_owl_04", 77175]];
+const SFX_FILES = {
+  nibble: [["sfx_nibble_01", 5292], ["sfx_nibble_02", 3307]],
+  bite: [["sfx_bite_01", 30869], ["sfx_bite_02", 19845]],
+  catch: [["sfx_catch_01", 37485], ["sfx_catch_02", 33075]],
+  fail: [["sfx_fail_01", 18522], ["sfx_fail_02", 31752]],
+};
+const SFX_TRIM = 0.35;
 
 const AudioFX = {
   ctx: null,
@@ -848,6 +855,7 @@ const AudioFX = {
     } catch (err) {
       this.ctx = null; /* no audio device: cues become silent, the game keeps going */
     }
+    this._sfxInit();
   },
   _dest(bus) {
     const name = bus || "sfx";
@@ -911,22 +919,96 @@ const AudioFX = {
   },
   bite() {
     this.ensure();
-    this.tone(520, 0.07, "square", 0.04);
-    setTimeout(() => this.tone(720, 0.08, "square", 0.04), 70);
+    if (!this._sfxPlay("bite")) {
+      this.tone(520, 0.07, "square", 0.04);
+      setTimeout(() => this.tone(720, 0.08, "square", 0.04), 70);
+    }
   },
   catch() {
     this.ensure();
-    this.tone(392, 0.12, "triangle", 0.05);
-    setTimeout(() => this.tone(523, 0.12, "triangle", 0.05), 90);
-    setTimeout(() => this.tone(659, 0.2, "triangle", 0.06), 180);
+    if (!this._sfxPlay("catch")) {
+      this.tone(392, 0.12, "triangle", 0.05);
+      setTimeout(() => this.tone(523, 0.12, "triangle", 0.05), 90);
+      setTimeout(() => this.tone(659, 0.2, "triangle", 0.06), 180);
+    }
   },
   fail() {
     this.ensure();
-    this.tone(240, 0.2, "sawtooth", 0.03, 90);
+    if (!this._sfxPlay("fail")) this.tone(240, 0.2, "sawtooth", 0.03, 90);
   },
   nibble() {
     this.ensure();
-    this.tone(340, 0.05, "sine", 0.03, 180);
+    if (!this._sfxPlay("nibble")) this.tone(340, 0.05, "sine", 0.03, 180);
+  },
+  _sfxInit() {
+    if (!this.ctx || this._sfxBuf) return;
+    this._sfxBuf = {};
+    this._sfxFail = {};
+    this._sfxBusy = {};
+    this._sfxWarned = {};
+    this._sfxLast = {};
+    const cues = Object.keys(SFX_FILES);
+    for (let i = 0; i < cues.length; i++) {
+      const list = SFX_FILES[cues[i]];
+      for (let j = 0; j < list.length; j++) this._sfxLoad(list[j][0]);
+    }
+  },
+  _sfxLoad(file) {
+    if (!file || !this.ctx || !this._sfxBuf) return;
+    if (this._sfxBuf[file] || this._sfxFail[file] || this._sfxBusy[file]) return;
+    this._sfxBusy[file] = true;
+    const url = "assets/audio/sfx/" + file + "." + this._musicExt();
+    fetch(url).then((res) => {
+      if (!res.ok) throw new Error("sfx " + file);
+      return res.arrayBuffer();
+    }).then((ab) => this._musicDecode(ab)).then((buf) => {
+      this._sfxBuf[file] = buf;
+      this._sfxBusy[file] = false;
+    }).catch((err) => {
+      this._sfxFail[file] = true;
+      this._sfxBusy[file] = false;
+      if (!this._sfxWarned[file]) {
+        this._sfxWarned[file] = true;
+        console.warn("sfx " + file, err);
+      }
+    });
+  },
+  _sfxPlay(cue) {
+    if (this.muted || !this.ctx || !Object.prototype.hasOwnProperty.call(SFX_FILES, cue)) return false;
+    const list = SFX_FILES[cue];
+    if (!list || !list.length || !this._sfxBuf) return false;
+    let idx;
+    const last = this._sfxLast[cue];
+    if (list.length >= 2 && typeof last === "number") {
+      idx = (last + 1 + ((Math.random() * (list.length - 1)) | 0)) % list.length;
+    } else {
+      idx = (Math.random() * list.length) | 0;
+    }
+    const pair = list[idx];
+    const buf = this._sfxBuf[pair[0]];
+    if (!buf) return false;
+    const N = pair[1];
+    const off = buf.length >= N + 1024 ? 1024 : 0;
+    const src = this.ctx.createBufferSource();
+    const gain = this.ctx.createGain();
+    src.buffer = buf;
+    src.playbackRate.value = 1 + (Math.random() * 2 - 1) * 0.03;
+    gain.gain.value = SFX_TRIM;
+    src.connect(gain).connect(this._dest("sfx"));
+    const now = this.ctx.currentTime;
+    try {
+      src.start(now, off / 44100, N / 44100);
+    } catch (err) {
+      try { src.disconnect(); } catch (e) { /* already stopped */ }
+      try { gain.disconnect(); } catch (e) { /* already stopped */ }
+      return false;
+    }
+    src.onended = () => {
+      try { src.disconnect(); } catch (e) { /* already stopped */ }
+      try { gain.disconnect(); } catch (e) { /* already stopped */ }
+    };
+    this._sfxLast[cue] = idx;
+    return true;
   },
   /* Small world cues. All of them route through tone(), so mute silences everything. */
   pickup() {
