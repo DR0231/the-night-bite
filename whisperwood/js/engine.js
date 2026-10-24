@@ -1420,14 +1420,18 @@ const AudioFX = {
     const wantFile = this._ambWant && AMBIENCE[this._ambWant] ? AMBIENCE[this._ambWant][0] : "";
     if (node.file !== wantFile) delete this._ambBuf[node.file];
   },
+  _ambArmDown(name, node, seconds) {
+    this._musicCurve(node.gain, seconds, false);
+    if (node.stopTimer) clearTimeout(node.stopTimer);
+    node.secs = seconds;
+    node.stopTimer = setTimeout(() => this._ambRelease(name, node), seconds * 1000);
+  },
   _ambFadeDown(name, seconds) {
     const node = this._ambPlay[name];
     if (!node) return;
     delete this._ambPlay[name];
     this._ambFade[name] = node;
-    this._musicCurve(node.gain, seconds, false);
-    if (node.stopTimer) clearTimeout(node.stopTimer);
-    node.stopTimer = setTimeout(() => this._ambRelease(name, node), seconds * 1000);
+    this._ambArmDown(name, node, seconds);
   },
   _ambFadeUp(name, seconds) {
     const node = this._ambFade[name];
@@ -1586,7 +1590,12 @@ const AudioFX = {
       return;
     }
     if (!want) {
+      const fading = this._ambFade ? Object.keys(this._ambFade) : [];
       if (this._ambCurrent && this._ambPlay[this._ambCurrent]) this._ambFadeDown(this._ambCurrent, 1.5);
+      for (let i = 0; i < fading.length; i++) {
+        const node = this._ambFade[fading[i]];
+        if (node && node.secs > 1.5) this._ambArmDown(fading[i], node, 1.5);
+      }
       this._ambCurrent = null;
       this._ambOwls(null);
       return;
