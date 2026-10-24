@@ -1115,7 +1115,7 @@ html.pad-input .pack-bait kbd { display: none; }
 .journal-cook { margin-top: 8px; font-size: 16px; color: var(--ink-soft); }
 #mill-end-scene { display: block; width: 192px; height: 96px; margin: 6px auto; image-rendering: pixelated; border: 2px solid var(--frame); }
 #mill-end.is-rolling #mill-card { display: none; }
-#mill-roll-window { position: relative; height: 240px; overflow: hidden; }
+#mill-roll-window { position: relative; height: 240px; overflow: hidden; -webkit-mask-image: linear-gradient(transparent, #000 16%, #000 84%, transparent); mask-image: linear-gradient(transparent, #000 16%, #000 84%, transparent); }
 #mill-roll-track { position: absolute; left: 0; right: 0; top: 0; text-align: center; }
 #mill-roll-track p { font-size: 16px; line-height: 24px; margin: 0 0 16px; }
 .mill-roll-hint { font-size: 16px; text-align: center; color: var(--ink-soft); margin: 8px 0 0; }
