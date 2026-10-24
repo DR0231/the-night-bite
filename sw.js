@@ -15,7 +15,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v4-2026-10-23";
+var VERSION = "v5-2026-10-24";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;

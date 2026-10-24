@@ -180,6 +180,12 @@
         "</time>";
     }
 
+    // share the water temp with the conditions card ("Tonight's bite")
+    if (tempF !== null) {
+      window.NightBiteWaterF = tempF;
+      try { document.dispatchEvent(new CustomEvent("nb:usgs", { detail: { tempF: tempF, at: temp.dateTime } })); } catch (e) {}
+    }
+
     return (
       (typeof poolFt === "number" && isFinite(poolFt)) || tempF !== null
     );

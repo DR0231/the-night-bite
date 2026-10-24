@@ -125,6 +125,11 @@
 
       <section class="bento-card bento-conditions" id="conditions" aria-labelledby="conditions-title" data-state="loading">
         <h2 id="conditions-title">Tonight at Hoover</h2>
+        <p class="cond-storm" role="status" hidden></p>
+        <div class="cond-bite" hidden>
+          <p class="cond-bite-line"><span class="cond-label">Tonight&rsquo;s bite</span> <span class="cond-bite-rate"></span> <span class="cond-bite-why"></span></p>
+          <p class="cond-bite-note">A rule of thumb guide, not a promise.</p>
+        </div>
         <div class="cond-grid">
           <div class="cond-cell cond-wind" data-cond="wind" data-empty><span class="cond-label">Wind</span><span class="cond-wind-row"><span class="wind-sprite" role="img" aria-label="Wind not loaded yet"></span><span class="cond-value" aria-hidden="true">--</span></span><span class="cond-sub" aria-hidden="true"></span></div>
           <div class="cond-cell" data-cond="air" data-empty><span class="cond-label">Air</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
@@ -134,9 +139,18 @@
           <div class="cond-cell" data-cond="moonrise" data-empty><span class="cond-label">Moonrise</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
           <div class="cond-cell cond-moon" data-cond="moon" data-empty><span class="cond-label">Moon tonight</span><span class="cond-moon-row"><span class="moon-sprite" aria-hidden="true"></span><span class="cond-moon-text"><span class="cond-value">--</span><span class="cond-sub"></span></span></span></div>
         </div>
+        <div class="cond-hours" hidden>
+          <p class="cond-label cond-hours-label">Tonight, hour by hour</p>
+          <ol class="cond-hours-list" tabindex="0" aria-label="Tonight's hourly forecast"></ol>
+        </div>
+        <dl class="cond-extra" hidden>
+          <div data-x="water" hidden><dt class="cond-x-label">On the water</dt><dd class="cond-x-value"></dd></div>
+          <div data-x="dew" hidden><dt class="cond-x-label">Dew point</dt><dd class="cond-x-value"></dd></div>
+          <div data-x="moonset" hidden><dt class="cond-x-label">Moonset</dt><dd class="cond-x-value"></dd></div>
+        </dl>
         <p class="cond-summary"></p>
         <p class="meta cond-status">Loading the National Weather Service forecast…</p>
-        <p class="meta cond-note">Sun, moon and moon phase are worked out on your phone. Times can be off by a few minutes.</p>
+        <p class="meta cond-note">Sun and moon times are worked out on your phone, within a few minutes of the US Naval Observatory.</p>
       </section>
 
       <a class="bento-card bento-maps" href="water.html#maps">

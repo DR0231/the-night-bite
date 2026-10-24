@@ -1788,6 +1788,111 @@ h3 { font-size: 20px; line-height: 30px; }
 }
 .cond-moon[data-empty] .moon-sprite { visibility: hidden; }
 @media (min-width: 768px) { .moon-sprite { --moon-scale: 3; } }
+.cond-storm[hidden], .cond-bite[hidden], .cond-hours[hidden], .cond-extra[hidden], .cond-extra > div[hidden] { display: none; }
+/* Storm heads up: the one amber line at the top when thunder is in tonight's forecast */
+.cond-storm {
+  margin: 0 0 var(--space-sm);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--amber);
+  border-left-width: 4px;
+  border-radius: var(--radius);
+  background: var(--amber-glow);
+  color: var(--cream);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+/* Tonight's bite: rating in the readout font, reason in body type */
+.cond-bite { margin: 0 0 var(--space-sm); }
+.cond-bite-line { margin: 0; line-height: 1.45; }
+.cond-bite-line .cond-label { margin-right: 0.25rem; }
+.cond-bite-rate {
+  font-family: var(--font-heading);
+  font-synthesis: none;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--amber);
+  margin-right: 0.25rem;
+}
+.cond-bite-why { color: var(--cream-dark); font-size: var(--text-sm); }
+.cond-bite-note {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: var(--text-label);
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  color: var(--muted);
+}
+/* Hourly strip: one row, scrolls sideways on phones */
+.cond-hours { margin: 0 0 var(--space-sm); }
+.cond-hours-label { margin: 0 0 0.375rem; }
+.cond-hours-list {
+  display: flex;
+  gap: 0.375rem;
+  margin: 0;
+  padding: 0 0 0.375rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--navy-light) transparent;
+}
+.cond-hours-list:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.cond-hour {
+  flex: 0 0 auto;
+  min-width: 3.25rem;
+  margin: 0;
+  padding: 0.25rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--navy-light);
+  border-radius: var(--radius);
+  scroll-snap-align: start;
+  text-align: center;
+}
+.cond-hour[data-now] { border-color: var(--amber-dim); }
+.cond-hour[data-storm] { border-color: var(--amber); background: var(--amber-glow); }
+.cond-hour-t, .cond-hour-wind, .cond-hour-pop {
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: var(--text-label);
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.cond-hour-t { color: var(--muted); text-transform: uppercase; }
+.cond-hour-wind { color: var(--cream-dark); }
+.cond-hour-pop { color: var(--cream-dark); min-height: 1.3em; }
+.cond-hour[data-storm] .cond-hour-pop { color: var(--amber); }
+.cond-hour-temp {
+  font-family: var(--font-heading);
+  font-synthesis: none;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--amber);
+}
+/* Extras: dew point, moonset and which bank the wind is pushing into, as one compact wrapped row */
+.cond-extra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin: 0 0 var(--space-sm);
+}
+.cond-extra > div { display: flex; align-items: baseline; gap: 0.375rem; min-width: 0; }
+.cond-extra dt, .cond-extra dd {
+  margin: 0;
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: var(--text-label);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+.cond-extra dt { color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.cond-extra dd { color: var(--cream); }
 .cond-summary { margin: 0 0 var(--space-xs); color: var(--cream-dark); font-size: var(--text-base); }
 .cond-summary:empty { display: none; }
 .bento-conditions .meta { margin: 0 0 0.375rem; }

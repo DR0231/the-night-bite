@@ -1,13 +1,25 @@
 # Data sources (live data features)
 
+Updated 2026-10-24 (ET): Tonight at Hoover gets the hourly strip, Tonight's bite, last light and moonset, 3 hour pressure change, storm heads up, feels like and dew point, and wind on the water.
+
 Updated 2026-10-22 (ET): boardwalk added; What's biting now added.
 
 Checked 2026-10-22 (ET). Only details confirmed by a source below are shown on the site. Anything missing was left out on purpose.
 
 ## Tonight at Hoover card (js/conditions.js)
 - Forecast: National Weather Service API, `https://api.weather.gov/points/40.11,-82.88` resolves to office ILN (Wilmington, OH), gridpoint 89,88. Hourly forecast: `https://api.weather.gov/gridpoints/ILN/89,88/forecast/hourly`. Wind, air temp, rain chance (max of the next 12 hourly periods).
-- Pressure trend: `https://api.weather.gov/stations/KCMH/observations`. KCMH (John Glenn Columbus International Airport, 39.99 N 82.88 W) is the first station NWS lists for gridpoint ILN 89,88 (`/gridpoints/ILN/89,88/stations`, next are KOSU and KDLZ). Trend compares the newest barometric pressure with the reading closest to 12 hours earlier: rising or falling when the change is 1 hPa (about 0.03 inHg) or more, otherwise steady.
-- Sunset and moonrise: computed in the browser (js/astro.js, port of SunCalc by Vladimir Agafonkin, BSD 2-Clause). Checked against the US Naval Observatory for 2026-10-22 and 23 at 40.11 N 82.88 W: sunset within 2 minutes, moonrise within 4 minutes.
+- Pressure trend: `https://api.weather.gov/stations/KCMH/observations`. KCMH (John Glenn Columbus International Airport, 39.99 N 82.88 W) is the first station NWS lists for gridpoint ILN 89,88 (`/gridpoints/ILN/89,88/stations`, next are KOSU and KDLZ). The card shows the change over the last 3 hours: the newest reading against the one closest to 3 hours earlier (used only when it is 2 to 4 hours older), from the same pressure field. Within 0.02 inHg is steady; 0.06 inHg or more in 3 hours counts as fast. Readings over an hour old get an "as of" time.
+- Hourly strip: the hourly forecast periods from sunset (or from now, once the sun is down) through the period that starts at 2 AM ET. Hour, temperature, wind direction and speed, rain chance. Hidden if the hourly forecast can't be loaded.
+- Storm heads up: thunder anywhere from now through 2 AM ET, from an hourly period whose `shortForecast` mentions thunder, or from the raw gridpoint `https://api.weather.gov/gridpoints/ILN/89,88` (`weather` lists thunderstorms, or `probabilityOfThunder` is 25% or more). When the alert banner (js/alerts.js) is showing a thunderstorm or tornado Watch or Warning, the line points to it instead of repeating it.
+- Feels like and dew point: from the same hourly period as the Air value, so they always agree. Wind chill (NWS formula) at 50 F or below with wind over 3 mph, heat index (NWS Rothfusz regression with its adjustments) at 80 F and up, otherwise the air temperature. Dew point is the period's `dewpoint`.
+- Wind on the water: the bank the current hourly wind blows toward, the opposite of where it comes from (a southwest wind pushes into the northeast bank). Hoover runs north to south, so north and south winds name the south and north ends. Skipped under 3 mph.
+- Tonight's bite (rule of thumb, not a forecast; also in the comment above biteRating in js/conditions.js):
+  - Pressure, last 3 hours at KCMH: falling slowly (0.02 to 0.06 inHg) +2, steady +1, rising slowly 0, falling fast 0, rising fast -1.
+  - Wind, average sustained NWS hourly speed over tonight's window: under 3 mph 0, 3 to 12 mph +1, 13 to 18 mph 0, over 18 mph -2.
+  - Moon: new or full (the principal phase falls tonight, or under 10% or over 90% lit) +1.
+  - Water temp from USGS 03228400 when the gauge sends one: 55 to 80 F +1, 45 to 54 or 81 to 86 F 0, colder or warmer -1. Water temp alone never makes a rating; pressure or wind must be known.
+  - 4 or more is Good, 2 or 3 is Fair, 1 or less is Tough. Thunder in tonight's window always makes it Tough.
+- Sunset, last light (end of civil twilight, Sun 6 degrees down), moonrise and moonset: computed in the browser (js/astro.js, port of SunCalc by Vladimir Agafonkin, BSD 2-Clause, with the Moon's position from the Meeus main terms and the standard parallax corrected rise and set altitude). Checked against the US Naval Observatory (aa.usno.navy.mil rstt/oneday) at 40.11 N 82.88 W for 2026-10-24, 10-25, 10-28, 11-02 and 11-10: sunset and last light within 2 minutes, moonrise and moonset within 2 minutes.
 - Fallback when NWS can't be reached: "Weather unavailable, check weather.gov" with a link to the NWS point forecast.
 
 ## Alert banner (js/alerts.js, every page)

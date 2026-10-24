@@ -35,12 +35,19 @@
     return out;
   }
 
+  // tell the home conditions card which alerts are on screen, so its storm line can point here instead of repeating them
+  function shown(list) {
+    window.NightBiteAlertsShown = list;
+    try { document.dispatchEvent(new CustomEvent("nb:alerts", { detail: { list: list } })); } catch (e) {}
+  }
+
   function render(list) {
     var old = document.querySelector(".nws-alert");
     if (old) { old.remove(); document.documentElement.classList.remove("has-nws-alert"); }
-    if (!list.length) return;
+    if (!list.length) return shown([]);
     var sig = list.map(function (a) { return a.id; }).join(",");
-    try { if (sessionStorage.getItem(HIDE_KEY) === sig) return; } catch (e) {}
+    try { if (sessionStorage.getItem(HIDE_KEY) === sig) return shown([]); } catch (e) {}
+    shown(list);
     var bar = document.createElement("div");
     bar.className = "nws-alert";
     bar.setAttribute("role", "region");
@@ -69,6 +76,7 @@
     close.addEventListener("click", function () {
       try { sessionStorage.setItem(HIDE_KEY, sig); } catch (e) {}
       bar.remove();
+      shown([]);
     });
     inner.appendChild(text);
     inner.appendChild(close);

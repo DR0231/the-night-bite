@@ -2,8 +2,9 @@
  * The Night Bite: sunset and moonrise for Hoover Reservoir, computed in the browser.
  * Compact port of the SunCalc formulas (c) Vladimir Agafonkin, BSD 2-Clause
  * (https://github.com/mourner/suncalc). No network, no CDN.
- * Exposes window.NightBiteAstro = { sunset(date, lat, lng), moonrise(date, lat, lng), etMidnight(date),
- *   moonIllumination(date), moonTonight(now) }.
+ * Exposes window.NightBiteAstro = { sunset(date, lat, lng), lastLight(date, lat, lng), moonrise(date, lat, lng),
+ *   moonset(date, lat, lng), moonTimes(date, lat, lng), etMidnight(date), moonIllumination(date), moonTonight(now) }.
+ * lastLight is the end of civil twilight (Sun 6 degrees below the horizon), the same "end civil twilight" USNO lists.
  * Moon phase uses extra lunar longitude terms (Meeus, Astronomical Algorithms ch. 47) and refers the Sun to the
  * equinox of date, which puts phase instants within about 15 minutes of USNO for 2026 and 2027.
  */
@@ -29,28 +30,33 @@
   function solarTransitJ(ds, M, L) { return J2000 + ds + 0.0053 * sin(M) - 0.0069 * sin(2 * L); }
   function hourAngle(h, phi, d) { return acos((sin(h) - sin(phi) * sin(d)) / (cos(phi) * cos(d))); }
 
-  function sunset(date, lat, lng) {
+  /* evening instant when the Sun's centre reaches altitude h (degrees) on the solar day nearest `date` */
+  function sunDown(date, lat, lng, h) {
     var lw = rad * -lng, phi = rad * lat, d = toDays(date), n = julianCycle(d, lw);
     var ds = approxTransit(0, lw, n), M = solarMeanAnomaly(ds), L = eclipticLongitude(M), dec = declination(L, 0);
-    var w = hourAngle(-0.833 * rad, phi, dec);
+    var w = hourAngle(h * rad, phi, dec);
     if (isNaN(w)) return null;
     return fromJulian(solarTransitJ(approxTransit(w, lw, n), M, L));
   }
+  function sunset(date, lat, lng) { return sunDown(date, lat, lng, -0.833); }      // upper limb on the horizon, with refraction
+  function lastLight(date, lat, lng) { return sunDown(date, lat, lng, -6); }       // end of civil twilight
 
+  /* Moon's geocentric altitude minus the standard rise/set altitude h0 = 0.7275 * parallax - 0.5667 degrees
+     (Meeus ch. 15: refraction and semi-diameter included), so rise and set are where this crosses zero.
+     Position from the Meeus main terms in moonEcliptic below, which keeps moonrise and moonset within a few minutes of USNO. */
   function moonAltitude(date, lat, lng) {
-    var lw = rad * -lng, phi = rad * lat, d = toDays(date);
-    var L = rad * (218.316 + 13.176396 * d), M = rad * (134.963 + 13.064993 * d), F = rad * (93.272 + 13.22935 * d);
-    var l = L + rad * 6.289 * sin(M), b = rad * 5.128 * sin(F);
-    var ra = rightAscension(l, b), dec = declination(l, b);
+    var lw = rad * -lng, phi = rad * lat, d = toDays(date), m = moonEcliptic(d);
+    var ra = rightAscension(m.l, m.b), dec = declination(m.l, m.b);
     var h = altitude(siderealTime(d, lw) - ra, phi, dec);
-    return h + astroRefraction(h);
+    var par = asin(6378.14 / m.dist);
+    return h - (0.7275 * par - 0.5667 * rad);
   }
 
-  /* Moonrise during the 24 h that start at `start` (an instant), or null if the moon doesn't rise. */
-  function moonrise(start, lat, lng) {
-    var hc = 0.133 * rad, t = start.valueOf();
-    function alt(hrs) { return moonAltitude(new Date(t + hrs * 36e5), lat, lng) - hc; }
-    var h0 = alt(0), rise = null;
+  /* Moonrise and moonset during the 24 h that start at `start` (an instant). Either can be null (no rise or no set that day). */
+  function moonTimes(start, lat, lng) {
+    var t = start.valueOf();
+    function alt(hrs) { return moonAltitude(new Date(t + hrs * 36e5), lat, lng); }
+    var h0 = alt(0), rise = null, set = null;
     for (var i = 1; i <= 24; i += 2) {
       var h1 = alt(i), h2 = alt(i + 1);
       var a = (h0 + h2) / 2 - h1, b = (h2 - h0) / 2, xe = -b / (2 * a), ye = (a * xe + b) * xe + h1;
@@ -62,13 +68,18 @@
         if (Math.abs(x2) <= 1) roots++;
         if (x1 < -1) x1 = x2;
       }
-      if (roots === 1) { if (h0 < 0) rise = i + x1; }
-      else if (roots === 2) { rise = i + (ye < 0 ? x2 : x1); }
-      if (rise !== null) break;
+      if (roots === 1) { if (h0 < 0) { if (rise === null) rise = i + x1; } else if (set === null) set = i + x1; }
+      else if (roots === 2) {
+        if (rise === null) rise = i + (ye < 0 ? x2 : x1);
+        if (set === null) set = i + (ye < 0 ? x1 : x2);
+      }
+      if (rise !== null && set !== null) break;
       h0 = h2;
     }
-    return rise === null ? null : new Date(t + rise * 36e5);
+    return { rise: rise === null ? null : new Date(t + rise * 36e5), set: set === null ? null : new Date(t + set * 36e5) };
   }
+  function moonrise(start, lat, lng) { return moonTimes(start, lat, lng).rise; }
+  function moonset(start, lat, lng) { return moonTimes(start, lat, lng).set; }
 
   /* ---- moon phase ---- */
   // Sun's geocentric ecliptic longitude, referred to the equinox of date (adds precession and aberration)
@@ -79,7 +90,11 @@
     var l = L + rad * (6.288774 * sin(M) + 1.274027 * sin(2 * D - M) + 0.658314 * sin(2 * D) + 0.213618 * sin(2 * M) -
       0.185116 * sin(Ms) - 0.114332 * sin(2 * F) + 0.058793 * sin(2 * D - 2 * M) + 0.057066 * sin(2 * D - Ms - M) +
       0.053322 * sin(2 * D + M) + 0.045758 * sin(2 * D - Ms) - 0.040923 * sin(Ms - M) - 0.034720 * sin(D) - 0.030383 * sin(Ms + M));
-    return { l: l, b: rad * 5.128 * sin(F), dist: 385001 - 20905 * cos(M) };
+    var b = rad * (5.128122 * sin(F) + 0.280602 * sin(M + F) + 0.277693 * sin(M - F) + 0.173237 * sin(2 * D - F) +
+      0.055413 * sin(2 * D - M + F) + 0.046271 * sin(2 * D - M - F) + 0.032573 * sin(2 * D + F) + 0.017198 * sin(2 * M + F));
+    var dist = 385000.56 - 20905.355 * cos(M) - 3699.111 * cos(2 * D - M) - 2955.968 * cos(2 * D) - 569.925 * cos(2 * M) +
+      48.888 * cos(Ms) - 3.149 * cos(2 * F) + 246.158 * cos(2 * D - 2 * M) - 152.138 * cos(2 * D - Ms - M) - 170.733 * cos(2 * D + M);
+    return { l: l, b: b, dist: dist };
   }
   /* fraction: lit part of the disc, 0 to 1. phase: 0 new, 0.25 first quarter, 0.5 full, 0.75 last quarter. */
   function moonIllumination(date) {
@@ -133,6 +148,6 @@
     return new Date(Date.UTC(+p.year, +p.month - 1, +p.day) - offset);
   }
 
-  window.NightBiteAstro = { sunset: sunset, moonrise: moonrise, etMidnight: etMidnight,
+  window.NightBiteAstro = { sunset: sunset, lastLight: lastLight, moonrise: moonrise, moonset: moonset, moonTimes: moonTimes, etMidnight: etMidnight,
     moonIllumination: moonIllumination, moonTonight: moonTonight };
 })();
