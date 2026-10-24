@@ -1026,6 +1026,8 @@ html.pad-input .pack-bait kbd { display: none; }
 .vale-desktop .desktop-only { display: block; }
 #pause-menu button.desktop-only { display: none; }
 .vale-desktop #pause-menu button.desktop-only { display: block; }
+#pause-menu label.desktop-only { display: none; }
+.vale-desktop #pause-menu label.desktop-only { display: block; }
 
 #pause-menu #pause-reset-yes { background: none; border-color: transparent; box-shadow: none; color: #8b6238; }
 #pause-menu button { min-width: 168px; text-align: center; }

@@ -57,6 +57,8 @@ const Pause = {
     }
     const shake = document.getElementById("pause-shake");
     if (shake) shake.checked = Settings.shake;
+    const startFs = document.getElementById("pause-start-fs");
+    if (startFs) startFs.checked = !!Settings.fullscreen;
   },
 
   askReset() {
@@ -129,6 +131,11 @@ const Pause = {
   const shake = document.getElementById("pause-shake");
   if (shake && typeof Settings !== "undefined") shake.addEventListener("change", () => {
     Settings.setShake(shake.checked);
+  });
+  const startFs = document.getElementById("pause-start-fs");
+  if (startFs && typeof Settings !== "undefined") startFs.addEventListener("change", () => {
+    if (typeof Settings.setFullscreen === "function") Settings.setFullscreen(startFs.checked);
+    Pause.refreshSettings();
   });
   const fsWeb = !window.valeDesktop
     && typeof document.documentElement.requestFullscreen === "function"
