@@ -831,6 +831,8 @@ const SFX_FILES = {
   step_grass: [["sfx_step_grass_01", 8379], ["sfx_step_grass_02", 8379], ["sfx_step_grass_03", 8379]],
   step_path: [["sfx_step_path_01", 8379], ["sfx_step_path_02", 8379], ["sfx_step_path_03", 8379]],
   step_wood: [["sfx_step_wood_01", 8379], ["sfx_step_wood_02", 8379], ["sfx_step_wood_03", 8379]],
+  door: [["sfx_door_01", 19845], ["sfx_door_02", 21168]],
+  bed: [["sfx_bed_01", 30870], ["sfx_bed_02", 29106]],
 };
 const SFX_TRIM = 0.35;
 
@@ -957,6 +959,14 @@ const AudioFX = {
     this._reelAt = now;
     this.ensure();
     this._sfxPlay("reel", 0.8);
+  },
+  door() {
+    this.ensure();
+    this._sfxPlay("door", 0.7);
+  },
+  bed() {
+    this.ensure();
+    this._sfxPlay("bed", 0.5);
   },
   _sfxInit() {
     if (!this.ctx || this._sfxBuf) return;

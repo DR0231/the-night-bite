@@ -813,6 +813,7 @@ const Game = {
     Player.sleeping = true;
     Player.vx = 0;
     Player.vy = 0;
+    try { if (typeof AudioFX !== "undefined" && typeof AudioFX.bed === "function") AudioFX.bed(); } catch (e) { /* bed cue optional */ }
     const night = TimeCycle.phaseId() === "night" || TimeCycle.phaseId() === "golden";
     const phase = night ? "dawn" : "golden";
     this.sleeping = {
@@ -997,7 +998,12 @@ const Game = {
         Camera.follow(Player.x, Player.y, dt, World.pw, World.ph, Player.vx, Player.vy);
         if (!this.fading && World.portalCool <= 0 && !Fishing.active) {
           const gate = World.portalAt(Player.x, Player.y);
-          if (gate) this.warp(gate);
+          if (gate) {
+            this.warp(gate);
+            if (this.fading && this.fading.portal === gate && (gate.to === "cottage" || World.id === "cottage")) {
+              try { if (typeof AudioFX !== "undefined" && typeof AudioFX.door === "function") AudioFX.door(); } catch (e) { /* door cue optional */ }
+            }
+          }
         }
         if (Math.random() < dt * (World.inCave() ? 1.4 : 0.6)) this._nightFlies();
         Save.data.playTime += dt;
