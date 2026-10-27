@@ -827,6 +827,7 @@ const SFX_FILES = {
   catch: [["sfx_catch_01", 37485], ["sfx_catch_02", 33075]],
   fail: [["sfx_fail_01", 18522], ["sfx_fail_02", 31752]],
   land: [["sfx_plop_01", 14553], ["sfx_plop_02", 6615]],
+  reel: [["sfx_reel_01", 2535], ["sfx_reel_02", 2756]],
 };
 const SFX_TRIM = 0.35;
 
@@ -835,6 +836,7 @@ const AudioFX = {
   muted: false,
   _out: null,
   _bus: null,
+  _reelAt: 0,
   ensure() {
     if (this.muted) return;
     try {
@@ -946,6 +948,13 @@ const AudioFX = {
     this.ensure();
     if (!this._sfxPlay("nibble")) this.tone(340, 0.05, "sine", 0.03, 180);
   },
+  reel() {
+    const now = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
+    if (now - this._reelAt < 85) return;
+    this._reelAt = now;
+    this.ensure();
+    this._sfxPlay("reel", 0.8);
+  },
   _sfxInit() {
     if (!this.ctx || this._sfxBuf) return;
     this._sfxBuf = {};
@@ -979,7 +988,7 @@ const AudioFX = {
       }
     });
   },
-  _sfxPlay(cue) {
+  _sfxPlay(cue, mul) {
     if (this.muted || !this.ctx || !Object.prototype.hasOwnProperty.call(SFX_FILES, cue)) return false;
     const list = SFX_FILES[cue];
     if (!list || !list.length || !this._sfxBuf) return false;
@@ -999,7 +1008,7 @@ const AudioFX = {
     const gain = this.ctx.createGain();
     src.buffer = buf;
     src.playbackRate.value = 1 + (Math.random() * 2 - 1) * 0.03;
-    gain.gain.value = SFX_TRIM;
+    gain.gain.value = SFX_TRIM * (typeof mul === "number" ? mul : 1);
     src.connect(gain).connect(this._dest("sfx"));
     const now = this.ctx.currentTime;
     try {
