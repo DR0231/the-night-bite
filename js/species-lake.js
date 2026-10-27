@@ -124,7 +124,7 @@
     }
     var links = el("p", "meta sp-now-links");
     var w = el("a", null, "Ramps and access at " + lakeName);
-    w.href = "../water.html#access";
+    w.href = "../water#access";
     links.appendChild(w);
     box.appendChild(links);
     box.hidden = false;

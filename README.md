@@ -103,6 +103,10 @@ Limit tables are **reminders only** — confirm on [HuntFish OH / ODNR licenses]
 | `whisperwood.html` | Game teaser (kept) |
 | `about.html` | Disclaimer, safety, regs reminders |
 
+## Clean addresses
+
+Pages are linked without `.html` (`water`, `updates`, `species/walleye`, `species/`, `./` for Home). GitHub Pages serves `water.html` at `/water`, so the files keep their `.html` names and old links and bookmarks still work. Canonicals, og:url, JSON-LD and `sitemap.xml` use the clean form too. Write new links the same way. Exceptions: links into Whisperwood (`whisperwood.html`, `whisperwood/play.html`) keep `.html`, because `/whisperwood` is also a folder and the Whisperwood auto-deploy writes those links. The service worker answers `/water` and `/water.html` from the same saved copy when offline.
+
 ## Lake home pages
 
 Each lake has its own address: Hoover is the root (`/`), Alum Creek is `/alum/`, Buckeye Lake is `/buckeye/`.
@@ -154,7 +158,7 @@ To add an update:
      "links": [{ "label": "Home", "href": "./" }]
    }
    ```
-   `tag` is `New`, `Improved` or `Fixed`. `id` must be unique; it becomes the entry's anchor (`updates.html#id`). Links are repo paths and must exist. Use the date the change went live (Eastern time), and only describe changes that actually shipped.
+   `tag` is `New`, `Improved` or `Fixed`. `id` must be unique; it becomes the entry's anchor (`updates#id`). Links are repo paths written without `.html` (`water#docks`, `species/walleye`, `./`) and must exist. Use the date the change went live (Eastern time), and only describe changes that actually shipped.
 2. Run `python3 tools/build-updates.py && python3 tools/build-lake-pages.py && python3 tools/stamp-version.py`.
    The build checks the data (order, tags, 2 to 5 bullets, no spaced dashes, links exist) and stops with a message if something is off. It then:
    * prerenders the entries into `updates.html` between `<!-- updates:start -->` and `<!-- updates:end -->`;

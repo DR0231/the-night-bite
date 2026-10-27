@@ -26,9 +26,9 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v10-2026-10-27">
+  <link rel="stylesheet" href="css/styles.css?v=v11-2026-10-27">
   <noscript><style>.glance,.glance-actions{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
-  <script src="js/lakes.js?v=v10-2026-10-27"></script>
+  <script src="js/lakes.js?v=v11-2026-10-27"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "WebSite", "name": "The Night Bite", "url": "https://nightbiteoh.com/"}
   </script>
@@ -47,21 +47,21 @@
         <ul>
           <li class="nav-core"><a href="./" aria-current="page">Home</a></li>
           <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
-          <li class="nav-core"><a href="water.html"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
-          <li class="nav-core"><a href="log.html">Log</a></li>
-          <li class="nav-extra"><a href="tournaments.html">Tournaments</a></li>
-          <li class="nav-extra"><a href="gear.html">Gear</a></li>
+          <li class="nav-core"><a href="water"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="log">Log</a></li>
+          <li class="nav-extra"><a href="tournaments">Tournaments</a></li>
+          <li class="nav-extra"><a href="gear">Gear</a></li>
           <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
-          <li class="nav-extra"><a href="about.html">About</a></li>
-          <li class="nav-extra"><a href="updates.html" data-updates="2026-10-27">What&rsquo;s new</a></li>
+          <li class="nav-extra"><a href="about">About</a></li>
+          <li class="nav-extra"><a href="updates" data-updates="2026-10-27">What&rsquo;s new</a></li>
           <li class="nav-more-item">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
-              <a href="gear.html">Gear</a>
-              <a href="tournaments.html">Tournaments</a>
+              <a href="gear">Gear</a>
+              <a href="tournaments">Tournaments</a>
               <a href="whisperwood.html">Whisperwood Vale</a>
-              <a href="about.html">About</a>
-              <a href="updates.html" data-updates="2026-10-27">What&rsquo;s new</a>
+              <a href="about">About</a>
+              <a href="updates" data-updates="2026-10-27">What&rsquo;s new</a>
             </div>
           </li>
         </ul>
@@ -144,7 +144,7 @@
       <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
         <p class="pool-lead" id="correction-line">890.79 ft · 63°F · ~3.2 ft below full pool</p>
-        <script src="js/pool-readout.js?v=v10-2026-10-27"></script>
+        <script src="js/pool-readout.js?v=v11-2026-10-27"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-10-26T08:00:00.000-04:00">2026-10-26 08:00 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
@@ -156,7 +156,7 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           Provisional snapshot; your browser may refresh it from USGS. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v10-2026-10-27"></script>
+        <script src="js/lake-snapshot.js?v=v11-2026-10-27"></script>
         <div class="pool-trend" id="pool-trend" hidden data-pending>
           <div class="pool-trend-head">
             <span class="pool-trend-label">Pool, last 7 days</span>
@@ -232,7 +232,7 @@
         <p class="meta cond-note">Sun and moon times are worked out on your phone, within a few minutes of the US Naval Observatory.</p>
       </section>
 
-      <a class="bento-card bento-maps" href="water.html#maps">
+      <a class="bento-card bento-maps" href="water#maps">
         <h3>Water / maps</h3>
         <p class="card-text" data-for="hoover">ODNR contours @ 894, city ramp map, USGS gauge, pool correction.</p>
         <p class="card-text" data-for="alum">ODNR fishing map @ 888, Corps ramps, USACE lake level, pool correction.</p>
@@ -251,7 +251,7 @@
         <p class="card-text">Cozy pixel fishing game. Fiction, not the real lake.</p>
         <span class="card-cue" aria-hidden="true">Play in the browser</span>
       </a>
-      <a class="bento-card bento-log" id="latest-log-card" href="log.html">
+      <a class="bento-card bento-log" id="latest-log-card" href="log">
         <h3>Latest log</h3>
         <div class="latest-log-body">
           <p class="meta log-loading">Opening the notebook…</p>
@@ -259,7 +259,7 @@
         <span class="card-cue" aria-hidden="true">Open the log</span>
       </a>
     </div>
-    <script src="js/glance.js?v=v10-2026-10-27"></script>
+    <script src="js/glance.js?v=v11-2026-10-27"></script>
 
     <section class="bento-card get-app" id="get-the-app" aria-labelledby="get-app-title">
       <div class="get-app-head">
@@ -295,7 +295,7 @@
         </details>
       </div>
     </section>
-    <script src="js/get-app.js?v=v10-2026-10-27"></script>
+    <script src="js/get-app.js?v=v11-2026-10-27"></script>
 
     <hr class="divider">
 
@@ -309,7 +309,7 @@
 
     <div class="callout warn">
       Night fishing can be dangerous in storms, heat, and low visibility. Wear a life jacket when it calls for it.
-      <span data-for="hoover">10 hp · drinking-water reservoir · license ages 16+.</span><span data-for="alum">No wake on the north end · drinking-water reservoir · license ages 16+.</span><span data-for="buckeye">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span> See <a href="about.html">About</a>.
+      <span data-for="hoover">10 hp · drinking-water reservoir · license ages 16+.</span><span data-for="alum">No wake on the north end · drinking-water reservoir · license ages 16+.</span><span data-for="buckeye">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span> See <a href="about">About</a>.
     </div>
   </main>
 
@@ -348,35 +348,35 @@
       <nav aria-label="Footer">
         <a href="./">Home</a>
         <a href="species/">Species</a>
-        <a href="water.html">Water</a>
-        <a href="log.html">Log</a>
-        <a href="tournaments.html">Tournaments</a>
-        <a href="gear.html">Gear</a>
-        <a href="about.html">About</a>
-        <a href="updates.html" data-updates="2026-10-27">What&rsquo;s new</a>
-        <a href="privacy.html">Privacy</a>
+        <a href="water">Water</a>
+        <a href="log">Log</a>
+        <a href="tournaments">Tournaments</a>
+        <a href="gear">Gear</a>
+        <a href="about">About</a>
+        <a href="updates" data-updates="2026-10-27">What&rsquo;s new</a>
+        <a href="privacy">Privacy</a>
         <a href="whisperwood.html">Whisperwood Vale</a>
       </nav>
       <p class="footer-app"><a href="#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v10-2026-10-27"></script>
-  <script src="js/sw-update.js?v=v10-2026-10-27"></script>
-  <script src="js/alerts.js?v=v10-2026-10-27"></script>
-  <script src="js/nav.js?v=v10-2026-10-27"></script>
-  <script src="js/lake-picker.js?v=v10-2026-10-27"></script>
-  <script src="js/usgs.js?v=v10-2026-10-27"></script>
-  <script src="js/home-log.js?v=v10-2026-10-27"></script>
-  <script src="js/astro.js?v=v10-2026-10-27"></script>
-  <script src="js/conditions.js?v=v10-2026-10-27"></script>
-  <script src="js/pool-trend.js?v=v10-2026-10-27"></script>
-  <script src="js/hoover-map-data.js?v=v10-2026-10-27"></script>
-  <script src="js/lake-map-data-alum.js?v=v10-2026-10-27"></script>
-  <script src="js/lake-map-data-buckeye.js?v=v10-2026-10-27"></script>
-  <script src="js/hoover-map.js?v=v10-2026-10-27"></script>
-  <script src="js/install-tip.js?v=v10-2026-10-27"></script>
-  <script src="js/tonight-tools.js?v=v10-2026-10-27"></script>
+  <script src="js/refresh.js?v=v11-2026-10-27"></script>
+  <script src="js/sw-update.js?v=v11-2026-10-27"></script>
+  <script src="js/alerts.js?v=v11-2026-10-27"></script>
+  <script src="js/nav.js?v=v11-2026-10-27"></script>
+  <script src="js/lake-picker.js?v=v11-2026-10-27"></script>
+  <script src="js/usgs.js?v=v11-2026-10-27"></script>
+  <script src="js/home-log.js?v=v11-2026-10-27"></script>
+  <script src="js/astro.js?v=v11-2026-10-27"></script>
+  <script src="js/conditions.js?v=v11-2026-10-27"></script>
+  <script src="js/pool-trend.js?v=v11-2026-10-27"></script>
+  <script src="js/hoover-map-data.js?v=v11-2026-10-27"></script>
+  <script src="js/lake-map-data-alum.js?v=v11-2026-10-27"></script>
+  <script src="js/lake-map-data-buckeye.js?v=v11-2026-10-27"></script>
+  <script src="js/hoover-map.js?v=v11-2026-10-27"></script>
+  <script src="js/install-tip.js?v=v11-2026-10-27"></script>
+  <script src="js/tonight-tools.js?v=v11-2026-10-27"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

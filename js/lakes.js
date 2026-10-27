@@ -199,7 +199,7 @@
       var root0 = BASE.replace(/[?#].*$/, ""), links = document.querySelectorAll("a[href]");
       for (var j = 0; j < links.length; j++) {
         var a = links[j], h = a.href.replace(/[?#].*$/, "");
-        if (h === root0 || h === root0 + "index.html") a.href = homeFor(id) + (a.hash || "");
+        if (h === root0 || h === root0 + "index.html" || h === root0 + "index") a.href = homeFor(id) + (a.hash || "");
       }
     }
     root.classList.add("lk-ready");

@@ -19,7 +19,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v10-2026-10-27";
+var VERSION = "v11-2026-10-27";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
@@ -204,6 +204,7 @@ function cachedPage(url) {
   var tries = [href];
   if (/\/$/.test(href)) tries.push(href + "index.html");
   else if (/\/index\.html$/.test(href)) tries.push(href.replace(/index\.html$/, ""));
+  else if (/\.html$/.test(href)) tries.push(href.replace(/\.html$/, ""));
   else if (!/\.[a-z0-9]+$/i.test(href)) { tries.push(href + ".html"); tries.push(href + "/"); }
   return caches.open(CACHE).then(function (cache) {
     var i = 0;

@@ -9,11 +9,11 @@ It writes
     without JavaScript and search engines see it. Draft entries ("draft": true, "date": null) are rendered with
     class "is-draft"; the CSS hides them unless js/updates-draft.js marks the page as a preview (any host other than
     nightbiteoh.com), so a draft never shows on the live site even if it gets promoted by mistake.
-  · data-updates="YYYY-MM-DD" on every link to updates.html in the site's pages (newest dated entry), which js/nav.js
+  · data-updates="YYYY-MM-DD" on every link to the What's new page (updates, no .html) in the site's pages (newest dated entry), which js/nav.js
     compares with what the visitor last saw to show the small New dot.
-  · the <lastmod> of updates.html in sitemap.xml.
+  · the <lastmod> of /updates in sitemap.xml.
 Checks: dates are YYYY-MM-DD, newest first; tag is New, Improved or Fixed; 2 to 5 bullets; no spaced dashes; every
-link points at a file in the repo. whisperwood.html and everything under whisperwood/ are left alone.
+link points at a page in the repo, written without .html (water#docks, species/walleye, ./). whisperwood.html and everything under whisperwood/ are left alone.
 """
 import datetime, html, json, pathlib, re, sys
 
@@ -32,7 +32,10 @@ def link_ok(href):
     if path in ("", "./"):
         return (root / "index.html").exists()
     p = root / path
-    return (p / "index.html").exists() if path.endswith("/") else p.exists()
+    if path.endswith("/"):
+        return (p / "index.html").exists()
+    # links are written without .html (GitHub Pages serves foo.html at foo)
+    return not path.endswith(".html") and (root / (path + ".html")).exists()
 
 ids, last = set(), None
 for i, e in enumerate(entries):
@@ -111,7 +114,7 @@ if new != src:
     page.write_text(new)
 
 # ---- data-updates on every link to the page (drives the New dot), and the sitemap lastmod
-pat = re.compile(r'(<a href="(?:\.\./|/night-bite-preview/|/)?updates\.html")(?: data-updates="[^"]*")?')
+pat = re.compile(r'(<a href="(?:\.\./|/night-bite-preview/|/)?updates")(?: data-updates="[^"]*")?')
 pages = 0
 for p in sorted(root.rglob("*.html")):
     rel = p.relative_to(root).as_posix()
@@ -123,7 +126,7 @@ for p in sorted(root.rglob("*.html")):
         p.write_text(t); pages += 1
 sm = root / "sitemap.xml"
 s = sm.read_text()
-t = re.sub(r"(<loc>https://nightbiteoh\.com/updates\.html</loc>\s*<lastmod>)[^<]*", lambda m: m.group(1) + latest, s)
+t = re.sub(r"(<loc>https://nightbiteoh\.com/updates</loc>\s*<lastmod>)[^<]*", lambda m: m.group(1) + latest, s)
 if t != s:
     sm.write_text(t)
 print(f"updates: {len(dated)} dated, {len(entries) - len(dated)} draft; newest {latest}; stamped links on {pages} pages")

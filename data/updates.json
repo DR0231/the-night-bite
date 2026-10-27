@@ -23,11 +23,11 @@
         },
         {
           "label": "Dock season",
-          "href": "water.html#docks"
+          "href": "water#docks"
         },
         {
           "label": "Ice season",
-          "href": "ice.html"
+          "href": "ice"
         }
       ]
     },
@@ -70,7 +70,7 @@
       "links": [
         {
           "label": "Log",
-          "href": "log.html"
+          "href": "log"
         }
       ]
     },
@@ -92,7 +92,7 @@
         },
         {
           "label": "Water",
-          "href": "water.html"
+          "href": "water"
         },
         {
           "label": "Species",
@@ -100,7 +100,7 @@
         },
         {
           "label": "Tournaments",
-          "href": "tournaments.html"
+          "href": "tournaments"
         }
       ]
     },
@@ -167,11 +167,11 @@
         },
         {
           "label": "Gear",
-          "href": "gear.html"
+          "href": "gear"
         },
         {
           "label": "About",
-          "href": "about.html"
+          "href": "about"
         }
       ]
     }

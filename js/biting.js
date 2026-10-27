@@ -30,7 +30,7 @@
       var li = document.createElement("li");
       var a = document.createElement("a");
       a.className = "biting-item";
-      a.href = p.id + ".html";
+      a.href = p.id;
       var img = document.createElement("img");
       img.src = "../assets/icons/fish-" + p.id + ".svg";
       img.alt = "";

@@ -25,7 +25,7 @@
     var card = el("article", "card ice-species-card");
     var h = el("h3");
     var a = el("a", null, names[sp] || sp.replace(/-/g, " "));
-    a.href = "species/" + sp + ".html";
+    a.href = "species/" + sp;
     h.appendChild(a);
     card.appendChild(h);
     var dl = el("dl", "ice-months");
