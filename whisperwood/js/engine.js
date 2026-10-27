@@ -819,7 +819,7 @@ if (window.valeDesktop && typeof window.valeDesktop.onFullscreenChange === "func
 }
 
 const MUSIC = { day: 2791545, rain: 3388883, cottage: 3045368, ending: 864360 };
-const AMBIENCE = { dawn: ["amb_dawn_birds_loop", 2778300], day: ["amb_day_leaves_loop", 2425500], golden: ["amb_dusk_crickets_loop", 2646000], night: ["amb_night_bed_loop", 2646000] };
+const AMBIENCE = { dawn: ["amb_dawn_birds_loop", 2778300], day: ["amb_day_leaves_loop", 2425500], golden: ["amb_dusk_crickets_loop", 2646000], night: ["amb_night_bed_loop", 2646000], cottage_rain: ["amb_cottage_rain", 2646000] };
 const AMB_OWLS = [["amb_night_owl_01", 72765], ["amb_night_owl_02", 94815], ["amb_night_owl_03", 81586], ["amb_night_owl_04", 77175]];
 const SFX_FILES = {
   nibble: [["sfx_nibble_01", 5292], ["sfx_nibble_02", 3307]],

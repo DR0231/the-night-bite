@@ -1025,6 +1025,7 @@ const Game = {
       const outdoor = World.id === "vale" || World.id === "marsh" || World.id === "island";
       const rain = typeof TimeCycle !== "undefined" && TimeCycle.weatherId() === "rain";
       let amb = outdoor && !rain ? TimeCycle.phaseId() : null;
+      if (World.id === "cottage" && rain) amb = "cottage_rain";
       let level = 1;
       if (amb && typeof TimeCycle !== "undefined" && TimeCycle.season() === "winter") {
         if (amb === "golden") amb = "day";
