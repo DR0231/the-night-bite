@@ -828,6 +828,9 @@ const SFX_FILES = {
   fail: [["sfx_fail_01", 18522], ["sfx_fail_02", 31752]],
   land: [["sfx_plop_01", 14553], ["sfx_plop_02", 6615]],
   reel: [["sfx_reel_01", 2535], ["sfx_reel_02", 2756]],
+  step_grass: [["sfx_step_grass_01", 8379], ["sfx_step_grass_02", 8379], ["sfx_step_grass_03", 8379]],
+  step_path: [["sfx_step_path_01", 8379], ["sfx_step_path_02", 8379], ["sfx_step_path_03", 8379]],
+  step_wood: [["sfx_step_wood_01", 8379], ["sfx_step_wood_02", 8379], ["sfx_step_wood_03", 8379]],
 };
 const SFX_TRIM = 0.35;
 
@@ -1196,11 +1199,11 @@ const AudioFX = {
     const t = typeof World !== "undefined" && World.tileAt ? World.tileAt(Player.x, Player.y) : TILE.GRASS;
     const jitter = Math.random();
     if (t === TILE.GRASS) {
-      this.tone(108 + jitter * 18, 0.045, "sine", 0.016);
+      if (!this._sfxPlay("step_grass", 0.6)) this.tone(108 + jitter * 18, 0.045, "sine", 0.016);
     } else if (t === TILE.DIRT || t === TILE.SHORE) {
-      this.tone(82 + jitter * 16, 0.05, "triangle", 0.02);
+      if (!this._sfxPlay("step_path", 0.5)) this.tone(82 + jitter * 16, 0.05, "triangle", 0.02);
     } else if (t === TILE.DOCK || t === TILE.BRIDGE || t === TILE.WOOD) {
-      this.tone(168 + jitter * 22, 0.036, "square", 0.011);
+      if (!this._sfxPlay("step_wood", 0.5)) this.tone(168 + jitter * 22, 0.036, "square", 0.011);
     } else if (t === TILE.STONE || t === TILE.CAVE_FLOOR || t === TILE.CAVE_WALL || t === TILE.MARSH) {
       this.tone(68 + jitter * 14, 0.055, "sine", 0.022, 48);
     } else {
