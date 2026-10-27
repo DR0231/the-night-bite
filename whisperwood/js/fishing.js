@@ -305,6 +305,7 @@ const Fishing = {
       const tensionPlay = this.state === "play" && (Minigame.kind === "tension" || Minigame.kind === "tensionErratic");
       if (tensionPlay) {
         Minigame.update(dt);
+        if (this.state === "play" && Minigame.holding() && typeof AudioFX.reel === "function") AudioFX.reel();
         const pull = Minigame.pull || 0;
         const w = Minigame.weight || 0.12;
         const dip = Math.abs(pull);
@@ -334,6 +335,7 @@ const Fishing = {
     }
 
     if (this.state === "reel") {
+      if (typeof AudioFX.reel === "function") AudioFX.reel();
       const u = Utils.clamp(this.t / 0.62, 0, 1);
       const ease = 1 - Math.pow(1 - u, 2);
       const struggle = (1 - ease) * feel.yank * Math.sin(this.t * 16);
