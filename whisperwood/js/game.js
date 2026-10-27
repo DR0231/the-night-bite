@@ -1014,7 +1014,8 @@ const Game = {
     try { if (typeof Onboard !== "undefined") Onboard.observe(); } catch (e) { /* nudges optional */ }
     try {
       const rain = typeof TimeCycle !== "undefined" && TimeCycle.weatherId() === "rain" && !World.indoor();
-      if (typeof AudioFX !== "undefined") AudioFX.syncRain(!!rain);
+      const recorded = typeof AudioFX !== "undefined" && typeof AudioFX.ambLive === "function" && AudioFX.ambLive("outdoor_rain");
+      if (typeof AudioFX !== "undefined") AudioFX.syncRain(!!rain && !recorded);
     } catch (e) { /* rain bed optional */ }
     try { if (typeof AudioFX !== "undefined") AudioFX.syncMill(now / 1000); } catch (e) { /* mill bed optional */ }
     try {
@@ -1026,6 +1027,7 @@ const Game = {
       const rain = typeof TimeCycle !== "undefined" && TimeCycle.weatherId() === "rain";
       let amb = outdoor && !rain ? TimeCycle.phaseId() : null;
       if (World.id === "cottage" && rain) amb = "cottage_rain";
+      if (outdoor && rain) amb = "outdoor_rain";
       let level = 1;
       if (amb && typeof TimeCycle !== "undefined" && TimeCycle.season() === "winter") {
         if (amb === "golden") amb = "day";
