@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the What's new page and feed from data/updates.json (the one place entries live).
+"""Build the What's new page from data/updates.json (the one place entries live).
 
 Run from the repo root after editing data/updates.json, then stamp as usual:
     python3 tools/build-updates.py && python3 tools/stamp-version.py
@@ -9,7 +9,6 @@ It writes
     without JavaScript and search engines see it. Draft entries ("draft": true, "date": null) are rendered with
     class "is-draft"; the CSS hides them unless js/updates-draft.js marks the page as a preview (any host other than
     nightbiteoh.com), so a draft never shows on the live site even if it gets promoted by mistake.
-  · updates.xml: an Atom feed of the dated entries only (drafts are never in the feed).
   · data-updates="YYYY-MM-DD" on every link to updates.html in the site's pages (newest dated entry), which js/nav.js
     compares with what the visitor last saw to show the small New dot.
   · the <lastmod> of updates.html in sitemap.xml.
@@ -17,13 +16,9 @@ Checks: dates are YYYY-MM-DD, newest first; tag is New, Improved or Fixed; 2 to 
 link points at a file in the repo. whisperwood.html and everything under whisperwood/ are left alone.
 """
 import datetime, html, json, pathlib, re, sys
-from zoneinfo import ZoneInfo
-from urllib.parse import urljoin
 
 root = pathlib.Path(__file__).resolve().parent.parent
-SITE = "https://nightbiteoh.com/"
 TAGS = {"New", "Improved", "Fixed"}
-ET = ZoneInfo("America/New_York")
 data = json.loads((root / "data/updates.json").read_text())
 entries = data["entries"]
 errors = []
@@ -114,33 +109,6 @@ if n != 1:
     sys.exit("updates.html: markers <!-- updates:start --> / <!-- updates:end --> not found")
 if new != src:
     page.write_text(new)
-
-# ---- updates.xml (Atom), dated entries only
-def stamp(d):
-    return datetime.datetime.combine(datetime.date.fromisoformat(d), datetime.time(12, 0), ET).isoformat()
-
-feed = ['<?xml version="1.0" encoding="utf-8"?>', '<feed xmlns="http://www.w3.org/2005/Atom">',
-        "  <title>The Night Bite: What's new</title>",
-        "  <subtitle>Updates to The Night Bite, an unofficial fishing hub for Hoover Reservoir, Alum Creek Lake and Buckeye Lake in Ohio.</subtitle>",
-        f'  <link rel="alternate" type="text/html" href="{SITE}updates.html"/>',
-        f'  <link rel="self" type="application/atom+xml" href="{SITE}updates.xml"/>',
-        f"  <id>{SITE}updates.html</id>",
-        f"  <updated>{stamp(latest) if latest else ''}</updated>",
-        "  <author><name>The Night Bite</name></author>",
-        f'  <icon>{SITE}favicon.ico</icon>']
-for e in dated:
-    body = "<p>" + esc(e.get("tag", "")) + "</p>" if e.get("tag") else ""
-    body += "<ul>" + "".join(f"<li>{esc(b)}</li>" for b in e["bullets"]) + "</ul>"
-    if e.get("links"):
-        body += "<p>Pages: " + ", ".join(f'<a href="{esc(urljoin(SITE, l["href"]))}">{esc(l["label"])}</a>' for l in e["links"]) + "</p>"
-    feed += ["  <entry>", f"    <title>{esc(e['title'])}</title>",
-             f'    <link rel="alternate" type="text/html" href="{SITE}updates.html#{e["id"]}"/>',
-             f"    <id>{SITE}updates.html#{e['id']}</id>",
-             f"    <published>{stamp(e['date'])}</published>", f"    <updated>{stamp(e['date'])}</updated>",
-             *([f'    <category term="{esc(e["tag"])}"/>'] if e.get("tag") else []),
-             f'    <content type="html">{esc(body)}</content>', "  </entry>"]
-feed.append("</feed>")
-(root / "updates.xml").write_text("\n".join(feed) + "\n")
 
 # ---- data-updates on every link to the page (drives the New dot), and the sitemap lastmod
 pat = re.compile(r'(<a href="(?:\.\./|/night-bite-preview/|/)?updates\.html")(?: data-updates="[^"]*")?')

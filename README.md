@@ -139,7 +139,7 @@ the script URL), so the permission prompt names whatever site serves it.
 
 ## What's new (updates.html)
 
-`updates.html` lists new features, improvements and fixes, newest first. Everything comes from one file, `data/updates.json`; `tools/build-updates.py` turns it into the page and the feed, so the page reads without JavaScript and search engines see it.
+`updates.html` lists new features, improvements and fixes, newest first. Everything comes from one file, `data/updates.json`; `tools/build-updates.py` turns it into the page, so the page reads without JavaScript and search engines see it.
 
 To add an update:
 
@@ -158,14 +158,13 @@ To add an update:
 2. Run `python3 tools/build-updates.py && python3 tools/build-lake-pages.py && python3 tools/stamp-version.py`.
    The build checks the data (order, tags, 2 to 5 bullets, no spaced dashes, links exist) and stops with a message if something is off. It then:
    * prerenders the entries into `updates.html` between `<!-- updates:start -->` and `<!-- updates:end -->`;
-   * writes the Atom feed `updates.xml` (dated entries only; linked from Home and updates.html with `<link rel="alternate">`);
    * stamps `data-updates="<newest date>"` on every What's new link in the nav, More menu and footer;
    * sets the `<lastmod>` for updates.html in `sitemap.xml`.
 3. Bump `VERSION` in `sw.js` and deploy as usual.
 
 **New dot.** `js/nav.js` compares the newest date on the links with `nb-updates-seen` in localStorage and shows a small amber dot on What's new (and on the More button on phones) until the visitor opens the page. Adding a dated entry turns the dot back on for everyone.
 
-**Drafts.** An entry with `"draft": true` and `"date": null` is for features that are only on the preview. It shows on the preview (and localhost) with a dashed line and "Preview only", stays hidden on nightbiteoh.com (`js/updates-draft.js`), and never goes in the feed. When the feature ships, set its date, remove `"draft": true`, move it into date order and rebuild.
+**Drafts.** An entry with `"draft": true` and `"date": null` is for features that are only on the preview. It shows on the preview (and localhost) with a dashed line and "Preview only", stays hidden on nightbiteoh.com (`js/updates-draft.js`). When the feature ships, set its date, remove `"draft": true`, move it into date order and rebuild.
 
 ## Keep test runs out of the stats
 

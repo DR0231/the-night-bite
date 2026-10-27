@@ -2990,7 +2990,6 @@ html:not([data-lake]) .sp-away .species-card[data-lakes][data-lakes]:not([hidden
 .ice-months dd { margin: 0; }
 
 /* What's new (updates.html): a quiet timeline, newest first. Pixel type only for the page h1. */
-.updates-follow a { white-space: nowrap; }
 .updates { list-style: none; margin: var(--space-lg) 0 0; padding: 0; }
 .update {
   position: relative;
