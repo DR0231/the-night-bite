@@ -93,9 +93,10 @@ Limit tables are **reminders only** — confirm on [HuntFish OH / ODNR licenses]
 |------|---------|
 | `index.html` | Hub home for Hoover (the site root), lake level and tonight's bite up top, pool/temp snapshot, next actions |
 | `alum/index.html`, `buckeye/index.html` | Alum Creek and Buckeye Lake home pages, built from `index.html` (see Lake home pages) |
-| `species/index.html` | Filterable species grid |
-| `species/*.html` | Per-species Season · Where · Limits · Gear · Bait |
-| `water.html` | Maps, pool correction, structure, ramps |
+| `species/index.html` | Filterable species grid for the active lake: Biting now tags, a "Not at <lake>" group, ramps and access (`js/species-lake.js`) |
+| `species/*.html` | Per-species Season · Where · Limits · Gear · Bait, with an "at <lake> this month" note under the title |
+| `water.html` | Maps, pool correction, structure, ramps, dock season, link to Ice season |
+| `ice.html` | Ice season: ODNR ice safety, who to call per lake, winter species from the monthly notes. No ice reports |
 | `log.html` | Community JSON + private localStorage + submit |
 | `tournaments.html` | Static JSON list + submit |
 | `gear.html` | Short kits (affiliate placeholders) |
@@ -112,10 +113,59 @@ python3 tools/build-lake-pages.py && python3 tools/stamp-version.py
 ```
 
 The generator adds `<base href="../">` (so every asset, script and fetch resolves from the root), the lake's
-`nb-home` meta, its own title, description, canonical and OG tags, and points in-page links at the lake's page.
+`nb-home` meta, its own title, description, canonical and OG tags (og:image is `assets/og/og-<lake>.png`), and points in-page links at the lake's page.
 `js/lakes.js` reads `nb-home`. Old links still work: `/?lake=alum` and a saved lake choice (localStorage `nb-lake`)
 send the root to `/alum/`. On Home the lake picker goes to the lake's address; on other pages it adds `?lake=`.
 All three home pages are precached by `sw.js`, so each opens offline. List new lakes in `sitemap.xml` too.
+
+## Home tools: Share tonight, Remind me
+
+`js/tonight-tools.js` adds two buttons under the Right now strip.
+A one line note under them ("Share tonight's wind, weather, sunset and what's biting") says what the card holds, so
+Share doesn't read as sharing only the strip above. No live thumbnail: at thumbnail size the card's text is unreadable,
+it would wait on the forecast, and it crowds the first screen.
+Share tonight draws a 1200x630 PNG on the phone from what the page shows, angler info first: wind and gusts, air and
+feels like, sky and rain chance (NWS), any NWS watch or warning (event name only), sunset, moonrise and moon (worked out
+on the phone), water temp only where the lake has a public temp gauge (Hoover; Alum and Buckeye say "No public temp
+gauge"), and the top 3 picks from the lake's "What's biting now" month notes. Lake level and the bite rating sit on one
+small line. "--" when a value is missing. No URL and no source footer on the image; the sources are listed under it in
+the dialog. Shares with the Web Share API with files where supported, or a download.
+Remind me picks any time of day on a wheel (hour 1 to 12, minutes in 5 minute steps, AM/PM; scroll-snap columns with
+spinbutton roles and arrow keys) or the Sunset button (exact minute). A time that already passed today rolls to tomorrow
+and says so. No push server: a `.ics` calendar file (always works), and a phone notification that uses Notification
+Triggers where the browser has them, otherwise a timer that only runs while the app is open.
+`sw.js` handles `notificationclick` to open the lake's home page. Every URL comes from the page's own origin (`homeFor`,
+the script URL), so the permission prompt names whatever site serves it.
+
+## What's new (updates.html)
+
+`updates.html` lists new features, improvements and fixes, newest first. Everything comes from one file, `data/updates.json`; `tools/build-updates.py` turns it into the page and the feed, so the page reads without JavaScript and search engines see it.
+
+To add an update:
+
+1. Add an entry at the top of `entries` in `data/updates.json` (below any draft):
+   ```json
+   {
+     "id": "2026-11-02-short-name",
+     "date": "2026-11-02",
+     "tag": "New",
+     "title": "Short title",
+     "bullets": ["What changed, in plain words.", "Two to five bullets."],
+     "links": [{ "label": "Home", "href": "./" }]
+   }
+   ```
+   `tag` is `New`, `Improved` or `Fixed`. `id` must be unique; it becomes the entry's anchor (`updates.html#id`). Links are repo paths and must exist. Use the date the change went live (Eastern time), and only describe changes that actually shipped.
+2. Run `python3 tools/build-updates.py && python3 tools/build-lake-pages.py && python3 tools/stamp-version.py`.
+   The build checks the data (order, tags, 2 to 5 bullets, no spaced dashes, links exist) and stops with a message if something is off. It then:
+   * prerenders the entries into `updates.html` between `<!-- updates:start -->` and `<!-- updates:end -->`;
+   * writes the Atom feed `updates.xml` (dated entries only; linked from Home and updates.html with `<link rel="alternate">`);
+   * stamps `data-updates="<newest date>"` on every What's new link in the nav, More menu and footer;
+   * sets the `<lastmod>` for updates.html in `sitemap.xml`.
+3. Bump `VERSION` in `sw.js` and deploy as usual.
+
+**New dot.** `js/nav.js` compares the newest date on the links with `nb-updates-seen` in localStorage and shows a small amber dot on What's new (and on the More button on phones) until the visitor opens the page. Adding a dated entry turns the dot back on for everyone.
+
+**Drafts.** An entry with `"draft": true` and `"date": null` is for features that are only on the preview. It shows on the preview (and localhost) with a dashed line and "Preview only", stays hidden on nightbiteoh.com (`js/updates-draft.js`), and never goes in the feed. When the feature ships, set its date, remove `"draft": true`, move it into date order and rebuild.
 
 ## Keep test runs out of the stats
 

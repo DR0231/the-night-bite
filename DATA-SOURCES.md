@@ -107,6 +107,38 @@ Gaps (said on the site, never filled in):
 - No community trips logged at either lake yet; the sample trip is Hoover's.
 - Structure notes for these lakes are reference notes, not first-hand nights.
 
+## Lake-aware Species (js/species-lake.js)
+
+No new data. Which species live at each lake: `data-lakes` on each card (same lists as `js/lakes.js`). Biting now:
+the current month's picks from `js/biting-data.js` / `js/biting-data-lakes.js`. Ramps and access: the lake's map data
+places of type ramp or access, shown with their own source labels.
+
+## Share card (js/tonight-tools.js)
+
+No new data. The card copies the Right now strip (USGS or USACE gauge with its "Checked" time; bite rule of thumb
+from the NWS forecast with its "Checked" time) and prints "--" for anything missing. Static per-lake OG images
+(`assets/og/og-alum.png`, `og-buckeye.png`) are the site art with the lake's name, no live data.
+
+## Dock season (water.html#docks), checked Oct. 27, 2026
+
+- Hoover: Columbus Recreation and Parks, Marinas & Docks, season May 1 to Oct. 31, dock office 614-645-3337.
+  https://columbusrecparks.com/facilities/rentals/marinas-and-docks/
+- Alum Creek: ODNR Alum Creek State Park, office (740) 548-4631, Alum Creek Marina (740) 548-6056.
+  https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park and https://www.alumcreekmarina.net/
+- Buckeye Lake: ODNR Buckeye Lake State Park, office (740) 527-4218.
+  https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park
+- No 2026 pull dates are posted for any of the three.
+
+## Ice season (ice.html), checked Oct. 27, 2026
+
+- ODNR Ice Fishing Safety: https://ohiodnr.gov/discover-and-learn/safety-conservation/recreational-safety/ice-fishing-safety
+  ("No ice is safe ice", safety tips, six tip-ups labeled with name and address, Buckeye Lake as a saugeye ice lake).
+- ODNR Ice Thickness Guidelines: https://ohiodnr.gov/discover-and-learn/safety-conservation/recreational-safety/ice-thickness-guidelines
+  (linked only; no thickness numbers on the site).
+- City of Columbus Watershed Management (Hoover "subject to significant water level fluctuation", 614-645-1721):
+  https://www.columbus.gov/Services/Columbus-Water-Power/About-Columbus-Water-Power/The-Division-of-Water/Reservoir-Land-Stewardship-Program/About-the-Columbus-Watershed-Management-Section
+- Winter species: December to February picks from the site's own biting data. No ice reports, ever.
+
 ## Offline and Add to Home Screen
 
 No new data. The service worker (`sw.js`) caches this site's own files only; live NWS, USGS and Corps of Engineers requests are never cached by it. The last good live readings are kept in the browser (localStorage) and shown offline with "Offline. Last updated HH:MM ET". Details and the plan for the live site are in SERVICE-WORKER.md.

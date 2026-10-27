@@ -16,10 +16,10 @@
   <link rel="canonical" href="https://nightbiteoh.com/buckeye/">
   <meta property="og:title" content="The Night Bite: Buckeye Lake fishing hub">
   <meta property="og:description" content="Unofficial Buckeye Lake fishing hub, Ohio: live lake level, tonight&#39;s bite, species, water maps, trip log, gear.">
-  <meta property="og:image" content="https://nightbiteoh.com/assets/og/og-card.png">
+  <meta property="og:image" content="https://nightbiteoh.com/assets/og/og-buckeye.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="The Night Bite: a pixel lantern over a moonlit tree line">
+  <meta property="og:image:alt" content="The Night Bite: Buckeye Lake fishing hub, a pixel lantern over a moonlit tree line">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nightbiteoh.com/buckeye/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -28,9 +28,10 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v8-2026-10-27">
-  <noscript><style>.glance{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
-  <script src="js/lakes.js?v=v8-2026-10-27"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v9-2026-10-27">
+  <noscript><style>.glance,.glance-actions{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
+  <link rel="alternate" type="application/atom+xml" title="The Night Bite: What’s new" href="updates.xml">
+  <script src="js/lakes.js?v=v9-2026-10-27"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "WebSite", "name": "The Night Bite", "url": "https://nightbiteoh.com/buckeye/"}
   </script>
@@ -55,6 +56,7 @@
           <li class="nav-extra"><a href="gear.html">Gear</a></li>
           <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
           <li class="nav-extra"><a href="about.html">About</a></li>
+          <li class="nav-extra"><a href="updates.html" data-updates="2026-10-27">What&rsquo;s new</a></li>
           <li class="nav-more-item">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
@@ -62,6 +64,7 @@
               <a href="tournaments.html">Tournaments</a>
               <a href="whisperwood.html">Whisperwood Vale</a>
               <a href="about.html">About</a>
+              <a href="updates.html" data-updates="2026-10-27">What&rsquo;s new</a>
             </div>
           </li>
         </ul>
@@ -91,6 +94,41 @@
         <span class="glance-sub" data-glance="bite-sub">Loading the forecast</span>
       </a>
     </div>
+    <div class="glance-actions" id="glance-actions">
+      <button type="button" class="glance-btn" data-act="share" aria-haspopup="dialog" aria-controls="tt-share" aria-describedby="glance-share-note">Share tonight</button>
+      <button type="button" class="glance-btn" data-act="remind" aria-haspopup="dialog" aria-controls="tt-remind">Remind me</button>
+      <p class="glance-note" id="glance-share-note">Share tonight’s wind, weather, sunset and what’s biting</p>
+    </div>
+    <dialog class="tt-dialog" id="tt-share" aria-labelledby="tt-share-title">
+      <h2 id="tt-share-title">Tonight at a glance</h2>
+      <img class="tt-share-img" id="tt-share-img" alt="Share card: tonight's lake level and bite rating" width="1200" height="630">
+      <p class="meta tt-share-src" id="tt-share-msg" role="status"></p>
+      <div class="tt-actions">
+        <button type="button" class="btn" id="tt-share-go" hidden>Share</button>
+        <a class="btn" id="tt-share-dl" href="buckeye/#" download>Download PNG</a>
+        <button type="button" class="btn btn-ghost tt-close">Close</button>
+      </div>
+    </dialog>
+    <dialog class="tt-dialog" id="tt-remind" aria-labelledby="tt-remind-title">
+      <h2 id="tt-remind-title">Remind me</h2>
+      <div class="tt-wheel" role="group" aria-labelledby="tt-wheel-label">
+        <span class="sr-only" id="tt-wheel-label">Reminder time</span>
+        <div class="tt-col" data-col="h" role="spinbutton" tabindex="0" aria-label="Hour" aria-valuemin="1" aria-valuemax="12"><ul class="tt-col-list" aria-hidden="true"></ul></div>
+        <span class="tt-colon" aria-hidden="true">:</span>
+        <div class="tt-col" data-col="m" role="spinbutton" tabindex="0" aria-label="Minute, 5 minute steps" aria-valuemin="0" aria-valuemax="55"><ul class="tt-col-list" aria-hidden="true"></ul></div>
+        <div class="tt-col tt-col-ap" data-col="ap" role="spinbutton" tabindex="0" aria-label="AM or PM" aria-valuemin="0" aria-valuemax="1"><ul class="tt-col-list" aria-hidden="true"></ul></div>
+      </div>
+      <div class="tt-quick"><button type="button" class="tt-chip" id="tt-remind-sunset" hidden>Sunset</button></div>
+      <p class="tt-when" id="tt-remind-when" aria-live="polite"></p>
+      <div class="tt-actions">
+        <button type="button" class="btn" id="tt-remind-ics">Add to calendar</button>
+        <button type="button" class="btn" id="tt-remind-notify">Notify me on this phone</button>
+        <button type="button" class="btn btn-ghost" id="tt-remind-cancel" hidden>Cancel reminder</button>
+      </div>
+      <p class="meta" id="tt-remind-msg" role="status"></p>
+      <p class="meta tt-limits">No account, no push server. The calendar file works on any phone. A phone reminder needs permission and, on most phones, the app open.</p>
+      <div class="tt-actions"><button type="button" class="btn btn-ghost tt-close">Close</button></div>
+    </dialog>
 
     <p class="lead" data-for="hoover">
       Personal, unofficial Hoover Reservoir hub in Ohio:
@@ -109,7 +147,7 @@
       <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
         <p class="pool-lead" id="correction-line">890.79 ft · 63°F · ~3.2 ft below full pool</p>
-        <script src="js/pool-readout.js?v=v8-2026-10-27"></script>
+        <script src="js/pool-readout.js?v=v9-2026-10-27"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-10-26T08:00:00.000-04:00">2026-10-26 08:00 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
@@ -121,7 +159,7 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           Provisional snapshot; your browser may refresh it from USGS. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v8-2026-10-27"></script>
+        <script src="js/lake-snapshot.js?v=v9-2026-10-27"></script>
         <div class="pool-trend" id="pool-trend" hidden data-pending>
           <div class="pool-trend-head">
             <span class="pool-trend-label">Pool, last 7 days</span>
@@ -224,7 +262,7 @@
         <span class="card-cue" aria-hidden="true">Open the log</span>
       </a>
     </div>
-    <script src="js/glance.js?v=v8-2026-10-27"></script>
+    <script src="js/glance.js?v=v9-2026-10-27"></script>
 
     <section class="bento-card get-app" id="get-the-app" aria-labelledby="get-app-title">
       <div class="get-app-head">
@@ -260,7 +298,7 @@
         </details>
       </div>
     </section>
-    <script src="js/get-app.js?v=v8-2026-10-27"></script>
+    <script src="js/get-app.js?v=v9-2026-10-27"></script>
 
     <hr class="divider">
 
@@ -318,6 +356,7 @@
         <a href="tournaments.html">Tournaments</a>
         <a href="gear.html">Gear</a>
         <a href="about.html">About</a>
+        <a href="updates.html" data-updates="2026-10-27">What&rsquo;s new</a>
         <a href="privacy.html">Privacy</a>
         <a href="whisperwood.html">Whisperwood Vale</a>
       </nav>
@@ -325,21 +364,22 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v8-2026-10-27"></script>
-  <script src="js/sw-update.js?v=v8-2026-10-27"></script>
-  <script src="js/alerts.js?v=v8-2026-10-27"></script>
-  <script src="js/nav.js?v=v8-2026-10-27"></script>
-  <script src="js/lake-picker.js?v=v8-2026-10-27"></script>
-  <script src="js/usgs.js?v=v8-2026-10-27"></script>
-  <script src="js/home-log.js?v=v8-2026-10-27"></script>
-  <script src="js/astro.js?v=v8-2026-10-27"></script>
-  <script src="js/conditions.js?v=v8-2026-10-27"></script>
-  <script src="js/pool-trend.js?v=v8-2026-10-27"></script>
-  <script src="js/hoover-map-data.js?v=v8-2026-10-27"></script>
-  <script src="js/lake-map-data-alum.js?v=v8-2026-10-27"></script>
-  <script src="js/lake-map-data-buckeye.js?v=v8-2026-10-27"></script>
-  <script src="js/hoover-map.js?v=v8-2026-10-27"></script>
-  <script src="js/install-tip.js?v=v8-2026-10-27"></script>
+  <script src="js/refresh.js?v=v9-2026-10-27"></script>
+  <script src="js/sw-update.js?v=v9-2026-10-27"></script>
+  <script src="js/alerts.js?v=v9-2026-10-27"></script>
+  <script src="js/nav.js?v=v9-2026-10-27"></script>
+  <script src="js/lake-picker.js?v=v9-2026-10-27"></script>
+  <script src="js/usgs.js?v=v9-2026-10-27"></script>
+  <script src="js/home-log.js?v=v9-2026-10-27"></script>
+  <script src="js/astro.js?v=v9-2026-10-27"></script>
+  <script src="js/conditions.js?v=v9-2026-10-27"></script>
+  <script src="js/pool-trend.js?v=v9-2026-10-27"></script>
+  <script src="js/hoover-map-data.js?v=v9-2026-10-27"></script>
+  <script src="js/lake-map-data-alum.js?v=v9-2026-10-27"></script>
+  <script src="js/lake-map-data-buckeye.js?v=v9-2026-10-27"></script>
+  <script src="js/hoover-map.js?v=v9-2026-10-27"></script>
+  <script src="js/install-tip.js?v=v9-2026-10-27"></script>
+  <script src="js/tonight-tools.js?v=v9-2026-10-27"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

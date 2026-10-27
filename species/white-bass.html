@@ -17,8 +17,8 @@
   <link rel="preload" href="../assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../css/styles.css?v=v8-2026-10-27">
-  <script src="../js/lakes.js?v=v8-2026-10-27"></script>
+  <link rel="stylesheet" href="../css/styles.css?v=v9-2026-10-27">
+  <script src="../js/lakes.js?v=v9-2026-10-27"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Species", "item": "https://nightbiteoh.com/species/"}, {"@type": "ListItem", "position": 3, "name": "White bass", "item": "https://nightbiteoh.com/species/white-bass.html"}]}
   </script>
@@ -43,6 +43,7 @@
           <li class="nav-extra"><a href="../gear.html">Gear</a></li>
           <li class="nav-extra"><a href="../whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
           <li class="nav-extra"><a href="../about.html">About</a></li>
+          <li class="nav-extra"><a href="../updates.html" data-updates="2026-10-27">What&rsquo;s new</a></li>
           <li class="nav-more-item">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
@@ -50,6 +51,7 @@
               <a href="../tournaments.html">Tournaments</a>
               <a href="../whisperwood.html">Whisperwood Vale</a>
               <a href="../about.html">About</a>
+              <a href="../updates.html" data-updates="2026-10-27">What&rsquo;s new</a>
             </div>
           </li>
         </ul>
@@ -64,6 +66,12 @@
     <p class="lead" data-for="hoover buckeye">Confirmed on the ODNR Hoover page, with a spring run up Big Walnut Creek and summer schools chasing shad.</p>
     <p class="lake-note" data-for="alum">Present at Alum Creek (ODNR species list).</p>
     <p class="lake-note" data-for="buckeye">Not a regular at Buckeye Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
+
+    <div class="sp-now" id="sp-now" data-species="white-bass" hidden></div>
+    <!-- filled right here, before paint, from the month's picks for the active lake -->
+    <script src="../js/biting-data.js?v=v9-2026-10-27"></script>
+    <script src="../js/biting-data-lakes.js?v=v9-2026-10-27"></script>
+    <script src="../js/species-lake.js?v=v9-2026-10-27"></script>
 
     <nav class="species-subnav" aria-label="On this page">
       <a href="#season">Season</a>
@@ -216,6 +224,7 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
         <a href="../tournaments.html">Tournaments</a>
         <a href="../gear.html">Gear</a>
         <a href="../about.html">About</a>
+        <a href="../updates.html" data-updates="2026-10-27">What&rsquo;s new</a>
         <a href="../privacy.html">Privacy</a>
         <a href="../whisperwood.html">Whisperwood Vale</a>
       </nav>
@@ -223,13 +232,13 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="../js/refresh.js?v=v8-2026-10-27"></script>
-  <script src="../js/sw-update.js?v=v8-2026-10-27"></script>
-  <script src="../js/alerts.js?v=v8-2026-10-27"></script>
-  <script src="../js/nav.js?v=v8-2026-10-27"></script>
-  <script src="../js/lake-picker.js?v=v8-2026-10-27"></script>
-  <script src="../js/sticky-nav.js?v=v8-2026-10-27"></script>
-  <script src="../js/mode-toggle.js?v=v8-2026-10-27"></script>
+  <script src="../js/refresh.js?v=v9-2026-10-27"></script>
+  <script src="../js/sw-update.js?v=v9-2026-10-27"></script>
+  <script src="../js/alerts.js?v=v9-2026-10-27"></script>
+  <script src="../js/nav.js?v=v9-2026-10-27"></script>
+  <script src="../js/lake-picker.js?v=v9-2026-10-27"></script>
+  <script src="../js/sticky-nav.js?v=v9-2026-10-27"></script>
+  <script src="../js/mode-toggle.js?v=v9-2026-10-27"></script>
 
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

@@ -70,4 +70,23 @@
       });
     });
   }
+
+  // What's new: a small New dot on links to updates.html when the newest entry (data-updates, stamped by
+  // tools/build-updates.py) is newer than the last one this visitor saw. Visiting the page clears it.
+  (function () {
+    var links = document.querySelectorAll("a[data-updates]");
+    var latest = links.length ? links[0].getAttribute("data-updates") : "";
+    var KEY = "nb-updates-seen", seen = "";
+    if (!latest) return;
+    try { seen = localStorage.getItem(KEY) || ""; } catch (e) { return; }
+    if (document.querySelector("[data-updates-page]")) { try { localStorage.setItem(KEY, latest); } catch (e) {} return; }
+    if (seen >= latest) return;
+    links.forEach(function (a) {
+      a.classList.add("is-new");
+      var s = document.createElement("span");
+      s.className = "sr-only"; s.textContent = " (new)";
+      a.appendChild(s);
+    });
+    if (moreBtn && morePanel && morePanel.querySelector(".is-new")) moreBtn.classList.add("has-new");
+  })();
 })();

@@ -19,7 +19,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v8-2026-10-27";
+var VERSION = "v9-2026-10-27";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
@@ -30,10 +30,12 @@ var PRECACHE = [
   "buckeye/",
   "species/",
   "water.html",
+  "ice.html",
   "gear.html",
   "log.html",
   "tournaments.html",
   "about.html",
+  "updates.html",
   "privacy.html",
   "offline.html",
   "site.webmanifest",
@@ -67,6 +69,7 @@ var PRECACHE = [
   "js/home-log.js",
   "js/hoover-map-data.js",
   "js/hoover-map.js",
+  "js/ice-species.js",
   "js/install-tip.js",
   "js/lake-map-data-alum.js",
   "js/lake-map-data-buckeye.js",
@@ -76,13 +79,16 @@ var PRECACHE = [
   "js/log.js",
   "js/mode-toggle.js",
   "js/nav.js",
+  "js/updates-draft.js",
   "js/pack-list.js",
   "js/pool-readout.js",
   "js/pool-trend.js",
   "js/refresh.js",
   "js/species-filter.js",
+  "js/species-lake.js",
   "js/sticky-nav.js",
   "js/sw-update.js",
+  "js/tonight-tools.js",
   "js/tournaments.js",
   "js/usgs.js",
   "js/water.js",
@@ -268,6 +274,20 @@ self.addEventListener("message", function (event) {
   if (d && d.type === "nb-hello" && event.ports && event.ports[0]) {
     event.ports[0].postMessage({ version: VERSION, assets: "network-first" });
   }
+});
+
+// "Remind me" (js/tonight-tools.js): the page shows the notification through this worker; tapping it opens
+// (or focuses) the lake's home page. No push subscription, no server: nothing arrives here from outside.
+self.addEventListener("notificationclick", function (event) {
+  event.notification.close();
+  var url = (event.notification.data && event.notification.data.url) || SCOPE;
+  if (url.indexOf(SCOPE) !== 0) url = SCOPE;
+  event.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (list) {
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].url.split("#")[0] === url && "focus" in list[i]) return list[i].focus();
+    }
+    return self.clients.openWindow ? self.clients.openWindow(url) : null;
+  }));
 });
 
 self.addEventListener("fetch", function (event) {

@@ -47,6 +47,7 @@
   function render(list) {
     var old = document.querySelector(".nws-alert");
     if (old) { old.remove(); document.documentElement.classList.remove("has-nws-alert"); }
+    window.NightBiteAlertsActive = list;   // every active warning or watch, even one hidden from the banner (share card)
     if (!list.length) return shown([]);
     var sig = list.map(function (a) { return a.id; }).join(",");
     try { if (sessionStorage.getItem(HIDE_KEY) === sig) return shown([]); } catch (e) {}

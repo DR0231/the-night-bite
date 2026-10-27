@@ -1,0 +1,179 @@
+{
+  "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, is hidden on nightbiteoh.com, and is left out of updates.xml until you set the date and remove the draft flag at promotion.",
+  "entries": [
+    {
+      "id": "2026-10-27-share-remind-seasons",
+      "date": "2026-10-27",
+      "tag": "New",
+      "title": "Share tonight, Remind me, and season pages",
+      "bullets": [
+        "Share tonight makes a picture card with the wind, weather, sunset, water temp and what's biting, ready to send to your fishing buddies.",
+        "Remind me sets a reminder for any time of day, from a time wheel or the Sunset button, in your calendar or on your phone.",
+        "Species knows your lake: it shows the fish in that lake first, marks what's biting there this month, and lists ramps and access.",
+        "Water adds dock season notes for each lake, and the new Ice season page covers ice safety and what still bites in winter."
+      ],
+      "links": [
+        {
+          "label": "Home",
+          "href": "./"
+        },
+        {
+          "label": "Species",
+          "href": "species/"
+        },
+        {
+          "label": "Dock season",
+          "href": "water.html#docks"
+        },
+        {
+          "label": "Ice season",
+          "href": "ice.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-lake-pages",
+      "date": "2026-10-27",
+      "tag": "New",
+      "title": "Lake home pages and a faster Home",
+      "bullets": [
+        "Alum Creek Lake and Buckeye Lake have their own home pages.",
+        "The live lake level and tonight's bite now sit at the top of Home.",
+        "Home and Species no longer jump around while they load.",
+        "After an update, a page reloads only when it is out of date."
+      ],
+      "links": [
+        {
+          "label": "Hoover home",
+          "href": "./"
+        },
+        {
+          "label": "Alum Creek home",
+          "href": "alum/"
+        },
+        {
+          "label": "Buckeye home",
+          "href": "buckeye/"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-trip-reports",
+      "date": "2026-10-24",
+      "tag": "Improved",
+      "title": "Trip reports for every lake",
+      "bullets": [
+        "The trip report form asks which lake you fished: Hoover Reservoir, Alum Creek Lake or Buckeye Lake.",
+        "Its species list covers all three lakes, including muskellunge, yellow perch and bullhead.",
+        "The Log page's report link fills in the lake you picked."
+      ],
+      "links": [
+        {
+          "label": "Log",
+          "href": "log.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-three-lakes",
+      "date": "2026-10-24",
+      "tag": "New",
+      "title": "Alum Creek Lake and Buckeye Lake",
+      "bullets": [
+        "Pick Hoover Reservoir, Alum Creek Lake or Buckeye Lake with the new lake picker.",
+        "Each lake has its own map, lake level gauge (USGS, or the US Army Corps of Engineers at Alum Creek), species and tournaments.",
+        "New species pages for muskellunge, yellow perch and bullhead.",
+        "Pages pick up each new release on their own, even if your phone saved an older copy."
+      ],
+      "links": [
+        {
+          "label": "Home",
+          "href": "./"
+        },
+        {
+          "label": "Water",
+          "href": "water.html"
+        },
+        {
+          "label": "Species",
+          "href": "species/"
+        },
+        {
+          "label": "Tournaments",
+          "href": "tournaments.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-weather",
+      "date": "2026-10-24",
+      "tag": "Improved",
+      "title": "More weather for tonight",
+      "bullets": [
+        "An hourly forecast strip through 2 AM.",
+        "Tonight's bite: a rule of thumb rating from the forecast.",
+        "Last light and moonset, the 3 hour pressure change, feels like, dew point and wind on the water.",
+        "A storm heads up when thunderstorms are in the forecast."
+      ],
+      "links": [
+        {
+          "label": "Home",
+          "href": "./"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-tonight",
+      "date": "2026-10-22",
+      "tag": "New",
+      "title": "Tonight at Hoover, weather alerts and the lake map",
+      "bullets": [
+        "Tonight at Hoover on Home: barometer with its 12 hour trend, wind with gusts, and tonight's moon phase.",
+        "National Weather Service watches and warnings show in a banner at the top of every page.",
+        "Home adds the 7 day lake level trend and a map of Hoover, and readings refresh on their own.",
+        "Species shows what's biting this month.",
+        "Works offline, and you can add it to your home screen like an app."
+      ],
+      "links": [
+        {
+          "label": "Home",
+          "href": "./"
+        },
+        {
+          "label": "Species",
+          "href": "species/"
+        },
+        {
+          "label": "Add to home screen",
+          "href": "./#get-the-app"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-new-look",
+      "date": "2026-10-20",
+      "tag": "Improved",
+      "title": "A cleaner look",
+      "bullets": [
+        "A new Home with a moonlit horizon and a chart of Hoover on the lake level card.",
+        "One set of pixel icons, with a fish for each species.",
+        "Gear has pixel rig diagrams with numbered parts and step by step how to cards.",
+        "About lists Hoover's fishing limits from the 2026 to 2027 ODNR regulations."
+      ],
+      "links": [
+        {
+          "label": "Home",
+          "href": "./"
+        },
+        {
+          "label": "Gear",
+          "href": "gear.html"
+        },
+        {
+          "label": "About",
+          "href": "about.html"
+        }
+      ]
+    }
+  ]
+}
