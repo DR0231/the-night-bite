@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
   <meta name="apple-mobile-web-app-title" content="Night Bite">
+  <meta name="nb-home" content="hoover">
   <link rel="manifest" href="site.webmanifest">
   <title>The Night Bite: Hoover, Alum Creek and Buckeye Lake fishing hub</title>
   <meta name="description" content="Unofficial fishing hub for Hoover, Alum Creek and Buckeye Lake, Ohio: species, water maps, trip log, gear.">
@@ -25,8 +26,9 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v7-2026-10-24">
-  <script src="js/lakes.js?v=v7-2026-10-24"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v8-2026-10-27">
+  <noscript><style>.glance{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
+  <script src="js/lakes.js?v=v8-2026-10-27"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "WebSite", "name": "The Night Bite", "url": "https://nightbiteoh.com/"}
   </script>
@@ -75,16 +77,29 @@
       <p class="tagline"><span data-lk="name">Hoover Reservoir</span> Fishing Hub</p>
     </section>
 
+    <div class="glance" id="glance" role="group" aria-label="Right now">
+      <a class="glance-cell" href="#pool-snapshot" data-empty>
+        <span class="glance-label">Lake level</span>
+        <span class="glance-value" data-glance="pool">--</span>
+        <span class="glance-sub" data-glance="pool-sub">Loading the gauge</span>
+      </a>
+      <a class="glance-cell" href="#conditions" data-empty>
+        <span class="glance-label">Tonight&rsquo;s bite</span>
+        <span class="glance-value" data-glance="bite">--</span>
+        <span class="glance-sub" data-glance="bite-sub">Loading the forecast</span>
+      </a>
+    </div>
+
     <p class="lead" data-for="hoover">
-      Personal, unofficial Hoover Reservoir hub (Delaware / Franklin County, Ohio):
+      Personal, unofficial Hoover Reservoir hub in Ohio:
       species pages, water maps, trip log, and gear kits.
     </p>
     <p class="lead" data-for="alum">
-      Personal, unofficial Alum Creek Lake hub (Delaware County, Ohio):
+      Personal, unofficial Alum Creek Lake hub in Ohio:
       species pages, water maps, trip log, and gear kits.
     </p>
     <p class="lead" data-for="buckeye">
-      Personal, unofficial Buckeye Lake hub (Licking, Fairfield and Perry Counties, Ohio):
+      Personal, unofficial Buckeye Lake hub in Ohio:
       species pages, water maps, trip log, and gear kits.
     </p>
 
@@ -92,7 +107,7 @@
       <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
         <p class="pool-lead" id="correction-line">890.79 ft · 63°F · ~3.2 ft below full pool</p>
-        <script src="js/pool-readout.js?v=v7-2026-10-24"></script>
+        <script src="js/pool-readout.js?v=v8-2026-10-27"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-10-26T08:00:00.000-04:00">2026-10-26 08:00 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
@@ -104,8 +119,8 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           Provisional snapshot; your browser may refresh it from USGS. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v7-2026-10-24"></script>
-        <div class="pool-trend" id="pool-trend" hidden>
+        <script src="js/lake-snapshot.js?v=v8-2026-10-27"></script>
+        <div class="pool-trend" id="pool-trend" hidden data-pending>
           <div class="pool-trend-head">
             <span class="pool-trend-label">Pool, last 7 days</span>
             <span class="pool-trend-read"><span class="pool-trend-delta" id="pool-trend-delta"></span><span class="pool-trend-word" id="pool-trend-word"></span></span>
@@ -207,6 +222,7 @@
         <span class="card-cue" aria-hidden="true">Open the log</span>
       </a>
     </div>
+    <script src="js/glance.js?v=v8-2026-10-27"></script>
 
     <section class="bento-card get-app" id="get-the-app" aria-labelledby="get-app-title">
       <div class="get-app-head">
@@ -242,6 +258,7 @@
         </details>
       </div>
     </section>
+    <script src="js/get-app.js?v=v8-2026-10-27"></script>
 
     <hr class="divider">
 
@@ -306,22 +323,21 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v7-2026-10-24"></script>
-  <script src="js/sw-update.js?v=v7-2026-10-24"></script>
-  <script src="js/alerts.js?v=v7-2026-10-24"></script>
-  <script src="js/nav.js?v=v7-2026-10-24"></script>
-  <script src="js/lake-picker.js?v=v7-2026-10-24"></script>
-  <script src="js/usgs.js?v=v7-2026-10-24"></script>
-  <script src="js/home-log.js?v=v7-2026-10-24"></script>
-  <script src="js/astro.js?v=v7-2026-10-24"></script>
-  <script src="js/conditions.js?v=v7-2026-10-24"></script>
-  <script src="js/pool-trend.js?v=v7-2026-10-24"></script>
-  <script src="js/hoover-map-data.js?v=v7-2026-10-24"></script>
-  <script src="js/lake-map-data-alum.js?v=v7-2026-10-24"></script>
-  <script src="js/lake-map-data-buckeye.js?v=v7-2026-10-24"></script>
-  <script src="js/hoover-map.js?v=v7-2026-10-24"></script>
-  <script src="js/install-tip.js?v=v7-2026-10-24"></script>
-  <script src="js/get-app.js?v=v7-2026-10-24"></script>
+  <script src="js/refresh.js?v=v8-2026-10-27"></script>
+  <script src="js/sw-update.js?v=v8-2026-10-27"></script>
+  <script src="js/alerts.js?v=v8-2026-10-27"></script>
+  <script src="js/nav.js?v=v8-2026-10-27"></script>
+  <script src="js/lake-picker.js?v=v8-2026-10-27"></script>
+  <script src="js/usgs.js?v=v8-2026-10-27"></script>
+  <script src="js/home-log.js?v=v8-2026-10-27"></script>
+  <script src="js/astro.js?v=v8-2026-10-27"></script>
+  <script src="js/conditions.js?v=v8-2026-10-27"></script>
+  <script src="js/pool-trend.js?v=v8-2026-10-27"></script>
+  <script src="js/hoover-map-data.js?v=v8-2026-10-27"></script>
+  <script src="js/lake-map-data-alum.js?v=v8-2026-10-27"></script>
+  <script src="js/lake-map-data-buckeye.js?v=v8-2026-10-27"></script>
+  <script src="js/hoover-map.js?v=v8-2026-10-27"></script>
+  <script src="js/install-tip.js?v=v8-2026-10-27"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

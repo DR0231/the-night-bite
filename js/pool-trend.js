@@ -5,6 +5,7 @@
  */
 (function () {
   var box = document.getElementById("pool-trend");
+  if (box && !window.fetch) box.removeAttribute("data-pending");
   if (!box || !window.fetch) return;
   var LK = window.NightBiteLake, LP = LK && LK.cfg && LK.cfg.pool;   // js/lakes.js; Hoover if missing
   var CWMS = !!(LP && LP.src === "cwms");
@@ -53,6 +54,7 @@
       var saved = !box.hasAttribute("data-drawn") && OFF && OFF.isOffline() && OFF.load(SAVE_KEY, 14 * 864e5);
       if (saved && saved.pts && saved.pts.length >= 12) { draw(saved.pts); box.setAttribute("data-offline", "1"); return; }
       if (!box.hasAttribute("data-drawn")) box.hidden = true;
+      box.removeAttribute("data-pending");   // stop holding its space (css/styles.css)
     });
   }
 
@@ -98,6 +100,7 @@
       svg.setAttribute("aria-label", "Pool level over the last 7 days: " + word.toLowerCase() + ", " +
         (change >= 0 ? "up " : "down ") + abs + " ft, from " + pts[0].v.toFixed(2) + " to " + last.v.toFixed(2) + " ft.");
       box.hidden = false;
+      box.removeAttribute("data-pending");
       box.setAttribute("data-drawn", "1");
   }
 

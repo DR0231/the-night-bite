@@ -91,7 +91,8 @@ Limit tables are **reminders only** — confirm on [HuntFish OH / ODNR licenses]
 
 | Path | Purpose |
 |------|---------|
-| `index.html` | Hub home, pool/temp snapshot, next actions |
+| `index.html` | Hub home for Hoover (the site root), lake level and tonight's bite up top, pool/temp snapshot, next actions |
+| `alum/index.html`, `buckeye/index.html` | Alum Creek and Buckeye Lake home pages, built from `index.html` (see Lake home pages) |
 | `species/index.html` | Filterable species grid |
 | `species/*.html` | Per-species Season · Where · Limits · Gear · Bait |
 | `water.html` | Maps, pool correction, structure, ramps |
@@ -100,6 +101,34 @@ Limit tables are **reminders only** — confirm on [HuntFish OH / ODNR licenses]
 | `gear.html` | Short kits (affiliate placeholders) |
 | `whisperwood.html` | Game teaser (kept) |
 | `about.html` | Disclaimer, safety, regs reminders |
+
+## Lake home pages
+
+Each lake has its own address: Hoover is the root (`/`), Alum Creek is `/alum/`, Buckeye Lake is `/buckeye/`.
+`alum/index.html` and `buckeye/index.html` are generated, never edited by hand. After any change to `index.html`:
+
+```bash
+python3 tools/build-lake-pages.py && python3 tools/stamp-version.py
+```
+
+The generator adds `<base href="../">` (so every asset, script and fetch resolves from the root), the lake's
+`nb-home` meta, its own title, description, canonical and OG tags, and points in-page links at the lake's page.
+`js/lakes.js` reads `nb-home`. Old links still work: `/?lake=alum` and a saved lake choice (localStorage `nb-lake`)
+send the root to `/alum/`. On Home the lake picker goes to the lake's address; on other pages it adds `?lake=`.
+All three home pages are precached by `sw.js`, so each opens offline. List new lakes in `sitemap.xml` too.
+
+## Keep test runs out of the stats
+
+The live site sends page views to Cloudflare Web Analytics (`static.cloudflareinsights.com`, `cloudflareinsights.com`).
+Our own screenshot, CLS and test runs must never load it, or they show up as visitors (they did, as ChromeHeadless).
+
+- **Every new script** blocks it in code. Node/Playwright: `const na = require("./tools/no-analytics.cjs");`, launch
+  with `args: na.args()`, then `await na.block(context)`. Python: `from no_analytics import args, block` from
+  `tools/no_analytics.py`, the same two steps (`await block(ctx)` with the async API).
+- **The box blocks it for everything else**, including older scripts that were written before this: `/etc/hosts`
+  maps both hosts to `0.0.0.0` and `::`, and a Chrome/Chromium policy (`/etc/opt/chrome/policies/managed/` and
+  `/etc/chromium/policies/managed/nb-no-analytics.json`, `URLBlocklist`) refuses them.
+- Check a run: no request to `cloudflareinsights.com` should succeed (the CLS and screenshot scripts print a count).
 
 ## Fonts
 

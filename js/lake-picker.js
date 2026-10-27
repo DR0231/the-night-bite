@@ -8,8 +8,9 @@
  *   Leave with no change: Esc, the X, a tap outside the cards, or dragging the sheet's handle down.
  *   Desktop (a mouse or trackpad): the same glass cards centered over the blurred page, plus previous and next
  *   buttons beside the row; the wheel, a sideways trackpad swipe or the arrow keys preview, a click picks.
- * Picking another lake saves it (localStorage "nb-lake") and reloads the same page with ?lake=, with a short
- * cross-fade (view transition) when the browser supports it and reduced motion is off.
+ * Picking another lake saves it (localStorage "nb-lake") and opens the same page for that lake: on Home that is the
+ * lake's own address (the root for Hoover, alum/, buckeye/), elsewhere the same page with ?lake=. A short cross-fade
+ * (view transition) plays when the browser supports it and reduced motion is off.
  * Card readings: the last reading this browser saved for that lake (js/usgs.js), else the snapshot in js/lakes.js,
  * then a live refresh from each lake's own gauge while the sheet is open. Never invented.
  */

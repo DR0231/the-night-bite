@@ -1,6 +1,7 @@
 /**
  * The Night Bite: site-wide NWS alert banner.
- * Shows only when a Warning or Watch is active for Delaware or Franklin County, Ohio
+ * Shows only when a Warning or Watch is active for the lake's area (Hoover: Delaware or Franklin County, Ohio,
+ * named in page text only as "the Hoover area")
  * (county zones OHC041, OHC049 and forecast zones OHZ046, OHZ055). Source: api.weather.gov/alerts/active.
  * Silent when there is nothing active or the API can't be reached (the conditions card covers outages).
  */
@@ -9,7 +10,7 @@
   var LK = window.NightBiteLake, LC = (LK && LK.cfg) || null;   // js/lakes.js; Hoover if missing
   var URL = "https://api.weather.gov/alerts/active?zone=" + ((LC && LC.alerts.zones) || "OHC041,OHC049,OHZ046,OHZ055");
   var MORE = (LC && LC.nws.page) || "https://forecast.weather.gov/MapClick.php?lat=40.11&lon=-82.88";
-  var COUNTIES = (LC && LC.alerts.counties) || "Delaware or Franklin County";
+  var COUNTIES = (LC && LC.alerts.counties) || "the Hoover area";
   var CACHE_KEY = LK ? LK.key("nb-alerts-v1") : "nb-alerts-v1", CACHE_MS = 5 * 60 * 1000, HIDE_KEY = "nb-alerts-hidden";
 
   function fmt(iso) {

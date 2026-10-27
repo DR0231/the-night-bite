@@ -4,7 +4,12 @@
  * lake-only blocks ([data-for="alum"] and so on, see css/styles.css) never flash the wrong lake.
  *
  * Active lake: ?lake=hoover|alum|buckeye in the URL first, then localStorage "nb-lake", then Hoover (the default).
- * Hoover keeps a clean URL. Other lakes keep ?lake= in the address bar, so a shared link opens the same lake.
+ * Home pages have their own address per lake: Hoover at the site root, Alum Creek at alum/, Buckeye Lake at buckeye/
+ * (alum/index.html and buckeye/index.html are built from index.html by tools/build-lake-pages.py and carry
+ * <meta name="nb-home" content="alum">). On a lake's own home page that lake always wins. At the root, a ?lake= link
+ * or a saved Alum Creek or Buckeye choice goes straight to that lake's address (location.replace, before anything
+ * paints). Other pages keep ?lake= in the address bar for Alum Creek and Buckeye, a clean URL for Hoover, and their
+ * Home links point at the chosen lake's home page.
  *
  * Every value below has a source in DATA-SOURCES.md. Hoover's values are exactly the ones the scripts used before
  * this file existed (js/usgs.js, js/pool-trend.js, js/conditions.js, js/alerts.js); those scripts fall back to the
@@ -16,7 +21,7 @@
       id: "hoover",
       name: "Hoover Reservoir",
       short: "Hoover",
-      area: "Delaware / Franklin County",
+      area: "Central Ohio",
       lat: 40.11, lng: -82.88,
       pool: {
         src: "usgs", srcName: "USGS",
@@ -31,7 +36,7 @@
         station: "KCMH", stationName: "Columbus airport (KCMH)",
         page: "https://forecast.weather.gov/MapClick.php?lat=40.11&lon=-82.88"
       },
-      alerts: { zones: "OHC041,OHC049,OHZ046,OHZ055", counties: "Delaware or Franklin County" },
+      alerts: { zones: "OHC041,OHC049,OHZ046,OHZ055", counties: "the Hoover area" },
       push: null,      // null: js/conditions.js keeps its own Hoover list (north to south lake)
       map: { data: "NightBiteMapData", chart: "assets/hoover-chart.png" },
       spots: ["Oxbow (upper ramp)", "Redbank (middle ramp)", "Walnut Road (lower ramp)", "Bank (upper)", "Bank (middle)", "Bank (lower)", "Maxtown", "Marina / lower marina"],
@@ -41,7 +46,7 @@
       id: "alum",
       name: "Alum Creek Lake",
       short: "Alum Creek",
-      area: "Delaware County",
+      area: "Central Ohio",
       lat: 40.24, lng: -82.97,
       pool: {
         // no USGS gauge on the lake itself; the Corps of Engineers posts the lake level every 15 minutes
@@ -59,7 +64,7 @@
         station: "KDLZ", stationName: "Delaware airport (KDLZ)",
         page: "https://forecast.weather.gov/MapClick.php?lat=40.24&lon=-82.97"
       },
-      alerts: { zones: "OHC041,OHZ046", counties: "Delaware County" },
+      alerts: { zones: "OHC041,OHZ046", counties: "the Alum Creek area" },
       push: null,      // Alum Creek also runs north to south, so the Hoover wording fits
       map: { data: "NightBiteMapDataAlum", chart: "assets/alum-chart.png" },
       spots: ["New Galena ramp", "Marina ramp (Hollenback Rd)", "Cheshire ramp", "Howard ramp", "Bank (south, main lake)", "Bank (middle)", "Bank (north, no wake)", "Kayak launch"],
@@ -69,7 +74,7 @@
       id: "buckeye",
       name: "Buckeye Lake",
       short: "Buckeye",
-      area: "Licking, Fairfield and Perry Counties",
+      area: "Central Ohio",
       lat: 39.93, lng: -82.49,
       pool: {
         src: "usgs", srcName: "USGS",
@@ -86,7 +91,7 @@
         station: "KVTA", stationName: "Newark airport (KVTA)",
         page: "https://forecast.weather.gov/MapClick.php?lat=39.93&lon=-82.49"
       },
-      alerts: { zones: "OHC089,OHC045,OHC127,OHZ056,OHZ065,OHZ066", counties: "Licking, Fairfield or Perry County" },
+      alerts: { zones: "OHC089,OHC045,OHC127,OHZ056,OHZ065,OHZ066", counties: "the Buckeye Lake area" },
       // Buckeye runs west southwest to east northeast: north and south winds name a shore, east and west winds name an end
       push: ["into the south shore", "toward the southwest end", "toward the west end", "into the northwest shore",
         "into the north shore", "toward the northeast end", "toward the east end", "into the southeast shore"],
@@ -107,16 +112,30 @@
   var KEY = "nb-lake";
 
   function valid(id) { return Object.prototype.hasOwnProperty.call(LAKES, id) ? id : null; }
+
+  // site root, so pages in species/ and alum/ can find assets (lakes.js is always loaded as <root>/js/lakes.js)
+  var BASE = "";
+  try { BASE = document.currentScript.src.replace(/js\/lakes\.js(\?.*)?$/, ""); } catch (e) {}
+  // a lake's home page: the root for Hoover, alum/ and buckeye/ for the others
+  function homeFor(lake) { return BASE + (lake === "hoover" ? "" : lake + "/"); }
+
+  var homeMeta = document.querySelector('meta[name="nb-home"]');
+  var homeLake = homeMeta ? valid(homeMeta.getAttribute("content")) : null;   // set on the three home pages only
   var fromUrl = null, stored = null;
   try { fromUrl = valid(new URLSearchParams(location.search).get("lake")); } catch (e) {}
   try { stored = valid(localStorage.getItem(KEY)); } catch (e) {}
-  var id = fromUrl || stored || "hoover";
-  if (fromUrl && fromUrl !== stored) { try { localStorage.setItem(KEY, fromUrl); } catch (e) {} }
+  var id = homeLake && homeLake !== "hoover" ? homeLake : (fromUrl || stored || "hoover");
+  if (id !== stored && (fromUrl || (homeLake && homeLake !== "hoover"))) { try { localStorage.setItem(KEY, id); } catch (e) {} }
 
-  // keep the address bar honest: ?lake= for Alum Creek and Buckeye, a clean URL for Hoover
+  // the root home page with Alum Creek or Buckeye chosen: open that lake's own address instead
+  if (homeLake === "hoover" && id !== "hoover" && BASE) {
+    try { location.replace(homeFor(id) + location.hash); } catch (e) {}
+  }
+
+  // keep the address bar honest: a lake's home page has no ?lake=; elsewhere ?lake= for Alum Creek and Buckeye
   try {
     var u = new URL(location.href);
-    if (id === "hoover") u.searchParams.delete("lake"); else u.searchParams.set("lake", id);
+    if (id === "hoover" || homeLake) u.searchParams.delete("lake"); else u.searchParams.set("lake", id);
     if (u.href !== location.href) history.replaceState(history.state, "", u.href);
   } catch (e) {}
 
@@ -124,8 +143,10 @@
   root.setAttribute("data-lake", id);
   root.style.setProperty("--lake-short", '"' + LAKES[id].short + '"');
 
-  // same page, other lake (the picker navigates here; a cross-document view transition fades between them)
+  // same page, other lake (the picker navigates here; a cross-document view transition fades between them).
+  // On a home page that is the other lake's home page.
   function hrefFor(next) {
+    if (homeLake) return homeFor(next);
     var u = new URL(location.href);
     if (next === "hoover") u.searchParams.delete("lake"); else u.searchParams.set("lake", next);
     return u.href;
@@ -153,12 +174,8 @@
   }
   function cwms(hours) { return cwmsFor(id, hours); }
 
-  // site root, so pages in species/ can find assets (lakes.js is always loaded as <root>/js/lakes.js)
-  var BASE = "";
-  try { BASE = document.currentScript.src.replace(/js\/lakes\.js(\?.*)?$/, ""); } catch (e) {}
-
-  window.NightBiteLakes = { all: LAKES, order: ORDER, speciesNames: SPECIES, storageKey: KEY, hrefFor: hrefFor, base: BASE, cwmsFor: cwmsFor };
-  window.NightBiteLake = { id: id, cfg: LAKES[id], key: key, cwms: cwms };
+  window.NightBiteLakes = { all: LAKES, order: ORDER, speciesNames: SPECIES, storageKey: KEY, hrefFor: hrefFor, homeFor: homeFor, base: BASE, cwmsFor: cwmsFor };
+  window.NightBiteLake = { id: id, cfg: LAKES[id], key: key, cwms: cwms, home: homeLake };
 
   // Lake switches only (js/lake-picker.js sets the flag): a short cross-fade into the new page.
   // Registered here in <head> so it is in place before the first frame; every other navigation stays instant.
@@ -176,7 +193,13 @@
       var nodes = document.querySelectorAll("[data-lk]");
       for (var i = 0; i < nodes.length; i++) {
         var v = LAKES[id][nodes[i].getAttribute("data-lk")];
-        if (typeof v === "string") nodes[i].textContent = v;
+        if (typeof v === "string" && nodes[i].textContent !== v) nodes[i].textContent = v;
+      }
+      // Home links (logo, nav, footer) go straight to this lake's home page
+      var root0 = BASE.replace(/[?#].*$/, ""), links = document.querySelectorAll("a[href]");
+      for (var j = 0; j < links.length; j++) {
+        var a = links[j], h = a.href.replace(/[?#].*$/, "");
+        if (h === root0 || h === root0 + "index.html") a.href = homeFor(id) + (a.hash || "");
       }
     }
     root.classList.add("lk-ready");

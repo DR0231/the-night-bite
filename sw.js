@@ -9,6 +9,7 @@
  *    with last deploy's styles or scripts. (Up to v11 these were cache first, which showed the multi-lake
  *    picker unstyled and the old Hoover-only map script after a deploy.) Pages ask for them with ?v=VERSION.
  *  · Fonts, images: stale while revalidate (instant from cache, refreshed in the background).
+ *  · Home pages: the root (Hoover), alum/ and buckeye/ are all precached, so each lake opens offline.
  *  · Whisperwood is never touched: nothing under whisperwood/ (or whisperwood.html) is cached or intercepted.
  *  · Cross origin requests (NWS, USGS, links out) pass straight through. The page itself keeps the last good
  *    readings in localStorage and labels them "Offline. Last updated ..." (js/refresh.js, NightBiteOffline).
@@ -18,13 +19,15 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v7-2026-10-24";
+var VERSION = "v8-2026-10-27";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
 
 var PRECACHE = [
   "./",
+  "alum/",
+  "buckeye/",
   "species/",
   "water.html",
   "gear.html",
@@ -60,6 +63,7 @@ var PRECACHE = [
   "js/community-log.js",
   "js/conditions.js",
   "js/get-app.js",
+  "js/glance.js",
   "js/home-log.js",
   "js/hoover-map-data.js",
   "js/hoover-map.js",
@@ -256,6 +260,15 @@ function staleWhileRevalidate(event, url) {
     });
   });
 }
+
+// js/sw-update.js asks before it heals a page: this worker keeps CSS and JS network first, so pages it served are
+// never a mix of two deploys and don't need the one time reload.
+self.addEventListener("message", function (event) {
+  var d = event.data;
+  if (d && d.type === "nb-hello" && event.ports && event.ports[0]) {
+    event.ports[0].postMessage({ version: VERSION, assets: "network-first" });
+  }
+});
 
 self.addEventListener("fetch", function (event) {
   var req = event.request;
