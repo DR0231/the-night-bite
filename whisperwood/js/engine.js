@@ -1107,6 +1107,9 @@ const AudioFX = {
     }
   },
   _mill: null,
+  _water: null,
+  _waterKey: "",
+  _waterDist: Infinity,
   _millBeat: -1,
   _millCreak(out, vol) {
     if (!this.ctx || !out) return;
@@ -1197,6 +1200,81 @@ const AudioFX = {
         this._millBeat = beat;
       }
     } catch (err) { /* mill bed optional */ }
+  },
+  _waterTarget() {
+    if (typeof World === "undefined" || typeof Player === "undefined") return 0;
+    if (World.id !== "vale" && World.id !== "marsh" && World.id !== "island") return 0;
+    const tx = Math.floor(Player.x / TILE_SIZE);
+    const ty = Math.floor(Player.y / TILE_SIZE);
+    const key = World.id + ":" + tx + "," + ty;
+    if (key !== this._waterKey) {
+      this._waterKey = key;
+      const R = Math.ceil(DESIGN.waterSoundFar);
+      let best = Infinity;
+      for (let dy = -R; dy <= R; dy++) {
+        for (let dx = -R; dx <= R; dx++) {
+          if (WATER_TILES.has(World.get(tx + dx, ty + dy))) {
+            const d = Math.hypot(dx, dy);
+            if (d < best) best = d;
+          }
+        }
+      }
+      this._waterDist = best;
+    }
+    const near = DESIGN.waterSoundNear;
+    const far = DESIGN.waterSoundFar;
+    let vol = 0;
+    if (this._waterDist <= near) vol = DESIGN.waterSoundVol;
+    else if (this._waterDist >= far) vol = 0;
+    else vol = DESIGN.waterSoundVol * (1 - (this._waterDist - near) / (far - near));
+    if (World.id === "marsh") vol *= DESIGN.waterSoundMarshMul;
+    else if (World.id === "island") vol *= DESIGN.waterSoundIslandMul;
+    return vol;
+  },
+  syncWater() {
+    try {
+      const outdoor = typeof World !== "undefined" && (World.id === "vale" || World.id === "marsh" || World.id === "island");
+      const indoors = typeof World !== "undefined" && World.indoor && World.indoor();
+      if (this.muted || indoors || !outdoor) {
+        if (this._water && this.ctx) {
+          const now = this.ctx.currentTime;
+          if (this.muted) {
+            this._water.gain.cancelScheduledValues(now);
+            this._water.gain.setValueAtTime(0, now);
+          } else {
+            this._water.gain.setTargetAtTime(0, now, DESIGN.waterSoundFade);
+          }
+        }
+        return;
+      }
+      this.ensure();
+      if (!this.ctx) return;
+      this._ambInit();
+      this._ambLoad("amb_water");
+      const buf = this._ambBuf && this._ambBuf.amb_water;
+      if (!buf) return;
+      const now = this.ctx.currentTime;
+      if (!this._water) {
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0, now);
+        gain.connect(this._dest("amb"));
+        const src = this.ctx.createBufferSource();
+        src.buffer = buf;
+        src.loop = true;
+        const pts = this._ambPoints(2646000, buf);
+        src.loopStart = pts.start;
+        src.loopEnd = pts.end;
+        src.connect(gain);
+        gain.bed = src;
+        try { src.start(now, pts.start); } catch (err) {
+          try { src.disconnect(); } catch (e) { /* already stopped */ }
+          try { gain.disconnect(); } catch (e) { /* already stopped */ }
+          return;
+        }
+        this._water = gain;
+      }
+      this._water.gain.setTargetAtTime(this._waterTarget(), now, DESIGN.waterSoundFade);
+    } catch (err) { /* water bed optional */ }
   },
   millStart() {
     this.ensure();
