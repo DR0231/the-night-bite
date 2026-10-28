@@ -1029,11 +1029,10 @@ const Game = {
       let amb = outdoor && !rain ? TimeCycle.phaseId() : null;
       if (World.id === "cottage" && rain) amb = "cottage_rain";
       if (outdoor && rain) amb = "outdoor_rain";
-      let level = 1;
-      if (amb && typeof TimeCycle !== "undefined" && TimeCycle.season() === "winter") {
-        if (amb === "golden") amb = "day";
-        if (amb === "dawn") level = 0.6;
-      }
+      const winter = !!(amb && typeof TimeCycle !== "undefined" && TimeCycle.season() === "winter");
+      if (winter && amb === "golden") amb = "day";
+      let level = amb && DESIGN.ambBedLevel && typeof DESIGN.ambBedLevel[amb] === "number" ? DESIGN.ambBedLevel[amb] : 1;
+      if (amb === "dawn" && winter) level *= DESIGN.ambWinterDawnMul;
       if (typeof AudioFX !== "undefined" && typeof AudioFX.syncAmbience === "function") AudioFX.syncAmbience(amb, level);
     } catch (e) { /* ambience optional */ }
     UI.update(dt);

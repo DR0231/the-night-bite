@@ -1565,7 +1565,9 @@ const AudioFX = {
   },
   _ambPoints(N, buf) {
     const off = buf.length >= N + 1024 ? 1024 : 0;
-    return { off: off, start: off / 44100, end: (off + N) / 44100 };
+    const end = Math.min((off + N) / 44100, buf.duration);
+    const start = Math.min(off / 44100, end);
+    return { off: off, start: start, end: end };
   },
   _ambStart(name, level) {
     const pair = AMBIENCE[name];
@@ -1584,7 +1586,7 @@ const AudioFX = {
     src.connect(gain);
     gain.connect(levelGain);
     levelGain.connect(this._dest("amb"));
-    const node = { name: name, file: pair[0], src: src, gain: gain, level: levelGain, stopTimer: 0, gone: false };
+    const node = { name: name, file: pair[0], src: src, gain: gain, level: levelGain, lv: level, stopTimer: 0, gone: false };
     try {
       src.start(this.ctx.currentTime, pts.start);
     } catch (err) {
@@ -1633,10 +1635,11 @@ const AudioFX = {
     this._musicCurve(node.gain, seconds, true);
   },
   _ambSetLevel(node, level) {
-    if (!node || !node.level || this._ambLevel === level) return;
+    if (!node || !node.level || node.lv === level) return;
     try {
       node.level.gain.setTargetAtTime(level, this.ctx.currentTime, 0.7);
     } catch (err) { /* level ramp is optional */ }
+    node.lv = level;
     this._ambLevel = level;
   },
   _ambBegin(name, level, seconds) {
@@ -1765,7 +1768,7 @@ const AudioFX = {
     if (!this.ctx) return;
     this._ambInit();
     if (want && !Object.prototype.hasOwnProperty.call(AMBIENCE, want)) want = null;
-    const lv = level === 0.6 ? 0.6 : 1;
+    const lv = typeof level === "number" && isFinite(level) ? Math.max(0, Math.min(1, level)) : 1;
     this._ambWant = want;
     if (want) this._ambLoad(AMBIENCE[want][0]);
     if (want && this._ambFail[AMBIENCE[want][0]]) want = null;

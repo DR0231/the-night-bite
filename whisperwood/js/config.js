@@ -72,6 +72,8 @@ const DESIGN = {
   waterSoundFade: 0.5,
   waterSoundMarshMul: 0.6,
   waterSoundIslandMul: 0.6,
+  ambBedLevel: { dawn: 1, day: 0.5, golden: 1, night: 1, cottage_rain: 1, outdoor_rain: 1 },
+  ambWinterDawnMul: 0.6,
   landSoundGain: 0.71,
   reelSoundOn: false,
   musicFightDuck: false,
