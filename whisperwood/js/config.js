@@ -169,6 +169,8 @@ const DESIGN = {
   toastMax: 7,
   noteHoldMax: 9000,
   toastLongChars: 56,
+  /* seconds the spot name stays up after you step into a spot. */
+  spotLabelHold: 6,
   warps: [
     { id: "vale", label: "Vale spawn", map: "vale", x: 32.5, y: 26.2, dir: 0 },
     { id: "cottage", label: "Cottage", map: "cottage", x: 11, y: 12.2, dir: 3 },

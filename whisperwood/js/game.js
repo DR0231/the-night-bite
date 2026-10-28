@@ -15,6 +15,8 @@ const UI = {
   _noteQ: [],
   _regionLast: "",
   _regionAt: 0,
+  _spotId: null,
+  _spotT: 0,
 
   _fishVerb: "",
   touch() { return this._mq.coarse.matches; },
@@ -485,14 +487,20 @@ const UI = {
 
     const spot = World.spotAt(Player.x, Player.y);
     if (spot) {
+      if (spot.id !== this._spotId) {
+        this._spotId = spot.id;
+        this._spotT = DESIGN.spotLabelHold || 6;
+      }
+      this._spotT = Math.max(0, this._spotT - dt);
       const hot = TimeCycle.hotspot() === spot.id ? " ✦" : "";
       const best = Journal.bestAt(spot.id);
       const star = Save.data.flags.spotMastery[spot.id] ? " ★" : "";
       const bestTxt = best ? `  · Best ${best.fish.name} ${best.inches}"` : "";
       this.els.spot.textContent = spot.name.toUpperCase() + hot + star + bestTxt;
-      this.els.spot.classList.remove("hidden");
+      this.els.spot.classList.toggle("hidden", this._spotT <= 0);
       this.els.spot.classList.toggle("hot", !!hot);
     } else {
+      this._spotId = null;
       this.els.spot.classList.add("hidden");
     }
 
