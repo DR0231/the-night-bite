@@ -928,7 +928,8 @@ const AudioFX = {
   },
   land() {
     this.ensure();
-    if (!this._sfxPlay("land")) this.tone(180, 0.12, "sine", 0.06, 70);
+    const g = typeof DESIGN.landSoundGain === "number" ? DESIGN.landSoundGain : 1;
+    if (!this._sfxPlay("land", g)) this.tone(180, 0.12, "sine", 0.06 * g, 70);
   },
   bite() {
     this.ensure();
@@ -954,6 +955,7 @@ const AudioFX = {
     if (!this._sfxPlay("nibble")) this.tone(340, 0.05, "sine", 0.03, 180);
   },
   reel() {
+    if (!DESIGN.reelSoundOn) return;
     const now = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
     if (now - this._reelAt < 85) return;
     this._reelAt = now;
@@ -1500,7 +1502,7 @@ const AudioFX = {
     }
     this._musicWant = want;
     const duckGain = this._musicEnsureDuck();
-    const duckOn = !!duck;
+    const duckOn = !!duck && DESIGN.musicFightDuck === true;
     if (duckOn !== this._musicDuckOn) {
       this._musicDuckOn = duckOn;
       duckGain.gain.setTargetAtTime(duckOn ? 0.398 : 1, this.ctx.currentTime, duckOn ? 0.04 : 0.5);
