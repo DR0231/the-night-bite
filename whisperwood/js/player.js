@@ -45,6 +45,7 @@ const Player = {
       this.vx = 0; this.vy = 0;
       this.moving = false;
       this.frame = 0;
+      this.lastStep = -1;
       this.animT = 0;
       this.idleT += dt;
       this.blink = (this.idleT % 3.6) < 0.12;
@@ -114,14 +115,14 @@ const Player = {
     const prev = this.frame;
     this.animT += dt * Utils.clamp(speed / Math.max(1, wantSpeed), 0.45, 1.2) * 8.4;
     this.frame = (this.animT | 0) % n;
-    if (this.frame !== prev) this._footfall();
+    if (this.frame !== prev || this.lastStep === -1) this._footfall();
   },
 
   _footfall() {
     const pose = this._pose();
     if (!pose.bob || this.lastStep === this.frame) return;
     Particles.dust(this.x, this.y);
-    if (Math.random() < 0.45) AudioFX.step();
+    AudioFX.step();
     this.lastStep = this.frame;
   },
 
