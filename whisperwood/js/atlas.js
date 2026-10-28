@@ -419,7 +419,7 @@ const Atlas = {
     if (sx + w > size.w || h > size.h) return false;
     try {
       this.castShadow(ctx, x, y, 8, 2.4);
-      ctx.drawImage(img, sx, 0, w, h, (x - w * 0.5) | 0, (y - h) | 0, w, h);
+      ctx.drawImage(img, sx, 0, w, h, (x - w * 0.5) | 0, (y - h + 1) | 0, w, h);
       return true;
     } catch (err) {
       return false;
