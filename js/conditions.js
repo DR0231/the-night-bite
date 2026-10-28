@@ -32,6 +32,7 @@
   var biteEl = card.querySelector(".cond-bite");
   var stripEl = card.querySelector(".cond-hours");
   var extraEl = card.querySelector(".cond-extra");
+  var lineEl = card.querySelector(".cond-line");
   // what the derived lines (strip, storm, bite, extras) are built from; each loader fills its part, then render() redraws
   var st = { periods: null, p3: null, thunder: null, waterF: null, stormAlert: false };
 
@@ -498,13 +499,66 @@
     extraEl.hidden = !any;
   }
 
+
+  /* ---- Tonight, in short: one plain line built only from numbers already on this page ----
+     Sunset (or "after dark"), tonight's NWS wind range and top rain chance, storms, the KCMH pressure trend,
+     gauge water temp, and the pool line and 7 day trend from the pool card. No score and no prediction. */
+  function poolBits() {
+    var out = [], line = document.getElementById("correction-line");
+    var m = line && /~?\s*([\d.]+)\s*ft\s+(below|above)\s+full pool/i.exec(line.textContent || "");
+    if (m) out.push("pool " + m[1] + " ft " + m[2].toLowerCase() + " full");
+    var tr = document.getElementById("pool-trend"), w = document.getElementById("pool-trend-word");
+    var word = tr && !tr.hidden && w && (w.textContent || "").trim().toLowerCase();
+    if (word && /^(rising|falling|steady)$/.test(word)) out.push(word + " over 7 days");
+    return out.length ? [out.join(", ")] : [];
+  }
+  function renderLine() {
+    if (!lineEl) return;
+    var bits = [], now = Date.now(), win = tonight(now);
+    if (win && !win.started) {
+      var sv = grid.querySelector('[data-cond="sunset"] .cond-value');
+      if (sv && !/--/.test(sv.textContent)) bits.push("Sunset " + sv.textContent.replace(/(\d)\s*([AP]M)/, "$1 $2").replace(/\s+/g, " ").trim());
+    } else if (win) bits.push("After dark now");
+    var list = win && periodsIn(st.periods, win.from, win.to);
+    if (list && list.length) {
+      var lo = null, hi = null, pop = null;
+      list.forEach(function (p) {
+        var w = windHi(p);
+        if (w !== null) { lo = lo === null ? w : Math.min(lo, w); hi = hi === null ? w : Math.max(hi, w); }
+        var r = p.probabilityOfPrecipitation && p.probabilityOfPrecipitation.value;
+        if (typeof r === "number") pop = pop === null ? r : Math.max(pop, r);
+      });
+      var dir = String(list[0].windDirection || "").toUpperCase();
+      if (hi === 0) bits.push("calm wind");
+      else if (hi !== null) bits.push((DIRS.indexOf(dir) < 0 ? "" : dir + " ") + "wind " + (lo === hi ? hi : lo + " to " + hi) + " mph");
+      if (pop !== null) bits.push(Math.round(pop) + "% rain chance");
+    }
+    if (st.storm) bits.push("storms possible");
+    if (st.p3) bits.push("pressure " + (st.p3.trend === "steady" ? "steady" : st.p3.trend));
+    if (typeof st.waterF === "number") bits.push(Math.round(st.waterF) + "°F water");
+    bits = bits.concat(poolBits());
+    if (!bits.length) { lineEl.hidden = true; return; }
+    var txt = bits.join(", ");
+    lineEl.querySelector(".cond-line-text").textContent = txt.charAt(0).toUpperCase() + txt.slice(1) + ".";
+    lineEl.hidden = false;
+  }
+
   // storm first: the strip and the bite both read what it found
   function render() {
     try { renderStorm(); } catch (e) { if (stormEl) stormEl.hidden = true; }
     try { renderStrip(); } catch (e) { if (stripEl) stripEl.hidden = true; }
     try { renderBite(); } catch (e) { if (biteEl) biteEl.hidden = true; }
     try { renderExtras(); } catch (e) { if (extraEl) extraEl.hidden = true; }
+    try { renderLine(); } catch (e) { if (lineEl) lineEl.hidden = true; }
   }
+  // the pool card fills in on its own schedule; redraw the short line when it changes
+  (function () {
+    var t = null, again = function () { clearTimeout(t); t = setTimeout(function () { try { renderLine(); } catch (e) {} }, 50); };
+    ["correction-line", "pool-trend"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el && window.MutationObserver) new MutationObserver(again).observe(el, { childList: true, subtree: true, characterData: true, attributes: true });
+    });
+  })();
 
   // water temp from js/usgs.js (pool card) and storm alerts from js/alerts.js arrive on their own schedule
   document.addEventListener("nb:usgs", function (e) {

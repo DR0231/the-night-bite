@@ -56,7 +56,7 @@ Home · Species · Water · Log · Tournaments · Gear · About
 
 ## Adding a tournament
 
-1. Use `.github/ISSUE_TEMPLATE/tournament.yml` or the Tournaments mailto form.
+1. Use `.github/ISSUE_TEMPLATE/tournament.yml` or the tournament mailto form at the bottom of the Log (`log#tournaments`).
 2. Append to `data/tournaments.json` → `events`:
 
 ```json
@@ -98,7 +98,7 @@ Limit tables are **reminders only** — confirm on [HuntFish OH / ODNR licenses]
 | `water.html` | Maps, pool correction, structure, ramps, dock season, link to Ice season |
 | `ice.html` | Ice season: ODNR ice safety, who to call per lake, winter species from the monthly notes. No ice reports |
 | `log.html` | Community JSON + private localStorage + submit |
-| `tournaments.html` | Static JSON list + submit |
+| `tournaments.html` | Redirect to `log#tournaments` (list + submit now live at the bottom of the Log) |
 | `gear.html` | Short kits (affiliate placeholders) |
 | `whisperwood.html` | Game teaser (kept) |
 | `about.html` | Disclaimer, safety, regs reminders |

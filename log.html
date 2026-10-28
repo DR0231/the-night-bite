@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.waterdata.usgs.gov https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
@@ -17,8 +17,8 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v11-2026-10-27">
-  <script src="js/lakes.js?v=v11-2026-10-27"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v12-2026-10-28">
+  <script src="js/lakes.js?v=v12-2026-10-28"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -35,18 +35,16 @@
           <li class="nav-core"><a href="./">Home</a></li>
           <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
           <li class="nav-core"><a href="water"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
-          <li class="nav-core"><a href="log" aria-current="page">Log</a></li>
-          <li class="nav-extra"><a href="tournaments">Tournaments</a></li>
-          <li class="nav-extra"><a href="gear">Gear</a></li>
+          <li class="nav-core"><a href="gear">Gear</a></li>
           <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra"><a href="log" aria-current="page">Log</a></li>
           <li class="nav-extra"><a href="about">About</a></li>
           <li class="nav-extra"><a href="updates" data-updates="2026-10-27">What&rsquo;s new</a></li>
           <li class="nav-more-item">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
-              <a href="gear">Gear</a>
-              <a href="tournaments">Tournaments</a>
               <a href="whisperwood.html">Whisperwood Vale</a>
+              <a href="log">Log</a>
               <a href="about">About</a>
               <a href="updates" data-updates="2026-10-27">What&rsquo;s new</a>
             </div>
@@ -271,6 +269,64 @@
       </div>
       <p class="meta" style="margin-top:0.75rem;margin-bottom:0;">“Clear my entries” removes only your own trips. Never stores names, addresses, or card info.</p>
     </form>
+    <hr class="divider">
+
+    <section class="log-tournaments" id="tournaments" aria-labelledby="tournaments-h">
+      <h2 id="tournaments-h">Tournaments</h2>
+      <p class="meta">
+        Third-party club events at <span data-lk="short">Hoover</span>, listed only when someone submits one.
+        The Night Bite is <strong>not</strong> an official tournament director, not ODNR, and not a club host.
+        Nothing here is invented, so a short list is an honest list.
+      </p>
+      <div id="tournaments-list" aria-live="polite">
+        <div class="empty-log" id="tournaments-empty">
+          <p>No events listed right now. Know of one? <a href="#submit-tournament">Submit it below</a>.</p>
+        </div>
+      </div>
+
+      <details class="how-to-read" id="submit-tournament">
+        <summary>Submit a tournament</summary>
+        <div class="how-to-read-body">
+          <p class="meta">
+            No account needed. Use the form to build an email, or open a GitHub issue from the template.
+          </p>
+          <form class="form-block" id="tournament-form">
+            <div class="form-row">
+              <label for="t-name">Event name</label>
+              <input type="text" id="t-name" name="name" required maxlength="120" placeholder="Club or event name">
+            </div>
+            <div class="form-row">
+              <label for="t-date">Date</label>
+              <input type="date" id="t-date" name="date" required>
+            </div>
+            <div class="form-row">
+              <label for="t-ramp">Public ramp / area</label>
+              <input type="text" id="t-ramp" name="ramp" required maxlength="120" placeholder="e.g. Walnut Road (public)">
+            </div>
+            <div class="form-row">
+              <label for="t-club">Club / organizer</label>
+              <input type="text" id="t-club" name="club" maxlength="120">
+            </div>
+            <div class="form-row">
+              <label for="t-url">Info URL (optional)</label>
+              <input type="url" id="t-url" name="url" maxlength="200" placeholder="https://">
+            </div>
+            <div class="form-row">
+              <label for="t-notes">Notes</label>
+              <textarea id="t-notes" name="notes" maxlength="500" placeholder="Start time, species, public details only…"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn">Build email</button>
+              <a class="btn btn-ghost" href="https://github.com/DR0231/the-night-bite/issues/new?template=tournament.yml" id="tournament-gh-link" target="_blank" rel="noopener">Open GitHub issue</a>
+            </div>
+            <p class="meta" id="tournament-mailto-out" style="margin-top:0.75rem;" hidden></p>
+          </form>
+          <p class="meta">
+            Build email sends to <code>contact@nightbiteoh.com</code>.
+          </p>
+        </div>
+      </details>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -279,25 +335,26 @@
         <a href="./">Home</a>
         <a href="species/">Species</a>
         <a href="water">Water</a>
-        <a href="log">Log</a>
-        <a href="tournaments">Tournaments</a>
         <a href="gear">Gear</a>
+        <a href="whisperwood.html">Whisperwood Vale</a>
+        <a href="log">Log</a>
         <a href="about">About</a>
         <a href="updates" data-updates="2026-10-27">What&rsquo;s new</a>
         <a href="privacy">Privacy</a>
-        <a href="whisperwood.html">Whisperwood Vale</a>
       </nav>
       <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v11-2026-10-27"></script>
-  <script src="js/sw-update.js?v=v11-2026-10-27"></script>
-  <script src="js/alerts.js?v=v11-2026-10-27"></script>
-  <script src="js/nav.js?v=v11-2026-10-27"></script>
-  <script src="js/lake-picker.js?v=v11-2026-10-27"></script>
-  <script src="js/log.js?v=v11-2026-10-27"></script>
-  <script src="js/community-log.js?v=v11-2026-10-27"></script>
+  <script src="js/refresh.js?v=v12-2026-10-28"></script>
+  <script src="js/sw-update.js?v=v12-2026-10-28"></script>
+  <script src="js/alerts.js?v=v12-2026-10-28"></script>
+  <script src="js/nav.js?v=v12-2026-10-28"></script>
+  <script src="js/lake-picker.js?v=v12-2026-10-28"></script>
+  <script src="js/log.js?v=v12-2026-10-28"></script>
+  <script src="js/community-log.js?v=v12-2026-10-28"></script>
+  <script src="js/tournaments.js?v=v12-2026-10-28"></script>
+  <script src="js/fold-anchors.js?v=v12-2026-10-28"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

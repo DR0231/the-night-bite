@@ -3054,3 +3054,338 @@ html.nb-show-drafts .update.is-draft { display: block; border-left-style: dashed
   background-image: linear-gradient(var(--amber), var(--amber));
   background-size: 6px 6px; background-repeat: no-repeat; background-position: right 0 top 10px;
 }
+
+/* ==========================================================================
+   Stocking & surveys (stocking.html): ODNR numbers, folded by species
+   ========================================================================== */
+.data-jumps { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 var(--space-md); }
+.data-jumps a {
+  font-family: var(--font-display); font-variant-ligatures: none; font-size: var(--text-label); letter-spacing: 0.06em;
+  color: var(--cream-dark); text-decoration: none; padding: 0.55rem 0.8rem; min-height: 44px; display: inline-flex; align-items: center;
+  border: 1px solid var(--navy-light); border-radius: var(--radius); background: var(--navy-mid);
+}
+.data-jumps a:hover, .data-jumps a:focus-visible { color: var(--amber); border-color: var(--amber); }
+.data-glance-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1rem; margin: 0; }
+.data-glance-list dt { font-family: var(--font-display); font-variant-ligatures: none; font-size: var(--text-label); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.data-glance-list dd { margin: 0.15rem 0 0; color: var(--cream); }
+@media (min-width: 720px) { .data-glance-list { grid-template-columns: repeat(4, 1fr); } }
+.data-dates { margin: var(--space-sm) 0 var(--space-lg); max-width: var(--measure); }
+.data-more { margin-top: 0.5rem; }
+.data-more summary { flex-wrap: wrap; row-gap: 0; padding: 0.35rem 0; }
+.data-sum { font-family: var(--font-body); font-size: var(--text-sm); letter-spacing: 0; color: var(--muted); margin-left: auto; }
+.data-table-wrap { margin: 0.25rem 0 0.75rem; max-width: 30rem; }
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+.data-table th, .data-table td { padding: 0.45rem 0.7rem; border-bottom: 1px solid var(--navy-light); text-align: left; }
+.data-table thead th {
+  font-family: var(--font-display); font-variant-ligatures: none; font-size: var(--text-label); font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: rgba(10, 22, 40, 0.5); vertical-align: bottom;
+}
+.data-table tbody th { font-weight: 600; color: var(--cream); }
+.data-table .num { text-align: right; white-space: nowrap; }
+.data-table tbody tr:last-child th, .data-table tbody tr:last-child td { border-bottom: none; }
+.data-none { color: var(--cream-dark); max-width: var(--measure); }
+.data-forecast { max-width: var(--measure); padding-left: 1.2rem; }
+.data-forecast li { margin-bottom: 0.5rem; }
+.data-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+/* Phase 2 preview: species stocking line, lake facts, water quality line, lake rules */
+.sp-stock { margin: 0 0 var(--space-sm); }
+.lake-facts { margin-top: var(--space-md); }
+.lake-facts-title { margin: 0 0 0.5rem; color: var(--cream); }
+.lake-facts .meta { margin: 0.75rem 0 0; }
+.wq-line { margin: var(--space-sm) 0 0; }
+.wq-label { font-family: var(--font-display); font-variant-ligatures: none; color: var(--cream); }
+.rules-card ul { margin: 0 0 0.5rem; }
+.rules-card .meta { margin: 0; }
+
+/* Phase 3 preview: Tonight, in short; owner's local notes */
+.cond-line { margin: 0 0 var(--space-sm); line-height: 1.45; }
+.cond-line[hidden] { display: none; }
+.cond-line .cond-label { margin-right: 0.25rem; }
+.note-slots { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-sm); }
+.note-slot { border: 1px dashed var(--amber-dim); border-radius: var(--radius); padding: var(--space-sm) var(--space-md); }
+.note-slot-label { margin: 0 0 0.25rem; font-family: var(--font-display); font-variant-ligatures: none; font-size: var(--text-label); letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber); }
+.note-slot-body { margin: 0; color: var(--muted); }
+.note-slot.note-real { border-style: solid; }
+.note-slot.note-real .note-slot-body { color: var(--cream); }
+.cond-line-text { font-size: var(--text-sm); color: var(--cream-dark); }
+
+/* —— Scrollspy wave (js/scrollspy.js, main[data-scrollspy]) ——
+   Right-edge column of ticks; the ticks at your spot swell amber. Each section owns a slice you can tap. */
+.spy {
+  position: fixed;
+  right: max(2px, env(safe-area-inset-right));
+  top: 50%;
+  transform: translateY(-50%);
+  height: min(62vh, 30rem);
+  width: 14px;
+  z-index: 40;
+}
+.spy[hidden] { display: none; }
+.spy-ticks {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+}
+.spy-tick {
+  display: block;
+  width: 100%; height: 2px;
+  background: var(--cream-dark);
+  transform-origin: right center;
+  transform: scaleX(0.28);
+  opacity: 0.32;
+  transition: transform 180ms var(--ease), opacity 180ms var(--ease), background-color 180ms var(--ease);
+}
+.spy-tick.is-start { background: var(--cream); }
+.spy-tick.is-hot { background: var(--amber); box-shadow: 0 0 6px var(--amber-glow); }
+.spy-list { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; }
+.spy-list li { margin: 0; }
+.spy-link {
+  position: absolute; right: 0; width: 100%;
+  min-height: 6px;
+  display: block;
+  text-decoration: none;
+  border-radius: 2px;
+  -webkit-tap-highlight-color: transparent;
+}
+.spy-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.spy-label,
+.spy-now {
+  position: absolute;
+  right: calc(100% + 0.5rem);
+  white-space: nowrap;
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: var(--text-label);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 0.375rem 0.5rem;
+  color: var(--amber);
+  background: rgba(10, 22, 40, 0.94);
+  border: 1px solid var(--navy-light);
+  border-radius: var(--radius);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms var(--ease);
+}
+.spy-label { top: 50%; transform: translateY(-50%); color: var(--cream); }
+.spy-now { transform: translateY(-50%); }
+.spy-link:hover .spy-label,
+.spy-link:focus-visible .spy-label { opacity: 1; }
+.spy:hover .spy-now, .spy:focus-within .spy-now { opacity: 0 !important; }
+.spy.is-scrolling .spy-now { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .spy { width: 22px; right: max(8px, env(safe-area-inset-right)); }
+  .spy-link:hover { background: rgba(245, 237, 216, 0.04); }
+}
+@media (min-width: 1100px) { .spy { width: 28px; right: 16px; } }
+/* very narrow or short screens: no column */
+@media (max-width: 359px), (max-height: 419px) { .spy { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .spy-tick, .spy-label, .spy-now { transition: none; }
+}
+
+/* —— Gear: folded kit, rig and bait lists for species after the first —— */
+.gear-fold { margin-top: 0.25rem; border-top: 1px solid var(--hairline); }
+.gear-fold + .gear-fold { margin-top: 0; }
+.gear-fold summary { font-family: var(--font-display); font-variant-ligatures: none; }
+.gear-fold .how-to-read-body { font-size: var(--text-base); color: inherit; }
+.gear-fold .how-to-read-body > :first-child { margin-top: 0.25rem; }
+.gear-fold .gear-kit h3 { margin-top: 0; }
+
+/* ==========================================================================
+   Gear polish (phase 5): labeled segmented nav, species chapter heads,
+   grouped folds, label-style subheads. Scoped to .gear-guide.
+   ========================================================================== */
+.gear-guide .gear-nav-rows {
+  display: grid;
+  gap: 0.375rem;
+  padding: 0.5rem;
+  margin: var(--space-md) 0 var(--space-xl);
+  background: rgba(18, 32, 56, 0.96);
+  border: 0;
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 var(--hairline), 0 8px 24px -16px rgba(0, 0, 0, 0.6);
+  overflow: visible;
+}
+.gear-guide .gear-nav-row {
+  display: grid;
+  grid-template-columns: 5.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+}
+.gear-nav-label {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding-left: 0.5rem;
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: var(--text-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.gear-nav-label::before {
+  content: ""; width: 6px; height: 6px; flex: none;
+  background: var(--amber);
+}
+.gear-nav-seg {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 2px;
+  padding: 2px;
+  background: var(--navy);
+  border-radius: var(--radius);
+}
+.gear-guide .gear-nav-seg a {
+  position: relative;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 0.5rem;
+  gap: 0.4rem;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--cream-dark);
+  font-size: var(--text-label);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.gear-guide .gear-nav-seg a:hover { background: var(--navy-mid); color: var(--cream); }
+.gear-guide .gear-nav-seg a.is-active,
+.gear-guide .gear-nav-seg a[aria-current="true"] {
+  background: var(--navy-light);
+  color: var(--amber);
+  border: 0;
+  box-shadow: inset 0 -2px 0 var(--amber);
+}
+.gear-guide .gear-nav-seg a:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.gear-nav-icon { width: 16px; height: 16px; flex: none; opacity: 0.85; }
+.gear-nav-seg a.is-active .gear-nav-icon { opacity: 1; }
+
+/* phones: the Plan row scrolls away with the intro; only the Species row sticks */
+@media (max-width: 719px) {
+  .gear-guide .gear-nav-rows { display: contents; }
+  .gear-guide .gear-nav-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.3125rem;
+    padding: 0.5rem 0.5rem 0.375rem;
+    background: rgba(18, 32, 56, 0.97);
+    box-shadow: inset 0 1px 0 var(--hairline);
+  }
+  .gear-guide .gear-nav-row:first-child { margin-top: var(--space-md); border-radius: var(--radius) var(--radius) 0 0; }
+  .gear-guide .gear-nav-row-species {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 50;
+    margin-bottom: var(--space-xl);
+    padding: 0.375rem 0.5rem 0.5rem;
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: 0 8px 20px -14px rgba(0, 0, 0, 0.7);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .gear-nav-label { padding: 0 0.25rem; font-size: 0.625rem; line-height: 1; gap: 0.375rem; }
+  .gear-nav-label::before { width: 5px; height: 5px; }
+  .gear-guide .gear-nav-seg a { padding: 0 0.25rem; gap: 0.3rem; }
+  .gear-guide .species-section { scroll-margin-top: calc(var(--header-h) + 5.5rem); }
+}
+@media (max-width: 380px) { .gear-nav-icon { display: none; } }
+
+/* section rhythm */
+.gear-guide .gear-section { margin-bottom: var(--space-xl); }
+.gear-guide .gear-section > h2:first-child { margin-top: 0; }
+
+/* species chapters: hairline rule, fish mark, eyebrow, title, subtitle */
+.gear-guide #catfish,
+.gear-guide #crappie,
+.gear-guide #bass,
+.gear-guide #saugeye { padding-top: var(--space-lg); border-top: 1px solid var(--navy-light); }
+.gear-sp-head { display: flex; align-items: center; gap: var(--space-sm); margin: 0 0 var(--space-md); }
+.gear-sp-icon {
+  width: 48px; height: 48px; flex: none;
+  padding: 8px;
+  background: var(--navy-mid);
+  box-shadow: inset 0 1px 0 var(--hairline);
+  border-radius: var(--radius);
+  image-rendering: pixelated;
+}
+.gear-sp-titles { min-width: 0; }
+.gear-sp-head .gear-sp-eyebrow { margin: 0 0 0.125rem; color: var(--amber); }
+.gear-guide .gear-sp-head h2 { margin: 0; }
+.gear-sp-sub { margin: 0.125rem 0 0; font-size: var(--text-sm); color: var(--muted); }
+
+/* subheads inside a section read as labels, not a second tier of headlines */
+.gear-guide .gear-section > h3,
+.gear-mode-head h3 {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cream-dark);
+  margin: var(--space-lg) 0 var(--space-sm);
+}
+.gear-guide .gear-section > h3::before,
+.gear-mode-head h3::before { content: ""; width: 6px; height: 6px; flex: none; background: var(--amber); }
+.gear-guide .gear-section > h3 + .card-grid { margin-top: 0; }
+
+/* Bank vs boat: label left, toggle right */
+.gear-mode-head {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--space-xs) var(--space-md);
+  margin: var(--space-lg) 0 var(--space-sm);
+}
+.gear-mode-head h3 { margin: 0; }
+.gear-mode-head .mode-toggle { margin: 0; }
+.gear-guide .bank-boat-card h3 {
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: var(--text-label); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500;
+  margin-bottom: var(--space-xs);
+}
+
+/* folded lists: one card, hairline between rows, hint on the right */
+.gear-folds {
+  margin: var(--space-md) 0 0;
+  background: var(--navy-mid);
+  box-shadow: inset 0 1px 0 var(--hairline);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.gear-folds .gear-fold {
+  margin: 0;
+  padding: 0 var(--card-pad);
+  background: transparent;
+  border-radius: 0;
+  border-top: 1px solid var(--navy-light);
+}
+.gear-folds .gear-fold:first-child { border-top: 0; }
+.gear-folds .gear-fold summary {
+  min-height: 52px;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+}
+.gear-folds .gear-fold summary::before { color: var(--amber); background: var(--amber); }
+.gear-folds .gear-fold summary:hover { color: var(--amber); }
+.gear-folds .gear-fold[open] summary { color: var(--amber); }
+.gear-folds .gear-fold .data-sum { font-size: var(--text-sm); }
+.gear-folds .how-to-read-body { padding-bottom: var(--space-md); }
+.gear-folds .gear-kit { background: none; box-shadow: none; padding: 0; margin: 0; }
+.gear-folds .rig-figure { background: var(--navy); margin: var(--space-sm) 0 0; }
+.gear-folds .how-to-read-body ul { margin-bottom: 0; }
+
+/* rig diagrams: three across once there is room, so none sits alone */
+@media (min-width: 720px) { .gear-guide .rig-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.gear-guide .rig-row .rig-figure { padding: var(--space-sm); }
+
+/* kit cards: bigger fish mark, card cue */
+.gear-guide .gear-kit-jump h3 .icon-inline { width: 32px; height: 32px; }
+.gear-folds .rig-figure { max-width: 22rem; }
+
+/* Log: tournaments folded in at the bottom (log#tournaments) */
+.log-tournaments { scroll-margin-top: calc(var(--header-h, 56px) + 1rem); }
+.log-tournaments #tournaments-list { margin-bottom: 1rem; }
+.log-tournaments .how-to-read .form-block { margin-top: 0.5rem; }

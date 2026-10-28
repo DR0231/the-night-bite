@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.waterdata.usgs.gov https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="apple-mobile-web-app-title" content="Night Bite">
+  <link rel="manifest" href="site.webmanifest">
+  <title>Stocking and surveys: Hoover, Alum Creek and Buckeye Lake | The Night Bite</title>
+  <meta name="description" content="What ODNR has published for Hoover, Alum Creek and Buckeye Lake: fish stocked, net survey growth, angler surveys and the official habitat map. Sources and dates on every number.">
+  <link rel="canonical" href="https://nightbiteoh.com/stocking">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css?v=v12-2026-10-28">
+  <script src="js/lakes.js?v=v12-2026-10-28"></script>
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="./">
+        <img src="assets/lantern.svg" alt="" width="24" height="36" class="lantern-glow">
+        <span class="logo-text">The Night Bite</span>
+      </a>
+      <button type="button" class="lake-pill"><span class="lake-pill-label">Choose a lake</span><span class="lake-pill-chip" aria-hidden="true"><span class="lake-pill-dot"></span><span class="lake-pill-name"></span><span class="lake-pill-chev"></span></span></button>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li class="nav-core"><a href="./">Home</a></li>
+          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
+          <li class="nav-core"><a href="water"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="gear">Gear</a></li>
+          <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra"><a href="log">Log</a></li>
+          <li class="nav-extra"><a href="about">About</a></li>
+          <li class="nav-extra"><a href="updates" data-updates="2026-10-27">What&rsquo;s new</a></li>
+          <li class="nav-more-item">
+            <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
+            <div id="nav-more-panel" class="nav-more-panel" hidden>
+              <a href="whisperwood.html">Whisperwood Vale</a>
+              <a href="log">Log</a>
+              <a href="about">About</a>
+              <a href="updates" data-updates="2026-10-27">What&rsquo;s new</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-horizon" aria-hidden="true"></div>
+    <p class="breadcrumb"><a href="water">Water</a> &middot; Stocking &amp; surveys</p>
+    <h1>Stocking &amp; surveys</h1>
+    <p class="lead" data-for="hoover alum">
+      What ODNR has published for <span data-lk="name">Hoover Reservoir</span>: fish stocked, how fast they grow, what anglers catch, and ODNR&rsquo;s habitat map.
+      Official numbers only, each with its source.
+    </p>
+    <p class="lead" data-for="buckeye">
+      What ODNR has published for Buckeye Lake, and what it hasn&rsquo;t. Official facts only, each with its source.
+    </p>
+    <nav class="data-jumps" data-for="hoover alum" aria-label="On this page">
+      <a href="#stocked">Stocked</a><a href="#growth">Growth</a><a href="#anglers">Anglers</a><a href="#habitat">Map</a>
+    </nav>
+    <div data-for="hoover">
+      <div class="card data-glance">
+        <dl class="data-glance-list">
+          <div><dt>Stocked</dt><dd>Saugeye, blue catfish, walleye</dd></div>
+          <div><dt>Newest public table</dt><dd>2019 stockings</dd></div>
+          <div><dt>Net surveys</dt><dd>2007 to 2019</dd></div>
+          <div><dt>Angler survey</dt><dd>2016</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div data-for="alum">
+      <div class="card data-glance">
+        <dl class="data-glance-list">
+          <div><dt>Stocked</dt><dd>Saugeye, muskellunge</dd></div>
+          <div><dt>Newest public table</dt><dd>2019 stockings</dd></div>
+          <div><dt>Net surveys</dt><dd>2010 to 2019</dd></div>
+          <div><dt>Angler survey</dt><dd>2018</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div data-for="buckeye">
+      <div class="card data-glance">
+        <p class="data-none">ODNR&rsquo;s Buckeye Lake fishing area page has no stocking tables, net surveys, angler survey or fishing forecast. This page says so rather than guess.</p>
+        <p class="meta">What ODNR does say: Buckeye Lake was built about 1830. It averages about 6 ft deep with a maximum of about 14 ft, and has a relatively flat bottom without much underwater woody cover. No horsepower limit.
+        Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area" target="_blank" rel="noopener">ODNR, Buckeye Lake Fishing Area</a>.</p>
+      </div>
+    </div>
+    <p class="meta data-dates">ODNR&rsquo;s lake PDFs run through 2019. Newer stocking is in ODNR&rsquo;s <a href="https://ohiodnr.gov/buy-and-apply/hunting-fishing-boating/fishing-resources/fish-stocking-records" target="_blank" rel="noopener">Fish Stocking Database</a> on DataOhio, which asked for a sign in, so it isn&rsquo;t copied here. Checked Oct. 27, 2026.</p>
+    <section id="stocked" data-for="hoover alum" aria-labelledby="stocked-title">
+      <h2 id="stocked-title">Fish stocked</h2>
+      <div data-for="hoover">
+        <details class="how-to-read data-more">
+          <summary>Saugeye <span class="data-sum">2010 to 2019, 10 years</span></summary>
+          <div class="how-to-read-body">
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Year</th><th scope="col" class="num">Fingerlings</th><th scope="col" class="num">Fry</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">2010</th><td class="num">284,036</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2011</th><td class="num">284,269</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2012</th><td class="num">290,913</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2013</th><td class="num">&ndash;</td><td class="num">2,891,503</td></tr>
+                <tr><th scope="row">2014</th><td class="num">294,728</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2015</th><td class="num">&ndash;</td><td class="num">2,895,880</td></tr>
+                <tr><th scope="row">2016</th><td class="num">289,170</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2017</th><td class="num">679,460</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2018</th><td class="num">418,243</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2019</th><td class="num">296,175</td><td class="num">&ndash;</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Hoover%20Saugeye%20Stocking%20up20.pdf" target="_blank" rel="noopener">Saugeye stocking table (PDF)</a>. Copied from the PDF; a dash means none listed.</p>
+          </div>
+        </details>
+        <details class="how-to-read data-more">
+          <summary>Blue catfish <span class="data-sum">2011 to 2018, 7 years</span></summary>
+          <div class="how-to-read-body">
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Year</th><th scope="col" class="num">Advanced fingerlings</th><th scope="col" class="num">Yearlings</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">2011</th><td class="num">8,316</td><td class="num">13,516</td></tr>
+                <tr><th scope="row">2012</th><td class="num">&ndash;</td><td class="num">17,594</td></tr>
+                <tr><th scope="row">2013</th><td class="num">&ndash;</td><td class="num">10,494</td></tr>
+                <tr><th scope="row">2015</th><td class="num">62,639</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2016</th><td class="num">57,550</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2017</th><td class="num">59,251</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2018</th><td class="num">49,214</td><td class="num">&ndash;</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Hoover%20Blue%20Catfish%20Stocking%20up20.pdf" target="_blank" rel="noopener">Blue catfish stocking table (PDF)</a>. Copied from the PDF; a dash means none listed.</p>
+          </div>
+        </details>
+        <details class="how-to-read data-more">
+          <summary>Walleye <span class="data-sum">2019</span></summary>
+          <div class="how-to-read-body">
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Year</th><th scope="col" class="num">Fingerlings</th><th scope="col" class="num">Fry</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">2019</th><td class="num">288,728</td><td class="num">&ndash;</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Hoover%20Walleye%20Stocking%20up20.pdf" target="_blank" rel="noopener">Walleye stocking table (PDF)</a>. Copied from the PDF; a dash means none listed.</p>
+          </div>
+        </details>
+      </div>
+      <div data-for="alum">
+        <details class="how-to-read data-more">
+          <summary>Saugeye <span class="data-sum">2010 to 2019, 10 years</span></summary>
+          <div class="how-to-read-body">
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Year</th><th scope="col" class="num">Fingerlings</th><th scope="col" class="num">Fry</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">2010</th><td class="num">&ndash;</td><td class="num">3,192,560</td></tr>
+                <tr><th scope="row">2011</th><td class="num">321,935</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2012</th><td class="num">334,435</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2013</th><td class="num">338,683</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2014</th><td class="num">&ndash;</td><td class="num">3,350,000</td></tr>
+                <tr><th scope="row">2015</th><td class="num">333,935</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2016</th><td class="num">&ndash;</td><td class="num">3,366,263</td></tr>
+                <tr><th scope="row">2017</th><td class="num">202,440</td><td class="num">3,331,009</td></tr>
+                <tr><th scope="row">2018</th><td class="num">&ndash;</td><td class="num">4,372,680</td></tr>
+                <tr><th scope="row">2019</th><td class="num">&ndash;</td><td class="num">5,529,000</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Alum%20Creek%20Saugeye%20Stocking%20up20.pdf" target="_blank" rel="noopener">Saugeye stocking table (PDF)</a>. Copied from the PDF; a dash means none listed.</p>
+          </div>
+        </details>
+        <details class="how-to-read data-more">
+          <summary>Muskellunge <span class="data-sum">2010 to 2019, 10 years</span></summary>
+          <div class="how-to-read-body">
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Year</th><th scope="col" class="num">Advanced fingerlings</th><th scope="col" class="num">Fingerlings</th><th scope="col" class="num">Fry</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">2010</th><td class="num">2,234</td><td class="num">&ndash;</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2011</th><td class="num">1,955</td><td class="num">66,122</td><td class="num">598,631</td></tr>
+                <tr><th scope="row">2012</th><td class="num">3,332</td><td class="num">&ndash;</td><td class="num">159,518</td></tr>
+                <tr><th scope="row">2013</th><td class="num">3,322</td><td class="num">&ndash;</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2014</th><td class="num">3,373</td><td class="num">&ndash;</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2015</th><td class="num">3,451</td><td class="num">&ndash;</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2016</th><td class="num">3,325</td><td class="num">&ndash;</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2017</th><td class="num">3,577</td><td class="num">&ndash;</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2018</th><td class="num">3,598</td><td class="num">&ndash;</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">2019</th><td class="num">2,541</td><td class="num">&ndash;</td><td class="num">&ndash;</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Alum%20Creek%20Muskellunge%20Stocking%20up20.pdf" target="_blank" rel="noopener">Muskellunge stocking table (PDF)</a>. Copied from the PDF; a dash means none listed.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+    <section id="growth" data-for="hoover alum" aria-labelledby="growth-title">
+      <h2 id="growth-title">Net surveys: growth</h2>
+      <div data-for="hoover">
+        <details class="how-to-read data-more">
+          <summary>Saugeye <span class="data-sum">age 3: 20.2 in, Ohio 19.6</span></summary>
+          <div class="how-to-read-body">
+            <p>Average length in inches at each age, from ODNR gill nets. The PDF also charts catch rates by size for 2007 to 2019.</p>
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Age</th><th scope="col" class="num">Hoover</th><th scope="col" class="num">Ohio avg</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">0</th><td class="num">10.4</td><td class="num">9.8</td></tr>
+                <tr><th scope="row">1</th><td class="num">15.2</td><td class="num">13.9</td></tr>
+                <tr><th scope="row">2</th><td class="num">18.0</td><td class="num">17.4</td></tr>
+                <tr><th scope="row">3</th><td class="num">20.2</td><td class="num">19.6</td></tr>
+                <tr><th scope="row">4</th><td class="num">22.6</td><td class="num">20.9</td></tr>
+                <tr><th scope="row">5</th><td class="num">23.7</td><td class="num">22.3</td></tr>
+                <tr><th scope="row">6</th><td class="num">26.6</td><td class="num">22.9</td></tr>
+                <tr><th scope="row">7</th><td class="num">27.0</td><td class="num">23.2</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Hoover%20Saugeye%20Survey%20up20.pdf" target="_blank" rel="noopener">Saugeye survey (PDF)</a>. Copied from the PDF.</p>
+          </div>
+        </details>
+        <details class="how-to-read data-more">
+          <summary>Crappie <span class="data-sum">age 3: 9.9 in, Ohio 9.5</span></summary>
+          <div class="how-to-read-body">
+            <p>Average length in inches at each age, from ODNR trap nets. The PDF also charts catch rates by size for 2009 to 2019.</p>
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Age</th><th scope="col" class="num">Hoover</th><th scope="col" class="num">Ohio avg</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">0</th><td class="num">3.7</td><td class="num">3.8</td></tr>
+                <tr><th scope="row">1</th><td class="num">7.5</td><td class="num">6.9</td></tr>
+                <tr><th scope="row">2</th><td class="num">9.2</td><td class="num">8.6</td></tr>
+                <tr><th scope="row">3</th><td class="num">9.9</td><td class="num">9.5</td></tr>
+                <tr><th scope="row">4</th><td class="num">10.6</td><td class="num">10.1</td></tr>
+                <tr><th scope="row">5</th><td class="num">10.4</td><td class="num">10.3</td></tr>
+                <tr><th scope="row">6</th><td class="num">10.9</td><td class="num">10.5</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Hoover%20Crappie%20Survey%20up20.pdf" target="_blank" rel="noopener">Crappie survey (PDF)</a>. Copied from the PDF.</p>
+          </div>
+        </details>
+        <details class="how-to-read data-more">
+          <summary>Largemouth bass <span class="data-sum">age 3: 12.4 in, Ohio 11.3</span></summary>
+          <div class="how-to-read-body">
+            <p>Average length in inches at each age, from ODNR electrofishing. The PDF also charts catch rates by size for 2007 to 2019.</p>
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Age</th><th scope="col" class="num">Hoover</th><th scope="col" class="num">Ohio avg</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">1</th><td class="num">7.0</td><td class="num">5.8</td></tr>
+                <tr><th scope="row">2</th><td class="num">10.0</td><td class="num">8.8</td></tr>
+                <tr><th scope="row">3</th><td class="num">12.4</td><td class="num">11.3</td></tr>
+                <tr><th scope="row">4</th><td class="num">14.3</td><td class="num">12.9</td></tr>
+                <tr><th scope="row">5</th><td class="num">15.4</td><td class="num">14.2</td></tr>
+                <tr><th scope="row">6</th><td class="num">16.3</td><td class="num">15.2</td></tr>
+                <tr><th scope="row">7</th><td class="num">17.5</td><td class="num">15.8</td></tr>
+                <tr><th scope="row">8</th><td class="num">18.0</td><td class="num">16.6</td></tr>
+                <tr><th scope="row">9</th><td class="num">17.2</td><td class="num">17.2</td></tr>
+                <tr><th scope="row">10</th><td class="num">19.8</td><td class="num">18.3</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Hoover%20Largemouth%20Bass%20Survey%20up20.pdf" target="_blank" rel="noopener">Largemouth bass survey (PDF)</a>. Copied from the PDF.</p>
+          </div>
+        </details>
+        <p class="meta">Channel catfish: ODNR hoop net results from 2016 are charted in the <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Hoover%20Channel%20Catfish%20Survey%20up20.pdf" target="_blank" rel="noopener">channel catfish survey (PDF)</a>. The growth table there doesn&rsquo;t line up cleanly with its ages, so it isn&rsquo;t copied here.</p>
+      </div>
+      <div data-for="alum">
+        <details class="how-to-read data-more">
+          <summary>Saugeye <span class="data-sum">age 3: 19.2 in, Ohio 19.6</span></summary>
+          <div class="how-to-read-body">
+            <p>Average length in inches at each age, from ODNR gill nets. The PDF also charts catch rates by size for 2010 to 2019.</p>
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Age</th><th scope="col" class="num">Alum Creek</th><th scope="col" class="num">Ohio avg</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">0</th><td class="num">10.4</td><td class="num">9.8</td></tr>
+                <tr><th scope="row">1</th><td class="num">15.2</td><td class="num">13.9</td></tr>
+                <tr><th scope="row">2</th><td class="num">16.9</td><td class="num">17.4</td></tr>
+                <tr><th scope="row">3</th><td class="num">19.2</td><td class="num">19.6</td></tr>
+                <tr><th scope="row">4</th><td class="num">21.7</td><td class="num">20.9</td></tr>
+                <tr><th scope="row">5</th><td class="num">22.1</td><td class="num">22.3</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Alum%20Creek%20Saugeye%20Survey%20up20.pdf" target="_blank" rel="noopener">Saugeye survey (PDF)</a>. Copied from the PDF.</p>
+          </div>
+        </details>
+        <details class="how-to-read data-more">
+          <summary>Crappie <span class="data-sum">age 3: 10.8 in, Ohio 9.5</span></summary>
+          <div class="how-to-read-body">
+            <p>Average length in inches at each age, from ODNR trap nets. The PDF also charts catch rates by size for 2010 to 2019.</p>
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Age</th><th scope="col" class="num">Alum Creek</th><th scope="col" class="num">Ohio avg</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">0</th><td class="num">3.5</td><td class="num">3.8</td></tr>
+                <tr><th scope="row">1</th><td class="num">7.8</td><td class="num">6.9</td></tr>
+                <tr><th scope="row">2</th><td class="num">9.6</td><td class="num">8.6</td></tr>
+                <tr><th scope="row">3</th><td class="num">10.8</td><td class="num">9.5</td></tr>
+                <tr><th scope="row">4</th><td class="num">10.9</td><td class="num">10.1</td></tr>
+                <tr><th scope="row">5</th><td class="num">11.7</td><td class="num">10.3</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Alum%20Creek%20Crappie%20Survey%20up20.pdf" target="_blank" rel="noopener">Crappie survey (PDF)</a>. Copied from the PDF.</p>
+          </div>
+        </details>
+        <details class="how-to-read data-more">
+          <summary>Largemouth bass <span class="data-sum">age 3: 13.3 in, Ohio 11.3</span></summary>
+          <div class="how-to-read-body">
+            <p>Average length in inches at each age, from ODNR electrofishing. The PDF also charts catch rates by size for 2010 to 2019.</p>
+            <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Age</th><th scope="col" class="num">Alum Creek</th><th scope="col" class="num">Ohio avg</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">1</th><td class="num">6.1</td><td class="num">5.8</td></tr>
+                <tr><th scope="row">2</th><td class="num">10.3</td><td class="num">8.8</td></tr>
+                <tr><th scope="row">3</th><td class="num">13.3</td><td class="num">11.3</td></tr>
+                <tr><th scope="row">4</th><td class="num">15.1</td><td class="num">12.9</td></tr>
+                <tr><th scope="row">5</th><td class="num">17.4</td><td class="num">14.2</td></tr>
+                <tr><th scope="row">6</th><td class="num">16.6</td><td class="num">15.2</td></tr>
+                <tr><th scope="row">7</th><td class="num">17.6</td><td class="num">15.8</td></tr>
+                <tr><th scope="row">8</th><td class="num">19.3</td><td class="num">16.6</td></tr>
+                <tr><th scope="row">9</th><td class="num">19.7</td><td class="num">17.2</td></tr>
+                <tr><th scope="row">10</th><td class="num">19.3</td><td class="num">18.3</td></tr>
+              </tbody>
+            </table></div>
+            <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Alum%20Creek%20Largemouth%20Bass%20Survey%20up20.pdf" target="_blank" rel="noopener">Largemouth bass survey (PDF)</a>. Copied from the PDF.</p>
+          </div>
+        </details>
+        <p class="meta">Channel catfish: ODNR hoop net results from 2018 are charted in the <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Alum%20Creek%20Channel%20Catfish%20Survey%20up20.pdf" target="_blank" rel="noopener">channel catfish survey (PDF)</a>. The growth table there doesn&rsquo;t line up cleanly with its ages, so it isn&rsquo;t copied here.</p>
+      </div>
+    </section>
+    <section id="anglers" data-for="hoover alum" aria-labelledby="anglers-title">
+      <h2 id="anglers-title">Angler survey</h2>
+      <div data-for="hoover">
+        <p>ODNR&rsquo;s 2016 creel survey: what weekend anglers were after, and how many fish per hour those anglers caught. About <strong>1,412</strong> angler hours per weekend day in total.</p>
+        <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Fishing for</th><th scope="col" class="num">% of anglers</th><th scope="col" class="num">Fish per hour</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Crappie</th><td class="num">29.4</td><td class="num">1.79</td></tr>
+                <tr><th scope="row">Anything</th><td class="num">27.4</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">Black bass</th><td class="num">19.2</td><td class="num">0.51</td></tr>
+                <tr><th scope="row">Saugeye</th><td class="num">14.0</td><td class="num">0.15</td></tr>
+                <tr><th scope="row">Catfish</th><td class="num">6.2</td><td class="num">0.28</td></tr>
+                <tr><th scope="row">Sunfish</th><td class="num">3.3</td><td class="num">2.11</td></tr>
+                <tr><th scope="row">White bass</th><td class="num">0.2</td><td class="num">0</td></tr>
+              </tbody>
+            </table></div>
+        <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/Hoover%20Angler%20Survey%20up20.pdf" target="_blank" rel="noopener">Hoover angler survey (PDF)</a>. &ldquo;Anything&rdquo; means anglers with no target species.</p>
+      </div>
+      <div data-for="alum">
+        <p>ODNR&rsquo;s 2018 creel survey: what weekend anglers were after, and how many fish per hour those anglers caught. About <strong>1,276</strong> angler hours per weekend day in total.</p>
+        <div class="table-wrap data-table-wrap"><table class="data-table">
+              <thead><tr><th scope="col">Fishing for</th><th scope="col" class="num">% of anglers</th><th scope="col" class="num">Fish per hour</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Anything</th><td class="num">35.4</td><td class="num">&ndash;</td></tr>
+                <tr><th scope="row">Black bass</th><td class="num">32.8</td><td class="num">0.98</td></tr>
+                <tr><th scope="row">Saugeye</th><td class="num">11.2</td><td class="num">0.58</td></tr>
+                <tr><th scope="row">Crappie</th><td class="num">10.4</td><td class="num">1.11</td></tr>
+                <tr><th scope="row">Catfish</th><td class="num">6</td><td class="num">0.37</td></tr>
+                <tr><th scope="row">Muskie</th><td class="num">3.8</td><td class="num">0</td></tr>
+                <tr><th scope="row">White bass</th><td class="num">0.4</td><td class="num">3.5</td></tr>
+                <tr><th scope="row">Sunfish</th><td class="num">0</td><td class="num">&ndash;</td></tr>
+              </tbody>
+            </table></div>
+        <p class="meta">ODNR, <a href="https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/D1%20Lakes%20Alum%20Creek%20Angler%20Survey%20up20.pdf" target="_blank" rel="noopener">Alum Creek angler survey (PDF)</a>. &ldquo;Anything&rdquo; means anglers with no target species.</p>
+      </div>
+    </section>
+    <section id="forecast" data-for="hoover alum" aria-labelledby="forecast-title">
+      <h2 id="forecast-title">ODNR&rsquo;s fishing forecast</h2>
+      <div data-for="hoover">
+        <ul class="data-forecast">
+          <li>Blue catfish were first stocked in 2011, and some of the older fish already weigh over thirty pounds.</li>
+          <li>Saugeye have rebounded: average to above average stocking success since 2017, with many sizes from 10 to 20 inches.</li>
+          <li>Walleye were stocked in 2019 for the first time in over thirty years, part of a three year walleye and saugeye study.</li>
+          <li>Crappie trap nets show an even split of fish above and below the nine inch minimum length.</li>
+          <li>Most bass sampled are 12 to 18 inches. White bass run up Big Walnut Creek in spring.</li>
+        </ul>
+        <p class="meta">Summarized from the fishing forecast on <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Hoover Reservoir Fishing Area</a>. ODNR doesn&rsquo;t date the forecast.</p>
+      </div>
+      <div data-for="alum">
+        <ul class="data-forecast">
+          <li>A strong 2016 year class of largemouth bass should give good numbers of 13 to 16 inch fish.</li>
+          <li>Some of the best smallmouth fishing in the state, many 10 to 14 inches and some reaching 5 to 6 pounds.</li>
+          <li>Saugeye stocked in 2017 survived very well, giving many fish of 17 to 20 inches.</li>
+          <li>Recent crappie trap nets had the best catch rate of crappie over 11 inches in ten years.</li>
+          <li>Muskie are stocked every year: usually best May to July in the lake and March to April in the spillway.</li>
+        </ul>
+        <p class="meta">Summarized from the fishing forecast on <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Alum Creek Lake Fishing Area</a>. ODNR doesn&rsquo;t date the forecast.</p>
+      </div>
+    </section>
+    <section id="habitat" aria-labelledby="habitat-title">
+      <h2 id="habitat-title">Habitat map</h2>
+      <div data-for="hoover">
+        <p>ODNR&rsquo;s Interactive Ohio Lake Fishing Map puts ODNR&rsquo;s own fishing layers on the lake. Layers vary by lake, so open it to see what ODNR has mapped here. The Night Bite links to it rather than copying it.</p>
+        <p class="data-actions"><a class="btn btn-ghost" href="https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638/page/Page#data_s=id%3AdataSource_2-1942de5a64a-layer-2-20%3A54%2Cid%3AdataSource_2-19d2fe52235-layer-8-20%3A58&zoom_to_selection=true" target="_blank" rel="noopener">Open ODNR&rsquo;s lake map</a> <a class="btn btn-ghost" href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf" target="_blank" rel="noopener">Depth map (PDF)</a></p>
+        <p class="meta">Both are ODNR&rsquo;s. ODNR notes its depth map is not for navigation. The interactive map is large and works best on a good signal.</p>
+      </div>
+      <div data-for="alum">
+        <p>ODNR&rsquo;s Interactive Ohio Lake Fishing Map puts ODNR&rsquo;s own fishing layers on the lake. Layers vary by lake, so open it to see what ODNR has mapped here. The Night Bite links to it rather than copying it.</p>
+        <p class="data-actions"><a class="btn btn-ghost" href="https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638/page/Page#data_s=id%3AdataSource_2-1942de5a64a-layer-2-20%3A54%2Cid%3AdataSource_2-19d2fe52235-layer-8-20%3A2&zoom_to_selection=true" target="_blank" rel="noopener">Open ODNR&rsquo;s lake map</a> <a class="btn btn-ghost" href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/alumcreeklake2.pdf" target="_blank" rel="noopener">Depth map (PDF)</a></p>
+        <p class="meta">Both are ODNR&rsquo;s. ODNR notes its depth map is not for navigation. The interactive map is large and works best on a good signal.</p>
+      </div>
+      <div data-for="buckeye">
+        <p>ODNR&rsquo;s Interactive Ohio Lake Fishing Map puts ODNR&rsquo;s own fishing layers on the lake. Layers vary by lake, so open it to see what ODNR has mapped here. The Night Bite links to it rather than copying it.</p>
+        <p class="data-actions"><a class="btn btn-ghost" href="https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638/page/Page#data_s=id%3AdataSource_2-1942de5a64a-layer-2-20%3A54%2Cid%3AdataSource_2-19d2fe52235-layer-8-20%3A13&zoom_to_selection=true" target="_blank" rel="noopener">Open ODNR&rsquo;s lake map</a> <a class="btn btn-ghost" href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf" target="_blank" rel="noopener">Depth map (PDF)</a></p>
+        <p class="meta">Both are ODNR&rsquo;s. ODNR notes its depth map is not for navigation. The interactive map is large and works best on a good signal.</p>
+      </div>
+    </section>
+
+    <div class="callout">
+      The Night Bite is unofficial and personal: <strong>not ODNR</strong>. Numbers here are copied from ODNR&rsquo;s public pages and PDFs and dated; check the source before you rely on one.
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav aria-label="Footer">
+        <a href="./">Home</a>
+        <a href="species/">Species</a>
+        <a href="water">Water</a>
+        <a href="gear">Gear</a>
+        <a href="whisperwood.html">Whisperwood Vale</a>
+        <a href="log">Log</a>
+        <a href="about">About</a>
+        <a href="updates" data-updates="2026-10-27">What&rsquo;s new</a>
+        <a href="privacy">Privacy</a>
+      </nav>
+      <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
+      <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
+    </div>
+  </footer>
+  <script src="js/refresh.js?v=v12-2026-10-28"></script>
+  <script src="js/sw-update.js?v=v12-2026-10-28"></script>
+  <script src="js/alerts.js?v=v12-2026-10-28"></script>
+  <script src="js/nav.js?v=v12-2026-10-28"></script>
+  <script src="js/lake-picker.js?v=v12-2026-10-28"></script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

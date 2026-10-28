@@ -26,7 +26,14 @@ Checked 2026-10-22 (ET). Only details confirmed by a source below are shown on t
 - `https://api.weather.gov/alerts/active?zone=OHC041,OHC049,OHZ046,OHZ055` (Delaware and Franklin County zones, plus their forecast zones from `/points`). Shown only for an active Warning or Watch.
 
 ## 7 day pool trend (js/pool-trend.js)
-- USGS 03228400, Hoover Reservoir at Central College OH, parameter 62614 (lake elevation, ft NGVD29), `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=03228400&parameterCd=62614&period=P7D`. Same gauge as js/usgs.js. Provisional.
+- USGS 03228400, Hoover Reservoir at Central College OH, parameter 62614 (lake elevation, ft NGVD29), `https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items?f=json&monitoring_location_id=USGS-03228400&parameter_code=62614&time=P7D&skipGeometry=true&properties=time,value&limit=5000`, fallback `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=03228400&parameterCd=62614&period=P7D`. Same gauge as js/usgs.js. Provisional.
+
+## USGS Water Data APIs (js/lakes.js: usgsLatest, usgsSeries), switched Oct. 27, 2026
+- Every USGS read (Tonight card, Right now strip, lake picker, pool trend) goes through js/lakes.js. First try: the new USGS Water Data OGC API, `https://api.waterdata.usgs.gov/ogcapi/v1/collections/latest-continuous/items` (latest values) and `.../continuous/items` (7 day series), 8 second timeout, no API key (rate limited per IP by api.data.gov).
+- Fallback: the legacy WaterServices IV API (`waterservices.usgs.gov/nwis/iv`). USGS adds a 2 second delay to it from Nov. 16, 2026 and turns it off Feb. 22, 2027 (https://waterdata.usgs.gov/blog/wdfn-waterservices-degradation/). Remove the fallback and its CSP host then.
+- If both fail: the saved offline reading, then "unavailable, check USGS".
+- Parity check, Oct. 27, 2026: Hoover 62614 890.60 ft and 00010 18.0 C, Buckeye 62614 891.45 ft, same in both APIs; 7 day series had the same point counts (Hoover 167, Buckeye 667).
+- `window.NightBiteUsgsVia` shows which API answered last ("ogcapi" or "waterservices").
 
 ## Map pins (js/hoover-map-data.js)
 Map art: the same traced outline as assets/hoover-chart.png (trace of a Google Maps screenshot, web mercator, north up). The trace was georeferenced to the OpenStreetMap Hoover Reservoir polygon (relation 241088, IoU 0.89), and each pin is the real lat/lng projected through that fit. Ramps within 2.5 map pixels of the traced shore are snapped onto it; Oxbow sits in a cove the trace filled in, so it keeps its true position.
@@ -142,3 +149,30 @@ from the NWS forecast with its "Checked" time) and prints "--" for anything miss
 ## Offline and Add to Home Screen
 
 No new data. The service worker (`sw.js`) caches this site's own files only; live NWS, USGS and Corps of Engineers requests are never cached by it. The last good live readings are kept in the browser (localStorage) and shown offline with "Offline. Last updated HH:MM ET". Details and the plan for the live site are in SERVICE-WORKER.md.
+
+## Stocking & surveys (stocking.html), checked Oct. 27, 2026
+- ODNR District 1 lake PDFs, `https://ohiodnr.gov/static/documents/wildlife/fishing-forecasts-reports/d1/lakes/<Lake> <Species> Stocking|Survey up20.pdf` and the Angler Survey PDFs. Data through 2019; files last modified Mar. 15, 2024 on ODNR's server. Values copied by hand from the PDF tables and checked against the rendered PDF.
+- Hoover: saugeye, blue catfish and walleye stocking; saugeye, crappie and largemouth bass length at age with ODNR's statewide average; 2016 angler survey. Alum Creek: saugeye and muskellunge stocking; the same three growth tables; 2018 angler survey.
+- Not copied: catch rate bar charts (images only, linked); channel catfish growth tables (ages don't line up cleanly, linked).
+- Forecast bullets: summarized from the Fishing Forecast on each ODNR fishing area page (hoover-reservoir-fishing-area, alum-creek-lake-fishing-area). Undated by ODNR.
+- Buckeye Lake: ODNR's fishing area page posts no stocking, survey or forecast data. Lake facts (built about 1830, about 2,873 acres, average about 6 ft, max about 14 ft) are from that page.
+- Newer stocking (2020 on): ODNR Fish Stocking Database on DataOhio, https://ohiodnr.gov/buy-and-apply/hunting-fishing-boating/fishing-resources/fish-stocking-records . Linked, not copied.
+- Habitat map: links to ODNR's Interactive Ohio Lake Fishing Map (ArcGIS Experience, deep link per lake) and ODNR's lake depth map PDFs (dam.assets.ohio.gov .../wildlife/maps/hooverreservoir2.pdf, alumcreeklake2.pdf, buckeyelake2.pdf). Nothing hosted or traced; reuse terms for the GIS service were not found.
+- Built by tools/build-stocking.py (values live in the script). Edit there, run it, then tools/stamp-version.py.
+
+## Lake rules, water quality and Buckeye facts (preview, Phase 2)
+
+Checked Oct. 27, 2026. Copied only from the agency that runs each lake; nothing is paraphrased into a new rule.
+
+- Hoover boating rules (water.html#rules): Columbus City Code 921.01 (https://library.municode.com/oh/columbus/codes/code_of_ordinances?nodeId=TIT9STPAPUPRCO_CH921WARE): 10 hp, 8 to 22 ft (sail to 25 ft), 10 mph, idle within 100 ft of shore, motors over 10 hp tilted or prop removed, no water skiing, no boating within 100 ft downriver of the dam; 921.01-1(F) bans personal watercraft. Columbus Rec and Parks Hoover page (https://columbusrecparks.com/parks/hoover-reservoir-parkland/) lists 9.9 hp max, no wakeboarding, tubing or swimming in any City reservoir.
+- Alum Creek: ODNR Alum Creek Lake Fishing Area page: unlimited horsepower, portions of the lake are no wake zones.
+- Buckeye Lake: ODNR Buckeye Lake Fishing Area page: no horsepower restrictions; built about 1830, about 6 ft average and 14 ft max depth, relatively flat bottom with little woody cover. 2,873 acres and the 300 ft no wake zone are from the ODNR fishing map (buckeyelake2.pdf).
+- Fishing seasons and limits are not copied. The "Check official regs" button links ODNR's Ohio Fishing Regulations PDF.
+- Water quality (water.html#water-quality): links only, to ODH BeachGuard (https://publicapps.odh.ohio.gov/beachguardpublic/) and Ohio EPA harmful algal blooms (https://epa.ohio.gov/monitor-pollution/pollution-issues/harmful-algae-blooms). No advisory status is fetched or shown.
+- Species stocking lines (tools/build-species-stocking-lines.py): one line on saugeye, blue catfish, walleye, muskellunge, black and white crappie, largemouth bass and channel catfish pages, copied from the same ODNR PDFs as /stocking, linking to it for that lake. None on Buckeye, which has no ODNR tables.
+
+## Tonight, in short and Local notes (preview, Phase 3)
+
+- "Tonight, in short" (home Tonight card, js/conditions.js renderLine) restates numbers already on the page in one line: sunset (or "after dark now"), tonight's NWS hourly wind range and top rain chance from sunset to 2 AM, storms if the storm line found any, the KCMH 3 hour pressure trend, the gauge water temp when there is one, and the pool card's "below full pool" figure and 7 day trend word. No score, no prediction; it hides when none of those are loaded. The separate "Tonight's bite" rule of thumb line is unchanged.
+- Local notes (water.html#notes) holds the owner's own notes. It ships with placeholder slots marked "Sample note, replace with your own" and no content. See LOCAL-NOTES.md.
+- ODNR fishing map layers (DOW_LakeFishing MapServer) are not embedded: the service publishes no copyright, description or reuse terms, so the site stays link only. The legacy USGS waterservices fallback stays in place.

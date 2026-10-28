@@ -1,7 +1,8 @@
 /**
  * The Night Bite: 7 day pool level trend for the home pool card.
  * Same USGS gauge as js/usgs.js: 03228400 (Hoover Reservoir at Central College), parameter 62614
- * (lake elevation, ft NGVD29), period P7D. Provisional data. Hidden if USGS can't be reached.
+ * (lake elevation, ft NGVD29), last 7 days, via js/lakes.js (new USGS Water Data API first, legacy IV as fallback).
+ * Provisional data. Hidden if USGS can't be reached.
  */
 (function () {
   var box = document.getElementById("pool-trend");
@@ -9,8 +10,7 @@
   if (!box || !window.fetch) return;
   var LK = window.NightBiteLake, LP = LK && LK.cfg && LK.cfg.pool;   // js/lakes.js; Hoover if missing
   var CWMS = !!(LP && LP.src === "cwms");
-  var URL = "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=" + ((LP && LP.site) || "03228400") +
-    "&parameterCd=" + ((LP && LP.param) || "62614") + "&period=P7D";
+  var LS = window.NightBiteLakes;
   var NS = "http://www.w3.org/2000/svg";
   var W = 280, H = 56, PAD = 4;
 
@@ -28,17 +28,8 @@
 
   function points() {
     if (CWMS) return LK.cwms(7 * 24);   // Corps lake level, every 15 minutes
-    return fetch(URL)
-    .then(function (r) { if (!r.ok) throw new Error("usgs " + r.status); return r.json(); })
-    .then(function (json) {
-      var ts = json.value.timeSeries[0].values[0].value;
-      var pts = [];
-      ts.forEach(function (v) {
-        var n = parseFloat(v.value);
-        if (isFinite(n) && n > -9999) pts.push({ t: new Date(v.dateTime).valueOf(), v: n, iso: v.dateTime });
-      });
-      return pts;
-    });
+    if (!LS || !LS.usgsSeries) return Promise.reject(new Error("js/lakes.js missing"));
+    return LS.usgsSeries((LP && LP.site) || "03228400", (LP && LP.param) || "62614", 7);   // USGS, new API first
   }
 
   function load() {

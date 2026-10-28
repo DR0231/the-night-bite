@@ -24,35 +24,32 @@
     });
   }
 
-  if ("IntersectionObserver" in window) {
-    var visible = {};
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          visible[entry.target.id] = entry.isIntersecting
-            ? entry.intersectionRatio
-            : 0;
-        });
-        var best = null;
-        var bestRatio = 0;
-        sections.forEach(function (s) {
-          var r = visible[s.id] || 0;
-          if (r > bestRatio) {
-            bestRatio = r;
-            best = s.id;
-          }
-        });
-        if (best) setActive(best);
-      },
-      {
-        rootMargin: "-20% 0px -55% 0px",
-        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1]
-      }
-    );
-    sections.forEach(function (s) {
-      observer.observe(s.el);
-    });
+  // Active = the last page section whose top has passed a reading line
+  // just under the sticky bars. Sections without a chip clear the highlight.
+  var main = nav.closest("main") || document;
+  var all = Array.prototype.slice.call(main.querySelectorAll("section[id]"));
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var bottom = nav.getBoundingClientRect().bottom;
+    var last = nav.lastElementChild;
+    if (last) bottom = Math.max(bottom, last.getBoundingClientRect().bottom);
+    var line = bottom + window.innerHeight * 0.2;
+    var cur = null;
+    var atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      if (!el.offsetParent && el.offsetHeight === 0) continue;
+      if (atEnd || el.getBoundingClientRect().top <= line) cur = el.id;
+    }
+    setActive(cur);
   }
+  function onScroll() {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  update();
 
   links.forEach(function (link) {
     link.addEventListener("click", function () {

@@ -11,6 +11,9 @@
  * paints). Other pages keep ?lake= in the address bar for Alum Creek and Buckeye, a clean URL for Hoover, and their
  * Home links point at the chosen lake's home page.
  *
+ * Also the shared gauge fetchers: USGS (usgsLatest, usgsSeries: new Water Data API first, legacy IV as fallback) and the
+ * Corps CWMS API (cwmsFor). js/usgs.js, js/pool-trend.js and js/lake-picker.js all use them.
+ *
  * Every value below has a source in DATA-SOURCES.md. Hoover's values are exactly the ones the scripts used before
  * this file existed (js/usgs.js, js/pool-trend.js, js/conditions.js, js/alerts.js); those scripts fall back to the
  * same Hoover values if this file is missing.
@@ -174,7 +177,76 @@
   }
   function cwms(hours) { return cwmsFor(id, hours); }
 
-  window.NightBiteLakes = { all: LAKES, order: ORDER, speciesNames: SPECIES, storageKey: KEY, hrefFor: hrefFor, homeFor: homeFor, base: BASE, cwmsFor: cwmsFor };
+  // USGS lake gauges (Hoover, Buckeye). The legacy WaterServices IV API (waterservices.usgs.gov/nwis/iv) slows down
+  // from Nov. 16, 2026 and is switched off Feb. 22, 2027 (DATA-SOURCES.md). So every reading asks the new USGS Water
+  // Data API first (api.waterdata.usgs.gov/ogcapi, public, CORS open, no key) and only tries the legacy API if the
+  // new one errors, rate limits or takes longer than 8 seconds. Both give the same provisional readings; the legacy
+  // fallback can be deleted after Feb. 22, 2027. window.NightBiteUsgsVia says which one answered last (for testing).
+  var USGS_API = "https://api.waterdata.usgs.gov/ogcapi/v1/collections/";
+  var USGS_IV = "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=";
+  function getJson(url, ms) {
+    var ctl = ms && window.AbortController ? new AbortController() : null;
+    var timer = ctl ? setTimeout(function () { ctl.abort(); }, ms) : 0;
+    return fetch(url, ctl ? { signal: ctl.signal } : undefined)
+      .then(function (r) { if (!r.ok) throw new Error("http " + r.status); return r.json(); })
+      .then(function (j) { clearTimeout(timer); return j; }, function (e) { clearTimeout(timer); throw e; });
+  }
+  function num(v) { var n = parseFloat(v); return isFinite(n) && n > -9999 ? n : null; }
+  function via(which, x) { window.NightBiteUsgsVia = which; return x; }
+  // legacy IV JSON: { code: [{ value, dateTime }] } oldest first
+  function ivSeries(json) {
+    var out = {}, ts = (json && json.value && json.value.timeSeries) || [];
+    ts.forEach(function (s) {
+      try {
+        var code = String(s.variable.variableCode[0].value), list = [];
+        (s.values[0].value || []).forEach(function (v) { var n = num(v.value); if (n !== null) list.push({ value: n, dateTime: v.dateTime }); });
+        out[code] = list;
+      } catch (e) {}
+    });
+    return out;
+  }
+  // latest reading per parameter code: { "62614": { value, dateTime }, "00010": {...} }; a code with no reading is left out
+  function usgsLatest(site, codes) {
+    var url = USGS_API + "latest-continuous/items?f=json&monitoring_location_id=USGS-" + site + "&parameter_code=" + codes.join(",") +
+      "&skipGeometry=true&properties=parameter_code,time,value";
+    return getJson(url, 8000).then(function (j) {
+      var out = {};
+      (j.features || []).forEach(function (f) {
+        var p = f && f.properties, n = p && num(p.value);
+        if (n === null || !p.time) return;
+        var prev = out[p.parameter_code];
+        if (!prev || new Date(p.time) > new Date(prev.dateTime)) out[p.parameter_code] = { value: n, dateTime: p.time };
+      });
+      if (!out[codes[0]]) throw new Error("no reading");
+      return via("ogcapi", out);
+    }).catch(function () {
+      return getJson(USGS_IV + site + "&parameterCd=" + codes.join(",")).then(function (j) {
+        var s = ivSeries(j), out = {};
+        codes.forEach(function (c) { if (s[c] && s[c].length) out[c] = s[c][s[c].length - 1]; });
+        return via("waterservices", out);
+      });
+    });
+  }
+  // one parameter over the last `days` days: [{ t, v, iso }] oldest first, the same shape as cwmsFor()
+  function usgsSeries(site, code, days) {
+    var url = USGS_API + "continuous/items?f=json&monitoring_location_id=USGS-" + site + "&parameter_code=" + code +
+      "&time=P" + days + "D&skipGeometry=true&properties=time,value&limit=5000";
+    function pts(list) { return list.map(function (r) { return { t: new Date(r.dateTime).valueOf(), v: r.value, iso: r.dateTime }; }); }
+    return getJson(url, 8000).then(function (j) {
+      var list = [];
+      (j.features || []).forEach(function (f) { var p = f && f.properties, n = p && num(p.value); if (n !== null && p.time) list.push({ value: n, dateTime: p.time }); });
+      if (!list.length) throw new Error("no readings");
+      list.sort(function (a, b) { return new Date(a.dateTime) - new Date(b.dateTime); });
+      return via("ogcapi", pts(list));
+    }).catch(function () {
+      return getJson(USGS_IV + site + "&parameterCd=" + code + "&period=P" + days + "D").then(function (j) {
+        return via("waterservices", pts(ivSeries(j)[code] || []));
+      });
+    });
+  }
+
+  window.NightBiteLakes = { all: LAKES, order: ORDER, speciesNames: SPECIES, storageKey: KEY, hrefFor: hrefFor, homeFor: homeFor, base: BASE, cwmsFor: cwmsFor,
+    usgsLatest: usgsLatest, usgsSeries: usgsSeries };
   window.NightBiteLake = { id: id, cfg: LAKES[id], key: key, cwms: cwms, home: homeLake };
 
   // Lake switches only (js/lake-picker.js sets the flag): a short cross-fade into the new page.

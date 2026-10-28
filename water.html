@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.waterdata.usgs.gov https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
@@ -17,8 +17,8 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v11-2026-10-27">
-  <script src="js/lakes.js?v=v11-2026-10-27"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v12-2026-10-28">
+  <script src="js/lakes.js?v=v12-2026-10-28"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -35,18 +35,16 @@
           <li class="nav-core"><a href="./">Home</a></li>
           <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
           <li class="nav-core"><a href="water" aria-current="page"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
-          <li class="nav-core"><a href="log">Log</a></li>
-          <li class="nav-extra"><a href="tournaments">Tournaments</a></li>
-          <li class="nav-extra"><a href="gear">Gear</a></li>
+          <li class="nav-core"><a href="gear">Gear</a></li>
           <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra"><a href="log">Log</a></li>
           <li class="nav-extra"><a href="about">About</a></li>
           <li class="nav-extra"><a href="updates" data-updates="2026-10-27">What&rsquo;s new</a></li>
           <li class="nav-more-item">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
-              <a href="gear">Gear</a>
-              <a href="tournaments">Tournaments</a>
               <a href="whisperwood.html">Whisperwood Vale</a>
+              <a href="log">Log</a>
               <a href="about">About</a>
               <a href="updates" data-updates="2026-10-27">What&rsquo;s new</a>
             </div>
@@ -56,7 +54,7 @@
     </div>
   </header>
 
-  <main id="main">
+  <main id="main" data-scrollspy>
     <div class="page-horizon" aria-hidden="true"></div>
     <h1>Water</h1>
     <p class="lead">
@@ -146,6 +144,19 @@
           <p>Buckeye Lake level (provisional). It measures level only, no water temp.</p>
         </a>
       </div>
+
+      <div class="card data-glance lake-facts" data-for="buckeye">
+        <p class="cond-label lake-facts-title">Buckeye Lake facts</p>
+        <dl class="data-glance-list">
+          <div><dt>Built</dt><dd>About 1830</dd></div>
+          <div><dt>Size</dt><dd>2,873 acres</dd></div>
+          <div><dt>Average depth</dt><dd>About 6 ft</dd></div>
+          <div><dt>Deepest</dt><dd>About 14 ft</dd></div>
+          <div><dt>Bottom</dt><dd>Relatively flat, little woody cover</dd></div>
+          <div><dt>Horsepower</dt><dd>No limit</dd></div>
+        </dl>
+        <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area" target="_blank" rel="noopener">ODNR, Buckeye Lake Fishing Area</a>. Acres from the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Oct. 27, 2026.</p>
+      </div>
     </section>
 
     <section id="correction" aria-labelledby="correction-title">
@@ -164,7 +175,7 @@
       </p>
       <div class="card" id="pool-correction">
         <p class="pool-lead" id="correction-line">890.79 ft · 63°F · ~3.2 ft below full pool</p>
-        <script src="js/pool-readout.js?v=v11-2026-10-27"></script>
+        <script src="js/pool-readout.js?v=v12-2026-10-28"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-10-26T08:00:00.000-04:00">2026-10-26 08:00 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
@@ -174,9 +185,9 @@
           <span class="value" id="water-temp"><strong>63.3 °F</strong> (17.4 °C) · provisional</span>
         </div>
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.75rem;">
-          Provisional snapshot; your browser may refresh it from USGS IV. If that fails it says unavailable. Never invented.
+          Provisional snapshot; your browser may refresh it from USGS. If that fails it says unavailable. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v11-2026-10-27"></script>
+        <script src="js/lake-snapshot.js?v=v12-2026-10-28"></script>
         <details class="how-to-read" id="how-to-read">
           <summary>How to read this</summary>
           <div class="how-to-read-body">
@@ -204,6 +215,7 @@
           </div>
         </details>
       </div>
+      <p class="meta wq-line" id="water-quality"><span class="wq-label">Water quality.</span> Current bacteria and algae advisories at Ohio public beaches are on <a href="https://publicapps.odh.ohio.gov/beachguardpublic/" target="_blank" rel="noopener">Ohio Department of Health BeachGuard</a>. <a href="https://epa.ohio.gov/monitor-pollution/pollution-issues/harmful-algae-blooms" target="_blank" rel="noopener">Ohio EPA</a> explains the algae advisory signs posted at beaches and boat ramps.<span data-for="hoover"> Swimming isn&rsquo;t allowed on Columbus reservoirs, Hoover included.</span> Checked Oct. 27, 2026.</p>
     </section>
 
     <section id="photos" aria-labelledby="photos-title">
@@ -256,6 +268,64 @@
         <li><strong>No wake within 300 ft</strong> of any land mass. Idle in the dark and watch for stumps.</li>
       </ul>
     </section>
+
+    <!-- local-notes: owner's own notes, see LOCAL-NOTES.md -->
+    <section id="notes" aria-labelledby="notes-title" data-local-notes hidden>
+      <h2 id="notes-title">Local notes</h2>
+      <p class="meta">First hand notes from nights on <span data-lk="short">Hoover</span>, each dated. They are one angler&rsquo;s read, kept apart from the official data on this page.</p>
+      <div data-for="hoover" class="notes-lake">
+        <details class="how-to-read data-more notes-card">
+          <summary>Notes from Hoover <span class="data-sum">2 sample slots</span></summary>
+          <div class="how-to-read-body">
+            <ul class="note-slots">
+            <li class="note-slot">
+              <p class="note-slot-label">Sample note, replace with your own</p>
+              <p class="note-slot-body">Spot: [ramp, cove or bank]. When: [month and time of night]. What I saw: [one or two lines]. Dated: [date].</p>
+            </li>
+            <li class="note-slot">
+              <p class="note-slot-label">Sample note, replace with your own</p>
+              <p class="note-slot-body">Spot: [ramp, cove or bank]. When: [month and time of night]. What I saw: [one or two lines]. Dated: [date].</p>
+            </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+      <div data-for="alum" class="notes-lake">
+        <details class="how-to-read data-more notes-card">
+          <summary>Notes from Alum Creek <span class="data-sum">2 sample slots</span></summary>
+          <div class="how-to-read-body">
+            <ul class="note-slots">
+            <li class="note-slot">
+              <p class="note-slot-label">Sample note, replace with your own</p>
+              <p class="note-slot-body">Spot: [ramp, cove or bank]. When: [month and time of night]. What I saw: [one or two lines]. Dated: [date].</p>
+            </li>
+            <li class="note-slot">
+              <p class="note-slot-label">Sample note, replace with your own</p>
+              <p class="note-slot-body">Spot: [ramp, cove or bank]. When: [month and time of night]. What I saw: [one or two lines]. Dated: [date].</p>
+            </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+      <div data-for="buckeye" class="notes-lake">
+        <details class="how-to-read data-more notes-card">
+          <summary>Notes from Buckeye Lake <span class="data-sum">2 sample slots</span></summary>
+          <div class="how-to-read-body">
+            <ul class="note-slots">
+            <li class="note-slot">
+              <p class="note-slot-label">Sample note, replace with your own</p>
+              <p class="note-slot-body">Spot: [ramp, cove or bank]. When: [month and time of night]. What I saw: [one or two lines]. Dated: [date].</p>
+            </li>
+            <li class="note-slot">
+              <p class="note-slot-label">Sample note, replace with your own</p>
+              <p class="note-slot-body">Spot: [ramp, cove or bank]. When: [month and time of night]. What I saw: [one or two lines]. Dated: [date].</p>
+            </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </section>
+    <!-- /local-notes -->
 
     <section id="access" aria-labelledby="access-title">
       <h2 id="access-title">Ramp / access</h2>
@@ -343,6 +413,52 @@
       <p class="map-pdf-cta" data-for="buckeye"><a class="btn-map-pdf" href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/parks/parkmaps/buckeyelakeparkmap.pdf" target="_blank" rel="noopener">Ohio State Parks: Buckeye Lake map (PDF)</a></p>
     </section>
 
+    <section id="rules" aria-labelledby="rules-title">
+      <h2 id="rules-title">Lake rules</h2>
+      <p>Boating rules from the agency that runs <span data-lk="short">Hoover</span>, with the source and the date checked. Rules change, so check the official page before you launch.</p>
+      <div data-for="hoover">
+        <details class="how-to-read data-more rules-card">
+          <summary>Boating on Hoover <span class="data-sum">10 hp, 10 mph</span></summary>
+          <div class="how-to-read-body">
+            <ul>
+              <li>Boats up to <strong>10 hp</strong>, 8 to 22 ft long (sailboats up to 25 ft). Rec and Parks lists the max as 9.9 hp.</li>
+              <li>No motorized boat over <strong>10 mph</strong>, and idle speed within 100 ft of shore.</li>
+              <li>A motor over 10 hp has to stay tilted up or have its prop removed.</li>
+              <li>No water skiing and no personal watercraft. Rec and Parks also lists no wakeboarding or tubing.</li>
+              <li>No boating within 100 ft downriver of the dam.</li>
+              <li>No swimming in any City of Columbus reservoir.</li>
+            </ul>
+            <p class="meta">Sources: <a href="https://library.municode.com/oh/columbus/codes/code_of_ordinances?nodeId=TIT9STPAPUPRCO_CH921WARE" target="_blank" rel="noopener">Columbus City Code 921.01</a>; <a href="https://columbusrecparks.com/parks/hoover-reservoir-parkland/" target="_blank" rel="noopener">Columbus Rec and Parks, Hoover Reservoir</a>. Questions: Columbus Watershed Management, <a href="tel:+16146451721">614-645-1721</a>. Checked Oct. 27, 2026.</p>
+          </div>
+        </details>
+      </div>
+      <div data-for="alum">
+        <details class="how-to-read data-more rules-card">
+          <summary>Boating on Alum Creek <span class="data-sum">no hp limit, no wake zones</span></summary>
+          <div class="how-to-read-body">
+            <ul>
+              <li>ODNR: outboard motors of <strong>unlimited horsepower</strong> are allowed, but portions of the lake are <strong>no wake zones</strong>. Follow the buoys.</li>
+            </ul>
+            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Alum Creek Lake Fishing Area</a>. State park: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park" target="_blank" rel="noopener">ODNR, Alum Creek State Park</a>. Checked Oct. 27, 2026.</p>
+          </div>
+        </details>
+      </div>
+      <div data-for="buckeye">
+        <details class="how-to-read data-more rules-card">
+          <summary>Boating on Buckeye Lake <span class="data-sum">no hp limit, 300 ft no wake</span></summary>
+          <div class="how-to-read-body">
+            <ul>
+              <li>ODNR: <strong>no horsepower restrictions</strong>.</li>
+              <li>ODNR&rsquo;s fishing map marks a <strong>300 ft no wake zone</strong> along the shore.</li>
+            </ul>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area" target="_blank" rel="noopener">ODNR, Buckeye Lake Fishing Area</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. State park: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park" target="_blank" rel="noopener">ODNR, Buckeye Lake State Park</a>. Checked Oct. 27, 2026.</p>
+          </div>
+        </details>
+      </div>
+      <p class="data-actions"><a class="btn btn-ghost" href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">Check official regs</a> <a class="btn btn-ghost" href="https://ohiodnr.gov/buy-and-apply/hunting-and-fishing-licenses" target="_blank" rel="noopener">Fishing licenses</a></p>
+      <p class="meta">Fishing seasons and limits aren&rsquo;t copied here. They are in ODNR&rsquo;s Ohio Fishing Regulations, and each species page has a Limits reminder.</p>
+    </section>
+
     <section id="docks" aria-labelledby="docks-title">
       <h2 id="docks-title">Dock season</h2>
       <div data-for="hoover">
@@ -376,6 +492,17 @@
       </div>
     </section>
 
+    <section id="stocking" aria-labelledby="stocking-title">
+      <h2 id="stocking-title">Stocking &amp; surveys</h2>
+      <p data-for="hoover alum">
+        What ODNR stocked in <span data-lk="short">Hoover</span>, how fast the fish grow in its nets, and what weekend anglers caught. Official numbers with their sources.
+      </p>
+      <p data-for="buckeye">
+        ODNR posts no stocking or survey numbers for Buckeye Lake. The page says so and links ODNR&rsquo;s depth map.
+      </p>
+      <p><a class="btn btn-ghost" href="stocking">Stocking &amp; surveys page</a></p>
+    </section>
+
     <section id="winter" aria-labelledby="winter-title">
       <h2 id="winter-title">Ice season</h2>
       <p>
@@ -405,24 +532,26 @@
         <a href="./">Home</a>
         <a href="species/">Species</a>
         <a href="water">Water</a>
-        <a href="log">Log</a>
-        <a href="tournaments">Tournaments</a>
         <a href="gear">Gear</a>
+        <a href="whisperwood.html">Whisperwood Vale</a>
+        <a href="log">Log</a>
         <a href="about">About</a>
         <a href="updates" data-updates="2026-10-27">What&rsquo;s new</a>
         <a href="privacy">Privacy</a>
-        <a href="whisperwood.html">Whisperwood Vale</a>
       </nav>
       <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v11-2026-10-27"></script>
-  <script src="js/sw-update.js?v=v11-2026-10-27"></script>
-  <script src="js/alerts.js?v=v11-2026-10-27"></script>
-  <script src="js/nav.js?v=v11-2026-10-27"></script>
-  <script src="js/lake-picker.js?v=v11-2026-10-27"></script>
-  <script src="js/usgs.js?v=v11-2026-10-27"></script>
+  <script src="js/refresh.js?v=v12-2026-10-28"></script>
+  <script src="js/sw-update.js?v=v12-2026-10-28"></script>
+  <script src="js/alerts.js?v=v12-2026-10-28"></script>
+  <script src="js/nav.js?v=v12-2026-10-28"></script>
+  <script src="js/lake-picker.js?v=v12-2026-10-28"></script>
+  <script src="js/usgs.js?v=v12-2026-10-28"></script>
+  <script src="js/local-notes.js?v=v12-2026-10-28"></script>
+  <script src="js/fold-anchors.js?v=v12-2026-10-28"></script>
+  <script src="js/scrollspy.js?v=v12-2026-10-28"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

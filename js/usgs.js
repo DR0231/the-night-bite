@@ -1,5 +1,7 @@
 /**
- * The Night Bite — USGS IV refresh for pool (62614) and water temp (00010).
+ * The Night Bite — USGS refresh for pool (62614) and water temp (00010).
+ * Readings come from js/lakes.js (NightBiteLakes.usgsLatest): the new USGS Water Data API first, the legacy
+ * WaterServices IV API only as a fallback until it is switched off (Feb. 22, 2027).
  * Site: 03228400 (Hoover Reservoir at Central College, OH).
  * Human lead: "892.97 ft · 83°F · ~1.0 ft below full pool"
  * On failure: “unavailable, check USGS” + link. Never invent readings.
@@ -18,12 +20,7 @@
   var CWMS = !!(LP && LP.src === "cwms");
   var GAUGE_URL = (LP && LP.gaugeUrl) ||
     "https://waterdata.usgs.gov/monitoring-location/USGS-03228400/";
-  var IV_URL =
-    "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=" +
-    SITE +
-    "&parameterCd=" +
-    PARAM_POOL +
-    (PARAM_TEMP ? "," + PARAM_TEMP : "");
+  var LS = window.NightBiteLakes;
 
   var lineEl = document.getElementById("correction-line");
   var checkedEl = document.getElementById("correction-checked");
@@ -70,33 +67,6 @@
 
   function cToF(c) {
     return Math.round(((c * 9) / 5 + 32) * 10) / 10;
-  }
-
-  function parseSeries(json, paramCd) {
-    try {
-      var series = json && json.value && json.value.timeSeries;
-      if (!series || !series.length) return null;
-      for (var i = 0; i < series.length; i++) {
-        var ts = series[i];
-        var code =
-          ts &&
-          ts.variable &&
-          ts.variable.variableCode &&
-          ts.variable.variableCode[0] &&
-          ts.variable.variableCode[0].value;
-        if (String(code) !== String(paramCd)) continue;
-        var values =
-          ts.values && ts.values[0] && ts.values[0].value;
-        if (!values || !values.length) return null;
-        var latest = values[values.length - 1];
-        var n = parseFloat(latest.value, 10);
-        if (!isFinite(n) || n <= -99999) return null;
-        return { value: n, dateTime: latest.dateTime };
-      }
-      return null;
-    } catch (e) {
-      return null;
-    }
   }
 
   function humanLead(poolFt, tempF) {
@@ -217,7 +187,7 @@
     return true;
   }
 
-  // { pool, temp } from the lake's gauge: USGS IV (Hoover, Buckeye) or the Corps CWMS API (Alum Creek)
+  // { pool, temp } from the lake's gauge: USGS (Hoover, Buckeye; js/lakes.js picks the API) or the Corps CWMS API (Alum Creek)
   function getReadings() {
     if (CWMS) {
       return LK.cwms(3).then(function (pts) {
@@ -225,14 +195,10 @@
         return { pool: last ? { value: last.v, dateTime: last.iso } : null, temp: null };
       });
     }
-    return fetch(IV_URL)
-      .then(function (res) {
-        if (!res.ok) throw new Error("usgs http " + res.status);
-        return res.json();
-      })
-      .then(function (json) {
-        return { pool: parseSeries(json, PARAM_POOL), temp: PARAM_TEMP ? parseSeries(json, PARAM_TEMP) : null };
-      });
+    if (!LS || !LS.usgsLatest) return Promise.reject(new Error("js/lakes.js missing"));
+    return LS.usgsLatest(SITE, PARAM_TEMP ? [PARAM_POOL, PARAM_TEMP] : [PARAM_POOL]).then(function (r) {
+      return { pool: r[PARAM_POOL] || null, temp: PARAM_TEMP ? r[PARAM_TEMP] || null : null };
+    });
   }
 
   function load() {

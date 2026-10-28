@@ -138,17 +138,6 @@
     k.btn.setAttribute("aria-label", k.cfg.name + ", " + k.cfg.area + ". " + k.read.textContent + ". " +
       (k.id === cur ? "Now showing." : "Press Enter to switch."));
   }
-  function parseIv(json, code) {
-    try {
-      var ts = json.value.timeSeries;
-      for (var i = 0; i < ts.length; i++) {
-        if (String(ts[i].variable.variableCode[0].value) !== code) continue;
-        var vals = ts[i].values[0].value, last = vals[vals.length - 1], n = parseFloat(last.value);
-        if (isFinite(n) && n > -9999) return { value: n, dateTime: last.dateTime };
-      }
-    } catch (e) {}
-    return null;
-  }
   function refresh() {
     if (Date.now() - liveAt < 10 * 6e4 || !window.fetch || (navigator.onLine === false)) return;
     liveAt = Date.now();
@@ -157,9 +146,8 @@
       if (P.src === "cwms") {
         p = LS.cwmsFor(k.id, 3).then(function (pts) { var l = pts[pts.length - 1]; return l ? { pool: { value: l.v, dateTime: l.iso }, temp: null } : null; });
       } else {
-        p = fetch("https://waterservices.usgs.gov/nwis/iv/?format=json&sites=" + P.site + "&parameterCd=" + P.param + (P.temp ? "," + P.temp : ""))
-          .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-          .then(function (j) { return { pool: parseIv(j, P.param), temp: P.temp ? parseIv(j, P.temp) : null }; });
+        p = LS.usgsLatest(P.site, P.temp ? [P.param, P.temp] : [P.param])   // js/lakes.js: new USGS API first
+          .then(function (r) { return { pool: r[P.param] || null, temp: P.temp ? r[P.temp] || null : null }; });
       }
       p.then(function (r) { if (r && r.pool) { live[k.id] = r; paint(k); } }).catch(function () {});
     });
