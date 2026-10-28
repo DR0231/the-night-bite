@@ -1365,14 +1365,14 @@ html.pad-input .pack-bait kbd { display: none; }
     #clock:not(.expanded) .need-row.warn .need-icon,
     #clock:not(.expanded) .need-row.crit .need-icon { outline: none; }
     #clock.expanded { position: fixed; top: calc(8px + env(safe-area-inset-top)); right: calc(8px + env(safe-area-inset-right)); width: 168px; height: auto; display: flex; flex-direction: column; align-items: stretch; }
-    #catch-toast { position: fixed; top: calc(8px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); max-width: min(60vw, calc(100vw - 528px)); height: 28px; }
-    #catch-toast .toast-inner { min-width: 0; padding: 4px 10px; height: 28px; box-sizing: border-box; display: flex; align-items: center; }
+    #catch-toast { position: fixed; top: calc(8px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); max-width: min(70vw, 520px); height: auto; }
+    #catch-toast .toast-inner { min-width: 0; padding: 4px 10px; height: auto; box-sizing: border-box; display: flex; align-items: center; }
     #catch-toast #toast-art { display: none; }
-    #catch-toast .toast-inner > div:not(#toast-art) { display: flex; gap: 6px; white-space: nowrap; overflow: hidden; min-width: 0; }
+    #catch-toast .toast-inner > div:not(#toast-art) { display: block; white-space: normal; overflow: hidden; min-width: 0; }
     #catch-toast .toast-kicker, #catch-toast #toast-name, #catch-toast #toast-desc { font-size: 16px; line-height: 16px; margin: 0; }
-    #catch-toast #toast-desc { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-    #catch-toast .toast-kicker, #catch-toast #toast-name { flex: none; }
-    #catch-toast #toast-name { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    #catch-toast:not(.note) .toast-kicker, #catch-toast:not(.note) #toast-name { display: inline; white-space: nowrap; }
+    #catch-toast:not(.note) #toast-name { margin-left: 6px; }
+    #catch-toast:not(.note) #toast-desc { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     #catch-toast.note { height: auto; width: max-content; max-width: min(480px, 92vw); }
     #catch-toast.note .toast-inner { height: auto; max-height: 60px; padding: 2px 10px; }
     #catch-toast.note .toast-inner > div:not(#toast-art) { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; white-space: normal; overflow: hidden; max-height: 48px; font-size: 16px; line-height: 16px; }
