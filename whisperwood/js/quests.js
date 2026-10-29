@@ -553,7 +553,7 @@ const Onboard = {
   active() {
     const f = this._flags();
     if (!f || f.done) return false;
-    if ((Save.data.playTime || 0) > (DESIGN.onboardWindow || 600) || Journal.count() >= 4) {
+    if ((Save.data.playTime || 0) > (DESIGN.onboardWindow || 600) || Journal.count() >= (DESIGN.onboardSpecies || 4)) {
       f.done = true;
       return false;
     }
