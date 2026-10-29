@@ -142,6 +142,33 @@ const Pause = {
     && document.fullscreenEnabled === true
     && matchMedia("(pointer: coarse)").matches;
   if (fsWeb) document.documentElement.classList.add("web-fs");
+  const menuOpen = document.getElementById("btn-menu-open");
+  const menuChooser = document.getElementById("menu-chooser");
+  const closeChooser = () => {
+    if (menuChooser) menuChooser.classList.add("hidden");
+    if (menuOpen) menuOpen.setAttribute("aria-expanded", "false");
+  };
+  if (menuOpen && menuChooser) {
+    menuOpen.addEventListener("pointerdown", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      menuChooser.classList.toggle("hidden");
+      menuOpen.setAttribute("aria-expanded", menuChooser.classList.contains("hidden") ? "false" : "true");
+    });
+    const rowIds = ["btn-journal", "btn-pack", "btn-menu"];
+    for (let r = 0; r < rowIds.length; r++) {
+      const row = document.getElementById(rowIds[r]);
+      if (!row) continue;
+      row.addEventListener("pointerup", closeChooser);
+      row.addEventListener("pointercancel", closeChooser);
+    }
+    document.addEventListener("pointerdown", (ev) => {
+      if (menuChooser.classList.contains("hidden")) return;
+      const pad = document.getElementById("menu-pad");
+      if (pad && pad.contains(ev.target)) return;
+      closeChooser();
+    }, true);
+  }
   const releaseFsHold = () => {
     const pads = [document.getElementById("move-pad"), document.getElementById("menu-pad")];
     for (let p = 0; p < pads.length; p++) {
@@ -150,6 +177,8 @@ const Pause = {
       const btns = pad.querySelectorAll("button");
       for (let i = 0; i < btns.length; i++) btns[i].dispatchEvent(new Event("pointercancel"));
     }
+    if (typeof Input !== "undefined" && typeof Input.stickRelease === "function") Input.stickRelease();
+    closeChooser();
     const fish = document.getElementById("btn-fish");
     if (fish) fish.dispatchEvent(new Event("pointercancel"));
     if (typeof Input !== "undefined") {

@@ -354,13 +354,19 @@
       <button type="button" data-move="left">◀</button>
       <button type="button" data-move="down">▼</button>
       <button type="button" data-move="right">▶</button>
+    </div>
+    <div id="stick-zone" aria-hidden="true"><div id="stick-ring"><div id="stick-knob"></div></div></div>
+    <div id="act-pad" aria-label="Fishing">
       <button type="button" id="btn-packup">Pack up</button>
       <button type="button" id="btn-fish">Fish</button>
     </div>
     <div id="menu-pad" aria-label="Menus">
-      <button type="button" id="btn-journal">Journal</button>
-      <button type="button" id="btn-pack">Pack</button>
-      <button type="button" id="btn-menu">Menu</button>
+      <button type="button" id="btn-menu-open" aria-haspopup="true" aria-expanded="false">Menu</button>
+      <div id="menu-chooser" class="hidden" role="menu">
+        <button type="button" id="btn-journal">Journal</button>
+        <button type="button" id="btn-pack">Pack</button>
+        <button type="button" id="btn-menu">Menu</button>
+      </div>
     </div>
     </div>
   </div>
