@@ -314,7 +314,11 @@ const MillEnd = {
     if (roll) roll.classList.remove("hidden");
     const track = document.getElementById("mill-roll-track");
     const credits = document.getElementById("pause-credits");
-    if (track && credits) track.innerHTML = credits.innerHTML;
+    if (track && credits) {
+      const copy = [];
+      for (let i = 0; i < credits.childNodes.length; i++) copy.push(credits.childNodes[i].cloneNode(true));
+      track.replaceChildren.apply(track, copy);
+    }
     const win = document.getElementById("mill-roll-window");
     const windowHeight = win ? win.clientHeight : window.innerHeight;
     if (track) track.style.transform = "translateY(" + windowHeight + "px)";
@@ -358,8 +362,8 @@ const MillEnd = {
       const f = FISH.find((x) => x.id === id);
       const e = Journal.ensure(id);
       const day = e.firstDay | 0;
-      const daySpan = day > 0 ? `<span class="stamp-day">Day ${day}</span>` : "";
-      return `<li class="stamp-open"><span class="stamp-seal is-ink" aria-hidden="true"></span><span class="stamp-title">${f ? f.name : id}</span>${daySpan}</li>`;
+      const daySpan = day > 0 ? `<span class="stamp-day">Day ${esc(day)}</span>` : "";
+      return `<li class="stamp-open"><span class="stamp-seal is-ink" aria-hidden="true"></span><span class="stamp-title">${esc(f ? f.name : id)}</span>${daySpan}</li>`;
     }).join("");
     let landedSum = 0;
     let bestName = "";
@@ -384,7 +388,7 @@ const MillEnd = {
       `${landedSum} fish landed`,
       `Biggest: ${bestName}, ${best}"`,
     ];
-    el.innerHTML = `<p>${C.body}</p><ul class="stamp-list">${rares}</ul>`;
+    el.innerHTML = `<p>${esc(C.body)}</p><ul class="stamp-list">${rares}</ul>`;
     for (const s of stats) {
       const p = document.createElement("p");
       p.className = "ink-soft";
@@ -505,8 +509,7 @@ const Onboard = {
       silent: () => Journal.count() >= 1 || (Fishing.active && Fishing.state !== "aim"),
       ready: () => Journal.count() === 0 && !Fishing.active,
       get text() {
-        const line = (typeof UI !== "undefined" && UI.tt ? UI.tt("Water is close. Stand at the edge and press E to cast.", "Water is close. Stand at the edge and tap Fish to cast.") : "Water is close. Stand at the edge and press E to cast.");
-        return (typeof UI !== "undefined" && UI.padText) ? UI.padText(line) : line;
+        return (typeof UI !== "undefined" && UI.tt ? UI.tt("Water is close. Stand at the edge and press {fish} to cast.", "Water is close. Stand at the edge and tap Fish to cast.") : "Water is close. Stand at the edge and press {fish} to cast.");
       },
     },
     {
@@ -514,8 +517,7 @@ const Onboard = {
       silent: () => UI.journalOpen,
       ready: () => Journal.count() >= 1,
       get text() {
-        if (typeof UI !== "undefined" && !UI.touch() && document.documentElement.classList.contains("pad-input")) return "That one goes in the journal. Press Y.";
-        return (typeof UI !== "undefined" && UI.tt ? UI.tt("That one goes in the journal. Press J.", "That one goes in the journal. Tap Journal.") : "That one goes in the journal. Press J.");
+        return (typeof UI !== "undefined" && UI.tt ? UI.tt("That one goes in the journal. Press {journal}.", "That one goes in the journal. Tap Journal.") : "That one goes in the journal. Press {journal}.");
       },
     },
     {
@@ -523,8 +525,7 @@ const Onboard = {
       silent: () => Inventory.open,
       ready: () => Journal.count() >= 1,
       get text() {
-        if (typeof UI !== "undefined" && !UI.touch() && document.documentElement.classList.contains("pad-input")) return "Bait and rods live in the pack. Press X.";
-        return (typeof UI !== "undefined" && UI.tt ? UI.tt("Bait and rods live in the pack. Press I.", "Bait and rods live in the pack. Tap Pack.") : "Bait and rods live in the pack. Press I.");
+        return (typeof UI !== "undefined" && UI.tt ? UI.tt("Bait and rods live in the pack. Press {pack}.", "Bait and rods live in the pack. Tap Pack.") : "Bait and rods live in the pack. Press {pack}.");
       },
     },
     {

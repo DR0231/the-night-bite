@@ -44,28 +44,28 @@ const UI = {
     if (text.indexOf("cooler") !== -1 || text.indexOf("Check the mail tray") === 0 || text.indexOf("Manage the tank") === 0 || text.indexOf("Manage the wall mount") === 0) return "Open";
     return "Fish";
   },
-  padText(text) {
-    if (this.touch() || !document.documentElement.classList.contains("pad-input")) return text;
-    const verb = (word) => (match) => (match.charAt(0) === match.charAt(0).toLowerCase() ? word.toLowerCase() : word) + " A";
-    const rules = [
-      [/\bPress Space\b/gi, verb("Press")],
-      [/\bHold Space\b/gi, verb("Hold")],
-      [/\bSpace or E\b/gi, "A"],
-      [/\bE or Space\b/gi, "A"],
-      [/\bE \/ Space\b/gi, "A"],
-      [/\bSpace \/ E\b/gi, "A"],
-      [/\bTap Space\b/gi, verb("Tap")],
-      [/\bE or Fish\b/gi, "A"],
-      [/\bE\/Space\b/gi, "A"],
-      [/\bSpace\/E\b/gi, "A"],
-      [/\bPress E\b/gi, verb("Press")],
-      [/\bHold E\b/gi, verb("Hold")],
-      [/\bTap E\b/gi, verb("Tap")],
-    ];
-    let out = String(text);
-    for (let i = 0; i < rules.length; i++) out = out.replace(rules[i][0], rules[i][1]);
-    return out;
+  /* control-names
+     Player copy names a control with {fish} {hook} {cast} {journal} {pack} {menu} {move}.
+     text() fills the name when the line is shown, so a pad connected later still matches. */
+  text(s) {
+    const pad = !this.touch() && document.documentElement.classList.contains("pad-input");
+    const name = {
+      fish: pad ? "A" : "E",
+      hook: pad ? "A" : "E / Space",
+      cast: pad ? "A" : "Space or E",
+      journal: pad ? "Y" : "J",
+      pack: pad ? "X" : "I",
+      menu: pad ? "Start" : "Esc",
+      move: pad ? "Stick" : "WASD",
+    };
+    return String(s == null ? "" : s).replace(/\{(fish|hook|cast|journal|pack|menu|move)\}/g, (all, key) => name[key]);
   },
+  aimLine() {
+    if (this.touch()) return "Arrows aim · Fish to cast · Pack up to stop";
+    if (document.documentElement.classList.contains("pad-input")) return "Stick aim · A to cast · Start to stop";
+    return "WASD aim · E or Fish to cast · Esc or Pack up to stop";
+  },
+  /* end control-names */
 
   anyMenu() {
     return this.journalOpen || Inventory.open || Shop.openFlag || Board.open || Mail.open
@@ -174,7 +174,7 @@ const UI = {
         <canvas class="fish-swatch" width="40" height="26"></canvas>
         <div>
           <div class="fish-name">???</div>
-          <div class="fish-meta"><i class="dot ${f.rarity.toLowerCase()}"></i> ${SPOTS[f.spot].name}</div>
+          <div class="fish-meta"><i class="dot ${esc(f.rarity.toLowerCase())}"></i> ${esc(SPOTS[f.spot].name)}</div>
         </div>`;
       ul.appendChild(li);
       li.addEventListener("click", () => {
@@ -251,9 +251,9 @@ const UI = {
           ? MILL_END_COPY.journalDone
           : `${MILL_END_COPY.journal} · ${n} / ${ids.length}`;
         const turning = MillSpine.stage() === "turning";
-        const page = turning ? "" : `<p class="ink-soft">${MILL_END_COPY.page}</p>`;
-        const hunger = turning ? "" : `<p class="ink-soft">${MILL_END_COPY.hunger}</p>`;
-        mill.innerHTML = `<p>${heading}</p>${page}` + ids.map((id) => {
+        const page = turning ? "" : `<p class="ink-soft">${esc(MILL_END_COPY.page)}</p>`;
+        const hunger = turning ? "" : `<p class="ink-soft">${esc(MILL_END_COPY.hunger)}</p>`;
+        const rareRows = ids.map((id) => {
           const f = FISH.find((x) => x.id === id);
           const landed = Journal.landed(id);
           let label = "";
@@ -270,8 +270,9 @@ const UI = {
             }
           } else if (f.nightOnly) label = "nights only";
           const where = label ? `${SPOTS[f.spot].name} · ${label}` : SPOTS[f.spot].name;
-          return `<div class="mill-rare"><canvas width="40" height="26" data-mill="${id}"></canvas><div>${landed ? f.name : "???"}</div><div class="ink-soft">${where}</div></div>`;
-        }).join("") + hunger;
+          return `<div class="mill-rare"><canvas width="40" height="26" data-mill="${esc(id)}"></canvas><div>${esc(landed ? f.name : "???")}</div><div class="ink-soft">${esc(where)}</div></div>`;
+        }).join("");
+        mill.innerHTML = `<p>${esc(heading)}</p>${page}${rareRows}${hunger}`;
         mill.querySelectorAll("canvas").forEach((cv) => {
           const f = FISH.find((x) => x.id === cv.dataset.mill);
           const c = cv.getContext("2d");
@@ -393,7 +394,7 @@ const UI = {
     if (this.toastHoldT > 0) return;
     const el = this.els && this.els.toast;
     if (!el || !this.els.toastName) return;
-    text = String(text == null ? "" : text);
+    text = this.text(String(text == null ? "" : text));
     if (this.toastT > 0 && now !== true) {
       const titleKey = title || "";
       const last = this._noteQ[this._noteQ.length - 1];
@@ -534,8 +535,7 @@ const UI = {
       this.els.regionBlurb.textContent = blurb;
     }
 
-    const padHint = !this.touch() && document.documentElement.classList.contains("pad-input");
-    const hintText = padHint ? "Y Journal · X Pack" : "J Journal · I Pack";
+    const hintText = this.text("{journal} Journal · {pack} Pack");
     if (this._hintEl === undefined) this._hintEl = document.getElementById("hint");
     if (this._hintEl && this._hintText !== hintText) {
       this._hintEl.textContent = hintText;
@@ -558,7 +558,7 @@ const UI = {
       }
     }
     if (prompt && !this.anyMenu()) {
-      this.els.prompt.textContent = this.padText(prompt);
+      this.els.prompt.textContent = this.text(prompt);
       this.els.prompt.classList.remove("hidden");
       this.els.prompt.classList.toggle("bite", Fishing.state === "bite" || Fishing.state === "play");
       if (Fishing.state === "play" && !this.phonePortrait()) {
@@ -683,7 +683,7 @@ const Game = {
       window.addEventListener("pagehide", () => Save.write());
       if (window.valeDesktop) window.valeDesktop.onSaveRequest(() => Save.write());
       const hint = document.getElementById("hint");
-      if (hint) hint.textContent = "J Journal · I Pack";
+      if (hint) hint.textContent = UI.text("{journal} Journal · {pack} Pack");
       Camera.x = Player.x - CONFIG.VIEW_W * 0.5;
       Camera.y = Player.y - CONFIG.VIEW_H * 0.58;
       Camera.clampToWorld(World.pw, World.ph);
@@ -696,7 +696,12 @@ const Game = {
       try { console.warn("boot failed", err); } catch (e) { /* ignore */ }
       try {
         const rec = document.getElementById("start-recap");
-        if (rec) rec.innerHTML = `<li>Boot failed: ${String((err && err.message) || err)}</li>`;
+        if (rec) {
+          rec.textContent = "";
+          const li = document.createElement("li");
+          li.textContent = "Boot failed: " + String((err && err.message) || err);
+          rec.appendChild(li);
+        }
         const btn = document.getElementById("btn-start");
         if (btn) {
           btn.textContent = "Retry boot";

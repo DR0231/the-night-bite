@@ -36,6 +36,14 @@ const Utils = {
   an(s, cap) { return (/^[aeiou]/i.test(s) ? (cap ? "An" : "an") : (cap ? "A" : "a")) + " " + String(s); },
 };
 
+/* Put this around every value that lands in an HTML template.
+   tools/check-markup.js rejects a template that skips it. */
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
 function mulberry32(seed) {
   let a = seed | 0;
   return function rng() {

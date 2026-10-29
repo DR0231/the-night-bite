@@ -94,31 +94,31 @@ const Cottage = {
   hint() {
     const tt = (desk, touch) => (typeof UI !== "undefined" && UI.tt ? UI.tt(desk, touch) : desk);
     if (World.id !== "cottage") return "";
-    if (this.carry) return "E place · R rotate · F flip · -/+ size";
-    if (this.sitting) return tt("Press E to stand", "Stand up");
-    if (this.nearSlot("chair")) return "E sit · Q pick up";
+    if (this.carry) return "{fish} place · R rotate · F flip · -/+ size";
+    if (this.sitting) return tt("Press {fish} to stand", "Stand up");
+    if (this.nearSlot("chair")) return "{fish} sit · Q pick up";
     const slot = this.nearAnySlot();
-    if (slot) return tt("E or Q to pick up", "Pick up");
+    if (slot) return tt("{fish} or Q to pick up", "Pick up");
     if (this.near("bed")) {
       return (typeof Game !== "undefined" && Game.sleepReady && !Game.sleepReady())
         ? Game.sleepRefusal()
-        : tt("Press E to sleep until dusk or dawn", "Sleep until dusk or dawn");
+        : tt("Press {fish} to sleep until dusk or dawn", "Sleep until dusk or dawn");
     }
-    if (this.near("bench")) return tt("Press E — packing bench (cook & bait)", "Packing bench (cook & bait)");
-    if (this.near("crate")) return tt("Press E — cottage cooler", "Cottage cooler");
-    if (this.near("calendar")) return tt("Press E to read the forecast board", "Read the forecast board");
-    if (this.near("mailtray")) return tt("Press E to check the mail tray", "Check the mail tray");
+    if (this.near("bench")) return tt("Press {fish} — packing bench (cook & bait)", "Packing bench (cook & bait)");
+    if (this.near("crate")) return tt("Press {fish} — cottage cooler", "Cottage cooler");
+    if (this.near("calendar")) return tt("Press {fish} to read the forecast board", "Read the forecast board");
+    if (this.near("mailtray")) return tt("Press {fish} to check the mail tray", "Check the mail tray");
     if (this.near("tank")) {
       const aq = Save.data.cottage.aquarium || [];
-      if (aq.length || this.tuckable()) return tt("Press E to manage the tank", "Manage the tank");
+      if (aq.length || this.tuckable()) return tt("Press {fish} to manage the tank", "Manage the tank");
     }
-    if (this.near("certificate")) return tt("Press E to read your fisher certificate", "Read your fisher certificate");
+    if (this.near("certificate")) return tt("Press {fish} to read your fisher certificate", "Read your fisher certificate");
     if (this.near("dayclock")) {
       return Save.data.inventory.items.dayclock
-        ? tt("Press E — the sundial", "The sundial")
+        ? tt("Press {fish} — the sundial", "The sundial")
         : "A blank nail. Wren sells a cottage sundial.";
     }
-    if (this.near("trophy")) return tt("Press E to manage the wall mount", "Manage the wall mount");
+    if (this.near("trophy")) return tt("Press {fish} to manage the wall mount", "Manage the wall mount");
     return "";
   },
 
@@ -184,7 +184,7 @@ const Cottage = {
     this.carryFlip = !!p.flip;
     this.carryScale = p.scale || 1;
     this.sitting = false;
-    UI.toastNote("Carrying. R rotate · F flip · -/+ size · E place.");
+    UI.toastNote("Carrying. R rotate · F flip · -/+ size · {fish} place.");
   },
 
   tweakCarry() {
@@ -234,9 +234,7 @@ const Cottage = {
     Player.x = p.x;
     Player.y = face === 3 ? p.y - 1 : p.y + 2;
     Player.dir = face === 1 ? 1 : face === 2 ? 2 : face === 3 ? 3 : 0;
-    UI.toastNote((typeof UI !== "undefined" && !UI.touch() && document.documentElement.classList.contains("pad-input"))
-      ? "The chair creaks. Rest comes slow. A or walk to stand."
-      : (typeof UI !== "undefined" && UI.tt ? UI.tt("The chair creaks. Rest comes slow. E or walk to stand.", "The chair creaks. Rest comes slow. Walk or tap Fish to stand.") : "The chair creaks. Rest comes slow. E or walk to stand."));
+    UI.toastNote(typeof UI !== "undefined" && UI.tt ? UI.tt("The chair creaks. Rest comes slow. {fish} or walk to stand.", "The chair creaks. Rest comes slow. Walk or tap Fish to stand.") : "The chair creaks. Rest comes slow. {fish} or walk to stand.");
     return true;
   },
 
@@ -838,7 +836,7 @@ const Marsh = {
       addDeco("raft", 4.2 * TILE_SIZE, 16.3 * TILE_SIZE, {
         boat: {
           to: "vale", spawn: { x: 59.2 * TILE_SIZE, y: 26.4 * TILE_SIZE }, dir: 1,
-          label: (typeof UI !== "undefined" && UI.tt ? UI.tt("Press E to boat back to the vale", "Boat back to the vale") : "Press E to boat back to the vale"),
+          label: (typeof UI !== "undefined" && UI.tt ? UI.tt("Press {fish} to boat back to the vale", "Boat back to the vale") : "Press {fish} to boat back to the vale"),
         },
       });
       // East landing: the island boat. Gate stays Island.open() (millpond + mill spine done).
@@ -985,7 +983,7 @@ const Island = {
       addDeco("raft", 8.3 * TILE_SIZE, 22.2 * TILE_SIZE, {
         boat: {
           to: "marsh", spawn: { x: 39.0 * TILE_SIZE, y: 16.6 * TILE_SIZE }, dir: 1,
-          label: (typeof UI !== "undefined" && UI.tt ? UI.tt("Press E to boat back to the millpond", "Boat back to the millpond") : "Press E to boat back to the millpond"),
+          label: (typeof UI !== "undefined" && UI.tt ? UI.tt("Press {fish} to boat back to the millpond", "Boat back to the millpond") : "Press {fish} to boat back to the millpond"),
         },
       });
       Pickups.scatter(addDeco, get, rng, tw, th, "island", solidAt);
@@ -1044,7 +1042,7 @@ const Shop = {
       if (it.minRank && Skills.rank() < it.minRank) return "";
       if (it.kind === "bait") {
         if (it.rainOnly && TimeCycle.weatherId() !== "rain") return "";
-        return `<button type="button" data-buy="${it.kind}:${it.id}">${BAIT[it.id].name} — ${it.price}c (×${this.stock[it.id] | 0})</button>`;
+        return `<button type="button" data-buy="${esc(it.kind)}:${esc(it.id)}">${esc(BAIT[it.id].name)} — ${esc(it.price)}c (×${esc(this.stock[it.id] | 0)})</button>`;
       }
       if (it.kind === "rod") {
         const have = Inventory.ownsRod(it.id);
@@ -1052,22 +1050,26 @@ const Shop = {
         const price = (rod && rod.cost) || it.price;
         const needFish = FISH.find((f) => f.id === (rod.requireFish || it.requireFish));
         const feel = rod.tension > 1.2 ? "tension" : "timing";
-        return `<button type="button" data-buy="${it.kind}:${it.id}" ${have ? "disabled" : ""}>${rod.name} — ${price}c + a ${needFish ? needFish.name : it.requireFish}${have ? " (owned)" : ` · ${feel}`}</button>`;
+        const own = have ? " (owned)" : " · " + feel;
+        return `<button type="button" data-buy="${esc(it.kind)}:${esc(it.id)}" ${have ? "disabled" : ""}>${esc(rod.name)} — ${esc(price)}c + a ${esc(needFish ? needFish.name : it.requireFish)}${esc(own)}</button>`;
       }
       if (it.kind === "item") {
         const have = it.id !== "campfireKit" && (Save.data.inventory.items[it.id] | 0) > 0;
-        const stock = it.stock != null ? ` (×${this.stock[it.id] | 0})` : "";
-        return `<button type="button" data-buy="${it.kind}:${it.id}" ${have ? "disabled" : ""}>${it.name} — ${it.price}c${it.requireBait ? " + crystal" : ""}${stock}</button>`;
+        const stock = it.stock != null ? " (×" + (this.stock[it.id] | 0) + ")" : "";
+        const crystal = it.requireBait ? " + crystal" : "";
+        return `<button type="button" data-buy="${esc(it.kind)}:${esc(it.id)}" ${have ? "disabled" : ""}>${esc(it.name)} — ${esc(it.price)}c${esc(crystal)}${esc(stock)}</button>`;
       }
       if (it.kind === "kit" || it.kind === "decor") {
         if (!Cottage.decorOn()) return "";
         const owned = Cottage.hasCatalog(it);
         const broke = Inventory.coins() < it.price;
-        return `<button type="button" data-buy="${it.kind}:${it.id}" ${owned || broke ? "disabled" : ""}>${it.name} — ${it.price}c${owned ? " (hung)" : ""}</button>`;
+        const hung = owned ? " (hung)" : "";
+        return `<button type="button" data-buy="${esc(it.kind)}:${esc(it.id)}" ${owned || broke ? "disabled" : ""}>${esc(it.name)} — ${esc(it.price)}c${esc(hung)}</button>`;
       }
       const have = Save.data.inventory.items.tank;
       const donate = FISH.find((f) => f.id === it.requireFish);
-      return `<button type="button" data-buy="upgrade:tank" ${have ? "disabled" : ""}>${it.name} — donate a ${donate ? donate.name : it.requireFish}${have ? " (done)" : ""}</button>`;
+      const done = have ? " (done)" : "";
+      return `<button type="button" data-buy="upgrade:tank" ${have ? "disabled" : ""}>${esc(it.name)} — donate a ${esc(donate ? donate.name : it.requireFish)}${esc(done)}</button>`;
     }).join("");
     const sellable = FISH.filter((f) => Save.countLoose(f.id) > 0);
     const sell = sellable.map((f) => {
@@ -1075,9 +1077,9 @@ const Shop = {
       const oldest = Save.oldestLoose(f.id);
       const price = oldest ? Save.sellPrice(oldest) : f.sell;
       const soft = oldest && Save.freshness(oldest) === "soft";
-      return `<button type="button" data-sell="${f.id}">Sell ${f.name} (${price}c)${soft ? " (soft)" : ""} ×${n}</button>`;
+      return `<button type="button" data-sell="${esc(f.id)}">Sell ${esc(f.name)} (${esc(price)}c)${soft ? " (soft)" : ""} ×${esc(n)}</button>`;
     }).join("") || "<p>Nothing to sell.</p>";
-    el.innerHTML = `<p>${Inventory.coins()} coins</p><div class="shop-cols"><div>${buy}</div><div>${sell}</div></div>`;
+    el.innerHTML = `<p>${esc(Inventory.coins())} coins</p><div class="shop-cols"><div>${buy}</div><div>${sell}</div></div>`;
     el.querySelectorAll("[data-buy]").forEach((b) => b.addEventListener("click", () => this.buy(b.dataset.buy)));
     el.querySelectorAll("[data-sell]").forEach((b) => b.addEventListener("click", () => this.sell(b.dataset.sell)));
   },
@@ -1189,7 +1191,7 @@ const Bench = {
     const baits = [
       { id: "berryblend", label: "Berry blend — berries + worm" },
       { id: "glowplus", label: "Bright glow — crystal + worm" },
-    ].map((r) => `<button type="button" data-craft="${r.id}">${r.label}</button>`).join("");
+    ].map((r) => `<button type="button" data-craft="${esc(r.id)}">${esc(r.label)}</button>`).join("");
     const meals = Object.keys(MEALS).map((id) => {
       const m = MEALS[id];
       const known = Save.data.flags.cooked[id];
@@ -1197,7 +1199,7 @@ const Bench = {
       const stock = Save.data.inventory.meals[id] | 0;
       const ok = Survival.canCook(id);
       const need = this._needLine(m.need);
-      return `<button type="button" data-meal="${id}" ${ok ? "" : "disabled"}><strong>${name} ×${stock}</strong><span>${m.desc}</span><span>${need}${ok ? "" : " · need more"}</span></button>`;
+      return `<button type="button" data-meal="${esc(id)}" ${ok ? "" : "disabled"}><strong>${esc(name)} ×${esc(stock)}</strong><span>${esc(m.desc)}</span><span>${esc(need)}${ok ? "" : " · need more"}</span></button>`;
     }).join("");
     el.innerHTML = `<p>Bait</p>${baits}<p>Meals</p>${meals}`;
     el.querySelectorAll("[data-craft]").forEach((b) => b.addEventListener("click", () => {

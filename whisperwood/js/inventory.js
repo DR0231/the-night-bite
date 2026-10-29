@@ -49,7 +49,7 @@ const Inventory = {
     const left = this.baitCount(id);
     if (left <= 0) {
       Save.data.inventory.equippedBait = "none";
-      UI.toastNote((typeof UI !== "undefined" && UI.tt ? UI.tt(`${BAIT[id].name} is gone. Empty hook — pick bait in the pack (I).`, `${BAIT[id].name} is gone. Empty hook — pick bait in the Pack.`) : `${BAIT[id].name} is gone. Empty hook — pick bait in the pack (I).`));
+      UI.toastNote((typeof UI !== "undefined" && UI.tt ? UI.tt(`${BAIT[id].name} is gone. Empty hook — pick bait in the pack ({pack}).`, `${BAIT[id].name} is gone. Empty hook — pick bait in the Pack.`) : `${BAIT[id].name} is gone. Empty hook — pick bait in the pack ({pack}).`));
     } else if (left < (DESIGN.baitLowWarn || 3)) {
       UI.toastNote(`${BAIT[id].name} running low (×${left}).`);
     }
@@ -113,9 +113,9 @@ const Inventory = {
       const n = this.baitCount(id);
       const on = eq === id && n > 0;
       const low = n > 0 && n < (DESIGN.baitLowWarn || 3);
-      const key = i < 5 ? `<kbd>${i + 1}</kbd> ` : "";
-      return `<button type="button" class="pack-bait${on ? " is-on" : ""}${low ? " is-low" : ""}" data-bait="${id}">
-        ${key}${b.name} ×${n}${on ? " · on hook" : ""}${n === 0 ? " · out" : low ? " · low" : ""}
+      const key = i < 5 ? `<kbd>${esc(i + 1)}</kbd> ` : "";
+      return `<button type="button" class="pack-bait${on ? " is-on" : ""}${low ? " is-low" : ""}" data-bait="${esc(id)}">
+        ${key}${esc(b.name)} ×${esc(n)}${on ? " · on hook" : ""}${n === 0 ? " · out" : low ? " · low" : ""}
       </button>`;
     }).join("");
     const emptyBtn = `<button type="button" class="pack-bait${emptyOn ? " is-on" : ""}" data-bait="none">Empty hook${emptyOn ? " · selected" : ""}</button>`;
@@ -123,7 +123,7 @@ const Inventory = {
       const r = RODS[id];
       const have = this.ownsRod(id);
       const on = this.rod().id === id;
-      return `<button type="button" data-rod="${id}" ${have ? "" : "disabled"} class="${on ? "is-on" : ""}">${r.name}${on ? " · in hand" : have ? "" : " · locked"}</button>`;
+      return `<button type="button" data-rod="${esc(id)}" ${have ? "" : "disabled"} class="${on ? "is-on" : ""}">${esc(r.name)}${on ? " · in hand" : have ? "" : " · locked"}</button>`;
     }).join("");
     const heartLine = NPC_DATA.map((n) => {
       const h = (Save.data.npcs[n.id] && Save.data.npcs[n.id].hearts) | 0;
@@ -140,28 +140,28 @@ const Inventory = {
       const m = MEALS[id];
       const name = Save.data.flags.cooked[id] ? m.name : "???";
       if (n < 1) return "";
-      return `<button type="button" data-eat="${id}">Eat ${name} ×${n}</button>`;
+      return `<button type="button" data-eat="${esc(id)}">Eat ${esc(name)} ×${esc(n)}</button>`;
     }).join("");
     const tools = [];
     if (this.baitCount("berries") > 0) tools.push(`<button type="button" id="btn-eat-berries">Eat berries (+12 hunger)</button>`);
     if (Save.data.inventory.items.cloak | 0) tools.push("<p>Wool cloak — worn.</p>");
-    if (Save.data.inventory.items.campfireKit | 0) tools.push(`<p>Campfire kit ×${Save.data.inventory.items.campfireKit}</p>`);
+    if (Save.data.inventory.items.campfireKit | 0) tools.push(`<p>Campfire kit ×${esc(Save.data.inventory.items.campfireKit)}</p>`);
     if (Save.data.inventory.items.lantern | 0) {
       const on = Save.data.inventory.lanternOn;
       const fuel = Math.ceil(Save.data.inventory.items.lanternFuel || 0);
-      tools.push(`<button type="button" id="btn-lantern">${on ? "Douse lantern" : "Light lantern"} (fuel ${fuel})</button>`);
+      tools.push(`<button type="button" id="btn-lantern">${on ? "Douse lantern" : "Light lantern"} (fuel ${esc(fuel)})</button>`);
       tools.push(`<button type="button" id="btn-fuel">Fill lantern (glow or crystal → 6)</button>`);
     }
     el.innerHTML = `
-      <p class="pack-rod"><strong>${rod.name}</strong> — ${rod.desc}</p>
+      <p class="pack-rod"><strong>${esc(rod.name)}</strong> — ${esc(rod.desc)}</p>
       <div class="pack-rods">${rodBtns}</div>
-      <p class="pack-rank">${Skills.line()}</p>
-      <p class="pack-coins">${this.coins()} coins</p>
-      <p class="pack-hearts">${heartLine}</p>
+      <p class="pack-rank">${esc(Skills.line())}</p>
+      <p class="pack-coins">${esc(this.coins())} coins</p>
+      <p class="pack-hearts">${esc(heartLine)}</p>
       <p class="pack-fish"></p>
       <div class="pack-baits">${emptyBtn}${rows}</div>
-      <p class="pack-extra">${extras}</p>
-      <p class="pack-meal">${mealLine}</p>
+      <p class="pack-extra">${esc(extras)}</p>
+      <p class="pack-meal">${esc(mealLine)}</p>
       <div class="pack-eats">${cooked}</div>
       <div class="pack-tools">${tools.join("")}</div>
       <p class="pack-craft">Bench: berries + worm → berry blend · crystal + worm → bright glow · meals in the pan</p>

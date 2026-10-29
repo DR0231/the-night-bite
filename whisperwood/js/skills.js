@@ -131,10 +131,10 @@ const Skills = {
     const offered = this.data.offered || [];
     const btns = offered.map((id) => {
       const p = PERKS[id];
-      return `<button type="button" data-perk="${id}"><strong>${p.name}</strong><span>${p.desc}</span></button>`;
+      return `<button type="button" data-perk="${esc(id)}"><strong>${esc(p.name)}</strong><span>${esc(p.desc)}</span></button>`;
     }).join("");
     body.innerHTML = `
-      <p class="journal-sub">Fisher rank ${this.rank()}</p>
+      <p class="journal-sub">Fisher rank ${esc(this.rank())}</p>
       <p>Your hands know the water a little better. Choose one.</p>
       <div class="perk-picks">${btns || "<p>Every habit you needed, you already have.</p>"}</div>`;
     el.classList.remove("hidden");

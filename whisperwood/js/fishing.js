@@ -477,7 +477,7 @@ const Fishing = {
     if (this.state === "wait" || this.state === "nibble") {
       return "Watch the bobber…  Move to pack up";
     }
-    if (this.state === "aim") return (typeof UI !== "undefined" && UI.touch && !UI.touch() && document.documentElement.classList.contains("pad-input")) ? "Stick aim · A to cast · Start to stop" : tt("WASD aim · E or Fish to cast · Esc or Pack up to stop", "Arrows aim · Fish to cast · Pack up to stop");
+    if (this.state === "aim") return (typeof UI !== "undefined" && UI.aimLine) ? UI.aimLine() : "WASD aim · {fish} to cast · Esc or Pack up to stop";
     if (this.state === "cast") return "Casting…";
     if (this.state === "reel") return "Reeling in…";
     if (this.state === "fail") return "It got away…";
@@ -486,7 +486,7 @@ const Fishing = {
     // Whatever E would really do wins the prompt; the Fish line only shows when E fishes.
     if (typeof Interact !== "undefined" && (Interact.priorityHint() || Interact.hint())) return "";
     const water = World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE);
-    if (water) return tt("Fish · Space or E", "Tap Fish to cast");
+    if (water) return tt("Fish · {cast}", "Tap Fish to cast");
     return "";
   },
 };
