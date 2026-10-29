@@ -580,7 +580,6 @@ const DAILY_ASKS = [
   { spot: "island", fish: "duskrunner", text: "Land a Dusk Runner before the copper’s gone." },
 ];
 
-/* Placeholder mill-spine mail. Ivy polish later. Boat gate stays flags.fifthWater. */
 const MILL_SPINE_MAIL = {
   heard: "Lark: “The east mill went quiet. Used to hear the wheel from the lake path.” The old millers say it turns again when someone lands the vale’s five rare fish.",
   opened: "Bramble: “East boat’s free. Mill’s still silent, though. Pick mill reeds along the shore.”",

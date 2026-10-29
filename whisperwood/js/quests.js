@@ -498,8 +498,7 @@ const Mail = {
 
 /*
  * First-evening nudges. One quiet line each, fired by what the player has not yet
- * done, spaced by DESIGN.onboardGap, and gone for good after DESIGN.onboardWindow
- * seconds of play. Anything the player finds on their own is marked silently.
+ * done, spaced by DESIGN.onboardGap. Anything the player finds on their own is marked silently.
  */
 const Onboard = {
   cool: 0,

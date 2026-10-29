@@ -1,4 +1,4 @@
-/* Journal entries live on Save.data.journal. Sightings unlock silhouettes. */
+/* Journal entries live on Save.data.journal. */
 
 const Journal = {
   ensure(id) { return Save.ensureFish(id); },

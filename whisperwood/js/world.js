@@ -214,7 +214,7 @@ const World = {
       set(27, 24, TILE.DIRT);
       set(28, 24, TILE.DIRT);
 
-      // Trees keep two tiles off water so nobody fishes from behind a canopy.
+      // Trees stay off the banks so nobody fishes from behind a canopy.
       const nearPathOrWater = (tx, ty) => {
         for (let oy = -1; oy <= 1; oy++) for (let ox = -1; ox <= 1; ox++) {
           const t = get(tx + ox, ty + oy);

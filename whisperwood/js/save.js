@@ -118,7 +118,7 @@ const Save = {
       this._ingestOldJournal();
     }
     this._ensureFish();
-    /* Legacy journal import lands fish after migrate. A save that already fished does not get the first-evening nudges. */
+    /* A save that already fished does not get the first-evening nudges. */
     if (this.data.cottage && this.data.cottage.visited) this.data.flags.onboard.done = true;
     for (const id of Object.keys(this.data.journal)) {
       const row = this.data.journal[id];
@@ -263,7 +263,7 @@ const Save = {
         row[key] = (typeof row[key] === "number" && Number.isFinite(row[key])) ? row[key] : 0;
       }
     }
-    /* A cottage visit or any landed fish means the nudges would be late. Do not invent a first-land day for rows that never stored one. */
+    /* A cottage visit or any landed fish means the nudges would be late. */
     if (out.cottage && out.cottage.visited) out.flags.onboard.done = true;
     for (const id of Object.keys(out.journal)) {
       const row = out.journal[id];

@@ -762,7 +762,7 @@ const Marsh = {
       // Fishing pier into the pond's south side.
       for (let y = 20; y <= 23; y++) { set(24, y, TILE.DOCK); set(25, y, TILE.DOCK); }
 
-      // Footpath: west landing, south around the pond, east landing; a spur north to the mill.
+      // Footpath: west landing, south around the pond, east landing.
       paintPath(8, 16, 8, 25);
       paintPath(8, 25, 39, 25);
       paintPath(39, 25, 39, 16);
