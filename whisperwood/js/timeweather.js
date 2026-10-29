@@ -55,7 +55,6 @@ TimeCycle.update = function (dt) {
       try { Quests.rollDay(); } catch (e) { /* board optional */ }
       try { Shop.restock(); } catch (e) { /* stall optional */ }
       for (const id of Object.keys(Save.data.npcs)) Save.data.npcs[id].giftedToday = 0;
-      try { if (typeof Passer !== "undefined") Passer.sync(); } catch (e) { /* passer optional */ }
       Save.data.skills.repeatsToday = { total: 0 };
       Save.data.skills.speciesToday = {};
       Save.data.skills.recordToday = {};

@@ -242,47 +242,6 @@ const Npcs = {
   },
 };
 
-/* One millpond passer-by. No hearts, no gifts, no wander. Present or not is a day roll. */
-const Passer = {
-  present() {
-    if (typeof World === "undefined" || World.id !== "marsh" || !Save.data) return false;
-    const day = Save.data.clock.day | 0;
-    const n = (Save.data.worldSeed ^ (day * 2654435761) ^ 0x70617373) >>> 0;
-    return mulberry32(n)() < 0.5;
-  },
-
-  pos() {
-    const p = (typeof MARSH_PASSER !== "undefined" && MARSH_PASSER) || { x: 28, y: 25.2 };
-    return { x: p.x * TILE_SIZE, y: p.y * TILE_SIZE };
-  },
-
-  near() {
-    if (!this.present()) return false;
-    const p = this.pos();
-    return Utils.dist(Player.x, Player.y, p.x, p.y) < CONFIG.NPC_RANGE;
-  },
-
-  talk() {
-    const line = (typeof MARSH_PASSER !== "undefined" && MARSH_PASSER.line) || "Just passing.";
-    UI.toastNote(line);
-    return true;
-  },
-
-  sync() {
-    if (!World.maps || !World.maps.marsh || !World.maps.marsh.decos) return;
-    const decos = World.maps.marsh.decos;
-    let i = -1;
-    for (let k = 0; k < decos.length; k++) if (decos[k].passer) { i = k; break; }
-    const show = this.present();
-    if (show && i < 0) {
-      const p = this.pos();
-      decos.push({ type: "npc", x: p.x, y: p.y, color: "#5c6b62", passer: true });
-    } else if (!show && i >= 0) {
-      decos.splice(i, 1);
-    }
-  },
-};
-
 /* E does one thing at a time. Cottage, pickups, and people come first; then the
    nearest of stump / weeds / boat / cooler / sign; fishing only if none of those
    is in reach. hint() reads the same pick, so the prompt never lies about E. */
@@ -291,7 +250,6 @@ const Interact = {
     if (World.id === "cottage" && Cottage.try()) return true;
     if (Pickups.try()) return true;
     if (Npcs.try()) return true;
-    if (typeof Passer !== "undefined" && Passer.near()) return Passer.talk();
     const near = this._nearest();
     if (near) {
       if (near.kind === "sit") return this._sit();
@@ -313,7 +271,6 @@ const Interact = {
     if (pick) return tt(`Press E to pick ${pick}`, `Pick ${pick}`);
     const n = Npcs.at(Player.x, Player.y);
     if (n) return tt(`Press E to talk to ${n.name}`, `Talk to ${n.name}`);
-    if (typeof Passer !== "undefined" && Passer.near()) return tt("Press E to greet the passer-by", "Greet the passer-by");
     return "";
   },
 

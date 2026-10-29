@@ -595,6 +595,5 @@ const Onboard = {
     try {
       if (id === "marsh" && prev !== "marsh" && typeof MillSpine !== "undefined") MillSpine.onVisited();
     } catch (err) { /* warp still works if mail flavor fails */ }
-    try { if (typeof Passer !== "undefined") Passer.sync(); } catch (err) { /* passer optional */ }
   };
 })();
