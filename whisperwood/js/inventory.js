@@ -38,6 +38,15 @@ const Inventory = {
     Save.data.inventory.rodId = id;
   },
 
+  takeRod(id) {
+    if (!this.ownsRod(id)) return;
+    Save.data.inventory.rodId = id;
+    UI.toastNote(RODS[id].name + " in hand.");
+    if (this.open) this.refresh();
+    Save.mark();
+    Hotbar.note("rod:" + id);
+  },
+
   consumeCastBait() {
     const id = this.equipped();
     if (id === "none" || this.baitCount(id) <= 0) {
@@ -206,19 +215,20 @@ const Inventory = {
       fishP.appendChild(document.createTextNode(Save.stewLine()));
     }
     el.querySelectorAll("[data-bait]").forEach((btn) => {
-      btn.addEventListener("click", () => { this.equip(btn.dataset.bait); this.refresh(); });
-    });
-    el.querySelectorAll("[data-rod]").forEach((btn) => {
       btn.addEventListener("click", () => {
-        if (!this.ownsRod(btn.dataset.rod)) return;
-        Save.data.inventory.rodId = btn.dataset.rod;
-        UI.toastNote(RODS[btn.dataset.rod].name + " in hand.");
+        const id = btn.dataset.bait;
+        if (this.equip(id) && id !== "none") Hotbar.note("bait:" + id);
         this.refresh();
-        Save.mark();
       });
     });
+    el.querySelectorAll("[data-rod]").forEach((btn) => {
+      btn.addEventListener("click", () => this.takeRod(btn.dataset.rod));
+    });
     el.querySelectorAll("[data-eat]").forEach((btn) => {
-      btn.addEventListener("click", () => Survival.eatMeal(btn.dataset.eat));
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.eat;
+        if (Survival.eatMeal(id)) Hotbar.note("meal:" + id);
+      });
     });
     el.querySelectorAll("[data-eatfish]").forEach((btn) => {
       btn.addEventListener("click", () => Survival.eatFish(btn.dataset.eatfish));
@@ -262,7 +272,9 @@ const Inventory = {
   numberKey(n) {
     if (!this.open) return;
     const id = HOOK_BAIT[n - 1];
-    if (id) { this.equip(id); this.refresh(); }
+    if (!id) return;
+    if (this.equip(id) && id !== "none") Hotbar.note("bait:" + id);
+    this.refresh();
   },
 
   downloadSave() {
@@ -287,6 +299,147 @@ const Inventory = {
     }
     return false;
   },
+};
+
+const Hotbar = {
+  _lastUse: [0, 0, 0, 0],
+  _sig: "",
+  _els: null,
+
+  slots() {
+    const inv = Save.data.inventory;
+    if (!Array.isArray(inv.hotbar) || inv.hotbar.length !== 4) inv.hotbar = [null, null, null, null];
+    return inv.hotbar;
+  },
+
+  note(key) {
+    const slots = this.slots();
+    let i = slots.indexOf(key);
+    if (i >= 0) {
+      this._lastUse[i] = performance.now();
+      return;
+    }
+    i = slots.indexOf(null);
+    if (i < 0) {
+      i = 0;
+      for (let s = 1; s < 4; s++) {
+        if (this._lastUse[s] <= this._lastUse[i]) i = s;
+      }
+    }
+    slots[i] = key;
+    this._lastUse[i] = performance.now();
+    Save.mark();
+    this._sig = "";
+  },
+
+  tap(i) {
+    const key = this.slots()[i];
+    if (key == null) {
+      Inventory.toggle();
+    } else {
+      const cut = key.indexOf(":");
+      const kind = cut < 0 ? "" : key.slice(0, cut);
+      const id = cut < 0 ? "" : key.slice(cut + 1);
+      const casting = typeof Fishing !== "undefined" && Fishing.active;
+      const asleep = typeof Game !== "undefined" && Game.sleeping;
+      if (kind === "bait") {
+        if (!(typeof Fishing !== "undefined" && Fishing.inFight()) && Inventory.equip(id)) this.note(key);
+      } else if (kind === "rod") {
+        if (!casting) Inventory.takeRod(id);
+      } else if (kind === "meal") {
+        if (!casting && !asleep) {
+          if ((Save.data.inventory.meals[id] | 0) < 1) UI.toastNote("Cook more at the pan.");
+          else if (Survival.eatMeal(id)) this.note(key);
+        }
+      }
+    }
+    this._sig = "";
+  },
+
+  render() {
+    if (!this._els) {
+      const root = document.getElementById("hotbar");
+      if (!root) return;
+      const slots = [];
+      root.querySelectorAll(".hb-slot").forEach((btn) => {
+        const index = slots.length;
+        slots.push({
+          btn,
+          icon: btn.querySelector(".hb-icon"),
+          count: btn.querySelector(".hb-count")
+        });
+        btn.addEventListener("click", () => Hotbar.tap(index));
+      });
+      this._els = { root, slots };
+    }
+    const bar = this.slots();
+    const fighting = typeof Fishing !== "undefined" && !!Fishing.inFight();
+    const casting = typeof Fishing !== "undefined" && !!Fishing.active;
+    const sleeping = typeof Game !== "undefined" && !!Game.sleeping;
+    const hook = Inventory.equipped();
+    const hand = Inventory.rod().id;
+    const mealId = Save.data.inventory.mealId || "";
+    const parts = [bar[0], bar[1], bar[2], bar[3], hook, hand, mealId, fighting ? 1 : 0, casting ? 1 : 0, sleeping ? 1 : 0];
+    for (let i = 0; i < 4; i++) parts.push(this._count(bar[i]));
+    const sig = parts.join("\u001f");
+    if (sig === this._sig) return;
+    this._sig = sig;
+    this._els.root.classList.toggle("hidden", sleeping);
+    for (let i = 0; i < 4; i++) this._paint(this._els.slots[i], bar[i], hook, hand, mealId, fighting, casting, sleeping);
+  },
+
+  _count(key) {
+    if (key == null) return "";
+    const cut = key.indexOf(":");
+    if (cut < 0) return "";
+    const kind = key.slice(0, cut);
+    const id = key.slice(cut + 1);
+    if (kind === "bait") return Inventory.baitCount(id);
+    if (kind === "meal") return Save.data.inventory.meals[id] | 0;
+    return "";
+  },
+
+  _paint(slot, key, hook, hand, mealId, fighting, casting, sleeping) {
+    const btn = slot.btn;
+    const icon = slot.icon;
+    const countEl = slot.count;
+    btn.classList.remove("is-on", "is-meal", "is-off", "is-empty", "is-low");
+    if (key == null) {
+      icon.textContent = "";
+      icon.style.backgroundImage = "none";
+      icon.style.backgroundPosition = "";
+      countEl.textContent = "";
+      btn.classList.add("is-empty");
+      btn.setAttribute("aria-label", "Empty slot, opens Pack");
+      return;
+    }
+    const cut = key.indexOf(":");
+    const kind = cut < 0 ? "" : key.slice(0, cut);
+    const id = cut < 0 ? key : key.slice(cut + 1);
+    const table = kind === "bait" ? BAIT : kind === "rod" ? RODS : MEALS;
+    const item = table[id];
+    const name = item && item.name ? item.name : id;
+    const frameKey = (kind === "bait" ? "bait_" : kind === "rod" ? "rod_" : "meal_") + id;
+    const frame = (typeof Atlas !== "undefined" && Atlas.FRAMES) ? Atlas.FRAMES[frameKey] : null;
+    if (frame) {
+      icon.textContent = "";
+      icon.style.backgroundImage = "";
+      icon.style.backgroundPosition = "-" + (frame.sx * 2) + "px -" + (frame.sy * 2) + "px";
+    } else {
+      icon.style.backgroundImage = "none";
+      icon.style.backgroundPosition = "";
+      icon.textContent = name;
+    }
+    const n = kind === "bait" ? Inventory.baitCount(id) : kind === "meal" ? (Save.data.inventory.meals[id] | 0) : "";
+    countEl.textContent = n === "" ? "" : String(n);
+    const out = n !== "" && n <= 0;
+    const refused = (kind === "bait" && fighting) || ((kind === "rod" || kind === "meal") && (casting || sleeping));
+    if ((kind === "bait" && id === hook) || (kind === "rod" && id === hand)) btn.classList.add("is-on");
+    if (kind === "meal" && id === mealId) btn.classList.add("is-meal");
+    if (out || refused) btn.classList.add("is-off");
+    if (kind === "bait" && n > 0 && n < DESIGN.baitLowWarn) btn.classList.add("is-low");
+    btn.setAttribute("aria-label", n === "" ? name : name + " " + n);
+  }
 };
 
 const Pickups = {
