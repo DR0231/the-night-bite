@@ -171,6 +171,9 @@ const DESIGN = {
   toastLongChars: 56,
   /* seconds the spot name stays up after you step into a spot. */
   spotLabelHold: 6,
+  /* px of knob travel and the dead zone for the touch stick. */
+  stickDead: 10,
+  stickTravel: 36,
   warps: [
     { id: "vale", label: "Vale spawn", map: "vale", x: 32.5, y: 26.2, dir: 0 },
     { id: "cottage", label: "Cottage", map: "cottage", x: 11, y: 12.2, dir: 3 },

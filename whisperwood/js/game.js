@@ -610,6 +610,7 @@ const UI = {
           release(mp, false);
           const fish = document.getElementById("btn-fish");
           if (fish && typeof Minigame !== "undefined" && Minigame._padHold) fish.dispatchEvent(new Event("pointercancel"));
+          if (typeof Input !== "undefined" && typeof Input.stickRelease === "function") Input.stickRelease();
         }
         mp.classList.toggle("menu-hide", hide);
       }

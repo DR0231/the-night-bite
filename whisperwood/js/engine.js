@@ -49,6 +49,12 @@ function mulberry32(seed) {
 const Input = {
   down: Object.create(null),
   pressed: Object.create(null),
+  _stickId: null,
+  _stickOx: 0,
+  _stickOy: 0,
+  _stickRx: 0,
+  _stickRy: 0,
+  _stickKeys: Object.create(null),
 
   _alias(e) {
     const codes = {
@@ -136,6 +142,7 @@ const Input = {
     window.addEventListener("blur", () => {
       this.down = Object.create(null);
       this._clearPadKeys();
+      this.stickRelease();
     });
     const hidePadRing = () => {
       document.documentElement.classList.remove("pad-input");
@@ -208,6 +215,66 @@ const Input = {
     tapKey("btn-journal", "j");
     tapKey("btn-pack", "i");
     tapKey("btn-menu", "escape");
+    const zone = document.getElementById("stick-zone");
+    if (zone) {
+      zone.addEventListener("pointerdown", (ev) => {
+        if (this._stickId !== null) return;
+        ev.preventDefault();
+        this._stickId = ev.pointerId;
+        try { zone.setPointerCapture(ev.pointerId); } catch (e) { /* capture is optional */ }
+        this._stickOx = ev.clientX;
+        this._stickOy = ev.clientY;
+        const edge = 48 + 8;
+        const rx = Math.max(edge, Math.min(window.innerWidth - edge, ev.clientX));
+        const ry = Math.max(edge, Math.min(window.innerHeight - edge, ev.clientY));
+        this._stickRx = rx;
+        this._stickRy = ry;
+        const ring = document.getElementById("stick-ring");
+        const knob = document.getElementById("stick-knob");
+        if (ring) {
+          const box = zone.getBoundingClientRect();
+          ring.style.left = (rx - box.left) + "px";
+          ring.style.top = (ry - box.top) + "px";
+          ring.classList.add("on");
+        }
+        if (knob) knob.style.transform = "";
+      }, { passive: false });
+      zone.addEventListener("pointermove", (ev) => {
+        if (ev.pointerId !== this._stickId) return;
+        const dx = ev.clientX - this._stickOx;
+        const dy = ev.clientY - this._stickOy;
+        const d = Math.hypot(dx, dy);
+        const travel = DESIGN.stickTravel || 36;
+        let kx = ev.clientX - this._stickRx;
+        let ky = ev.clientY - this._stickRy;
+        const kd = Math.hypot(kx, ky);
+        if (kd > travel) {
+          kx = kx / kd * travel;
+          ky = ky / kd * travel;
+        }
+        const knob = document.getElementById("stick-knob");
+        if (knob) knob.style.transform = "translate(" + kx + "px, " + ky + "px)";
+        if (d < (DESIGN.stickDead || 10)) {
+          this._stickSet({});
+          return;
+        }
+        const ux = dx / d;
+        const uy = dy / d;
+        this._stickSet({
+          arrowright: ux > 0.38,
+          arrowleft: ux < -0.38,
+          arrowdown: uy > 0.38,
+          arrowup: uy < -0.38,
+        });
+      });
+      const stickUp = (ev) => {
+        if (ev.pointerId !== this._stickId) return;
+        this.stickRelease();
+      };
+      zone.addEventListener("pointerup", stickUp);
+      zone.addEventListener("pointercancel", stickUp);
+      zone.addEventListener("lostpointercapture", stickUp);
+    }
     this.syncPad();
     window.addEventListener("resize", () => this.syncPad());
   },
@@ -221,6 +288,31 @@ const Input = {
     const on = coarse || narrow;
     if (pad) pad.classList.toggle("is-touch", on);
     if (menu) menu.classList.toggle("is-touch", on);
+    document.documentElement.classList.toggle("stick-on", on && !!document.getElementById("stick-zone"));
+  },
+
+  _stickSet(dirs) {
+    const keys = ["arrowup", "arrowdown", "arrowleft", "arrowright"];
+    for (let i = 0; i < keys.length; i++) {
+      const k = keys[i];
+      const want = !!(dirs && dirs[k]);
+      if (want && !this._stickKeys[k]) {
+        this.setKey(k, true, false);
+        this._stickKeys[k] = true;
+      } else if (!want && this._stickKeys[k]) {
+        this.setKey(k, false, false);
+        delete this._stickKeys[k];
+      }
+    }
+  },
+
+  stickRelease() {
+    this._stickSet({});
+    this._stickId = null;
+    const ring = document.getElementById("stick-ring");
+    if (ring) ring.classList.remove("on");
+    const knob = document.getElementById("stick-knob");
+    if (knob) knob.style.transform = "";
   },
 
   _padWasOn: false,
@@ -290,7 +382,7 @@ const Input = {
     for (let i = 0; i < nodes.length; i++) {
       const el = nodes[i];
       if (el.disabled || el.hidden) continue;
-      if (el.closest("#move-pad, #menu-pad")) continue;
+      if (el.closest("#move-pad, #menu-pad, #stick-zone, #act-pad")) continue;
       if (el.id === "btn-fish" || el.id === "btn-packup") continue;
       const type = (el.getAttribute("type") || "").toLowerCase();
       if (type === "file") continue;
