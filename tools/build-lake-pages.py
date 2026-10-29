@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build each lake's own home page from index.html: alum/index.html and buckeye/index.html.
+"""Build each lake's own home page from index.html: alum/, buckeye/, oshaughnessy/, griggs/, indian/ and delaware/index.html.
 
 Run from the repo root after any change to index.html, then run tools/stamp-version.py:
     python3 tools/build-lake-pages.py && python3 tools/stamp-version.py
@@ -10,7 +10,7 @@ index.html stays the Hoover home page at the site root, unchanged. Each copy:
   · says which lake it is (<meta name="nb-home" content="alum">), which js/lakes.js reads before first paint;
   · has its own title, description, canonical, og:url, og:title, og:description, og:image and JSON-LD url;
   · has the lake's names already filled in [data-lk] spots, so nothing swaps after paint.
-Never edit alum/index.html or buckeye/index.html by hand; they are overwritten.
+Never edit the <lake>/index.html copies by hand; they are overwritten.
 """
 import pathlib, re, sys
 
@@ -28,6 +28,26 @@ LAKES = {
         "name": "Buckeye Lake", "short": "Buckeye",
         "title": "The Night Bite: Buckeye Lake fishing hub",
         "desc": "Unofficial Buckeye Lake fishing hub, Ohio: live lake level, tonight's bite, species, water maps, trip log, gear.",
+    },
+    "oshaughnessy": {
+        "name": "O'Shaughnessy Reservoir", "short": "O'Shaughnessy",
+        "title": "The Night Bite: O'Shaughnessy Reservoir fishing hub",
+        "desc": "Unofficial O'Shaughnessy Reservoir fishing hub, Ohio: live reservoir level, tonight's bite, species, water maps, trip log, gear.",
+    },
+    "griggs": {
+        "name": "Griggs Reservoir", "short": "Griggs",
+        "title": "The Night Bite: Griggs Reservoir fishing hub",
+        "desc": "Unofficial Griggs Reservoir fishing hub, Ohio: live reservoir level and water temp, tonight's bite, species, water maps, trip log, gear.",
+    },
+    "indian": {
+        "name": "Indian Lake", "short": "Indian Lake",
+        "title": "The Night Bite: Indian Lake fishing hub",
+        "desc": "Unofficial Indian Lake fishing hub, Ohio: live lake level and water temp, tonight's bite, species, water maps, trip log, gear.",
+    },
+    "delaware": {
+        "name": "Delaware Lake", "short": "Delaware Lake",
+        "title": "The Night Bite: Delaware Lake fishing hub",
+        "desc": "Unofficial Delaware Lake fishing hub, Ohio: live lake level, tonight's bite, species, water maps, trip log, gear.",
     },
 }
 

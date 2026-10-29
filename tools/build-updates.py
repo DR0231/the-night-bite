@@ -80,6 +80,10 @@ def nice(d):
 def esc(s):
     return html.escape(s, quote=True)
 
+def nowrap_phones(s):
+    # keep 614-645-3337 on one line on phones instead of breaking at a hyphen
+    return re.sub(r"(?<![\d-])(\d{3}-\d{3}-\d{4})(?![\d-])", r'<span class="nowrap">\1</span>', s)
+
 # ---- updates.html
 out = []
 for e in entries:
@@ -98,7 +102,7 @@ for e in entries:
     out.append(f'          <h2 class="update-title" id="{e["id"]}-title">{esc(e["title"])}</h2>')
     out.append('          <ul class="update-list">')
     for b in e["bullets"]:
-        out.append(f"            <li>{esc(b)}</li>")
+        out.append(f"            <li>{nowrap_phones(esc(b))}</li>")
     out.append("          </ul>")
     if e.get("links"):
         links = "".join(f'<li><a href="{esc(l["href"])}">{esc(l["label"])}</a></li>' for l in e["links"])

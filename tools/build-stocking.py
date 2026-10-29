@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """Builds stocking.html (Stocking & surveys) from ODNR public PDFs. Values typed from the PDF tables and checked against
-the rendered PDFs, Oct. 27, 2026. Reuses ice.html's head and footer. Run, then tools/stamp-version.py."""
+the rendered PDFs, Oct. 27, 2026 (Indian Lake and Delaware Lake: Oct. 29, 2026, from pdftotext -layout of the same PDFs). Reuses ice.html's head and footer. Run, then tools/stamp-version.py."""
 import pathlib, re
 R = pathlib.Path(__file__).resolve().parent.parent
 ice = (R / "ice.html").read_text()
 head = ice[:ice.index("  <main id=\"main\">")]
 foot = ice[ice.index("  </main>"):]
-head = head.replace("<title>Ice season: Hoover, Alum Creek and Buckeye Lake | The Night Bite</title>",
-                    "<title>Stocking and surveys: Hoover, Alum Creek and Buckeye Lake | The Night Bite</title>")
+head = re.sub(r"<title>[^<]*</title>", "<title>Stocking &amp; surveys: central Ohio lakes | The Night Bite</title>", head, count=1)
 head = re.sub(r'<meta name="description" content="[^"]*">',
-              '<meta name="description" content="What ODNR has published for Hoover, Alum Creek and Buckeye Lake: fish stocked, net survey growth, angler surveys and the official habitat map. Sources and dates on every number.">', head)
+              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake, O&#39;Shaughnessy, Griggs, Indian Lake and Delaware Lake, with sources.">', head)
 head = head.replace('<link rel="canonical" href="https://nightbiteoh.com/ice">', '<link rel="canonical" href="https://nightbiteoh.com/stocking">')
 assert "stocking" in head
 # ice.html's own scripts at the bottom stay (refresh, sw-update, alerts, nav, lake-picker); nothing else is needed
@@ -21,16 +20,29 @@ ODNR_MAP = {
     "hoover": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638/page/Page#data_s=id%3AdataSource_2-1942de5a64a-layer-2-20%3A54%2Cid%3AdataSource_2-19d2fe52235-layer-8-20%3A58&zoom_to_selection=true",
     "alum": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638/page/Page#data_s=id%3AdataSource_2-1942de5a64a-layer-2-20%3A54%2Cid%3AdataSource_2-19d2fe52235-layer-8-20%3A2&zoom_to_selection=true",
     "buckeye": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638/page/Page#data_s=id%3AdataSource_2-1942de5a64a-layer-2-20%3A54%2Cid%3AdataSource_2-19d2fe52235-layer-8-20%3A13&zoom_to_selection=true",
+    # ODNR's O'Shaughnessy page has no map link and its Griggs link is malformed, so both open the map itself
+    "oshaughnessy": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "griggs": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "indian": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638/page/Page#data_s=id%3AdataSource_2-1942de5a64a-layer-2-20%3A54%2Cid%3AdataSource_2-19d2fe52235-layer-8-20%3A59&zoom_to_selection=true",
+    "delaware": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638/page/Page#data_s=id%3AdataSource_2-1942de5a64a-layer-2-20%3A54%2Cid%3AdataSource_2-19d2fe52235-layer-8-20%3A24&zoom_to_selection=true",
 }
 AREA = {
     "hoover": ("ODNR, Hoover Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area"),
     "alum": ("ODNR, Alum Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-lake-fishing-area"),
     "buckeye": ("ODNR, Buckeye Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area"),
+    "oshaughnessy": ("ODNR, O&rsquo;Shaughnessy Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/o-shaughnessy-reservoir-fishing-area"),
+    "griggs": ("ODNR, Griggs Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/griggs-reservoir-fishing-area"),
+    "indian": ("ODNR, Indian Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-fishing-area"),
+    "delaware": ("ODNR, Delaware Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-lake-fishing-area"),
 }
 PDFMAP = {
     "hoover": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf",
     "alum": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/alumcreeklake2.pdf",
     "buckeye": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf",
+    "oshaughnessy": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/oshaughnessyreservoir2.pdf",
+    "griggs": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/griggsreservoir2.pdf",
+    "indian": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/indianlake2.pdf",
+    "delaware": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/delawarelake2.pdf",
 }
 STOCK_DB = "https://ohiodnr.gov/buy-and-apply/hunting-fishing-boating/fishing-resources/fish-stocking-records"
 
@@ -54,6 +66,12 @@ STOCK = {
             (2014, "3,373", "", ""), (2015, "3,451", "", ""), (2016, "3,325", "", ""), (2017, "3,577", "", ""), (2018, "3,598", "", ""),
             (2019, "2,541", "", "")]),
     ],
+    "indian": [
+        ("Saugeye", "Indian Saugeye Stocking up20", ("Fingerlings", "Fry"), [
+            (2010, "231,529", ""), (2011, "524,876", "2,797,350"), (2012, "505,137", ""), (2013, "510,240", ""), (2014, "", "5,081,351"),
+            (2015, "540,426", ""), (2016, "", "5,123,783"), (2017, "", "5,125,133"), (2018, "", "6,907,875"), (2019, "", "7,139,320")]),
+    ],
+    "delaware": [],   # ODNR posts no stocking table among Delaware Lake's lake PDFs
 }
 
 # length at age (inches), lake row and ODNR's statewide average row, ages as the PDF lists them
@@ -68,8 +86,19 @@ GROWTH = {
         ("Crappie", "Alum Creek Crappie Survey up20", "trap nets", 0, [3.5, 7.8, 9.6, 10.8, 10.9, 11.7], [3.8, 6.9, 8.6, 9.5, 10.1, 10.3, 10.5, 10.6, 10.4], "2010 to 2019"),
         ("Largemouth bass", "Alum Creek Largemouth Bass Survey up20", "electrofishing", 1, [6.1, 10.3, 13.3, 15.1, 17.4, 16.6, 17.6, 19.3, 19.7, 19.3], [5.8, 8.8, 11.3, 12.9, 14.2, 15.2, 15.8, 16.6, 17.2, 18.3], "2010 to 2019"),
     ],
+    # None: the PDF leaves that age blank
+    "indian": [
+        ("Saugeye", "Indian Saugeye Survey up20", "gill nets", 0, [9.7, 14.4, 17.3, 19.9, 22.3, 22.4, None, 20.9], [9.8, 13.9, 17.4, 19.6, 20.9, 22.3, 22.9, 23.2, 24.8], "2003 to 2019"),
+        ("Crappie", "Indian Crappie Survey up20", "trap nets", 0, [3.6, 7.6, 9.8, 10.9, 11.7, 11.2, 11.2, 12.7, 12.4], [3.8, 6.9, 8.6, 9.5, 10.1, 10.3, 10.5, 10.6, 10.4], "2008 to 2017"),
+        ("Largemouth bass", "Indian Largemouth Bass Survey up20", "electrofishing", 1, [5.8, 9.8, 11.4, 13.0, 14.4, 15.0, 14.4, 13.8, 16.7], [5.8, 8.8, 11.3, 12.9, 14.2, 15.2, 15.8, 16.6, 17.2, 18.3], "2005 to 2017"),
+    ],
+    "delaware": [
+        ("Crappie", "Delaware Crappie Survey up20", "trap nets", 0, [3.7, 7.6, 9.5, 10.4, 11.0, 10.9, 12.1], [3.8, 6.9, 8.6, 9.5, 10.1, 10.3, 10.5, 10.6, 10.4], "2009 to 2019"),
+        ("Largemouth bass", "Delaware Largemouth Bass Survey up20", "electrofishing", 1, [5.7, 8.8, 11.4, 13.6, 13.6, 15.8, 14.7, 17.5, 16.9, 18.1], [5.8, 8.8, 11.3, 12.9, 14.2, 15.2, 15.8, 16.6, 17.2, 18.3], "2010 to 2019"),
+    ],
 }
-CATFISH = {"hoover": ("Hoover Channel Catfish Survey up20", "2016"), "alum": ("Alum Creek Channel Catfish Survey up20", "2018")}
+CATFISH = {"hoover": ("Hoover Channel Catfish Survey up20", "2016"), "alum": ("Alum Creek Channel Catfish Survey up20", "2018"),
+           "indian": ("Indian Channel Catfish Survey up20", "2018"), "delaware": ("Delaware Channel Catfish Survey up20", "2017")}
 ANGLER = {
     "hoover": ("Hoover Angler Survey up20", "2016", "1,412", [
         ("Crappie", "29.4", "1.79"), ("Anything", "27.4", ""), ("Black bass", "19.2", "0.51"), ("Saugeye", "14.0", "0.15"),
@@ -77,6 +106,12 @@ ANGLER = {
     "alum": ("D1 Lakes Alum Creek Angler Survey up20", "2018", "1,276", [
         ("Anything", "35.4", ""), ("Black bass", "32.8", "0.98"), ("Saugeye", "11.2", "0.58"), ("Crappie", "10.4", "1.11"),
         ("Catfish", "6", "0.37"), ("Muskie", "3.8", "0"), ("White bass", "0.4", "3.5"), ("Sunfish", "0", "")]),
+    "indian": ("Indian Angler Survey up20", "2014", "1,289", [
+        ("Black bass", "29.4", "0.44"), ("Anything", "22.6", ""), ("Catfish", "21.8", "0.36"), ("Crappie", "16.1", "1.09"),
+        ("Saugeye", "6", "0.2"), ("Sunfish", "4.1", "1.68"), ("White bass", "0", "0")]),
+    "delaware": ("Delaware Angler Survey up20", "2016", "397", [
+        ("Black bass", "33.3", "0.66"), ("Anything", "29.0", ""), ("Crappie", "28.6", "1.50"), ("Catfish", "7.8", "0.60"),
+        ("Sunfish", "1.0", "1.55")]),
 }
 FORECAST = {
     "hoover": [
@@ -93,7 +128,24 @@ FORECAST = {
         "Recent crappie trap nets had the best catch rate of crappie over 11 inches in ten years.",
         "Muskie are stocked every year: usually best May to July in the lake and March to April in the spillway.",
     ],
+    "indian": [
+        "One of Ohio&rsquo;s best saugeye lakes by angler reports and gill nets: stocked fish survive well and grow fast in this shallow, productive lake.",
+        "Crappie have done very well, with many black and white crappie over nine inches and a real chance at 14 to 16 inch fish.",
+        "Largemouth bass do well in the shallow water and weeds; good numbers, though most are under 15 inches.",
+        "One of the best bluegill lakes in central Ohio, where fish over eight inches are caught consistently.",
+        "Flathead catfish have grown in number over the past decade, with fish of 20 to 30 pounds caught every year. White bass run up the South Fork of the Great Miami River near Moundwood in spring.",
+    ],
+    "delaware": [
+        "Best known for crappie: both black and white crappie reproduce well, and trap nets show many fish over nine inches.",
+        "Crappie catch rates are above average, and crappie tournament fish average about one pound.",
+        "Largemouth bass numbers have trended down over five years, but there are still good numbers, mostly 12 to 15 inches.",
+        "Channel catfish hoop nets caught three times the statewide average rate, the highest in central Ohio, though about three quarters were under 15 inches.",
+        "Bluegill and white bass can be caught in good numbers at different times of the year.",
+    ],
 }
+NAME = {"hoover": "Hoover", "alum": "Alum Creek", "indian": "Indian Lake", "delaware": "Delaware Lake"}
+DATA = ("hoover", "alum", "indian", "delaware")   # lakes with ODNR lake PDFs
+NONE = ("buckeye", "oshaughnessy", "griggs")      # lakes ODNR publishes no lake PDFs for
 NOTE = "Copied from the PDF; a dash means none listed."
 
 def details(summary, body, open_=False):
@@ -105,7 +157,7 @@ def table(cols, rows, num_from=1):
     th = "".join(f'<th scope="col"{NUMC if i >= num_from else ""}>{c}</th>' for i, c in enumerate(cols))
     trs = ""
     for r in rows:
-        tds = "".join((f'<th scope="row">{v}</th>' if i == 0 else f'<td class="num">{v if v != "" else "&ndash;"}</td>') for i, v in enumerate(r))
+        tds = "".join((f'<th scope="row">{v}</th>' if i == 0 else f'<td class="num">{v if v not in ("", None) else "&ndash;"}</td>') for i, v in enumerate(r))
         trs += f"                <tr>{tds}</tr>\n"
     return (f'            <div class="table-wrap data-table-wrap"><table class="data-table">\n'
             f'              <thead><tr>{th}</tr></thead>\n              <tbody>\n{trs}              </tbody>\n            </table></div>\n')
@@ -116,14 +168,14 @@ def years_text(rows):
 
 def lake_block(lake):
     out = []
-    name = {"hoover": "Hoover", "alum": "Alum Creek"}[lake]
     st = STOCK[lake]
     # glance
-    species = ", ".join(s[0].lower() if i else s[0] for i, s in enumerate(st))
+    species = ", ".join(s[0].lower() if i else s[0] for i, s in enumerate(st)) or "No table posted"
+    newest = "2019 stockings" if st else "None in the lake PDFs"
     out.append(f'''      <div class="card data-glance">
         <dl class="data-glance-list">
           <div><dt>Stocked</dt><dd>{species}</dd></div>
-          <div><dt>Newest public table</dt><dd>2019 stockings</dd></div>
+          <div><dt>Newest public table</dt><dd>{newest}</dd></div>
           <div><dt>Net surveys</dt><dd>{GROWTH[lake][0][6].split(" to ")[0]} to 2019</dd></div>
           <div><dt>Angler survey</dt><dd>{ANGLER[lake][1]}</dd></div>
         </dl>
@@ -132,6 +184,8 @@ def lake_block(lake):
     return "".join(out)
 
 def stocked(lake):
+    if not STOCK[lake]:
+        return (f'        <p class="data-none">ODNR&rsquo;s lake PDFs for {NAME[lake]} have no stocking table. Stocking records, if any, are in ODNR&rsquo;s <a href="{STOCK_DB}"{EXT}>Fish Stocking Database</a>. Nothing is filled in here.</p>\n')
     s = ""
     for sp, f, cols, rows in STOCK[lake]:
         body = table(("Year",) + cols, rows) + f'            <p class="meta">ODNR, <a href="{pdf(f)}"{EXT}>{sp} stocking table (PDF)</a>. {NOTE}</p>\n'
@@ -141,7 +195,7 @@ def stocked(lake):
 def growth(lake):
     s = ""
     for sp, f, gear, a0, here, state, yrs in GROWTH[lake]:
-        rows = [(f"{a0 + i}", f"{h:.1f}", f"{state[a0 + i - (0 if a0 == 0 else 1)]:.1f}" if (a0 + i - (0 if a0 == 0 else 1)) < len(state) else "") for i, h in enumerate(here)]
+        rows = [(f"{a0 + i}", f"{h:.1f}" if h is not None else "", f"{state[a0 + i - (0 if a0 == 0 else 1)]:.1f}" if (a0 + i - (0 if a0 == 0 else 1)) < len(state) else "") for i, h in enumerate(here)]
         i3 = 3 - a0
         lead = f'age 3: {here[i3]:.1f} in, Ohio {state[3 - (0 if a0 == 0 else 1)]:.1f}'
         body = (f'            <p>Average length in inches at each age, from ODNR {gear}. The PDF also charts catch rates by size for {yrs}.</p>\n'
@@ -152,7 +206,7 @@ def growth(lake):
     s += f'        <p class="meta">Channel catfish: ODNR hoop net results from {cy} are charted in the <a href="{pdf(cf)}"{EXT}>channel catfish survey (PDF)</a>. The growth table there doesn&rsquo;t line up cleanly with its ages, so it isn&rsquo;t copied here.</p>\n'
     return s
 
-def name_of(lake): return {"hoover": "Hoover", "alum": "Alum Creek"}[lake]
+def name_of(lake): return NAME[lake]
 
 def anglers(lake):
     f, yr, total, rows = ANGLER[lake]
@@ -173,13 +227,15 @@ def habitat(lake):
             f'        <p class="meta">Both are ODNR&rsquo;s. ODNR notes its depth map is not for navigation. The interactive map is large and works best on a good signal.</p>\n')
 
 secs = []
-def section(id_, title, per_lake, extra_buckeye):
-    df = "" if extra_buckeye else ' data-for="hoover alum"'
+def section(id_, title, per_lake, extra=None):
+    # extra(lake) fills the same section for the NONE lakes; without it the section shows for DATA lakes only
+    df = "" if extra else f' data-for="{" ".join(DATA)}"'
     s = f'    <section id="{id_}"{df} aria-labelledby="{id_}-title">\n      <h2 id="{id_}-title">{title}</h2>\n'
-    for lake in ("hoover", "alum"):
+    for lake in DATA:
         s += f'      <div data-for="{lake}">\n{per_lake(lake)}      </div>\n'
-    if extra_buckeye:
-        s += f'      <div data-for="buckeye">\n{extra_buckeye}      </div>\n'
+    if extra:
+        for lake in NONE:
+            s += f'      <div data-for="{lake}">\n{extra(lake)}      </div>\n'
     return s + "    </section>\n"
 
 # BUCK_NONE unused since Buckeye sections are hidden
@@ -188,25 +244,43 @@ main = f'''  <main id="main">
     <div class="page-horizon" aria-hidden="true"></div>
     <p class="breadcrumb"><a href="water">Water</a> &middot; Stocking &amp; surveys</p>
     <h1>Stocking &amp; surveys</h1>
-    <p class="lead" data-for="hoover alum">
+    <p class="lead" data-for="{" ".join(DATA)}">
       What ODNR has published for <span data-lk="name">Hoover Reservoir</span>: fish stocked, how fast they grow, what anglers catch, and ODNR&rsquo;s habitat map.
       Official numbers only, each with its source.
     </p>
-    <p class="lead" data-for="buckeye">
-      What ODNR has published for Buckeye Lake, and what it hasn&rsquo;t. Official facts only, each with its source.
+    <p class="lead" data-for="{" ".join(NONE)}">
+      What ODNR has published for <span data-lk="name">Hoover Reservoir</span>, and what it hasn&rsquo;t. Official facts only, each with its source.
     </p>
-    <nav class="data-jumps" data-for="hoover alum" aria-label="On this page">
+    <nav class="data-jumps" data-for="{" ".join(DATA)}" aria-label="On this page">
       <a href="#stocked">Stocked</a><a href="#growth">Growth</a><a href="#anglers">Anglers</a><a href="#habitat">Map</a>
     </nav>
     <div data-for="hoover">
 {lake_block("hoover")}    </div>
     <div data-for="alum">
 {lake_block("alum")}    </div>
+    <div data-for="indian">
+{lake_block("indian")}    </div>
+    <div data-for="delaware">
+{lake_block("delaware")}    </div>
     <div data-for="buckeye">
       <div class="card data-glance">
         <p class="data-none">ODNR&rsquo;s Buckeye Lake fishing area page has no stocking tables, net surveys, angler survey or fishing forecast. This page says so rather than guess.</p>
         <p class="meta">What ODNR does say: Buckeye Lake was built about 1830. It averages about 6 ft deep with a maximum of about 14 ft, and has a relatively flat bottom without much underwater woody cover. No horsepower limit.
         Source: <a href="{AREA["buckeye"][1]}"{EXT}>{AREA["buckeye"][0]}</a>.</p>
+      </div>
+    </div>
+    <div data-for="oshaughnessy">
+      <div class="card data-glance">
+        <p class="data-none">ODNR&rsquo;s O&rsquo;Shaughnessy Reservoir fishing area page has no stocking tables, net surveys, angler survey or fishing forecast. This page says so rather than guess.</p>
+        <p class="meta">What ODNR does say: the City of Columbus built the reservoir in 1925 on the Scioto River. It is 912 acres with 18.4 miles of shoreline, over 40 ft deep near the dam though much of it is 20 ft or less, with rock bottom in the south and mud and silt in the north.
+        Source: <a href="{AREA["oshaughnessy"][1]}"{EXT}>{AREA["oshaughnessy"][0]}</a>. ODNR&rsquo;s <a href="https://ohiodnr.gov/discover-and-learn/education-training/wild-ohio-harvest-community/fishing-tips"{EXT}>Hybrid Striped Bass Fishing Tips</a> list O&rsquo;Shaughnessy among the lakes the Division of Wildlife stocks with hybrid striped bass; the numbers aren&rsquo;t posted there.</p>
+      </div>
+    </div>
+    <div data-for="griggs">
+      <div class="card data-glance">
+        <p class="data-none">ODNR&rsquo;s Griggs Reservoir fishing area page has no stocking tables, net surveys, angler survey or fishing forecast. This page says so rather than guess.</p>
+        <p class="meta">What ODNR does say: the dam was built on the Scioto River in 1904, making a narrow lake about six miles long with 387 surface acres. Depths can pass 20 ft near the dam, but most of the lake is 10 to 15 ft. It is generally clear but turns muddy after heavy rain.
+        Source: <a href="{AREA["griggs"][1]}"{EXT}>{AREA["griggs"][0]}</a>. ODNR&rsquo;s <a href="https://ohiodnr.gov/discover-and-learn/education-training/wild-ohio-harvest-community/fishing-tips"{EXT}>Hybrid Striped Bass Fishing Tips</a> list Griggs among the lakes stocked with hybrid striped bass, and ODNR&rsquo;s <a href="https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/central-ohio-is-a-fishing-destination-for-crappie-bass-and-catfish"{EXT}>June 12, 2026 news release</a> says Griggs has a strong population of large hybrids, often over 20 inches. No numbers are posted.</p>
       </div>
     </div>
     <p class="meta data-dates">ODNR&rsquo;s lake PDFs run through 2019. Newer stocking is in ODNR&rsquo;s <a href="{STOCK_DB}"{EXT}>Fish Stocking Database</a> on DataOhio, which asked for a sign in, so it isn&rsquo;t copied here. Checked Oct. 27, 2026.</p>
@@ -215,7 +289,7 @@ main += section("stocked", "Fish stocked", stocked, "")
 main += section("growth", "Net surveys: growth", growth, "")
 main += section("anglers", "Angler survey", anglers, "")
 main += section("forecast", "ODNR&rsquo;s fishing forecast", forecast, "")
-main += section("habitat", "Habitat map", habitat, habitat("buckeye"))
+main += section("habitat", "Habitat map", habitat, habitat)
 main += '''
     <div class="callout">
       The Night Bite is unofficial and personal: <strong>not ODNR</strong>. Numbers here are copied from ODNR&rsquo;s public pages and PDFs and dated; check the source before you rely on one.

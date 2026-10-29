@@ -9,6 +9,7 @@ LINES = {
     "saugeye": [
         ("hoover", "stocked", "ODNR stocked saugeye in Hoover every year from 2010 to 2019."),
         ("alum", "stocked", "ODNR stocked saugeye in Alum Creek every year from 2010 to 2019."),
+        ("indian", "stocked", "ODNR stocked saugeye in Indian Lake every year from 2010 to 2019."),
     ],
     "blue-catfish": [
         ("hoover", "stocked", "ODNR stocked blue catfish in Hoover in 7 of the years from 2011 to 2018."),
@@ -22,14 +23,24 @@ LINES = {
     "black-crappie": [
         ("hoover", "growth", "ODNR trap nets: Hoover crappie average 9.9 in at age 3 (Ohio 9.5)."),
         ("alum", "growth", "ODNR trap nets: Alum Creek crappie average 10.8 in at age 3 (Ohio 9.5)."),
+        ("indian", "growth", "ODNR trap nets: Indian Lake crappie average 10.9 in at age 3 (Ohio 9.5)."),
+        ("delaware", "growth", "ODNR trap nets: Delaware Lake crappie average 10.4 in at age 3 (Ohio 9.5)."),
     ],
     "largemouth-bass": [
         ("hoover", "growth", "ODNR electrofishing: Hoover largemouth average 12.4 in at age 3 (Ohio 11.3)."),
         ("alum", "growth", "ODNR electrofishing: Alum Creek largemouth average 13.3 in at age 3 (Ohio 11.3)."),
+        ("indian", "growth", "ODNR electrofishing: Indian Lake largemouth average 11.4 in at age 3 (Ohio 11.3)."),
+        ("delaware", "growth", "ODNR electrofishing: Delaware Lake largemouth average 11.4 in at age 3 (Ohio 11.3)."),
     ],
     "channel-catfish": [
         ("hoover", "growth", "ODNR hoop nets compare Hoover channel catfish catch rates with district and state averages."),
         ("alum", "growth", "ODNR hoop nets compare Alum Creek channel catfish catch rates with district and state averages."),
+        ("indian", "growth", "ODNR hoop nets compare Indian Lake channel catfish catch rates with district and state averages."),
+        ("delaware", "growth", "ODNR hoop nets compare Delaware Lake channel catfish catch rates with district and state averages."),
+    ],
+    "hybrid-striped-bass": [
+        ("oshaughnessy", "stocked", "ODNR lists O’Shaughnessy among the lakes it stocks with hybrid striped bass; no numbers are posted."),
+        ("griggs", "stocked", "ODNR lists Griggs among the lakes it stocks with hybrid striped bass; no numbers are posted."),
     ],
 }
 LINES["white-crappie"] = LINES["black-crappie"]

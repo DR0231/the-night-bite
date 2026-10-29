@@ -84,7 +84,7 @@ Hoover stays the default. The active lake comes from `?lake=hoover|alum|buckeye`
 | Alerts | Delaware County: OHC041, OHZ046 | Licking, Fairfield, Perry: OHC089, OHC045, OHC127, OHZ056, OHZ065, OHZ066 |
 | Wind wording | Same north to south wording as Hoover (the lake also runs north to south) | Own list: the lake runs west southwest to east northeast |
 | Boating rules shown | Unlimited horsepower on the south main lake, no wake north of Cheshire Road (USACE Alum Creek recreation page; follow the buoys) | No wake within 300 ft of any land mass and in marked areas (ODNR fishing map) |
-| Species shown | saugeye, walleye, muskellunge, largemouth and smallmouth bass, white and black crappie, white bass, bluegill, channel catfish (ODNR Alum Creek Lake Fishing Area, https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-lake-fishing-area) | saugeye, largemouth bass, white and black crappie, bluegill, yellow perch, channel catfish, bullhead (ODNR Buckeye Lake State Park, https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park) |
+| Species shown | saugeye, walleye, muskellunge, largemouth and smallmouth bass, white and black crappie, white bass, bluegill, channel catfish (ODNR Alum Creek Lake Fishing Area, https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-lake-fishing-area); yellow perch (ODNR Waterbody Report survey data); blue catfish (ODNR Fish Stocking, 2023 to 2025) | saugeye, largemouth bass, white and black crappie, bluegill, yellow perch, channel catfish, bullhead (ODNR Buckeye Lake State Park, https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park); hybrid striped bass and white bass (ODNR Waterbody Report survey data; hybrids also ODNR Fish Stocking and ODNR Fishing Tips) |
 
 Regulations (2026–27): ODNR Fishing Regulations 2026–27 (https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf) and the Ohio Administrative Code. Alum Creek Lake and Buckeye Lake appear only in the crappie rules: 30 crappie a day, OAC 1501:31-13-08(L), and a 9″ minimum, OAC 1501:31-13-09(H) (https://codes.ohio.gov/ohio-administrative-code/rule-1501:31-13-08 and rule-1501:31-13-09). Everything else is statewide: muskellunge 1 a day (13-08(B)), no muskie length rule in 13-09; yellow perch 30 a day (13-08(H)); bass 5 a day, 12″; walleye, sauger and saugeye 6 combined, no minimum at either lake; bullhead not on the limits table.
 
@@ -114,17 +114,83 @@ Gaps (said on the site, never filled in):
 - No community trips logged at either lake yet; the sample trip is Hoover's.
 - Structure notes for these lakes are reference notes, not first-hand nights.
 
+## Lakes: O'Shaughnessy Reservoir, Griggs Reservoir, Indian Lake and Delaware Lake, checked Oct. 29, 2026
+
+Same system as Alum Creek and Buckeye Lake: `?lake=oshaughnessy|griggs|indian|delaware`, home pages at `/oshaughnessy/`, `/griggs/`, `/indian/`, `/delaware/` (built by `tools/build-lake-pages.py`), per lake settings in `js/lakes.js`, storage keys with the lake's own suffix. USGS site IDs and parameters were checked against the USGS Water Data API on Oct. 29, 2026.
+
+| Setting | O'Shaughnessy Reservoir | Griggs Reservoir | Indian Lake | Delaware Lake |
+|---|---|---|---|---|
+| Owner (boating rules) | City of Columbus | City of Columbus | ODNR (state park lake) | US Army Corps of Engineers; ODNR runs the state park |
+| Lake level | USGS 03220500, Scioto River at O'Shaughnessy Dam near Dublin, param 62614 (provisional). https://waterdata.usgs.gov/monitoring-location/USGS-03220500/ | USGS 03221500, Scioto River at Griggs Dam, param 62614 (provisional). https://waterdata.usgs.gov/monitoring-location/USGS-03221500/ | USGS 03260500, Indian Lake at Russells Point, param 62614 (provisional). https://waterdata.usgs.gov/monitoring-location/USGS-03260500/ | USACE Huntington District (LRH), CWMS time series `Delaware-Lake.Elev.Inst.15Minutes.0.OBS`, https://cwms-data.usace.army.mil/cwms-data/timeseries . Page: https://water.usace.army.mil/overview/lrh/locations/delaware |
+| Water temp | None. The City of Columbus FAQ says "Reservoir temperatures are not monitored", and the USGS site has no temp. | USGS 03221500 param 00010 | USGS 03260500 param 00010 | None. No public lake temp gauge. |
+| Full pool used | 848.5 ft, City of Columbus dam crest (ODNR map depths use 847.9 ft) | 756.18 ft, City of Columbus dam crest (ODNR map depths use 757 ft) | 996.3 ft, ODNR fishing map | 915 ft, ODNR fishing map |
+| Map pool (contour datum) | 847.9 ft, 10 ft contours, surveyed 2003, 896 acres: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/oshaughnessyreservoir2.pdf | 757 ft, 3 ft contours, surveyed 2006, 387 acres: .../wildlife/maps/griggsreservoir2.pdf | 996.3 ft, 2 ft contours, surveyed 1999, 5,157 acres, 300 ft no wake zone: .../wildlife/maps/indianlake2.pdf | 915 ft, 3 ft contours, surveyed 1999, 1,215 acres: .../wildlife/maps/delawarelake2.pdf |
+| Tonight forecast | NWS grid ILN 79,92 | NWS grid ILN 81,84 | NWS grid ILN 52,103 | NWS grid ILN 81,100 |
+| Barometer / observations | KDLZ, Delaware airport | KOSU, Ohio State airport | KEDJ, Bellefontaine airport | KDLZ, Delaware airport |
+| Alerts | OHC041, OHZ046 | OHC049, OHZ055 | OHC091, OHZ044 | OHC041, OHZ046 |
+| Wind wording | Hoover's north to south list | Hoover's north to south list | Own list (a round lake: "into the south shore" and so on) | Hoover's north to south list |
+| Boating rules shown | Columbus Recreation and Parks: unlimited horsepower, 40 mph limit; no jet skis, tubing or swimming in any City reservoir | Same as O'Shaughnessy | ODNR Indian Lake pages: no horsepower limit; 300 ft no wake zone from the ODNR map | ODNR Delaware Lake Fishing Area and Delaware State Park pages: unlimited horsepower |
+| Species shown | hybrid striped bass, saugeye, blue catfish, black and white crappie, bluegill, channel catfish, largemouth and smallmouth bass, white bass (ODNR Waterbody Report survey data; hybrids, saugeye and blue catfish also ODNR Fish Stocking) | hybrid striped bass, saugeye, black and white crappie, bluegill, channel catfish, largemouth and smallmouth bass, white bass (ODNR Waterbody Report survey data; hybrids also ODNR Fishing Tips and the 2026 central Ohio forecast) | saugeye, black and white crappie, largemouth bass, bluegill, channel and flathead catfish, white bass, walleye, yellow perch (ODNR Indian Lake Fishing Area); smallmouth bass (ODNR Waterbody Report survey data) | black and white crappie, largemouth and smallmouth bass, channel catfish, bluegill, white bass (ODNR Delaware Lake Fishing Area) |
+
+Regulations (2026–27, ODNR Fishing Regulations PDF above): the 30 crappie, 9″ minimum site rule lists Delaware, Indian and O'Shaughnessy, not Griggs, so Griggs crappie follow the statewide pattern (no daily limit, no minimum). Hybrid, striped and white bass are statewide: 30 combined, no more than 4 over 15″. Walleye, sauger and saugeye: 6 combined, no minimum at any of the four.
+
+Hybrid stocking at O'Shaughnessy and Griggs: ODNR Fishing Tips, Hybrid Striped Bass (https://ohiodnr.gov/discover-and-learn/education-training/wild-ohio-harvest-community/fishing-tips): "the Division stocks hybrids in Buckeye, Charles Mill, Dillon, East Fork, Griggs, Kiser and O'Shaughnessy". The site does not list hybrids at Buckeye Lake (pre-existing; see open questions in the build notes).
+
+Map pins (`js/lake-map-data-oshaughnessy.js`, `-griggs.js`, `-indian.js`, `-delaware.js`; shorelines traced from OpenStreetMap, not for navigation; "approximate position" means no surveyed point was found):
+
+| Lake | Pin | Address | Sources |
+|---|---|---|---|
+| O'Shaughnessy | Home Road ramp and marina (ramp) | SR 257 (Riverside Dr) at Home Rd, east side | City of Columbus Recreation and Parks, O'Shaughnessy Reservoir page and reservoir map (launch ramp at map point M, public boat docks, hours 7 a.m. to 11 p.m.) ; ODNR O'Shaughnessy Reservoir Fishing Area page (access along SR 257 at Home Road) ; OpenStreetMap roads (Home Rd and SR 257, approximate position) |
+| O'Shaughnessy | Twin Lakes launch (access) | SR 257, east side, south of Clark Shaw Rd | ODNR O'Shaughnessy Reservoir Fishing Area page (parking lots and boat ramps in the Twin Lakes area) ; City of Columbus Recreation and Parks, O'Shaughnessy Reservoir page reservoir map (canoe and kayak launch, map point O) ; OpenStreetMap roads (approximate position) |
+| O'Shaughnessy | Bellepoint ramp (ramp) | Bellepoint, north end of the reservoir | ODNR O'Shaughnessy Reservoir Fishing Area page (access in Bellepoint; mud and silt bottom in the north) ; City of Columbus Recreation and Parks, O'Shaughnessy Reservoir page reservoir map (launch ramp, map point Q) ; OpenStreetMap slipway way 1531505383 (coordinates) |
+| Griggs | Griggs boat launch (south of Fishinger Rd) (ramp) | Griggs Park, Riverside Dr (US 33), east side, just south of Fishinger Rd | City of Columbus Recreation and Parks, Griggs Park page (boat launch, park hours 7 a.m. to 11 p.m., Trabue-Murphy ramp closed since July 2025) ; ODNR Griggs Reservoir Fishing Area page (park along the east side, boat launch) ; OpenStreetMap slipway node 332451317 (coordinates) |
+| Griggs | Griggs marina and public boat docks (access) | Griggs Park, 2933 Riverside Dr, Columbus, OH 43221 | City of Columbus Recreation and Parks, Griggs Park page (address, public boat docks) ; City of Columbus Recreation and Parks, Marinas and Docks page (dock permits, (614) 645-3337) ; ODNR Griggs Reservoir Fishing Area page (depths over 20 ft near the dam) ; OpenStreetMap marina way 30170471 (coordinates) |
+| Indian Lake | Moundwood Marina ramp (ramp) | South side of Indian Lake | ODNR Indian Lake State Park page (six lane ramp, courtesy docks, trailer parking, seasonal restroom, accessible kayak launch) ; ODNR Indian Lake Fishing Area page (white bass spawning run near the Moundwood access) ; OpenStreetMap slipway node 9170237619 (coordinates) |
+| Indian Lake | Lakeview Harbor ramp (ramp) | Southwest side of Indian Lake | ODNR Indian Lake State Park page (two lane ramp, 24 transient and courtesy docks, trailer parking, seasonal restroom) ; OpenStreetMap slipway node 9170237618 (coordinates) |
+| Indian Lake | Blackhawk Marina ramp (ramp) | West side of Indian Lake | ODNR Indian Lake State Park page (two lane ramp, seawall tie ups, trailer parking, seasonal restroom) ; OpenStreetMap node 6308630798 (coordinates) |
+| Indian Lake | Chippewa Marina ramp (ramp) | North side of Indian Lake | ODNR Indian Lake State Park page (two lane ramp, trailer parking, seasonal restroom) ; OpenStreetMap node 6308624834 (coordinates) |
+| Indian Lake | Cranetown Island ramp (ramp) | On the islands near the Pew Island walking trail | ODNR Indian Lake State Park page (one lane ramp, 4 courtesy docks, 6 trailer spaces) ; ODNR Indian Lake fishing map (ramp symbol, approximate position) |
+| Indian Lake | Old Field Beach fishing jetties (access) | 11252 State Route 235 N, Lakeview, OH 43331 | ODNR Indian Lake State Park page (large fishing jetties at the main beach, Old Field Beach address, park hours 6 a.m. to 11 p.m.) ; US Census Geocoder (11252 State Route 235 N, directions point) ; OpenStreetMap beach way 392165350 (coordinates) |
+| Delaware Lake | Main marina ramp (ramp) | Delaware State Park, 5202 US Highway 23 N, Delaware, OH 43015 | ODNR Delaware State Park page (marina, phones, life jacket loaners, boat camping, park hours sunrise to sunset, park address) ; USACE Delaware Lake page (launch ramps at Delaware Marina) ; OpenStreetMap slipway way 1562271171 (coordinates) |
+| Delaware Lake | Sherwood Road ramp (east side) (ramp) | Sherwood Rd, east side of the lake | ODNR Delaware State Park page (three boat ramps around the lake) ; ODNR Delaware Lake fishing map (ramp symbol) ; OpenStreetMap way 1562271169, Sherwood Road Boat Ramp (coordinates) |
+| Delaware Lake | Southwest launch area (ramp) | Southwest side, inside Delaware State Park | ODNR Delaware State Park page (accessible kayak and canoe launch at the Southwest launch area, life jacket loaners at the Southwest docks) ; ODNR Delaware Lake fishing map (ramp symbol), moved to the nearest OpenStreetMap shoreline point (approximate position) |
+
+No bait shop pins for these four yet: no official source was used for shops.
+
+Stocking & surveys (stocking.html): Indian Lake and Delaware Lake use the same ODNR District lake PDFs as Hoover and Alum Creek (Indian saugeye stocking; Indian saugeye, crappie and largemouth bass growth; Delaware crappie and largemouth bass growth; channel catfish surveys linked; Indian 2014 and Delaware 2016 angler surveys). ODNR posts no stocking table for Delaware Lake, and no lake PDFs for O'Shaughnessy or Griggs; those blocks say so and link the ODNR fishing area page and the hybrid stocking line above.
+
+Dock season (data/docks.json): City of Columbus Marinas and Docks (O'Shaughnessy and Griggs marina docks May 1 to Oct. 31, 614-645-3337), Facility Alerts (Trabue-Murphy ramp at Griggs closed), Griggs Park and O'Shaughnessy Reservoir park pages; ODNR Indian Lake State Park (office 937-843-2717) and Delaware State Park (office 740-363-4561) pages; ODNR Winter Drawdowns (Delaware 5 ft, Oct. 1 to Nov. 1, 2025, refill Mar. 1 to Apr. 1, 2026, start postponed by the Corps to after Dec. 1, 2025 for drought; no Indian Lake row). All are in the `watch` list for `tools/check-docks.py`.
+
+Gaps (said on the site, never filled in):
+- No public water temperature at O'Shaughnessy or Delaware Lake.
+- Delaware Lake's level is the Corps of Engineers reading, not USGS; values are provisional.
+- ODNR posts no written fishing forecast for O'Shaughnessy or Griggs. Their species lists come from ODNR Waterbody Report survey data and ODNR stocking records, with no size or catch notes.
+- No 2026 dock pull or drawdown dates posted for these four on Oct. 29, 2026.
+- No community trips logged at these lakes yet.
+
 ## Lake-aware Species (js/species-lake.js)
 
-No new data. Which species live at each lake: `data-lakes` on each card (same lists as `js/lakes.js`). Biting now:
-the current month's picks from `js/biting-data.js` / `js/biting-data-lakes.js`. Ramps and access: the lake's map data
-places of type ramp or access, shown with their own source labels.
+Which species live at each lake: the `species` list for each lake in `js/lakes.js` (the script also rewrites
+`data-lakes` on each card from it, and the HTML carries the same lists for the no JS view). Order on the page: this
+month's Biting now picks first (from `js/biting-data.js` / `js/biting-data-lakes.js`), then every other species on the
+lake's list, then a closed "Not at <lake>" dropdown with species that no ODNR record lists at that lake. Ramps and
+access: the lake's map data places of type ramp or access, shown with their own source labels.
+
+Species lists, checked Oct. 29, 2026 (a species is listed at a lake only when an official ODNR source shows it there):
+- ODNR fishing area and state park pages (linked in the lake tables above).
+- ODNR Waterbody Report (fish survey data, 2011 to 2026), filter Location Name: https://analytics.das.ohio.gov/t/DOPPUB/views/WaterbodyReport/WaterbodyReport
+- ODNR Fish Stocking: https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking
+- ODNR Fishing Tips (hybrid striped bass stocked in Buckeye Lake, Griggs and O'Shaughnessy, among others).
+Added Oct. 29, 2026 from these: yellow perch at Hoover and Alum Creek; blue catfish at Alum Creek (stocked 2023 to 2025)
+and O'Shaughnessy (stocked 2022, 2023, 2025); hybrid striped bass and white bass at Buckeye Lake; saugeye, crappie,
+bluegill, channel catfish, largemouth and smallmouth bass and white bass at O'Shaughnessy and Griggs; smallmouth bass at
+Indian Lake. Delaware Lake unchanged (ODNR stocked saugeye there only through 2009, and no survey since 2011 records them).
 
 ## Share card (js/tonight-tools.js)
 
 No new data. The card copies the Right now strip (USGS or USACE gauge with its "Checked" time; bite rule of thumb
 from the NWS forecast with its "Checked" time) and prints "--" for anything missing. Static per-lake OG images
-(`assets/og/og-alum.png`, `og-buckeye.png`) are the site art with the lake's name, no live data.
+(`assets/og/og-<lake>.png` for every lake but Hoover) are the site art with the lake's name, no live data.
 
 ## Dock season (water.html#docks), checked Oct. 28, 2026
 

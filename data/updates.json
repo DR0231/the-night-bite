@@ -2,6 +2,33 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-10-29-four-lakes",
+      "date": "2026-10-29",
+      "tag": "New",
+      "title": "O’Shaughnessy, Griggs, Indian Lake and Delaware Lake",
+      "bullets": [
+        "Pick O’Shaughnessy Reservoir, Griggs Reservoir, Indian Lake or Delaware Lake with the lake picker. Each has its own home page.",
+        "Each lake has its own map and ramps, lake level gauge (USGS, or the US Army Corps of Engineers at Delaware Lake), lake rules, species notes and dock season.",
+        "Stocking & surveys adds ODNR stocking and survey data where ODNR posts it, and says so where it doesn’t.",
+        "The trip report form now lists all seven lakes.",
+        "Species now puts Biting now first, lists every other fish ODNR records at the lake below it, and folds the rest into a closed Not recorded at dropdown."
+      ],
+      "links": [
+        {
+          "label": "Water",
+          "href": "water"
+        },
+        {
+          "label": "Stocking & surveys",
+          "href": "stocking"
+        },
+        {
+          "label": "Species",
+          "href": "species/"
+        }
+      ]
+    },
+    {
       "id": "2026-10-29-dock-season",
       "date": "2026-10-29",
       "tag": "New",

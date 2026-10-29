@@ -63,7 +63,7 @@
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   // "What's biting now" data is not on the home page, so load the lake's file (already in the offline cache) on demand
   function bitingData() {
-    var key = LK.id === "alum" ? "NightBiteBitingAlum" : LK.id === "buckeye" ? "NightBiteBitingBuckeye" : "NightBiteBiting";
+    var key = window.NightBiteLakes ? window.NightBiteLakes.bitingVar(LK.id) : "NightBiteBiting";
     if (window[key]) return Promise.resolve(window[key]);
     return new Promise(function (ok) {
       var sc = document.createElement("script");

@@ -1,5 +1,5 @@
 name: Tournament listing
-description: Submit a third-party tournament at Hoover, Alum Creek or Buckeye Lake for the static list.
+description: Submit a third-party tournament at Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake or Delaware Lake for the static list.
 title: "Tournament: "
 labels: ["tournament"]
 body:
@@ -22,6 +22,10 @@ body:
         - Hoover
         - Alum Creek
         - Buckeye Lake
+        - O'Shaughnessy
+        - Griggs
+        - Indian Lake
+        - Delaware Lake
     validations:
       required: true
   - type: input

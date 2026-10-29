@@ -20,7 +20,7 @@
       "View Dock Availability (set date in drop down to see live availability) ."
     ],
     "url": "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/",
-    "seen": "2026-10-28"
+    "seen": "2026-10-29"
   },
   "recparks-alerts": {
     "hash": "bdd74bcd8fea1137",
@@ -28,7 +28,7 @@
       "The Trabue-Murphy boat ramp is closed until further notice due to uneven subsurface conditions that could cause damage to boats."
     ],
     "url": "https://columbusrecparks.com/facilities/alerts/",
-    "seen": "2026-10-28"
+    "seen": "2026-10-29"
   },
   "recparks-hoover": {
     "hash": "f19cfaf4dcf2e33c",
@@ -37,17 +37,18 @@
       "Motors in excess of 10 horsepower may remain in a non-tilt position provided the prop is removed prior to launch and remains so while on the waterway."
     ],
     "url": "https://columbusrecparks.com/parks/hoover-reservoir-parkland/",
-    "seen": "2026-10-28"
+    "seen": "2026-10-29"
   },
   "odnr-drawdowns": {
-    "hash": "06c82d9d1dfab34d",
+    "hash": "2835c910a63a65c9",
     "snippets": [
       "Alum Creek | 3' | 0' | 10/01/25 - 11/01/25 | 03/15/26 - 04/15/26 | Flood Control",
       "Buckeye Lake | 3' | 0' | 11/15/25 - 12/15/25 | 03/01/26 - 05/01/26 | Dock Maintenance, Seawall Repair, Shoreline Maintenance",
+      "Delaware | 5' | 0' | 10/01/25 - 11/01/25 | 03/01/26 - 04/01/26 | Flood Control",
       "The USACE is postponing the start date of the drawdown at Delaware, Dillon, Paint Creek state parks due to drought conditions."
     ],
     "url": "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns",
-    "seen": "2026-10-28"
+    "seen": "2026-10-29"
   },
   "odnr-alum": {
     "hash": "b1e114531fd24868",
@@ -65,7 +66,7 @@
       "To see what this journey was like, you can walk the Heritage of Freedom Trail near the New Galena boat ramp."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park",
-    "seen": "2026-10-28"
+    "seen": "2026-10-29"
   },
   "odnr-buckeye": {
     "hash": "cb21a50511432413",
@@ -85,7 +86,7 @@
       "You may enter the path at either the North Shore boat ramp or Lieb's Island."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park",
-    "seen": "2026-10-28"
+    "seen": "2026-10-29"
   },
   "alum-marina": {
     "hash": "ce6577e26bf36940",
@@ -102,6 +103,68 @@
       "You have 24 hours from the booking date to cancel, or a $50 cancellation fee will be charged."
     ],
     "url": "https://www.alumcreekmarina.net/docking.html",
-    "seen": "2026-10-28"
+    "seen": "2026-10-29"
+  },
+  "recparks-oshaughnessy": {
+    "hash": "f9073db80a45ff5a",
+    "snippets": [
+      "Maximum Horsepower: Unlimited horsepower",
+      "Prohibited: Jet skis, tubing and swimming are not permitted in any City of Columbus reservoir."
+    ],
+    "url": "https://columbusrecparks.com/parks/oshaughnessy-reservoir/",
+    "seen": "2026-10-29"
+  },
+  "recparks-griggs": {
+    "hash": "8468a82a97b272d6",
+    "snippets": [
+      "Maximum Horsepower: Unlimited horsepower",
+      "Prohibited: Jet skis, tubing and swimming are not permitted in any City of Columbus reservoir.",
+      "The Trabue-Murphy boat ramp is closed until further notice due to uneven subsurface conditions that could cause damage to boats."
+    ],
+    "url": "https://columbusrecparks.com/parks/griggs-park/",
+    "seen": "2026-10-29"
+  },
+  "odnr-indian": {
+    "hash": "477b0d7b45c2dfbf",
+    "snippets": [
+      "An accessible kayak launch is located at Moundwood.",
+      "Beach, swimming pool, boat ramp, and boat docks are provided for exclusive use of registered campers.",
+      "Black Hawk Shelter — Partially enclosed 25' x 30' shelter on a paved site is ADA accessible with 2 electric outlets (110-amp), small grill, 8-10 picnic tables, parking for up to 30 vehicles, close to restrooms and lake, adjacent picnic area has grills and lots of shade",
+      "Blackhawk Marina – two-lane launch ramp and 206 state-owned docks for seasonal rental, 10 tie-ups available for transient/4-hour courtesy along the seawall at Blackhawk, trailer parking available, seasonal restroom, and playground available are located on the west side of Indian Lake.",
+      "Boating facilities include five launch ramps and 500 boat seasonal docks for rent.",
+      "Chippewa Marina – two lane launch ramp and 162 state-owned docks for seasonal rental, trailer parking available, restroom available seasonally, playground available that includes cornhole game and a sand volleyball court, located on the north side of Indian Lake",
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --",
+      "Course is open dawn to dusk anytime Old Field Island is open. (Closed for hunting sunrise to 10 am in early September and for special activities).",
+      "Cranetown Island – one lane 10-foot-wide launch ramp and 4 transient/4-hour courtesy docks available, 6 trailer parking spaces available, located on the Islands near Pew Island walking trail",
+      "Lakeview Harbor – two-lane launch ramp and 24 transient/4-hour courtesy docks are located next to the ramp, trailer parking available, swingset, and a seasonal restroom located on the southwest side of Indian Lake.The Indian Lake Bike Trail runs 3.5 miles along the west and south bank goes through Lakeview Harbor.",
+      "Moundwood Marina – six lane launch ramp and 154 state-owned docks for seasonal rental, 6 transient/4 hour courtesy docks are located next to the ramp, trailer parking available, restroom available seasonally, playground available, located on the south side of Indian Lake",
+      "Moundwood Shelter — Open 35' x 45' shelter with 6 electric outlets (110 amp), 6 picnic tables, <100 yards to flush toilets, playground nearby, access to fishing, located in the Moundwood channel, near kayak launch",
+      "Oldfield North Shelter — Partially enclosed 25' x 30' shelter on a paved pad is ADA accessible with 2 electric outlets (110 amp) located at the main beach, small group grill, 6-8 picnic tables, parking for 20+ vehicles, close to restrooms, bike trail, and large fishing jetty",
+      "Oldfield South Shelter — Partially enclosed 25' x 30' shelter on a paved pad is ADA accessible with 2 electric outlets (110 amp) located at the main beach, small group grill, 6-8 picnic tables, parking for 20+ vehicles, close to restrooms, volleyball court, bike trail, and large fishing jetty",
+      "The archery range is located near the recycling station at the Moundwood Boat ramp."
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park",
+    "seen": "2026-10-29"
+  },
+  "odnr-delaware": {
+    "hash": "a3900aaef9c1395a",
+    "snippets": [
+      "A fully-equipped marina is open seasonally and offers daily boat rentals, overnight dock rentals, fuel, fishing, and boating supplies. (614) 390-7105 in season; Oct-Apr contact the camp office, at (740) 363-4561.",
+      "A small pond near the marina offers fishing specifically for children 15 years old and younger.",
+      "An accessible kayak-canoe launch is available at Southwest launch area.",
+      "Boat camping is permitted at the main marina.",
+      "Boaters will find all they need for a great day on the lake including a marina, boat launch ramps for both power and paddle craft, and seasonal docks.",
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --",
+      "Dock rentals are offered seasonally.",
+      "Life jacket loaner boards are available at the main marina and Southwest docks.",
+      "NOTICE (9/22/26): Area C of the campground (sites 101-157) will be closed beginning October 4, 2026, for a construction project.",
+      "Three boat ramps are conveniently located around the lake."
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park",
+    "seen": "2026-10-29"
   }
 }

@@ -1,6 +1,6 @@
 {
   "_readme": "Dock season status for water.html#docks. Edit here, then run: python3 tools/build-docks.py && python3 tools/stamp-version.py. Status is one of: in, ending, out, unannounced. 'ending' needs 'ends' (YYYY-MM-DD) and flips to 'after' text on the page once that date passes. Never set 'out' without an official source saying so. 'checked' is the date someone last read every source below. tools/check-docks.py watches the 'watch' list.",
-  "checked": "2026-10-28",
+  "checked": "2026-10-29",
   "lakes": {
     "hoover": {
       "name": "Hoover",
@@ -127,6 +127,178 @@
         "odnr-buckeye",
         "odnr-drawdowns"
       ]
+    },
+    "oshaughnessy": {
+      "name": "O&rsquo;Shaughnessy",
+      "items": [
+        {
+          "name": "City marina docks",
+          "status": "ending",
+          "ends": "2026-10-31",
+          "label": "Season ends Oct. 31",
+          "after_label": "Season over",
+          "note": "Columbus Recreation and Parks lists the public dock season at its Griggs, Hoover and O&rsquo;Shaughnessy marinas as May 1 to Oct. 31.",
+          "after_note": "Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.",
+          "source": "recparks-docks"
+        },
+        {
+          "name": "Ramp docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "Columbus has not posted a 2026 date for pulling the docks at the public ramps. No closure for O&rsquo;Shaughnessy is on the city&rsquo;s alerts page.",
+          "source": "recparks-alerts"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "City dock office (Columbus Rec and Parks)",
+          "+16146453337",
+          "614-645-3337",
+          ""
+        ],
+        [
+          "Columbus Watershed Management (ramps, rangers)",
+          "+16146451721",
+          "614-645-1721",
+          ""
+        ]
+      ],
+      "sources": [
+        "recparks-docks",
+        "recparks-alerts",
+        "recparks-oshaughnessy"
+      ]
+    },
+    "griggs": {
+      "name": "Griggs",
+      "items": [
+        {
+          "name": "City marina docks",
+          "status": "ending",
+          "ends": "2026-10-31",
+          "label": "Season ends Oct. 31",
+          "after_label": "Season over",
+          "note": "Columbus Recreation and Parks lists the public dock season at its Griggs, Hoover and O&rsquo;Shaughnessy marinas as May 1 to Oct. 31.",
+          "after_note": "Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.",
+          "source": "recparks-docks"
+        },
+        {
+          "name": "Trabue-Murphy ramp",
+          "status": "out",
+          "label": "Closed",
+          "note": "The city says the Trabue-Murphy boat ramp is closed until further notice because uneven subsurface conditions could damage boats.",
+          "source": "recparks-alerts"
+        },
+        {
+          "name": "Ramp docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "Columbus has not posted a 2026 date for pulling the docks at the public ramps.",
+          "source": "recparks-alerts"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "City dock office (Columbus Rec and Parks)",
+          "+16146453337",
+          "614-645-3337",
+          ""
+        ],
+        [
+          "Columbus Watershed Management (ramps, rangers)",
+          "+16146451721",
+          "614-645-1721",
+          ""
+        ]
+      ],
+      "sources": [
+        "recparks-docks",
+        "recparks-alerts",
+        "recparks-griggs"
+      ]
+    },
+    "indian": {
+      "name": "Indian Lake",
+      "items": [
+        {
+          "name": "State park docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR has not posted a 2026 date for pulling the seasonal rental or courtesy docks.",
+          "source": "odnr-indian"
+        },
+        {
+          "name": "Winter drawdown",
+          "status": "unannounced",
+          "label": "Not listed",
+          "note": "ODNR&rsquo;s winter drawdown list has no row for Indian Lake.",
+          "source": "odnr-drawdowns"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Indian Lake State Park office",
+          "+19378432717",
+          "937-843-2717",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-indian",
+        "odnr-drawdowns"
+      ]
+    },
+    "delaware": {
+      "name": "Delaware Lake",
+      "items": [
+        {
+          "name": "State park docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR has not posted a 2026 date for pulling the seasonal rental or launch docks.",
+          "source": "odnr-delaware"
+        },
+        {
+          "name": "Winter drawdown",
+          "status": "unannounced",
+          "label": "2026 not posted",
+          "note": "ODNR&rsquo;s drawdown list still shows last winter: 5 ft, Oct. 1 to Nov. 1, 2025, for flood control, refilled Mar. 1 to Apr. 1, 2026. ODNR noted the Corps postponed that start to after Dec. 1, 2025 because of drought. The Corps of Engineers sets the timing.",
+          "source": "odnr-drawdowns"
+        },
+        {
+          "name": "Marina",
+          "status": "unannounced",
+          "label": "Off season calls",
+          "note": "ODNR says the marina is open seasonally, with rentals, overnight docks and fuel. From October to April, call the camp office.",
+          "source": "odnr-delaware"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Delaware State Park marina (in season)",
+          "+16143907105",
+          "614-390-7105",
+          ""
+        ],
+        [
+          "Delaware State Park camp office",
+          "+17403634561",
+          "740-363-4561",
+          " (Oct. to April)"
+        ]
+      ],
+      "sources": [
+        "odnr-delaware",
+        "odnr-drawdowns"
+      ]
     }
   },
   "watch": [
@@ -135,7 +307,9 @@
       "label": "Columbus Recreation and Parks, Marinas &amp; Docks",
       "url": "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/",
       "lakes": [
-        "hoover"
+        "hoover",
+        "oshaughnessy",
+        "griggs"
       ],
       "keywords": [
         "dock",
@@ -151,7 +325,9 @@
       "label": "Columbus Recreation and Parks, Facility Alerts",
       "url": "https://columbusrecparks.com/facilities/alerts/",
       "lakes": [
-        "hoover"
+        "hoover",
+        "oshaughnessy",
+        "griggs"
       ],
       "keywords": [
         "hoover",
@@ -164,7 +340,14 @@
         "redbank",
         "walnut",
         "oxbow",
-        "maxtown"
+        "maxtown",
+        "griggs",
+        "shaughnessy",
+        "trabue",
+        "fishinger",
+        "home road",
+        "bellepoint",
+        "twin lakes"
       ]
     },
     {
@@ -190,16 +373,19 @@
       "url": "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns",
       "lakes": [
         "alum",
-        "buckeye"
+        "buckeye",
+        "delaware"
       ],
       "rows": [
         "Alum Creek",
-        "Buckeye Lake"
+        "Buckeye Lake",
+        "Delaware"
       ],
       "keywords": [
         "postpon",
         "alum creek",
-        "buckeye"
+        "buckeye",
+        "delaware"
       ]
     },
     {
@@ -254,6 +440,84 @@
         "winter",
         "october",
         "november"
+      ]
+    },
+    {
+      "id": "recparks-oshaughnessy",
+      "label": "Columbus Recreation and Parks, O&rsquo;Shaughnessy Reservoir",
+      "url": "https://columbusrecparks.com/parks/oshaughnessy-reservoir/",
+      "lakes": [
+        "oshaughnessy"
+      ],
+      "keywords": [
+        "closed",
+        "closure",
+        "dock",
+        "horsepower",
+        "launch",
+        "maximum speed",
+        "prohibited",
+        "ramp",
+        "season",
+        "winter"
+      ]
+    },
+    {
+      "id": "recparks-griggs",
+      "label": "Columbus Recreation and Parks, Griggs Park",
+      "url": "https://columbusrecparks.com/parks/griggs-park/",
+      "lakes": [
+        "griggs"
+      ],
+      "keywords": [
+        "closed",
+        "closure",
+        "dock",
+        "horsepower",
+        "launch",
+        "maximum speed",
+        "prohibited",
+        "ramp",
+        "season",
+        "trabue",
+        "winter"
+      ]
+    },
+    {
+      "id": "odnr-indian",
+      "label": "ODNR, Indian Lake State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park",
+      "lakes": [
+        "indian"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert"
+      ]
+    },
+    {
+      "id": "odnr-delaware",
+      "label": "ODNR, Delaware State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park",
+      "lakes": [
+        "delaware"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
       ]
     }
   ]

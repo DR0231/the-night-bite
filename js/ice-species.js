@@ -1,14 +1,14 @@
 /**
  * The Night Bite: winter species on ice.html. Lists the December, January and February picks for the active lake
- * from the site's own month by month notes (js/biting-data.js for Hoover, js/biting-data-lakes.js for Alum Creek and
- * Buckeye Lake). Nothing new: same species, same words. Runs right after its container, before paint.
+ * from the site's own month by month notes (js/biting-data.js for Hoover, js/biting-data-lakes.js for every other
+ * lake). Nothing new: same species, same words. Runs right after its container, before paint.
  */
 (function () {
   var box = document.getElementById("ice-species-list");
   var LK = window.NightBiteLake, LS = window.NightBiteLakes;
   if (!box || !LK) return;
   var id = LK.id;
-  var data = id === "alum" ? window.NightBiteBitingAlum : id === "buckeye" ? window.NightBiteBitingBuckeye : window.NightBiteBiting;
+  var data = LS ? window[LS.bitingVar(id)] : window.NightBiteBiting;
   if (!data) return;
   var MONTHS = [[11, "December"], [0, "January"], [1, "February"]];
   var order = [], by = {};

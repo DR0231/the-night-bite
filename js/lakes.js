@@ -3,16 +3,16 @@
  * Loaded in <head> on every page (before any other script), so html[data-lake] is set before first paint and the
  * lake-only blocks ([data-for="alum"] and so on, see css/styles.css) never flash the wrong lake.
  *
- * Active lake: ?lake=hoover|alum|buckeye in the URL first, then localStorage "nb-lake", then Hoover (the default).
- * Home pages have their own address per lake: Hoover at the site root, Alum Creek at alum/, Buckeye Lake at buckeye/
- * (alum/index.html and buckeye/index.html are built from index.html by tools/build-lake-pages.py and carry
- * <meta name="nb-home" content="alum">). On a lake's own home page that lake always wins. At the root, a ?lake= link
- * or a saved Alum Creek or Buckeye choice goes straight to that lake's address (location.replace, before anything
- * paints). Other pages keep ?lake= in the address bar for Alum Creek and Buckeye, a clean URL for Hoover, and their
+ * Active lake: ?lake=hoover|alum|buckeye|oshaughnessy|griggs|indian|delaware in the URL first, then localStorage "nb-lake", then Hoover (the default).
+ * Home pages have their own address per lake: Hoover at the site root, every other lake at <id>/ (alum/, buckeye/,
+ * oshaughnessy/, griggs/, indian/, delaware/). Those index.html files are built from index.html by tools/build-lake-pages.py
+ * and carry <meta name="nb-home" content="<id>">. On a lake's own home page that lake always wins. At the root, a ?lake= link
+ * or a saved choice of another lake goes straight to that lake's address (location.replace, before anything
+ * paints). Other pages keep ?lake= in the address bar for every lake but Hoover, a clean URL for Hoover, and their
  * Home links point at the chosen lake's home page.
  *
  * Also the shared gauge fetchers: USGS (usgsLatest, usgsSeries: new Water Data API first, legacy IV as fallback) and the
- * Corps CWMS API (cwmsFor). js/usgs.js, js/pool-trend.js and js/lake-picker.js all use them.
+ * Corps CWMS API (cwmsFor, Alum Creek and Delaware Lake). js/usgs.js, js/pool-trend.js and js/lake-picker.js all use them.
  *
  * Every value below has a source in DATA-SOURCES.md. Hoover's values are exactly the ones the scripts used before
  * this file existed (js/usgs.js, js/pool-trend.js, js/conditions.js, js/alerts.js); those scripts fall back to the
@@ -43,7 +43,7 @@
       push: null,      // null: js/conditions.js keeps its own Hoover list (north to south lake)
       map: { data: "NightBiteMapData", chart: "assets/hoover-chart.png" },
       spots: ["Oxbow (upper ramp)", "Redbank (middle ramp)", "Walnut Road (lower ramp)", "Bank (upper)", "Bank (middle)", "Bank (lower)", "Maxtown", "Marina / lower marina"],
-      species: ["channel-catfish", "blue-catfish", "flathead-catfish", "largemouth-bass", "smallmouth-bass", "black-crappie", "white-crappie", "bluegill", "white-bass", "hybrid-striped-bass", "saugeye", "walleye", "common-carp", "longnose-gar"]
+      species: ["channel-catfish", "blue-catfish", "flathead-catfish", "largemouth-bass", "smallmouth-bass", "black-crappie", "white-crappie", "bluegill", "white-bass", "hybrid-striped-bass", "saugeye", "walleye", "common-carp", "longnose-gar", "yellow-perch"]   // + yellow perch: ODNR Waterbody Report survey data
     },
     alum: {
       id: "alum",
@@ -71,7 +71,7 @@
       push: null,      // Alum Creek also runs north to south, so the Hoover wording fits
       map: { data: "NightBiteMapDataAlum", chart: "assets/alum-chart.png" },
       spots: ["New Galena ramp", "Marina ramp (Hollenback Rd)", "Cheshire ramp", "Howard ramp", "Bank (south, main lake)", "Bank (middle)", "Bank (north, no wake)", "Kayak launch"],
-      species: ["saugeye", "walleye", "muskellunge", "largemouth-bass", "smallmouth-bass", "white-crappie", "black-crappie", "white-bass", "bluegill", "channel-catfish"]
+      species: ["saugeye", "walleye", "muskellunge", "largemouth-bass", "smallmouth-bass", "white-crappie", "black-crappie", "white-bass", "bluegill", "channel-catfish", "yellow-perch", "blue-catfish"]   // perch: ODNR Waterbody Report; blue cats: ODNR stocking 2023 to 2025
     },
     buckeye: {
       id: "buckeye",
@@ -100,10 +100,119 @@
         "into the north shore", "toward the northeast end", "toward the east end", "into the southeast shore"],
       map: { data: "NightBiteMapDataBuckeye", chart: "assets/buckeye-chart.png" },
       spots: ["North Shore ramp", "Liebs Island ramp", "Fairfield Beach ramp", "Mud Island pier", "Bank (north shore)", "Bank (south shore)", "Canal / Millersport"],
-      species: ["saugeye", "largemouth-bass", "white-crappie", "black-crappie", "bluegill", "yellow-perch", "channel-catfish", "bullhead"]
+      species: ["saugeye", "largemouth-bass", "white-crappie", "black-crappie", "bluegill", "yellow-perch", "channel-catfish", "bullhead", "hybrid-striped-bass", "white-bass"]   // hybrids and white bass: ODNR Waterbody Report; hybrids also ODNR stocking
+    },
+    oshaughnessy: {
+      id: "oshaughnessy",
+      name: "O'Shaughnessy Reservoir",
+      short: "O'Shaughnessy",
+      area: "Central Ohio",
+      lat: 40.20, lng: -83.14,
+      pool: {
+        src: "usgs", srcName: "USGS",
+        site: "03220500", param: "62614",   // Scioto River at O'Shaughnessy Dam near Dublin: reservoir elevation
+        temp: null,     // level only; City of Columbus: "Reservoir temperatures are not monitored"
+        fullPool: 848.5,  // City of Columbus: O'Shaughnessy Dam crest 848.50 ft (ODNR map depths use 847.9 ft)
+        gaugeUrl: "https://waterdata.usgs.gov/monitoring-location/USGS-03220500/",
+        snapshot: { line: "848.44 ft · no temp · ~0.1 ft below full pool", at: "2026-10-29T12:00:00-04:00", when: "2026-10-29 12:00 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/79,92/forecast/hourly",
+        point: "https://api.weather.gov/points/40.2,-83.14",
+        grid: "https://api.weather.gov/gridpoints/ILN/79,92",
+        station: "KDLZ", stationName: "Delaware airport (KDLZ)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.20&lon=-83.14"
+      },
+      alerts: { zones: "OHC041,OHZ046", counties: "the O'Shaughnessy area" },
+      push: null,      // runs north to south like Hoover
+      map: { data: "NightBiteMapDataOshaughnessy", chart: "assets/oshaughnessy-chart.png" },
+      spots: ["Home Road ramp", "Twin Lakes launch", "Bellepoint ramp", "Bank (south, near the dam)", "Bank (middle)", "Bank (north)", "Kayak launch"],
+      species: ["hybrid-striped-bass", "saugeye", "blue-catfish", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "largemouth-bass", "smallmouth-bass", "white-bass"]   // ODNR Waterbody Report surveys; hybrids, saugeye and blue cats also ODNR stocking
+    },
+    griggs: {
+      id: "griggs",
+      name: "Griggs Reservoir",
+      short: "Griggs",
+      area: "Central Ohio",
+      lat: 40.03, lng: -83.095,
+      pool: {
+        src: "usgs", srcName: "USGS",
+        site: "03221500", param: "62614", temp: "00010",   // Scioto River at Griggs Dam: reservoir elevation and water temp
+        fullPool: 756.18,  // City of Columbus: Griggs Dam crest 756.18 ft (ODNR map depths use 757 ft)
+        gaugeUrl: "https://waterdata.usgs.gov/monitoring-location/USGS-03221500/",
+        snapshot: { line: "755.64 ft · 59°F · ~0.5 ft below full pool", at: "2026-10-29T12:45:00-04:00", when: "2026-10-29 12:45 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/81,84/forecast/hourly",
+        point: "https://api.weather.gov/points/40.03,-83.095",
+        grid: "https://api.weather.gov/gridpoints/ILN/81,84",
+        station: "KOSU", stationName: "Ohio State airport (KOSU)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.03&lon=-83.095"
+      },
+      alerts: { zones: "OHC049,OHZ055", counties: "the Griggs area" },
+      push: null,      // runs north to south like Hoover
+      map: { data: "NightBiteMapDataGriggs", chart: "assets/griggs-chart.png" },
+      spots: ["Griggs boat launch (Fishinger Rd)", "Griggs marina docks", "Bank (east side park)", "Bank (west side, south of Fishinger Rd)", "Bank (north)", "Kayak launch"],
+      species: ["hybrid-striped-bass", "saugeye", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "largemouth-bass", "smallmouth-bass", "white-bass"]   // ODNR Waterbody Report surveys; hybrids also ODNR stocking and the 2026 central Ohio forecast
+    },
+    indian: {
+      id: "indian",
+      name: "Indian Lake",
+      short: "Indian Lake",
+      area: "West central Ohio",
+      lat: 40.49, lng: -83.89,
+      pool: {
+        src: "usgs", srcName: "USGS",
+        site: "03260500", param: "62614", temp: "00010",   // Indian Lake at Russells Point: lake elevation and water temp
+        fullPool: 996.3,
+        gaugeUrl: "https://waterdata.usgs.gov/monitoring-location/USGS-03260500/",
+        snapshot: { line: "996.02 ft · 61°F · ~0.3 ft below full pool", at: "2026-10-29T13:00:00-04:00", when: "2026-10-29 13:00 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/52,103/forecast/hourly",
+        point: "https://api.weather.gov/points/40.49,-83.89",
+        grid: "https://api.weather.gov/gridpoints/ILN/52,103",
+        station: "KEDJ", stationName: "Bellefontaine airport (KEDJ)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.49&lon=-83.89"
+      },
+      alerts: { zones: "OHC091,OHZ044", counties: "the Indian Lake area" },
+      // Indian Lake is a wide, round lake: every wind direction names the shore it blows into
+      push: ["into the south shore", "into the southwest shore", "into the west shore", "into the northwest shore",
+        "into the north shore", "into the northeast shore", "into the east shore", "into the southeast shore"],
+      map: { data: "NightBiteMapDataIndian", chart: "assets/indian-chart.png" },
+      spots: ["Moundwood ramp", "Lakeview Harbor ramp", "Blackhawk ramp", "Chippewa ramp", "Cranetown Island ramp", "Old Field Beach jetties", "Bank (other)", "Kayak launch"],
+      species: ["saugeye", "black-crappie", "white-crappie", "largemouth-bass", "bluegill", "channel-catfish", "flathead-catfish", "white-bass", "walleye", "yellow-perch", "smallmouth-bass"]   // + smallmouth: ODNR Waterbody Report survey data
+    },
+    delaware: {
+      id: "delaware",
+      name: "Delaware Lake",
+      short: "Delaware Lake",
+      area: "Central Ohio",
+      lat: 40.385, lng: -83.055,
+      pool: {
+        // no USGS lake gauge; the Corps of Engineers posts the lake level every 15 minutes (same as Alum Creek)
+        src: "cwms", srcName: "USACE",
+        office: "LRH", ts: "Delaware-Lake.Elev.Inst.15Minutes.0.OBS",
+        temp: null,     // no public lake temperature gauge
+        fullPool: 915,
+        gaugeUrl: "https://water.usace.army.mil/overview/lrh/locations/delaware",
+        snapshot: { line: "915.18 ft · no temp · ~0.2 ft above full pool", at: "2026-10-29T13:15:00-04:00", when: "2026-10-29 13:15 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/81,100/forecast/hourly",
+        point: "https://api.weather.gov/points/40.385,-83.055",
+        grid: "https://api.weather.gov/gridpoints/ILN/81,100",
+        station: "KDLZ", stationName: "Delaware airport (KDLZ)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.385&lon=-83.055"
+      },
+      alerts: { zones: "OHC041,OHZ046", counties: "the Delaware Lake area" },
+      push: null,      // runs north to south like Hoover
+      map: { data: "NightBiteMapDataDelaware", chart: "assets/delaware-chart.png" },
+      spots: ["Main marina ramp", "Southwest launch", "Sherwood Road ramp (east)", "Bank (dam area)", "Bank (other)", "Kayak launch"],
+      species: ["black-crappie", "white-crappie", "largemouth-bass", "smallmouth-bass", "channel-catfish", "bluegill", "white-bass"]
     }
   };
-  var ORDER = ["hoover", "alum", "buckeye"];
+  var ORDER = ["hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware"];
   // display names for the species ids above (the log's species lists use these)
   var SPECIES = {
     "channel-catfish": "Channel catfish", "blue-catfish": "Blue catfish", "flathead-catfish": "Flathead catfish",
@@ -119,23 +228,23 @@
   // site root, so pages in species/ and alum/ can find assets (lakes.js is always loaded as <root>/js/lakes.js)
   var BASE = "";
   try { BASE = document.currentScript.src.replace(/js\/lakes\.js(\?.*)?$/, ""); } catch (e) {}
-  // a lake's home page: the root for Hoover, alum/ and buckeye/ for the others
+  // a lake's home page: the root for Hoover, <id>/ for the others
   function homeFor(lake) { return BASE + (lake === "hoover" ? "" : lake + "/"); }
 
   var homeMeta = document.querySelector('meta[name="nb-home"]');
-  var homeLake = homeMeta ? valid(homeMeta.getAttribute("content")) : null;   // set on the three home pages only
+  var homeLake = homeMeta ? valid(homeMeta.getAttribute("content")) : null;   // set on the lake home pages only
   var fromUrl = null, stored = null;
   try { fromUrl = valid(new URLSearchParams(location.search).get("lake")); } catch (e) {}
   try { stored = valid(localStorage.getItem(KEY)); } catch (e) {}
   var id = homeLake && homeLake !== "hoover" ? homeLake : (fromUrl || stored || "hoover");
   if (id !== stored && (fromUrl || (homeLake && homeLake !== "hoover"))) { try { localStorage.setItem(KEY, id); } catch (e) {} }
 
-  // the root home page with Alum Creek or Buckeye chosen: open that lake's own address instead
+  // the root home page with another lake chosen: open that lake's own address instead
   if (homeLake === "hoover" && id !== "hoover" && BASE) {
     try { location.replace(homeFor(id) + location.hash); } catch (e) {}
   }
 
-  // keep the address bar honest: a lake's home page has no ?lake=; elsewhere ?lake= for Alum Creek and Buckeye
+  // keep the address bar honest: a lake's home page has no ?lake=; elsewhere ?lake= for every lake but Hoover
   try {
     var u = new URL(location.href);
     if (id === "hoover" || homeLake) u.searchParams.delete("lake"); else u.searchParams.set("lake", id);
@@ -177,7 +286,7 @@
   }
   function cwms(hours) { return cwmsFor(id, hours); }
 
-  // USGS lake gauges (Hoover, Buckeye). The legacy WaterServices IV API (waterservices.usgs.gov/nwis/iv) slows down
+  // USGS lake gauges (Hoover, Buckeye, O'Shaughnessy, Griggs, Indian Lake). The legacy WaterServices IV API (waterservices.usgs.gov/nwis/iv) slows down
   // from Nov. 16, 2026 and is switched off Feb. 22, 2027 (DATA-SOURCES.md). So every reading asks the new USGS Water
   // Data API first (api.waterdata.usgs.gov/ogcapi, public, CORS open, no key) and only tries the legacy API if the
   // new one errors, rate limits or takes longer than 8 seconds. Both give the same provisional readings; the legacy
@@ -245,8 +354,14 @@
     });
   }
 
+  // per-lake data files: "what's biting" (js/biting-data.js for Hoover, js/biting-data-lakes.js for the rest) and the
+  // map data (js/hoover-map-data.js, js/lake-map-data-<id>.js). One rule for every lake, so a new lake needs no edits here.
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function bitingVar(lake) { return lake === "hoover" ? "NightBiteBiting" : "NightBiteBiting" + cap(lake); }
+  function mapFile(lake) { return lake === "hoover" ? "hoover-map-data.js" : "lake-map-data-" + lake + ".js"; }
+
   window.NightBiteLakes = { all: LAKES, order: ORDER, speciesNames: SPECIES, storageKey: KEY, hrefFor: hrefFor, homeFor: homeFor, base: BASE, cwmsFor: cwmsFor,
-    usgsLatest: usgsLatest, usgsSeries: usgsSeries };
+    usgsLatest: usgsLatest, usgsSeries: usgsSeries, bitingVar: bitingVar, mapFile: mapFile };
   window.NightBiteLake = { id: id, cfg: LAKES[id], key: key, cwms: cwms, home: homeLake };
 
   // Lake switches only (js/lake-picker.js sets the flag): a short cross-fade into the new page.

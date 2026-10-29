@@ -9,7 +9,7 @@
  *    with last deploy's styles or scripts. (Up to v11 these were cache first, which showed the multi-lake
  *    picker unstyled and the old Hoover-only map script after a deploy.) Pages ask for them with ?v=VERSION.
  *  · Fonts, images: stale while revalidate (instant from cache, refreshed in the background).
- *  · Home pages: the root (Hoover), alum/ and buckeye/ are all precached, so each lake opens offline.
+ *  · Home pages: the root (Hoover) and every lake home page (alum/, buckeye/, oshaughnessy/, griggs/, indian/, delaware/) are precached, so each lake opens offline.
  *  · Whisperwood is never touched: nothing under whisperwood/ (or whisperwood.html) is cached or intercepted.
  *  · Cross origin requests (NWS, USGS, links out) pass straight through. The page itself keeps the last good
  *    readings in localStorage and labels them "Offline. Last updated ..." (js/refresh.js, NightBiteOffline).
@@ -19,7 +19,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v14-2026-10-29";
+var VERSION = "v15-2026-10-29";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
@@ -28,6 +28,10 @@ var PRECACHE = [
   "./",
   "alum/",
   "buckeye/",
+  "oshaughnessy/",
+  "griggs/",
+  "indian/",
+  "delaware/",
   "species/",
   "water.html",
   "ice.html",
@@ -73,6 +77,10 @@ var PRECACHE = [
   "js/install-tip.js",
   "js/lake-map-data-alum.js",
   "js/lake-map-data-buckeye.js",
+  "js/lake-map-data-oshaughnessy.js",
+  "js/lake-map-data-griggs.js",
+  "js/lake-map-data-indian.js",
+  "js/lake-map-data-delaware.js",
   "js/lake-picker.js",
   "js/lake-snapshot.js",
   "js/lakes.js",
@@ -109,6 +117,10 @@ var PRECACHE = [
   "assets/hoover-chart.png",
   "assets/alum-chart.png",
   "assets/buckeye-chart.png",
+  "assets/oshaughnessy-chart.png",
+  "assets/griggs-chart.png",
+  "assets/indian-chart.png",
+  "assets/delaware-chart.png",
   "assets/horizon-center.png",
   "assets/horizon-thin.png",
   "assets/horizon-tile.png",
@@ -143,6 +155,14 @@ var PRECACHE = [
   "assets/map/alum-map-wide.png",
   "assets/map/buckeye-map-tall.png",
   "assets/map/buckeye-map-wide.png",
+  "assets/map/oshaughnessy-map-tall.png",
+  "assets/map/oshaughnessy-map-wide.png",
+  "assets/map/griggs-map-tall.png",
+  "assets/map/griggs-map-wide.png",
+  "assets/map/indian-map-tall.png",
+  "assets/map/indian-map-wide.png",
+  "assets/map/delaware-map-tall.png",
+  "assets/map/delaware-map-wide.png",
   "assets/map/pin-access.png",
   "assets/map/pin-ramp.png",
   "assets/map/pin-shop.png",

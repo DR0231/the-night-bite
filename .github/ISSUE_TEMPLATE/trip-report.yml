@@ -1,5 +1,5 @@
 name: Trip report
-description: Submit a trip at Hoover Reservoir, Alum Creek Lake or Buckeye Lake for the community log.
+description: Submit a trip at Hoover Reservoir, Alum Creek Lake, Buckeye Lake, O'Shaughnessy Reservoir, Griggs Reservoir, Indian Lake or Delaware Lake for the community log.
 title: "Trip: "
 labels: ["trip-report"]
 body:
@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Public info only: no secret GPS, no private property, no personal addresses.
-        Photos are Phase 2. Confirm you fished public access at Hoover Reservoir, Alum Creek Lake or Buckeye Lake (OH).
+        Photos are Phase 2. Confirm you fished public access at Hoover Reservoir, Alum Creek Lake, Buckeye Lake, O'Shaughnessy Reservoir, Griggs Reservoir, Indian Lake or Delaware Lake (OH).
   - type: dropdown
     id: lake
     attributes:
@@ -16,6 +16,10 @@ body:
         - Hoover Reservoir
         - Alum Creek Lake
         - Buckeye Lake
+        - O'Shaughnessy Reservoir
+        - Griggs Reservoir
+        - Indian Lake
+        - Delaware Lake
     validations:
       required: true
   - type: input
@@ -54,7 +58,7 @@ body:
     id: ramp
     attributes:
       label: Ramp / area (public)
-      description: Public names only (for example Oxbow at Hoover, Cheshire at Alum Creek, North Shore at Buckeye Lake, or bank).
+      description: Public names only (for example Oxbow at Hoover, Cheshire at Alum Creek, North Shore at Buckeye Lake, Glick Rd at O'Shaughnessy, or bank).
     validations:
       required: true
   - type: dropdown

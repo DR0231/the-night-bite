@@ -2480,18 +2480,26 @@ html.map-open { overflow: hidden; }
 }
 
 /* ==========================================================================
-   Lakes: Hoover, Alum Creek, Buckeye (js/lakes.js sets html[data-lake])
+   Lakes: Hoover, Alum Creek, Buckeye, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake (js/lakes.js sets html[data-lake])
    ========================================================================== */
-/* Lake-only blocks: data-for="hoover", "alum", "buckeye" or a space separated list. No data-lake: Hoover. */
+/* Lake-only blocks: data-for="hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware" or a space separated list. No data-lake: Hoover. */
 html:not([data-lake]) [data-for]:not([data-for~="hoover"]),
 html[data-lake="hoover"] [data-for]:not([data-for~="hoover"]),
 html[data-lake="alum"] [data-for]:not([data-for~="alum"]),
-html[data-lake="buckeye"] [data-for]:not([data-for~="buckeye"]) { display: none !important; }
+html[data-lake="buckeye"] [data-for]:not([data-for~="buckeye"]),
+html[data-lake="oshaughnessy"] [data-for]:not([data-for~="oshaughnessy"]),
+html[data-lake="griggs"] [data-for]:not([data-for~="griggs"]),
+html[data-lake="indian"] [data-for]:not([data-for~="indian"]),
+html[data-lake="delaware"] [data-for]:not([data-for~="delaware"]) { display: none !important; }
 /* species cards list the lakes they live in (data-lakes) */
 html:not([data-lake]) [data-lakes]:not([data-lakes~="hoover"]),
 html[data-lake="hoover"] [data-lakes]:not([data-lakes~="hoover"]),
 html[data-lake="alum"] [data-lakes]:not([data-lakes~="alum"]),
-html[data-lake="buckeye"] [data-lakes]:not([data-lakes~="buckeye"]) { display: none !important; }
+html[data-lake="buckeye"] [data-lakes]:not([data-lakes~="buckeye"]),
+html[data-lake="oshaughnessy"] [data-lakes]:not([data-lakes~="oshaughnessy"]),
+html[data-lake="griggs"] [data-lakes]:not([data-lakes~="griggs"]),
+html[data-lake="indian"] [data-lakes]:not([data-lakes~="indian"]),
+html[data-lake="delaware"] [data-lakes]:not([data-lakes~="delaware"]) { display: none !important; }
 
 /* ---- header lake picker: under the wordmark, a "Choose a lake" label over the pill; one button ---- */
 :root { --header-h: 4rem; }
@@ -2738,9 +2746,17 @@ html.lake-sheet-open { overflow: hidden; }
 /* ---- home pool card: each lake's chart at 2x (1x on the narrowest phones), same as Hoover's ---- */
 .pool-chart img[data-for="alum"] { width: 268px; height: 74px; }
 .pool-chart img[data-for="buckeye"] { width: 184px; height: 96px; }
+.pool-chart img[data-for="oshaughnessy"] { width: 290px; height: 76px; }
+.pool-chart img[data-for="griggs"] { width: 296px; height: 76px; }
+.pool-chart img[data-for="indian"] { width: 96px; height: 84px; }
+.pool-chart img[data-for="delaware"] { width: 252px; height: 96px; }
 @media (max-width: 359px) {
   .pool-chart img[data-for="alum"] { width: 134px; height: 37px; }
   .pool-chart img[data-for="buckeye"] { width: 92px; height: 48px; }
+  .pool-chart img[data-for="oshaughnessy"] { width: 145px; height: 38px; }
+  .pool-chart img[data-for="griggs"] { width: 148px; height: 38px; }
+  .pool-chart img[data-for="indian"] { width: 48px; height: 42px; }
+  .pool-chart img[data-for="delaware"] { width: 126px; height: 48px; }
 }
 .pool-chart-key > span[data-for="buckeye"] { margin-right: 0.5rem; }
 @media (min-width: 560px) { .pool-chart-key > span[data-for="buckeye"] { margin-right: 0; } }
@@ -2811,7 +2827,7 @@ html.lake-sheet-open { overflow: hidden; }
 .pool-trend[hidden][data-pending] { display: block; visibility: hidden; }
 
 /* ==========================================================================
-   Lake-aware Species (js/species-lake.js): Biting now tags, the "Not at <lake>" group, ramps and access,
+   Lake-aware Species (js/species-lake.js): Biting now tags (listed first), the "Not recorded at <lake>" dropdown, ramps and access,
    and the species page note under the title.
    ========================================================================== */
 .sp-tag {
@@ -2830,10 +2846,44 @@ html.lake-sheet-open { overflow: hidden; }
 .sp-tag-away, .sp-tag-quiet { color: var(--cream-dark); box-shadow: inset 0 0 0 1px var(--navy-light); }
 .species-card h3 .sp-tag { margin-left: 0.4rem; }
 .sp-count { margin: 0 0 var(--space-sm); }
-.sp-away { margin-top: var(--space-xl); }
+/* "Not recorded at <lake>": a closed native <details> dropdown below the lake's species (keyboard: Tab to it, Enter or Space) */
+.sp-away {
+  margin-top: var(--space-xl);
+  border-radius: var(--radius);
+  background: rgba(10, 22, 40, 0.45);
+  padding: 0 1rem;
+}
 .sp-away[hidden] { display: none; }
-.sp-away h2 { color: var(--cream-dark); }
-/* species not at the lake stay visible in their own group (lakes.css rule above hides them in the main grid) */
+.sp-away summary {
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: var(--cream-dark);
+  cursor: pointer;
+  list-style: none;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color var(--dur) var(--ease);
+}
+.sp-away summary:hover, .sp-away[open] summary { color: var(--amber); }
+.sp-away summary::-webkit-details-marker { display: none; }
+.sp-away summary::before {
+  content: "";
+  width: 6px;
+  height: 8px;
+  background: currentColor;
+  clip-path: polygon(0 0, 50% 0, 50% 25%, 100% 25%, 100% 75%, 50% 75%, 50% 100%, 0 100%);
+  transition: transform var(--dur) var(--ease);
+}
+.sp-away[open] summary::before { transform: rotate(90deg); }
+.sp-away-intro { margin: 0 0 var(--space-sm); }
+.sp-away-grid { padding-bottom: 1rem; }
+@media (prefers-reduced-motion: reduce) {
+  .sp-away summary, .sp-away summary::before { transition: none; }
+}
+/* species not at the lake stay visible inside the dropdown (lakes.css rule above hides them in the main grid) */
 html[data-lake] .sp-away .species-card[data-lakes][data-lakes]:not([hidden]),
 html:not([data-lake]) .sp-away .species-card[data-lakes][data-lakes]:not([hidden]) { display: block !important; }
 .species-card.is-away { opacity: 0.72; }
@@ -3411,3 +3461,9 @@ html.nb-show-drafts .update.is-draft { display: block; border-left-style: dashed
 .log-tournaments { scroll-margin-top: calc(var(--header-h, 56px) + 1rem); }
 .log-tournaments #tournaments-list { margin-bottom: 1rem; }
 .log-tournaments .how-to-read .form-block { margin-top: 0.5rem; }
+
+/* Phone numbers never break at a hyphen (tel links everywhere; .nowrap spans in What's new) */
+a[href^="tel:"],
+.nowrap {
+  white-space: nowrap;
+}

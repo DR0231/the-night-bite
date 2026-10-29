@@ -9,26 +9,32 @@
   <meta name="apple-mobile-web-app-title" content="Night Bite">
   <meta name="nb-home" content="hoover">
   <link rel="manifest" href="site.webmanifest">
-  <title>The Night Bite: Hoover, Alum Creek and Buckeye Lake fishing hub</title>
-  <meta name="description" content="Unofficial fishing hub for Hoover, Alum Creek and Buckeye Lake, Ohio: species, water maps, trip log, gear.">
+  <title>The Night Bite: Hoover and central Ohio lakes fishing hub</title>
+  <meta name="description" content="Unofficial fishing hub for Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake and Delaware Lake, Ohio: species, water maps, trip log, gear.">
   <link rel="canonical" href="https://nightbiteoh.com/">
-  <meta property="og:title" content="The Night Bite: Hoover, Alum Creek and Buckeye Lake fishing hub">
-  <meta property="og:description" content="Unofficial fishing hub for Hoover, Alum Creek and Buckeye Lake, Ohio: species, water maps, trip log, gear.">
+  <meta property="og:site_name" content="The Night Bite">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Night Bite: Hoover and central Ohio lakes fishing hub">
+  <meta property="og:description" content="Unofficial fishing hub for Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake and Delaware Lake, Ohio: species, water maps, trip log, gear.">
+  <meta property="og:url" content="https://nightbiteoh.com/">
   <meta property="og:image" content="https://nightbiteoh.com/assets/og/og-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The Night Bite: a pixel lantern over a moonlit tree line">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://nightbiteoh.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Night Bite: Hoover and central Ohio lakes fishing hub">
+  <meta name="twitter:description" content="Unofficial fishing hub for Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake and Delaware Lake, Ohio: species, water maps, trip log, gear.">
+  <meta name="twitter:image" content="https://nightbiteoh.com/assets/og/og-card.png">
+  <meta name="twitter:image:alt" content="The Night Bite: a pixel lantern over a moonlit tree line">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v14-2026-10-29">
+  <link rel="stylesheet" href="css/styles.css?v=v15-2026-10-29">
   <noscript><style>.glance,.glance-actions{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
-  <script src="js/lakes.js?v=v14-2026-10-29"></script>
+  <script src="js/lakes.js?v=v15-2026-10-29"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "WebSite", "name": "The Night Bite", "url": "https://nightbiteoh.com/"}
   </script>
@@ -137,12 +143,28 @@
       Personal, unofficial Buckeye Lake hub in Ohio:
       species pages, water maps, trip log, and gear kits.
     </p>
+    <p class="lead" data-for="oshaughnessy">
+      Personal, unofficial O&rsquo;Shaughnessy Reservoir hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="griggs">
+      Personal, unofficial Griggs Reservoir hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="indian">
+      Personal, unofficial Indian Lake hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="delaware">
+      Personal, unofficial Delaware Lake hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
 
     <div class="bento-grid" aria-label="Next actions">
       <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
         <p class="pool-lead" id="correction-line">890.79 ft · 63°F · ~3.2 ft below full pool</p>
-        <script src="js/pool-readout.js?v=v14-2026-10-29"></script>
+        <script src="js/pool-readout.js?v=v15-2026-10-29"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-10-26T08:00:00.000-04:00">2026-10-26 08:00 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
@@ -154,7 +176,7 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           Provisional snapshot; your browser may refresh it from USGS. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v14-2026-10-29"></script>
+        <script src="js/lake-snapshot.js?v=v15-2026-10-29"></script>
         <div class="pool-trend" id="pool-trend" hidden data-pending>
           <div class="pool-trend-head">
             <span class="pool-trend-label">Pool, last 7 days</span>
@@ -168,9 +190,13 @@
             <img src="assets/hoover-chart.png" alt="" width="143" height="48" data-for="hoover">
             <img src="assets/alum-chart.png" alt="" width="134" height="37" data-for="alum">
             <img src="assets/buckeye-chart.png" alt="" width="92" height="48" data-for="buckeye">
-            <span class="sr-only">Open the <span data-lk="short">Hoover</span> map with boat ramps and bait shops</span>
+            <img src="assets/oshaughnessy-chart.png" alt="" width="145" height="38" data-for="oshaughnessy">
+            <img src="assets/griggs-chart.png" alt="" width="148" height="38" data-for="griggs">
+            <img src="assets/indian-chart.png" alt="" width="48" height="42" data-for="indian">
+            <img src="assets/delaware-chart.png" alt="" width="126" height="48" data-for="delaware">
+            <span class="sr-only">Open the <span data-lk="short">Hoover</span> map with boat ramps<span data-for="hoover alum buckeye"> and bait shops</span><span data-for="oshaughnessy griggs indian delaware"> and fishing access</span></span>
           </button>
-          <figcaption><span class="pool-chart-name" data-lk="name">Hoover Reservoir</span><span class="pool-chart-key"><span data-for="hoover alum">&larr; North</span><span data-for="buckeye">&uarr; North</span><span class="pool-chart-legend"><span class="pool-chart-dot" aria-hidden="true"></span><span data-for="hoover">Dam park &amp; dock</span><span data-for="alum">Dam</span><span data-for="buckeye">Liebs Island ramp</span></span></span><span class="pool-chart-cue" aria-hidden="true">Tap the map for ramps &amp; bait</span></figcaption>
+          <figcaption><span class="pool-chart-name" data-lk="name">Hoover Reservoir</span><span class="pool-chart-key"><span data-for="hoover alum oshaughnessy griggs delaware">&larr; North</span><span data-for="buckeye indian">&uarr; North</span><span class="pool-chart-legend"><span class="pool-chart-dot" aria-hidden="true"></span><span data-for="hoover">Dam park &amp; dock</span><span data-for="alum">Dam</span><span data-for="buckeye">Liebs Island ramp</span><span data-for="oshaughnessy griggs delaware">Dam</span><span data-for="indian">Moundwood ramp</span></span></span><span class="pool-chart-cue" aria-hidden="true">Tap the map for ramps &amp; <span data-for="hoover alum buckeye">bait</span><span data-for="oshaughnessy griggs indian delaware">access</span></span></figcaption>
         </figure>
         <details class="how-to-read" id="how-to-read">
           <summary>How to read this</summary>
@@ -195,6 +221,34 @@
               <li>The USGS gauge on Buckeye measures level only. <strong>No public water temp gauge</strong>, so the temp slot says n/a.</li>
               <li>USGS values are <strong>provisional</strong> (param 62614) and can be revised. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-395540082291600/" target="_blank" rel="noopener">USGS-395540082291600</a>.</li>
               <li><strong>No wake within 300 ft</strong> of any land mass and in marked areas; unlimited horsepower elsewhere. Check Ohio&rsquo;s BeachGuard for algae advisories before wading or swimming a dog.</li>
+            </ul>
+            <ul data-for="oshaughnessy">
+              <li><strong>Pool</strong> is lake surface elevation (ft NGVD29), not the depth of any hole or channel.</li>
+              <li>Full pool here is the City of Columbus dam crest, <strong>848.5 ft</strong>. The ODNR fishing map&rsquo;s depths are based on <strong>847.9 ft</strong>, so contours are off by about <strong>(847.9 − pool)</strong>. If pool is lower, real water is shallower than printed.</li>
+              <li><strong>No public water temp gauge</strong>: the USGS gauge at the dam reads level only, and the City says its reservoir temperatures are not monitored. The temp slot says n/a. Nothing is estimated.</li>
+              <li>USGS values are <strong>provisional</strong> (param 62614) and can be revised. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03220500/" target="_blank" rel="noopener">USGS-03220500</a>.</li>
+              <li>City of Columbus drinking-water reservoir: unlimited horsepower, <strong>40 mph</strong> limit, boats 22 ft or shorter, no personal watercraft, tubing or swimming, and idle speed within 100 ft of shore and bridges (City of Columbus).</li>
+            </ul>
+            <ul data-for="griggs">
+              <li><strong>Pool</strong> is lake surface elevation (ft NGVD29), not the depth of any hole or channel.</li>
+              <li>Full pool here is the City of Columbus dam crest, <strong>756.18 ft</strong>. The ODNR fishing map&rsquo;s depths are based on <strong>757 ft</strong>, so contours are off by about <strong>(757 − pool)</strong>. If pool is lower, real water is shallower than printed.</li>
+              <li><strong>Temp</strong> is the USGS reservoir gauge (°F in the lead). It isn&rsquo;t air temp, and not every cove.</li>
+              <li>USGS values are <strong>provisional</strong> (params 62614 pool / 00010 temp) and can be revised. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03221500/" target="_blank" rel="noopener">USGS-03221500</a>.</li>
+              <li>City of Columbus drinking-water reservoir: unlimited horsepower, <strong>40 mph</strong> limit, boats 22 ft or shorter, no personal watercraft, tubing or swimming, and idle speed within 100 ft of shore and bridges (City of Columbus).</li>
+            </ul>
+            <ul data-for="indian">
+              <li><strong>Pool</strong> is lake surface elevation (ft NGVD29), not the depth of any hole or channel.</li>
+              <li>The ODNR fishing map&rsquo;s depths are based on the <strong>996.3 ft</strong> normal summer pool. Contours are off by about <strong>(996.3 − pool)</strong>. Indian Lake is shallow, so a few inches matter.</li>
+              <li><strong>Temp</strong> is the USGS gauge at the lake (°F in the lead). It isn&rsquo;t air temp, and not every channel.</li>
+              <li>USGS values are <strong>provisional</strong> (params 62614 pool / 00010 temp) and can be revised. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03260500/" target="_blank" rel="noopener">USGS-03260500</a>.</li>
+              <li><strong>No horsepower limit</strong>; no wake within 300 ft of any shoreline, in channels and where marked (ODNR). Check Ohio&rsquo;s BeachGuard for algae advisories before wading or swimming a dog.</li>
+            </ul>
+            <ul data-for="delaware">
+              <li><strong>Pool</strong> is lake surface elevation (ft NGVD29), not the depth of any hole or channel.</li>
+              <li>The ODNR fishing map&rsquo;s depths are based on the <strong>915 ft</strong> normal summer pool. Contours are off by about <strong>(915 − pool)</strong>. ODNR lists a 5 ft winter drawdown to 910 ft for flood control, set by the Corps.</li>
+              <li><strong>No public water temp gauge</strong> on the lake, so the temp slot says n/a. Nothing is estimated.</li>
+              <li>Lake level comes from the US Army Corps of Engineers (Huntington District), posted every 15 minutes. It is <strong>provisional</strong> and can be revised. <a href="https://water.usace.army.mil/overview/lrh/locations/delaware" target="_blank" rel="noopener">Corps Delaware Lake page</a>.</li>
+              <li><strong>Unlimited horsepower</strong> (ODNR). Follow the posted no wake buoys, and check Ohio&rsquo;s BeachGuard for advisories before swimming.</li>
             </ul>
           </div>
         </details>
@@ -236,6 +290,10 @@
         <p class="card-text" data-for="hoover">ODNR contours @ 894, city ramp map, USGS gauge, pool correction.</p>
         <p class="card-text" data-for="alum">ODNR fishing map @ 888, Corps ramps, USACE lake level, pool correction.</p>
         <p class="card-text" data-for="buckeye">ODNR fishing map @ 891.75, state park ramps, USGS gauge, pool correction.</p>
+        <p class="card-text" data-for="oshaughnessy">ODNR fishing map @ 847.9, city ramps, USGS gauge, pool correction.</p>
+        <p class="card-text" data-for="griggs">ODNR fishing map @ 757, city ramp, USGS gauge, pool correction.</p>
+        <p class="card-text" data-for="indian">ODNR fishing map @ 996.3, state park ramps, USGS gauge, pool correction.</p>
+        <p class="card-text" data-for="delaware">ODNR fishing map @ 915, state park ramps, USACE lake level, pool correction.</p>
         <span class="card-cue" aria-hidden="true">Open maps</span>
       </a>
       <a class="bento-card bento-species" href="species/">
@@ -243,6 +301,9 @@
         <p class="card-text" data-for="hoover">Cats, bass, panfish, saugeye: season, where, limits, gear.</p>
         <p class="card-text" data-for="alum">Saugeye, muskie, bass, crappie: season, where, limits, gear.</p>
         <p class="card-text" data-for="buckeye">Saugeye, crappie, perch, bass, cats: season, where, limits, gear.</p>
+        <p class="card-text" data-for="oshaughnessy griggs">Hybrid striped bass: season, where, limits, gear.</p>
+        <p class="card-text" data-for="indian">Saugeye, crappie, bass, cats, perch: season, where, limits, gear.</p>
+        <p class="card-text" data-for="delaware">Crappie, bass, cats, white bass: season, where, limits, gear.</p>
         <span class="card-cue" aria-hidden="true">Browse species</span>
       </a>
       <a class="bento-card bento-whisper" href="whisperwood/play.html">
@@ -258,7 +319,7 @@
         <span class="card-cue" aria-hidden="true">Open the log</span>
       </a>
     </div>
-    <script src="js/glance.js?v=v14-2026-10-29"></script>
+    <script src="js/glance.js?v=v15-2026-10-29"></script>
 
     <section class="bento-card get-app" id="get-the-app" aria-labelledby="get-app-title">
       <div class="get-app-head">
@@ -294,21 +355,21 @@
         </details>
       </div>
     </section>
-    <script src="js/get-app.js?v=v14-2026-10-29"></script>
+    <script src="js/get-app.js?v=v15-2026-10-29"></script>
 
     <hr class="divider">
 
     <h2>What this site is</h2>
     <ul class="condensed-list">
       <li data-for="hoover">Unofficial Hoover-only fishing hub with night-dock atmosphere</li>
-      <li data-for="alum buckeye">Unofficial central Ohio fishing hub with night-dock atmosphere: Hoover, Alum Creek and Buckeye Lake</li>
+      <li data-for="alum buckeye oshaughnessy griggs indian delaware">Unofficial Ohio fishing hub with night-dock atmosphere: Hoover, Alum Creek, Buckeye Lake, O&rsquo;Shaughnessy, Griggs, Indian Lake and Delaware Lake</li>
       <li>Species pages with limit reminders from the ODNR 2026–27 rules</li>
       <li>One example log entry, marked <span class="sample-badge">Example</span> · not ODNR / City / USGS</li>
     </ul>
 
     <div class="callout warn">
       Night fishing can be dangerous in storms, heat, and low visibility. Wear a life jacket when it calls for it.
-      <span data-for="hoover">10 hp · drinking-water reservoir · license ages 16+.</span><span data-for="alum">No wake on the north end · drinking-water reservoir · license ages 16+.</span><span data-for="buckeye">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span> See <a href="about">About</a>.
+      <span data-for="hoover">10 hp · drinking-water reservoir · license ages 16+.</span><span data-for="alum">No wake on the north end · drinking-water reservoir · license ages 16+.</span><span data-for="buckeye">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span><span data-for="oshaughnessy griggs">40 mph · idle within 100 ft of shore · drinking-water reservoir · license ages 16+.</span><span data-for="indian">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span><span data-for="delaware">Corps winter drawdown · check BeachGuard advisories · license ages 16+.</span> See <a href="about">About</a>.
     </div>
   </main>
 
@@ -317,14 +378,17 @@
     <div class="map-panel">
       <div class="map-head">
         <span class="map-grab" aria-hidden="true"></span>
-        <h2 id="map-title">Ramps &amp; bait at <span data-lk="short">Hoover</span></h2>
+        <h2 id="map-title">Ramps &amp; <span data-for="hoover alum buckeye">bait</span><span data-for="oshaughnessy griggs indian delaware">access</span> at <span data-lk="short">Hoover</span></h2>
         <button type="button" class="map-close" aria-label="Close map"><span aria-hidden="true"></span></button>
       </div>
       <ul class="map-legend" aria-label="Map key">
         <li><img src="assets/map/pin-ramp.png" alt="" width="9" height="11">Public boat ramp</li>
-        <li><img src="assets/map/pin-shop.png" alt="" width="9" height="11">Bait shop</li>
+        <li data-for="hoover alum buckeye"><img src="assets/map/pin-shop.png" alt="" width="9" height="11">Bait shop</li>
         <li data-for="hoover"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Boardwalk, shore access</li>
         <li data-for="buckeye"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Fishing pier, shore access</li>
+        <li data-for="oshaughnessy"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Canoe and kayak access</li>
+        <li data-for="griggs"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Boat docks, shore access</li>
+        <li data-for="indian"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Beach jetties, shore access</li>
         <li class="map-legend-hint">Tap a pin for details</li>
       </ul>
       <div class="map-stage">
@@ -338,6 +402,9 @@
         <p data-for="hoover">City park hours are 7 a.m. to 11 p.m. (Columbus Rec and Parks); check posted signs before a night trip. Shoreline traced from a map, not for navigation.</p>
         <p data-for="alum">Alum Creek State Park and Corps of Engineers land: check posted hours and rules before a night trip. Unlimited horsepower on the south main lake, no wake on the north end. Shoreline traced from OpenStreetMap, not for navigation.</p>
         <p data-for="buckeye">No wake within 300 ft of any land mass and in marked areas (ODNR fishing map). Check posted state park hours before a night trip. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="oshaughnessy griggs">City park hours are 7 a.m. to 11 p.m. (Columbus Rec and Parks); check posted signs before a night trip. 40 mph limit, idle within 100 ft of shore and bridges. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="indian">Indian Lake State Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. No horsepower limit, no wake within 300 ft of shore. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="delaware">Delaware State Park hours are sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours. Unlimited horsepower. Corps of Engineers lake. Shoreline traced from OpenStreetMap, not for navigation.</p>
       </details>
     </div>
   </dialog>
@@ -359,22 +426,26 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v14-2026-10-29"></script>
-  <script src="js/sw-update.js?v=v14-2026-10-29"></script>
-  <script src="js/alerts.js?v=v14-2026-10-29"></script>
-  <script src="js/nav.js?v=v14-2026-10-29"></script>
-  <script src="js/lake-picker.js?v=v14-2026-10-29"></script>
-  <script src="js/usgs.js?v=v14-2026-10-29"></script>
-  <script src="js/home-log.js?v=v14-2026-10-29"></script>
-  <script src="js/astro.js?v=v14-2026-10-29"></script>
-  <script src="js/conditions.js?v=v14-2026-10-29"></script>
-  <script src="js/pool-trend.js?v=v14-2026-10-29"></script>
-  <script src="js/hoover-map-data.js?v=v14-2026-10-29"></script>
-  <script src="js/lake-map-data-alum.js?v=v14-2026-10-29"></script>
-  <script src="js/lake-map-data-buckeye.js?v=v14-2026-10-29"></script>
-  <script src="js/hoover-map.js?v=v14-2026-10-29"></script>
-  <script src="js/install-tip.js?v=v14-2026-10-29"></script>
-  <script src="js/tonight-tools.js?v=v14-2026-10-29"></script>
+  <script src="js/refresh.js?v=v15-2026-10-29"></script>
+  <script src="js/sw-update.js?v=v15-2026-10-29"></script>
+  <script src="js/alerts.js?v=v15-2026-10-29"></script>
+  <script src="js/nav.js?v=v15-2026-10-29"></script>
+  <script src="js/lake-picker.js?v=v15-2026-10-29"></script>
+  <script src="js/usgs.js?v=v15-2026-10-29"></script>
+  <script src="js/home-log.js?v=v15-2026-10-29"></script>
+  <script src="js/astro.js?v=v15-2026-10-29"></script>
+  <script src="js/conditions.js?v=v15-2026-10-29"></script>
+  <script src="js/pool-trend.js?v=v15-2026-10-29"></script>
+  <script src="js/hoover-map-data.js?v=v15-2026-10-29"></script>
+  <script src="js/lake-map-data-alum.js?v=v15-2026-10-29"></script>
+  <script src="js/lake-map-data-buckeye.js?v=v15-2026-10-29"></script>
+  <script src="js/lake-map-data-oshaughnessy.js?v=v15-2026-10-29"></script>
+  <script src="js/lake-map-data-griggs.js?v=v15-2026-10-29"></script>
+  <script src="js/lake-map-data-indian.js?v=v15-2026-10-29"></script>
+  <script src="js/lake-map-data-delaware.js?v=v15-2026-10-29"></script>
+  <script src="js/hoover-map.js?v=v15-2026-10-29"></script>
+  <script src="js/install-tip.js?v=v15-2026-10-29"></script>
+  <script src="js/tonight-tools.js?v=v15-2026-10-29"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
