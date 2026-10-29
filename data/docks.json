@@ -1,0 +1,260 @@
+{
+  "_readme": "Dock season status for water.html#docks. Edit here, then run: python3 tools/build-docks.py && python3 tools/stamp-version.py. Status is one of: in, ending, out, unannounced. 'ending' needs 'ends' (YYYY-MM-DD) and flips to 'after' text on the page once that date passes. Never set 'out' without an official source saying so. 'checked' is the date someone last read every source below. tools/check-docks.py watches the 'watch' list.",
+  "checked": "2026-10-28",
+  "lakes": {
+    "hoover": {
+      "name": "Hoover",
+      "items": [
+        {
+          "name": "City marina docks",
+          "status": "ending",
+          "ends": "2026-10-31",
+          "label": "Season ends Oct. 31",
+          "after_label": "Season over",
+          "note": "Columbus Recreation and Parks lists the public dock season at its Griggs, Hoover and O&rsquo;Shaughnessy marinas as May 1 to Oct. 31.",
+          "after_note": "Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.",
+          "source": "recparks-docks"
+        },
+        {
+          "name": "Ramp docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "Columbus has not posted a 2026 date for pulling the docks at the public ramps. No closure for Hoover is on the city&rsquo;s alerts page.",
+          "source": "recparks-alerts"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Hoover dock office (Columbus Rec and Parks)",
+          "+16146453337",
+          "614-645-3337",
+          ""
+        ],
+        [
+          "Columbus Watershed Management (ramps, rangers)",
+          "+16146451721",
+          "614-645-1721",
+          ""
+        ]
+      ],
+      "sources": [
+        "recparks-docks",
+        "recparks-alerts",
+        "recparks-hoover"
+      ]
+    },
+    "alum": {
+      "name": "Alum Creek",
+      "items": [
+        {
+          "name": "State park docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR has not posted a 2026 date for pulling the lease or launch docks.",
+          "source": "odnr-alum"
+        },
+        {
+          "name": "Winter drawdown",
+          "status": "unannounced",
+          "label": "2026 not posted",
+          "note": "ODNR&rsquo;s drawdown list still shows last winter: 3 ft, Oct. 1 to Nov. 1, 2025, for flood control, refilled Mar. 15 to Apr. 15, 2026. The Corps of Engineers sets the timing.",
+          "source": "odnr-drawdowns"
+        },
+        {
+          "name": "Alum Creek Marina",
+          "status": "ending",
+          "label": "October weekends",
+          "note": "The marina lists April and October hours as Saturday and Sunday only, 9 am to 6 pm. Its 12 overnight slips take stays of up to 4 days.",
+          "source": "alum-marina",
+          "ends": "2026-10-31",
+          "after_label": "Nov. hours not listed",
+          "after_note": "The marina lists hours for April to October only. Call before you go."
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Alum Creek State Park office",
+          "+17405484631",
+          "740-548-4631",
+          " (Mon to Fri, 8 am to 4:30 pm)"
+        ],
+        [
+          "Alum Creek Marina, Hollenback Rd",
+          "+17405486056",
+          "740-548-6056",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-alum",
+        "odnr-drawdowns",
+        "alum-marina"
+      ]
+    },
+    "buckeye": {
+      "name": "Buckeye Lake",
+      "items": [
+        {
+          "name": "State park docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR has not posted a 2026 date for pulling the Fairfield Beach lease docks or the launch docks.",
+          "source": "odnr-buckeye"
+        },
+        {
+          "name": "Winter drawdown",
+          "status": "unannounced",
+          "label": "2026 not posted",
+          "note": "ODNR&rsquo;s drawdown list still shows last winter: 3 ft, Nov. 15 to Dec. 15, 2025, for dock maintenance, seawall repair and shoreline work, refilled Mar. 1 to May 1, 2026.",
+          "source": "odnr-drawdowns"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Buckeye Lake State Park office",
+          "+17405274218",
+          "740-527-4218",
+          " (Mon to Thu, 8 am to 5 pm)"
+        ]
+      ],
+      "sources": [
+        "odnr-buckeye",
+        "odnr-drawdowns"
+      ]
+    }
+  },
+  "watch": [
+    {
+      "id": "recparks-docks",
+      "label": "Columbus Recreation and Parks, Marinas &amp; Docks",
+      "url": "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/",
+      "lakes": [
+        "hoover"
+      ],
+      "keywords": [
+        "dock",
+        "season",
+        "marina",
+        "remov",
+        "winter",
+        "close"
+      ]
+    },
+    {
+      "id": "recparks-alerts",
+      "label": "Columbus Recreation and Parks, Facility Alerts",
+      "url": "https://columbusrecparks.com/facilities/alerts/",
+      "lakes": [
+        "hoover"
+      ],
+      "keywords": [
+        "hoover",
+        "reservoir",
+        "dock",
+        "marina",
+        "boat ramp",
+        "launch",
+        "red bank",
+        "redbank",
+        "walnut",
+        "oxbow",
+        "maxtown"
+      ]
+    },
+    {
+      "id": "recparks-hoover",
+      "label": "Columbus Recreation and Parks, Hoover Reservoir Parkland",
+      "url": "https://columbusrecparks.com/parks/hoover-reservoir-parkland/",
+      "lakes": [
+        "hoover"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "closed",
+        "closure",
+        "winter",
+        "season"
+      ]
+    },
+    {
+      "id": "odnr-drawdowns",
+      "label": "ODNR, Winter Drawdowns at Ohio State Park Lakes",
+      "url": "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns",
+      "lakes": [
+        "alum",
+        "buckeye"
+      ],
+      "rows": [
+        "Alum Creek",
+        "Buckeye Lake"
+      ],
+      "keywords": [
+        "postpon",
+        "alum creek",
+        "buckeye"
+      ]
+    },
+    {
+      "id": "odnr-alum",
+      "label": "ODNR, Alum Creek State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park",
+      "lakes": [
+        "alum"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert"
+      ]
+    },
+    {
+      "id": "odnr-buckeye",
+      "label": "ODNR, Buckeye Lake State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park",
+      "lakes": [
+        "buckeye"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert"
+      ]
+    },
+    {
+      "id": "alum-marina",
+      "label": "Alum Creek Marina, Docking",
+      "url": "https://www.alumcreekmarina.net/docking.html",
+      "lakes": [
+        "alum"
+      ],
+      "keywords": [
+        "dock",
+        "slip",
+        "hours",
+        "season",
+        "closed",
+        "winter",
+        "october",
+        "november"
+      ]
+    }
+  ]
+}

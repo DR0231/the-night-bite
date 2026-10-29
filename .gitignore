@@ -4,3 +4,7 @@
 # Keep Whisperwood reference images
 !whisperwood/.images/
 !whisperwood/.images/**
+
+# python bytecode
+__pycache__/
+*.pyc

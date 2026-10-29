@@ -126,15 +126,33 @@ No new data. The card copies the Right now strip (USGS or USACE gauge with its "
 from the NWS forecast with its "Checked" time) and prints "--" for anything missing. Static per-lake OG images
 (`assets/og/og-alum.png`, `og-buckeye.png`) are the site art with the lake's name, no live data.
 
-## Dock season (water.html#docks), checked Oct. 27, 2026
+## Dock season (water.html#docks), checked Oct. 28, 2026
 
-- Hoover: Columbus Recreation and Parks, Marinas & Docks, season May 1 to Oct. 31, dock office 614-645-3337.
-  https://columbusrecparks.com/facilities/rentals/marinas-and-docks/
-- Alum Creek: ODNR Alum Creek State Park, office (740) 548-4631, Alum Creek Marina (740) 548-6056.
-  https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park and https://www.alumcreekmarina.net/
-- Buckeye Lake: ODNR Buckeye Lake State Park, office (740) 527-4218.
+Built from `data/docks.json` by `tools/build-docks.py` (then `tools/stamp-version.py`). `js/docks.js` flips an
+"ending" line to its after text once the date passes in Columbus, and flags a check older than 14 days. No fetches.
+
+- Hoover: Columbus Recreation and Parks, Marinas & Docks: public dock season May 1 to Oct. 31 at the Griggs, Hoover
+  and O'Shaughnessy marinas, dock office 614-645-3337.
+  https://columbusrecparks.com/facilities/rentals/marinas-and-docks/ . Facility Alerts (no Hoover item on Oct. 28):
+  https://columbusrecparks.com/facilities/alerts/ . Hoover Reservoir Parkland (Watershed Management 614-645-1721):
+  https://columbusrecparks.com/parks/hoover-reservoir-parkland/ . Last year, news only: The Westerville News, Nov. 1,
+  2025, "The final sailboats were removed from Hoover Reservoir's city docks Friday" (Oct. 31, 2025):
+  https://www.thewestervillenews.com/p/summer-ends-when-boats-leave-hoover . No ramp dock pull date is posted.
+- Alum Creek: ODNR Alum Creek State Park (office 740-548-4631, dock lottery), Alum Creek Marina docking page
+  (12 transient slips, max 4 days; April and October hours Sat. and Sun. only, 9 am to 6 pm; 740-548-6056).
+  https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park and https://www.alumcreekmarina.net/docking.html
+- Buckeye Lake: ODNR Buckeye Lake State Park (office 740-527-4218; lottery docks at Fairfield Beach).
   https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park
-- No 2026 pull dates are posted for any of the three.
+- Drawdowns: ODNR, Winter Drawdowns at Ohio State Park Lakes (page dated June 24, 2024; table still shows the
+  2025 to 2026 winter on Oct. 28, 2026): Alum Creek 3 ft, 10/01/25 to 11/01/25, refill 03/15/26 to 04/15/26, flood
+  control (Corps of Engineers); Buckeye Lake 3 ft, 11/15/25 to 12/15/25, refill 03/01/26 to 05/01/26, dock maintenance,
+  seawall repair, shoreline maintenance.
+  https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns
+- No 2026 dock pull dates are posted for any of the three on Oct. 28, 2026.
+- Watching: `python3 tools/check-docks.py` reads every page in the `watch` list of `data/docks.json` and compares
+  the dock, ramp, closure and drawdown sentences with `tools/docks-watch-state.json`. Last line `RESULT: CHANGED n`
+  means read the +/- lines and the page, update `data/docks.json` (and `checked`), rebuild, then rerun with
+  `--update` and commit the new baseline. ODNR and Columbus also post on Facebook; those are not watched.
 
 ## Ice season (ice.html), checked Oct. 27, 2026
 

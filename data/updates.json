@@ -2,6 +2,24 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-10-29-dock-season",
+      "date": "2026-10-29",
+      "tag": "New",
+      "title": "Dock season tracker",
+      "bullets": [
+        "Water has a new Dock season section showing whether the docks are in, ending or out at Hoover, Alum Creek and Buckeye Lake.",
+        "Every status links to its official City of Columbus, ODNR or marina source and shows the date it was last checked.",
+        "Hoover lists the dock office at 614-645-3337 and Columbus Watershed Management at 614-645-1721, one tap to call.",
+        "Share nightbiteoh.com/docks to send anyone straight to the latest dock status."
+      ],
+      "links": [
+        {
+          "label": "Dock season",
+          "href": "water#docks"
+        }
+      ]
+    },
+    {
       "id": "2026-10-28-stocking-gear",
       "date": "2026-10-28",
       "tag": "New",

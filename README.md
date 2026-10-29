@@ -95,7 +95,7 @@ Limit tables are **reminders only** — confirm on [HuntFish OH / ODNR licenses]
 | `alum/index.html`, `buckeye/index.html` | Alum Creek and Buckeye Lake home pages, built from `index.html` (see Lake home pages) |
 | `species/index.html` | Filterable species grid for the active lake: Biting now tags, a "Not at <lake>" group, ramps and access (`js/species-lake.js`) |
 | `species/*.html` | Per-species Season · Where · Limits · Gear · Bait, with an "at <lake> this month" note under the title |
-| `water.html` | Maps, pool correction, structure, ramps, dock season, link to Ice season |
+| `water.html` | Maps, pool correction, structure, ramps, dock season (from `data/docks.json` via `tools/build-docks.py`; `docks.html` is the short /docks link), link to Ice season |
 | `ice.html` | Ice season: ODNR ice safety, who to call per lake, winter species from the monthly notes. No ice reports |
 | `log.html` | Community JSON + private localStorage + submit |
 | `tournaments.html` | Redirect to `log#tournaments` (list + submit now live at the bottom of the Log) |
