@@ -594,6 +594,7 @@ const UI = {
     if (this.anyMenu() && this.els.clock) this.els.clock.classList.remove("expanded");
     if (!this._packBtn) this._packBtn = document.getElementById("btn-packup");
     if (this._packBtn) this._packBtn.classList.toggle("is-on", Fishing.state === "aim" && !this.anyMenu());
+    if (typeof Hotbar !== "undefined" && Hotbar.render) Hotbar.render();
     const onTitle = !!(this.els.start && !this.els.start.classList.contains("hidden"));
     const menuUp = this.anyMenu();
     const release = (pad, all) => {

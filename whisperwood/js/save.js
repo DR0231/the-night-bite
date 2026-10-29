@@ -47,6 +47,7 @@ const Save = {
         lineId: "gut", lureId: "",
         bait: Object.assign({ worms: 0, crickets: 0, glow: 0, berries: 0, millreed: 0, saltberries: 0, crystal: 0, berryblend: 0, glowplus: 0, rainworms: 0 }, DESIGN.startBait),
         equippedBait: "worms",
+        hotbar: ["bait:worms", "rod:willow", null, null],
         items: { tank: 0, cloak: 0, lantern: 0, lanternFuel: 0, campfireKit: 0 },
         meals: { panperch: 0, dawntea: 0, riverstew: 0, cavebroth: 0, mistskillet: 0, reedchowder: 0, amberpot: 0, moonkettle: 0, saltskillet: 0, galechowder: 0 },
         mealId: "",
@@ -270,6 +271,38 @@ const Save = {
       if (row && (row.landed | 0) > 0) { out.flags.onboard.done = true; break; }
     }
     if (!Array.isArray(out.inventory.ownedRods)) out.inventory.ownedRods = ["willow"];
+    const srcBar = d.inventory && d.inventory.hotbar;
+    let hotbar;
+    if (!Array.isArray(srcBar) || srcBar.length !== 4) {
+      const srcBait = d.inventory && Object.prototype.hasOwnProperty.call(d.inventory, "equippedBait")
+        ? d.inventory.equippedBait
+        : "";
+      const slot1 = (srcBait && srcBait !== "none") ? ("bait:" + srcBait) : null;
+      hotbar = [slot1, "rod:" + (out.inventory.rodId || "willow"), null, null];
+    } else {
+      hotbar = srcBar.slice();
+    }
+    const seenBar = Object.create(null);
+    for (let i = 0; i < 4; i++) {
+      const entry = hotbar[i];
+      let keep = null;
+      if (typeof entry === "string") {
+        const cut = entry.indexOf(":");
+        if (cut > 0) {
+          const kind = entry.slice(0, cut);
+          const id = entry.slice(cut + 1);
+          const ok = (kind === "bait" && HOOK_BAIT.indexOf(id) >= 0)
+            || (kind === "rod" && Object.prototype.hasOwnProperty.call(RODS, id))
+            || (kind === "meal" && Object.prototype.hasOwnProperty.call(MEALS, id));
+          if (ok && !seenBar[entry]) {
+            seenBar[entry] = 1;
+            keep = entry;
+          }
+        }
+      }
+      hotbar[i] = keep;
+    }
+    out.inventory.hotbar = hotbar;
     const srcInv = d.inventory || {};
     if (!Array.isArray(srcInv.loose)) {
       out.inventory.loose = [];
