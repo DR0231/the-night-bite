@@ -157,10 +157,11 @@ const DESIGN = {
   /* Seconds after a door fade before another door can fire. Long enough to step off the mat, not a wait in the doorway. */
   doorCool: 0.35,
   npcWander: 10,
-  /* Quiet first-evening nudges: seconds of play before the first one, gap between them, and the play-time window after which none show. */
+  /* Quiet first-evening nudges: seconds of play before the first one, gap between them, and the play-time window after which none show. Nudges also stop once onboardSpecies species are in the journal. */
   onboardDelay: 6,
   onboardGap: 30,
   onboardWindow: 600,
+  onboardSpecies: 4,
   /* Hook fights that still show the E / Space line above the bar. After this the bar is the cue. */
   fightHintCasts: 3,
   /* Parchment note timing: base seconds, extra per character. Plain notes cap at noteHoldMax milliseconds. Warnings cap at toastMax seconds. Notes longer than toastLongChars drop to the small body line under a title. */
