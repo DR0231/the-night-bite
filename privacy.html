@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.waterdata.usgs.gov https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.waterdata.usgs.gov https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com https://nightbite-visits.nightbiteoh.workers.dev; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
@@ -31,8 +31,8 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v16-2026-10-30">
-  <script src="js/lakes.js?v=v16-2026-10-30"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v17-2026-10-30">
+  <script src="js/lakes.js?v=v17-2026-10-30"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -72,7 +72,7 @@
     <div class="page-horizon" aria-hidden="true"></div>
     <h1>Privacy</h1>
     <p class="lead">
-      The Night Bite and Whisperwood Vale have no accounts, no cookies, and no ads. The only analytics is Cloudflare Web Analytics, which counts visits without cookies.
+      The Night Bite and Whisperwood Vale have no accounts, no cookies, and no ads. Visits are only counted, without cookies or anything personal.
       Most of what you do here stays in your own browser.
     </p>
     <p class="meta">Last updated October 30, 2026.</p>
@@ -87,6 +87,7 @@
       <li><strong>Gear:</strong> your packing checklist ticks (<code>nightbite-pack-v1</code>) and the bank / boat toggle (<code>nightbite-mode-v1</code>).</li>
       <li><strong>Offline readings:</strong> the last pool reading, 7 day pool trend and weather forecast your browser fetched (<code>nb-usgs-last</code>, <code>nb-trend-last</code>, <code>nb-cond-last</code>), so Home can show them, marked &ldquo;Offline&rdquo;, when you have no signal.</li>
       <li><strong>Lake picker:</strong> the lake you last opened (<code>nb-lake</code>) and the lakes you star as Your lakes (<code>nb-lake-stars</code>). Opening a lake doesn't add it; tap its star again to remove it. <strong>Near me</strong> asks for your location only when you tap it, works out the distances on your device, and never sends or saves your location.</li>
+      <li><strong>Bait nearby:</strong> <strong>Sort by my location</strong> asks for your location only when you tap it, sorts the shops on your device, and never sends or saves your location.</li>
       <li><strong>Add to home screen tip:</strong> whether you closed it (<code>nb-install-tip-v1</code>).</li>
       <li><strong>Whisperwood Vale:</strong> your game save (<code>whisperwood-save-v1</code> and related keys), journal and settings. If you export or import a save file, that file stays wherever you put it.</li>
     </ul>
@@ -128,6 +129,9 @@
       The Whisperwood Vale game pages don&rsquo;t load it.
     </p>
 
+    <h2>New and returning visits</h2>
+    <p>Once a day, the site notes whether this phone has visited before (it keeps only the date in <code>nb-visit-day</code>) and sends just &ldquo;new&rdquo; or &ldquo;returning&rdquo; to our own counter. Nothing personal is stored or sent: no ID, no IP address, no browser details. It&rsquo;s skipped when Do Not Track or Global Privacy Control is on, and Whisperwood Vale never sends it.</p>
+
     <h2>Live water and weather readings</h2>
     <p>
       The Home and Water pages ask for the latest gauge reading for the lake you&rsquo;ve picked, straight from your browser:
@@ -166,11 +170,12 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v16-2026-10-30"></script>
-  <script src="js/sw-update.js?v=v16-2026-10-30"></script>
-  <script src="js/alerts.js?v=v16-2026-10-30"></script>
-  <script src="js/nav.js?v=v16-2026-10-30"></script>
-  <script src="js/lake-picker.js?v=v16-2026-10-30"></script>
+  <script src="js/refresh.js?v=v17-2026-10-30"></script>
+  <script src="js/sw-update.js?v=v17-2026-10-30"></script>
+  <script src="js/alerts.js?v=v17-2026-10-30"></script>
+  <script src="js/nav.js?v=v17-2026-10-30"></script>
+  <script src="js/visits.js?v=v17-2026-10-30"></script>
+  <script src="js/lake-picker.js?v=v17-2026-10-30"></script>
 
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

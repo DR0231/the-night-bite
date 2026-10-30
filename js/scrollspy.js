@@ -111,10 +111,9 @@
         li.appendChild(link);
         list.appendChild(li);
       }
-      link.style.top = (a * 100) + "%";
-      link.style.height = Math.max(0, (b - a) * 100) + "%";
       s.link = link;
     });
+    placeLinks();
     tickSec = ticks.map(function (t, i) {
       var f = (i + 0.5) / n;
       for (var k = sections.length - 1; k >= 0; k--) if (f >= sections[k].a) return k;
@@ -123,6 +122,23 @@
     ticks.forEach(function (t, i) { t.classList.toggle("is-start", i > 0 && tickSec[i] !== tickSec[i - 1]); });
     active = -1;
     paint();
+  }
+
+  // tap slices: proportional to section length, but never under 24px of rail (a 24px tap target);
+  // the extra comes out of the longer slices so the column still fills the rail exactly
+  function placeLinks() {
+    var railH = list.getBoundingClientRect().height, MIN = 24, n = sections.length;
+    if (!n || !railH) return;
+    var raw = sections.map(function (s) { return Math.max(0, s.b - s.a) * railH; });
+    var extra = raw.map(function (h) { return Math.max(0, h - MIN); });
+    var sumX = extra.reduce(function (p, x) { return p + x; }, 0);
+    var spare = railH - MIN * n, top = 0;
+    sections.forEach(function (s, i) {
+      var h = spare <= 0 ? railH / n : MIN + (sumX ? extra[i] * spare / sumX : spare / n);
+      s.link.style.top = (top / railH * 100) + "%";
+      s.link.style.height = (h / railH * 100) + "%";
+      top += h;
+    });
   }
 
   function paint() {

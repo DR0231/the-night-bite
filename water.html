@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.waterdata.usgs.gov https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.waterdata.usgs.gov https://waterservices.usgs.gov https://api.weather.gov https://cwms-data.usace.army.mil https://nightbite-visits.nightbiteoh.workers.dev https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a1628">
@@ -31,8 +31,8 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v16-2026-10-30">
-  <script src="js/lakes.js?v=v16-2026-10-30"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v17-2026-10-30">
+  <script src="js/lakes.js?v=v17-2026-10-30"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -521,7 +521,7 @@
       </p>
       <div class="card" id="pool-correction">
         <p class="pool-lead" id="correction-line">890.79 ft · 63°F · ~3.2 ft below full pool</p>
-        <script src="js/pool-readout.js?v=v16-2026-10-30"></script>
+        <script src="js/pool-readout.js?v=v17-2026-10-30"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-10-26T08:00:00.000-04:00">2026-10-26 08:00 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
@@ -533,7 +533,7 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.75rem;">
           Provisional snapshot; your browser may refresh it from USGS. If that fails it says unavailable. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v16-2026-10-30"></script>
+        <script src="js/lake-snapshot.js?v=v17-2026-10-30"></script>
         <details class="how-to-read" id="how-to-read">
           <summary>How to read this</summary>
           <div class="how-to-read-body">
@@ -1584,16 +1584,17 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v16-2026-10-30"></script>
-  <script src="js/sw-update.js?v=v16-2026-10-30"></script>
-  <script src="js/alerts.js?v=v16-2026-10-30"></script>
-  <script src="js/nav.js?v=v16-2026-10-30"></script>
-  <script src="js/lake-picker.js?v=v16-2026-10-30"></script>
-  <script src="js/usgs.js?v=v16-2026-10-30"></script>
-  <script src="js/local-notes.js?v=v16-2026-10-30"></script>
-  <script src="js/fold-anchors.js?v=v16-2026-10-30"></script>
-  <script src="js/docks.js?v=v16-2026-10-30"></script>
-  <script src="js/scrollspy.js?v=v16-2026-10-30"></script>
+  <script src="js/refresh.js?v=v17-2026-10-30"></script>
+  <script src="js/sw-update.js?v=v17-2026-10-30"></script>
+  <script src="js/alerts.js?v=v17-2026-10-30"></script>
+  <script src="js/nav.js?v=v17-2026-10-30"></script>
+  <script src="js/visits.js?v=v17-2026-10-30"></script>
+  <script src="js/lake-picker.js?v=v17-2026-10-30"></script>
+  <script src="js/usgs.js?v=v17-2026-10-30"></script>
+  <script src="js/local-notes.js?v=v17-2026-10-30"></script>
+  <script src="js/fold-anchors.js?v=v17-2026-10-30"></script>
+  <script src="js/docks.js?v=v17-2026-10-30"></script>
+  <script src="js/scrollspy.js?v=v17-2026-10-30"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

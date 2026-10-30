@@ -9,9 +9,9 @@ Two layers: Chrome never resolves the analytics hosts, and any request that stil
 """
 import re
 
-HOSTS = ["static.cloudflareinsights.com", "cloudflareinsights.com"]
+HOSTS = ["static.cloudflareinsights.com", "cloudflareinsights.com", "nightbite-visits.nightbiteoh.workers.dev"]
 RULE = "--host-resolver-rules=" + ", ".join(f"MAP {h} ~NOTFOUND" for h in HOSTS)
-PATTERN = re.compile(r"^https?://([a-z0-9-]+\.)*cloudflareinsights\.com/", re.I)
+PATTERN = re.compile(r"^https?://(([a-z0-9-]+\.)*cloudflareinsights\.com|nightbite-visits\.nightbiteoh\.workers\.dev)/", re.I)
 
 
 def args(extra=None):

@@ -2775,6 +2775,8 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
   font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--cream-dark);
 }
 .lake-tag::before { content: ""; width: 6px; height: 6px; background: var(--amber); }
+.paper-card .lake-tag { color: var(--navy-light); }
+.paper-card .lake-tag::before { background: var(--amber-dim); }
 .lake-now { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; font-family: var(--font-display); font-size: 0.75rem; color: var(--muted); margin: 0 0 var(--space-sm); }
 .lake-now strong { color: var(--cream); font-weight: 400; }
 .lake-note { border-left: 2px solid var(--amber-dim); padding-left: var(--space-sm); color: var(--cream-dark); }
@@ -3259,7 +3261,7 @@ html.nb-show-drafts .update.is-draft { display: block; border-left-style: dashed
 .spy-list li { margin: 0; }
 .spy-link {
   position: absolute; right: 0; width: 100%;
-  min-height: 6px;
+  min-height: 24px; /* tap target; js/scrollspy.js gives every slice at least 24px of the rail */
   display: block;
   text-decoration: none;
   border-radius: 2px;
