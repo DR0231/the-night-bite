@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Adds a one line ODNR stocking or survey note to species pages, linking to /stocking for that lake.
-Every number here is copied from the ODNR district 1 PDFs listed in DATA-SOURCES.md (Stocking & surveys).
+Every number here is copied from the ODNR district 1 PDFs listed in DATA-SOURCES.md (Stocking & surveys), or for Deer Creek Lake, Madison Lake, Knox Lake and Clear Fork Reservoir from ODNR's Fish Stocking dashboard (checked Oct. 30, 2026).
 Idempotent: rewrites the block between <!-- stocking-line --> markers. Run from the repo root."""
 import pathlib, re
 
@@ -10,6 +10,7 @@ LINES = {
         ("hoover", "stocked", "ODNR stocked saugeye in Hoover every year from 2010 to 2019."),
         ("alum", "stocked", "ODNR stocked saugeye in Alum Creek every year from 2010 to 2019."),
         ("indian", "stocked", "ODNR stocked saugeye in Indian Lake every year from 2010 to 2019."),
+        ("deercreek", "stocked", "ODNR stocked saugeye in Deer Creek Lake every year from 2016 to 2025, about 130,000 fingerlings a year since 2021."),
     ],
     "blue-catfish": [
         ("hoover", "stocked", "ODNR stocked blue catfish in Hoover in 7 of the years from 2011 to 2018."),
@@ -19,6 +20,7 @@ LINES = {
     ],
     "muskellunge": [
         ("alum", "stocked", "ODNR stocked muskellunge in Alum Creek every year from 2010 to 2019."),
+        ("clearfork", "stocked", "ODNR stocked muskellunge in Clear Fork Reservoir every year from 2016 to 2025."),
     ],
     "black-crappie": [
         ("hoover", "growth", "ODNR trap nets: Hoover crappie average 9.9 in at age 3 (Ohio 9.5)."),
@@ -37,6 +39,10 @@ LINES = {
         ("alum", "growth", "ODNR hoop nets compare Alum Creek channel catfish catch rates with district and state averages."),
         ("indian", "growth", "ODNR hoop nets compare Indian Lake channel catfish catch rates with district and state averages."),
         ("delaware", "growth", "ODNR hoop nets compare Delaware Lake channel catfish catch rates with district and state averages."),
+        ("madison", "stocked", "ODNR stocked channel catfish in Madison Lake every other year from 2016 to 2024."),
+    ],
+    "yellow-perch": [
+        ("knox", "stocked", "ODNR stocked yellow perch fingerlings in Knox Lake in 2019 and every year from 2022 to 2025."),
     ],
     "hybrid-striped-bass": [
         ("oshaughnessy", "stocked", "ODNR lists O’Shaughnessy among the lakes it stocks with hybrid striped bass; no numbers are posted."),

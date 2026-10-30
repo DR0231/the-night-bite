@@ -67,8 +67,9 @@ for key, lake in D["lakes"].items():
         out.append(f'          <li>{label}: <a href="tel:{tel}">{shown}</a>{tail}</li>')
     out.append('        </ul>')
     links = "; ".join(src_link(s) for s in lake["sources"])
-    out.append(f'        <p class="meta dock-checked" data-checked="{checked}">Last checked '
-               f'<time datetime="{checked}">{ap_date(checked)}</time>. Sources: {links}.</p>')
+    ck = lake.get("checked", checked)   # a lake added later carries its own checked date
+    out.append(f'        <p class="meta dock-checked" data-checked="{ck}">Last checked '
+               f'<time datetime="{ck}">{ap_date(ck)}</time>. Sources: {links}.</p>')
     out.append('      </div>')
 block = "\n".join(out)
 

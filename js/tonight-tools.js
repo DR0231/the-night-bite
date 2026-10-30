@@ -21,7 +21,7 @@
   var row = document.getElementById("glance-actions");
   var LK = window.NightBiteLake, LS = window.NightBiteLakes;
   if (!row || !LK || !LS) return;
-  var cfg = LK.cfg, lakeName = cfg.short === "Buckeye" ? "Buckeye Lake" : cfg.name;
+  var cfg = LK.cfg, lakeName = cfg.name;
   var home = LS.homeFor ? LS.homeFor(LK.id) : location.href.split("#")[0];
   var REMIND_KEY = "nb-remind";
   row.hidden = false;
@@ -114,7 +114,7 @@
     var poolOk = poolCell && !poolCell.closest(".glance-cell").hasAttribute("data-empty");
     var biteOk = biteCell && !biteCell.closest(".glance-cell").hasAttribute("data-empty");
     r.level = poolOk ? txt('[data-glance="pool"]') : DASH;
-    r.levelSub = poolOk ? txt('[data-glance="pool-sub"]') : "";
+    r.levelSub = poolOk ? txt('[data-glance="pool-sub"]') : (cfg.pool && !cfg.pool.src ? "No public gauge" : "");
     r.bite = biteOk ? txt('[data-glance="bite"]') : DASH;
     // biting now: top 3 picks for this month from the site's notes
     var m = monthEt(), picks = bite && bite.months && bite.months[m] ? bite.months[m].picks : [];
@@ -126,7 +126,8 @@
     r.src = [
       "Weather: NWS forecast" + (cm ? ", checked " + cm[1] + " ET" : ", not loaded") + ". Alerts: NWS.",
       "Sunset, moonrise and moon: worked out on this phone.",
-      "Level" + (hasTemp ? " and water temp" : "") + ": " + (cfg.pool && cfg.pool.srcName ? cfg.pool.srcName + " gauge" : "gauge") + (poolOk && checked ? ", checked " + checked : poolOk ? "" : ", no reading") + ".",
+      (cfg.pool && !cfg.pool.src ? "Level: no public gauge on this lake." :
+      "Level" + (hasTemp ? " and water temp" : "") + ": " + (cfg.pool && cfg.pool.srcName ? cfg.pool.srcName + " gauge" : "gauge") + (poolOk && checked ? ", checked " + checked : poolOk ? "" : ", no reading") + "."),
       "Biting now: this site\u2019s " + MONTHS[m] + " notes (typical patterns, not a report). Bite: rule of thumb from the NWS forecast."
     ].join(" ");
     r.date = (function () { try { return new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date()) + " ET"; } catch (e) { return ""; } })();

@@ -1,7 +1,7 @@
 /**
  * The Night Bite: tournaments from data/tournaments.json + mailto submit.
  * Each event carries a "lake" id (hoover, alum, buckeye); events with no lake are Hoover events.
- * Only the selected lake's events are listed, so a Hoover event never shows on the Alum or Buckeye view.
+ * Only the selected lake's events are listed, so a Hoover event never shows on the Alum or Buckeye Lake view.
  */
 (function () {
   var MAILTO = "contact@nightbiteoh.com";

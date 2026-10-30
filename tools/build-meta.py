@@ -10,7 +10,8 @@ right after the canonical:
   twitter:card summary_large_image, twitter:title, twitter:description, twitter:image, twitter:image:alt.
 Any og:* or twitter:* tags already on the page are removed first, so running it twice changes nothing.
 Images are absolute https://nightbiteoh.com URLs: assets/og/og-<lake>.png on each lake home page other
-than Hoover (alum, buckeye, oshaughnessy, griggs, indian, delaware), assets/og/og-card.png everywhere else (all 1200x630).
+than Hoover (alum, buckeye, oshaughnessy, griggs, indian, delaware,
+deercreek, madison, knox, clearfork), assets/og/og-card.png everywhere else (all 1200x630).
 Skipped: 404.html and offline.html (no canonical, not shared), previews/, review/, tools/, whisperwood/ (the game),
 and Search Console verification files. Check the result with tools/check-meta.py.
 """
@@ -26,6 +27,10 @@ IMAGES = {
     "griggs/index.html": ("og-griggs.png", "The Night Bite: Griggs Reservoir fishing hub, a pixel lantern over a moonlit tree line"),
     "indian/index.html": ("og-indian.png", "The Night Bite: Indian Lake fishing hub, a pixel lantern over a moonlit tree line"),
     "delaware/index.html": ("og-delaware.png", "The Night Bite: Delaware Lake fishing hub, a pixel lantern over a moonlit tree line"),
+    "deercreek/index.html": ("og-deercreek.png", "The Night Bite: Deer Creek Lake fishing hub, a pixel lantern over a moonlit tree line"),
+    "madison/index.html": ("og-madison.png", "The Night Bite: Madison Lake fishing hub, a pixel lantern over a moonlit tree line"),
+    "knox/index.html": ("og-knox.png", "The Night Bite: Knox Lake fishing hub, a pixel lantern over a moonlit tree line"),
+    "clearfork/index.html": ("og-clearfork.png", "The Night Bite: Clear Fork Reservoir fishing hub, a pixel lantern over a moonlit tree line"),
 }
 DEFAULT_IMAGE = ("og-card.png", "The Night Bite: a pixel lantern over a moonlit tree line")
 

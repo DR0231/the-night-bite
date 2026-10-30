@@ -29,10 +29,10 @@
   function pickFor(sp) { for (var i = 0; i < picks.length; i++) if (picks[i].id === sp) return picks[i]; return null; }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
   function names(list) {
-    var out = list.map(function (k) { return LS.all[k] ? LS.all[k].short === "Buckeye" ? "Buckeye Lake" : LS.all[k].short : k; });
+    var out = list.map(function (k) { return LS.all[k] ? LS.all[k].short : k; });
     return out.length < 3 ? out.join(" and ") : out.slice(0, -1).join(", ") + " and " + out[out.length - 1];
   }
-  var lakeName = cfg.short === "Buckeye" ? "Buckeye Lake" : cfg.short;
+  var lakeName = cfg.short;
 
   // ---------- species index ----------
   // Which lakes a species lives at: the lake's species list in js/lakes.js is the one source (data-lakes on the

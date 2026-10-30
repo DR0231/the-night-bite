@@ -1,7 +1,7 @@
 {
   "name": "The Night Bite",
   "short_name": "Night Bite",
-  "description": "Unofficial night fishing notebook for Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake and Delaware Lake: lake level, weather, ramps, species.",
+  "description": "Unofficial night fishing notebook for Hoover, Alum Creek, Buckeye Lake and eight more central Ohio lakes: lake level, weather, ramps, species.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

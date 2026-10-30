@@ -9,7 +9,7 @@
  *    with last deploy's styles or scripts. (Up to v11 these were cache first, which showed the multi-lake
  *    picker unstyled and the old Hoover-only map script after a deploy.) Pages ask for them with ?v=VERSION.
  *  · Fonts, images: stale while revalidate (instant from cache, refreshed in the background).
- *  · Home pages: the root (Hoover) and every lake home page (alum/, buckeye/, oshaughnessy/, griggs/, indian/, delaware/) are precached, so each lake opens offline.
+ *  · Home pages: the root (Hoover) and every lake home page (alum/, buckeye/, oshaughnessy/, griggs/, indian/, delaware/, deercreek/, madison/, knox/, clearfork/) are precached, so each lake opens offline.
  *  · Whisperwood is never touched: nothing under whisperwood/ (or whisperwood.html) is cached or intercepted.
  *  · Cross origin requests (NWS, USGS, links out) pass straight through. The page itself keeps the last good
  *    readings in localStorage and labels them "Offline. Last updated ..." (js/refresh.js, NightBiteOffline).
@@ -19,7 +19,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v15-2026-10-29";
+var VERSION = "v16-2026-10-30";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
@@ -32,6 +32,10 @@ var PRECACHE = [
   "griggs/",
   "indian/",
   "delaware/",
+  "deercreek/",
+  "madison/",
+  "knox/",
+  "clearfork/",
   "species/",
   "water.html",
   "ice.html",
@@ -63,6 +67,8 @@ var PRECACHE = [
   "species/bullhead.html",
   "js/alerts.js",
   "js/astro.js",
+  "js/bait-nearby.js",
+  "data/bait-shops.json",
   "js/biting-data.js",
   "js/biting-data-lakes.js",
   "js/biting.js",
@@ -81,6 +87,10 @@ var PRECACHE = [
   "js/lake-map-data-griggs.js",
   "js/lake-map-data-indian.js",
   "js/lake-map-data-delaware.js",
+  "js/lake-map-data-deercreek.js",
+  "js/lake-map-data-madison.js",
+  "js/lake-map-data-knox.js",
+  "js/lake-map-data-clearfork.js",
   "js/lake-picker.js",
   "js/lake-snapshot.js",
   "js/lakes.js",
@@ -121,6 +131,10 @@ var PRECACHE = [
   "assets/griggs-chart.png",
   "assets/indian-chart.png",
   "assets/delaware-chart.png",
+  "assets/deercreek-chart.png",
+  "assets/madison-chart.png",
+  "assets/knox-chart.png",
+  "assets/clearfork-chart.png",
   "assets/horizon-center.png",
   "assets/horizon-thin.png",
   "assets/horizon-tile.png",
@@ -163,6 +177,14 @@ var PRECACHE = [
   "assets/map/indian-map-wide.png",
   "assets/map/delaware-map-tall.png",
   "assets/map/delaware-map-wide.png",
+  "assets/map/deercreek-map-tall.png",
+  "assets/map/deercreek-map-wide.png",
+  "assets/map/madison-map-tall.png",
+  "assets/map/madison-map-wide.png",
+  "assets/map/knox-map-tall.png",
+  "assets/map/knox-map-wide.png",
+  "assets/map/clearfork-map-tall.png",
+  "assets/map/clearfork-map-wide.png",
   "assets/map/pin-access.png",
   "assets/map/pin-ramp.png",
   "assets/map/pin-shop.png",

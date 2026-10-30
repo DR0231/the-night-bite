@@ -26,8 +26,9 @@
       set(poolS, "~" + m[2] + " ft " + m[3] + " full pool");
       cell(poolV, true);
     } else {
+      var LKc = window.NightBiteLake && window.NightBiteLake.cfg;
       set(poolV, "--");
-      set(poolS, "See the gauge below");
+      set(poolS, LKc && LKc.pool && !LKc.pool.src ? "No public level gauge" : "See the gauge below");
       cell(poolV, false);
     }
   }

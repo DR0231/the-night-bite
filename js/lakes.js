@@ -3,16 +3,20 @@
  * Loaded in <head> on every page (before any other script), so html[data-lake] is set before first paint and the
  * lake-only blocks ([data-for="alum"] and so on, see css/styles.css) never flash the wrong lake.
  *
- * Active lake: ?lake=hoover|alum|buckeye|oshaughnessy|griggs|indian|delaware in the URL first, then localStorage "nb-lake", then Hoover (the default).
+ * Active lake: ?lake=hoover|alum|buckeye|oshaughnessy|griggs|indian|delaware|deercreek|madison|knox|clearfork in the URL first, then localStorage "nb-lake", then Hoover (the default).
  * Home pages have their own address per lake: Hoover at the site root, every other lake at <id>/ (alum/, buckeye/,
- * oshaughnessy/, griggs/, indian/, delaware/). Those index.html files are built from index.html by tools/build-lake-pages.py
+ * oshaughnessy/, griggs/, indian/, delaware/, deercreek/, madison/, knox/, clearfork/). Those index.html files are built from index.html by tools/build-lake-pages.py
  * and carry <meta name="nb-home" content="<id>">. On a lake's own home page that lake always wins. At the root, a ?lake= link
  * or a saved choice of another lake goes straight to that lake's address (location.replace, before anything
  * paints). Other pages keep ?lake= in the address bar for every lake but Hoover, a clean URL for Hoover, and their
  * Home links point at the chosen lake's home page.
  *
  * Also the shared gauge fetchers: USGS (usgsLatest, usgsSeries: new Water Data API first, legacy IV as fallback) and the
- * Corps CWMS API (cwmsFor, Alum Creek and Delaware Lake). js/usgs.js, js/pool-trend.js and js/lake-picker.js all use them.
+ * Corps CWMS API (cwmsFor, Alum Creek, Delaware Lake and Deer Creek Lake). Madison Lake, Knox Lake and Clear Fork Reservoir have
+ * no public lake gauge (pool.src null): nothing is fetched and the pool card says so. js/usgs.js, js/pool-trend.js and js/lake-picker.js all use them.
+ *
+ * Adding a lake: one entry in LAKES plus its id in ORDER. The picker (js/lake-picker.js) reads name, short, aliases
+ * (search), region, lat and lng (Near me) and pool (its Live level and Live temp tags) from that entry.
  *
  * Every value below has a source in DATA-SOURCES.md. Hoover's values are exactly the ones the scripts used before
  * this file existed (js/usgs.js, js/pool-trend.js, js/conditions.js, js/alerts.js); those scripts fall back to the
@@ -26,6 +30,8 @@
       short: "Hoover",
       area: "Central Ohio",
       lat: 40.11, lng: -82.88,
+      region: "central", owner: "City of Columbus",
+      aliases: ["Hoover", "Hoover Dam", "Big Walnut"],
       pool: {
         src: "usgs", srcName: "USGS",
         site: "03228400", param: "62614", temp: "00010",
@@ -51,6 +57,8 @@
       short: "Alum Creek",
       area: "Central Ohio",
       lat: 40.24, lng: -82.97,
+      region: "central", owner: "US Army Corps of Engineers",
+      aliases: ["Alum", "Alum Creek State Park"],
       pool: {
         // no USGS gauge on the lake itself; the Corps of Engineers posts the lake level every 15 minutes
         src: "cwms", srcName: "USACE",
@@ -76,9 +84,11 @@
     buckeye: {
       id: "buckeye",
       name: "Buckeye Lake",
-      short: "Buckeye",
+      short: "Buckeye Lake",
       area: "Central Ohio",
       lat: 39.93, lng: -82.49,
+      region: "central", owner: "ODNR",
+      aliases: ["Buckeye Lake State Park"],
       pool: {
         src: "usgs", srcName: "USGS",
         site: "395540082291600", param: "62614",
@@ -95,7 +105,7 @@
         page: "https://forecast.weather.gov/MapClick.php?lat=39.93&lon=-82.49"
       },
       alerts: { zones: "OHC089,OHC045,OHC127,OHZ056,OHZ065,OHZ066", counties: "the Buckeye Lake area" },
-      // Buckeye runs west southwest to east northeast: north and south winds name a shore, east and west winds name an end
+      // Buckeye Lake runs west southwest to east northeast: north and south winds name a shore, east and west winds name an end
       push: ["into the south shore", "toward the southwest end", "toward the west end", "into the northwest shore",
         "into the north shore", "toward the northeast end", "toward the east end", "into the southeast shore"],
       map: { data: "NightBiteMapDataBuckeye", chart: "assets/buckeye-chart.png" },
@@ -108,6 +118,8 @@
       short: "O'Shaughnessy",
       area: "Central Ohio",
       lat: 40.20, lng: -83.14,
+      region: "central", owner: "City of Columbus",
+      aliases: ["OShaughnessy", "O Shaughnessy", "Shaughnessy", "Scioto"],
       pool: {
         src: "usgs", srcName: "USGS",
         site: "03220500", param: "62614",   // Scioto River at O'Shaughnessy Dam near Dublin: reservoir elevation
@@ -135,6 +147,8 @@
       short: "Griggs",
       area: "Central Ohio",
       lat: 40.03, lng: -83.095,
+      region: "central", owner: "City of Columbus",
+      aliases: ["Griggs", "Scioto"],
       pool: {
         src: "usgs", srcName: "USGS",
         site: "03221500", param: "62614", temp: "00010",   // Scioto River at Griggs Dam: reservoir elevation and water temp
@@ -161,6 +175,8 @@
       short: "Indian Lake",
       area: "West central Ohio",
       lat: 40.49, lng: -83.89,
+      region: "central", owner: "ODNR",
+      aliases: ["Indian", "Indian Lake State Park", "Russells Point"],
       pool: {
         src: "usgs", srcName: "USGS",
         site: "03260500", param: "62614", temp: "00010",   // Indian Lake at Russells Point: lake elevation and water temp
@@ -189,6 +205,8 @@
       short: "Delaware Lake",
       area: "Central Ohio",
       lat: 40.385, lng: -83.055,
+      region: "central", owner: "US Army Corps of Engineers",
+      aliases: ["Delaware", "Delaware State Park"],
       pool: {
         // no USGS lake gauge; the Corps of Engineers posts the lake level every 15 minutes (same as Alum Creek)
         src: "cwms", srcName: "USACE",
@@ -210,9 +228,134 @@
       map: { data: "NightBiteMapDataDelaware", chart: "assets/delaware-chart.png" },
       spots: ["Main marina ramp", "Southwest launch", "Sherwood Road ramp (east)", "Bank (dam area)", "Bank (other)", "Kayak launch"],
       species: ["black-crappie", "white-crappie", "largemouth-bass", "smallmouth-bass", "channel-catfish", "bluegill", "white-bass"]
+    },
+    deercreek: {
+      id: "deercreek",
+      name: "Deer Creek Lake",
+      short: "Deer Creek Lake",
+      area: "Central Ohio",
+      lat: 39.62, lng: -83.24,
+      region: "central", owner: "US Army Corps of Engineers",
+      aliases: ["Deer Creek", "Deer Creek State Park", "Deer Creek Reservoir", "Mt. Sterling"],
+      pool: {
+        // no USGS lake gauge; the Corps of Engineers posts the lake level every 15 minutes (same as Alum Creek).
+        // ODNR draws it down about 14 ft to winter pool Oct. 1 to Nov. 30, so fall readings sit well below full pool.
+        src: "cwms", srcName: "USACE",
+        office: "LRH", ts: "DeerCr-Lake.Elev.Inst.15Minutes.0.OBS",
+        temp: null,     // no public lake temperature gauge (the Corps posts an outflow temp only)
+        fullPool: 810.5,   // ODNR fishing map pool
+        gaugeUrl: "https://water.usace.army.mil/overview/lrh/locations/deercr",
+        snapshot: { line: "804.72 ft · no temp · ~5.8 ft below full pool", at: "2026-10-30T10:30:00-04:00", when: "2026-10-30 10:30 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/78,65/forecast/hourly",
+        point: "https://api.weather.gov/points/39.62,-83.24",
+        grid: "https://api.weather.gov/gridpoints/ILN/78,65",
+        station: "KI23", stationName: "Washington Court House airport (KI23)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.62&lon=-83.24"
+      },
+      alerts: { zones: "OHC129,OHC047,OHZ064,OHZ063", counties: "the Deer Creek Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataDeercreek", chart: "assets/deercreek-chart.png" },
+      spots: ["Marina ramp (west)", "Ramp by the dam", "Below the dam", "Bank (other)", "Kayak launch"],
+      species: ["saugeye", "black-crappie", "white-crappie", "largemouth-bass", "smallmouth-bass", "channel-catfish", "bluegill", "white-bass"]
+    },
+    madison: {
+      id: "madison",
+      name: "Madison Lake",
+      short: "Madison Lake",
+      area: "Central Ohio",
+      lat: 39.875, lng: -83.376,
+      region: "central", owner: "ODNR Ohio State Parks",
+      aliases: ["Madison", "Madison Lake State Park", "London"],
+      pool: {
+        // no public lake level or temperature gauge (USGS or Corps): the pool card says so, nothing is fetched
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 965,     // ODNR fishing map summer pool
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/72,76/forecast/hourly",
+        point: "https://api.weather.gov/points/39.875,-83.376",
+        grid: "https://api.weather.gov/gridpoints/ILN/72,76",
+        station: "KUYF", stationName: "London airport (KUYF)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.875&lon=-83.376"
+      },
+      alerts: { zones: "OHC097,OHZ054", counties: "the Madison Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataMadison", chart: "assets/madison-chart.png" },
+      spots: ["Launch ramp", "Bank by the ramp", "Bank (other)", "Kayak launch"],
+      species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "bullhead"]
+    },
+    knox: {
+      id: "knox",
+      name: "Knox Lake",
+      short: "Knox Lake",
+      area: "Central Ohio",
+      lat: 40.507, lng: -82.506,
+      region: "central", owner: "ODNR Division of Wildlife",
+      aliases: ["Knox", "Knox Lake Fishing Area", "Fredericktown", "Kokosing"],
+      pool: {
+        // no public lake level or temperature gauge (the USGS Kokosing River gauge is on the river, not the lake)
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 1100,    // ODNR fishing map summer pool
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/CLE/60,17/forecast/hourly",
+        point: "https://api.weather.gov/points/40.507,-82.506",
+        grid: "https://api.weather.gov/gridpoints/CLE/60,17",
+        station: "KMFD", stationName: "Mansfield airport (KMFD)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.507&lon=-82.506"
+      },
+      alerts: { zones: "OHC083,OHZ047", counties: "the Knox Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataKnox", chart: "assets/knox-chart.png" },
+      spots: ["Marina ramp (lower lake)", "Upper lake ramp", "Carry-in access", "Bank (other)", "Kayak launch"],
+      species: ["largemouth-bass", "flathead-catfish", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "yellow-perch"]
+    },
+    clearfork: {
+      id: "clearfork",
+      name: "Clear Fork Reservoir",
+      short: "Clear Fork",
+      area: "Central Ohio",
+      lat: 40.71, lng: -82.63,
+      region: "central", owner: "City of Mansfield",
+      aliases: ["Clear Fork", "Clearfork", "Clear Fork Lake", "Mansfield", "Lexington"],
+      pool: {
+        // no public lake level or temperature gauge: the pool card says so, nothing is fetched
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 1202,    // ODNR fishing map summer pool (the City lists the spillway at 1202 ft)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/CLE/55,26/forecast/hourly",
+        point: "https://api.weather.gov/points/40.71,-82.63",
+        grid: "https://api.weather.gov/gridpoints/CLE/55,26",
+        station: "KMFD", stationName: "Mansfield airport (KMFD)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.71&lon=-82.63"
+      },
+      alerts: { zones: "OHC139,OHC117,OHZ029,OHZ037", counties: "the Clear Fork Reservoir area" },
+      push: null,
+      map: { data: "NightBiteMapDataClearfork", chart: "assets/clearfork-chart.png" },
+      spots: ["Ramp and marina (south side)", "Picnic area pier", "Bank (south shore)", "Bank (other)", "Kayak launch"],
+      species: ["muskellunge", "largemouth-bass", "black-crappie", "white-crappie", "channel-catfish"]
     }
   };
-  var ORDER = ["hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware"];
+  var ORDER = ["hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware", "deercreek", "madison", "knox", "clearfork"];
+  // picker regions, in this order (js/lake-picker.js). A region with no lakes yet is hidden. Every lake above sets
+  // region to one of these ids; lat and lng above (the lake's NWS forecast point, on the water) give Near me distances.
+  var REGIONS = [
+    { id: "central", name: "Central Ohio" },
+    { id: "northeast", name: "Northeast Ohio" },
+    { id: "northwest", name: "Northwest Ohio" },
+    { id: "southwest", name: "Southwest Ohio" },
+    { id: "southeast", name: "Southeast Ohio" },
+    { id: "erie", name: "Lake Erie" }
+  ];
   // display names for the species ids above (the log's species lists use these)
   var SPECIES = {
     "channel-catfish": "Channel catfish", "blue-catfish": "Blue catfish", "flathead-catfish": "Flathead catfish",
@@ -253,6 +396,12 @@
 
   var root = document.documentElement;
   root.setAttribute("data-lake", id);
+  // hide every other lake's blocks (data-for, data-lakes) before first paint; generated from the id, so a new lake needs no CSS
+  try {
+    var hide = document.createElement("style");
+    hide.textContent = 'html[data-lake="' + id + '"] [data-for]:not([data-for~="' + id + '"]),html[data-lake="' + id + '"] [data-lakes]:not([data-lakes~="' + id + '"]){display:none!important}';
+    (document.head || root).appendChild(hide);
+  } catch (e) {}
   root.style.setProperty("--lake-short", '"' + LAKES[id].short + '"');
 
   // same page, other lake (the picker navigates here; a cross-document view transition fades between them).
@@ -286,7 +435,7 @@
   }
   function cwms(hours) { return cwmsFor(id, hours); }
 
-  // USGS lake gauges (Hoover, Buckeye, O'Shaughnessy, Griggs, Indian Lake). The legacy WaterServices IV API (waterservices.usgs.gov/nwis/iv) slows down
+  // USGS lake gauges (Hoover, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake). The legacy WaterServices IV API (waterservices.usgs.gov/nwis/iv) slows down
   // from Nov. 16, 2026 and is switched off Feb. 22, 2027 (DATA-SOURCES.md). So every reading asks the new USGS Water
   // Data API first (api.waterdata.usgs.gov/ogcapi, public, CORS open, no key) and only tries the legacy API if the
   // new one errors, rate limits or takes longer than 8 seconds. Both give the same provisional readings; the legacy
@@ -360,18 +509,34 @@
   function bitingVar(lake) { return lake === "hoover" ? "NightBiteBiting" : "NightBiteBiting" + cap(lake); }
   function mapFile(lake) { return lake === "hoover" ? "hoover-map-data.js" : "lake-map-data-" + lake + ".js"; }
 
-  window.NightBiteLakes = { all: LAKES, order: ORDER, speciesNames: SPECIES, storageKey: KEY, hrefFor: hrefFor, homeFor: homeFor, base: BASE, cwmsFor: cwmsFor,
+  window.NightBiteLakes = { all: LAKES, order: ORDER, regions: REGIONS, speciesNames: SPECIES, storageKey: KEY, hrefFor: hrefFor, homeFor: homeFor, base: BASE, cwmsFor: cwmsFor,
     usgsLatest: usgsLatest, usgsSeries: usgsSeries, bitingVar: bitingVar, mapFile: mapFile };
   window.NightBiteLake = { id: id, cfg: LAKES[id], key: key, cwms: cwms, home: homeLake };
 
   // Lake switches only (js/lake-picker.js sets the flag): a short cross-fade into the new page.
   // Registered here in <head> so it is in place before the first frame; every other navigation stays instant.
+  // revealing: true from the first frame until this page's own fade in has finished. A switch picked inside that
+  // window skips its fade out, so two fades never overlap (Chrome aborts the second with "Page already revealed").
+  var revealing = true;
+  function revealed() { revealing = false; }
   function vt(e, clear) {
     var switching = false;
     try { switching = sessionStorage.getItem("nb-lake-switch") === "1"; if (clear) sessionStorage.removeItem("nb-lake-switch"); } catch (er) {}
-    if (e.viewTransition && !switching) e.viewTransition.skipTransition();
+    var t = e.viewTransition;
+    if (!t) { if (clear) revealed(); return; }
+    // a skipped or interrupted fade (quick lake switches) rejects these; nothing to do, so keep the console quiet
+    var quiet = function () {};
+    try { [t.ready, t.finished, t.updateCallbackDone].forEach(function (pr) { if (pr && pr.catch) pr.catch(quiet); }); } catch (er) {}
+    var busy = !clear && (revealing || document.activeViewTransition);
+    if (!switching || busy) { try { t.skipTransition(); } catch (er) {} }
+    if (clear) { try { t.finished.then(revealed, revealed); } catch (er) { revealed(); } }
   }
   window.addEventListener("pagereveal", function (e) { vt(e, true); });
+  // back or forward from the browser cache shows this page's lake again, so make it the saved lake too; otherwise the
+  // next Water or Species link would open whichever lake was picked last on another page
+  window.addEventListener("pageshow", function (e) {
+    if (e.persisted) { try { if (localStorage.getItem(KEY) !== id) localStorage.setItem(KEY, id); } catch (er) {} }
+  });
   window.addEventListener("pageswap", function (e) { vt(e, false); });
 
   // fill [data-lk="name|short|area"] once the page is parsed (Hoover markup already says Hoover)
@@ -382,8 +547,9 @@
         var v = LAKES[id][nodes[i].getAttribute("data-lk")];
         if (typeof v === "string" && nodes[i].textContent !== v) nodes[i].textContent = v;
       }
-      // Home links (logo, nav, footer) go straight to this lake's home page
-      var root0 = BASE.replace(/[?#].*$/, ""), links = document.querySelectorAll("a[href]");
+      // Home links (logo, nav, footer) go straight to this lake's home page. Links that pick a lake (a[data-lake], the
+      // picker rows) are left alone: rewriting those once sent the Hoover link to the lake already open (v42, v43).
+      var root0 = BASE.replace(/[?#].*$/, ""), links = document.querySelectorAll("a[href]:not([data-lake])");
       for (var j = 0; j < links.length; j++) {
         var a = links[j], h = a.href.replace(/[?#].*$/, "");
         if (h === root0 || h === root0 + "index.html" || h === root0 + "index") a.href = homeFor(id) + (a.hash || "");

@@ -9,6 +9,7 @@
   if (box && !window.fetch) box.removeAttribute("data-pending");
   if (!box || !window.fetch) return;
   var LK = window.NightBiteLake, LP = LK && LK.cfg && LK.cfg.pool;   // js/lakes.js; Hoover if missing
+  if (LP && !LP.src) { box.hidden = true; box.removeAttribute("data-pending"); return; }   // no public lake gauge: no trend
   var CWMS = !!(LP && LP.src === "cwms");
   var LS = window.NightBiteLakes;
   var NS = "http://www.w3.org/2000/svg";

@@ -1,5 +1,5 @@
 name: Trip report
-description: Submit a trip at Hoover Reservoir, Alum Creek Lake, Buckeye Lake, O'Shaughnessy Reservoir, Griggs Reservoir, Indian Lake or Delaware Lake for the community log.
+description: Submit a trip at Hoover Reservoir, Alum Creek Lake, Buckeye Lake, O'Shaughnessy Reservoir, Griggs Reservoir, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake or Clear Fork Reservoir for the community log.
 title: "Trip: "
 labels: ["trip-report"]
 body:
@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Public info only: no secret GPS, no private property, no personal addresses.
-        Photos are Phase 2. Confirm you fished public access at Hoover Reservoir, Alum Creek Lake, Buckeye Lake, O'Shaughnessy Reservoir, Griggs Reservoir, Indian Lake or Delaware Lake (OH).
+        Photos are Phase 2. Confirm you fished public access at Hoover Reservoir, Alum Creek Lake, Buckeye Lake, O'Shaughnessy Reservoir, Griggs Reservoir, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake or Clear Fork Reservoir (OH).
   - type: dropdown
     id: lake
     attributes:
@@ -20,6 +20,10 @@ body:
         - Griggs Reservoir
         - Indian Lake
         - Delaware Lake
+        - Deer Creek Lake
+        - Madison Lake
+        - Knox Lake
+        - Clear Fork Reservoir
     validations:
       required: true
   - type: input

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Build each lake's own home page from index.html: alum/, buckeye/, oshaughnessy/, griggs/, indian/ and delaware/index.html.
+"""Build each lake's own home page from index.html: alum/, buckeye/, oshaughnessy/, griggs/, indian/, delaware/,
+deercreek/, madison/, knox/ and clearfork/index.html.
 
 Run from the repo root after any change to index.html, then run tools/stamp-version.py:
     python3 tools/build-lake-pages.py && python3 tools/stamp-version.py
@@ -25,7 +26,7 @@ LAKES = {
         "desc": "Unofficial Alum Creek fishing hub, Ohio: live lake level, tonight's bite, species, water maps, trip log, gear.",
     },
     "buckeye": {
-        "name": "Buckeye Lake", "short": "Buckeye",
+        "name": "Buckeye Lake", "short": "Buckeye Lake",
         "title": "The Night Bite: Buckeye Lake fishing hub",
         "desc": "Unofficial Buckeye Lake fishing hub, Ohio: live lake level, tonight's bite, species, water maps, trip log, gear.",
     },
@@ -48,6 +49,26 @@ LAKES = {
         "name": "Delaware Lake", "short": "Delaware Lake",
         "title": "The Night Bite: Delaware Lake fishing hub",
         "desc": "Unofficial Delaware Lake fishing hub, Ohio: live lake level, tonight's bite, species, water maps, trip log, gear.",
+    },
+    "deercreek": {
+        "name": "Deer Creek Lake", "short": "Deer Creek Lake",
+        "title": "The Night Bite: Deer Creek Lake fishing hub",
+        "desc": "Unofficial Deer Creek Lake fishing hub, Ohio: live lake level, tonight's bite, species, water maps, trip log, gear.",
+    },
+    "madison": {
+        "name": "Madison Lake", "short": "Madison Lake",
+        "title": "The Night Bite: Madison Lake fishing hub",
+        "desc": "Unofficial Madison Lake fishing hub, Ohio: lake map and ramps, tonight's bite, species, water maps, trip log, gear.",
+    },
+    "knox": {
+        "name": "Knox Lake", "short": "Knox Lake",
+        "title": "The Night Bite: Knox Lake fishing hub",
+        "desc": "Unofficial Knox Lake fishing hub, Ohio: lake map and ramps, tonight's bite, species, water maps, trip log, gear.",
+    },
+    "clearfork": {
+        "name": "Clear Fork Reservoir", "short": "Clear Fork",
+        "title": "The Night Bite: Clear Fork Reservoir fishing hub",
+        "desc": "Unofficial Clear Fork Reservoir fishing hub, Ohio: reservoir map and ramps, tonight's bite, species, water maps, trip log, gear.",
     },
 }
 

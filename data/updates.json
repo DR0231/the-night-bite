@@ -2,6 +2,28 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-10-30-lake-picker-bait",
+      "date": "2026-10-30",
+      "tag": "New",
+      "title": "New lake picker, four more lakes and Bait nearby",
+      "bullets": [
+        "The new lake picker lets you search by name, star the lakes you fish so they stay up top in Your lakes, and use Near me to see the closest water. Near me works out the distance on your phone and never sends your location.",
+        "Deer Creek Lake, Madison Lake, Knox Lake and Clear Fork Reservoir each get their own home page, map and ramps, lake rules, species notes, stocking and ice notes. Deer Creek shows a live lake level from the US Army Corps of Engineers.",
+        "Every lake home now has a Bait nearby card with the closest bait and tackle shops, about how many minutes away they are, and a Directions button.",
+        "Tap Sort by my location on the card to sort shops from where you are standing. Your location stays on your device, and without it the list stays sorted from the lake."
+      ],
+      "links": [
+        {
+          "label": "Bait nearby",
+          "href": "./#bait-nearby"
+        },
+        {
+          "label": "Water",
+          "href": "water"
+        }
+      ]
+    },
+    {
       "id": "2026-10-29-four-lakes",
       "date": "2026-10-29",
       "tag": "New",
@@ -128,7 +150,7 @@
           "href": "alum/"
         },
         {
-          "label": "Buckeye home",
+          "label": "Buckeye Lake home",
           "href": "buckeye/"
         }
       ]

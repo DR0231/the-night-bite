@@ -2480,26 +2480,12 @@ html.map-open { overflow: hidden; }
 }
 
 /* ==========================================================================
-   Lakes: Hoover, Alum Creek, Buckeye, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake (js/lakes.js sets html[data-lake])
+   Lakes: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir (js/lakes.js sets html[data-lake])
    ========================================================================== */
-/* Lake-only blocks: data-for="hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware" or a space separated list. No data-lake: Hoover. */
+/* Lake-only blocks: data-for="<lake id>" or a space separated list; species cards list their lakes in data-lakes.
+   js/lakes.js adds the hide rule for the current lake before first paint, from its LAKES entry. No data-lake (no JS): Hoover. */
 html:not([data-lake]) [data-for]:not([data-for~="hoover"]),
-html[data-lake="hoover"] [data-for]:not([data-for~="hoover"]),
-html[data-lake="alum"] [data-for]:not([data-for~="alum"]),
-html[data-lake="buckeye"] [data-for]:not([data-for~="buckeye"]),
-html[data-lake="oshaughnessy"] [data-for]:not([data-for~="oshaughnessy"]),
-html[data-lake="griggs"] [data-for]:not([data-for~="griggs"]),
-html[data-lake="indian"] [data-for]:not([data-for~="indian"]),
-html[data-lake="delaware"] [data-for]:not([data-for~="delaware"]) { display: none !important; }
-/* species cards list the lakes they live in (data-lakes) */
-html:not([data-lake]) [data-lakes]:not([data-lakes~="hoover"]),
-html[data-lake="hoover"] [data-lakes]:not([data-lakes~="hoover"]),
-html[data-lake="alum"] [data-lakes]:not([data-lakes~="alum"]),
-html[data-lake="buckeye"] [data-lakes]:not([data-lakes~="buckeye"]),
-html[data-lake="oshaughnessy"] [data-lakes]:not([data-lakes~="oshaughnessy"]),
-html[data-lake="griggs"] [data-lakes]:not([data-lakes~="griggs"]),
-html[data-lake="indian"] [data-lakes]:not([data-lakes~="indian"]),
-html[data-lake="delaware"] [data-lakes]:not([data-lakes~="delaware"]) { display: none !important; }
+html:not([data-lake]) [data-lakes]:not([data-lakes~="hoover"]) { display: none !important; }
 
 /* ---- header lake picker: under the wordmark, a "Choose a lake" label over the pill; one button ---- */
 :root { --header-h: 4rem; }
@@ -2584,50 +2570,55 @@ html[data-lake="delaware"] [data-lakes]:not([data-lakes~="delaware"]) { display:
   }
 }
 
-/* ---- the picker sheet: frosted glass, one card per lake ---- */
+/* ---- the lake picker (js/lake-picker.js): the old switcher's frosted glass, as a sheet rising from the bottom on
+   phones and a panel under the pill on desktop. Motion: fade plus a short rise, ease out in, ease in out. ---- */
 .lake-sheet {
+  --lp-in: 220ms; --lp-out: 180ms;
+  --lp-ease-in: cubic-bezier(0.2, 0, 0, 1);      /* opening: quick start, soft landing */
+  --lp-ease-out: cubic-bezier(0.4, 0, 1, 1);     /* closing: soft start, quick exit */
   padding: 0; border: 0; margin: 0;
   width: 100%; height: 100%; max-width: none; max-height: none;
   background: transparent; color: var(--cream);
   overflow: hidden;
 }
-.lake-sheet[open] { display: flex; align-items: center; justify-content: center; }
+.lake-sheet[open] { display: flex; align-items: flex-end; justify-content: center; }
 .lake-sheet::backdrop {
   background: rgba(10, 22, 40, 0.55);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   backdrop-filter: blur(14px) saturate(1.2);
 }
+.lake-sheet[open]::backdrop { animation: lp-fade var(--lp-in) var(--lp-ease-in) backwards; }
+.lake-sheet.is-closing::backdrop { animation: lp-fade-out var(--lp-out) var(--lp-ease-out) both; }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .lake-sheet::backdrop { background: rgba(10, 22, 40, 0.94); }
-  .lake-sheet-panel, .lake-card { background: var(--navy-mid) !important; }
+  .lake-sheet-panel { background: var(--navy-mid) !important; }
 }
-html.lake-sheet-open { overflow: hidden; }
+html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
 .lake-sheet-panel {
   position: relative;
-  width: min(100%, 980px);
-  padding: 0 0 max(1rem, env(safe-area-inset-bottom));
-  background: linear-gradient(180deg, rgba(26, 46, 74, 0.55), rgba(18, 32, 56, 0.35));
-  border: 1px solid rgba(245, 237, 216, 0.12);
-  border-radius: 14px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(245, 237, 216, 0.10);
+  display: flex; flex-direction: column;
+  width: 100%; height: min(84dvh, 680px);
+  min-width: 0;
+  background: linear-gradient(180deg, rgba(26, 46, 74, 0.72), rgba(18, 32, 56, 0.62));
+  border: 1px solid rgba(245, 237, 216, 0.12); border-bottom: 0;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(245, 237, 216, 0.10);
   -webkit-backdrop-filter: blur(18px) saturate(1.25);
   backdrop-filter: blur(18px) saturate(1.25);
   transition: transform var(--dur) var(--ease);
+  will-change: transform, opacity;
 }
-.lake-sheet[open] .lake-sheet-panel { animation: lake-in 220ms var(--ease) both; }
-.lake-sheet.is-closing .lake-sheet-panel { animation: lake-out 180ms var(--ease) both; }
-@keyframes lake-in { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
-@keyframes lake-out { to { opacity: 0; transform: translateY(14px) scale(0.98); } }
-@media (max-width: 559px) {
-  .lake-sheet[open] { align-items: flex-end; }
-  .lake-sheet-panel { border-radius: 14px 14px 0 0; border-bottom: 0; }
-}
+.lake-sheet[open] .lake-sheet-panel { animation: lp-rise var(--lp-in) var(--lp-ease-in) backwards; }
+.lake-sheet.is-closing .lake-sheet-panel { animation: lp-sink var(--lp-out) var(--lp-ease-out) both; }
+@keyframes lp-fade { from { opacity: 0; } }
+@keyframes lp-fade-out { to { opacity: 0; } }
+@keyframes lp-rise { from { opacity: 0; transform: translateY(24px); } }
+@keyframes lp-sink { to { opacity: 0; transform: translateY(24px); } }
 .lake-sheet-head {
   position: relative;
   display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm);
   padding: 1.25rem var(--space-sm) 0 var(--space-md);
   touch-action: none;
-  cursor: grab;
 }
 .lake-sheet-grab { position: absolute; top: 0.5rem; left: 50%; width: 40px; height: 4px; margin-left: -20px; background: rgba(245, 237, 216, 0.28); border-radius: 2px; }
 .lake-sheet-title { font-family: var(--font-heading); font-size: var(--text-lg); margin: 0; color: var(--cream); }
@@ -2636,97 +2627,142 @@ html.lake-sheet-open { overflow: hidden; }
   width: 44px; height: 44px; flex-shrink: 0;
   background: rgba(245, 237, 216, 0.06); border: 1px solid rgba(245, 237, 216, 0.14); border-radius: 999px;
   color: var(--cream); cursor: pointer;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-.lake-sheet-close:hover { color: var(--amber); }
+.lake-sheet-close:hover { color: var(--amber); border-color: rgba(240, 168, 48, 0.4); }
+.lake-sheet-close:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .lake-sheet-close span {
   width: 12px; height: 12px; background: currentColor;
   clip-path: polygon(0 0, 16.66% 0, 50% 33.33%, 83.33% 0, 100% 0, 100% 16.66%, 66.66% 50%, 100% 83.33%, 100% 100%, 83.33% 100%, 50% 66.66%, 16.66% 100%, 0 100%, 0 83.33%, 33.33% 50%, 0 16.66%);
 }
-.lake-sheet-hint { font-family: var(--font-display); font-size: 0.75rem; color: var(--muted); padding: 0.25rem var(--space-md) 0; margin: 0; }
-.lake-track {
-  --card-w: min(76vw, 320px);
-  list-style: none; margin: 0; padding: 1.25rem calc((100% - var(--card-w)) / 2) 1rem;
-  display: flex; gap: 0.75rem;
-  overflow-x: auto; overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-  touch-action: pan-x;
+/* search and Near me: quiet glass fields, amber only on focus or when Near me is on */
+.lp-tools { display: flex; gap: var(--space-xs); padding: 0.875rem var(--space-md) 0; }
+.lp-search {
+  flex: 1; min-width: 0; min-height: 44px;
+  padding: 0 0.875rem;
+  font-family: var(--font-body); font-size: 1rem; color: var(--cream);
+  background: rgba(245, 237, 216, 0.04); border: 1px solid rgba(245, 237, 216, 0.10); border-radius: 10px;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  -webkit-appearance: none; appearance: none;
 }
-.lake-track::-webkit-scrollbar { display: none; }
-.lake-slot { flex: 0 0 var(--card-w); scroll-snap-align: center; scroll-snap-stop: always; display: flex; margin: 0; }
-.lake-card {
-  --d: 1;
-  flex: 1;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 0.25rem;
-  padding: 0.875rem 1rem 1rem;
-  text-align: left; color: var(--cream);
-  background: linear-gradient(180deg, rgba(26, 46, 74, 0.78), rgba(10, 22, 40, 0.70));
-  border: 1px solid rgba(245, 237, 216, 0.14);
-  border-radius: 12px;
-  box-shadow: inset 0 1px 0 rgba(245, 237, 216, 0.10);
+.lp-search::placeholder { color: var(--muted); opacity: 1; }
+.lp-search:hover { border-color: rgba(245, 237, 216, 0.18); }
+.lp-search:focus { outline: none; border-color: rgba(240, 168, 48, 0.55); background: rgba(245, 237, 216, 0.06); box-shadow: 0 0 0 3px rgba(240, 168, 48, 0.12); }
+.lp-near {
+  flex-shrink: 0; min-height: 44px; padding: 0 0.875rem;
+  font-family: var(--font-display); font-size: 0.8125rem; letter-spacing: 0.03em; color: var(--cream-dark);
+  background: rgba(245, 237, 216, 0.04); border: 1px solid rgba(245, 237, 216, 0.10); border-radius: 10px;
   cursor: pointer;
-  transform: scale(calc(1 - var(--d) * 0.1));
-  opacity: calc(1 - var(--d) * 0.5);
-  transition: transform 200ms var(--ease), opacity 200ms var(--ease), border-color var(--dur) var(--ease);
-  font: inherit;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-.lake-card.is-center { border-color: rgba(240, 168, 48, 0.55); box-shadow: inset 0 1px 0 rgba(245, 237, 216, 0.12), 0 0 0 1px rgba(240, 168, 48, 0.18), 0 10px 30px rgba(0, 0, 0, 0.35); }
-.lake-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-.lake-card.is-picked { border-color: var(--amber); }
-.lake-card-tag { font-family: var(--font-display); font-size: 0.75rem; color: var(--muted); letter-spacing: 0.03em; }
-.lake-card[aria-current="true"] .lake-card-tag { color: var(--amber); }
-.lake-card-map {
-  display: flex; align-items: center; justify-content: center;
-  width: 100%; height: 108px; margin: 0.25rem 0 0.5rem;
-  background: rgba(10, 22, 40, 0.55); border-radius: 8px;
+.lp-near:hover, .lp-near[aria-pressed="true"] { color: var(--amber); border-color: rgba(240, 168, 48, 0.45); }
+.lp-near:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.lp-near:disabled { opacity: 0.6; cursor: progress; }
+.lp-status { margin: 0; padding: 0.375rem var(--space-md) 0; min-height: 1.5rem; font-family: var(--font-display); font-size: 0.75rem; color: var(--muted); }
+.lp-status:empty { min-height: 0.375rem; padding-top: 0; }
+.lp-body {
+  flex: 1; min-height: 0;
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: 0 var(--space-md) max(1rem, env(safe-area-inset-bottom));
+  scrollbar-width: thin; scrollbar-color: rgba(245, 237, 216, 0.16) transparent;
 }
-.lake-card-map img { image-rendering: pixelated; max-width: 100%; height: auto; }
-.lake-card-name { font-family: var(--font-heading); font-size: var(--text-md); line-height: 1.2; color: var(--cream); }
-.lake-card-area { font-family: var(--font-body); font-size: var(--text-sm); color: var(--cream-dark); }
-.lake-card-read { font-family: var(--font-heading); font-size: 0.9375rem; color: var(--amber); margin-top: 0.375rem; }
-.lake-card-src { font-family: var(--font-display); font-size: 0.75rem; color: var(--muted); }
-.lake-dots { display: flex; justify-content: center; gap: 0.5rem; padding-bottom: 0.25rem; }
-.lake-dots span { width: 6px; height: 6px; background: rgba(245, 237, 216, 0.25); transition: background-color var(--dur) var(--ease); }
-.lake-dots span.on { background: var(--amber); }
-/* previous / next buttons: hidden on phones and tablets (they swipe); shown with a mouse or trackpad */
-.lake-stage { position: relative; }
-.lake-nav { display: none; }
+.lp-sec { margin-top: 0.75rem; }
+.lp-h { font-family: var(--font-display); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.25rem; padding: 0 0.625rem; }
+.lp-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+/* rows: a soft glass card on hover, the lake you're on outlined in amber like the old picker's middle card */
+.lp-row {
+  display: flex; align-items: stretch; margin: 0;
+  border: 1px solid transparent; border-radius: 10px;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.lp-row:hover { background: rgba(245, 237, 216, 0.04); }
+.lp-row.is-now { background: linear-gradient(180deg, rgba(26, 46, 74, 0.7), rgba(10, 22, 40, 0.55)); border-color: rgba(240, 168, 48, 0.45); box-shadow: inset 0 1px 0 rgba(245, 237, 216, 0.08); }
+.lp-row.is-picked { border-color: var(--amber); }
+.lp-lake {
+  flex: 1; min-width: 0; min-height: 44px;
+  display: flex; flex-direction: column; justify-content: center; gap: 0.0625rem;
+  padding: 0.4375rem 0.625rem;
+  color: var(--cream); text-decoration: none; border-radius: 10px;
+}
+.lp-lake:focus-visible, .lp-star:focus-visible, .lp-region summary:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; border-radius: 10px; }
+.lp-name { font-family: var(--font-heading); font-size: 1.0625rem; line-height: 1.25; transition: color var(--dur) var(--ease); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lp-lake:hover .lp-name { color: var(--amber); }
+.lp-meta { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.5rem; font-family: var(--font-display); font-size: 0.6875rem; letter-spacing: 0.03em; line-height: 1.4; color: var(--muted); }
+.lp-meta > span + span::before { content: "\00b7"; margin-right: 0.5rem; opacity: 0.7; }
+.lp-tag { color: var(--muted); }
+.lp-now { color: var(--amber); }
+.lp-dist { color: var(--cream-dark); }
+.lp-star {
+  flex-shrink: 0; width: 44px; min-height: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 0; border-radius: 10px; color: rgba(138, 154, 170, 0.55); cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.lp-star span {   /* a pixel star: dim when off, filled amber when on */
+  width: 15px; height: 15px; background: currentColor;
+  clip-path: polygon(50% 0, 62.5% 37.5%, 100% 37.5%, 68.75% 62.5%, 81.25% 100%, 50% 75%, 18.75% 100%, 31.25% 62.5%, 0 37.5%, 37.5% 37.5%);
+  transition: transform 140ms var(--ease), background-color 180ms var(--ease);
+}
+.lp-star:hover { color: var(--cream-dark); }
+.lp-star:active span { transform: scale(0.82); }
+.lp-star[aria-pressed="true"] { color: var(--amber); }
+.lp-star.lp-pop span { animation: lp-pop 260ms var(--lp-ease-in); }
+@keyframes lp-pop { 0% { transform: scale(0.7); opacity: 0.5; } 60% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
+.lp-empty { font-family: var(--font-body); color: var(--cream-dark); margin: 0.75rem 0.625rem 0; }
+/* regions: an open and shut heading like the Species "Not recorded at" dropdown, no box, a hairline above */
+.lp-region { margin-top: 0.75rem; border-top: 1px solid rgba(245, 237, 216, 0.08); }
+.lp-region summary {
+  font-family: var(--font-display); font-variant-ligatures: none; font-size: 0.875rem; letter-spacing: 0.04em;
+  color: var(--cream-dark); cursor: pointer; list-style: none;
+  min-height: 44px; padding: 0 0.625rem; display: flex; align-items: center; gap: 0.5rem;
+  transition: color var(--dur) var(--ease);
+}
+.lp-region summary:hover, .lp-region[open] summary { color: var(--amber); }
+.lp-region summary::-webkit-details-marker { display: none; }
+.lp-region summary::before {
+  content: ""; width: 6px; height: 8px; background: currentColor;
+  clip-path: polygon(0 0, 50% 0, 50% 25%, 100% 25%, 100% 75%, 50% 75%, 50% 100%, 0 100%);
+  transition: transform 200ms var(--lp-ease-in);
+}
+.lp-region[open] summary::before { transform: rotate(90deg); }
+.lp-region .lp-list { padding-bottom: 0.25rem; }
+/* smooth open and shut where the browser can size to auto; elsewhere it opens at once */
+@supports selector(::details-content) {
+  .lp-region { interpolate-size: allow-keywords; }
+  .lp-region::details-content {
+    block-size: 0; opacity: 0; overflow: clip;
+    transition: block-size 220ms var(--lp-ease-in), opacity 180ms var(--lp-ease-in), content-visibility 220ms allow-discrete;
+  }
+  .lp-region[open]::details-content { block-size: auto; opacity: 1; }
+}
 @media (hover: hover) and (pointer: fine) and (min-width: 560px) {
-  /* desktop: the same sheet, floating centered with room around it, no drag handle */
-  .lake-sheet-panel { width: min(calc(100% - 3rem), 920px); padding-bottom: 1.25rem; }
+  /* desktop: a glass panel under the pill, the page softly blurred behind it */
+  .lake-sheet[open] { display: block; }
+  .lake-sheet::backdrop { background: rgba(10, 22, 40, 0.4); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+  .lake-sheet-panel {
+    position: absolute; left: var(--lp-left, 1rem); top: var(--lp-top, 4rem);
+    width: min(400px, calc(100% - 2rem));
+    height: min(560px, calc(100dvh - var(--lp-top, 4rem) - 1rem));
+    padding: 0 0 0.5rem;
+    background: linear-gradient(180deg, rgba(26, 46, 74, 0.86), rgba(18, 32, 56, 0.9));
+    border: 1px solid rgba(245, 237, 216, 0.12); border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(245, 237, 216, 0.10);
+    transform-origin: 2rem 0;
+  }
+  .lake-sheet[open] .lake-sheet-panel { animation-name: lp-drop; }
+  .lake-sheet.is-closing .lake-sheet-panel { animation-name: lp-lift; }
   .lake-sheet-grab { display: none; }
-  .lake-sheet-head { cursor: default; touch-action: auto; padding-top: 1rem; }
-  .lake-track { --card-w: 300px; padding-top: 1rem; }
-  .lake-stage { display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; gap: 0.5rem; padding: 0 var(--space-md); }
-  .lake-stage > .lake-track {
-    grid-column: 2; grid-row: 1;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
-  }
-  .lake-nav {
-    display: inline-flex; align-items: center; justify-content: center;
-    grid-row: 1;
-    width: 44px; height: 44px;
-    background: rgba(26, 46, 74, 0.72); border: 1px solid rgba(245, 237, 216, 0.16); border-radius: 999px;
-    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-    color: var(--cream); cursor: pointer;
-    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), opacity var(--dur) var(--ease);
-  }
-  .lake-nav-prev { grid-column: 1; }
-  .lake-nav-next { grid-column: 3; }
-  .lake-nav:hover { color: var(--amber); border-color: rgba(240, 168, 48, 0.5); }
-  .lake-nav:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-  .lake-nav:disabled { opacity: 0; pointer-events: none; }
-  .lake-nav span { width: 8px; height: 16px; background: currentColor; }
-  .lake-nav-prev span { clip-path: polygon(100% 0%, 75% 0%, 75% 12.5%, 50% 12.5%, 50% 25%, 25% 25%, 25% 37.5%, 0% 37.5%, 0% 62.5%, 25% 62.5%, 25% 75%, 50% 75%, 50% 87.5%, 75% 87.5%, 75% 100%, 100% 100%); }
-  .lake-nav-next span { clip-path: polygon(0% 0%, 25% 0%, 25% 12.5%, 50% 12.5%, 50% 25%, 75% 25%, 75% 37.5%, 100% 37.5%, 100% 62.5%, 75% 62.5%, 75% 75%, 50% 75%, 50% 87.5%, 25% 87.5%, 25% 100%, 0% 100%); }
+  .lake-sheet-head { touch-action: auto; padding-top: 0.875rem; }
+  .lake-sheet-close { width: 36px; height: 36px; }
 }
+@keyframes lp-drop { from { opacity: 0; transform: translateY(-6px) scale(0.98); } }
+@keyframes lp-lift { to { opacity: 0; transform: translateY(-6px) scale(0.98); } }
 @media (prefers-reduced-motion: reduce) {
-  .lake-sheet[open] .lake-sheet-panel, .lake-sheet.is-closing .lake-sheet-panel { animation: none; }
-  .lake-card, .lake-sheet-panel, .lake-nav { transition: none; }
+  .lake-sheet[open] .lake-sheet-panel, .lake-sheet.is-closing .lake-sheet-panel,
+  .lake-sheet[open]::backdrop, .lake-sheet.is-closing::backdrop, .lp-star.lp-pop span { animation: none; }
+  .lake-sheet-panel, .lp-row, .lp-name, .lp-star span, .lp-search, .lp-near, .lp-region summary, .lp-region summary::before { transition: none; }
+  .lp-region::details-content { transition: none; }
 }
-
 /* ---- lake switch: a short cross-fade (js/lakes.js skips it for every other navigation) ---- */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
@@ -2750,6 +2786,10 @@ html.lake-sheet-open { overflow: hidden; }
 .pool-chart img[data-for="griggs"] { width: 296px; height: 76px; }
 .pool-chart img[data-for="indian"] { width: 96px; height: 84px; }
 .pool-chart img[data-for="delaware"] { width: 252px; height: 96px; }
+.pool-chart img[data-for="deercreek"] { width: 96px; height: 94px; }
+.pool-chart img[data-for="madison"] { width: 264px; height: 96px; }
+.pool-chart img[data-for="knox"] { width: 70px; height: 54px; }
+.pool-chart img[data-for="clearfork"] { width: 120px; height: 96px; }
 @media (max-width: 359px) {
   .pool-chart img[data-for="alum"] { width: 134px; height: 37px; }
   .pool-chart img[data-for="buckeye"] { width: 92px; height: 48px; }
@@ -2757,6 +2797,10 @@ html.lake-sheet-open { overflow: hidden; }
   .pool-chart img[data-for="griggs"] { width: 148px; height: 38px; }
   .pool-chart img[data-for="indian"] { width: 48px; height: 42px; }
   .pool-chart img[data-for="delaware"] { width: 126px; height: 48px; }
+  .pool-chart img[data-for="deercreek"] { width: 48px; height: 47px; }
+  .pool-chart img[data-for="madison"] { width: 132px; height: 48px; }
+  .pool-chart img[data-for="knox"] { width: 35px; height: 27px; }
+  .pool-chart img[data-for="clearfork"] { width: 60px; height: 48px; }
 }
 .pool-chart-key > span[data-for="buckeye"] { margin-right: 0.5rem; }
 @media (min-width: 560px) { .pool-chart-key > span[data-for="buckeye"] { margin-right: 0; } }
@@ -3467,3 +3511,54 @@ a[href^="tel:"],
 .nowrap {
   white-space: nowrap;
 }
+
+/* ---- Bait nearby (js/bait-nearby.js, data/bait-shops.json) ---- */
+@media (min-width: 560px) {
+  .bento-grid .bento-bait { grid-column: 1 / -1; }
+}
+@media (min-width: 1000px) {
+  /* Left: pool, maps, species beside the tall conditions card; then Whisperwood and log beside Bait nearby.
+     Nothing stretches to fill a taller neighbour (v47 stretched the pool card down beside Bait nearby). */
+  .bento-grid { align-items: start; }
+  .bento-grid .bento-pool { grid-column: 1; grid-row: 1; }
+  .bento-grid .bento-maps { grid-column: 1; grid-row: 2; }
+  .bento-grid .bento-species { grid-column: 1; grid-row: 3; }
+  .bento-grid .bento-conditions { grid-column: 2; grid-row: 1 / span 3; }
+  .bento-grid .bento-whisper { grid-column: 1; grid-row: 4; }
+  .bento-grid .bento-log { grid-column: 1; grid-row: 5; }
+  .bento-grid .bento-bait { grid-column: 2; grid-row: 4 / span 2; }
+}
+.bait-list { list-style: none; margin: 0; padding: 0; }
+.bait-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 0.625rem 0;
+  border-top: 1px solid var(--hairline);
+}
+.bait-list > .bait-row:first-child { border-top: 0; padding-top: 0; }
+.bait-more-list > .bait-row:first-child { padding-top: 0; }
+.bait-info { display: flex; flex-direction: column; min-width: 0; }
+.bait-name { color: var(--cream); font-size: var(--text-base); line-height: 1.35; overflow-wrap: anywhere; }
+.bait-time { color: var(--muted); font-size: var(--text-sm); }
+.bait-go { flex-shrink: 0; padding: 0.55rem 0.9rem; }
+.bait-status { margin: 0; color: var(--cream-dark); }
+.bento-bait .how-to-read { margin-top: var(--space-sm); }
+.bento-bait .how-to-read-body li { margin-bottom: 0; }
+.bait-foot { margin: var(--space-sm) 0 0; }
+.bait-foot a { color: var(--amber); }
+.bait-foot a:hover { color: var(--cream); }
+.bait-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem var(--space-sm); margin: 0 0 var(--space-sm); }
+.bait-near {
+  min-height: 44px; padding: 0 0.875rem;
+  font-family: var(--font-display); font-variant-ligatures: none; font-size: 0.8125rem; letter-spacing: 0.03em; color: var(--cream-dark);
+  background: rgba(245, 237, 216, 0.04); border: 1px solid rgba(245, 237, 216, 0.10); border-radius: 10px;
+  cursor: pointer;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.bait-near:hover, .bait-near[aria-pressed="true"] { color: var(--amber); border-color: rgba(240, 168, 48, 0.45); }
+.bait-near:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.bait-near:disabled { opacity: 0.6; cursor: progress; }
+.bait-loc { margin: 0; font-family: var(--font-display); font-size: 0.75rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .bait-near { transition: none; } }

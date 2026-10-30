@@ -299,6 +299,152 @@
         "odnr-delaware",
         "odnr-drawdowns"
       ]
+    },
+    "deercreek": {
+      "name": "Deer Creek Lake",
+      "checked": "2026-10-30",
+      "items": [
+        {
+          "name": "Marina docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR lists seasonal docks, fuel and boat rental at the marina but has not posted a 2026 date for pulling the docks.",
+          "source": "odnr-deercreek"
+        },
+        {
+          "name": "Winter drawdown",
+          "status": "unannounced",
+          "label": "Seasonal, Corps timing",
+          "note": "ODNR&rsquo;s drawdown list shows 14 ft, from the 810 ft standard pool to a 796 ft winter pool, Oct. 1 to Nov. 30, refilled Apr. 1 to May 15. The Corps of Engineers sets the timing. Check the Corps lake level before a trip.",
+          "source": "odnr-drawdowns"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists two boat launch ramps. In a deep drawdown, check the ramp end before backing down.",
+          "source": "odnr-deercreek"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Deer Creek marina",
+          "+17408692100",
+          "740-869-2100",
+          ""
+        ],
+        [
+          "Deer Creek State Park office",
+          "+17408693124",
+          "740-869-3124",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-deercreek",
+        "odnr-drawdowns"
+      ]
+    },
+    "madison": {
+      "name": "Madison Lake",
+      "checked": "2026-10-30",
+      "items": [
+        {
+          "name": "Launch ramp",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists one launch ramp, electric motors only. It posts no marina or seasonal dock schedule for Madison Lake.",
+          "source": "odnr-madison"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Park office (at Deer Creek State Park)",
+          "+17408693124",
+          "740-869-3124",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-madison"
+      ]
+    },
+    "knox": {
+      "name": "Knox Lake",
+      "checked": "2026-10-30",
+      "items": [
+        {
+          "name": "Marina and main ramp",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR lists a marina and the main ramp on Armentrout Road but posts no dock season dates.",
+          "source": "odnr-knox"
+        },
+        {
+          "name": "Upper lake ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists other ramps off County Road 5 on the upper lake.",
+          "source": "odnr-knox"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "ODNR Division of Wildlife (number on the Knox Lake page)",
+          "+16146443925",
+          "614-644-3925",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-knox"
+      ]
+    },
+    "clearfork": {
+      "name": "Clear Fork Reservoir",
+      "checked": "2026-10-30",
+      "items": [
+        {
+          "name": "Marina",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "The City of Mansfield lists the marina at 7471 OH-97. Neither the City nor ODNR posts dock season dates.",
+          "source": "mansfield-clearfork"
+        },
+        {
+          "name": "Launch ramp",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists a free improved ramp on the south side just east of Bowers Road.",
+          "source": "odnr-clearfork"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Clear Fork marina",
+          "+14198846277",
+          "419-884-6277",
+          ""
+        ],
+        [
+          "Clear Fork park police and information",
+          "+14198841408",
+          "419-884-1408",
+          ""
+        ]
+      ],
+      "sources": [
+        "mansfield-clearfork",
+        "odnr-clearfork"
+      ]
     }
   },
   "watch": [
@@ -374,12 +520,14 @@
       "lakes": [
         "alum",
         "buckeye",
-        "delaware"
+        "delaware",
+        "deercreek"
       ],
       "rows": [
         "Alum Creek",
         "Buckeye Lake",
-        "Delaware"
+        "Delaware",
+        "Deer Creek"
       ],
       "keywords": [
         "postpon",
@@ -507,6 +655,101 @@
       "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park",
       "lakes": [
         "delaware"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-deercreek",
+      "label": "ODNR, Deer Creek State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park",
+      "lakes": [
+        "deercreek"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-madison",
+      "label": "ODNR, Madison Lake State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park",
+      "lakes": [
+        "madison"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-knox",
+      "label": "ODNR, Knox Lake Fishing Area",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area",
+      "lakes": [
+        "knox"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-clearfork",
+      "label": "ODNR, Clear Fork Reservoir Fishing Area",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area",
+      "lakes": [
+        "clearfork"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "mansfield-clearfork",
+      "label": "City of Mansfield, Clear Fork Reservoir",
+      "url": "https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/",
+      "lakes": [
+        "clearfork"
       ],
       "keywords": [
         "dock",

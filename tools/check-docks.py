@@ -6,7 +6,7 @@ From the repo root:
     python3 tools/check-docks.py --update   # same, then save today's snapshot as the new baseline
 
 For each page it keeps only the sentences that mention that source's keywords (docks, ramps, drawdown, closures...),
-so menus, ads and date stamps don't trip it. ODNR drawdowns: just the Alum Creek, Buckeye Lake and Delaware table rows.
+so menus, ads and date stamps don't trip it. ODNR drawdowns: just the Alum Creek, Buckeye Lake, Delaware and Deer Creek table rows.
 Baseline: tools/docks-watch-state.json (commit it after --update).
 
 Output: one line per source, then a last line that starts with RESULT:

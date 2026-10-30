@@ -474,7 +474,7 @@
      Hoover runs north to south, so east and west winds name a bank and north and south winds name an end. */
   var PUSH = ["toward the south end", "into the southwest bank", "into the west bank", "into the northwest bank",
     "toward the north end", "into the northeast bank", "into the east bank", "into the southeast bank"];   // wind FROM N, NE, E ...
-  if (LC && LC.push) PUSH = LC.push;   // lakes that don't run north to south (Buckeye) name their own shores
+  if (LC && LC.push) PUSH = LC.push;   // lakes that don't run north to south (Buckeye Lake) name their own shores
   function extra(key, label, value) {
     var row = extraEl && extraEl.querySelector('[data-x="' + key + '"]');
     if (!row) return;

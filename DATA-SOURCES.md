@@ -168,6 +168,51 @@ Gaps (said on the site, never filled in):
 - No 2026 dock pull or drawdown dates posted for these four on Oct. 29, 2026.
 - No community trips logged at these lakes yet.
 
+## Lakes: Deer Creek Lake, Madison Lake, Knox Lake and Clear Fork Reservoir, checked Oct. 30, 2026
+
+Same system as the other lakes: `?lake=deercreek|madison|knox|clearfork`, home pages at `/deercreek/`, `/madison/`, `/knox/`, `/clearfork/` (built by `tools/build-lake-pages.py`), per lake settings in `js/lakes.js`. Only Deer Creek Lake has a public lake gauge; the other three have no USGS or Corps lake level or water temperature gauge, so `pool.src` is `null` and the pool card says so (nothing is fetched).
+
+| Setting | Deer Creek Lake | Madison Lake | Knox Lake | Clear Fork Reservoir |
+|---|---|---|---|---|
+| Owner (boating rules) | US Army Corps of Engineers dam (finished 1968); ODNR runs the state park and fishing area | ODNR Ohio State Parks | ODNR Division of Wildlife | City of Mansfield water supply lake (finished 1949) |
+| Lake level | USACE Huntington District (LRH), CWMS time series `DeerCr-Lake.Elev.Inst.15Minutes.0.OBS`. Page: https://water.usace.army.mil/overview/lrh/locations/deercr | None (no public gauge) | None (the USGS Kokosing River gauge is on the river, not the lake) | None (no public gauge) |
+| Water temp | None. The Corps posts an outflow temperature only. | None | None | None |
+| Full pool used | 810.5 ft, ODNR fishing map | 965 ft, ODNR fishing map | 1,100 ft, ODNR fishing map | 1,202 ft, ODNR fishing map (the City lists the spillway at 1202) |
+| Map pool (contour datum) | 810.5 ft, 5 ft contours, surveyed 1999, 1,301 acres, 17.9 mi shoreline: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/deercreeklake2.pdf | 965 ft, 2 ft contours, surveyed 2006, 98 acres: .../wildlife/maps/madisonlake2.pdf | 1,100 ft, 3 ft contours, surveyed 2003, 476 acres: .../wildlife/maps/knoxlake2.pdf | 1,202 ft, 3 ft contours, surveyed 1999, 1,033 acres: .../wildlife/maps/clearforkreservoir2.pdf |
+| Tonight forecast | NWS grid ILN 78,65 | NWS grid ILN 72,76 | NWS grid CLE 60,17 | NWS grid CLE 55,26 |
+| Barometer / observations | KI23, Washington Court House airport | KUYF, London airport | KMFD, Mansfield airport | KMFD, Mansfield airport |
+| Alerts | OHC129, OHC047, OHZ064, OHZ063 | OHC097, OHZ054 | OHC083, OHZ047 | OHC139, OHC117, OHZ029, OHZ037 |
+| Boating rules shown | ODNR Deer Creek Lake Fishing Area: unlimited horsepower | ODNR Madison Lake State Park: electric motors only | ODNR Knox Lake Fishing Area: 10 hp, larger motors at no wake or idle | City of Mansfield: no horsepower limit, no wake on the entire lake, no fishing from boats within 100 ft of the dam. ODNR also lists an 8 mph limit and no wake over 10 hp |
+| Species shown | saugeye, black and white crappie, largemouth and smallmouth bass, channel catfish, bluegill, white bass (ODNR Waterbody Report survey data; ODNR Deer Creek State Park page; saugeye also ODNR Fish Stocking) | largemouth bass, black and white crappie, channel catfish (ODNR Waterbody Report); bluegill, bullhead (ODNR Madison Lake State Park page); channel catfish also ODNR Fish Stocking | largemouth bass, black and white crappie, channel catfish (ODNR Waterbody Report); flathead catfish, bluegill, yellow perch (ODNR Knox Lake Fishing Area); yellow perch and channel catfish also ODNR Fish Stocking | largemouth bass, black and white crappie, channel catfish (ODNR Waterbody Report); muskellunge (ODNR Fish Stocking) |
+
+Regulations (2026–27, ODNR Fishing Regulations PDF above): the 30 crappie, 9″ minimum site rule lists Deer Creek Lake, not Madison, Knox or Clear Fork (statewide pattern there: no daily limit, no minimum). Knox: largemouth, smallmouth and spotted bass 5 a day combined, 18″ minimum. Paddlefish may not be taken within 2,000 ft of the Deer Creek dam. Walleye, sauger and saugeye: 6 combined, no minimum at any of the four.
+
+ODNR Fish Stocking dashboard (https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking, data updated 10/27/2026): Deer Creek saugeye fingerlings every year 2016 to 2025 (78,798 to 262,206 a year); Madison channel catfish 2016, 2018, 2020, 2022, 2024 (2,467 to 5,390); Knox yellow perch fingerlings 2019 and 2022 to 2025 (119,151 to 238,067) and channel catfish yearlings 2017 (3,060); Clear Fork muskellunge advanced fingerlings every year 2016 to 2025 (660 to 1,482).
+
+Map pins (`js/lake-map-data-deercreek.js`, `-madison.js`, `-knox.js`, `-clearfork.js`; shorelines traced from OpenStreetMap, not for navigation; "approximate" means no surveyed point was found):
+
+| Lake | Pin | Address | Sources |
+|---|---|---|---|
+| Deer Creek Lake | Marina ramp (west side) (ramp) | Deer Creek State Park marina, west side of the lake | ODNR Deer Creek State Park page (two boat launch ramps, marina with fuel, boat rental and seasonal docks, (740) 869-2100, park hours 6 a.m. to 11 p.m.) ; ODNR Deer Creek State Park map (boat ramp and marina symbols) ; OpenStreetMap slipway ways 1573453017 to 1573453020 (coordinates) ; OpenStreetMap marina node 1796595741 |
+| Deer Creek Lake | Ramp by the Corps day-use areas (near the dam) (ramp) | US Army Corps of Engineers day-use areas, east end near the dam | ODNR Deer Creek State Park page (two boat launch ramps) ; ODNR Deer Creek State Park map (boat ramp symbol by the USACE Day-Use Areas) ; OpenStreetMap slipway node 8467801164 (coordinates) |
+| Deer Creek Lake | Below the dam (access) | Deer Creek Dam, east end of the lake | ODNR Deer Creek State Park page (early spring saugeye fishing below the dam) ; ODNR 2026-2027 fishing regulations (paddlefish rule) ; OpenStreetMap dam way 41292056 (coordinates) |
+| Madison Lake | Launch ramp (ramp) | Madison Lake State Park, south end by the dam | ODNR Madison Lake State Park page (electric motors only, one launch ramp, hours, office phone) ; ODNR Madison Lake State Park map (boat ramp symbol) ; OpenStreetMap slipway way 1413111795 (coordinates) |
+| Madison Lake | Fishing spot by the ramp (access) | Madison Lake State Park, by the launch ramp | ODNR Madison Lake State Park page (fishing species) ; OpenStreetMap fishing node 12988189543 and pier way 1413111797 (coordinates) |
+| Knox Lake | Marina and main ramp (lower lake) (ramp) | Armentrout Road, lower lake | ODNR Knox Lake Fishing Area page (marina and main ramp on Armentrout Road, 10 hp limit) ; ODNR Knox Lake fishing map (ramp and marina symbols; pin placed from the map grid) |
+| Knox Lake | Upper lake ramp (ramp) | Off County Road 5, upper lake | ODNR Knox Lake Fishing Area page (other ramps off County Road 5, upper lake timber and bottom) ; ODNR Knox Lake fishing map (boat ramp, restroom and parking symbols) ; OpenStreetMap road end (coordinates) |
+| Knox Lake | East side carry-in access (access) | East side of the lake | ODNR Knox Lake fishing map (carry-in access symbol; pin placed from the map grid) |
+| Clear Fork Reservoir | Free ramp and marina (south side) (ramp) | 7471 OH-97, south side just east of Bowers Road | ODNR Clear Fork Reservoir Fishing Area page (free improved ramp and marina east of Bowers Rd, 8 mph limit) ; City of Mansfield Clear Fork Reservoir page (no wake policy, no hp limit, marina address and phone) ; OpenStreetMap way 472248881, Clear Fork Reservoir Boat Launch Ramp (coordinates) |
+| Clear Fork Reservoir | Accessible picnic area and fishing pier (access) | South side picnic areas off OH-97 | City of Mansfield Clear Fork Reservoir page (Picnic Area #2 accessible pier, shore fishing south and west shores) ; ODNR Clear Fork Reservoir fishing map (accessible symbol; pin placed from the map grid) |
+| Clear Fork Reservoir | South shore picnic area (access) | South side picnic areas off OH-97 | ODNR Clear Fork Reservoir Fishing Area page (three picnic areas on the south side) ; ODNR Clear Fork Reservoir fishing map (picnic symbol; pin placed from the map grid) |
+
+No bait shop pins for these four: no official source was used for shops.
+
+Gaps (said on the site, never filled in):
+- No public lake level or water temperature at Madison Lake, Knox Lake or Clear Fork Reservoir; no public water temperature at Deer Creek Lake.
+- Deer Creek Lake's level is the Corps of Engineers reading; values are provisional. It is drawn down in the fall, so fall readings sit below full pool.
+- No ODNR stocking or survey PDFs for these four on the Stocking page beyond the dashboard numbers above.
+- No ice reports, no 2026 dock pull dates, and no community trips logged at these lakes yet.
+
 ## Lake-aware Species (js/species-lake.js)
 
 Which species live at each lake: the `species` list for each lake in `js/lakes.js` (the script also rewrites

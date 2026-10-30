@@ -8,7 +8,7 @@ head = ice[:ice.index("  <main id=\"main\">")]
 foot = ice[ice.index("  </main>"):]
 head = re.sub(r"<title>[^<]*</title>", "<title>Stocking &amp; surveys: central Ohio lakes | The Night Bite</title>", head, count=1)
 head = re.sub(r'<meta name="description" content="[^"]*">',
-              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake, O&#39;Shaughnessy, Griggs, Indian Lake and Delaware Lake, with sources.">', head)
+              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake and eight more central Ohio lakes, with sources.">', head)
 head = head.replace('<link rel="canonical" href="https://nightbiteoh.com/ice">', '<link rel="canonical" href="https://nightbiteoh.com/stocking">')
 assert "stocking" in head
 # ice.html's own scripts at the bottom stay (refresh, sw-update, alerts, nav, lake-picker); nothing else is needed
@@ -25,6 +25,11 @@ ODNR_MAP = {
     "griggs": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
     "indian": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638/page/Page#data_s=id%3AdataSource_2-1942de5a64a-layer-2-20%3A54%2Cid%3AdataSource_2-19d2fe52235-layer-8-20%3A59&zoom_to_selection=true",
     "delaware": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638/page/Page#data_s=id%3AdataSource_2-1942de5a64a-layer-2-20%3A54%2Cid%3AdataSource_2-19d2fe52235-layer-8-20%3A24&zoom_to_selection=true",
+    # the four newer lakes open the map itself; no per lake selection link was confirmed
+    "deercreek": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "madison": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "knox": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "clearfork": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
 }
 AREA = {
     "hoover": ("ODNR, Hoover Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area"),
@@ -34,6 +39,10 @@ AREA = {
     "griggs": ("ODNR, Griggs Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/griggs-reservoir-fishing-area"),
     "indian": ("ODNR, Indian Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-fishing-area"),
     "delaware": ("ODNR, Delaware Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-lake-fishing-area"),
+    "deercreek": ("ODNR, Deer Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-lake-fishing-area"),
+    "madison": ("ODNR, Madison Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park"),
+    "knox": ("ODNR, Knox Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area"),
+    "clearfork": ("ODNR, Clear Fork Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area"),
 }
 PDFMAP = {
     "hoover": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf",
@@ -43,6 +52,10 @@ PDFMAP = {
     "griggs": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/griggsreservoir2.pdf",
     "indian": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/indianlake2.pdf",
     "delaware": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/delawarelake2.pdf",
+    "deercreek": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/deercreeklake2.pdf",
+    "madison": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/madisonlake2.pdf",
+    "knox": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/knoxlake2.pdf",
+    "clearfork": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/clearforkreservoir2.pdf",
 }
 STOCK_DB = "https://ohiodnr.gov/buy-and-apply/hunting-fishing-boating/fishing-resources/fish-stocking-records"
 
@@ -148,6 +161,54 @@ DATA = ("hoover", "alum", "indian", "delaware")   # lakes with ODNR lake PDFs
 NONE = ("buckeye", "oshaughnessy", "griggs")      # lakes ODNR publishes no lake PDFs for
 NOTE = "Copied from the PDF; a dash means none listed."
 
+# Lakes with no ODNR lake PDFs whose stocking is read from ODNR's public Fish Stocking dashboard (Tableau), last ten years.
+# Read Oct. 30, 2026 (dashboard "data updated 10/27/2026"). Deer Creek and Clear Fork list one species only.
+DB = ("deercreek", "madison", "knox", "clearfork")
+DB_NAME = {"deercreek": "Deer Creek Lake", "madison": "Madison Lake", "knox": "Knox Lake", "clearfork": "Clear Fork Reservoir"}
+DASH = "https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking"
+DB_STOCK = {
+    "deercreek": [("Saugeye", ("Fingerlings",), [
+        (2016, "123,902"), (2017, "196,072"), (2018, "78,798"), (2019, "262,206"), (2020, "195,763"),
+        (2021, "130,284"), (2022, "130,675"), (2023, "130,226"), (2024, "130,147"), (2025, "131,463")])],
+    "madison": [("Channel catfish", ("Fingerlings", "Advanced fingerlings"), [
+        (2016, "5,390", ""), (2018, "2,528", ""), (2020, "2,467", ""), (2022, "", "4,960"), (2024, "", "4,920")])],
+    "knox": [("Yellow perch", ("Fingerlings",), [(2019, "181,050"), (2022, "238,067"), (2023, "119,205"), (2024, "119,151"), (2025, "119,343")]),
+             ("Channel catfish", ("Yearlings",), [(2017, "3,060")])],
+    "clearfork": [("Muskellunge", ("Advanced fingerlings",), [
+        (2016, "1,087"), (2017, "1,022"), (2018, "1,084"), (2019, "1,011"), (2020, "1,204"),
+        (2021, "660"), (2022, "1,015"), (2023, "1,019"), (2024, "1,482"), (2025, "664")])],
+}
+DB_SAYS = {
+    "deercreek": "What ODNR does say: the Corps of Engineers finished the dam in 1968. The lake impounds 1,290 acres from Deer Creek and Clark Run, and its level can change up to 20 ft because the watershed is large for the lake. ODNR says early spring saugeye below the dam is the fishery the park is famous for.",
+    "madison": "What ODNR does say: a dam across Deer Creek filled the 106 acre lake by 1947. Anglers catch bass, bluegill, crappie, channel catfish and bullhead. Electric motors only.",
+    "knox": "What ODNR does say: Knox Lake has the best average bass size among similar tributary reservoirs, with 51% of bass collected over 15 inches, and ranks 5th among Ohio reservoirs for bass over 15 inches. The 18 inch minimum dates to 1991. ODNR posts no survey table.",
+    "clearfork": "What ODNR does say: the City of Mansfield finished the 971 acre water supply reservoir in 1949. It has a gently sloping bottom, a maximum depth of 24 ft, a shallow stumpy upper end, islands mid-lake and a deeper open lower end.",
+}
+
+def db_block(lake):
+    st = DB_STOCK[lake]
+    species = ", ".join(s[0].lower() if i else s[0] for i, s in enumerate(st))
+    newest = max(r[0] for s in st for r in s[2])
+    t, u = AREA[lake]
+    return f'''      <div class="card data-glance">
+        <dl class="data-glance-list">
+          <div><dt>Stocked</dt><dd>{species}</dd></div>
+          <div><dt>Newest record</dt><dd>{newest} stockings</dd></div>
+          <div><dt>Net surveys</dt><dd>No ODNR lake PDF</dd></div>
+          <div><dt>Angler survey</dt><dd>None posted</dd></div>
+        </dl>
+        <p class="meta">{DB_SAYS[lake]}
+        Source: <a href="{u}"{EXT}>{t}</a>.</p>
+      </div>
+'''
+
+def db_stocked(lake):
+    s = ""
+    for sp, cols, rows in DB_STOCK[lake]:
+        body = table(("Year",) + cols, rows) + f'            <p class="meta">ODNR, <a href="{DASH}"{EXT}>Fish Stocking dashboard</a>, {DB_NAME[lake]}. Years with no row had no stocking listed; a dash means none of that size.</p>\n'
+        s += details(f'{sp} <span class="data-sum">{years_text(rows)}</span>', body)
+    return s
+
 def details(summary, body, open_=False):
     return (f'        <details class="how-to-read data-more"{" open" if open_ else ""}>\n'
             f'          <summary>{summary}</summary>\n          <div class="how-to-read-body">\n{body}          </div>\n        </details>\n')
@@ -227,18 +288,22 @@ def habitat(lake):
             f'        <p class="meta">Both are ODNR&rsquo;s. ODNR notes its depth map is not for navigation. The interactive map is large and works best on a good signal.</p>\n')
 
 secs = []
-def section(id_, title, per_lake, extra=None):
-    # extra(lake) fills the same section for the NONE lakes; without it the section shows for DATA lakes only
-    df = "" if extra else f' data-for="{" ".join(DATA)}"'
+def section(id_, title, per_lake, extra=None, db=None):
+    # extra(lake) fills the same section for the NONE lakes; db(lake) for the DB lakes; without them the section shows for DATA lakes only
+    shown = DATA + (DB if db else ())
+    df = "" if extra else f' data-for="{" ".join(shown)}"'
     s = f'    <section id="{id_}"{df} aria-labelledby="{id_}-title">\n      <h2 id="{id_}-title">{title}</h2>\n'
     for lake in DATA:
         s += f'      <div data-for="{lake}">\n{per_lake(lake)}      </div>\n'
+    if db:
+        for lake in DB:
+            s += f'      <div data-for="{lake}">\n{db(lake)}      </div>\n'
     if extra:
         for lake in NONE:
             s += f'      <div data-for="{lake}">\n{extra(lake)}      </div>\n'
     return s + "    </section>\n"
 
-# BUCK_NONE unused since Buckeye sections are hidden
+# BUCK_NONE unused since Buckeye Lake sections are hidden
 BUCK_NONE = '        <p class="data-none">ODNR hasn&rsquo;t posted {what} for Buckeye Lake on its fishing area page. Nothing is filled in here.</p>\n'
 main = f'''  <main id="main">
     <div class="page-horizon" aria-hidden="true"></div>
@@ -248,11 +313,17 @@ main = f'''  <main id="main">
       What ODNR has published for <span data-lk="name">Hoover Reservoir</span>: fish stocked, how fast they grow, what anglers catch, and ODNR&rsquo;s habitat map.
       Official numbers only, each with its source.
     </p>
+    <p class="lead" data-for="{" ".join(DB)}">
+      What ODNR has published for <span data-lk="name">Hoover Reservoir</span>: fish stocked, from ODNR&rsquo;s Fish Stocking dashboard, and ODNR&rsquo;s habitat map. ODNR posts no lake survey PDFs here, and this page says so.
+    </p>
     <p class="lead" data-for="{" ".join(NONE)}">
       What ODNR has published for <span data-lk="name">Hoover Reservoir</span>, and what it hasn&rsquo;t. Official facts only, each with its source.
     </p>
     <nav class="data-jumps" data-for="{" ".join(DATA)}" aria-label="On this page">
       <a href="#stocked">Stocked</a><a href="#growth">Growth</a><a href="#anglers">Anglers</a><a href="#habitat">Map</a>
+    </nav>
+    <nav class="data-jumps" data-for="{" ".join(DB)}" aria-label="On this page">
+      <a href="#stocked">Stocked</a><a href="#habitat">Map</a>
     </nav>
     <div data-for="hoover">
 {lake_block("hoover")}    </div>
@@ -262,6 +333,14 @@ main = f'''  <main id="main">
 {lake_block("indian")}    </div>
     <div data-for="delaware">
 {lake_block("delaware")}    </div>
+    <div data-for="deercreek">
+{db_block("deercreek")}    </div>
+    <div data-for="madison">
+{db_block("madison")}    </div>
+    <div data-for="knox">
+{db_block("knox")}    </div>
+    <div data-for="clearfork">
+{db_block("clearfork")}    </div>
     <div data-for="buckeye">
       <div class="card data-glance">
         <p class="data-none">ODNR&rsquo;s Buckeye Lake fishing area page has no stocking tables, net surveys, angler survey or fishing forecast. This page says so rather than guess.</p>
@@ -283,13 +362,14 @@ main = f'''  <main id="main">
         Source: <a href="{AREA["griggs"][1]}"{EXT}>{AREA["griggs"][0]}</a>. ODNR&rsquo;s <a href="https://ohiodnr.gov/discover-and-learn/education-training/wild-ohio-harvest-community/fishing-tips"{EXT}>Hybrid Striped Bass Fishing Tips</a> list Griggs among the lakes stocked with hybrid striped bass, and ODNR&rsquo;s <a href="https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/central-ohio-is-a-fishing-destination-for-crappie-bass-and-catfish"{EXT}>June 12, 2026 news release</a> says Griggs has a strong population of large hybrids, often over 20 inches. No numbers are posted.</p>
       </div>
     </div>
-    <p class="meta data-dates">ODNR&rsquo;s lake PDFs run through 2019. Newer stocking is in ODNR&rsquo;s <a href="{STOCK_DB}"{EXT}>Fish Stocking Database</a> on DataOhio, which asked for a sign in, so it isn&rsquo;t copied here. Checked Oct. 27, 2026.</p>
+    <p class="meta data-dates" data-for="{" ".join(DB)}">Stocking numbers for <span data-lk="name">Hoover Reservoir</span> are read from ODNR&rsquo;s public <a href="{DASH}"{EXT}>Fish Stocking dashboard</a> (data updated Oct. 27, 2026), last ten years. Checked Oct. 30, 2026.</p>
+    <p class="meta data-dates" data-for="{" ".join(DATA + NONE)}">ODNR&rsquo;s lake PDFs run through 2019. Newer stocking is in ODNR&rsquo;s <a href="{STOCK_DB}"{EXT}>Fish Stocking Database</a> on DataOhio, which asked for a sign in, so it isn&rsquo;t copied here. Checked Oct. 27, 2026.</p>
 '''
-main += section("stocked", "Fish stocked", stocked, "")
+main += section("stocked", "Fish stocked", stocked, "", db_stocked)
 main += section("growth", "Net surveys: growth", growth, "")
 main += section("anglers", "Angler survey", anglers, "")
 main += section("forecast", "ODNR&rsquo;s fishing forecast", forecast, "")
-main += section("habitat", "Habitat map", habitat, habitat)
+main += section("habitat", "Habitat map", habitat, habitat, habitat)
 main += '''
     <div class="callout">
       The Night Bite is unofficial and personal: <strong>not ODNR</strong>. Numbers here are copied from ODNR&rsquo;s public pages and PDFs and dated; check the source before you rely on one.

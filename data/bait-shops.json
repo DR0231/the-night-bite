@@ -1,0 +1,229 @@
+{
+ "_note": "Bait and tackle shops near each lake, shown on each lake home (js/bait-nearby.js). Each shop was checked open on its Google Maps listing or own site, Oct 30, 2026; evidence in the build notes. min is an estimated drive from the lake, rounded to 5 minutes; lists are in drive time order. lat/lng let a visitor sort from their own location on the device. A lake with an empty list shows No shops confirmed yet.",
+ "lakes": {
+  "hoover": [
+   {
+    "name": "Old Dutchman Bait & Tackle",
+    "address": "904 S Sunbury Rd, Westerville, OH 43081",
+    "min": 5,
+    "lat": 40.1015667,
+    "lng": -82.8880828
+   },
+   {
+    "name": "Red Bank Food & Beverage and Bait",
+    "address": "7001 Sunbury Rd, Westerville, OH 43082",
+    "min": 10,
+    "lat": 40.1453361,
+    "lng": -82.8822167
+   },
+   {
+    "name": "Cabela's",
+    "address": "1650 Gemini Pl, Columbus, OH 43240",
+    "min": 20,
+    "lat": 40.1493035,
+    "lng": -82.9730806
+   }
+  ],
+  "alum": [
+   {
+    "name": "Cheshire Market",
+    "address": "5094 Cheshire Rd, Galena, OH 43021",
+    "min": 5,
+    "lat": 40.2386304,
+    "lng": -82.9622671
+   },
+   {
+    "name": "Alum Creek Drive Thru",
+    "address": "6999 OH-37, Sunbury, OH 43074",
+    "min": 10,
+    "lat": 40.267485,
+    "lng": -82.9371938
+   },
+   {
+    "name": "Cabela's",
+    "address": "1650 Gemini Pl, Columbus, OH 43240",
+    "min": 15,
+    "lat": 40.1493035,
+    "lng": -82.9730806
+   },
+   {
+    "name": "Red Bank Food & Beverage and Bait",
+    "address": "7001 Sunbury Rd, Westerville, OH 43082",
+    "min": 20,
+    "lat": 40.1453361,
+    "lng": -82.8822167
+   }
+  ],
+  "buckeye": [
+   {
+    "name": "North Shore Bait & Tackle",
+    "address": "5187 Walnut Rd, Buckeye Lake, OH 43008",
+    "min": 5,
+    "lat": 39.9311417,
+    "lng": -82.482129
+   },
+   {
+    "name": "R & R Bait and Tackle",
+    "address": "10905 Hebron Rd, Buckeye Lake, OH 43008",
+    "min": 5,
+    "lat": 39.9388087,
+    "lng": -82.4794104
+   },
+   {
+    "name": "Millersport Bait & Tackle",
+    "address": "12325 Lancaster St, Millersport, OH 43046",
+    "min": 10,
+    "lat": 39.90329,
+    "lng": -82.5347576
+   },
+   {
+    "name": "Vance Outdoors",
+    "address": "150 Arrowhead Dr, Hebron, OH 43025",
+    "min": 10,
+    "lat": 39.958535,
+    "lng": -82.478134
+   }
+  ],
+  "oshaughnessy": [
+   {
+    "name": "Cabela's",
+    "address": "1650 Gemini Pl, Columbus, OH 43240",
+    "min": 20,
+    "lat": 40.1493035,
+    "lng": -82.9730806
+   },
+   {
+    "name": "Cheshire Market",
+    "address": "5094 Cheshire Rd, Galena, OH 43021",
+    "min": 25,
+    "lat": 40.2386304,
+    "lng": -82.9622671
+   },
+   {
+    "name": "Mad River Outfitters",
+    "address": "833 Bethel Rd, Columbus, OH 43214",
+    "min": 25,
+    "lat": 40.0611255,
+    "lng": -83.0424363
+   }
+  ],
+  "griggs": [
+   {
+    "name": "Mad River Outfitters",
+    "address": "833 Bethel Rd, Columbus, OH 43214",
+    "min": 10,
+    "lat": 40.0611255,
+    "lng": -83.0424363
+   },
+   {
+    "name": "Vance Outdoors",
+    "address": "3723 Cleveland Ave, Columbus, OH 43224",
+    "min": 20,
+    "lat": 40.0446425,
+    "lng": -82.9589597
+   },
+   {
+    "name": "Fisherman's Warehouse",
+    "address": "1125 Williams Rd, Columbus, OH 43207",
+    "min": 25,
+    "lat": 39.8903189,
+    "lng": -82.9696771
+   }
+  ],
+  "indian": [
+   {
+    "name": "Lakeside Pro Bass Shop",
+    "address": "Duff Rd and SR 235 N, Lakeview, OH 43331",
+    "min": 5,
+    "lat": 40.4985056,
+    "lng": -83.9190436
+   },
+   {
+    "name": "Gene's Marine Bait & Tackle",
+    "address": "7320 Edison St, Russells Point, OH 43348",
+    "min": 10,
+    "lat": 40.4691061,
+    "lng": -83.8691643
+   },
+   {
+    "name": "Mike's Bait & Tackle",
+    "address": "13708 OH-235, Lakeview, OH 43331",
+    "min": 10,
+    "lat": 40.5198622,
+    "lng": -83.8902231
+   }
+  ],
+  "delaware": [
+   {
+    "name": "Norton Sporting Goods",
+    "address": "100 Norton Rd, Waldo, OH 43356",
+    "min": 15,
+    "lat": 40.4341455,
+    "lng": -83.0743384
+   },
+   {
+    "name": "Alum Creek Drive Thru",
+    "address": "6999 OH-37, Sunbury, OH 43074",
+    "min": 25,
+    "lat": 40.267485,
+    "lng": -82.9371938
+   },
+   {
+    "name": "Cheshire Market",
+    "address": "5094 Cheshire Rd, Galena, OH 43021",
+    "min": 30,
+    "lat": 40.2386304,
+    "lng": -82.9622671
+   }
+  ],
+  "deercreek": [
+   {
+    "name": "Frosties Bait & Tackle",
+    "address": "14761 Crownover Mill Rd, New Holland, OH 43145",
+    "min": 5,
+    "lat": 39.6025441,
+    "lng": -83.2291608
+   },
+   {
+    "name": "Deer Creek Marina",
+    "address": "21001 Deercreek Rd, Mt Sterling, OH 43143",
+    "min": 5,
+    "lat": 39.6147651,
+    "lng": -83.2484593
+   }
+  ],
+  "madison": [],
+  "knox": [
+   {
+    "name": "Knox Marine",
+    "address": "13285 Netherland Rd, Fredericktown, OH 43019",
+    "min": 5,
+    "lat": 40.51513,
+    "lng": -82.502532
+   },
+   {
+    "name": "Rick's Sporting Goods",
+    "address": "1326 Newark Rd, Mount Vernon, OH 43050",
+    "min": 25,
+    "lat": 40.3632766,
+    "lng": -82.478787
+   },
+   {
+    "name": "The Pier",
+    "address": "12259 Anchor Dr, Howard, OH 43028",
+    "min": 30,
+    "lat": 40.4102698,
+    "lng": -82.3560812
+   }
+  ],
+  "clearfork": [
+   {
+    "name": "Clearfork Marina & Campground",
+    "address": "7471 OH-97, Mansfield, OH 44903",
+    "min": 5,
+    "lat": 40.70756,
+    "lng": -82.652586
+   }
+  ]
+ }
+}

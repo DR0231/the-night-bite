@@ -20,7 +20,7 @@
       "View Dock Availability (set date in drop down to see live availability) ."
     ],
     "url": "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
   },
   "recparks-alerts": {
     "hash": "bdd74bcd8fea1137",
@@ -28,7 +28,7 @@
       "The Trabue-Murphy boat ramp is closed until further notice due to uneven subsurface conditions that could cause damage to boats."
     ],
     "url": "https://columbusrecparks.com/facilities/alerts/",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
   },
   "recparks-hoover": {
     "hash": "f19cfaf4dcf2e33c",
@@ -37,18 +37,19 @@
       "Motors in excess of 10 horsepower may remain in a non-tilt position provided the prop is removed prior to launch and remains so while on the waterway."
     ],
     "url": "https://columbusrecparks.com/parks/hoover-reservoir-parkland/",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
   },
   "odnr-drawdowns": {
-    "hash": "2835c910a63a65c9",
+    "hash": "d87c0046b8d92b22",
     "snippets": [
       "Alum Creek | 3' | 0' | 10/01/25 - 11/01/25 | 03/15/26 - 04/15/26 | Flood Control",
       "Buckeye Lake | 3' | 0' | 11/15/25 - 12/15/25 | 03/01/26 - 05/01/26 | Dock Maintenance, Seawall Repair, Shoreline Maintenance",
+      "Deer Creek | 14' | 0' | 10/01/25 - 11/30/25 | 04/01/26 - 05/15/26 | Flood Control",
       "Delaware | 5' | 0' | 10/01/25 - 11/01/25 | 03/01/26 - 04/01/26 | Flood Control",
       "The USACE is postponing the start date of the drawdown at Delaware, Dillon, Paint Creek state parks due to drought conditions."
     ],
     "url": "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
   },
   "odnr-alum": {
     "hash": "b1e114531fd24868",
@@ -66,7 +67,7 @@
       "To see what this journey was like, you can walk the Heritage of Freedom Trail near the New Galena boat ramp."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
   },
   "odnr-buckeye": {
     "hash": "cb21a50511432413",
@@ -86,7 +87,7 @@
       "You may enter the path at either the North Shore boat ramp or Lieb's Island."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
   },
   "alum-marina": {
     "hash": "ce6577e26bf36940",
@@ -103,7 +104,7 @@
       "You have 24 hours from the booking date to cancel, or a $50 cancellation fee will be charged."
     ],
     "url": "https://www.alumcreekmarina.net/docking.html",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
   },
   "recparks-oshaughnessy": {
     "hash": "f9073db80a45ff5a",
@@ -112,7 +113,7 @@
       "Prohibited: Jet skis, tubing and swimming are not permitted in any City of Columbus reservoir."
     ],
     "url": "https://columbusrecparks.com/parks/oshaughnessy-reservoir/",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
   },
   "recparks-griggs": {
     "hash": "8468a82a97b272d6",
@@ -122,7 +123,7 @@
       "The Trabue-Murphy boat ramp is closed until further notice due to uneven subsurface conditions that could cause damage to boats."
     ],
     "url": "https://columbusrecparks.com/parks/griggs-park/",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
   },
   "odnr-indian": {
     "hash": "477b0d7b45c2dfbf",
@@ -146,7 +147,7 @@
       "The archery range is located near the recycling station at the Moundwood Boat ramp."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
   },
   "odnr-delaware": {
     "hash": "a3900aaef9c1395a",
@@ -165,6 +166,74 @@
       "Three boat ramps are conveniently located around the lake."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park",
-    "seen": "2026-10-29"
+    "seen": "2026-10-30"
+  },
+  "odnr-deercreek": {
+    "hash": "645ecf26f9acb666",
+    "snippets": [
+      "A fenced dog swim area is also available for off-leash play at the bottom of Park Road 9, the first road South of the Marina entrance on State Route 207.",
+      "A fully-equipped marina offers fuel, boat rental, and seasonal dock rentals.",
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --",
+      "Set amidst rich farming country, the park’s well-appointed resort, marina, large campground, and 18-hole golf course facilities blend perfectly with outdoor activities such as boating, fishing, camping, and hiking.",
+      "The nature center boasts displays, crafts, archery, a Gray Rat Snake, and outdoor box turtle enclosure.",
+      "Two boat launch ramps provide access to the lake."
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park",
+    "seen": "2026-10-30"
+  },
+  "odnr-madison": {
+    "hash": "63198d96ef21b9d5",
+    "snippets": [
+      "A launch ramp provides access to the 106-acre lake.",
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --"
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park",
+    "seen": "2026-10-30"
+  },
+  "odnr-knox": {
+    "hash": "a9cb58ecc7584839",
+    "snippets": [
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --",
+      "Other boat ramps are located off County Road 5 in the upper section of the reservoir.",
+      "The Division of Wildlife maintains the parking lots, picnic areas, boat ramps, docks and rental boat slips.",
+      "The marina and main boat ramp are located on the lower section of the reservoir along Armentrout Road."
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area",
+    "seen": "2026-10-30"
+  },
+  "odnr-clearfork": {
+    "hash": "89f93fe574324492",
+    "snippets": [
+      "An improved public boat ramp and marina are located on the south side of the reservoir just east of Bowers Road.",
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --",
+      "No fee is charged for launching boats."
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area",
+    "seen": "2026-10-30"
+  },
+  "mansfield-clearfork": {
+    "hash": "65a5be5b7e7d0d06",
+    "snippets": [
+      "All of these facilities are open to the general public, except the docks and their moorings.",
+      "Boat rental is available at the Clearfork Park Marina.",
+      "Boating dock spaces can be leased on a seasonal basis at the Clearfork Park Marina.",
+      "Boats docked at Clearfork Reservoir Park Marina",
+      "CLEARFORK PARK MARINA : Camping / Boating",
+      "Clearfork Park Marina offers boat rentals, fishing bait, boating, and fishing equipment and supplies.",
+      "Downtown Event Closure Map/Parking",
+      "Members of the Mansfield Sailing Club have provided a picnic area, docks, shelter, drinking fountain, and restrooms.",
+      "The City also operates a family “A” campground near the marina.",
+      "These organizations sell and rent equipment for boating and fishing at the Clearfork Park Marina."
+    ],
+    "url": "https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/",
+    "seen": "2026-10-30"
   }
 }

@@ -12,6 +12,7 @@
   // lake settings from js/lakes.js; the fallbacks are Hoover's original values
   var LK = window.NightBiteLake;
   var LP = (LK && LK.cfg && LK.cfg.pool) || null;
+  if (LP && !LP.src) return;   // no public lake gauge (Madison Lake, Knox Lake, Clear Fork): js/lake-snapshot.js writes the card
   var SITE = (LP && LP.site) || "03228400";
   var PARAM_POOL = (LP && LP.param) || "62614";
   var PARAM_TEMP = LP ? LP.temp : "00010";        // null: this lake has no public water temp gauge
@@ -187,7 +188,7 @@
     return true;
   }
 
-  // { pool, temp } from the lake's gauge: USGS (Hoover, Buckeye, O'Shaughnessy, Griggs, Indian Lake; js/lakes.js picks the API) or the Corps CWMS API (Alum Creek, Delaware Lake)
+  // { pool, temp } from the lake's gauge: USGS (Hoover, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake; js/lakes.js picks the API) or the Corps CWMS API (Alum Creek, Delaware Lake)
   function getReadings() {
     if (CWMS) {
       return LK.cwms(3).then(function (pts) {
