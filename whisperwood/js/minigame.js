@@ -174,12 +174,26 @@ const Minigame = {
     return left;
   },
 
+  _visibleSpan(vw) {
+    const canvas = (typeof Renderer !== "undefined" && Renderer.canvas) || document.getElementById("game");
+    if (!canvas) return { left: 0, right: vw };
+    const c = canvas.getBoundingClientRect();
+    if (c.width === 0) return { left: 0, right: vw };
+    const screenW = document.documentElement.clientWidth || window.innerWidth;
+    const k = vw / c.width;
+    return { left: Math.max(0, (0 - c.left) * k), right: Math.min(vw, (screenW - c.left) * k) };
+  },
+
   draw(ctx, vw, vh) {
     if (!this.active) return;
     const y = vh - 28, h = 10;
     let x = 72, w = vw - 144;
+    const span = this._visibleSpan(vw);
+    x = Math.max(72, Math.ceil(span.left + 12));
+    let right = Math.min(vw - 72, Math.floor(span.right - 12));
     const edge = this._fishEdge(vw, vh, y - 8, y + h + 8);
-    if (edge !== null && edge - 8 < x + w + 4) w = Math.max(160, Math.floor(edge - 8 - 4 - x));
+    if (edge !== null) right = Math.min(right, Math.floor(edge - 12));
+    w = Math.max(160, right - x);
     ctx.fillStyle = "rgba(12, 18, 10, 0.72)";
     ctx.fillRect(x - 4, y - 8, w + 8, h + 16);
     ctx.fillStyle = "#3a2a18";
