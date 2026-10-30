@@ -2,6 +2,16 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-10-30-matching-corners",
+      "date": "2026-10-30",
+      "tag": "Improved",
+      "title": "Cleaner, matching corners across the site",
+      "bullets": [
+        "Cards, buttons, the lake picker and Bait nearby now share one crisp corner.",
+        "Chips, toggles and lake tags keep their round pill shape, so the whole site uses just two."
+      ]
+    },
+    {
       "id": "2026-10-30-privacy-small-fixes",
       "date": "2026-10-30",
       "tag": "Improved",
