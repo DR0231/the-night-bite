@@ -159,9 +159,27 @@ const Minigame = {
     return tt("Hold {hook}", "Hold Fish");
   },
 
+  _fishEdge(vw, vh, barTop, barBottom) {
+    const btn = document.getElementById("btn-fish");
+    const canvas = (typeof Renderer !== "undefined" && Renderer.canvas) || document.getElementById("game");
+    if (!btn || !canvas) return null;
+    const b = btn.getBoundingClientRect();
+    const c = canvas.getBoundingClientRect();
+    if (b.width === 0 || b.height === 0 || c.width === 0) return null;
+    const k = vw / c.width;
+    const left = (b.left - c.left) * k;
+    const top = (b.top - c.top) * k;
+    const bottom = (b.bottom - c.top) * k;
+    if (bottom <= barTop || top >= barBottom) return null;
+    return left;
+  },
+
   draw(ctx, vw, vh) {
     if (!this.active) return;
-    const x = 72, y = vh - 28, w = vw - 144, h = 10;
+    const y = vh - 28, h = 10;
+    let x = 72, w = vw - 144;
+    const edge = this._fishEdge(vw, vh, y - 8, y + h + 8);
+    if (edge !== null && edge - 8 < x + w + 4) w = Math.max(160, Math.floor(edge - 8 - 4 - x));
     ctx.fillStyle = "rgba(12, 18, 10, 0.72)";
     ctx.fillRect(x - 4, y - 8, w + 8, h + 16);
     ctx.fillStyle = "#3a2a18";
