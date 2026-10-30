@@ -1426,6 +1426,14 @@ html.stick-on #move-pad.is-touch ~ #stick-zone { display: block; position: fixed
     }
     @media (orientation: landscape) {
       #prompt { bottom: calc(60px + env(safe-area-inset-bottom)); height: 28px; padding: 4px 14px; box-sizing: border-box; font-size: 16px; line-height: 16px; max-width: min(50vw, calc(100vw - 2 * var(--gutter, 200px))); }
+      #catch-toast:not(.note) { left: calc(144px + env(safe-area-inset-left)); right: calc(144px + env(safe-area-inset-right)); transform: none; width: auto; max-width: none; }
+      #catch-toast:not(.note) .toast-inner { width: 100%; min-width: 0; max-width: none; }
+      #catch-toast.note { max-width: calc(100vw - 2 * (144px + max(env(safe-area-inset-left), env(safe-area-inset-right)))); }
+      #catch-toast.note .toast-inner { max-width: 100%; }
+      #catch-toast:not(.note) .toast-inner > div:not(#toast-art) { white-space: normal; }
+      #catch-toast:not(.note) .toast-kicker, #catch-toast:not(.note) #toast-name { display: inline-block; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; vertical-align: top; }
+      #catch-toast:not(.note) .toast-kicker:empty + #toast-name { margin-left: 0; }
+      #catch-toast:not(.note) #toast-desc { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; white-space: normal; overflow: hidden; text-overflow: clip; }
     }
   }
 }

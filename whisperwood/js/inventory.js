@@ -368,7 +368,12 @@ const Hotbar = {
           icon: btn.querySelector(".hb-icon"),
           count: btn.querySelector(".hb-count")
         });
-        btn.addEventListener("click", () => Hotbar.tap(index));
+        btn.addEventListener("pointerdown", (ev) => {
+          if (ev.button !== 0) return;
+          ev.preventDefault();
+          ev.stopPropagation();
+          Hotbar.tap(index);
+        });
       });
       this._els = { root, slots };
     }
@@ -384,7 +389,7 @@ const Hotbar = {
     const sig = parts.join("\u001f");
     if (sig === this._sig) return;
     this._sig = sig;
-    this._els.root.classList.toggle("hidden", sleeping);
+    this._els.root.classList.toggle("hidden", sleeping || fighting);
     for (let i = 0; i < 4; i++) this._paint(this._els.slots[i], bar[i], hook, hand, mealId, fighting, casting, sleeping);
   },
 
