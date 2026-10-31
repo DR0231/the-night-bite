@@ -12,8 +12,8 @@ const BASE = (process.argv[2] || 'https://dr0231.github.io/night-bite-preview/')
 const OUT = (process.argv[3] || '/workspace/nb-glance').replace(/\/?$/, '/');
 const fs = require('fs'); fs.mkdirSync(OUT, { recursive: true });
 const SIZES = [[390, 844, 'phone'], [820, 1180, 'tablet'], [1280, 800, 'desktop']];
-const LAKES = ['hoover', 'alum', 'buckeye', 'oshaughnessy', 'griggs', 'indian', 'delaware', 'deercreek', 'madison', 'knox', 'clearfork'];
-const NOGAUGE = ['madison', 'knox', 'clearfork'];
+const LAKES = ['hoover', 'alum', 'buckeye', 'oshaughnessy', 'griggs', 'indian', 'delaware', 'deercreek', 'madison', 'knox', 'clearfork', 'seneca', 'dillon', 'logan', 'saltfork', 'burroak', 'dow'];
+const NOGAUGE = ['madison', 'knox', 'clearfork', 'logan', 'saltfork', 'dow'];
 const TEMP = ['hoover', 'griggs', 'indian'];
 const home = l => BASE + (l === 'hoover' ? '' : l + '/');
 const lines = []; let fails = 0;
@@ -79,7 +79,7 @@ async function read(page) {
   // other pages: no strip, no console or CSP errors, no sideways scroll
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' }); await NA.block(ctx);
-    for (const u of ['water', 'species/', 'species/saugeye', 'gear', 'log', 'about', 'updates', 'docks', 'stocking', 'ice', 'tournaments', 'privacy', 'water?lake=knox']) {
+    for (const u of ['water', 'species/', 'species/saugeye', 'gear', 'log', 'about', 'updates', 'docks', 'stocking', 'ice', 'tournaments', 'privacy', 'water?lake=knox', 'water?lake=seneca', 'water?lake=dow', 'stocking?lake=saltfork', 'species/?lake=burroak']) {
       const page = await ctx.newPage(); const errs = [];
       page.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
       page.on('pageerror', e => errs.push('pageerror ' + e.message));

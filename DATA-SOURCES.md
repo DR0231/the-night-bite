@@ -214,6 +214,56 @@ Gaps (said on the site, never filled in):
 - No ODNR stocking or survey PDFs for these four on the Stocking page beyond the dashboard numbers above.
 - No ice reports, no 2026 dock pull dates, and no community trips logged at these lakes yet.
 
+## Lakes: Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake and Dow Lake, checked Oct. 31, 2026
+
+Same system as the other lakes: `?lake=seneca|dillon|logan|saltfork|burroak|dow`, home pages at `/seneca/`, `/dillon/`, `/logan/`, `/saltfork/`, `/burroak/`, `/dow/` (built by `tools/build-lake-pages.py`), per lake settings in `js/lakes.js`. Seneca has a USGS lake gauge, Dillon and Burr Oak have Corps of Engineers lake gauges; Lake Logan, Salt Fork and Dow have no public lake level or water temperature gauge, so `pool.src` is `null` and the pool card says so.
+
+| Setting | Seneca Lake | Dillon Lake | Lake Logan | Salt Fork Lake | Burr Oak Lake | Dow Lake |
+|---|---|---|---|---|---|---|
+| Owner (boating rules) | Muskingum Watershed Conservancy District (Corps dam, 1938); ODNR leases the fishing rights | US Army Corps of Engineers flood control lake (1961); ODNR runs the state park | ODNR Ohio State Parks (built 1955) | ODNR Ohio State Parks (dam 1967) | ODNR Ohio State Parks; Corps of Engineers Tom Jenkins Dam | ODNR Ohio State Parks, Strouds Run State Park (dam 1960) |
+| Lake level | USGS 03141000, parameter 62614 (lake elevation): https://waterdata.usgs.gov/monitoring-location/USGS-03141000/ | USACE LRH, `Dillon-Lake.Elev.Inst.15Minutes.0.OBS`: https://water.usace.army.mil/overview/lrh/locations/dillon | None (no public gauge) | None (no public gauge) | USACE LRH, `TomJenkins-Lake.Elev.Inst.15Minutes.0.OBS`: https://water.usace.army.mil/overview/lrh/locations/tomjenkins | None (no public gauge) |
+| Water temp | None | None | None | None | None | None |
+| Full pool used | 832 ft, ODNR fishing map | 737 ft, ODNR fishing map | 759 ft, ODNR fishing map | 800 ft, ODNR fishing map | 721 ft, ODNR fishing map | 660 ft, ODNR fishing map |
+| Map pool (contour datum) | 832 ft, 3 ft contours, surveyed 1999, 3,585 acres: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/senecalake2.pdf | 737 ft, 3 ft contours, 1999, 1,279 acres: .../dillonlake2.pdf | 759 ft, 3 ft contours, 2006, 333 acres: .../lakelogan2.pdf | 800 ft, 5 ft contours, 1998, 3,060 acres: .../saltforklake2.pdf | 721 ft, 5 ft contours, 1999, 668 acres: .../burroaklake2.pdf | 660 ft, 3 ft contours, 2006, 161 acres: .../dowlake2.pdf |
+| Tonight forecast | NWS grid PBZ 32,37 | NWS grid PBZ 6,40 | NWS grid ILN 105,64 | NWS grid PBZ 26,46 | NWS grid RLX 43,119 | NWS grid RLX 44,111 |
+| Barometer / observations | KZZV, Zanesville airport | KZZV | KLHQ, Lancaster airport | KZZV | KUNI, Ohio University airport, Albany | KUNI |
+| Alerts | OHC121, OHC059, OHZ068, OHZ058 | OHC119, OHZ057 | OHC073, OHZ074 | OHC059, OHZ058 | OHC115, OHC009, OHZ067, OHZ075 | OHC009, OHZ075 |
+| Boating rules shown | ODNR Seneca Lake Fishing Area: 399 hp limit; MWCD rules (https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web2.pdf) for boating, swimming and camping | ODNR Dillon Lake Fishing Area: unlimited horsepower, many coves no wake | ODNR Lake Logan State Park: 10 hp, 10 mph | ODNR Salt Fork Lake Fishing Area: unlimited horsepower, marked speed and ski zones | ODNR Burr Oak State Park: 10 hp, idle above that, no jet drives | ODNR Strouds Run State Park: 10 hp |
+| Species shown | saugeye, blue catfish, black and white crappie, largemouth and smallmouth bass, bluegill, white bass, yellow perch | saugeye, hybrid striped bass, blue and channel catfish, largemouth and smallmouth bass, black and white crappie, bluegill | saugeye, channel catfish, largemouth bass, bluegill, black and white crappie, muskellunge (park page; no muskie stocking listed 2016 to 2025) | muskellunge, saugeye, walleye, largemouth and smallmouth bass, black and white crappie, bluegill, white bass, yellow perch | largemouth bass, white and black crappie, bluegill, channel, blue and flathead catfish | saugeye, largemouth bass, white crappie, channel catfish |
+
+Species come from each lake's ODNR fishing area and state park pages, ODNR Waterbody Report survey data ("ODNR fish surveys record" on the species pages) and ODNR Fish Stocking records.
+
+Regulations (2026–27, ODNR Fishing Regulations PDF above): the 30 crappie, 9″ minimum site rule lists Dillon, Salt Fork and Seneca, not Lake Logan, Burr Oak or Dow. Bass: Seneca 5 a day, 15″ minimum; Salt Fork 4 a day split, 2 under 15″ and 2 15″ or longer; Burr Oak and Dow 5 a day, none between 12″ and 15″; Dillon and Lake Logan statewide (5, 12″). Seneca Lake south of State Route 147 is open to trotlines and to jug and float line fishing. Walleye, sauger and saugeye: 6 combined, no minimum at any of the six.
+
+ODNR Fish Stocking dashboard (https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking, data updated 10/27/2026, read Oct. 31, 2026), 2016 to 2025: Seneca saugeye every year (2025: 1,836,000 fry and 348,908 fingerlings) and blue catfish advanced fingerlings 2016 to 2020, 2022 and 2024; Dillon saugeye and hybrid striped bass fingerlings every year and blue catfish 2022 to 2025; Lake Logan saugeye every year and channel catfish yearlings in even years; Salt Fork muskellunge advanced fingerlings (1,927 to 3,660 a year) and saugeye every year; Burr Oak blue catfish 2022 to 2025 and channel catfish in even years; Dow saugeye every year, rainbow trout catchables 2016 to 2022 and channel catfish 2017 and 2019. ODNR's Seneca page also links a striped bass stocking report that the dashboard does not list in these ten years.
+
+Dock season and drawdowns (`data/docks.json`, watched by `tools/check-docks.py`): ODNR's lake drawdown list (2025–26 dates, read Oct. 29, 2026) gives Dillon 737 to 734 ft Nov 1 to Dec 1, Lake Logan 759 to 756 ft Nov 1 to Dec 1, Salt Fork 800 to 797 ft Nov 4 to Dec 1, and Strouds Run (Dow) a 6 ft drawdown whose pool numbers (660 to 658 ft) differ by only 2 ft, ending Dec 31. Burr Oak is not on the list (the Corps runs Tom Jenkins Dam). MWCD posts no winter pool date for Seneca.
+
+Map pins (`js/lake-map-data-seneca.js`, `-dillon.js`, `-logan.js`, `-saltfork.js`, `-burroak.js`, `-dow.js`; shorelines traced from OpenStreetMap, not for navigation; pins read from the ODNR and park maps are marked approximate):
+
+| Lake | Pin | Address | Sources |
+|---|---|---|---|
+| Seneca Lake | Seneca Lake Marina public ramp (ramp) | Seneca Lake Marina, 16592 Lashley Rd, Senecaville | MWCD Seneca Lake Marina page (https://www.mwcd.org/seneca-lake-marina/); ODNR Seneca Lake Fishing Area (concessionaire ramp off State Route 313, 399 hp) |
+| Seneca Lake | Seneca Lake Park ramps (Old Parkside and Park Central) (ramp) | Seneca Lake Park, 22172 Park Road, Senecaville | MWCD Seneca Lake page, https://www.mwcd.org/places/seneca-lake/ (ramps, kayak launch, accessible pier, park entry) |
+| Dillon Lake | Marina ramp (ramp) | Dillon State Park marina, south end | ODNR Dillon Lake Fishing Area (two ramps at the south end, 70 docks); ODNR Dillon State Park page (over 90 seasonal docks, four overnight docks, office phone); ODNR Dillon park map |
+| Dillon Lake | Big Run Boat Ramp (ramp) | Big Run, east shore near the south end | ODNR Dillon park map |
+| Lake Logan | Main ramp and marina (ramp) | Off Lake Logan Road, southeast side | ODNR Lake Logan State Park page (main ramp, Lake Logan Marina 740-380-2956, 10 hp and 10 mph); ODNR park map |
+| Lake Logan | Beach and boat ramp (ramp) | North shore by the beach | ODNR Lake Logan State Park page (527 ft beach); ODNR park map |
+| Salt Fork Lake | Sugartree Marina ramp (ramp) | Sugartree Marina | ODNR Salt Fork Lake Fishing Area (10 ramps, two marinas, 469 rental docks, Sugartree 740-439-4009); ODNR Salt Fork State Park page (8 ramps by name) |
+| Salt Fork Lake | Morning Glory ramp (ramp) | Off Old Twenty-One Road, north side | ODNR Salt Fork State Park page |
+| Burr Oak Lake | Dock 1, Dock 3, Dock 4 and lodge ramps (ramp) | Burr Oak State Park | ODNR Burr Oak State Park page (ramps, marina 740-767-3585, 10 hp, no jet drives); ODNR park map |
+| Dow Lake | Boat ramp and boathouse (ramp) | Off Strouds Run Road (County Road 20), northeast edge | ODNR Strouds Run State Park page (courtesy dock, tie-up stakes, kayak rack, boathouse 740-594-2628) |
+| Dow Lake | Shore fishing by the dam (access) | Off US 50 near the dam | ODNR Dow Lake Fishing Area |
+
+Bait nearby (`data/bait-shops.json`): each shop's Google Maps listing was open with recent reviews on Oct. 31, 2026, and Directions opens that exact listing (`q` where the name plus address opens another business). Seneca Lake Marina's bait and tackle are on MWCD's own marina page.
+
+Gaps (said on the site, never filled in):
+- No public lake level at Lake Logan, Salt Fork Lake or Dow Lake; no public water temperature at any of the six.
+- Dillon and Burr Oak levels are Corps of Engineers readings and Seneca's is USGS; all provisional.
+- No ODNR survey or angler survey tables are copied for these six; ODNR links some PDFs (Seneca, Salt Fork, Burr Oak) and the Stocking page says so.
+- ODNR's acreage differs between pages (Dillon 1,376 or 1,560; Lake Logan 333 or 400; Dow 171 or 161); both are shown where it matters.
+- No ice reports, no 2026 dock pull dates, and no community trips logged at these lakes yet.
+
 ## Lake-aware Species (js/species-lake.js)
 
 Which species live at each lake: the `species` list for each lake in `js/lakes.js` (the script also rewrites

@@ -57,7 +57,8 @@
     info.appendChild(time);
     var a = document.createElement("a");
     a.className = "btn btn-ghost bait-go";
-    a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.name + " " + s.address);
+    // q: an exact search for a shop whose name and address open a different listing (another business at the same address)
+    a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.q || (s.name + " " + s.address));
     a.target = "_blank";
     a.rel = "noopener";
     a.textContent = "Directions";

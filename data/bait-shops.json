@@ -1,5 +1,5 @@
 {
- "_note": "Bait and tackle shops near each lake, shown on each lake home (js/bait-nearby.js). Each shop was checked open on its Google Maps listing or own site, Oct 30, 2026; evidence in the build notes. min is an estimated drive from the lake, rounded to 5 minutes; lists are in drive time order. lat/lng let a visitor sort from their own location on the device. A lake with an empty list shows No shops confirmed yet.",
+ "_note": "Bait and tackle shops near each lake, shown on each lake home (js/bait-nearby.js). Each shop was checked open on its Google Maps listing or own site, Oct 30, 2026 (the six east and southeast lakes Oct 31, 2026); evidence in the build notes. min is an estimated drive from the lake, rounded to 5 minutes; lists are in drive time order. lat/lng let a visitor sort from their own location on the device. A lake with an empty list shows No shops confirmed yet. q, when present, is the exact Google Maps search that opens that shop’s own listing (its name plus address opens another business at the same address).",
  "lakes": {
   "hoover": [
    {
@@ -223,6 +223,82 @@
     "min": 5,
     "lat": 40.70756,
     "lng": -82.652586
+   }
+  ],
+  "seneca": [
+   {
+    "name": "Seneca Lake Marina",
+    "address": "16592 Lashley Rd, Senecaville, OH 43780",
+    "min": 10,
+    "lat": 39.930895,
+    "lng": -81.428205
+   },
+   {
+    "name": "T&L Sales LLC.",
+    "address": "14171 Clay Pike Rd, Senecaville, OH 43780",
+    "min": 15,
+    "lat": 39.9300719,
+    "lng": -81.4806132
+   }
+  ],
+  "dillon": [
+   {
+    "name": "D & D Bait",
+    "address": "849 Pine St, Zanesville, OH 43701",
+    "min": 20,
+    "lat": 39.9258048,
+    "lng": -82.0165945
+   },
+   {
+    "name": "Y Bridge Bait & Tackle",
+    "address": "761 Putnam Ave, Zanesville, OH 43701",
+    "min": 20,
+    "lat": 39.9266563,
+    "lng": -82.0071714
+   }
+  ],
+  "logan": [
+   {
+    "name": "Downs Bait & Guns",
+    "address": "30586 Lake Logan Rd, Logan, OH 43138",
+    "min": 5,
+    "lat": 39.5413961,
+    "lng": -82.4506962
+   }
+  ],
+  "saltfork": [
+   {
+    "name": "Salt Fork Outdoors (Bait Shop)",
+    "address": "Kimbolton, OH 43749",
+    "min": 10,
+    "lat": 40.1481438,
+    "lng": -81.5413464
+   }
+  ],
+  "burroak": [
+   {
+    "name": "Whitlatch Bait & Carry Out LLC",
+    "address": "415 E Brown St, New Lexington, OH 43764",
+    "min": 35,
+    "lat": 39.7174447,
+    "lng": -82.2054331
+   },
+   {
+    "name": "Maxwell's Hunting & Fishing",
+    "address": "170 W Main St, McConnelsville, OH 43756",
+    "min": 40,
+    "lat": 39.6487787,
+    "lng": -81.855327
+   }
+  ],
+  "dow": [
+   {
+    "name": "The Cabin at Athens Ace Hardware",
+    "address": "470 Richland Ave, Athens, OH 45701",
+    "min": 20,
+    "lat": 39.3094358,
+    "lng": -82.1042824,
+    "q": "The Cabin at Athens Ace Hardware Athens, OH 45701"
    }
   ]
  }

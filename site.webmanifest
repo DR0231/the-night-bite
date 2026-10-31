@@ -1,7 +1,7 @@
 {
-  "name": "The Night Bite",
+  "name": "The Night Bite (Preview)",
   "short_name": "Night Bite",
-  "description": "Unofficial night fishing notebook for Hoover, Alum Creek, Buckeye Lake and eight more central Ohio lakes: lake level, weather, ramps, species.",
+  "description": "Unofficial night fishing notebook for Hoover, Alum Creek, Buckeye Lake and 14 more Ohio lakes: lake level, weather, ramps, species.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

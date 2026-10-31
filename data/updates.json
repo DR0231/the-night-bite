@@ -2,6 +2,26 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-10-31-east-southeast-waters",
+      "date": "2026-10-31",
+      "tag": "New",
+      "title": "Six more waters east and southeast",
+      "bullets": [
+        "Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake and Dow Lake each get a home page with Tonight at a glance, the map, ramps and docks, rules, stocking and Bait nearby, all from MWCD, ODNR, USGS, Army Corps and NWS pages.",
+        "Every lake page now has a Quick facts block: motors and speed, ramps, normal pool and night rules, with the sources and the date they were checked."
+      ],
+      "links": [
+        {
+          "label": "Seneca Lake",
+          "href": "seneca/"
+        },
+        {
+          "label": "Water",
+          "href": "water"
+        }
+      ]
+    },
+    {
       "id": "2026-10-31-glance-lake-facts",
       "date": "2026-10-31",
       "tag": "Improved",

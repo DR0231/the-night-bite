@@ -1,0 +1,205 @@
+{
+  "_about": "Quick facts on each lake home page, written into the HTML by tools/build-lake-pages.py (no JavaScript). Every line is copied from text the site already sources (water.html lake facts cards, the home page map notes and How to read this, js/lake-map-data-*.js); the gauge link comes from js/lakes.js. Leave a field out when there is no official source. checked = the date the facts were last checked against the sources listed; it also becomes the page's WebPage dateModified.",
+  "lakes": {
+    "hoover": {
+      "checked": "2026-10-31",
+      "motors": "10 hp limit and 10 mph; idle speed within 100 ft of shore. Boats 22 ft max.",
+      "ramps": "Five public ramps: Oxbow Road, Sunbury Road, Twin Bridges, Red Bank and Walnut Street. Shore access on the Mudflats Boardwalk.",
+      "pool": "Summer pool is 894 ft, the level the ODNR contour map is drawn at.",
+      "night": "City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
+      "sources": [
+        ["Columbus Recreation and Parks, Hoover Reservoir", "https://columbusrecparks.com/parks/hoover-reservoir/"],
+        ["ODNR, Hoover Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf"]
+      ]
+    },
+    "alum": {
+      "checked": "2026-10-31",
+      "motors": "Unlimited horsepower on the south main lake, no wake on the north end. The state park puts the line at US 36/SR 37, the Corps at Cheshire Road, so follow the buoys.",
+      "ramps": "Four public launch ramps: New Galena, the marina ramp on Hollenback Road, Cheshire and Howard. One more for campers.",
+      "pool": "Summer pool is 888 ft, the level the ODNR fishing map is drawn at.",
+      "sources": [
+        ["US Army Corps of Engineers, Alum Creek Lake", "https://www.lrd.usace.army.mil/Missions/Recreation/Display/Article/3632213/alum-creek-lake/"],
+        ["ODNR, Alum Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/alumcreeklake2.pdf"]
+      ]
+    },
+    "buckeye": {
+      "checked": "2026-10-31",
+      "motors": "No horsepower limit. No wake within 300 ft of any land mass and in marked areas.",
+      "ramps": "North Shore, Liebs Island and Fairfield Beach ramps, plus the Mud Island fishing access.",
+      "pool": "Normal summer pool is 891.75 ft, the level the ODNR fishing map is drawn at.",
+      "sources": [
+        ["ODNR, Buckeye Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area"],
+        ["ODNR, Buckeye Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf"]
+      ]
+    },
+    "oshaughnessy": {
+      "checked": "2026-10-31",
+      "motors": "Unlimited horsepower; 40 mph by day. Idle speed within 100 ft of shore and bridges. Boats 22 ft or shorter, no personal watercraft.",
+      "ramps": "Home Road ramp and marina, and the Bellepoint ramp. Canoe and kayak launches at Twin Lakes and on the east side.",
+      "pool": "Full pool is the City dam crest, 848.5 ft. ODNR fishing map depths are based on 847.9 ft.",
+      "night": "10 mph from sunset to sunrise (City code). City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
+      "sources": [
+        ["Columbus Recreation and Parks, O\u2019Shaughnessy Reservoir", "https://columbusrecparks.com/parks/oshaughnessy-reservoir/"],
+        ["Columbus City Code 921.01-1(G)", "https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf"],
+        ["ODNR, O\u2019Shaughnessy Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/o-shaughnessy-reservoir-fishing-area"]
+      ]
+    },
+    "griggs": {
+      "checked": "2026-10-31",
+      "motors": "Unlimited horsepower; 40 mph by day. Idle speed within 100 ft of shore and bridges. Boats 22 ft or shorter, no personal watercraft.",
+      "ramps": "Griggs boat launch south of Fishinger Road, plus the marina and public boat docks.",
+      "pool": "Full pool is the City dam crest, 756.18 ft. ODNR fishing map depths are based on 757 ft.",
+      "night": "10 mph from sunset to sunrise (City code). City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
+      "sources": [
+        ["Columbus Recreation and Parks, Griggs Park", "https://columbusrecparks.com/parks/griggs-park/"],
+        ["Columbus City Code 921.01-1(G)", "https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf"],
+        ["ODNR, Griggs Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/griggs-reservoir-fishing-area"]
+      ]
+    },
+    "indian": {
+      "checked": "2026-10-29",
+      "motors": "No horsepower limit. No wake within 300 ft of any shoreline, in channels and where marked.",
+      "ramps": "Five state park launch ramps: Moundwood, Lakeview Harbor, Blackhawk, Chippewa and Cranetown Island. Fishing jetties at Old Field Beach.",
+      "pool": "Normal summer pool is 996.3 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Indian Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park"],
+        ["ODNR, Indian Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/indianlake2.pdf"]
+      ]
+    },
+    "delaware": {
+      "checked": "2026-10-29",
+      "motors": "Unlimited horsepower. Follow the posted no wake buoys.",
+      "ramps": "Three state park ramps: the main marina ramp, Sherwood Road on the east side and the southwest launch area.",
+      "pool": "Normal summer pool is 915 ft. ODNR lists a winter drawdown to about 910 ft.",
+      "night": "State park hours are sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Delaware State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park"],
+        ["ODNR, Delaware Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-lake-fishing-area"],
+        ["ODNR, Winter Drawdowns", "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns"]
+      ]
+    },
+    "deercreek": {
+      "checked": "2026-10-31",
+      "motors": "Unlimited horsepower.",
+      "ramps": "Two state park ramps and a marina. Shore access below the dam.",
+      "pool": "Summer pool is 810.5 ft on the ODNR fishing map. ODNR lists a winter drawdown to about 796 ft.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Deer Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park"],
+        ["ODNR, Deer Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-lake-fishing-area"],
+        ["ODNR, Winter Drawdowns", "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns"]
+      ]
+    },
+    "madison": {
+      "checked": "2026-10-31",
+      "motors": "Electric motors only, at no wake speed.",
+      "ramps": "One launch ramp, with shore fishing by it.",
+      "pool": "Summer pool is 965 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Madison Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park"],
+        ["ODNR, Madison Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-fishing-area"],
+        ["Ohio Adm. Code 1501:47-3-17", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-3-17"]
+      ]
+    },
+    "knox": {
+      "checked": "2026-10-30",
+      "motors": "10 hp limit; larger motors at no wake or idle only.",
+      "ramps": "Marina and main ramp on Armentrout Road and an upper lake ramp. Carry-in access on the east side.",
+      "pool": "Summer pool is 1,100 ft, the level the ODNR fishing map is drawn at.",
+      "sources": [
+        ["ODNR, Knox Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/knoxlake2.pdf"]
+      ]
+    },
+    "clearfork": {
+      "checked": "2026-10-31",
+      "motors": "No horsepower limit, but idle speed and no wake on the whole lake (City code). ODNR\u2019s page says 8 mph.",
+      "ramps": "Free public ramp and marina on the south side. Shore fishing on the south and west shores only.",
+      "pool": "Summer pool is 1,202 ft, the level the ODNR fishing map is drawn at.",
+      "night": "City code bars parking from dark to dawn outside designated camping areas, so check posted City signs before a night trip.",
+      "sources": [
+        ["City of Mansfield, Clearfork Reservoir Park", "https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/"],
+        ["Mansfield Codified Ordinances, chapter 971", "https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714"],
+        ["ODNR, Clear Fork Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area"]
+      ]
+    },
+    "seneca": {
+      "checked": "2026-10-31",
+      "motors": "399 hp limit. Idle or no wake inside the buoyed and shore zones.",
+      "ramps": "MWCD lists five public launch ramps, plus the Seneca Lake Marina.",
+      "pool": "Summer pool is 832 ft, the level the ODNR fishing map is drawn at.",
+      "night": "MWCD areas close from 11 p.m. to 6 a.m. except to people fishing, hunting or boating.",
+      "sources": [
+        ["MWCD, Seneca Lake", "https://www.mwcd.org/places/seneca-lake/"],
+        ["ODNR, Seneca Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/seneca-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/senecalake2.pdf"]
+      ]
+    },
+    "dillon": {
+      "checked": "2026-10-31",
+      "motors": "Unlimited horsepower; many coves are no wake.",
+      "ramps": "Two state park ramps at the south end: the marina ramp and Big Run.",
+      "pool": "Summer pool is 737 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Dillon State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park"],
+        ["ODNR, Dillon Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dillonlake2.pdf"]
+      ]
+    },
+    "logan": {
+      "checked": "2026-10-31",
+      "motors": "10 hp limit and 10 mph.",
+      "ramps": "Main ramp and marina off Lake Logan Road, and a smaller ramp about 1.5 miles northeast.",
+      "pool": "Summer pool is 759 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Lake Logan State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park"],
+        ["ODNR, Lake Logan Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakelogan2.pdf"]
+      ]
+    },
+    "saltfork": {
+      "checked": "2026-10-31",
+      "motors": "Unlimited horsepower, with marked speed and ski zones.",
+      "ramps": "ODNR\u2019s fishing page counts 10 ramps and the park page names 8, including Sugartree Marina and Morning Glory. Two marinas.",
+      "pool": "Summer pool is 800 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Salt Fork State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park"],
+        ["ODNR, Salt Fork Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/saltforklake2.pdf"]
+      ]
+    },
+    "burroak": {
+      "checked": "2026-10-31",
+      "motors": "10 hp limit; larger motors at idle only, no jet drives.",
+      "ramps": "Four ramps: Dock 1 with the marina, Dock 3, Dock 4 and the Lodge ramp.",
+      "pool": "Summer pool is 721 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Burr Oak State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park"],
+        ["ODNR, Burr Oak Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/burroaklake2.pdf"]
+      ]
+    },
+    "dow": {
+      "checked": "2026-10-31",
+      "motors": "10 hp limit.",
+      "ramps": "One ramp off Strouds Run Road, with a courtesy dock. Shore fishing by the dam.",
+      "pool": "Summer pool is 660 ft, the level the ODNR fishing map is drawn at.",
+      "night": "Strouds Run State Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Strouds Run State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park"],
+        ["ODNR, Dow Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dowlake2.pdf"]
+      ]
+    }
+  }
+}

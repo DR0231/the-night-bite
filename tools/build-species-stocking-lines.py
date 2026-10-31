@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Adds a one line ODNR stocking or survey note to species pages, linking to /stocking for that lake.
-Every number here is copied from the ODNR district 1 PDFs listed in DATA-SOURCES.md (Stocking & surveys), or for Deer Creek Lake, Madison Lake, Knox Lake and Clear Fork Reservoir from ODNR's Fish Stocking dashboard (checked Oct. 30, 2026).
+Every number here is copied from the ODNR district 1 PDFs listed in DATA-SOURCES.md (Stocking & surveys), or for Deer Creek Lake, Madison Lake, Knox Lake and Clear Fork Reservoir from ODNR's Fish Stocking dashboard (checked Oct. 30, 2026),
+and for Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake and Dow Lake from the same dashboard (checked Oct. 31, 2026).
 Idempotent: rewrites the block between <!-- stocking-line --> markers. Run from the repo root."""
 import pathlib, re
 
@@ -11,9 +12,17 @@ LINES = {
         ("alum", "stocked", "ODNR stocked saugeye in Alum Creek every year from 2010 to 2019."),
         ("indian", "stocked", "ODNR stocked saugeye in Indian Lake every year from 2010 to 2019."),
         ("deercreek", "stocked", "ODNR stocked saugeye in Deer Creek Lake every year from 2016 to 2025, about 130,000 fingerlings a year since 2021."),
+        ("seneca", "stocked", "ODNR stocked saugeye in Seneca Lake every year from 2016 to 2025, mostly as fry."),
+        ("dillon", "stocked", "ODNR stocked saugeye in Dillon Lake every year from 2016 to 2025."),
+        ("logan", "stocked", "ODNR stocked saugeye in Lake Logan every year from 2016 to 2025."),
+        ("saltfork", "stocked", "ODNR stocked saugeye in Salt Fork Lake every year from 2016 to 2025."),
+        ("dow", "stocked", "ODNR stocked saugeye in Dow Lake every year from 2016 to 2025."),
     ],
     "blue-catfish": [
         ("hoover", "stocked", "ODNR stocked blue catfish in Hoover in 7 of the years from 2011 to 2018."),
+        ("seneca", "stocked", "ODNR stocked blue catfish in Seneca Lake in 7 of the years from 2016 to 2024."),
+        ("dillon", "stocked", "ODNR stocked blue catfish in Dillon Lake every year from 2022 to 2025."),
+        ("burroak", "stocked", "ODNR stocked blue catfish in Burr Oak Lake every year from 2022 to 2025."),
     ],
     "walleye": [
         ("hoover", "stocked", "ODNR stocked 288,728 walleye fingerlings in Hoover in 2019."),
@@ -21,6 +30,7 @@ LINES = {
     "muskellunge": [
         ("alum", "stocked", "ODNR stocked muskellunge in Alum Creek every year from 2010 to 2019."),
         ("clearfork", "stocked", "ODNR stocked muskellunge in Clear Fork Reservoir every year from 2016 to 2025."),
+        ("saltfork", "stocked", "ODNR stocked muskellunge in Salt Fork Lake every year from 2016 to 2025."),
     ],
     "black-crappie": [
         ("hoover", "growth", "ODNR trap nets: Hoover crappie average 9.9 in at age 3 (Ohio 9.5)."),
@@ -40,6 +50,9 @@ LINES = {
         ("indian", "growth", "ODNR hoop nets compare Indian Lake channel catfish catch rates with district and state averages."),
         ("delaware", "growth", "ODNR hoop nets compare Delaware Lake channel catfish catch rates with district and state averages."),
         ("madison", "stocked", "ODNR stocked channel catfish in Madison Lake every other year from 2016 to 2024."),
+        ("logan", "stocked", "ODNR stocked channel catfish in Lake Logan every other year from 2016 to 2024."),
+        ("burroak", "stocked", "ODNR stocked channel catfish in Burr Oak Lake every other year from 2016 to 2024."),
+        ("dow", "stocked", "ODNR stocked channel catfish in Dow Lake in 2017 and 2019."),
     ],
     "yellow-perch": [
         ("knox", "stocked", "ODNR stocked yellow perch fingerlings in Knox Lake in 2019 and every year from 2022 to 2025."),
@@ -47,6 +60,7 @@ LINES = {
     "hybrid-striped-bass": [
         ("oshaughnessy", "stocked", "ODNR lists O’Shaughnessy among the lakes it stocks with hybrid striped bass; no numbers are posted."),
         ("griggs", "stocked", "ODNR lists Griggs among the lakes it stocks with hybrid striped bass; no numbers are posted."),
+        ("dillon", "stocked", "ODNR stocked hybrid striped bass fingerlings in Dillon Lake every year from 2016 to 2025."),
     ],
 }
 LINES["white-crappie"] = LINES["black-crappie"]

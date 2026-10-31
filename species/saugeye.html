@@ -31,8 +31,8 @@
   <link rel="preload" href="../assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../css/styles.css?v=v19-2026-10-31">
-  <script src="../js/lakes.js?v=v19-2026-10-31"></script>
+  <link rel="stylesheet" href="../css/styles.css?v=v20-2026-10-31">
+  <script src="../js/lakes.js?v=v20-2026-10-31"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Species", "item": "https://nightbiteoh.com/species/"}, {"@type": "ListItem", "position": 3, "name": "Saugeye", "item": "https://nightbiteoh.com/species/saugeye"}]}
   </script>
@@ -86,18 +86,29 @@
     <p class="lake-note" data-for="madison">Not a regular at Madison Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
     <p class="lake-note" data-for="knox">Not a regular at Knox Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
     <p class="lake-note" data-for="clearfork">Not a regular at Clear Fork Reservoir: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
+    <p class="lake-note" data-for="seneca">Stocked by ODNR at Seneca Lake every year: millions of fry a year since 2016, plus 348,908 fingerlings in 2025.</p>
+    <p class="lake-note" data-for="dillon">Stocked by ODNR at Dillon Lake every year (127,900 fingerlings in 2025), and listed as plentiful on ODNR&rsquo;s Dillon State Park page.</p>
+    <p class="lake-note" data-for="logan">Stocked by ODNR at Lake Logan every year (33,750 fingerlings in 2025), and recorded in ODNR fish surveys.</p>
+    <p class="lake-note" data-for="saltfork">Stocked by ODNR at Salt Fork Lake every year (458,583 fingerlings in 2025), and recorded in ODNR fish surveys.</p>
+    <p class="lake-note" data-for="burroak">Not a regular at Burr Oak Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
+    <p class="lake-note" data-for="dow">Stocked by ODNR at Dow Lake every year (17,963 fingerlings in 2025).</p>
     <!-- stocking-line -->
     <p class="meta sp-stock" data-for="hoover">ODNR stocked saugeye in Hoover every year from 2010 to 2019. <a href="../stocking?lake=hoover#stocked">Stocking &amp; surveys</a></p>
     <p class="meta sp-stock" data-for="alum">ODNR stocked saugeye in Alum Creek every year from 2010 to 2019. <a href="../stocking?lake=alum#stocked">Stocking &amp; surveys</a></p>
     <p class="meta sp-stock" data-for="indian">ODNR stocked saugeye in Indian Lake every year from 2010 to 2019. <a href="../stocking?lake=indian#stocked">Stocking &amp; surveys</a></p>
     <p class="meta sp-stock" data-for="deercreek">ODNR stocked saugeye in Deer Creek Lake every year from 2016 to 2025, about 130,000 fingerlings a year since 2021. <a href="../stocking?lake=deercreek#stocked">Stocking &amp; surveys</a></p>
+    <p class="meta sp-stock" data-for="seneca">ODNR stocked saugeye in Seneca Lake every year from 2016 to 2025, mostly as fry. <a href="../stocking?lake=seneca#stocked">Stocking &amp; surveys</a></p>
+    <p class="meta sp-stock" data-for="dillon">ODNR stocked saugeye in Dillon Lake every year from 2016 to 2025. <a href="../stocking?lake=dillon#stocked">Stocking &amp; surveys</a></p>
+    <p class="meta sp-stock" data-for="logan">ODNR stocked saugeye in Lake Logan every year from 2016 to 2025. <a href="../stocking?lake=logan#stocked">Stocking &amp; surveys</a></p>
+    <p class="meta sp-stock" data-for="saltfork">ODNR stocked saugeye in Salt Fork Lake every year from 2016 to 2025. <a href="../stocking?lake=saltfork#stocked">Stocking &amp; surveys</a></p>
+    <p class="meta sp-stock" data-for="dow">ODNR stocked saugeye in Dow Lake every year from 2016 to 2025. <a href="../stocking?lake=dow#stocked">Stocking &amp; surveys</a></p>
     <!-- /stocking-line -->
 
     <div class="sp-now" id="sp-now" data-species="saugeye" hidden></div>
     <!-- filled right here, before paint, from the month's picks for the active lake -->
-    <script src="../js/biting-data.js?v=v19-2026-10-31"></script>
-    <script src="../js/biting-data-lakes.js?v=v19-2026-10-31"></script>
-    <script src="../js/species-lake.js?v=v19-2026-10-31"></script>
+    <script src="../js/biting-data.js?v=v20-2026-10-31"></script>
+    <script src="../js/biting-data-lakes.js?v=v20-2026-10-31"></script>
+    <script src="../js/species-lake.js?v=v20-2026-10-31"></script>
 
     <nav class="species-subnav" aria-label="On this page">
       <a href="#season">Season</a>
@@ -209,6 +220,77 @@
       <p data-for="madison">Not a regular at Madison Lake, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
       <p data-for="knox">Not a regular at Knox Lake, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
       <p data-for="clearfork">Not a regular at Clear Fork Reservoir, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
+      <div data-for="seneca">
+      <div class="mode-panel" data-mode="bank">
+      <ul>
+        <li>The marina and Lake Park ramps, the accessible pier and public shore (MWCD).</li>
+        <li>Public ramps, parks and shore only. Pins on the <a href="../water#maps">water maps</a>.</li>
+      </ul>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
+      <ul>
+        <li>399 hp limit; ODNR&rsquo;s map uses 3 ft contours at 832 ft pool.</li>
+        <li>Contours on the ODNR fishing map; check no wake zones before a night run.</li>
+      </ul>
+      </div>
+      </div>
+      <div data-for="dillon">
+      <div class="mode-panel" data-mode="bank">
+      <ul>
+        <li>The two state park ramps, the beach area and state park shore (ODNR).</li>
+        <li>Public ramps, parks and shore only. Pins on the <a href="../water#maps">water maps</a>.</li>
+      </ul>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
+      <ul>
+        <li>Unlimited hp, many coves no wake; ODNR&rsquo;s map uses 3 ft contours at 737 ft pool, and the level moves with flood control.</li>
+        <li>Contours on the ODNR fishing map; check no wake zones before a night run.</li>
+      </ul>
+      </div>
+      </div>
+      <div data-for="logan">
+      <div class="mode-panel" data-mode="bank">
+      <ul>
+        <li>The two ramps off Lake Logan Road, the tailwater off State Route 664 and state park shore (ODNR).</li>
+        <li>Public ramps, parks and shore only. Pins on the <a href="../water#maps">water maps</a>.</li>
+      </ul>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
+      <ul>
+        <li>10 hp and 10 mph; ODNR&rsquo;s map uses 3 ft contours at 759 ft pool, and the headwaters run 3 ft or less.</li>
+        <li>Contours on the ODNR fishing map; check no wake zones before a night run.</li>
+      </ul>
+      </div>
+      </div>
+      <div data-for="saltfork">
+      <div class="mode-panel" data-mode="bank">
+      <ul>
+        <li>The launch ramps, the marinas and state park shore (ODNR).</li>
+        <li>Public ramps, parks and shore only. Pins on the <a href="../water#maps">water maps</a>.</li>
+      </ul>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
+      <ul>
+        <li>Unlimited hp with speed and ski zones; ODNR&rsquo;s map uses 5 ft contours at 800 ft pool, with an artificial reef on the north branch.</li>
+        <li>Contours on the ODNR fishing map; check no wake zones before a night run.</li>
+      </ul>
+      </div>
+      </div>
+      <p data-for="burroak">Not a regular at Burr Oak Lake, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
+      <div data-for="dow">
+      <div class="mode-panel" data-mode="bank">
+      <ul>
+        <li>Shore off US 50 by the dam, the ramp area and state park shore (ODNR).</li>
+        <li>Public ramps, parks and shore only. Pins on the <a href="../water#maps">water maps</a>.</li>
+      </ul>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
+      <ul>
+        <li>10 hp limit; ODNR&rsquo;s map uses 3 ft contours at 660 ft pool, 33 ft at the deepest.</li>
+        <li>Contours on the ODNR fishing map; check no wake zones before a night run.</li>
+      </ul>
+      </div>
+      </div>
     </section>
 
     <section id="limits" class="species-section">
@@ -242,6 +324,12 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
       <p class="meta" data-for="madison">Sized for bank reality and small boats. Madison Lake is electric motors only.</p>
       <p class="meta" data-for="knox">Sized for bank reality and small boats. Knox Lake has a 10 hp limit.</p>
       <p class="meta" data-for="clearfork">Sized for bank reality and small boats. Clear Fork is no wake on the whole lake.</p>
+      <p class="meta" data-for="seneca">Sized for bank reality and small boats. Seneca Lake has a 399 hp limit and long open water.</p>
+      <p class="meta" data-for="dillon">Sized for bank reality and small boats. Dillon Lake allows unlimited horsepower, and the level moves with flood control.</p>
+      <p class="meta" data-for="logan">Sized for bank reality and small boats. Lake Logan has a 10 hp limit and a 10 mph speed limit.</p>
+      <p class="meta" data-for="saltfork">Sized for bank reality and small boats. Salt Fork Lake allows unlimited horsepower, with speed and ski zones.</p>
+      <p class="meta" data-for="burroak">Sized for bank reality and small boats. Burr Oak Lake has a 10 hp limit.</p>
+      <p class="meta" data-for="dow">Sized for bank reality and small boats. Dow Lake has a 10 hp limit.</p>
       <div class="mode-panel" data-mode="bank">
       <ul>
         <li>Medium spinning/baitcasting, 8–12 lb.</li>
@@ -304,14 +392,14 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="../js/refresh.js?v=v19-2026-10-31"></script>
-  <script src="../js/sw-update.js?v=v19-2026-10-31"></script>
-  <script src="../js/alerts.js?v=v19-2026-10-31"></script>
-  <script src="../js/nav.js?v=v19-2026-10-31"></script>
-  <script src="../js/visits.js?v=v19-2026-10-31"></script>
-  <script src="../js/lake-picker.js?v=v19-2026-10-31"></script>
-  <script src="../js/sticky-nav.js?v=v19-2026-10-31"></script>
-  <script src="../js/mode-toggle.js?v=v19-2026-10-31"></script>
+  <script src="../js/refresh.js?v=v20-2026-10-31"></script>
+  <script src="../js/sw-update.js?v=v20-2026-10-31"></script>
+  <script src="../js/alerts.js?v=v20-2026-10-31"></script>
+  <script src="../js/nav.js?v=v20-2026-10-31"></script>
+  <script src="../js/visits.js?v=v20-2026-10-31"></script>
+  <script src="../js/lake-picker.js?v=v20-2026-10-31"></script>
+  <script src="../js/sticky-nav.js?v=v20-2026-10-31"></script>
+  <script src="../js/mode-toggle.js?v=v20-2026-10-31"></script>
 
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

@@ -3,17 +3,18 @@
  * Loaded in <head> on every page (before any other script), so html[data-lake] is set before first paint and the
  * lake-only blocks ([data-for="alum"] and so on, see css/styles.css) never flash the wrong lake.
  *
- * Active lake: ?lake=hoover|alum|buckeye|oshaughnessy|griggs|indian|delaware|deercreek|madison|knox|clearfork in the URL first, then localStorage "nb-lake", then Hoover (the default).
+ * Active lake: ?lake=hoover|alum|buckeye|oshaughnessy|griggs|indian|delaware|deercreek|madison|knox|clearfork|seneca|dillon|logan|saltfork|burroak|dow in the URL first, then localStorage "nb-lake", then Hoover (the default).
  * Home pages have their own address per lake: Hoover at the site root, every other lake at <id>/ (alum/, buckeye/,
- * oshaughnessy/, griggs/, indian/, delaware/, deercreek/, madison/, knox/, clearfork/). Those index.html files are built from index.html by tools/build-lake-pages.py
+ * oshaughnessy/, griggs/, indian/, delaware/, deercreek/, madison/, knox/, clearfork/, seneca/, dillon/, logan/,
+ * saltfork/, burroak/, dow/). Those index.html files are built from index.html by tools/build-lake-pages.py
  * and carry <meta name="nb-home" content="<id>">. On a lake's own home page that lake always wins. At the root, a ?lake= link
  * or a saved choice of another lake goes straight to that lake's address (location.replace, before anything
  * paints). Other pages keep ?lake= in the address bar for every lake but Hoover, a clean URL for Hoover, and their
  * Home links point at the chosen lake's home page.
  *
  * Also the shared gauge fetchers: USGS (usgsLatest, usgsSeries: new Water Data API first, legacy IV as fallback) and the
- * Corps CWMS API (cwmsFor, Alum Creek, Delaware Lake and Deer Creek Lake). Madison Lake, Knox Lake and Clear Fork Reservoir have
- * no public lake gauge (pool.src null): nothing is fetched and the pool card says so. js/usgs.js, js/pool-trend.js and js/lake-picker.js all use them.
+ * Corps CWMS API (cwmsFor, Alum Creek, Delaware Lake, Deer Creek Lake, Dillon Lake and Burr Oak Lake). Madison Lake, Knox Lake,
+ * Clear Fork Reservoir, Lake Logan, Salt Fork Lake and Dow Lake have no public lake gauge (pool.src null): nothing is fetched and the pool card says so. js/usgs.js, js/pool-trend.js and js/lake-picker.js all use them.
  *
  * Adding a lake: one entry in LAKES plus its id in ORDER. The picker (js/lake-picker.js) reads name, short, aliases
  * (search), region, lat and lng (Near me) and pool (its Live level and Live temp tags) from that entry.
@@ -343,9 +344,181 @@
       map: { data: "NightBiteMapDataClearfork", chart: "assets/clearfork-chart.png" },
       spots: ["Ramp and marina (south side)", "Picnic area pier", "Bank (south shore)", "Bank (other)", "Kayak launch"],
       species: ["muskellunge", "largemouth-bass", "black-crappie", "white-crappie", "channel-catfish"]
+    },
+    seneca: {
+      id: "seneca",
+      name: "Seneca Lake",
+      short: "Seneca Lake",
+      area: "East central Ohio",
+      lat: 39.91, lng: -81.4,
+      region: "southeast", owner: "Muskingum Watershed Conservancy District",
+      aliases: ["Seneca", "Seneca Lake Park", "Senecaville", "Senecaville Lake", "MWCD"],
+      pool: {
+        src: "usgs", srcName: "USGS",
+        site: "03141000", param: "62614", temp: null,   // Seneca Lake near Senecaville: lake elevation only, no water temp
+        fullPool: 832,     // ODNR fishing map summer pool
+        gaugeUrl: "https://waterdata.usgs.gov/monitoring-location/USGS-03141000/",
+        snapshot: { line: "832.74 ft · no temp · ~0.7 ft above full pool", at: "2026-10-31T11:15:00-04:00", when: "2026-10-31 11:15 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/PBZ/32,37/forecast/hourly",
+        point: "https://api.weather.gov/points/39.91,-81.4",
+        grid: "https://api.weather.gov/gridpoints/PBZ/32,37",
+        station: "KZZV", stationName: "Zanesville airport (KZZV)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.91&lon=-81.4"
+      },
+      alerts: { zones: "OHC121,OHC059,OHZ068,OHZ058", counties: "the Seneca Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataSeneca", chart: "assets/seneca-chart.png" },
+      spots: ["Seneca Lake Marina ramp", "Lake Park ramps", "Bank (other)", "Kayak launch"],
+      species: ["saugeye", "blue-catfish", "white-bass", "largemouth-bass", "smallmouth-bass", "white-crappie", "black-crappie", "bluegill", "yellow-perch"]
+    },
+    dillon: {
+      id: "dillon",
+      name: "Dillon Lake",
+      short: "Dillon Lake",
+      area: "East central Ohio",
+      lat: 40.02, lng: -82.12,
+      region: "southeast", owner: "US Army Corps of Engineers",
+      aliases: ["Dillon", "Dillon State Park", "Dillon Reservoir", "Nashport", "Zanesville"],
+      pool: {
+        // no USGS lake gauge; the Corps of Engineers posts the lake level every 15 minutes
+        src: "cwms", srcName: "USACE",
+        office: "LRH", ts: "Dillon-Lake.Elev.Inst.15Minutes.0.OBS",
+        temp: null,     // no public lake temperature gauge
+        fullPool: 737,     // ODNR fishing map summer pool
+        gaugeUrl: "https://water.usace.army.mil/overview/lrh/locations/dillon",
+        snapshot: { line: "737.38 ft · no temp · ~0.4 ft above full pool", at: "2026-10-31T11:15:00-04:00", when: "2026-10-31 11:15 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/PBZ/6,40/forecast/hourly",
+        point: "https://api.weather.gov/points/40.02,-82.12",
+        grid: "https://api.weather.gov/gridpoints/PBZ/6,40",
+        station: "KZZV", stationName: "Zanesville airport (KZZV)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.02&lon=-82.12"
+      },
+      alerts: { zones: "OHC119,OHZ057", counties: "the Dillon Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataDillon", chart: "assets/dillon-chart.png" },
+      spots: ["Marina ramp (east arm)", "Big Run ramp", "Bank (other)", "Kayak launch"],
+      species: ["saugeye", "hybrid-striped-bass", "blue-catfish", "channel-catfish", "largemouth-bass", "smallmouth-bass", "white-crappie", "black-crappie", "bluegill"]
+    },
+    logan: {
+      id: "logan",
+      name: "Lake Logan",
+      short: "Lake Logan",
+      area: "Southeast Ohio",
+      lat: 39.538, lng: -82.466,
+      region: "southeast", owner: "ODNR Ohio State Parks",
+      aliases: ["Logan", "Lake Logan State Park", "Hocking Lake", "Hocking Hills"],
+      pool: {
+        // no public lake level or temperature gauge: the pool card says so, nothing is fetched
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 759,     // ODNR fishing map summer pool
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/105,64/forecast/hourly",
+        point: "https://api.weather.gov/points/39.538,-82.466",
+        grid: "https://api.weather.gov/gridpoints/ILN/105,64",
+        station: "KLHQ", stationName: "Lancaster airport (KLHQ)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.538&lon=-82.466"
+      },
+      alerts: { zones: "OHC073,OHZ074", counties: "the Lake Logan area" },
+      push: null,
+      map: { data: "NightBiteMapDataLogan", chart: "assets/logan-chart.png" },
+      spots: ["Main ramp (southeast side)", "Beach ramp (north shore)", "Below the dam", "Bank (other)", "Kayak launch"],
+      species: ["saugeye", "channel-catfish", "largemouth-bass", "muskellunge", "bluegill", "black-crappie", "white-crappie"]
+    },
+    saltfork: {
+      id: "saltfork",
+      name: "Salt Fork Lake",
+      short: "Salt Fork Lake",
+      area: "East central Ohio",
+      lat: 40.11, lng: -81.54,
+      region: "southeast", owner: "ODNR Ohio State Parks",
+      aliases: ["Salt Fork", "Salt Fork State Park", "Saltfork", "Cambridge", "Kimbolton"],
+      pool: {
+        // no public lake level or temperature gauge: the pool card says so, nothing is fetched
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 800,     // ODNR fishing map summer pool
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/PBZ/26,46/forecast/hourly",
+        point: "https://api.weather.gov/points/40.11,-81.54",
+        grid: "https://api.weather.gov/gridpoints/PBZ/26,46",
+        station: "KZZV", stationName: "Zanesville airport (KZZV)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.11&lon=-81.54"
+      },
+      alerts: { zones: "OHC059,OHZ058", counties: "the Salt Fork Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataSaltfork", chart: "assets/saltfork-chart.png" },
+      spots: ["Sugartree Marina ramp", "Morning Glory ramp", "Bank (other)", "Kayak launch"],
+      species: ["muskellunge", "saugeye", "walleye", "largemouth-bass", "smallmouth-bass", "white-bass", "white-crappie", "black-crappie", "bluegill", "yellow-perch"]
+    },
+    burroak: {
+      id: "burroak",
+      name: "Burr Oak Lake",
+      short: "Burr Oak Lake",
+      area: "Southeast Ohio",
+      lat: 39.535, lng: -82.04,
+      region: "southeast", owner: "ODNR Ohio State Parks",
+      aliases: ["Burr Oak", "Burr Oak State Park", "Burr Oak Reservoir", "Tom Jenkins Dam", "Glouster"],
+      pool: {
+        // no USGS lake gauge; the Corps of Engineers posts the level behind Tom Jenkins Dam every 15 minutes
+        src: "cwms", srcName: "USACE",
+        office: "LRH", ts: "TomJenkins-Lake.Elev.Inst.15Minutes.0.OBS",
+        temp: null,     // no public lake temperature gauge
+        fullPool: 721,     // ODNR fishing map summer pool
+        gaugeUrl: "https://water.usace.army.mil/overview/lrh/locations/tomjenkins",
+        snapshot: { line: "721.73 ft · no temp · ~0.7 ft above full pool", at: "2026-10-31T11:30:00-04:00", when: "2026-10-31 11:30 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/RLX/43,119/forecast/hourly",
+        point: "https://api.weather.gov/points/39.535,-82.04",
+        grid: "https://api.weather.gov/gridpoints/RLX/43,119",
+        station: "KUNI", stationName: "Ohio University airport, Albany (KUNI)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.535&lon=-82.04"
+      },
+      alerts: { zones: "OHC115,OHC009,OHZ067,OHZ075", counties: "the Burr Oak Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataBurroak", chart: "assets/burroak-chart.png" },
+      spots: ["Dock 1 ramp", "Lodge ramp", "Dock 4 ramp", "Dock 3 ramp", "Bank (other)", "Kayak launch"],
+      species: ["largemouth-bass", "white-crappie", "black-crappie", "channel-catfish", "blue-catfish", "flathead-catfish", "bluegill"]
+    },
+    dow: {
+      id: "dow",
+      name: "Dow Lake",
+      short: "Dow Lake",
+      area: "Southeast Ohio",
+      lat: 39.345, lng: -82.03,
+      region: "southeast", owner: "ODNR Ohio State Parks",
+      aliases: ["Dow", "Strouds Run", "Strouds Run State Park", "Athens"],
+      pool: {
+        // no public lake level or temperature gauge: the pool card says so, nothing is fetched
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 660,     // ODNR fishing map summer pool
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/RLX/44,111/forecast/hourly",
+        point: "https://api.weather.gov/points/39.345,-82.03",
+        grid: "https://api.weather.gov/gridpoints/RLX/44,111",
+        station: "KUNI", stationName: "Ohio University airport, Albany (KUNI)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.345&lon=-82.03"
+      },
+      alerts: { zones: "OHC009,OHZ075", counties: "the Dow Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataDow", chart: "assets/dow-chart.png" },
+      spots: ["Boat ramp (northeast edge)", "Bank by the dam", "Bank (other)", "Kayak launch"],
+      species: ["saugeye", "largemouth-bass", "white-crappie", "channel-catfish"]
     }
   };
-  var ORDER = ["hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware", "deercreek", "madison", "knox", "clearfork"];
+  var ORDER = ["hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware", "deercreek", "madison", "knox", "clearfork", "seneca", "dillon", "logan", "saltfork", "burroak", "dow"];
   // picker regions, in this order (js/lake-picker.js). A region with no lakes yet is hidden. Every lake above sets
   // region to one of these ids; lat and lng above (the lake's NWS forecast point, on the water) give Near me distances.
   var REGIONS = [

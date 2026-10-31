@@ -40,12 +40,16 @@
     "seen": "2026-10-30"
   },
   "odnr-drawdowns": {
-    "hash": "d87c0046b8d92b22",
+    "hash": "e51e2840eae2a805",
     "snippets": [
       "Alum Creek | 3' | 0' | 10/01/25 - 11/01/25 | 03/15/26 - 04/15/26 | Flood Control",
       "Buckeye Lake | 3' | 0' | 11/15/25 - 12/15/25 | 03/01/26 - 05/01/26 | Dock Maintenance, Seawall Repair, Shoreline Maintenance",
       "Deer Creek | 14' | 0' | 10/01/25 - 11/30/25 | 04/01/26 - 05/15/26 | Flood Control",
       "Delaware | 5' | 0' | 10/01/25 - 11/01/25 | 03/01/26 - 04/01/26 | Flood Control",
+      "Dillon | 3' | 0' | 11/01/25 - 12/01/25 | 04/01/26 - 04/15/26 | Flood Control",
+      "Lake Logan | 3' | 0' | 11/01/25 - 12/01/25 | 03/15/26 - 04/04/26 | Weed and Edge Control",
+      "Salt Fork | 3' | 0' | 11/04/25 - 12/01/25 | 03/15/26 - 04/01/26 | Flood Control",
+      "Strouds Run | 6' | 0' | 11/01/22 - 12/31/25 | 03/01/26 - 04/01/26 | Reclaim Beach Sand, Check Ramp, Buoy Anchor Maintenance",
       "The USACE is postponing the start date of the drawdown at Delaware, Dillon, Paint Creek state parks due to drought conditions."
     ],
     "url": "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns",

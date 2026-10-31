@@ -9,7 +9,7 @@
  *    with last deploy's styles or scripts. (Up to v11 these were cache first, which showed the multi-lake
  *    picker unstyled and the old Hoover-only map script after a deploy.) Pages ask for them with ?v=VERSION.
  *  · Fonts, images: stale while revalidate (instant from cache, refreshed in the background).
- *  · Home pages: the root (Hoover) and every lake home page (alum/, buckeye/, oshaughnessy/, griggs/, indian/, delaware/, deercreek/, madison/, knox/, clearfork/) are precached, so each lake opens offline.
+ *  · Home pages: the root (Hoover) and every lake home page (alum/, buckeye/, oshaughnessy/, griggs/, indian/, delaware/, deercreek/, madison/, knox/, clearfork/, seneca/, dillon/, logan/, saltfork/, burroak/, dow/) are precached, so each lake opens offline.
  *  · Whisperwood is never touched: nothing under whisperwood/ (or whisperwood.html) is cached or intercepted.
  *  · Cross origin requests (NWS, USGS, links out) pass straight through. The page itself keeps the last good
  *    readings in localStorage and labels them "Offline. Last updated ..." (js/refresh.js, NightBiteOffline).
@@ -19,7 +19,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v19-2026-10-31";
+var VERSION = "v20-2026-10-31";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
@@ -36,6 +36,12 @@ var PRECACHE = [
   "madison/",
   "knox/",
   "clearfork/",
+  "seneca/",
+  "dillon/",
+  "logan/",
+  "saltfork/",
+  "burroak/",
+  "dow/",
   "species/",
   "water.html",
   "ice.html",
@@ -91,6 +97,12 @@ var PRECACHE = [
   "js/lake-map-data-madison.js",
   "js/lake-map-data-knox.js",
   "js/lake-map-data-clearfork.js",
+  "js/lake-map-data-seneca.js",
+  "js/lake-map-data-dillon.js",
+  "js/lake-map-data-logan.js",
+  "js/lake-map-data-saltfork.js",
+  "js/lake-map-data-burroak.js",
+  "js/lake-map-data-dow.js",
   "js/lake-picker.js",
   "js/lake-snapshot.js",
   "js/lakes.js",
@@ -136,6 +148,12 @@ var PRECACHE = [
   "assets/madison-chart.png",
   "assets/knox-chart.png",
   "assets/clearfork-chart.png",
+  "assets/seneca-chart.png",
+  "assets/dillon-chart.png",
+  "assets/logan-chart.png",
+  "assets/saltfork-chart.png",
+  "assets/burroak-chart.png",
+  "assets/dow-chart.png",
   "assets/horizon-center.png",
   "assets/horizon-thin.png",
   "assets/horizon-tile.png",
@@ -186,6 +204,18 @@ var PRECACHE = [
   "assets/map/knox-map-wide.png",
   "assets/map/clearfork-map-tall.png",
   "assets/map/clearfork-map-wide.png",
+  "assets/map/seneca-map-tall.png",
+  "assets/map/seneca-map-wide.png",
+  "assets/map/dillon-map-tall.png",
+  "assets/map/dillon-map-wide.png",
+  "assets/map/logan-map-tall.png",
+  "assets/map/logan-map-wide.png",
+  "assets/map/saltfork-map-tall.png",
+  "assets/map/saltfork-map-wide.png",
+  "assets/map/burroak-map-tall.png",
+  "assets/map/burroak-map-wide.png",
+  "assets/map/dow-map-tall.png",
+  "assets/map/dow-map-wide.png",
   "assets/map/pin-access.png",
   "assets/map/pin-ramp.png",
   "assets/map/pin-shop.png",

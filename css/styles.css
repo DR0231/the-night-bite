@@ -2796,6 +2796,12 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
 .pool-chart img[data-for="madison"] { width: 264px; height: 96px; }
 .pool-chart img[data-for="knox"] { width: 70px; height: 54px; }
 .pool-chart img[data-for="clearfork"] { width: 120px; height: 96px; }
+.pool-chart img[data-for="seneca"] { width: 98px; height: 94px; }
+.pool-chart img[data-for="dillon"] { width: 76px; height: 76px; }
+.pool-chart img[data-for="logan"] { width: 146px; height: 96px; }
+.pool-chart img[data-for="saltfork"] { width: 96px; height: 96px; }
+.pool-chart img[data-for="burroak"] { width: 146px; height: 96px; }
+.pool-chart img[data-for="dow"] { width: 120px; height: 94px; }
 @media (max-width: 359px) {
   .pool-chart img[data-for="alum"] { width: 134px; height: 37px; }
   .pool-chart img[data-for="buckeye"] { width: 92px; height: 48px; }
@@ -2807,6 +2813,12 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
   .pool-chart img[data-for="madison"] { width: 132px; height: 48px; }
   .pool-chart img[data-for="knox"] { width: 35px; height: 27px; }
   .pool-chart img[data-for="clearfork"] { width: 60px; height: 48px; }
+  .pool-chart img[data-for="seneca"] { width: 49px; height: 47px; }
+  .pool-chart img[data-for="dillon"] { width: 38px; height: 38px; }
+  .pool-chart img[data-for="logan"] { width: 73px; height: 48px; }
+  .pool-chart img[data-for="saltfork"] { width: 48px; height: 48px; }
+  .pool-chart img[data-for="burroak"] { width: 73px; height: 48px; }
+  .pool-chart img[data-for="dow"] { width: 60px; height: 47px; }
 }
 .pool-chart-key > span[data-for="buckeye"] { margin-right: 0.5rem; }
 @media (min-width: 560px) { .pool-chart-key > span[data-for="buckeye"] { margin-right: 0; } }
@@ -3607,3 +3619,20 @@ a[href^="tel:"],
 .bait-near:disabled { opacity: 0.6; cursor: progress; }
 .bait-loc { margin: 0; font-family: var(--font-display); font-size: 0.75rem; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .bait-near { transition: none; } }
+
+/* Quick facts on each lake home (static HTML from tools/build-lake-pages.py): one folded row above the bento,
+   the How to read look, the checked date always visible on the summary line */
+.home .quick-facts { margin: calc(-1 * var(--space-md)) 0 var(--space-md); }
+.quick-facts summary { flex-wrap: wrap; column-gap: 0.5rem; row-gap: 0; padding: 0.35rem 0; }
+.quick-facts .qf-title { margin: 0; font: inherit; letter-spacing: inherit; color: inherit; text-transform: none; }
+.quick-facts .qf-checked { margin-left: auto; font-family: var(--font-body); font-size: var(--text-sm); letter-spacing: 0; color: var(--muted); }
+.qf-list { display: grid; gap: 0.6rem; margin: 0.25rem 0 0; max-width: var(--measure); }
+.qf-list dt { font-family: var(--font-display); font-variant-ligatures: none; font-size: var(--text-label); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.qf-list dd { margin: 0.1rem 0 0; color: var(--cream); }
+.qf-src { margin: 0.75rem 0 0; max-width: var(--measure); }
+@media (min-width: 720px) {
+  .qf-list { grid-template-columns: max-content 1fr; column-gap: 1.25rem; max-width: 46rem; }
+  .qf-list > div { display: contents; }
+  .qf-list dd { margin: 0; }
+  .qf-list dt { padding-top: 0.2rem; }
+}

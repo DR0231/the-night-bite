@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """Builds stocking.html (Stocking & surveys) from ODNR public PDFs. Values typed from the PDF tables and checked against
-the rendered PDFs, Oct. 27, 2026 (Indian Lake and Delaware Lake: Oct. 29, 2026, from pdftotext -layout of the same PDFs). Reuses ice.html's head and footer. Run, then tools/stamp-version.py."""
+the rendered PDFs, Oct. 27, 2026 (Indian Lake and Delaware Lake: Oct. 29, 2026, from pdftotext -layout of the same PDFs). The six east and
+southeast lakes (Seneca, Dillon, Logan, Salt Fork, Burr Oak, Dow) come from ODNR's Fish Stocking dashboard, read Oct. 31, 2026. Reuses ice.html's head and footer. Run, then tools/stamp-version.py."""
 import pathlib, re
 R = pathlib.Path(__file__).resolve().parent.parent
 ice = (R / "ice.html").read_text()
 head = ice[:ice.index("  <main id=\"main\">")]
 foot = ice[ice.index("  </main>"):]
-head = re.sub(r"<title>[^<]*</title>", "<title>Stocking &amp; surveys: central Ohio lakes | The Night Bite</title>", head, count=1)
+head = re.sub(r"<title>[^<]*</title>", "<title>Stocking &amp; surveys: Ohio lakes | The Night Bite</title>", head, count=1)
 head = re.sub(r'<meta name="description" content="[^"]*">',
-              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake and eight more central Ohio lakes, with sources.">', head)
+              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake and 14 more Ohio lakes, with sources.">', head)
 head = head.replace('<link rel="canonical" href="https://nightbiteoh.com/ice">', '<link rel="canonical" href="https://nightbiteoh.com/stocking">')
 assert "stocking" in head
 # ice.html's own scripts at the bottom stay (refresh, sw-update, alerts, nav, lake-picker); nothing else is needed
@@ -30,6 +31,12 @@ ODNR_MAP = {
     "madison": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
     "knox": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
     "clearfork": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "seneca": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "dillon": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "logan": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "saltfork": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "burroak": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "dow": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
 }
 AREA = {
     "hoover": ("ODNR, Hoover Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area"),
@@ -43,6 +50,12 @@ AREA = {
     "madison": ("ODNR, Madison Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park"),
     "knox": ("ODNR, Knox Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area"),
     "clearfork": ("ODNR, Clear Fork Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area"),
+    "seneca": ("ODNR, Seneca Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/seneca-lake-fishing-area"),
+    "dillon": ("ODNR, Dillon Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-lake-fishing-area"),
+    "logan": ("ODNR, Lake Logan Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-fishing-area"),
+    "saltfork": ("ODNR, Salt Fork Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area"),
+    "burroak": ("ODNR, Burr Oak Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-lake-fishing-area"),
+    "dow": ("ODNR, Dow Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area"),
 }
 PDFMAP = {
     "hoover": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf",
@@ -56,6 +69,12 @@ PDFMAP = {
     "madison": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/madisonlake2.pdf",
     "knox": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/knoxlake2.pdf",
     "clearfork": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/clearforkreservoir2.pdf",
+    "seneca": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/senecalake2.pdf",
+    "dillon": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dillonlake2.pdf",
+    "logan": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakelogan2.pdf",
+    "saltfork": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/saltforklake2.pdf",
+    "burroak": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/burroaklake2.pdf",
+    "dow": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dowlake2.pdf",
 }
 STOCK_DB = "https://ohiodnr.gov/buy-and-apply/hunting-fishing-boating/fishing-resources/fish-stocking-records"
 
@@ -163,8 +182,9 @@ NOTE = "Copied from the PDF; a dash means none listed."
 
 # Lakes with no ODNR lake PDFs whose stocking is read from ODNR's public Fish Stocking dashboard (Tableau), last ten years.
 # Read Oct. 30, 2026 (dashboard "data updated 10/27/2026"). Deer Creek and Clear Fork list one species only.
-DB = ("deercreek", "madison", "knox", "clearfork")
-DB_NAME = {"deercreek": "Deer Creek Lake", "madison": "Madison Lake", "knox": "Knox Lake", "clearfork": "Clear Fork Reservoir"}
+DB = ("deercreek", "madison", "knox", "clearfork", "seneca", "dillon", "logan", "saltfork", "burroak", "dow")
+DB_NAME = {"deercreek": "Deer Creek Lake", "madison": "Madison Lake", "knox": "Knox Lake", "clearfork": "Clear Fork Reservoir",
+           "seneca": "Seneca Lake", "dillon": "Dillon Lake", "logan": "Lake Logan", "saltfork": "Salt Fork Lake", "burroak": "Burr Oak Lake", "dow": "Dow Lake"}
 DASH = "https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking"
 DB_STOCK = {
     "deercreek": [("Saugeye", ("Fingerlings",), [
@@ -177,13 +197,50 @@ DB_STOCK = {
     "clearfork": [("Muskellunge", ("Advanced fingerlings",), [
         (2016, "1,087"), (2017, "1,022"), (2018, "1,084"), (2019, "1,011"), (2020, "1,204"),
         (2021, "660"), (2022, "1,015"), (2023, "1,019"), (2024, "1,482"), (2025, "664")])],
+    "seneca": [("Saugeye", ("Fingerlings", "Fry",), [
+        (2016, "", "3,668,980"), (2017, "", "6,251,770"), (2018, "", "5,474,280"), (2019, "108,000", "6,063,230"), (2020, "", "4,135,080"), (2021, "", "3,587,715"), (2022, "", "4,052,000"), (2023, "", "2,737,600"), (2024, "", "3,587,112"), (2025, "348,908", "1,836,000")]),
+        ("Blue catfish", ("Advanced fingerlings", "Fry", "Yearlings", "Catchables",), [
+        (2016, "58,577", "", "5,294", ""), (2017, "58,812", "", "", ""), (2018, "61,348", "", "", ""), (2019, "95,066", "56,115", "", ""), (2020, "92,072", "", "", ""), (2022, "35,897", "", "", "429"), (2024, "37,140", "", "", "")])],
+    "dillon": [("Hybrid striped bass", ("Fingerlings",), [
+        (2016, "140,222"), (2017, "64,441"), (2018, "66,592"), (2019, "36,268"), (2020, "35,319"), (2021, "5,147"), (2022, "40,052"), (2023, "127,847"), (2024, "76,393"), (2025, "21,131")]),
+        ("Saugeye", ("Fingerlings", "Fry",), [
+        (2016, "131,425", "826,900"), (2017, "244,812", ""), (2018, "76,899", ""), (2019, "268,396", ""), (2020, "85,671", ""), (2021, "128,289", ""), (2022, "128,858", ""), (2023, "174,654", ""), (2024, "128,120", ""), (2025, "127,900", "")]),
+        ("Blue catfish", ("Advanced fingerlings", "Fry",), [
+        (2022, "31,693", "21,366"), (2023, "4,898", "88,012"), (2024, "", "12,177"), (2025, "6,291", "17,167")])],
+    "logan": [("Saugeye", ("Fingerlings",), [
+        (2016, "43,800"), (2017, "67,120"), (2018, "21,100"), (2019, "66,813"), (2020, "67,493"), (2021, "66,924"), (2022, "66,528"), (2023, "66,314"), (2024, "66,544"), (2025, "33,750")]),
+        ("Channel catfish", ("Fingerlings", "Yearlings",), [
+        (2016, "6,714", "3,401"), (2018, "", "2,525"), (2020, "8,382", "2,905"), (2022, "", "5,000"), (2024, "", "5,060")])],
+    "saltfork": [("Muskellunge", ("Advanced fingerlings",), [
+        (2016, "3,194"), (2017, "3,305"), (2018, "3,140"), (2019, "2,457"), (2020, "3,660"), (2021, "2,208"), (2022, "3,063"), (2023, "3,161"), (2024, "3,630"), (2025, "1,927")]),
+        ("Saugeye", ("Fingerlings",), [
+        (2016, "310,902"), (2017, "459,301"), (2018, "205,921"), (2019, "573,106"), (2020, "306,542"), (2021, "764,694"), (2022, "468,698"), (2023, "456,397"), (2024, "730,985"), (2025, "458,583")])],
+    "burroak": [("Channel catfish", ("Fingerlings", "Yearlings",), [
+        (2016, "", "5,191"), (2018, "", "3,095"), (2020, "9,221", "2,531"), (2022, "", "4,872"), (2024, "", "5,310")]),
+        ("Blue catfish", ("Advanced fingerlings",), [
+        (2022, "6,889"), (2023, "6,891"), (2024, "5,510"), (2025, "6,886")])],
+    "dow": [("Saugeye", ("Fingerlings",), [
+        (2016, "38,055"), (2017, "34,831"), (2018, "11,629"), (2019, "39,536"), (2020, "34,525"), (2021, "44,372"), (2022, "35,483"), (2023, "34,763"), (2024, "35,098"), (2025, "17,963")]),
+        ("Rainbow trout", ("Catchables",), [
+        (2016, "3,014"), (2017, "3,010"), (2018, "3,001"), (2019, "3,001"), (2020, "2,586"), (2021, "2,504"), (2022, "2,510")]),
+        ("Channel catfish", ("Fingerlings", "Yearlings",), [
+        (2017, "5,836", "2,915"), (2019, "", "4,299")])],
 }
 DB_SAYS = {
     "deercreek": "What ODNR does say: the Corps of Engineers finished the dam in 1968. The lake impounds 1,290 acres from Deer Creek and Clark Run, and its level can change up to 20 ft because the watershed is large for the lake. ODNR says early spring saugeye below the dam is the fishery the park is famous for.",
     "madison": "What ODNR does say: a dam across Deer Creek filled the 106 acre lake by 1947. Anglers catch bass, bluegill, crappie, channel catfish and bullhead. Electric motors only.",
     "knox": "What ODNR does say: Knox Lake has the best average bass size among similar tributary reservoirs, with 51% of bass collected over 15 inches, and ranks 5th among Ohio reservoirs for bass over 15 inches. The 18 inch minimum dates to 1991. ODNR posts no survey table.",
     "clearfork": "What ODNR does say: the City of Mansfield finished the 971 acre water supply reservoir in 1949. It has a gently sloping bottom, a maximum depth of 24 ft, a shallow stumpy upper end, islands mid-lake and a deeper open lower end.",
+    "seneca": "What ODNR does say: the Corps of Engineers built Seneca Lake dam in 1938 across Seneca Fork of Wills Creek. It is the largest MWCD lake, 3,509 acres with 45 miles of shoreline, with a 399 hp limit. MWCD controls boating, swimming and camping. ODNR also links a Seneca striped bass stocking report that the dashboard does not list in the last ten years. ODNR links crappie and largemouth surveys and an angler survey; they aren&rsquo;t copied here.",
+    "dillon": "What ODNR does say: Dillon Lake was built for flood control, with 1,376 acres of water and a 748 square mile watershed. The Corps of Engineers and ODNR manage it jointly. Unlimited horsepower; many coves are no wake.",
+    "logan": "What ODNR does say: Lake Logan was built in 1955 and was once called Hocking Lake. It is 333 acres at normal pool with 9.5 miles of shoreline, 18 ft at the deepest, and the headwaters are 3 ft or less. 10 hp limit.",
+    "saltfork": "What ODNR does say: the earthen dam was finished in 1967. Trees and shrubs were left standing in many bays and an artificial reef was built on the north branch for fish cover; boulders line parts of the shore. ODNR links crappie, largemouth and smallmouth surveys; they aren&rsquo;t copied here.",
+    "burroak": "What ODNR does say: largemouth bass from 3 to 23 inches, a consistent producer of fish over 18, and one of the top bass lakes in the area. White crappie lead, most 7 to 8 inches with fish over 15 every year; channel catfish 10 to 25 inches; flatheads occasionally. ODNR links channel catfish, crappie and largemouth surveys and an angler survey; they aren&rsquo;t copied here.",
+    "dow": "What ODNR does say: the dam creating Dow Lake was finished in 1960. ODNR&rsquo;s fishing page lists 171 acres at normal pool, 6.4 miles of shoreline and 33 ft at the deepest. 10 hp limit. ODNR stocked rainbow trout here through 2022.",
 }
+
+DB_NETS = {k: "Linked by ODNR, not copied" for k in ("seneca", "saltfork", "burroak")}
+DB_ANG = {k: "Linked by ODNR, not copied" for k in ("seneca", "burroak")}
 
 def db_block(lake):
     st = DB_STOCK[lake]
@@ -194,8 +251,8 @@ def db_block(lake):
         <dl class="data-glance-list">
           <div><dt>Stocked</dt><dd>{species}</dd></div>
           <div><dt>Newest record</dt><dd>{newest} stockings</dd></div>
-          <div><dt>Net surveys</dt><dd>No ODNR lake PDF</dd></div>
-          <div><dt>Angler survey</dt><dd>None posted</dd></div>
+          <div><dt>Net surveys</dt><dd>{DB_NETS.get(lake, "No ODNR lake PDF")}</dd></div>
+          <div><dt>Angler survey</dt><dd>{DB_ANG.get(lake, "None posted")}</dd></div>
         </dl>
         <p class="meta">{DB_SAYS[lake]}
         Source: <a href="{u}"{EXT}>{t}</a>.</p>
@@ -341,6 +398,18 @@ main = f'''  <main id="main">
 {db_block("knox")}    </div>
     <div data-for="clearfork">
 {db_block("clearfork")}    </div>
+    <div data-for="seneca">
+{db_block("seneca")}    </div>
+    <div data-for="dillon">
+{db_block("dillon")}    </div>
+    <div data-for="logan">
+{db_block("logan")}    </div>
+    <div data-for="saltfork">
+{db_block("saltfork")}    </div>
+    <div data-for="burroak">
+{db_block("burroak")}    </div>
+    <div data-for="dow">
+{db_block("dow")}    </div>
     <div data-for="buckeye">
       <div class="card data-glance">
         <p class="data-none">ODNR&rsquo;s Buckeye Lake fishing area page has no stocking tables, net surveys, angler survey or fishing forecast. This page says so rather than guess.</p>
@@ -362,7 +431,7 @@ main = f'''  <main id="main">
         Source: <a href="{AREA["griggs"][1]}"{EXT}>{AREA["griggs"][0]}</a>. ODNR&rsquo;s <a href="https://ohiodnr.gov/discover-and-learn/education-training/wild-ohio-harvest-community/fishing-tips"{EXT}>Hybrid Striped Bass Fishing Tips</a> list Griggs among the lakes stocked with hybrid striped bass, and ODNR&rsquo;s <a href="https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/central-ohio-is-a-fishing-destination-for-crappie-bass-and-catfish"{EXT}>June 12, 2026 news release</a> says Griggs has a strong population of large hybrids, often over 20 inches. No numbers are posted.</p>
       </div>
     </div>
-    <p class="meta data-dates" data-for="{" ".join(DB)}">Stocking numbers for <span data-lk="name">Hoover Reservoir</span> are read from ODNR&rsquo;s public <a href="{DASH}"{EXT}>Fish Stocking dashboard</a> (data updated Oct. 27, 2026), last ten years. Checked Oct. 30, 2026.</p>
+    <p class="meta data-dates" data-for="{" ".join(DB)}">Stocking numbers for <span data-lk="name">Hoover Reservoir</span> are read from ODNR&rsquo;s public <a href="{DASH}"{EXT}>Fish Stocking dashboard</a> (data updated Oct. 27, 2026), last ten years. Checked Oct. 30, 2026; the six east and southeast lakes Oct. 31, 2026.</p>
     <p class="meta data-dates" data-for="{" ".join(DATA + NONE)}">ODNR&rsquo;s lake PDFs run through 2019. Newer stocking is in ODNR&rsquo;s <a href="{STOCK_DB}"{EXT}>Fish Stocking Database</a> on DataOhio, which asked for a sign in, so it isn&rsquo;t copied here. Checked Oct. 27, 2026.</p>
 '''
 main += section("stocked", "Fish stocked", stocked, "", db_stocked)

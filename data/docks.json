@@ -445,6 +445,288 @@
         "mansfield-clearfork",
         "odnr-clearfork"
       ]
+    },
+    "seneca": {
+      "name": "Seneca Lake",
+      "checked": "2026-10-31",
+      "items": [
+        {
+          "name": "Marina docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "MWCD offers daily, weekly and seasonal dockage at Seneca Lake Marina but posts no date for pulling docks. Call the marina office.",
+          "source": "mwcd-seneca-marina"
+        },
+        {
+          "name": "Winter level",
+          "status": "unannounced",
+          "label": "Not posted",
+          "note": "Seneca is an MWCD lake, so it is not on ODNR&rsquo;s state park drawdown list, and MWCD posts no winter pool date. The USGS gauge at Senecaville shows the level.",
+          "source": "mwcd-seneca"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "MWCD lists public ramps in Seneca Lake Park and at the marina.",
+          "source": "mwcd-seneca"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Seneca Lake Marina",
+          "+17406850015",
+          "740-685-0015",
+          ""
+        ],
+        [
+          "Seneca Lake Park office",
+          "+17406856013",
+          "740-685-6013",
+          ""
+        ]
+      ],
+      "sources": [
+        "mwcd-seneca",
+        "mwcd-seneca-marina"
+      ]
+    },
+    "dillon": {
+      "name": "Dillon Lake",
+      "checked": "2026-10-31",
+      "items": [
+        {
+          "name": "Seasonal docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR&rsquo;s park page lists over 90 seasonal docks for lease at Dillon (its fishing page says 70) but has not posted a 2026 date for pulling them. Call the park office.",
+          "source": "odnr-dillon"
+        },
+        {
+          "name": "Winter drawdown",
+          "status": "unannounced",
+          "label": "Seasonal, Corps timing",
+          "note": "ODNR&rsquo;s drawdown list still shows last season&rsquo;s dates (2025–26): 3 ft, from the 737 ft pool to 734 ft, Nov. 1 to Dec. 1, refilled Apr. 1 to Apr. 15, for flood control. Last year the Corps of Engineers pushed the start past Dec. 1. The Corps sets the timing; check the Corps lake level before a trip.",
+          "source": "odnr-drawdowns"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists two boat ramps at the south end of the lake.",
+          "source": "odnr-dillon"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Dillon State Park office",
+          "+17404534377",
+          "740-453-4377",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-dillon",
+        "odnr-drawdowns"
+      ]
+    },
+    "logan": {
+      "name": "Lake Logan",
+      "checked": "2026-10-31",
+      "items": [
+        {
+          "name": "Marina docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR lists seasonal docks for rent and Lake Logan Marina rentals in spring, summer and fall, but has not posted a 2026 date for pulling docks.",
+          "source": "odnr-logan"
+        },
+        {
+          "name": "Winter drawdown",
+          "status": "unannounced",
+          "label": "Seasonal",
+          "note": "ODNR&rsquo;s drawdown list still shows last season&rsquo;s dates (2025–26): 3 ft, from the 759 ft pool to 756 ft, Nov. 1 to Dec. 1, refilled Mar. 15 to Apr. 4, for weed and edge control. No public gauge shows the level.",
+          "source": "odnr-drawdowns"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists the main ramp off Lake Logan Road and a smaller ramp about 1.5 miles northeast.",
+          "source": "odnr-logan"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Lake Logan marina",
+          "+17403802956",
+          "740-380-2956",
+          ""
+        ],
+        [
+          "Lake Logan State Park office",
+          "+17403856842",
+          "740-385-6842",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-logan",
+        "odnr-drawdowns"
+      ]
+    },
+    "saltfork": {
+      "name": "Salt Fork Lake",
+      "checked": "2026-10-31",
+      "items": [
+        {
+          "name": "Marina docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "Sugartree Marina and Salt Fork Marina have not posted a 2026 date for pulling docks. Call either marina.",
+          "source": "odnr-saltfork"
+        },
+        {
+          "name": "Winter drawdown",
+          "status": "unannounced",
+          "label": "Seasonal",
+          "note": "ODNR&rsquo;s drawdown list still shows last season&rsquo;s dates (2025–26): 3 ft, from the 800 ft pool to 797 ft, Nov. 4 to Dec. 1, refilled Mar. 15 to Apr. 1, for flood control. No public gauge shows the level.",
+          "source": "odnr-drawdowns"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists several public ramps and two marinas around the lake.",
+          "source": "odnr-saltfork"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Sugartree Marina",
+          "+17404394009",
+          "740-439-4009",
+          ""
+        ],
+        [
+          "Salt Fork Marina",
+          "+17404328883",
+          "740-432-8883",
+          ""
+        ],
+        [
+          "Salt Fork State Park office",
+          "+17404393521",
+          "740-439-3521",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-saltfork",
+        "odnr-drawdowns"
+      ]
+    },
+    "burroak": {
+      "name": "Burr Oak Lake",
+      "checked": "2026-10-31",
+      "items": [
+        {
+          "name": "Marina and seasonal docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR lists the Dock 1 marina and seasonal dock rentals but has not posted a 2026 date for pulling docks.",
+          "source": "odnr-burroak"
+        },
+        {
+          "name": "Winter level",
+          "status": "unannounced",
+          "label": "Not posted",
+          "note": "Burr Oak is not on ODNR&rsquo;s drawdown list. The Corps of Engineers runs Tom Jenkins Dam; check the Corps lake level before a trip.",
+          "source": "odnr-drawdowns"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists four single lane ramps: Dock 1, Dock 3, Dock 4 and the Lodge ramp.",
+          "source": "odnr-burroak"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Burr Oak marina (Dock 1)",
+          "+17407673585",
+          "740-767-3585",
+          ""
+        ],
+        [
+          "Burr Oak State Park office",
+          "+17407673570",
+          "740-767-3570",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-burroak",
+        "odnr-drawdowns"
+      ]
+    },
+    "dow": {
+      "name": "Dow Lake",
+      "checked": "2026-10-31",
+      "items": [
+        {
+          "name": "Courtesy dock",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR lists a courtesy dock at the ramp and a boathouse with rentals but has not posted a date for pulling the dock.",
+          "source": "odnr-strouds"
+        },
+        {
+          "name": "Winter drawdown",
+          "status": "unannounced",
+          "label": "Seasonal",
+          "note": "ODNR&rsquo;s drawdown list still shows last season&rsquo;s dates (2025–26) for Strouds Run: 6 ft (its pool numbers, 660 ft to 658 ft, differ by only 2), ending Dec. 31, refilled Mar. 1 to Apr. 1, to reclaim beach sand, check the ramp and service buoy anchors. No public gauge shows the level.",
+          "source": "odnr-drawdowns"
+        },
+        {
+          "name": "Launch ramp",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists one ramp off Strouds Run Road (County Road 20).",
+          "source": "odnr-strouds"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Strouds Run boathouse",
+          "+17405942628",
+          "740-594-2628",
+          ""
+        ],
+        [
+          "Strouds Run State Park office",
+          "+17407673570",
+          "740-767-3570",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-strouds",
+        "odnr-drawdowns"
+      ]
     }
   },
   "watch": [
@@ -521,19 +803,29 @@
         "alum",
         "buckeye",
         "delaware",
-        "deercreek"
+        "deercreek",
+        "dillon",
+        "logan",
+        "saltfork",
+        "burroak",
+        "dow"
       ],
       "rows": [
         "Alum Creek",
         "Buckeye Lake",
         "Delaware",
-        "Deer Creek"
+        "Deer Creek",
+        "Dillon",
+        "Lake Logan",
+        "Salt Fork",
+        "Strouds Run"
       ],
       "keywords": [
         "postpon",
         "alum creek",
         "buckeye",
-        "delaware"
+        "delaware",
+        "dillon"
       ]
     },
     {
@@ -750,6 +1042,141 @@
       "url": "https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/",
       "lakes": [
         "clearfork"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "mwcd-seneca",
+      "label": "Muskingum Watershed Conservancy District, Seneca Lake",
+      "url": "https://www.mwcd.org/places/seneca-lake/",
+      "lakes": [
+        "seneca"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina",
+        "season"
+      ]
+    },
+    {
+      "id": "mwcd-seneca-marina",
+      "label": "Muskingum Watershed Conservancy District, Seneca Lake Marina",
+      "url": "https://www.mwcd.org/seneca-lake-marina/",
+      "lakes": [
+        "seneca"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina",
+        "season"
+      ]
+    },
+    {
+      "id": "odnr-dillon",
+      "label": "ODNR, Dillon State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park",
+      "lakes": [
+        "dillon"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-logan",
+      "label": "ODNR, Lake Logan State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park",
+      "lakes": [
+        "logan"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-saltfork",
+      "label": "ODNR, Salt Fork State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park",
+      "lakes": [
+        "saltfork"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-burroak",
+      "label": "ODNR, Burr Oak State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park",
+      "lakes": [
+        "burroak"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-strouds",
+      "label": "ODNR, Strouds Run State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park",
+      "lakes": [
+        "dow"
       ],
       "keywords": [
         "dock",

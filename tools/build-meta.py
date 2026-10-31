@@ -11,7 +11,8 @@ right after the canonical:
 Any og:* or twitter:* tags already on the page are removed first, so running it twice changes nothing.
 Images are absolute https://nightbiteoh.com URLs: assets/og/og-<lake>.png on each lake home page other
 than Hoover (alum, buckeye, oshaughnessy, griggs, indian, delaware,
-deercreek, madison, knox, clearfork), assets/og/og-card.png everywhere else (all 1200x630).
+deercreek, madison, knox, clearfork, seneca, dillon, logan, saltfork, burroak,
+dow), assets/og/og-card.png everywhere else (all 1200x630).
 Skipped: 404.html and offline.html (no canonical, not shared), previews/, review/, tools/, whisperwood/ (the game),
 and Search Console verification files. Check the result with tools/check-meta.py.
 """
@@ -31,6 +32,12 @@ IMAGES = {
     "madison/index.html": ("og-madison.png", "The Night Bite: Madison Lake fishing hub, a pixel lantern over a moonlit tree line"),
     "knox/index.html": ("og-knox.png", "The Night Bite: Knox Lake fishing hub, a pixel lantern over a moonlit tree line"),
     "clearfork/index.html": ("og-clearfork.png", "The Night Bite: Clear Fork Reservoir fishing hub, a pixel lantern over a moonlit tree line"),
+    "seneca/index.html": ("og-seneca.png", "The Night Bite: Seneca Lake fishing hub, a pixel lantern over a moonlit tree line"),
+    "dillon/index.html": ("og-dillon.png", "The Night Bite: Dillon Lake fishing hub, a pixel lantern over a moonlit tree line"),
+    "logan/index.html": ("og-logan.png", "The Night Bite: Lake Logan fishing hub, a pixel lantern over a moonlit tree line"),
+    "saltfork/index.html": ("og-saltfork.png", "The Night Bite: Salt Fork Lake fishing hub, a pixel lantern over a moonlit tree line"),
+    "burroak/index.html": ("og-burroak.png", "The Night Bite: Burr Oak Lake fishing hub, a pixel lantern over a moonlit tree line"),
+    "dow/index.html": ("og-dow.png", "The Night Bite: Dow Lake fishing hub, a pixel lantern over a moonlit tree line"),
 }
 DEFAULT_IMAGE = ("og-card.png", "The Night Bite: a pixel lantern over a moonlit tree line")
 
