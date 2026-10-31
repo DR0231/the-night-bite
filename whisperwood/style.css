@@ -1301,6 +1301,14 @@ html.stick-on #move-pad.is-touch { display: none; }
 #act-pad .hb-slot.is-meal::after { content: ""; position: absolute; top: 3px; right: 3px; width: 4px; height: 4px; background: var(--gold); box-shadow: 0 0 0 1px #2a1c12; pointer-events: none; }
 #act-pad .hb-slot.is-off .hb-icon { opacity: 0.45; }
 #act-pad .hb-slot.is-empty { opacity: 1; background: rgba(28, 36, 24, 0.28); border-color: rgba(42, 28, 18, 0.45); box-shadow: inset 2px 2px 0 rgba(52, 64, 44, 0.28), inset -2px -2px 0 rgba(16, 22, 14, 0.28); }
+#move-pad:not(.is-touch):not(.menu-hide) ~ #act-pad { display: block; position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); z-index: 20; pointer-events: none; }
+#move-pad:not(.is-touch) ~ #act-pad #btn-fish, #move-pad:not(.is-touch) ~ #act-pad #btn-packup { display: none; }
+#move-pad:not(.is-touch) ~ #act-pad #hotbar { counter-reset: hbkey; }
+#move-pad:not(.is-touch) ~ #act-pad .hb-slot::before { counter-increment: hbkey; content: counter(hbkey); position: absolute; left: 3px; top: 2px; font-family: var(--pixel-font); font-size: 12px; line-height: 12px; color: #f3e2c4; opacity: 0.7; pointer-events: none; }
+@media (min-width: 721px) and (min-height: 481px) {
+  #stage:has(#move-pad:not(.is-touch)) #prompt { bottom: 60px; }
+  #stage:has(#move-pad:not(.is-touch)) #catch-toast { bottom: clamp(64px, 7vh, 76px); }
+}
 
 #stick-zone { display: none; }
 html.stick-on #move-pad.is-touch ~ #stick-zone { display: block; position: fixed; left: 0; top: calc(64px + env(safe-area-inset-top)); bottom: 0; width: 50vw; z-index: 30; pointer-events: auto; touch-action: none; -webkit-user-select: none; user-select: none; }
