@@ -473,7 +473,7 @@ main {
 main.wide, main.home { max-width: var(--max-wide); }
 main.wide .lead { max-width: 46rem; }
 
-h1, h2, h3 {
+h1, h2, h3, .hero-brand {
   font-family: var(--font-display); font-variant-ligatures: none;
   font-weight: 500;
   color: var(--cream);
@@ -607,7 +607,7 @@ code {
   image-rendering: pixelated;
 }
 
-.hero h1 {
+.hero .hero-brand {
   font-size: var(--text-hero);
   line-height: 1.05;
   letter-spacing: 0.02em;
@@ -621,6 +621,21 @@ code {
   color: var(--cream-dark);
   opacity: 0.85;
   margin-bottom: 0;
+}
+/* The home tagline is the page's <h1> ("Hoover Reservoir fishing") but keeps its body-text look; the pixel
+   wordmark above it is <p class="hero-brand"> with the old .hero h1 styles. */
+h1.tagline {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-md);
+  line-height: 1.65;
+  letter-spacing: normal;
+  font-variant-ligatures: normal;
+  text-wrap: pretty;
+  font-synthesis: weight style;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: auto;
+  font-smooth: auto;
 }
 
 .home .lead {
@@ -1637,7 +1652,7 @@ a.bento-card:hover .log-value { color: var(--amber); }
    is 100 units per pixel on a 10px em), stepping at 360 / 420 / 560 / 1000px.
    Small UI (nav, wordmark, labels, chips, buttons, units) stays Pixelify Sans.
    ========================================================================== */
-h1, h2, h3,
+h1, h2, h3, .hero-brand,
 .pool-readout-value,
 .pool-lead {
   font-family: var(--font-heading);
@@ -1659,14 +1674,14 @@ h1, h2, h3,
 h1 { font-size: 30px; line-height: 40px; }
 h2 { font-size: 20px; line-height: 30px; }
 h3 { font-size: 20px; line-height: 30px; }
-.hero h1 { font-size: 40px; line-height: 50px; font-weight: 400; }
+.hero .hero-brand { font-size: 40px; line-height: 50px; font-weight: 400; }
 .pool-lead { font-size: 30px; line-height: 40px; }
 .card .pool-lead { font-size: 20px; line-height: 30px; }
 .pool-readout-value,
 .card .pool-readout-value { font-size: 30px; line-height: 30px; }
 
 @media (max-width: 359px) {
-  .hero h1 { font-size: 30px; line-height: 40px; }
+  .hero .hero-brand { font-size: 30px; line-height: 40px; }
 }
 @media (max-width: 419px) {
   .pool-readout-cell:first-child .pool-readout-value { font-size: 40px; line-height: 40px; }
@@ -1676,12 +1691,12 @@ h3 { font-size: 20px; line-height: 30px; }
   .pool-readout { grid-template-columns: repeat(3, round(down, calc((100% - 2 * var(--space-sm)) / 3), 1px)); }
 }
 @media (min-width: 560px) {
-  .hero h1 { font-size: 50px; line-height: 60px; font-weight: 700; }
+  .hero .hero-brand { font-size: 50px; line-height: 60px; font-weight: 700; }
 }
 @media (min-width: 1000px) {
   h1 { font-size: 40px; line-height: 50px; }
   h2 { font-size: 30px; line-height: 40px; }
-  .hero h1 { font-size: 60px; line-height: 70px; }
+  .hero .hero-brand { font-size: 60px; line-height: 70px; }
 }
 
 /* ==========================================================================

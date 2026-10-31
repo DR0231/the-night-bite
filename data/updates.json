@@ -2,6 +2,26 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-10-31-clearer-titles",
+      "date": "2026-10-31",
+      "tag": "Improved",
+      "title": "Clearer page titles",
+      "bullets": [
+        "Every lake page now leads with the water's name in its title and main heading, like Hoover Reservoir fishing, so search results show which water you are looking at.",
+        "Species pages get clearer titles and descriptions: yellow perch no longer says 3 lakes, and blue catfish now lists Alum Creek, where ODNR stocked them from 2023 to 2025."
+      ],
+      "links": [
+        {
+          "label": "Hoover Reservoir",
+          "href": "./"
+        },
+        {
+          "label": "Species",
+          "href": "species/"
+        }
+      ]
+    },
+    {
       "id": "2026-10-31-east-southeast-waters",
       "date": "2026-10-31",
       "tag": "New",
