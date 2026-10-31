@@ -161,7 +161,17 @@ const Inventory = {
       tools.push(`<button type="button" id="btn-lantern">${on ? "Douse lantern" : "Light lantern"} (fuel ${esc(fuel)})</button>`);
       tools.push(`<button type="button" id="btn-fuel">Fill lantern (glow or crystal → 6)</button>`);
     }
+    const barRow = Hotbar.slots().map((key, i) => {
+      const n = i + 1;
+      if (key == null) return `<span class="pack-bar-slot is-empty">${esc(n)} Empty</span>`;
+      const cut = key.indexOf(":");
+      const kind = key.slice(0, cut), id = key.slice(cut + 1);
+      const row = kind === "bait" ? BAIT[id] : kind === "rod" ? RODS[id] : kind === "meal" ? MEALS[id] : null;
+      const name = row && row.name ? row.name : id;
+      return `<span class="pack-bar-slot">${esc(n)} ${esc(name)} <button type="button" class="pack-bar-x" data-hbclear="${esc(i)}" aria-label="Clear slot ${esc(n)}">×</button></span>`;
+    }).join("");
     el.innerHTML = `
+      <div class="pack-bar"><span class="pack-bar-label">Hotbar</span>${barRow}</div>
       <p class="pack-rod"><strong>${esc(rod.name)}</strong> — ${esc(rod.desc)}</p>
       <div class="pack-rods">${rodBtns}</div>
       <p class="pack-rank">${esc(Skills.line())}</p>
@@ -222,13 +232,17 @@ const Inventory = {
       });
     });
     el.querySelectorAll("[data-rod]").forEach((btn) => {
-      btn.addEventListener("click", () => this.takeRod(btn.dataset.rod));
+      btn.addEventListener("click", () => { this.takeRod(btn.dataset.rod); this.refresh(); });
     });
     el.querySelectorAll("[data-eat]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const id = btn.dataset.eat;
         if (Survival.eatMeal(id)) Hotbar.note("meal:" + id);
+        this.refresh();
       });
+    });
+    el.querySelectorAll("[data-hbclear]").forEach((btn) => {
+      btn.addEventListener("click", () => Hotbar.clear(Number(btn.dataset.hbclear)));
     });
     el.querySelectorAll("[data-eatfish]").forEach((btn) => {
       btn.addEventListener("click", () => Survival.eatFish(btn.dataset.eatfish));
@@ -354,6 +368,16 @@ const Hotbar = {
       }
     }
     this._sig = "";
+  },
+
+  clear(i) {
+    const slots = this.slots();
+    if (i < 0 || i > 3 || slots[i] == null) return;
+    slots[i] = null;
+    this._lastUse[i] = 0;
+    Save.mark();
+    this._sig = "";
+    if (Inventory.open) Inventory.refresh();
   },
 
   render() {

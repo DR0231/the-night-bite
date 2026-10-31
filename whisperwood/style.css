@@ -404,6 +404,11 @@ button, input, textarea, select, kbd, code, pre, table, th, td, h1, h2, h3, h4, 
 .pack-bait.is-low { background: #f0d8c4; }
 .pack-rods { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
 .pack-rods button { width: auto; margin: 0; }
+.pack-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 0 0 8px; font-size: 16px; line-height: 16px; color: var(--ink); }
+.pack-bar-label { color: var(--ink-faint); }
+.pack-bar-slot { display: inline-flex; align-items: center; gap: 4px; }
+.pack-bar-slot.is-empty { color: var(--ink-faint); }
+.pack-panel #pack-body .pack-bar-x { display: inline-block; width: 28px; height: 28px; min-width: 28px; min-height: 28px; margin: 0; padding: 0; line-height: 16px; text-align: center; }
 .pack-hearts { font-size: 16px; color: #8b3a32; }
 .ink-fresh { color: #2a6a38; }
 .ink-soft { color: #8b6238; }
