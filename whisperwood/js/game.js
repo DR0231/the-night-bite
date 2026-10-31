@@ -430,6 +430,18 @@ const UI = {
     this.toastHoldT = this.toastT;
   },
 
+  _fitFightHint() {
+    const el = this.els.prompt;
+    if (!el || typeof Minigame === "undefined" || !Minigame.shortHint) return;
+    const full = el.textContent;
+    const key = full + "|" + window.innerWidth + "x" + window.innerHeight;
+    if (this._fitHintKey !== key) {
+      this._fitHintKey = key;
+      this._fitHintShort = el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1;
+    }
+    if (this._fitHintShort) el.textContent = this.text(Minigame.shortHint());
+  },
+
   update(dt) {
     if (this.toastHoldT > 0) this.toastHoldT -= dt;
     if (this.toastT > 0) {
@@ -561,6 +573,7 @@ const UI = {
       this.els.prompt.textContent = this.text(prompt);
       this.els.prompt.classList.remove("hidden");
       this.els.prompt.classList.toggle("bite", Fishing.state === "bite" || Fishing.state === "play");
+      if (Fishing.state === "play" && typeof Minigame !== "undefined" && Minigame._hintThisFight) this._fitFightHint();
       if (Fishing.state === "play" && !this.phonePortrait()) {
         const canvas = (typeof Renderer !== "undefined" && Renderer.canvas) || document.getElementById("game");
         const rect = canvas ? canvas.getBoundingClientRect() : null;
