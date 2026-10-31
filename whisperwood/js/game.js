@@ -733,6 +733,7 @@ const Game = {
       Input.pressed[" "] = false;
       Input.pressed["enter"] = false;
     }
+    if (UI.els.start && !UI.els.start.classList.contains("hidden")) this._blockHotKeys = true;
     if (UI.els.start) UI.els.start.classList.add("hidden");
     if (Save._loadWarn) { const w = Save._loadWarn; Save._loadWarn = ""; try { UI.toastWarn(w); } catch (e) {} }
     Save.data.flags.introComplete = true;
@@ -981,10 +982,14 @@ const Game = {
       if (Input.pressed["j"] && !Skills.offering && !this.sleeping && !fightHeld && !millUp) UI.toggleJournal();
       if (Input.pressed["i"] && !Skills.offering && !this.sleeping && !fightHeld && !millUp) Inventory.toggle();
     }
-    if (Input.pressed["1"]) Inventory.numberKey(1);
-    if (Input.pressed["2"]) Inventory.numberKey(2);
-    if (Input.pressed["3"]) Inventory.numberKey(3);
-    if (Input.pressed["4"]) Inventory.numberKey(4);
+    const hbKeys = !Inventory.open && !UI.anyMenu() && !Skills.offering && !this.sleeping && !this.fading
+      && !Npcs.talkId && !Fishing.inFight() && typeof Hotbar !== "undefined" && !this._blockHotKeys;
+    for (let n = 1; n <= 4; n++) {
+      if (!Input.pressed[String(n)]) continue;
+      if (Inventory.open) Inventory.numberKey(n);
+      else if (hbKeys) Hotbar.tap(n - 1);
+    }
+    this._blockHotKeys = false;
     if (Input.pressed["5"]) Inventory.numberKey(5);
     if (Input.pressed["escape"]) {
       if (Skills.offering) { /* wait for a perk pick */ }
