@@ -2,7 +2,7 @@
    listed in DATA-SOURCES.md. Positions are percentages of each map image, projected from real lat/lng. */
 window.NightBiteMapDataOshaughnessy = {
  "title": "Ramps & access at O'Shaughnessy",
- "notes": "City of Columbus reservoir: park hours 7 a.m. to 11 p.m., unlimited horsepower, 40 mph limit, 22 ft vessel limit, no jet skis, idle within 100 ft of shore and bridges. Shoreline traced from OpenStreetMap, not for navigation.",
+ "notes": "City of Columbus reservoir: park hours 7 a.m. to 11 p.m., unlimited horsepower, 40 mph limit by day, 10 mph from sunset to sunrise, 22 ft vessel limit, no jet skis, idle within 100 ft of shore and bridges. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "oshaughnessy-map-wide": {
    "src": "assets/map/oshaughnessy-map-wide.png",
@@ -56,9 +56,43 @@ window.NightBiteMapDataOshaughnessy = {
    "name": "Twin Lakes launch",
    "typeLabel": "Launch / access",
    "shortLabel": "Twin Lakes",
-   "address": "SR 257, east side, south of Clark Shaw Rd",
+   "address": "West side, off Dublin Rd (SR 745) near Frabell Dr",
    "parking": "Yes, designated lot",
-   "note": "ODNR lists boat ramps in the Twin Lakes area; the City map marks a canoe and kayak launch here (map point O). Check before you tow a big boat. Approximate pin.",
+   "note": "The City's current map marks a canoe and kayak launch here (map point S); ODNR's older fishing map shows a boat ramp at Twin Lakes. Check before you tow a big boat. Approximate pin.",
+   "directions": [
+    40.1712,
+    -83.1396
+   ],
+   "pos": {
+    "oshaughnessy-map-wide": {
+     "x": 82.212,
+     "y": 60.127
+    },
+    "oshaughnessy-map-tall": {
+     "x": 42.949,
+     "y": 82.686
+    }
+   },
+   "sources": [
+    "City of Columbus Recreation and Parks, O'Shaughnessy Reservoir map, 2025 (canoe and kayak launch, map point S)",
+    "ODNR O'Shaughnessy Reservoir fishing map, revised 2010 (boat ramp, parking and restrooms at Twin Lakes)",
+    "OpenStreetMap roads (approximate position)"
+   ],
+   "sourceLabels": [
+    "City of Columbus Recreation and Parks",
+    "ODNR",
+    "OpenStreetMap"
+   ]
+  },
+  {
+   "id": "clarkshaw",
+   "type": "access",
+   "name": "Canoe and kayak launch (east side)",
+   "typeLabel": "Launch / access",
+   "shortLabel": "Kayak launch",
+   "address": "SR 257, east side, south of Clark Shaw Rd",
+   "parking": "Check posted signs",
+   "note": "City canoe and kayak launch (map point O); the City map shows no boat ramp here. Approximate pin.",
    "directions": [
     40.2222,
     -83.1385
@@ -74,12 +108,10 @@ window.NightBiteMapDataOshaughnessy = {
     }
    },
    "sources": [
-    "ODNR O'Shaughnessy Reservoir Fishing Area page (parking lots and boat ramps in the Twin Lakes area)",
-    "City of Columbus Recreation and Parks, O'Shaughnessy Reservoir page reservoir map (canoe and kayak launch, map point O)",
+    "City of Columbus Recreation and Parks, O'Shaughnessy Reservoir map, 2025 (canoe and kayak launch, map point O)",
     "OpenStreetMap roads (approximate position)"
    ],
    "sourceLabels": [
-    "ODNR",
     "City of Columbus Recreation and Parks",
     "OpenStreetMap"
    ]

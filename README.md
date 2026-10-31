@@ -124,7 +124,7 @@ All three home pages are precached by `sw.js`, so each opens offline. List new l
 
 ## Home tools: Share tonight, Remind me
 
-`js/tonight-tools.js` adds two buttons under the Right now strip.
+`js/tonight-tools.js` adds two buttons under the Tonight at a glance strip.
 A one line note under them ("Share tonight's wind, weather, sunset and what's biting") says what the card holds, so
 Share doesn't read as sharing only the strip above. No live thumbnail: at thumbnail size the card's text is unreadable,
 it would wait on the forecast, and it crowds the first screen.

@@ -32,9 +32,9 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v18-2026-10-30">
+  <link rel="stylesheet" href="css/styles.css?v=v19-2026-10-31">
   <noscript><style>.glance,.glance-actions{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
-  <script src="js/lakes.js?v=v18-2026-10-30"></script>
+  <script src="js/lakes.js?v=v19-2026-10-31"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "WebSite", "name": "The Night Bite", "url": "https://nightbiteoh.com/"}
   </script>
@@ -58,14 +58,14 @@
           <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
           <li class="nav-extra"><a href="log">Log</a></li>
           <li class="nav-extra"><a href="about">About</a></li>
-          <li class="nav-extra"><a href="updates" data-updates="2026-10-30">What&rsquo;s new</a></li>
+          <li class="nav-extra"><a href="updates" data-updates="2026-10-31">What&rsquo;s new</a></li>
           <li class="nav-more-item">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
               <a href="whisperwood.html">Whisperwood Vale</a>
               <a href="log">Log</a>
               <a href="about">About</a>
-              <a href="updates" data-updates="2026-10-30">What&rsquo;s new</a>
+              <a href="updates" data-updates="2026-10-31">What&rsquo;s new</a>
             </div>
           </li>
         </ul>
@@ -83,18 +83,37 @@
       <p class="tagline"><span data-lk="name">Hoover Reservoir</span> Fishing Hub</p>
     </section>
 
-    <div class="glance" id="glance" role="group" aria-label="Right now">
-      <a class="glance-cell" href="#pool-snapshot" data-empty>
-        <span class="glance-label">Lake level</span>
-        <span class="glance-value" data-glance="pool">--</span>
-        <span class="glance-sub" data-glance="pool-sub">Loading the gauge</span>
-      </a>
-      <a class="glance-cell" href="#conditions" data-empty>
-        <span class="glance-label">Tonight&rsquo;s bite</span>
-        <span class="glance-value" data-glance="bite">--</span>
-        <span class="glance-sub" data-glance="bite-sub">Loading the forecast</span>
-      </a>
-    </div>
+    <section class="glance" id="glance" aria-labelledby="glance-title">
+      <div class="glance-head">
+        <h2 class="glance-title" id="glance-title">Tonight at a glance</h2>
+        <a class="glance-cell glance-bite" href="#conditions" data-empty>
+          <span class="glance-label">Bite</span>
+          <span class="glance-value" data-glance="bite">--</span>
+        </a>
+      </div>
+      <div class="glance-grid">
+        <a class="glance-cell" href="#pool-snapshot" data-cell="pool" data-empty>
+          <span class="glance-label">Lake level</span>
+          <span class="glance-value" data-glance="pool">--</span>
+          <span class="glance-sub" data-glance="pool-sub">Loading the gauge</span>
+        </a>
+        <a class="glance-cell" href="#pool-snapshot" data-cell="temp" data-empty>
+          <span class="glance-label">Water temp</span>
+          <span class="glance-value" data-glance="temp">--</span>
+          <span class="glance-sub" data-glance="temp-sub">Loading the gauge</span>
+        </a>
+        <a class="glance-cell" href="#conditions" data-cell="sunset" data-empty>
+          <span class="glance-label">Sunset</span>
+          <span class="glance-value" data-glance="sunset">--</span>
+          <span class="glance-sub" data-glance="sunset-sub">Worked out on this phone</span>
+        </a>
+        <a class="glance-cell" href="#conditions" data-cell="wind" data-empty>
+          <span class="glance-label">Wind tonight</span>
+          <span class="glance-value" data-glance="wind">--</span>
+          <span class="glance-sub" data-glance="wind-sub">Loading the forecast</span>
+        </a>
+      </div>
+    </section>
     <div class="glance-actions" id="glance-actions">
       <button type="button" class="glance-btn" data-act="share" aria-haspopup="dialog" aria-controls="tt-share" aria-describedby="glance-share-note">Share tonight</button>
       <button type="button" class="glance-btn" data-act="remind" aria-haspopup="dialog" aria-controls="tt-remind">Remind me</button>
@@ -180,7 +199,7 @@
       <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
         <p class="pool-lead" id="correction-line">890.79 ft · 63°F · ~3.2 ft below full pool</p>
-        <script src="js/pool-readout.js?v=v18-2026-10-30"></script>
+        <script src="js/pool-readout.js?v=v19-2026-10-31"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-10-26T08:00:00.000-04:00">2026-10-26 08:00 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
@@ -192,7 +211,7 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           Provisional snapshot; your browser may refresh it from USGS. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v18-2026-10-30"></script>
+        <script src="js/lake-snapshot.js?v=v19-2026-10-31"></script>
         <div class="pool-trend" id="pool-trend" hidden data-pending>
           <div class="pool-trend-head">
             <span class="pool-trend-label">Pool, last 7 days</span>
@@ -247,14 +266,14 @@
               <li>Full pool here is the City of Columbus dam crest, <strong>848.5 ft</strong>. The ODNR fishing map&rsquo;s depths are based on <strong>847.9 ft</strong>, so contours are off by about <strong>(847.9 − pool)</strong>. If pool is lower, real water is shallower than printed.</li>
               <li><strong>No public water temp gauge</strong>: the USGS gauge at the dam reads level only, and the City says its reservoir temperatures are not monitored. The temp slot says n/a. Nothing is estimated.</li>
               <li>USGS values are <strong>provisional</strong> (param 62614) and can be revised. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03220500/" target="_blank" rel="noopener">USGS-03220500</a>.</li>
-              <li>City of Columbus drinking-water reservoir: unlimited horsepower, <strong>40 mph</strong> limit, boats 22 ft or shorter, no personal watercraft, tubing or swimming, and idle speed within 100 ft of shore and bridges (City of Columbus).</li>
+              <li>City of Columbus drinking-water reservoir: unlimited horsepower, <strong>40 mph</strong> by day and <strong>10 mph from sunset to sunrise</strong>, boats 22 ft or shorter, no personal watercraft, tubing or swimming, and idle speed within 100 ft of shore and bridges (City of Columbus).</li>
             </ul>
             <ul data-for="griggs">
               <li><strong>Pool</strong> is lake surface elevation (ft NGVD29), not the depth of any hole or channel.</li>
               <li>Full pool here is the City of Columbus dam crest, <strong>756.18 ft</strong>. The ODNR fishing map&rsquo;s depths are based on <strong>757 ft</strong>, so contours are off by about <strong>(757 − pool)</strong>. If pool is lower, real water is shallower than printed.</li>
               <li><strong>Temp</strong> is the USGS reservoir gauge (°F in the lead). It isn&rsquo;t air temp, and not every cove.</li>
               <li>USGS values are <strong>provisional</strong> (params 62614 pool / 00010 temp) and can be revised. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03221500/" target="_blank" rel="noopener">USGS-03221500</a>.</li>
-              <li>City of Columbus drinking-water reservoir: unlimited horsepower, <strong>40 mph</strong> limit, boats 22 ft or shorter, no personal watercraft, tubing or swimming, and idle speed within 100 ft of shore and bridges (City of Columbus).</li>
+              <li>City of Columbus drinking-water reservoir: unlimited horsepower, <strong>40 mph</strong> by day and <strong>10 mph from sunset to sunrise</strong>, boats 22 ft or shorter, no personal watercraft, tubing or swimming, and idle speed within 100 ft of shore and bridges (City of Columbus).</li>
             </ul>
             <ul data-for="indian">
               <li><strong>Pool</strong> is lake surface elevation (ft NGVD29), not the depth of any hole or channel.</li>
@@ -290,7 +309,7 @@
             <ul data-for="clearfork">
               <li><strong>No public lake level or water temp gauge</strong>: no USGS or Corps gauge posts Clear Fork Reservoir, so the level and temp slots say not available. Nothing is estimated.</li>
               <li>The ODNR fishing map&rsquo;s depths are based on the <strong>1,202 ft</strong> summer pool (3 ft contours, surveyed 1999). ODNR lists a 24 ft maximum depth; the City of Mansfield says 40 ft depths are not uncommon. Use the map as a guide.</li>
-              <li>City of Mansfield water supply lake: <strong>no wake</strong> on the whole lake, 8 mph limit, no horsepower limit, no swimming.</li>
+              <li>City of Mansfield water supply lake: <strong>idle speed, no wake</strong> on the whole lake (City code; ODNR&rsquo;s page says 8 mph), no horsepower limit, no swimming.</li>
             </ul>
           </div>
         </details>
@@ -341,7 +360,7 @@
         </details>
         <p class="meta bait-foot">Drive times are rough. <a class="bait-tell" href="mailto:contact@nightbiteoh.com?subject=Bait%20shop">Know a shop? Tell us</a></p>
       </section>
-      <script src="js/bait-nearby.js?v=v18-2026-10-30"></script>
+      <script src="js/bait-nearby.js?v=v19-2026-10-31"></script>
 
       <a class="bento-card bento-maps" href="water#maps">
         <h3>Water / maps</h3>
@@ -385,7 +404,7 @@
         <span class="card-cue" aria-hidden="true">Open the log</span>
       </a>
     </div>
-    <script src="js/glance.js?v=v18-2026-10-30"></script>
+    <script src="js/glance.js?v=v19-2026-10-31"></script>
 
     <section class="bento-card get-app" id="get-the-app" aria-labelledby="get-app-title">
       <div class="get-app-head">
@@ -421,7 +440,7 @@
         </details>
       </div>
     </section>
-    <script src="js/get-app.js?v=v18-2026-10-30"></script>
+    <script src="js/get-app.js?v=v19-2026-10-31"></script>
 
     <hr class="divider">
 
@@ -435,7 +454,7 @@
 
     <div class="callout warn">
       Night fishing can be dangerous in storms, heat, and low visibility. Wear a life jacket when it calls for it.
-      <span data-for="hoover">10 hp · drinking-water reservoir · license ages 16+.</span><span data-for="alum">No wake on the north end · drinking-water reservoir · license ages 16+.</span><span data-for="buckeye">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span><span data-for="oshaughnessy griggs">40 mph · idle within 100 ft of shore · drinking-water reservoir · license ages 16+.</span><span data-for="indian">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span><span data-for="delaware">Corps winter drawdown · check BeachGuard advisories · license ages 16+.</span><span data-for="deercreek">Corps fall drawdown to winter pool · check BeachGuard advisories · license ages 16+.</span><span data-for="madison">Electric motors only · check BeachGuard advisories · license ages 16+.</span><span data-for="knox">10 hp limit · 18 in bass minimum · license ages 16+.</span><span data-for="clearfork">No wake, 8 mph · water supply lake, no swimming · license ages 16+.</span> See <a href="about">About</a>.
+      <span data-for="hoover">10 hp · drinking-water reservoir · license ages 16+.</span><span data-for="alum">No wake on the north end · drinking-water reservoir · license ages 16+.</span><span data-for="buckeye">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span><span data-for="oshaughnessy griggs">40 mph, 10 mph after sunset · idle within 100 ft of shore · drinking-water reservoir · license ages 16+.</span><span data-for="indian">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span><span data-for="delaware">Corps winter drawdown · check BeachGuard advisories · license ages 16+.</span><span data-for="deercreek">Corps fall drawdown to winter pool · check BeachGuard advisories · license ages 16+.</span><span data-for="madison">Electric motors only · check BeachGuard advisories · license ages 16+.</span><span data-for="knox">10 hp limit · 18 in bass minimum · license ages 16+.</span><span data-for="clearfork">Idle speed, no wake · water supply lake, no swimming · license ages 16+.</span> See <a href="about">About</a>.
     </div>
   </main>
 
@@ -472,13 +491,13 @@
         <p data-for="hoover">City park hours are 7 a.m. to 11 p.m. (Columbus Rec and Parks); check posted signs before a night trip. Shoreline traced from a map, not for navigation.</p>
         <p data-for="alum">Alum Creek State Park and Corps of Engineers land: check posted hours and rules before a night trip. Unlimited horsepower on the south main lake, no wake on the north end. Shoreline traced from OpenStreetMap, not for navigation.</p>
         <p data-for="buckeye">No wake within 300 ft of any land mass and in marked areas (ODNR fishing map). Check posted state park hours before a night trip. Shoreline traced from OpenStreetMap, not for navigation.</p>
-        <p data-for="oshaughnessy griggs">City park hours are 7 a.m. to 11 p.m. (Columbus Rec and Parks); check posted signs before a night trip. 40 mph limit, idle within 100 ft of shore and bridges. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="oshaughnessy griggs">City park hours are 7 a.m. to 11 p.m. (Columbus Rec and Parks); check posted signs before a night trip. 40 mph by day, 10 mph from sunset to sunrise (City code), idle within 100 ft of shore and bridges. Shoreline traced from OpenStreetMap, not for navigation.</p>
         <p data-for="indian">Indian Lake State Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. No horsepower limit, no wake within 300 ft of shore. Shoreline traced from OpenStreetMap, not for navigation.</p>
         <p data-for="delaware">Delaware State Park hours are sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours. Unlimited horsepower. Corps of Engineers lake. Shoreline traced from OpenStreetMap, not for navigation.</p>
         <p data-for="deercreek">Deer Creek State Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Unlimited horsepower. Corps of Engineers lake with a fall drawdown. Shoreline traced from OpenStreetMap, not for navigation.</p>
         <p data-for="madison">Madison Lake State Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Electric motors only. Shoreline traced from OpenStreetMap, not for navigation.</p>
         <p data-for="knox">ODNR Division of Wildlife fishing area: 10 hp limit, larger motors at no wake or idle only. Check posted signs before a night trip. The marina and carry-in pins are approximate, from the ODNR fishing map. Shoreline traced from OpenStreetMap, not for navigation.</p>
-        <p data-for="clearfork">City of Mansfield water supply lake: no wake on the whole lake, 8 mph limit, shore fishing on the south and west shores only, no swimming. Check posted City signs before a night trip. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="clearfork">City of Mansfield water supply lake: idle speed, no wake on the whole lake, shore fishing on the south and west shores only, no swimming. City code bars parking from dark to dawn outside designated camping areas, so check posted City signs before a night trip. Shoreline traced from OpenStreetMap, not for navigation.</p>
       </details>
     </div>
   </dialog>
@@ -493,38 +512,38 @@
         <a href="whisperwood.html">Whisperwood Vale</a>
         <a href="log">Log</a>
         <a href="about">About</a>
-        <a href="updates" data-updates="2026-10-30">What&rsquo;s new</a>
+        <a href="updates" data-updates="2026-10-31">What&rsquo;s new</a>
         <a href="privacy">Privacy</a>
       </nav>
       <p class="footer-app"><a href="#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v18-2026-10-30"></script>
-  <script src="js/sw-update.js?v=v18-2026-10-30"></script>
-  <script src="js/alerts.js?v=v18-2026-10-30"></script>
-  <script src="js/nav.js?v=v18-2026-10-30"></script>
-  <script src="js/visits.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-picker.js?v=v18-2026-10-30"></script>
-  <script src="js/usgs.js?v=v18-2026-10-30"></script>
-  <script src="js/home-log.js?v=v18-2026-10-30"></script>
-  <script src="js/astro.js?v=v18-2026-10-30"></script>
-  <script src="js/conditions.js?v=v18-2026-10-30"></script>
-  <script src="js/pool-trend.js?v=v18-2026-10-30"></script>
-  <script src="js/hoover-map-data.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-map-data-alum.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-map-data-buckeye.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-map-data-oshaughnessy.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-map-data-griggs.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-map-data-indian.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-map-data-delaware.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-map-data-deercreek.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-map-data-madison.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-map-data-knox.js?v=v18-2026-10-30"></script>
-  <script src="js/lake-map-data-clearfork.js?v=v18-2026-10-30"></script>
-  <script src="js/hoover-map.js?v=v18-2026-10-30"></script>
-  <script src="js/install-tip.js?v=v18-2026-10-30"></script>
-  <script src="js/tonight-tools.js?v=v18-2026-10-30"></script>
+  <script src="js/refresh.js?v=v19-2026-10-31"></script>
+  <script src="js/sw-update.js?v=v19-2026-10-31"></script>
+  <script src="js/alerts.js?v=v19-2026-10-31"></script>
+  <script src="js/nav.js?v=v19-2026-10-31"></script>
+  <script src="js/visits.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-picker.js?v=v19-2026-10-31"></script>
+  <script src="js/usgs.js?v=v19-2026-10-31"></script>
+  <script src="js/home-log.js?v=v19-2026-10-31"></script>
+  <script src="js/astro.js?v=v19-2026-10-31"></script>
+  <script src="js/conditions.js?v=v19-2026-10-31"></script>
+  <script src="js/pool-trend.js?v=v19-2026-10-31"></script>
+  <script src="js/hoover-map-data.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-map-data-alum.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-map-data-buckeye.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-map-data-oshaughnessy.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-map-data-griggs.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-map-data-indian.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-map-data-delaware.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-map-data-deercreek.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-map-data-madison.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-map-data-knox.js?v=v19-2026-10-31"></script>
+  <script src="js/lake-map-data-clearfork.js?v=v19-2026-10-31"></script>
+  <script src="js/hoover-map.js?v=v19-2026-10-31"></script>
+  <script src="js/install-tip.js?v=v19-2026-10-31"></script>
+  <script src="js/tonight-tools.js?v=v19-2026-10-31"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

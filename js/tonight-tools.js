@@ -1,5 +1,5 @@
 /**
- * The Night Bite: two buttons under the home "Right now" strip.
+ * The Night Bite: two buttons under the home "Tonight at a glance" strip.
  *
  * Share tonight: draws a 1200x630 PNG on the phone (canvas) from what the page already shows, leading with what anglers
  * check first: wind and gusts, air and feels like, sky and rain chance (NWS forecast), any NWS watch or warning, sunset,

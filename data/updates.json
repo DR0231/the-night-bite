@@ -2,6 +2,27 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-10-31-glance-lake-facts",
+      "date": "2026-10-31",
+      "tag": "Improved",
+      "title": "Tonight at a glance and fuller lake facts",
+      "bullets": [
+        "Every lake now opens with Tonight at a glance: lake level, water temp, sunset and tonight’s wind, each linked to its USGS, Army Corps or National Weather Service source. Lakes with no public gauge say so.",
+        "O’Shaughnessy and Griggs show the City of Columbus 10 mph limit from sunset to sunrise, and Clear Fork Reservoir shows the City of Mansfield’s idle speed, no wake rule and its night parking rule.",
+        "Hoover and Alum Creek get lake facts cards, Deer Creek Lake, Madison Lake and Buckeye Lake list each agency’s acreage, and O’Shaughnessy’s Twin Lakes launch has a corrected pin."
+      ],
+      "links": [
+        {
+          "label": "Home",
+          "href": "./"
+        },
+        {
+          "label": "Water",
+          "href": "water"
+        }
+      ]
+    },
+    {
       "id": "2026-10-30-matching-corners",
       "date": "2026-10-30",
       "tag": "Improved",

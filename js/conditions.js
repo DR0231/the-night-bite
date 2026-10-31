@@ -520,6 +520,7 @@
       if (sv && !/--/.test(sv.textContent)) bits.push("Sunset " + sv.textContent.replace(/(\d)\s*([AP]M)/, "$1 $2").replace(/\s+/g, " ").trim());
     } else if (win) bits.push("After dark now");
     var list = win && periodsIn(st.periods, win.from, win.to);
+    card.removeAttribute("data-wind-tonight");   // js/glance.js mirrors tonight's range: "lo|hi|dir"
     if (list && list.length) {
       var lo = null, hi = null, pop = null;
       list.forEach(function (p) {
@@ -529,6 +530,7 @@
         if (typeof r === "number") pop = pop === null ? r : Math.max(pop, r);
       });
       var dir = String(list[0].windDirection || "").toUpperCase();
+      if (hi !== null) card.setAttribute("data-wind-tonight", lo + "|" + hi + "|" + (DIRS.indexOf(dir) < 0 ? "" : dir));
       if (hi === 0) bits.push("calm wind");
       else if (hi !== null) bits.push((DIRS.indexOf(dir) < 0 ? "" : dir + " ") + "wind " + (lo === hi ? hi : lo + " to " + hi) + " mph");
       if (pop !== null) bits.push(Math.round(pop) + "% rain chance");

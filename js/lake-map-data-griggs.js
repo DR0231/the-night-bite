@@ -2,7 +2,7 @@
    listed in DATA-SOURCES.md. Positions are percentages of each map image, projected from real lat/lng. */
 window.NightBiteMapDataGriggs = {
  "title": "Ramps & access at Griggs",
- "notes": "City of Columbus reservoir: park hours 7 a.m. to 11 p.m., unlimited horsepower, 40 mph limit, 22 ft vessel limit, no jet skis, idle within 100 ft of shore and bridges. Trabue-Murphy ramp closed since July 2025. Shoreline traced from OpenStreetMap, not for navigation.",
+ "notes": "City of Columbus reservoir: park hours 7 a.m. to 11 p.m., unlimited horsepower, 40 mph limit by day, 10 mph from sunset to sunrise, 22 ft vessel limit, no jet skis, idle within 100 ft of shore and bridges. Trabue-Murphy ramp closed since July 2025. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "griggs-map-wide": {
    "src": "assets/map/griggs-map-wide.png",

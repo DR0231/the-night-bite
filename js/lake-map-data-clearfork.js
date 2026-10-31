@@ -2,7 +2,7 @@
    listed in DATA-SOURCES.md. Positions are percentages of each map image, projected from real lat/lng. */
 window.NightBiteMapDataClearfork = {
  "title": "Ramps & access at Clear Fork Reservoir",
- "notes": "City of Mansfield water supply lake: no wake on the whole lake, 8 mph limit, shore fishing on the south and west shores only, no swimming. Shoreline traced from OpenStreetMap, not for navigation.",
+ "notes": "City of Mansfield water supply lake: idle speed, no wake on the whole lake, shore fishing on the south and west shores only, no swimming, no parking from dark to dawn outside camping areas. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "clearfork-map-wide": {
    "src": "assets/map/clearfork-map-wide.png",
@@ -24,7 +24,7 @@ window.NightBiteMapDataClearfork = {
    "shortLabel": "Ramp",
    "address": "7471 OH-97, south side just east of Bowers Road",
    "parking": "Yes",
-   "note": "Free improved ramp. City rules: no wake on the whole lake, 8 mph limit, no hp limit. Marina (419) 884-6277.",
+   "note": "Free improved ramp. City code: idle speed, no wake on the whole lake, no hp limit (ODNR's page says 8 mph). Marina (419) 884-6277.",
    "phone": "+14198846277",
    "phoneText": "(419) 884-6277",
    "directions": [
@@ -43,11 +43,13 @@ window.NightBiteMapDataClearfork = {
    },
    "sources": [
     "ODNR Clear Fork Reservoir Fishing Area page (free improved ramp and marina east of Bowers Rd, 8 mph limit)",
+    "Mansfield Codified Ordinances 971.04 (idle speed, no wake on the whole reservoir)",
     "City of Mansfield Clear Fork Reservoir page (no wake policy, no hp limit, marina address and phone)",
     "OpenStreetMap way 472248881, Clear Fork Reservoir Boat Launch Ramp (coordinates)"
    ],
    "sourceLabels": [
     "ODNR",
+    "Mansfield Codified Ordinances 971.04",
     "City of Mansfield",
     "OpenStreetMap"
    ]

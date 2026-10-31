@@ -2814,16 +2814,37 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
 .species-card > p.meta[data-for] { margin-bottom: 0; }
 
 /* ==========================================================================
-   Home "Right now" strip (js/glance.js): lake level and tonight's bite on the
-   first phone screen. Mirrors the pool and Tonight cards; fixed height cells.
+   Home "Tonight at a glance" strip (js/glance.js): lake level, water temp, sunset,
+   wind and the bite rating on the first phone screen. Mirrors the pool and Tonight
+   cards; fixed height cells. 2 by 2 on a phone, one row of 4 from 600px.
    ========================================================================== */
 .glance {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   max-width: var(--max);
   margin: calc(-1 * var(--space-xs)) auto var(--space-lg);
   border-top: 1px solid var(--navy-light);
   border-bottom: 1px solid var(--navy-light);
+}
+.glance-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-height: 32px;
+  border-bottom: 1px solid var(--navy-light);
+}
+.glance-title {
+  margin: 0;
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.glance-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 .glance-cell {
   display: flex;
@@ -2835,9 +2856,22 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
   color: inherit;
   transition: background-color var(--dur) var(--ease);
 }
-.glance-cell + .glance-cell { padding-left: var(--space-sm); box-shadow: inset 1px 0 0 var(--navy-light); }
-.glance-cell:hover { background: var(--navy-mid); color: inherit; }
+.glance-grid .glance-cell:nth-child(even) { padding-left: var(--space-sm); box-shadow: inset 1px 0 0 var(--navy-light); }
+.glance-grid .glance-cell:nth-child(n+3) { border-top: 1px solid var(--navy-light); }
+@media (min-width: 600px) {
+  .glance-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .glance-grid .glance-cell:nth-child(n+2) { padding-left: var(--space-sm); box-shadow: inset 1px 0 0 var(--navy-light); }
+  .glance-grid .glance-cell:nth-child(n+3) { border-top: 0; }
+}
+a.glance-cell[href]:hover { background: var(--navy-mid); color: inherit; }
 .glance-cell:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.glance-bite {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--space-xs);
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius);
+}
 .glance-label,
 .glance-sub {
   font-family: var(--font-display); font-variant-ligatures: none;
@@ -2852,6 +2886,8 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
 }
 .glance-label { text-transform: uppercase; }
 .glance-sub { letter-spacing: 0.04em; color: var(--cream-dark); }
+.glance-cell[data-none] .glance-sub,
+.glance-cell[data-empty] .glance-sub { color: var(--muted); }
 .glance-value {
   font-family: var(--font-heading);
   font-synthesis: none;
@@ -2864,9 +2900,12 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
   white-space: nowrap;
   overflow: hidden;
 }
+.glance-unit { font-size: 18px; }
+.glance-bite .glance-value { font-size: 20px; line-height: 24px; height: 24px; }
 .glance-cell[data-empty] .glance-value { color: var(--muted); }
 @media (max-width: 359px) {
   .glance-value { font-size: 20px; line-height: 30px; }
+  .glance-unit { font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .glance-cell { transition: none; }
