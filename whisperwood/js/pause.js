@@ -144,10 +144,22 @@ const Pause = {
   if (fsWeb) document.documentElement.classList.add("web-fs");
   const menuOpen = document.getElementById("btn-menu-open");
   const menuChooser = document.getElementById("menu-chooser");
-  const closeChooser = () => {
+  const flatMenu = window.matchMedia("(pointer: coarse) and (max-width: 720px), (pointer: coarse) and (max-height: 480px)");
+  const hideChooser = () => {
     if (menuChooser) menuChooser.classList.add("hidden");
     if (menuOpen) menuOpen.setAttribute("aria-expanded", "false");
   };
+  const closeChooser = () => {
+    if (flatMenu.matches) return;
+    hideChooser();
+  };
+  const syncFlatMenu = () => {
+    if (!menuChooser) return;
+    if (flatMenu.matches) menuChooser.classList.remove("hidden");
+    else hideChooser();
+  };
+  syncFlatMenu();
+  if (typeof flatMenu.addEventListener === "function") flatMenu.addEventListener("change", syncFlatMenu);
   if (menuOpen && menuChooser) {
     menuOpen.addEventListener("pointerdown", (ev) => {
       ev.preventDefault();
