@@ -553,6 +553,7 @@ const UI = {
       this._hintEl.textContent = hintText;
       this._hintText = hintText;
     }
+    if (this._hintEl) this._hintEl.classList.toggle("hidden", typeof Fishing !== "undefined" && !!Fishing.inFight());
 
     let prompt = "";
     if (!this.anyMenu()) {
