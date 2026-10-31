@@ -1296,9 +1296,9 @@ html.stick-on #move-pad.is-touch { display: none; }
 #act-pad .hb-slot { width: 44px; height: 44px; padding: 0; position: relative; }
 #act-pad .hb-icon { position: absolute; left: 50%; top: 50%; width: 32px; height: 32px; margin: -16px 0 0 -16px; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; font-family: var(--pixel-font); font-size: 12px; line-height: 12px; color: #f3e2c4; background-image: url(assets/sprites/props.png); background-size: 512px 512px; background-repeat: no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; pointer-events: none; }
 #act-pad .hb-count { position: absolute; right: 2px; bottom: 1px; font-family: var(--pixel-font); font-size: 12px; line-height: 12px; color: #f3e2c4; pointer-events: none; }
-#act-pad .hb-slot.is-low .hb-count { color: #f0d8c4; }
+#act-pad .hb-slot.is-low .hb-count { color: #e0a622; }
 #act-pad .hb-slot.is-on { box-shadow: inset 0 0 0 2px #c4a44a; }
-#act-pad .hb-slot.is-meal::after { content: ""; position: absolute; top: 3px; right: 3px; width: 4px; height: 4px; background: var(--gold); pointer-events: none; }
+#act-pad .hb-slot.is-meal::after { content: ""; position: absolute; top: 3px; right: 3px; width: 4px; height: 4px; background: var(--gold); box-shadow: 0 0 0 1px #2a1c12; pointer-events: none; }
 #act-pad .hb-slot.is-off .hb-icon { opacity: 0.45; }
 #act-pad .hb-slot.is-empty { opacity: 1; background: rgba(28, 36, 24, 0.28); border-color: rgba(42, 28, 18, 0.45); box-shadow: inset 2px 2px 0 rgba(52, 64, 44, 0.28), inset -2px -2px 0 rgba(16, 22, 14, 0.28); }
 
