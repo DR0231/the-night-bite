@@ -10,9 +10,7 @@ right after the canonical:
   twitter:card summary_large_image, twitter:title, twitter:description, twitter:image, twitter:image:alt.
 Any og:* or twitter:* tags already on the page are removed first, so running it twice changes nothing.
 Images are absolute https://nightbiteoh.com URLs: assets/og/og-<lake>.png on each lake home page other
-than Hoover (alum, buckeye, oshaughnessy, griggs, indian, delaware,
-deercreek, madison, knox, clearfork, seneca, dillon, logan, saltfork, burroak,
-dow), assets/og/og-card.png everywhere else (all 1200x630).
+than Hoover (every lake in js/lakes.js that has that file), assets/og/og-card.png everywhere else (all 1200x630).
 Skipped: 404.html and offline.html (no canonical, not shared), previews/, review/, tools/, whisperwood/ (the game),
 and Search Console verification files. Check the result with tools/check-meta.py.
 """
@@ -21,24 +19,15 @@ import pathlib, re, sys
 root = pathlib.Path(__file__).resolve().parent.parent
 SITE = "https://nightbiteoh.com/"
 SKIP_FILES = {"404.html", "offline.html"}
-IMAGES = {
-    "alum/index.html": ("og-alum.png", "The Night Bite: Alum Creek Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "buckeye/index.html": ("og-buckeye.png", "The Night Bite: Buckeye Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "oshaughnessy/index.html": ("og-oshaughnessy.png", "The Night Bite: O’Shaughnessy Reservoir fishing hub, a pixel lantern over a moonlit tree line"),
-    "griggs/index.html": ("og-griggs.png", "The Night Bite: Griggs Reservoir fishing hub, a pixel lantern over a moonlit tree line"),
-    "indian/index.html": ("og-indian.png", "The Night Bite: Indian Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "delaware/index.html": ("og-delaware.png", "The Night Bite: Delaware Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "deercreek/index.html": ("og-deercreek.png", "The Night Bite: Deer Creek Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "madison/index.html": ("og-madison.png", "The Night Bite: Madison Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "knox/index.html": ("og-knox.png", "The Night Bite: Knox Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "clearfork/index.html": ("og-clearfork.png", "The Night Bite: Clear Fork Reservoir fishing hub, a pixel lantern over a moonlit tree line"),
-    "seneca/index.html": ("og-seneca.png", "The Night Bite: Seneca Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "dillon/index.html": ("og-dillon.png", "The Night Bite: Dillon Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "logan/index.html": ("og-logan.png", "The Night Bite: Lake Logan fishing hub, a pixel lantern over a moonlit tree line"),
-    "saltfork/index.html": ("og-saltfork.png", "The Night Bite: Salt Fork Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "burroak/index.html": ("og-burroak.png", "The Night Bite: Burr Oak Lake fishing hub, a pixel lantern over a moonlit tree line"),
-    "dow/index.html": ("og-dow.png", "The Night Bite: Dow Lake fishing hub, a pixel lantern over a moonlit tree line"),
-}
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import registry  # noqa: E402
+
+# Each lake home other than Hoover shares its own card when assets/og/og-<id>.png exists (lake list and names from
+# js/lakes.js); a lake without its card yet falls back to og-card.png.
+IMAGES = {}
+for _id, _l in registry.load(root)["lakes"].items():
+    if _id != "hoover" and (root / "assets" / "og" / f"og-{_id}.png").exists():
+        IMAGES[f"{_id}/index.html"] = (f"og-{_id}.png", "The Night Bite: " + _l["name"].replace("'", "\u2019") + " fishing hub, a pixel lantern over a moonlit tree line")
 DEFAULT_IMAGE = ("og-card.png", "The Night Bite: a pixel lantern over a moonlit tree line")
 
 

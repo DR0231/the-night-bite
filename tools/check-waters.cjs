@@ -1,5 +1,5 @@
 // The Night Bite: full check of every page a set of waters has (lake home plus its ?lake= views of the shared pages).
-// Usage: node tools/check-waters.cjs [BASE] [OUTDIR] [ids,comma,separated]
+// Usage: node tools/check-waters.cjs [BASE] [OUTDIR] [ids,comma,separated]   (default ids: every lake in js/lakes.js)
 //   BASE defaults to the preview. Every run blocks analytics and the visits counter (tools/no-analytics.cjs).
 // Per page at 390, 820 and 1280: status 200, no console or page errors, no sideways scroll, every image loaded with alt.
 // Once per page (390): title, meta description, OG tags, canonical, JSON-LD parses, lake home WebPage dateModified
@@ -12,7 +12,8 @@ const path = require('path'), fs = require('fs');
 const NA = require(path.join(__dirname, 'no-analytics.cjs'));
 const BASE = (process.argv[2] || 'https://dr0231.github.io/night-bite-preview/').replace(/\/?$/, '/');
 const OUT = (process.argv[3] || '/tmp/check-waters').replace(/\/?$/, '/'); fs.mkdirSync(OUT, { recursive: true });
-const IDS = (process.argv[4] || 'seneca,dillon,logan,saltfork,burroak,dow').split(',');
+const R = require(path.join(__dirname, 'registry.cjs'));
+const IDS = process.argv[4] ? process.argv[4].split(',') : R.order();   // default: every lake in js/lakes.js
 const QF = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'quick-facts.json'), 'utf8')).lakes;
 const SITE = 'https://nightbiteoh.com/';
 const results = []; let fails = 0;
@@ -30,6 +31,8 @@ const PAGES = IDS.flatMap(l => [home(l), ...['water', 'stocking', 'gear', 'ice',
   for (const [w, h] of [[390, 844], [820, 1180], [1280, 800]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: w < 768, hasTouch: w < 768 });
     await NA.block(ctx);
+    // each new tab starts with no remembered lake, so one page never carries the last lake into the next ('/ shows hoover :: dow')
+    await ctx.addInitScript(() => { try { if (!sessionStorage.getItem('nb-test-fresh')) { localStorage.removeItem('nb-lake'); sessionStorage.setItem('nb-test-fresh', '1'); } } catch (e) {} });
     for (const p of PAGES) {
       const page = await ctx.newPage(); const errs = [];
       page.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });

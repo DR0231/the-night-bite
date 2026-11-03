@@ -14,9 +14,10 @@ Every public page (same list as tools/build-meta.py) must have:
 404.html and offline.html need a title and description only. Warnings (not errors): descriptions over 160
 characters, titles over 70, spaced dashes in title or description, an indexable canonical missing from sitemap.xml.
 """
-import html, json, pathlib, re, sys
+import html, json, os, pathlib, re, sys
 
-root = pathlib.Path(__file__).resolve().parent.parent
+# NB_ROOT=<dir> checks another copy of the site (tools/check-all.py uses it to read the live checkout without writing)
+root = pathlib.Path(os.environ.get("NB_ROOT") or pathlib.Path(__file__).resolve().parent.parent)
 SITE = "https://nightbiteoh.com/"
 BASIC_ONLY = {"404.html", "offline.html"}
 OG = ["og:site_name", "og:type", "og:title", "og:description", "og:url", "og:image",

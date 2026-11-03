@@ -1,0 +1,17 @@
+{
+  "_about": "Example entry for tools/new-lake.py. Every value needs an official source; leave a field out rather than guess. This example is not a real water.",
+  "slug": "examplelake",
+  "name": "Example Lake",
+  "short": "Example Lake",
+  "region": "southeast",
+  "lat": 39.345,
+  "lng": -82.03,
+  "owner": null,
+  "aliases": [],
+  "usgs_site": null,
+  "full_pool": null,
+  "facts": {
+    "motors": {"text": "10 hp limit.", "source": ["ODNR, Example property page", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/example"]}
+  },
+  "sources": [["ODNR, Example property page", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/example"]]
+}

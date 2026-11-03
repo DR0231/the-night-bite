@@ -1,5 +1,5 @@
 {
-  "_about": "Quick facts on each lake home page, written into the HTML by tools/build-lake-pages.py (no JavaScript). Every line is copied from text the site already sources (water.html lake facts cards, the home page map notes and How to read this, js/lake-map-data-*.js); the gauge link comes from js/lakes.js. Leave a field out when there is no official source. checked = the date the facts were last checked against the sources listed; it also becomes the page's WebPage dateModified.",
+  "_about": "Quick facts on each lake home page, written into the HTML by tools/build-lake-pages.py (no JavaScript). Every line is copied from text the site already sources (water.html lake facts cards, the home page map notes and How to read this, js/lake-map-data-*.js); the gauge link comes from js/lakes.js. Leave a field out when there is no official source. checked = the date the facts were last checked against the sources listed; it also becomes the page's WebPage dateModified. title and description (every lake but Hoover) are that lake home page's <title> and meta description, written by tools/build-lake-pages.py; Hoover's live in index.html itself.",
   "lakes": {
     "hoover": {
       "checked": "2026-10-31",
@@ -15,6 +15,8 @@
     },
     "alum": {
       "checked": "2026-10-31",
+      "title": "Alum Creek Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Alum Creek Lake fishing: live Corps lake level, unlimited hp south and no wake north, four public ramps, tonight's bite and species. Unofficial.",
       "motors": "Unlimited horsepower on the south main lake, no wake on the north end. The state park puts the line at US 36/SR 37, the Corps at Cheshire Road, so follow the buoys.",
       "ramps": "Four public launch ramps: New Galena, the marina ramp on Hollenback Road, Cheshire and Howard. One more for campers.",
       "pool": "Summer pool is 888 ft, the level the ODNR fishing map is drawn at.",
@@ -26,6 +28,8 @@
     },
     "buckeye": {
       "checked": "2026-10-31",
+      "title": "Buckeye Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Buckeye Lake fishing: live USGS lake level, no hp limit with a 300 ft no wake zone, ramps and the Mud Island access, tonight's bite. Unofficial.",
       "motors": "No horsepower limit. No wake within 300 ft of any land mass and in marked areas.",
       "ramps": "North Shore, Liebs Island and Fairfield Beach ramps, plus the Mud Island fishing access.",
       "pool": "Normal summer pool is 891.75 ft, the level the ODNR fishing map is drawn at.",
@@ -37,6 +41,8 @@
     },
     "oshaughnessy": {
       "checked": "2026-10-31",
+      "title": "O'Shaughnessy Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "O'Shaughnessy Reservoir fishing: live USGS level, 40 mph by day and 10 mph after sunset, Home Road and Bellepoint ramps, tonight's bite. Unofficial.",
       "motors": "Unlimited horsepower; 40 mph by day. Idle speed within 100 ft of shore and bridges. Boats 22 ft or shorter, no personal watercraft.",
       "ramps": "Home Road ramp and marina, and the Bellepoint ramp. Canoe and kayak launches at Twin Lakes and on the east side.",
       "pool": "Full pool is the City dam crest, 848.5 ft. ODNR fishing map depths are based on 847.9 ft.",
@@ -49,6 +55,8 @@
     },
     "griggs": {
       "checked": "2026-10-31",
+      "title": "Griggs Reservoir Fishing: Level, Rules | The Night Bite",
+      "description": "Griggs Reservoir fishing: live USGS level, 10 mph after sunset, the Griggs boat launch and docks, tonight's bite and species. Unofficial.",
       "motors": "Unlimited horsepower; 40 mph by day. Idle speed within 100 ft of shore and bridges. Boats 22 ft or shorter, no personal watercraft.",
       "ramps": "Griggs boat launch south of Fishinger Road, plus the marina and public boat docks.",
       "pool": "Full pool is the City dam crest, 756.18 ft. ODNR fishing map depths are based on 757 ft.",
@@ -61,6 +69,8 @@
     },
     "indian": {
       "checked": "2026-10-29",
+      "title": "Indian Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Indian Lake fishing: live USGS lake level, no hp limit, five state park ramps and the Old Field Beach jetties, tonight's bite. Unofficial.",
       "motors": "No horsepower limit. No wake within 300 ft of any shoreline, in channels and where marked.",
       "ramps": "Five state park launch ramps: Moundwood, Lakeview Harbor, Blackhawk, Chippewa and Cranetown Island. Fishing jetties at Old Field Beach.",
       "pool": "Normal summer pool is 996.3 ft, the level the ODNR fishing map is drawn at.",
@@ -73,6 +83,8 @@
     },
     "delaware": {
       "checked": "2026-10-29",
+      "title": "Delaware Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Delaware Lake fishing: live Corps lake level, unlimited hp, three state park ramps, tonight's bite and species. Unofficial.",
       "motors": "Unlimited horsepower. Follow the posted no wake buoys.",
       "ramps": "Three state park ramps: the main marina ramp, Sherwood Road on the east side and the southwest launch area.",
       "pool": "Normal summer pool is 915 ft. ODNR lists a winter drawdown to about 910 ft.",
@@ -85,6 +97,8 @@
     },
     "deercreek": {
       "checked": "2026-10-31",
+      "title": "Deer Creek Lake Fishing: Level, Rules | The Night Bite",
+      "description": "Deer Creek Lake fishing: live Corps lake level, unlimited hp, two state park ramps and a marina, tonight's bite and species. Unofficial.",
       "motors": "Unlimited horsepower.",
       "ramps": "Two state park ramps and a marina. Shore access below the dam.",
       "pool": "Summer pool is 810.5 ft on the ODNR fishing map. ODNR lists a winter drawdown to about 796 ft.",
@@ -97,6 +111,8 @@
     },
     "madison": {
       "checked": "2026-10-31",
+      "title": "Madison Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Madison Lake fishing: electric motors only, one launch ramp, the lake map, park hours, tonight's bite and species. No public level gauge. Unofficial.",
       "motors": "Electric motors only, at no wake speed.",
       "ramps": "One launch ramp, with shore fishing by it.",
       "pool": "Summer pool is 965 ft, the level the ODNR fishing map is drawn at.",
@@ -109,6 +125,8 @@
     },
     "knox": {
       "checked": "2026-10-30",
+      "title": "Knox Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Knox Lake fishing: 10 hp limit, the Armentrout Road ramp and marina, the lake map, tonight's bite and species. No public level gauge. Unofficial.",
       "motors": "10 hp limit; larger motors at no wake or idle only.",
       "ramps": "Marina and main ramp on Armentrout Road and an upper lake ramp. Carry-in access on the east side.",
       "pool": "Summer pool is 1,100 ft, the level the ODNR fishing map is drawn at.",
@@ -119,6 +137,8 @@
     },
     "clearfork": {
       "checked": "2026-10-31",
+      "title": "Clear Fork Reservoir Fishing: Map, Rules | The Night Bite",
+      "description": "Clear Fork Reservoir fishing: idle speed, no wake lake, the free south side ramp, night parking rules, tonight's bite. No public level gauge. Unofficial.",
       "motors": "No horsepower limit, but idle speed and no wake on the whole lake (City code). ODNR\u2019s page says 8 mph.",
       "ramps": "Free public ramp and marina on the south side. Shore fishing on the south and west shores only.",
       "pool": "Summer pool is 1,202 ft, the level the ODNR fishing map is drawn at.",
@@ -131,6 +151,8 @@
     },
     "seneca": {
       "checked": "2026-10-31",
+      "title": "Seneca Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Seneca Lake fishing: live USGS lake level, 399 hp limit, MWCD ramps and the marina, after dark access rules, tonight's bite and species. Unofficial.",
       "motors": "399 hp limit. Idle or no wake inside the buoyed and shore zones.",
       "ramps": "MWCD lists five public launch ramps, plus the Seneca Lake Marina.",
       "pool": "Summer pool is 832 ft, the level the ODNR fishing map is drawn at.",
@@ -143,6 +165,8 @@
     },
     "dillon": {
       "checked": "2026-10-31",
+      "title": "Dillon Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Dillon Lake fishing: live Corps lake level, unlimited hp with no wake coves, two south end ramps, tonight's bite and species. Unofficial.",
       "motors": "Unlimited horsepower; many coves are no wake.",
       "ramps": "Two state park ramps at the south end: the marina ramp and Big Run.",
       "pool": "Summer pool is 737 ft, the level the ODNR fishing map is drawn at.",
@@ -155,6 +179,8 @@
     },
     "logan": {
       "checked": "2026-10-31",
+      "title": "Lake Logan Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Lake Logan fishing: 10 hp and 10 mph limits, two ramps and a marina, the lake map, tonight's bite. No public level gauge. Unofficial.",
       "motors": "10 hp limit and 10 mph.",
       "ramps": "Main ramp and marina off Lake Logan Road, and a smaller ramp about 1.5 miles northeast.",
       "pool": "Summer pool is 759 ft, the level the ODNR fishing map is drawn at.",
@@ -167,6 +193,8 @@
     },
     "saltfork": {
       "checked": "2026-10-31",
+      "title": "Salt Fork Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Salt Fork Lake fishing: unlimited hp with speed zones, Sugartree and Morning Glory ramps, the lake map, tonight's bite. No public gauge. Unofficial.",
       "motors": "Unlimited horsepower, with marked speed and ski zones.",
       "ramps": "ODNR\u2019s fishing page counts 10 ramps and the park page names 8, including Sugartree Marina and Morning Glory. Two marinas.",
       "pool": "Summer pool is 800 ft, the level the ODNR fishing map is drawn at.",
@@ -179,6 +207,8 @@
     },
     "burroak": {
       "checked": "2026-10-31",
+      "title": "Burr Oak Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Burr Oak Lake fishing: live Corps lake level, 10 hp limit and no jet drives, four ramps, tonight's bite and species. Unofficial.",
       "motors": "10 hp limit; larger motors at idle only, no jet drives.",
       "ramps": "Four ramps: Dock 1 with the marina, Dock 3, Dock 4 and the Lodge ramp.",
       "pool": "Summer pool is 721 ft, the level the ODNR fishing map is drawn at.",
@@ -191,6 +221,8 @@
     },
     "dow": {
       "checked": "2026-10-31",
+      "title": "Dow Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Dow Lake fishing at Strouds Run: 10 hp limit, one ramp with a courtesy dock, shore fishing by the dam, tonight's bite. No public level gauge. Unofficial.",
       "motors": "10 hp limit.",
       "ramps": "One ramp off Strouds Run Road, with a courtesy dock. Shore fishing by the dam.",
       "pool": "Summer pool is 660 ft, the level the ODNR fishing map is drawn at.",

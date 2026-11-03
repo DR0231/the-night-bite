@@ -1,5 +1,5 @@
 // The Night Bite: check the "Tonight at a glance" strip on every lake home at phone, tablet and desktop widths.
-// Usage: node tools/check-glance.cjs [BASE] [OUTDIR]
+// Usage: node tools/check-glance.cjs [BASE] [OUTDIR]   (lakes from js/lakes.js, other pages from sitemap.xml)
 //   BASE defaults to the preview (https://dr0231.github.io/night-bite-preview/); OUTDIR gets the log and a Hoover phone shot.
 // Blocks analytics and the visits counter (tools/no-analytics.cjs). Checks per lake and width: 4 cells plus the bite,
 // the right source links (gauge, NWS) or a quiet "No public gauge", sunset filled, no sideways scroll, no console or CSP
@@ -12,10 +12,13 @@ const BASE = (process.argv[2] || 'https://dr0231.github.io/night-bite-preview/')
 const OUT = (process.argv[3] || '/workspace/nb-glance').replace(/\/?$/, '/');
 const fs = require('fs'); fs.mkdirSync(OUT, { recursive: true });
 const SIZES = [[390, 844, 'phone'], [820, 1180, 'tablet'], [1280, 800, 'desktop']];
-const LAKES = ['hoover', 'alum', 'buckeye', 'oshaughnessy', 'griggs', 'indian', 'delaware', 'deercreek', 'madison', 'knox', 'clearfork', 'seneca', 'dillon', 'logan', 'saltfork', 'burroak', 'dow'];
-const NOGAUGE = ['madison', 'knox', 'clearfork', 'logan', 'saltfork', 'dow'];
-const TEMP = ['hoover', 'griggs', 'indian'];
-const home = l => BASE + (l === 'hoover' ? '' : l + '/');
+// lakes, which have no gauge and which have a USGS temp gauge: all from js/lakes.js (tools/registry.cjs)
+const R = require('./registry.cjs');
+const LAKES = R.order(), NOGAUGE = R.noGauge(), TEMP = R.hasTemp();
+const home = l => BASE + R.home(l);
+// the analytics beacon we block ourselves logs ERR_BLOCKED_BY_CLIENT; ignore that line only when every failed request was ours
+const realErrs = (errs, rf) => errs.filter(e => !(/ERR_BLOCKED_BY_CLIENT/.test(e) && rf.length && rf.every(u => NA.PATTERN.test(u))));
+const watch = page => { const errs = [], rf = []; page.on('console', m => { if (m.type() === 'error') errs.push(m.text()); }); page.on('pageerror', e => errs.push('pageerror ' + e.message)); page.on('requestfailed', r => rf.push(r.url())); return () => realErrs(errs, rf); };
 const lines = []; let fails = 0;
 const check = (n, ok, info) => { lines.push((ok ? 'PASS ' : 'FAIL ') + n + (info ? ' :: ' + info : '')); if (!ok) fails++; };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -43,9 +46,7 @@ async function read(page) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: name === 'phone' ? 3 : 1, isMobile: name === 'phone', hasTouch: name === 'phone', userAgent: name === 'phone' ? UA_IOS : undefined, serviceWorkers: 'block' });
     await NA.block(ctx);
     for (const lake of LAKES) {
-      const page = await ctx.newPage(); const errs = [];
-      page.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
-      page.on('pageerror', e => errs.push('pageerror ' + e.message));
+      const page = await ctx.newPage(); const errsNow = watch(page);
       await page.goto(home(lake) + '?t=' + Date.now(), { waitUntil: 'load' });
       await page.waitForFunction(() => { const c = document.getElementById('conditions'); return c && c.getAttribute('data-state') !== 'loading'; }, null, { timeout: 20000 }).catch(() => {});
       await sleep(2500);
@@ -64,6 +65,7 @@ async function read(page) {
       const hs = [r.pool.h, r.temp.h, r.sunset.h, r.wind.h];
       check(t + ' equal cell heights (1px row rule), no clipped values', Math.max(...hs) - Math.min(...hs) <= 1 && ![r.pool, r.temp, r.sunset, r.wind].some(c => c.over), hs.join(','));
       check(t + ' no sideways scroll', !r.sideways);
+      const errs = errsNow();
       check(t + ' no console or CSP errors', errs.length === 0, errs.join(' | ').slice(0, 300));
       if (lake === 'hoover' && name === 'phone') {
         const el = await page.$('#glance');
@@ -79,12 +81,14 @@ async function read(page) {
   // other pages: no strip, no console or CSP errors, no sideways scroll
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' }); await NA.block(ctx);
-    for (const u of ['water', 'species/', 'species/saugeye', 'gear', 'log', 'about', 'updates', 'docks', 'stocking', 'ice', 'tournaments', 'privacy', 'water?lake=knox', 'water?lake=seneca', 'water?lake=dow', 'stocking?lake=saltfork', 'species/?lake=burroak']) {
-      const page = await ctx.newPage(); const errs = [];
-      page.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
-      page.on('pageerror', e => errs.push('pageerror ' + e.message));
+    // every sitemap page that is not a lake home (the game excluded), plus the shared pages for the newest lake and a no gauge lake
+    const last = LAKES[LAKES.length - 1], ng = NOGAUGE[0];
+    const others = R.sitemapPaths().filter(p => !R.isLakeHome(p) && !/^whisperwood/.test(p))
+      .concat(['water?lake=' + last, 'stocking?lake=' + last, 'species/?lake=' + last], ng && ng !== last ? ['water?lake=' + ng] : []);
+    for (const u of others) {
+      const page = await ctx.newPage(); const errsNow = watch(page);
       const res = await page.goto(BASE + u, { waitUntil: 'load' }).catch(() => null);
-      await sleep(1500);
+      await sleep(1500); const errs = errsNow();
       const r = await page.evaluate(() => ({ g: !!document.getElementById('glance'), side: document.documentElement.scrollWidth > innerWidth + 1 }));
       check(`other page ${u}: loads, no strip, no sideways scroll, no errors`, !!res && res.status() < 400 && !r.g && !r.side && errs.length === 0, (res ? res.status() : 'no response') + ' ' + errs.join(' | ').slice(0, 200));
       await page.close();

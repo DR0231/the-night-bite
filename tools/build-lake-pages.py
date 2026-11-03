@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Build each lake's own home page from index.html: alum/, buckeye/, oshaughnessy/, griggs/, indian/, delaware/,
-deercreek/, madison/, knox/, clearfork/, seneca/, dillon/, logan/, saltfork/, burroak/ and dow/index.html.
+"""Build each lake's own home page from index.html: <id>/index.html for every lake in js/lakes.js except Hoover
+(the lake list, names and order come from js/lakes.js; each page's title and description from data/quick-facts.json).
 
 Run from the repo root after any change to index.html, then run tools/stamp-version.py:
     python3 tools/build-lake-pages.py && python3 tools/stamp-version.py
@@ -32,88 +32,21 @@ LAKES_JS = (root / "js" / "lakes.js").read_text()
 WEBSITE_ID = SITE + "#website"
 ORG_ID = SITE + "#organization"
 
-LAKES = {
-    "alum": {
-        "name": "Alum Creek Lake", "short": "Alum Creek",
-        "title": "Alum Creek Fishing: Level, Ramps, Rules | The Night Bite",
-        "desc": "Alum Creek Lake fishing: live Corps lake level, unlimited hp south and no wake north, four public ramps, tonight's bite and species. Unofficial.",
-    },
-    "buckeye": {
-        "name": "Buckeye Lake", "short": "Buckeye Lake",
-        "title": "Buckeye Lake Fishing: Level, Ramps, Rules | The Night Bite",
-        "desc": "Buckeye Lake fishing: live USGS lake level, no hp limit with a 300 ft no wake zone, ramps and the Mud Island access, tonight's bite. Unofficial.",
-    },
-    "oshaughnessy": {
-        "name": "O'Shaughnessy Reservoir", "short": "O'Shaughnessy",
-        "title": "O'Shaughnessy Fishing: Level, Ramps, Rules | The Night Bite",
-        "desc": "O'Shaughnessy Reservoir fishing: live USGS level, 40 mph by day and 10 mph after sunset, Home Road and Bellepoint ramps, tonight's bite. Unofficial.",
-    },
-    "griggs": {
-        "name": "Griggs Reservoir", "short": "Griggs",
-        "title": "Griggs Reservoir Fishing: Level, Rules | The Night Bite",
-        "desc": "Griggs Reservoir fishing: live USGS level, 10 mph after sunset, the Griggs boat launch and docks, tonight's bite and species. Unofficial.",
-    },
-    "indian": {
-        "name": "Indian Lake", "short": "Indian Lake",
-        "title": "Indian Lake Fishing: Level, Ramps, Rules | The Night Bite",
-        "desc": "Indian Lake fishing: live USGS lake level, no hp limit, five state park ramps and the Old Field Beach jetties, tonight's bite. Unofficial.",
-    },
-    "delaware": {
-        "name": "Delaware Lake", "short": "Delaware Lake",
-        "title": "Delaware Lake Fishing: Level, Ramps, Rules | The Night Bite",
-        "desc": "Delaware Lake fishing: live Corps lake level, unlimited hp, three state park ramps, tonight's bite and species. Unofficial.",
-    },
-    "deercreek": {
-        "name": "Deer Creek Lake", "short": "Deer Creek Lake",
-        "title": "Deer Creek Lake Fishing: Level, Rules | The Night Bite",
-        "desc": "Deer Creek Lake fishing: live Corps lake level, unlimited hp, two state park ramps and a marina, tonight's bite and species. Unofficial.",
-    },
-    "madison": {
-        "name": "Madison Lake", "short": "Madison Lake",
-        "title": "Madison Lake Fishing: Map, Ramps, Rules | The Night Bite",
-        "desc": "Madison Lake fishing: electric motors only, one launch ramp, the lake map, park hours, tonight's bite and species. No public level gauge. Unofficial.",
-    },
-    "knox": {
-        "name": "Knox Lake", "short": "Knox Lake",
-        "title": "Knox Lake Fishing: Map, Ramps, Rules | The Night Bite",
-        "desc": "Knox Lake fishing: 10 hp limit, the Armentrout Road ramp and marina, the lake map, tonight's bite and species. No public level gauge. Unofficial.",
-    },
-    "clearfork": {
-        "name": "Clear Fork Reservoir", "short": "Clear Fork",
-        "title": "Clear Fork Reservoir Fishing: Map, Rules | The Night Bite",
-        "desc": "Clear Fork Reservoir fishing: idle speed, no wake lake, the free south side ramp, night parking rules, tonight's bite. No public level gauge. Unofficial.",
-    },
-    "seneca": {
-        "name": "Seneca Lake", "short": "Seneca Lake",
-        "title": "Seneca Lake Fishing: Level, Ramps, Rules | The Night Bite",
-        "desc": "Seneca Lake fishing: live USGS lake level, 399 hp limit, MWCD ramps and the marina, after dark access rules, tonight's bite and species. Unofficial.",
-    },
-    "dillon": {
-        "name": "Dillon Lake", "short": "Dillon Lake",
-        "title": "Dillon Lake Fishing: Level, Ramps, Rules | The Night Bite",
-        "desc": "Dillon Lake fishing: live Corps lake level, unlimited hp with no wake coves, two south end ramps, tonight's bite and species. Unofficial.",
-    },
-    "logan": {
-        "name": "Lake Logan", "short": "Lake Logan",
-        "title": "Lake Logan Fishing: Map, Ramps, Rules | The Night Bite",
-        "desc": "Lake Logan fishing: 10 hp and 10 mph limits, two ramps and a marina, the lake map, tonight's bite. No public level gauge. Unofficial.",
-    },
-    "saltfork": {
-        "name": "Salt Fork Lake", "short": "Salt Fork Lake",
-        "title": "Salt Fork Lake Fishing: Map, Ramps, Rules | The Night Bite",
-        "desc": "Salt Fork Lake fishing: unlimited hp with speed zones, Sugartree and Morning Glory ramps, the lake map, tonight's bite. No public gauge. Unofficial.",
-    },
-    "burroak": {
-        "name": "Burr Oak Lake", "short": "Burr Oak Lake",
-        "title": "Burr Oak Lake Fishing: Level, Ramps, Rules | The Night Bite",
-        "desc": "Burr Oak Lake fishing: live Corps lake level, 10 hp limit and no jet drives, four ramps, tonight's bite and species. Unofficial.",
-    },
-    "dow": {
-        "name": "Dow Lake", "short": "Dow Lake",
-        "title": "Dow Lake Fishing: Map, Ramps, Rules | The Night Bite",
-        "desc": "Dow Lake fishing at Strouds Run: 10 hp limit, one ramp with a courtesy dock, shore fishing by the dam, tonight's bite. No public level gauge. Unofficial.",
-    },
-}
+# Every lake in js/lakes.js except Hoover (the root page), in ORDER: name and short from js/lakes.js, the page's own
+# <title> and meta description from data/quick-facts.json ("title", "description"). A new lake needs no edit here.
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import registry  # noqa: E402
+
+REG = registry.load(root)
+LAKES = {}
+for _id in REG["order"]:
+    if _id == "hoover":
+        continue
+    _f = FACTS.get(_id) or {}
+    if not (_f.get("title") and _f.get("description")):
+        sys.exit(f"build-lake-pages: data/quick-facts.json needs a title and description for {_id}")
+    LAKES[_id] = {"name": REG["lakes"][_id]["name"], "short": REG["lakes"][_id]["short"],
+                  "title": _f["title"], "desc": _f["description"]}
 
 
 def sub1(pattern, repl, text, flags=0):

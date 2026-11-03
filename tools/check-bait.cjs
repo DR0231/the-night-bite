@@ -3,15 +3,17 @@ const {chromium}=require('/usr/local/lib/pnpm/5/.pnpm/playwright-core@1.59.1/nod
 const na=require(require('path').join(__dirname,'no-analytics.cjs'));
 const BASE=process.env.BASE||'https://dr0231.github.io/night-bite-preview/';
 const data=require(require('path').join(__dirname,'..','data','bait-shops.json')).lakes;
-const IDS=['hoover','alum','buckeye','oshaughnessy','griggs','indian','delaware','deercreek','madison','knox','clearfork','seneca','dillon','logan','saltfork','burroak','dow'];
+const IDS=require(require('path').join(__dirname,'registry.cjs')).order();   // every lake in js/lakes.js
+// the analytics beacon we block ourselves logs ERR_BLOCKED_BY_CLIENT; ignore that line only when every failed request was ours
+const realErrs=(errs,rf)=>errs.filter(e=>!(/ERR_BLOCKED_BY_CLIENT/.test(e)&&rf.length&&rf.every(u=>na.PATTERN.test(u))));
 let pass=0,fail=0;const out=[];function ok(n,c,i){c?pass++:fail++; if(!c||process.env.V) out.push((c?'PASS ':'FAIL ')+n+(i!==undefined?' :: '+JSON.stringify(i):''));}
 (async()=>{
  const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:na.args()});
  for(const vp of [[390,844,true],[820,1180,true],[1440,900,false]]){
   const c=await b.newContext({viewport:{width:vp[0],height:vp[1]},isMobile:vp[2],hasTouch:vp[2],serviceWorkers:'block'});await na.block(c);
   for(const id of IDS){
-   const p=await c.newPage();const errs=[];
-   p.on('console',m=>{if(m.type()==='error')errs.push(m.text())});p.on('pageerror',e=>errs.push('pageerror '+e.message));
+   const p=await c.newPage();const errs0=[],rf=[];
+   p.on('console',m=>{if(m.type()==='error')errs0.push(m.text())});p.on('pageerror',e=>errs0.push('pageerror '+e.message));p.on('requestfailed',r=>rf.push(r.url()));
    const W=vp[0]+' '+id+': ';
    await p.goto(BASE+(id==='hoover'?'':id+'/')+(process.env.V2?'?v='+Date.now():''),{waitUntil:'load'});
    await p.waitForFunction(()=>document.getElementById('bait-nearby').dataset.state!=='loading',null,{timeout:15000}).catch(()=>{});
@@ -23,7 +25,7 @@ let pass=0,fail=0;const out=[];function ok(n,c,i){c?pass++:fail++; if(!c||proces
       moreHidden:c.querySelector('.bait-more').hidden,status:c.querySelector('.bait-status').hidden?'':c.querySelector('.bait-status').textContent,
       tell:c.querySelector('.bait-tell').href,afterCond:p2&&p2.id==='conditions',below:bb.top>=cond.top-1,
       cards:document.querySelectorAll('#bait-nearby').length,ovf:document.documentElement.scrollWidth<=innerWidth,cardOvf:c.scrollWidth<=c.clientWidth+1}});
-   const exp=data[id];
+   const exp=data[id]||[];   // a lake with no entry in data/bait-shops.json shows No shops confirmed yet
    ok(W+'lake id',r.id===id,r.id);
    ok(W+'one card visible',r.cards===1&&r.vis);
    ok(W+'placed after conditions',r.afterCond&&r.below);
@@ -35,7 +37,7 @@ let pass=0,fail=0;const out=[];function ok(n,c,i){c?pass++:fail++; if(!c||proces
    ok(W+'empty state',exp.length?r.status==='':/No shops confirmed yet/.test(r.status),r.status);
    ok(W+'tell link',r.tell.startsWith('mailto:contact@nightbiteoh.com?subject='),r.tell);
    ok(W+'no h-overflow',r.ovf&&r.cardOvf);
-   ok(W+'no console errors',errs.length===0,errs);
+   const errs=realErrs(errs0,rf);ok(W+'no console errors',errs.length===0,errs);
    if(vp[0]===390&&id==='alum'||vp[0]===1440&&id==='buckeye'||vp[0]===820&&id==='madison'){
      if(!r.moreHidden){await p.click('#bait-nearby .bait-more summary');await p.waitForTimeout(200);}
      await p.locator('#bait-nearby').screenshot({path:`${process.env.OUT||'/tmp'}/bait-${vp[0]}-${id}.png`});
@@ -49,7 +51,7 @@ let pass=0,fail=0;const out=[];function ok(n,c,i){c?pass++:fail++; if(!c||proces
  // ---- location tests (1 page each, per viewport) ----
  for(const vp of [[390,844,true],[820,1180,true],[1440,900,false]]){
   const W=vp[0]+' geo ';
-  const mk=async(opts,init)=>{const c=await b.newContext(Object.assign({viewport:{width:vp[0],height:vp[1]},isMobile:vp[2],hasTouch:vp[2],serviceWorkers:'block'},opts));await na.block(c);if(init)await c.addInitScript(init);const p=await c.newPage();const errs=[];p.on('console',m=>{if(m.type()==='error')errs.push(m.text())});p.on('pageerror',e=>errs.push(e.message));return {c,p,errs};};
+  const mk=async(opts,init)=>{const c=await b.newContext(Object.assign({viewport:{width:vp[0],height:vp[1]},isMobile:vp[2],hasTouch:vp[2],serviceWorkers:'block'},opts));await na.block(c);if(init)await c.addInitScript(init);const p=await c.newPage();const errs=[],rf=[];p.on('console',m=>{if(m.type()==='error')errs.push(m.text())});p.on('pageerror',e=>errs.push(e.message));p.on('requestfailed',r=>rf.push(r.url()));p.on('console',m=>{if(m.type()==='error'&&/ERR_BLOCKED_BY_CLIENT/.test(m.text()))setTimeout(()=>{const k=errs.indexOf(m.text());if(k>=0&&rf.length&&rf.every(u=>na.PATTERN.test(u)))errs.splice(k,1);},0);});return {c,p,errs};};
   const st=p=>p.evaluate(()=>{const c=document.getElementById('bait-nearby');return {sort:c.dataset.sort,names:[...c.querySelectorAll('.bait-list:not(.bait-more-list) .bait-name')].map(e=>e.textContent),all:[...c.querySelectorAll('.bait-name')].map(e=>e.textContent),times:[...c.querySelectorAll('.bait-time')].map(e=>e.textContent),loc:c.querySelector('.bait-loc').hidden?'':c.querySelector('.bait-loc').textContent,btn:c.querySelector('.bait-near').textContent,btnHidden:c.querySelector('.bait-near').hidden,ovf:document.documentElement.scrollWidth<=innerWidth,calls:window.__geoCalls||0}});
   const ready=p=>p.waitForFunction(()=>document.getElementById('bait-nearby').dataset.state!=='loading');
   // granted near Millersport at Buckeye Lake: silent sort on load

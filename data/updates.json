@@ -2,6 +2,22 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-03-upkeep-checks",
+      "date": "2026-11-03",
+      "tag": "Improved",
+      "title": "Small upkeep and checks",
+      "bullets": [
+        "Nothing new to see on the water pages this time. I set up a full check that opens every page on a phone, tablet and desktop size and flags broken links, missing titles or images without descriptions before anything goes live.",
+        "Each lake's page title and description now live in one file next to its Quick facts, so adding the next water is quicker and less likely to miss a step."
+      ],
+      "links": [
+        {
+          "label": "Water",
+          "href": "water"
+        }
+      ]
+    },
+    {
       "id": "2026-10-31-clearer-titles",
       "date": "2026-10-31",
       "tag": "Improved",

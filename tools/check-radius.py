@@ -9,9 +9,10 @@ and anything listed in EXCEPTIONS below (for example a deliberate 50% circle; sa
 Scans CSS, HTML (inline style="" and <style> blocks), JS (style strings and .borderRadius) and the page builders
 in tools/. Whisperwood (whisperwood.html, whisperwood/) is the game's own look and is skipped.
 """
-import pathlib, re, sys
+import os, pathlib, re, sys
 
-root = pathlib.Path(__file__).resolve().parent.parent
+# NB_ROOT=<dir> checks another copy of the site (tools/check-all.py uses it to read the live checkout without writing)
+root = pathlib.Path(os.environ.get("NB_ROOT") or pathlib.Path(__file__).resolve().parent.parent)
 SKIP_DIRS = {".git", "node_modules", "whisperwood", "__pycache__"}
 SKIP_FILES = {"whisperwood.html", "check-radius.py"}
 EXTS = {".css", ".html", ".js", ".cjs", ".mjs", ".py"}
