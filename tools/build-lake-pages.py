@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Build each lake's own home page from index.html: <id>/index.html for every lake in js/lakes.js except Hoover
+"""Build every lake's home page, Hoover too, from one template: <id>/index.html for every lake in js/lakes.js
 (the lake list, names and order come from js/lakes.js; each page's title and description from data/quick-facts.json).
+The template is tools/lake-home.html (the Hoover home markup; the site root index.html is the water picker).
 
-Run from the repo root after any change to index.html, then run tools/stamp-version.py:
+Run from the repo root after any change to tools/lake-home.html, then run tools/stamp-version.py:
     python3 tools/build-lake-pages.py && python3 tools/stamp-version.py
 
-index.html stays the Hoover home page at the site root, unchanged. Each copy:
+Each copy:
   · gets <base href="../"> so every relative link, image, script and fetch() resolves from the site root
     (same files, same service worker scope); in-page links (#main, #get-the-app) become alum/#main and so on;
   · says which lake it is (<meta name="nb-home" content="alum">), which js/lakes.js reads before first paint;
@@ -13,35 +14,47 @@ index.html stays the Hoover home page at the site root, unchanged. Each copy:
   · has the lake's names already filled in [data-lk] spots, so nothing swaps after paint;
   · has its own Quick facts block and JSON-LD (see below).
 
+Hoover's pool snapshot (the USGS snapshot routine's three lines: correction-line, the Checked time, water-temp) is
+edited in hoover/index.html, the page visitors see. This script copies those three lines from hoover/index.html into
+the template first, so a rebuild never undoes the routine's last update.
+
 Quick facts: a static <details> block between <!-- nb:quick-facts --> markers, plain HTML with no script, built from
 data/quick-facts.json (motors and speed, ramps and access, pool, night rules, sources, checked date). The gauge link or
 "No public gauge" line comes from the lake's pool entry in js/lakes.js. A field missing from the JSON is left out.
-JSON-LD (between <!-- nb:jsonld --> markers): the Hoover home at the site root gets WebSite (with alternateName and a
-publisher Organization) plus its WebPage; every other lake home gets its own WebPage. Each WebPage carries
-dateModified = that lake's "checked" date, the same date the page shows as "Facts checked".
-This script also refreshes those two blocks in index.html itself (Hoover); nothing else in index.html changes.
-Never edit the <lake>/index.html copies by hand; they are overwritten.
+JSON-LD (between <!-- nb:jsonld --> markers): every lake home gets its own WebPage, part of the WebSite that the
+site root (the water picker) declares. Each WebPage carries dateModified = that lake's "checked" date, the same date
+the page shows as "Facts checked". The template's own two blocks are refreshed with Hoover's.
+Never edit the <lake>/index.html copies by hand (except the three snapshot lines in hoover/index.html); they are overwritten.
 """
 import datetime, html, json, pathlib, re, sys
 
 root = pathlib.Path(__file__).resolve().parent.parent
-src = (root / "index.html").read_text()
+TEMPLATE = root / "tools" / "lake-home.html"
+src = TEMPLATE.read_text()
 SITE = "https://nightbiteoh.com/"
 FACTS = json.loads((root / "data" / "quick-facts.json").read_text())["lakes"]
 LAKES_JS = (root / "js" / "lakes.js").read_text()
 WEBSITE_ID = SITE + "#website"
 ORG_ID = SITE + "#organization"
 
-# Every lake in js/lakes.js except Hoover (the root page), in ORDER: name and short from js/lakes.js, the page's own
+# Every lake in js/lakes.js, Hoover too, in ORDER: name and short from js/lakes.js, the page's own
 # <title> and meta description from data/quick-facts.json ("title", "description"). A new lake needs no edit here.
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import registry  # noqa: E402
+import importlib.util  # noqa: E402
 
 REG = registry.load(root)
+
+# picker tile charts first (assets/tiles/<id>.png and their sw.js PRECACHE lines), so a lake whose chart was just
+# added gets its tile on this build; see tools/build-tile-charts.py
+_spec = importlib.util.spec_from_file_location("build_tile_charts", pathlib.Path(__file__).with_name("build-tile-charts.py"))
+_tiles = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_tiles)
+_changed = _tiles.build(root)
+if _changed:
+    print("build-tile-charts: " + ", ".join(_changed))
 LAKES = {}
 for _id in REG["order"]:
-    if _id == "hoover":
-        continue
     _f = FACTS.get(_id) or {}
     if not (_f.get("title") and _f.get("description")):
         sys.exit(f"build-lake-pages: data/quick-facts.json needs a title and description for {_id}")
@@ -147,15 +160,6 @@ def jsonld(lake, name, url, title):
         "dateModified": F["checked"], "inLanguage": "en-US",
     }
     items = [page]
-    if lake == "hoover":
-        items = [
-            {"@context": "https://schema.org", "@type": "WebSite", "@id": WEBSITE_ID, "name": "The Night Bite",
-             "alternateName": ["Night Bite OH", "The Night Bite Ohio", "nightbiteoh.com"], "url": SITE,
-             "inLanguage": "en-US", "publisher": {"@id": ORG_ID}},
-            {"@context": "https://schema.org", "@type": "Organization", "@id": ORG_ID, "name": "The Night Bite", "url": SITE,
-             "logo": {"@type": "ImageObject", "url": SITE + "assets/icons/icon-512.png", "width": 512, "height": 512}},
-            page,
-        ]
     body = json.dumps(items, ensure_ascii=False)
     return ('  <!-- nb:jsonld (tools/build-lake-pages.py) -->\n'
             f'  <script type="application/ld+json">\n  {body}\n  </script>\n'
@@ -168,13 +172,27 @@ def fill(h, lake, name, url, title):
     return h
 
 
-# Hoover: refresh its own Quick facts and JSON-LD in index.html first, so every copy starts from the same source
-hoover_title = html.unescape(re.search(r"<title>([^<]*)</title>", src).group(1))
-new_src = fill(src, "hoover", "Hoover Reservoir", SITE, hoover_title)
-if new_src != src:
-    (root / "index.html").write_text(new_src)
-    print("wrote index.html (Hoover quick facts and JSON-LD)")
+# Hoover's pool snapshot lines: hoover/index.html (where the USGS snapshot routine writes) -> the template
+SNAP = [r'^[ \t]*<p class="pool-lead" id="correction-line">.*$', r'^[ \t]*Checked: <time datetime=.*$',
+        r'^[ \t]*<span class="value" id="water-temp">.*$']
+_hv = root / "hoover" / "index.html"
+if _hv.exists():
+    _old = _hv.read_text()
+    for pat in SNAP:
+        o = re.search(pat, _old, re.M); m = re.search(pat, src, re.M)
+        if o and m and o.group(0) != m.group(0):
+            src = src[:m.start()] + o.group(0) + src[m.end():]
+
+# the template's own Quick facts and JSON-LD: Hoover's, so it reads like the page it becomes
+new_src = fill(src, "hoover", "Hoover Reservoir", SITE + "hoover/", LAKES["hoover"]["title"])
+if new_src != TEMPLATE.read_text():
+    TEMPLATE.write_text(new_src)
+    print("wrote tools/lake-home.html (Hoover quick facts, JSON-LD, snapshot lines)")
 src = new_src
+TEMPLATE_NOTE = re.compile(r"<!-- Template for every lake home.*?-->\n", re.S)
+src = TEMPLATE_NOTE.sub("", src, count=1)
+# the template's own noindex (it is copied to live with the tools, but is not a page); never on the lake homes
+src = re.sub(r'[ \t]*<meta name="robots" content="noindex" data-nb-template>\n', "", src, count=1)
 
 for lake, L in LAKES.items():
     url = SITE + lake + "/"
@@ -197,8 +215,94 @@ for lake, L in LAKES.items():
     # lake names in place before first paint (js/lakes.js would fill the same text)
     for key in ("name", "short"):
         h = re.sub(r'(<span[^>]*data-lk="' + key + r'"[^>]*>)[^<]*(</span>)', r"\g<1>" + L[key] + r"\2", h)
-    h = h.replace("<!DOCTYPE html>\n", "<!DOCTYPE html>\n<!-- Built from index.html by tools/build-lake-pages.py. Do not edit by hand. -->\n", 1)
+    h = h.replace("<!DOCTYPE html>\n", "<!DOCTYPE html>\n<!-- Built from tools/lake-home.html by tools/build-lake-pages.py. Do not edit by hand (except the three snapshot lines in hoover/index.html). -->\n", 1)
     out = root / lake / "index.html"
     out.parent.mkdir(exist_ok=True)
     out.write_text(h)
     print(f"wrote {out.relative_to(root)}")
+
+
+# The site root (index.html) is the water picker: plain links to every lake home, grouped by region in the order of
+# REGIONS in js/lakes.js (empty regions left out), and the site-wide JSON-LD (WebSite, Organization, WebPage).
+# Written between markers, so a new lake in js/lakes.js shows up here with no edit to index.html.
+def chart_img(lid):
+    """The picker tile's chart: assets/tiles/<id>.png (north up, no arrow; tools/build-tile-charts.py makes it from the
+    pool card chart). Drawn at a whole-number scale (1x to 3x) that fits a 148px tall well, so pixels stay crisp."""
+    src = f"assets/tiles/{lid}.png"
+    f = root / src
+    if not f.exists():
+        return ""   # a new lake with no chart yet; tools/new-lake.py lists the missing tile
+    b = f.read_bytes()
+    w, h = int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big")   # PNG IHDR
+    k = max(1, min(3, 148 // h, 300 // w))
+    return f'<img src="{src}" alt="" width="{w * k}" height="{h * k}" decoding="async">'
+
+
+def picker_tile(lid):
+    c = REG["lakes"][lid]
+    pool = c.get("pool") or {}
+    q = " ".join([c["name"], c["short"], c.get("area") or ""] + list(c.get("aliases") or [])).lower()
+    gauge = ("Live level" + (" and temp" if pool.get("temp") else "")) if pool.get("src") else "No public gauge"
+    # the area line only when it says more than the region heading above it (West central Ohio under Central Ohio)
+    rname = next((r["name"] for r in REG["regions"] if r["id"] == c["region"]), "")
+    area = (f'<span class="wp-area">{html.escape(c["area"], quote=False)}</span>'
+            if c.get("area") and c["area"].lower() != rname.lower() else "")
+    return (f'          <li class="wp-item"><a class="wp-tile" href="{registry.home(lid)}" data-water="{lid}" data-q="{esc(q)}">'
+            f'<span class="wp-art" aria-hidden="true">{chart_img(lid)}</span>'
+            f'<span class="wp-head"><span class="wp-name">{html.escape(c["name"], quote=False)}</span>'
+            f'{area}</span>'
+            f'<span class="wp-gauge"{" data-live" if pool.get("src") else ""}>{gauge}</span></a></li>')
+
+
+def water_picker():
+    parts = []
+    for rg in REG["regions"]:
+        ids = [i for i in REG["order"] if REG["lakes"][i]["region"] == rg["id"]]
+        if not ids:
+            continue
+        name = html.escape(rg["name"], quote=False)
+        parts.append(f'      <section class="wp-region" id="region-{rg["id"]}" data-region="{rg["id"]}" aria-labelledby="wp-h-{rg["id"]}">\n'
+                     f'        <h3 class="wp-region-title" id="wp-h-{rg["id"]}">{name}</h3>\n'
+                     f'        <ul class="wp-grid">\n' + "\n".join(picker_tile(i) for i in ids) + '\n        </ul>\n      </section>')
+    return ("      <!-- nb:water-picker (tools/build-lake-pages.py, from js/lakes.js) -->\n" + "\n".join(parts)
+            + "\n      <!-- /nb:water-picker -->")
+
+
+def picker_chips():
+    chips = ['        <a class="wp-chip" href="#waters" data-chip="all">All waters</a>']
+    for rg in REG["regions"]:
+        if any(REG["lakes"][i]["region"] == rg["id"] for i in REG["order"]):
+            chips.append(f'        <a class="wp-chip" href="#region-{rg["id"]}" data-chip="{rg["id"]}">'
+                         f'{html.escape(rg["name"].replace(" Ohio", ""), quote=False)}</a>')
+    return ("      <!-- nb:water-chips (tools/build-lake-pages.py, from js/lakes.js) -->\n" + "\n".join(chips)
+            + "\n      <!-- /nb:water-chips -->")
+
+
+def root_jsonld(title):
+    checked = max((FACTS.get(i) or {}).get("checked", "") for i in REG["order"])
+    data = [
+        {"@context": "https://schema.org", "@type": "WebSite", "@id": WEBSITE_ID, "name": "The Night Bite",
+         "alternateName": ["Night Bite OH", "The Night Bite Ohio", "nightbiteoh.com"], "url": SITE,
+         "inLanguage": "en-US", "publisher": {"@id": ORG_ID}},
+        {"@context": "https://schema.org", "@type": "Organization", "@id": ORG_ID, "name": "The Night Bite", "url": SITE,
+         "logo": {"@type": "ImageObject", "url": SITE + "assets/icons/icon-512.png", "width": 512, "height": 512}},
+        {"@context": "https://schema.org", "@type": "WebPage", "@id": SITE + "#webpage", "url": SITE, "name": title,
+         "isPartOf": {"@id": WEBSITE_ID}, "dateModified": checked or None, "inLanguage": "en-US"},
+    ]
+    if not checked:
+        del data[2]["dateModified"]
+    return ("  <!-- nb:jsonld (tools/build-lake-pages.py) -->\n  <script type=\"application/ld+json\">\n  "
+            + json.dumps(data, ensure_ascii=False) + "\n  </script>\n  <!-- /nb:jsonld -->")
+
+
+ROOT_PAGE = root / "index.html"
+r = ROOT_PAGE.read_text()
+if 'name="nb-root"' not in r:
+    sys.exit("build-lake-pages: index.html is not the water picker (<meta name=\"nb-root\"> missing)")
+r_title = html.unescape(re.search(r"<title>([^<]*)</title>", r).group(1))
+new_r = sub1(r"[ \t]*<!-- nb:water-picker.*?<!-- /nb:water-picker -->", lambda m: water_picker(), r, re.S)
+new_r = sub1(r"[ \t]*<!-- nb:water-chips.*?<!-- /nb:water-chips -->", lambda m: picker_chips(), new_r, re.S)
+new_r = sub1(r"[ \t]*<!-- nb:jsonld.*?<!-- /nb:jsonld -->", lambda m: root_jsonld(r_title), new_r, re.S)
+if new_r != r:
+    ROOT_PAGE.write_text(new_r)
+    print("wrote index.html (water picker tiles and region chips, site JSON-LD)")

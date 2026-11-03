@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write the share tags (Open Graph and Twitter Card) on every public page from that page's own head.
 
-Run from the repo root after tools/build-lake-pages.py (it rebuilds alum/ and buckeye/ from index.html):
+Run from the repo root after tools/build-lake-pages.py (it rebuilds every lake home from tools/lake-home.html):
     python3 tools/build-lake-pages.py && python3 tools/build-meta.py && python3 tools/stamp-version.py
 
 For each page this reads <title>, <meta name="description"> and <link rel="canonical"> and writes one block
@@ -9,8 +9,8 @@ right after the canonical:
   og:site_name, og:type, og:title, og:description, og:url (= canonical), og:image (+ width, height, alt),
   twitter:card summary_large_image, twitter:title, twitter:description, twitter:image, twitter:image:alt.
 Any og:* or twitter:* tags already on the page are removed first, so running it twice changes nothing.
-Images are absolute https://nightbiteoh.com URLs: assets/og/og-<lake>.png on each lake home page other
-than Hoover (every lake in js/lakes.js that has that file), assets/og/og-card.png everywhere else (all 1200x630).
+Images are absolute https://nightbiteoh.com URLs: assets/og/og-<lake>.png on each lake home page
+(every lake in js/lakes.js that has that file), assets/og/og-card.png everywhere else (all 1200x630).
 Skipped: 404.html and offline.html (no canonical, not shared), previews/, review/, tools/, whisperwood/ (the game),
 and Search Console verification files. Check the result with tools/check-meta.py.
 """
@@ -22,11 +22,11 @@ SKIP_FILES = {"404.html", "offline.html"}
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import registry  # noqa: E402
 
-# Each lake home other than Hoover shares its own card when assets/og/og-<id>.png exists (lake list and names from
+# Each lake home shares its own card when assets/og/og-<id>.png exists (lake list and names from
 # js/lakes.js); a lake without its card yet falls back to og-card.png.
 IMAGES = {}
 for _id, _l in registry.load(root)["lakes"].items():
-    if _id != "hoover" and (root / "assets" / "og" / f"og-{_id}.png").exists():
+    if (root / "assets" / "og" / f"og-{_id}.png").exists():
         IMAGES[f"{_id}/index.html"] = (f"og-{_id}.png", "The Night Bite: " + _l["name"].replace("'", "\u2019") + " fishing hub, a pixel lantern over a moonlit tree line")
 DEFAULT_IMAGE = ("og-card.png", "The Night Bite: a pixel lantern over a moonlit tree line")
 

@@ -58,8 +58,12 @@
   function pickLink(a, id) {
     a.addEventListener("click", function (e) {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      if (id === cur) { e.preventDefault(); close(); return; }
-      try { localStorage.setItem(LS.storageKey, id); } catch (er) {}
+      if (id === cur) {
+        // just browsing (hoover/?browse): picking the lake on screen makes it this device's water
+        if (LK.browsing) { try { localStorage.setItem(LS.storageKey, id); sessionStorage.removeItem("nb-browse"); } catch (er) {} LK.browsing = false; LK.chosen = true; }
+        e.preventDefault(); close(); return;
+      }
+      try { localStorage.setItem(LS.storageKey, id); sessionStorage.removeItem("nb-browse"); } catch (er) {}
       if (a.parentNode && a.parentNode.classList) a.parentNode.classList.add("is-picked");   // the old picker's amber edge while the next lake loads
       markSwitch();
     });

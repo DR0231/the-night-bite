@@ -15,7 +15,7 @@ let pass=0,fail=0;const out=[];function ok(n,c,i){c?pass++:fail++; if(!c||proces
    const p=await c.newPage();const errs0=[],rf=[];
    p.on('console',m=>{if(m.type()==='error')errs0.push(m.text())});p.on('pageerror',e=>errs0.push('pageerror '+e.message));p.on('requestfailed',r=>rf.push(r.url()));
    const W=vp[0]+' '+id+': ';
-   await p.goto(BASE+(id==='hoover'?'':id+'/')+(process.env.V2?'?v='+Date.now():''),{waitUntil:'load'});
+   await p.goto(BASE+id+'/'+(process.env.V2?'?v='+Date.now():''),{waitUntil:'load'});
    await p.waitForFunction(()=>document.getElementById('bait-nearby').dataset.state!=='loading',null,{timeout:15000}).catch(()=>{});
    const r=await p.evaluate(()=>{const c=document.getElementById('bait-nearby');const cs=getComputedStyle(c);
      const rows=[...c.querySelectorAll('.bait-row')].map(li=>({n:li.querySelector('.bait-name').textContent,t:li.querySelector('.bait-time').textContent,h:li.querySelector('a').href}));
@@ -71,7 +71,7 @@ let pass=0,fail=0;const out=[];function ok(n,c,i){c?pass++:fail++; if(!c||proces
    // Hoover, user beside Cabela's: Cabela's promoted
    ok(W+'granted: no errors, no overflow (buckeye)',errs.length===0&&r.ovf,errs);await c.close();}
   {const {c,p,errs}=await mk({permissions:['geolocation'],geolocation:{latitude:40.1493,longitude:-82.9731}});let r;
-   await p.goto(BASE);await ready(p);await p.waitForFunction(()=>document.getElementById('bait-nearby').dataset.sort==='you',null,{timeout:10000}).catch(()=>{});
+   await p.goto(BASE+'hoover/');await ready(p);await p.waitForFunction(()=>document.getElementById('bait-nearby').dataset.sort==='you',null,{timeout:10000}).catch(()=>{});
    r=await st(p);ok(W+"granted hoover: Cabela's first",r.names[0]==="Cabela's",r.names);
    ok(W+'granted: no errors, no overflow',errs.length===0&&r.ovf,errs);
    await c.close();}
@@ -102,10 +102,10 @@ let pass=0,fail=0;const out=[];function ok(n,c,i){c?pass++:fail++; if(!c||proces
     ok(W+'unsupported: lake order + calm line, no button',r.sort==='lake'&&r.btnHidden&&r.loc==='Location off, sorted from the lake.',r);ok(W+'unsupported: no errors',errs.length===0,errs);await c.close();}
   }
   // layout: no card stretched far past its content at desktop
-  if(vp[0]===1440){const {c,p}=await mk({});for(const id of ['','buckeye/','madison/','alum/']){await p.goto(BASE+id);await ready(p);await p.waitForTimeout(3000);
+  if(vp[0]===1440){const {c,p}=await mk({});for(const id of ['hoover/','buckeye/','madison/','alum/']){await p.goto(BASE+id);await ready(p);await p.waitForTimeout(3000);
     const g=await p.evaluate(()=>[...document.querySelectorAll('.bento-grid > .bento-card')].map(e=>{const r=e.getBoundingClientRect();let h=0;for(const k of e.children){if(k.tagName==='SCRIPT')continue;const kr=k.getBoundingClientRect();if(kr.height)h=Math.max(h,kr.bottom-r.top)}return [e.className.split(' ')[1],Math.round(r.height-h)]}));
-    ok(W+'no stretched cards '+(id||'hoover'),g.every(x=>x[1]<80),g);
-    if(id==='') await p.screenshot({path:''+(process.env.OUT||'/tmp')+'/bait-1440-home-grid.png',fullPage:true});}
+    ok(W+'no stretched cards '+id.replace('/',''),g.every(x=>x[1]<80),g);
+    if(id==='hoover/') await p.screenshot({path:''+(process.env.OUT||'/tmp')+'/bait-1440-home-grid.png',fullPage:true});}
    await c.close();}
  }
  await b.close();

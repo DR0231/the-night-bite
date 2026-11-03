@@ -31,7 +31,7 @@ module.exports = {
   lakes: () => get().lakes,
   facts: () => get().facts,
   sitemapPaths: () => get().pages,                      // '' for the root, 'alum/', 'water', 'species/saugeye' ...
-  home: id => (id === 'hoover' ? '' : id + '/'),        // Hoover is the default lake and lives at the root
+  home: id => id + '/',                                 // every lake home, Hoover too; the site root is the water picker
   noGauge: () => get().order.filter(id => !get().lakes[id].pool || !get().lakes[id].pool.src),
   hasTemp: () => get().order.filter(id => get().lakes[id].pool && get().lakes[id].pool.src === 'usgs' && get().lakes[id].pool.temp),
   isLakeHome: p => get().order.some(id => module.exports.home(id) === p),

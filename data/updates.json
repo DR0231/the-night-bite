@@ -2,6 +2,31 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-03-pick-your-water",
+      "date": "2026-11-03",
+      "tag": "New",
+      "title": "Pick your water",
+      "bullets": [
+        "The homepage is now a picker for all 23 waters. Each tile shows the water's chart (north up) and its gauge line. Search by water or by town, or narrow it to Central, East and Southeast, or Northeast Ohio with the region chips.",
+        "Once you pick a water, this phone or computer remembers it and opens that water's page next time. It never leaves your device. To choose another, use the lake picker on any water's page or add ?pick to the homepage address.",
+        "Just browsing opens Hoover's page without saving anything. Hoover now lives at nightbiteoh.com/hoover/."
+      ],
+      "links": [
+        {
+          "label": "Pick your water",
+          "href": "./"
+        },
+        {
+          "label": "Hoover",
+          "href": "hoover/"
+        },
+        {
+          "label": "Privacy",
+          "href": "privacy"
+        }
+      ]
+    },
+    {
       "id": "2026-11-03-northeast-waters",
       "date": "2026-11-03",
       "tag": "New",

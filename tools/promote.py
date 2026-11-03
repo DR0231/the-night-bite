@@ -198,7 +198,13 @@ def transform(f, data, dst):
     """bytes of preview file f -> bytes for live"""
     if f.endswith(".html"):
         old = dst.read_text(encoding="utf-8") if dst.exists() else None
-        out = html(f, data.decode("utf-8"), old)
+        snap_from = old
+        if old is None and f == "hoover/index.html":
+            # first promote after the water picker (v65): live's snapshot lines are still in the old root index.html
+            snap_from = git(LIVE, "show", "HEAD:index.html", check=False) or None   # live's last commit, not this run's
+            if snap_from:
+                notes.append("hoover/index.html: snapshot lines taken from live's old root index.html (first promote)")
+        out = html(f, data.decode("utf-8"), snap_from)
         if old is not None and f not in STUBS:
             lc = re.search(CSP_RE, old); nc = re.search(CSP_RE, out)
             if lc and nc and lc.group(1) != nc.group(1):

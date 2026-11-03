@@ -88,11 +88,25 @@ python3 tools/promote.py --live --confirm-push --whats-new entry.json --commit -
 ## Builds (run by check-all, new-lake and promote, in this order)
 
 ```
-python3 tools/build-lake-pages.py   # lake homes from index.html + registry (title/description from data/quick-facts.json)
+python3 tools/build-lake-pages.py   # picker tile charts (build-tile-charts.py, below), lake homes from tools/lake-home.html
+                                    # + registry (title/description from data/quick-facts.json), the root picker tiles
 python3 tools/build-meta.py         # share tags; og-<id>.png when it exists, else og-card.png
 python3 tools/stamp-version.py      # ?v=VERSION on CSS/JS links
 python3 tools/build-updates.py      # What's new page from data/updates.json
 ```
+
+## Picker tile charts (`build-tile-charts.py`)
+
+```
+python3 tools/build-tile-charts.py                 # every lake in js/lakes.js
+python3 tools/build-tile-charts.py --lake seneca   # one lake (repeat --lake for more)
+python3 tools/build-tile-charts.py --check         # change nothing; exit 1 if a tile or sw.js would change
+```
+
+* Makes `assets/tiles/<id>.png` from the pool card chart `assets/<id>-chart.png`: the north arrow taken out, and charts drawn north-left turned north up, so every tile on the root picker faces the same way. The pool card charts are never changed.
+* Keeps exactly one `"assets/tiles/<id>.png"` line per tile in sw.js `PRECACHE`, and a full run drops tiles of lakes no longer in js/lakes.js.
+* Idempotent: files are written only when their bytes would change. Needs Pillow to draw; without it the committed tiles stay as they are.
+* Runs on its own inside `build-lake-pages.py` (so check-all, promote and every build keep tiles in step), and `new-lake.py` runs it with `--lake <slug>`. A new lake gets its tile on the first build after its chart is added. A chart needs the standard arrow in its top left corner; the script stops if it can't find one.
 
 ## Other checks and helpers
 

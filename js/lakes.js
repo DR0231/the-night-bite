@@ -3,14 +3,17 @@
  * Loaded in <head> on every page (before any other script), so html[data-lake] is set before first paint and the
  * lake-only blocks ([data-for="alum"] and so on, see css/styles.css) never flash the wrong lake.
  *
- * Active lake: ?lake=hoover|alum|buckeye|oshaughnessy|griggs|indian|delaware|deercreek|madison|knox|clearfork|seneca|dillon|logan|saltfork|burroak|dow|mosquito|berlin|westbranch|pymatuning|milton|leesville in the URL first, then localStorage "nb-lake", then Hoover (the default).
- * Home pages have their own address per lake: Hoover at the site root, every other lake at <id>/ (alum/, buckeye/,
- * oshaughnessy/, griggs/, indian/, delaware/, deercreek/, madison/, knox/, clearfork/, seneca/, dillon/, logan/,
- * saltfork/, burroak/, dow/, mosquito/, berlin/, westbranch/, pymatuning/, milton/, leesville/). Those index.html files are built from index.html by tools/build-lake-pages.py
- * and carry <meta name="nb-home" content="<id>">. On a lake's own home page that lake always wins. At the root, a ?lake= link
- * or a saved choice of another lake goes straight to that lake's address (location.replace, before anything
- * paints). Other pages keep ?lake= in the address bar for every lake but Hoover, a clean URL for Hoover, and their
- * Home links point at the chosen lake's home page.
+ * Active lake: ?lake=<id> in the URL first, then localStorage "nb-lake" (the last water chosen on this device, the id
+ * only), then Hoover for pages that need a lake before one is chosen.
+ * Home pages have their own address per lake: <id>/ for every lake, Hoover too (hoover/, alum/, buckeye/ ...). Those
+ * index.html files are built from tools/lake-home.html by tools/build-lake-pages.py and carry
+ * <meta name="nb-home" content="<id>">. On a lake's own home page that lake always wins and becomes the saved lake, so a
+ * shared link like berlin/ opens Berlin and remembers it.
+ * The site root (<meta name="nb-root">) is the water picker. With a saved lake (or a ?lake= link) it goes straight to that
+ * lake's home page (location.replace, here in <head>, before anything paints); ?pick keeps the picker open instead.
+ * "Just browsing" (hoover/?browse) opens Hoover's home page without saving it; see "browsing" below.
+ * Other pages keep ?lake= in the address bar for every lake but Hoover, a clean URL for Hoover, and once a lake is
+ * chosen their Home links point at that lake's home page.
  *
  * Also the shared gauge fetchers: USGS (usgsLatest, usgsSeries: new Water Data API first, legacy IV as fallback) and the
  * Corps CWMS API (cwmsFor, Alum Creek, Delaware Lake, Deer Creek Lake, Dillon Lake and Burr Oak Lake). Madison Lake, Knox Lake,
@@ -697,10 +700,10 @@
   // region to one of these ids; lat and lng above (the lake's NWS forecast point, on the water) give Near me distances.
   var REGIONS = [
     { id: "central", name: "Central Ohio" },
+    { id: "southeast", name: "East and Southeast Ohio" },
     { id: "northeast", name: "Northeast Ohio" },
     { id: "northwest", name: "Northwest Ohio" },
     { id: "southwest", name: "Southwest Ohio" },
-    { id: "southeast", name: "Southeast Ohio" },
     { id: "erie", name: "Lake Erie" }
   ];
   // display names for the species ids above (the log's species lists use these)
@@ -718,27 +721,38 @@
   // site root, so pages in species/ and alum/ can find assets (lakes.js is always loaded as <root>/js/lakes.js)
   var BASE = "";
   try { BASE = document.currentScript.src.replace(/js\/lakes\.js(\?.*)?$/, ""); } catch (e) {}
-  // a lake's home page: the root for Hoover, <id>/ for the others
-  function homeFor(lake) { return BASE + (lake === "hoover" ? "" : lake + "/"); }
+  // a lake's home page: <id>/ for every lake (the site root is the water picker)
+  function homeFor(lake) { return BASE + lake + "/"; }
 
   var homeMeta = document.querySelector('meta[name="nb-home"]');
   var homeLake = homeMeta ? valid(homeMeta.getAttribute("content")) : null;   // set on the lake home pages only
-  var fromUrl = null, stored = null;
-  try { fromUrl = valid(new URLSearchParams(location.search).get("lake")); } catch (e) {}
+  var atRoot = !!document.querySelector('meta[name="nb-root"]');               // the water picker at the site root
+  var fromUrl = null, stored = null, pick = false, browse = false;
+  try { var qs = new URLSearchParams(location.search); fromUrl = valid(qs.get("lake")); pick = qs.has("pick"); browse = qs.has("browse"); } catch (e) {}
   try { stored = valid(localStorage.getItem(KEY)); } catch (e) {}
-  var id = homeLake && homeLake !== "hoover" ? homeLake : (fromUrl || stored || "hoover");
-  if (id !== stored && (fromUrl || (homeLake && homeLake !== "hoover"))) { try { localStorage.setItem(KEY, id); } catch (e) {} }
+  // "Just browsing" on the picker opens hoover/?browse: look around without saving it as your water. The flag lives in
+  // this tab (sessionStorage) so in-page links on that home page don't save it either; opening any other water ends it.
+  var browsing = false;
+  try {
+    if (homeLake && browse) sessionStorage.setItem("nb-browse", homeLake);
+    browsing = !!homeLake && sessionStorage.getItem("nb-browse") === homeLake;
+    if (homeLake && !browsing) sessionStorage.removeItem("nb-browse");
+  } catch (e) { browsing = !!homeLake && browse; }
+  var id = homeLake || fromUrl || stored || "hoover";
+  var chosen = !!((homeLake && !browsing) || fromUrl || stored);   // false until this device has picked a water
+  if (id !== stored && (fromUrl || (homeLake && !browsing))) { try { localStorage.setItem(KEY, id); } catch (e) {} }
 
-  // the root home page with another lake chosen: open that lake's own address instead
-  if (homeLake === "hoover" && id !== "hoover" && BASE) {
+  // the water picker with a water already chosen: open that lake's own address instead (?pick shows the picker)
+  if (atRoot && (fromUrl || stored) && !pick && BASE) {
     try { location.replace(homeFor(id) + location.hash); } catch (e) {}
   }
 
   // keep the address bar honest: a lake's home page has no ?lake=; elsewhere ?lake= for every lake but Hoover
   try {
-    var u = new URL(location.href);
-    if (id === "hoover" || homeLake) u.searchParams.delete("lake"); else u.searchParams.set("lake", id);
-    if (u.href !== location.href) history.replaceState(history.state, "", u.href);
+    var u = new URL(location.href), had = u.searchParams.get("lake"), hadBrowse = u.searchParams.has("browse");
+    if (id === "hoover" || homeLake || atRoot) u.searchParams.delete("lake"); else u.searchParams.set("lake", id);
+    if (homeLake) u.searchParams.delete("browse");
+    if (had !== u.searchParams.get("lake") || (hadBrowse && homeLake)) history.replaceState(history.state, "", u.href);
   } catch (e) {}
 
   var root = document.documentElement;
@@ -858,7 +872,7 @@
 
   window.NightBiteLakes = { all: LAKES, order: ORDER, regions: REGIONS, speciesNames: SPECIES, storageKey: KEY, hrefFor: hrefFor, homeFor: homeFor, base: BASE, cwmsFor: cwmsFor,
     usgsLatest: usgsLatest, usgsSeries: usgsSeries, bitingVar: bitingVar, mapFile: mapFile };
-  window.NightBiteLake = { id: id, cfg: LAKES[id], key: key, cwms: cwms, home: homeLake };
+  window.NightBiteLake = { id: id, cfg: LAKES[id], key: key, cwms: cwms, home: homeLake, chosen: chosen, root: atRoot, browsing: browsing };
 
   // Lake switches only (js/lake-picker.js sets the flag): a short cross-fade into the new page.
   // Registered here in <head> so it is in place before the first frame; every other navigation stays instant.
@@ -894,11 +908,15 @@
         var v = LAKES[id][nodes[i].getAttribute("data-lk")];
         if (typeof v === "string" && nodes[i].textContent !== v) nodes[i].textContent = v;
       }
-      // Home links (logo, nav, footer) go straight to this lake's home page. Links that pick a lake (a[data-lake], the
-      // picker rows) are left alone: rewriting those once sent the Hoover link to the lake already open (v42, v43).
+    }
+    // Once a water is chosen, Home links (logo, nav, footer) go straight to that lake's home page; before that they
+    // open the water picker at the root. Links that pick a lake (a[data-lake], the picker rows) are left alone:
+    // rewriting those once sent the Hoover link to the lake already open (v42, v43). The picker page keeps its own.
+    if (chosen && !atRoot) {
       var root0 = BASE.replace(/[?#].*$/, ""), links = document.querySelectorAll("a[href]:not([data-lake])");
       for (var j = 0; j < links.length; j++) {
         var a = links[j], h = a.href.replace(/[?#].*$/, "");
+        if (/[?&]pick\b/.test(a.search)) continue;   // "Pick your water" links (./?pick) keep the picker
         if (h === root0 || h === root0 + "index.html" || h === root0 + "index") a.href = homeFor(id) + (a.hash || "");
       }
     }

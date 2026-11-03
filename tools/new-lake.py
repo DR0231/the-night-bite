@@ -16,7 +16,9 @@ What it writes (all from the entry; nothing is made up):
   · data/quick-facts.json: checked date, title, description and only the facts that came with a source
     (motors, ramps, pool, night). A fact without a source is left out, never guessed.
   · sitemap.xml: <id>/ after the last lake home. data/bait-shops.json: an empty list (the card says No shops confirmed yet).
-  · then runs tools/build-lake-pages.py, build-meta.py, stamp-version.py, build-updates.py (unless --no-build).
+  · then runs tools/build-tile-charts.py --lake <id> (the picker's north-up tile chart and its sw.js precache line,
+    once assets/<id>-chart.png exists), build-lake-pages.py, build-meta.py, stamp-version.py, build-updates.py
+    (unless --no-build). build-lake-pages.py also refreshes every tile, so a chart added later needs no extra step.
 Sources must be official: USGS, Army Corps, ODNR (ohio.gov), NWS, MWCD, or a host already used in data/quick-facts.json
 (vetted city, park and marina pages). Another official city, park or marina host needs --allow-host HOST, after you
 have checked it is the official page. Google Maps listings are for bait shops only, and those go in data/bait-shops.json.
@@ -72,12 +74,18 @@ def write(rel, text):
         print(f"  wrote {rel}")
 
 
+BUILD_LAKE = None   # the new lake's slug, so build-tile-charts draws only its tile (--remove runs a full pass)
+
+
 def build():
     if a.no_build or a.dry_run:
         print("build skipped" + (" (dry run)" if a.dry_run else ""))
         return
-    for b in ("build-lake-pages.py", "build-meta.py", "stamp-version.py", "build-updates.py"):
-        p = subprocess.run([sys.executable, str(ROOT / "tools" / b)], cwd=ROOT, capture_output=True, text=True)
+    for b in ("build-tile-charts.py", "build-lake-pages.py", "build-meta.py", "stamp-version.py", "build-updates.py"):
+        args = [sys.executable, str(ROOT / "tools" / b)]
+        if b == "build-tile-charts.py":   # the north-up tile chart for the picker, plus its sw.js precache line
+            args += ["--root", str(ROOT)] + (["--lake", BUILD_LAKE] if BUILD_LAKE else [])
+        p = subprocess.run(args, cwd=ROOT, capture_output=True, text=True)
         last = (p.stdout.strip().splitlines() or [""])[-1]
         print(f"  {b}: {'ok' if p.returncode == 0 else 'FAILED'} {last}")
         if p.returncode:
@@ -310,6 +318,7 @@ write("js/lakes.js", js)
 write("data/quick-facts.json", registry.dump_like(qf_text, qf))
 write("data/bait-shops.json", registry.dump_like(bait_text, bait))
 write("sitemap.xml", sm)
+BUILD_LAKE = slug
 if not a.dry_run:
     reg2 = registry.load(ROOT)   # parses again: proves the new entry is valid JavaScript
     assert reg2["order"][-1] == slug
@@ -321,7 +330,7 @@ cap = slug[0].upper() + slug[1:]
 files = {
     f"assets/og/og-{slug}.png": "share card (until then the page shares og-card.png)",
     f"js/lake-map-data-{slug}.js": "map data from the ODNR fishing map (map is null, so the home map falls back)",
-    f"assets/{slug}-chart.png": "map chart image",
+    f"assets/{slug}-chart.png": "map chart image (its north-up picker tile and precache line follow on the next build)",
 }
 for rel, why in files.items():
     if not (ROOT / rel).exists():

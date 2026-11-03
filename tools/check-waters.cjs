@@ -21,7 +21,7 @@ const check = (n, ok, info) => { results.push((ok ? 'PASS ' : 'FAIL ') + n + (in
 const note = s => results.push('NOTE ' + s);
 const SPX = fs.readFileSync(path.join(__dirname, '..', 'species', 'index.html'), 'utf8');
 const speciesOf = l => [...SPX.matchAll(/class="card species-card"[^>]*href="([a-z-]+)" data-lakes="([^"]*)"/g)].filter(m => m[2].split(' ').includes(l)).map(m => m[1]);
-const home = l => (l === 'hoover' ? '' : l + '/');   // Hoover is the default lake and lives at the root
+const home = l => R.home(l);   // every lake home at <id>/, Hoover too (the site root is the water picker)
 const PAGES = IDS.flatMap(l => [home(l), ...['water', 'stocking', 'gear', 'ice', 'log', 'species/'].map(p => p + '?lake=' + l), ...speciesOf(l).map(s => 'species/' + s + '?lake=' + l)]);
 (async () => {
   const sm = await (await fetch(BASE + 'sitemap.xml?x=' + Date.now())).text();
@@ -41,7 +41,7 @@ const PAGES = IDS.flatMap(l => [home(l), ...['water', 'stocking', 'gear', 'ice',
       let st = 0;
       try { const r = await page.goto(BASE + p, { waitUntil: 'networkidle', timeout: 45000 }); st = r ? r.status() : 0; } catch (e) { errs.push('goto ' + e.message); }
       await page.waitForTimeout(500);
-      const lake = p.split('?lake=')[1] || p.replace('/', '') || 'hoover';
+      const lake = p.split('?lake=')[1] || p.replace('/', '');
       const d = await page.evaluate(() => {
         const vis = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
         const imgs = [...document.images].filter(vis).map(i => ({ src: i.currentSrc || i.src, ok: i.complete && i.naturalWidth > 0, alt: i.hasAttribute('alt') }));

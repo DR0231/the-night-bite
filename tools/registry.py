@@ -3,7 +3,7 @@
     import sys, pathlib; sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
     import registry
     R = registry.load()          # {"order": [...], "lakes": {...}, "regions": [...], "pages": [...]}
-    registry.home("dow")         # "dow/"; Hoover is "" (the site root)
+    registry.home("dow")         # "dow/"; Hoover is "hoover/" (the site root is the water picker)
 
 Lakes and their order come from js/lakes.js, pages from sitemap.xml. Nothing is hard-coded here.
 dump_like(text, data) writes JSON in the same layout as an existing file (indent width, short lists on one line), so a
@@ -25,7 +25,7 @@ def load(root=None):
 
 
 def home(lake):
-    return "" if lake == "hoover" else lake + "/"
+    return lake + "/"   # every lake home, Hoover too, lives at <id>/; the site root is the water picker
 
 
 def _indent_of(text):
