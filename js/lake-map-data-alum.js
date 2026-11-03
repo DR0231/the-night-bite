@@ -39,12 +39,12 @@ window.NightBiteMapDataAlum = {
    },
    "sources": [
     "USACE Alum Creek Lake recreation page (five ramps, four public; life jacket loaners at New Galena, Cheshire and Marina)",
-    "Destination Delaware County, New Galena Boat Ramp (address, parking, south end access)",
+    "visitdelohio.com, New Galena Boat Ramp page (address, parking, south end access)",
     "OpenStreetMap slipway node 1729423321 (coordinates)"
    ],
    "sourceLabels": [
     "US Army Corps of Engineers",
-    "Destination Delaware County",
+    "visitdelohio.com",
     "OpenStreetMap"
    ]
   },

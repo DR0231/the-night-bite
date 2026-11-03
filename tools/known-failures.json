@@ -1,15 +1,6 @@
 {
   "_about": "Failures tools/check-all.py already knows about. A FAIL or ERROR line that matches one of these is reported as known, not new, and does not fail the run. check: the check name (a regex, e.g. check-waters or check-glance|check-bait). target: preview, live or local (leave out for all). match: a regex tried against the failure line without its FAIL/ERROR word. Remove an entry as soon as its cause is fixed, so a return shows up as new.",
   "known": [
-    {"check": "check-waters", "match": "^/stocking\\?lake=hoover every data block has a source link", "why": "stocking summary card has no in-card source link (on live since before v20)"},
-    {"check": "check-waters", "match": "^/stocking\\?lake=alum every data block has a source link", "why": "stocking summary card has no in-card source link (on live since before v20)"},
-    {"check": "check-waters", "match": "^/stocking\\?lake=indian every data block has a source link", "why": "stocking summary card has no in-card source link (on live since before v20)"},
-    {"check": "check-waters", "match": "^/stocking\\?lake=delaware every data block has a source link", "why": "stocking summary card has no in-card source link (on live since before v20)"},
-    {"check": "check-waters", "match": "^/gear\\?lake=hoover every data block has a source link", "why": "gear intro card has no in-card source link (on live since before v20)"},
-    {"check": "check-waters", "match": "^/gear\\?lake=alum every data block has a source link", "why": "gear intro card has no in-card source link (on live since before v20)"},
-    {"check": "check-waters", "match": "^/gear\\?lake=buckeye every data block has a source link", "why": "gear intro card has no in-card source link (on live since before v20)"},
-    {"check": "check-waters", "match": "^/gear\\?lake=griggs every data block has a source link", "why": "gear intro card has no in-card source link (on live since before v20)"},
-    {"check": "check-waters", "match": "^/species/\\?lake=alum no county names :: .*Destination Delaware County", "why": "map tile credit 'Destination Delaware County' on Alum Creek (on live since before v20)"},
     {"check": "check-glance|check-bait|check-waters|sweep", "target": "live", "match": "no console( or CSP| or page)? errors :: (\\[\")?(Failed to load resource: net::ERR_BLOCKED_BY_CLIENT[^|]*?(\\s*\\|\\s*|\",\"|\"\\])?)+$", "why": "our own tools/no-analytics.cjs block of the Cloudflare beacon on live logs ERR_BLOCKED_BY_CLIENT (the checks now ignore it when every failed request was ours; kept here for older copies of the checks)"}
   ]
 }
