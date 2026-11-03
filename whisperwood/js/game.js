@@ -984,10 +984,16 @@ const Game = {
     }
     const hbKeys = !Inventory.open && !UI.anyMenu() && !Skills.offering && !this.sleeping && !this.fading
       && !Npcs.talkId && !Fishing.inFight() && typeof Hotbar !== "undefined" && !this._blockHotKeys;
+    const packKeys = Inventory.open && !Skills.offering && !this.sleeping && !this.fading
+      && !Fishing.inFight() && typeof Hotbar !== "undefined" && !this._blockHotKeys;
     for (let n = 1; n <= 4; n++) {
       if (!Input.pressed[String(n)]) continue;
-      if (Inventory.open) Inventory.numberKey(n);
-      else if (hbKeys) Hotbar.tap(n - 1);
+      if (Inventory.open) {
+        if (packKeys && Hotbar.slots()[n - 1] != null) {
+          Hotbar.tap(n - 1);
+          Inventory.refresh();
+        }
+      } else if (hbKeys) Hotbar.tap(n - 1);
     }
     this._blockHotKeys = false;
     if (Input.pressed["5"]) Inventory.numberKey(5);
