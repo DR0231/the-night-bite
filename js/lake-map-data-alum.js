@@ -86,7 +86,7 @@ window.NightBiteMapDataAlum = {
    "address": "Off Africa Rd, just north of the Cheshire Rd bridge (east side)",
    "parking": "Yes, paved lot",
    "restroom": "Yes",
-   "note": "Life jacket loaner board. North of Cheshire Road the lake is no wake (Corps of Engineers).",
+   "note": "Life jacket loaner board. ODNR puts the no wake line farther north, at US 36/SR 37 (the Corps says Cheshire Road), so follow the buoys.",
    "directions": [
     40.24226,
     -82.96492
@@ -103,6 +103,7 @@ window.NightBiteMapDataAlum = {
    },
    "sources": [
     "USACE Alum Creek Lake recreation page (Cheshire ramp, no wake north of Cheshire Road, life jacket loaners)",
+    "ODNR Alum Creek State Park page (no wake north of US 36/SR 37)",
     "Public Lands, Paddling Alum Creek Lake (just above the Cheshire Road bridge off Africa Road, paved parking, restrooms, docks)",
     "OpenStreetMap slipway way 396982092 (coordinates)"
    ],
