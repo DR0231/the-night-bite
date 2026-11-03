@@ -122,7 +122,7 @@ const Inventory = {
       const n = this.baitCount(id);
       const on = eq === id && n > 0;
       const low = n > 0 && n < (DESIGN.baitLowWarn || 3);
-      const key = i < 5 ? `<kbd>${esc(i + 1)}</kbd> ` : "";
+      const key = i === 4 ? `<kbd>${esc(i + 1)}</kbd> ` : "";
       return `<button type="button" class="pack-bait${on ? " is-on" : ""}${low ? " is-low" : ""}" data-bait="${esc(id)}">
         ${key}${esc(b.name)} ×${esc(n)}${on ? " · on hook" : ""}${n === 0 ? " · out" : low ? " · low" : ""}
       </button>`;
