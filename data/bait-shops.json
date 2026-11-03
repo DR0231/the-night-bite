@@ -1,5 +1,5 @@
 {
- "_note": "Bait and tackle shops near each lake, shown on each lake home (js/bait-nearby.js). Each shop was checked open on its Google Maps listing or own site, Oct 30, 2026 (the six east and southeast lakes Oct 31, 2026); evidence in the build notes. min is an estimated drive from the lake, rounded to 5 minutes; lists are in drive time order. lat/lng let a visitor sort from their own location on the device. A lake with an empty list shows No shops confirmed yet. q, when present, is the exact Google Maps search that opens that shop’s own listing (its name plus address opens another business at the same address).",
+ "_note": "Bait and tackle shops near each lake, shown on each lake home (js/bait-nearby.js). Each shop was checked open on its Google Maps listing or own site, Oct 30, 2026 (the six east and southeast lakes Oct 31, 2026; the six northeast lakes Nov 3, 2026); evidence in the build notes. min is an estimated drive from the lake, rounded to 5 minutes; lists are in drive time order. lat/lng let a visitor sort from their own location on the device. A lake with an empty list shows No shops confirmed yet. q, when present, is the exact Google Maps search that opens that shop’s own listing (its name plus address opens another business at the same address).",
  "lakes": {
   "hoover": [
    {
@@ -299,6 +299,65 @@
     "lat": 39.3094358,
     "lng": -82.1042824,
     "q": "The Cabin at Athens Ace Hardware Athens, OH 45701"
+   }
+  ],
+  "mosquito": [
+   {
+    "name": "Lakeside Sport Shop",
+    "address": "2115 Wilson Sharpsville Rd, Cortland, OH 44410",
+    "min": 10,
+    "lat": 41.3084864,
+    "lng": -80.7439424,
+    "q": "Lakeside Sport Shop 2115 Wilson Sharpsville Rd, Cortland, OH 44410"
+   },
+   {
+    "name": "Causeway Bait and Tackle",
+    "address": "2233 Greenville Rd NE, Cortland, OH 44410",
+    "min": 10,
+    "lat": 41.3900384,
+    "lng": -80.7394199,
+    "q": "Causeway Bait and Tackle 2233 Greenville Rd NE, Cortland, OH 44410"
+   }
+  ],
+  "berlin": [
+   {
+    "name": "Les's Bait & Marina",
+    "address": "10583 Cobb Rd, Deerfield, OH 44411",
+    "min": 5,
+    "lat": 41.02509,
+    "lng": -81.009434,
+    "q": "Les's Bait & Marina 10583 Cobb Rd, Deerfield, OH 44411"
+   }
+  ],
+  "westbranch": [],
+  "pymatuning": [
+   {
+    "name": "Gateway Bait & Tackle",
+    "address": "6517 OH-85, Andover, OH 44003",
+    "min": 10,
+    "lat": 41.607509,
+    "lng": -80.5498555,
+    "q": "Gateway Bait & Tackle 6517 OH-85, Andover, OH 44003"
+   }
+  ],
+  "milton": [
+   {
+    "name": "North Coast Bait & Tackle",
+    "address": "16963 Mahoning Ave, Lake Milton, OH 44429",
+    "min": 5,
+    "lat": 41.0944681,
+    "lng": -80.9757406,
+    "q": "North Coast Bait & Tackle 16963 Mahoning Ave, Lake Milton, OH 44429"
+   }
+  ],
+  "leesville": [
+   {
+    "name": "Last Stop Tackle Shop",
+    "address": "7815 OH-800, Uhrichsville, OH 44683",
+    "min": 50,
+    "lat": 40.3638639,
+    "lng": -81.2916961,
+    "q": "Last Stop Tackle Shop 7815 OH-800, Uhrichsville, OH 44683"
    }
   ]
  }

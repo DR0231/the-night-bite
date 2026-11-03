@@ -54,7 +54,7 @@ async function read(page) {
       if (!r) { check(t + ' strip present', false); await page.close(); continue; }
       check(t + ' title + 4 cells + bite', r.title === 'Tonight at a glance' && r.cells === 4 && !!r.bite, `${r.title} / ${r.cells} / bite ${r.bite}`);
       if (NOGAUGE.includes(lake)) {
-        check(t + ' level: quiet no gauge, no link', r.pool.v === '--' && r.pool.s === 'No public gauge' && r.pool.href === null, JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
+        check(t + ' level: quiet no gauge, no link', r.pool.v === '--' && (r.pool.s === 'No public gauge' || (R.lakes()[lake].pool.stale && r.pool.s === 'Gauge not reporting')) && r.pool.href === null, JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
       } else {
         check(t + ' level from gauge, links to gauge', /^\d+\.\d+ ft$/.test(r.pool.v) && /waterdata\.usgs\.gov|water\.usace\.army\.mil/.test(r.pool.href || '') && r.pool.target === '_blank', JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
       }

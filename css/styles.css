@@ -2817,6 +2817,12 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
 .pool-chart img[data-for="saltfork"] { width: 96px; height: 96px; }
 .pool-chart img[data-for="burroak"] { width: 146px; height: 96px; }
 .pool-chart img[data-for="dow"] { width: 120px; height: 94px; }
+.pool-chart img[data-for="mosquito"] { width: 296px; height: 72px; }
+.pool-chart img[data-for="berlin"] { width: 120px; height: 96px; }
+.pool-chart img[data-for="westbranch"] { width: 204px; height: 96px; }
+.pool-chart img[data-for="pymatuning"] { width: 190px; height: 96px; }
+.pool-chart img[data-for="milton"] { width: 222px; height: 94px; }
+.pool-chart img[data-for="leesville"] { width: 90px; height: 96px; }
 @media (max-width: 359px) {
   .pool-chart img[data-for="alum"] { width: 134px; height: 37px; }
   .pool-chart img[data-for="buckeye"] { width: 92px; height: 48px; }
@@ -2834,6 +2840,12 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
   .pool-chart img[data-for="saltfork"] { width: 48px; height: 48px; }
   .pool-chart img[data-for="burroak"] { width: 73px; height: 48px; }
   .pool-chart img[data-for="dow"] { width: 60px; height: 47px; }
+  .pool-chart img[data-for="mosquito"] { width: 148px; height: 36px; }
+  .pool-chart img[data-for="berlin"] { width: 60px; height: 48px; }
+  .pool-chart img[data-for="westbranch"] { width: 102px; height: 48px; }
+  .pool-chart img[data-for="pymatuning"] { width: 95px; height: 48px; }
+  .pool-chart img[data-for="milton"] { width: 111px; height: 47px; }
+  .pool-chart img[data-for="leesville"] { width: 45px; height: 48px; }
 }
 .pool-chart-key > span[data-for="buckeye"] { margin-right: 0.5rem; }
 @media (min-width: 560px) { .pool-chart-key > span[data-for="buckeye"] { margin-right: 0; } }

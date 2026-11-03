@@ -264,6 +264,68 @@ Gaps (said on the site, never filled in):
 - ODNR's acreage differs between pages (Dillon 1,376 or 1,560; Lake Logan 333 or 400; Dow 171 or 161); both are shown where it matters.
 - No ice reports, no 2026 dock pull dates, and no community trips logged at these lakes yet.
 
+## Lakes: Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton and Leesville Lake, checked Nov. 3, 2026
+
+Same system as the other lakes: `?lake=mosquito|berlin|westbranch|pymatuning|milton|leesville`, home pages at `/mosquito/`, `/berlin/`, `/westbranch/`, `/pymatuning/`, `/milton/`, `/leesville/` (built by `tools/build-lake-pages.py`), per lake settings in `js/lakes.js`, region `northeast`. Five have a USGS lake gauge. Pymatuning's USGS gauge (03100500) has posted nothing since June 4, 2026, so `pool.src` is `null`, the pool card says the gauge is stale and the last reading is never shown as current. No lake has a public water temperature gauge.
+
+| Setting | Mosquito Creek Lake | Berlin Lake | West Branch Reservoir | Pymatuning Lake (Ohio side) | Lake Milton | Leesville Lake |
+|---|---|---|---|---|---|---|
+| Lake level | USGS 03095000, parameter 62615: https://waterdata.usgs.gov/monitoring-location/USGS-03095000/ | USGS 03090000, parameter 62615 | USGS 03092450, parameter 62615 | USGS 03100500, stale since June 4, 2026 (not shown as current) | USGS 03091000, parameter 62615 | USGS 03120000, parameter 62614 |
+| Water temp | None | None | None | None | None | None |
+| Full pool used | 901 ft, ODNR fishing map | 1,024 ft, Corps summer pool (the ODNR map's 832 ft is on an older datum) | 985.5 ft, ODNR fishing map | 1,008 ft, ODNR fishing map | 948 ft, ODNR fishing map | 963 ft, Corps summer pool (the ODNR map's 997 ft is on an older datum) |
+| Map pool (contour datum) | 901 ft, 3 ft contours, surveyed 2004, 7,199 acres: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mosquitocreeklake2.pdf | 832 ft, 10 ft contours, 1999, 3,341 acres: .../berlinlake2.pdf | 985.5 ft, 5 ft contours, 2010, 2,729 acres: .../mjkirwanreservoir.pdf | 1,008 ft, 3 ft contours, 2008, 16,349 acres: .../pymatuninglake2.pdf | 948 ft, 3 ft contours, 1998, 1,693 acres: .../lakemilton2.pdf | 997 ft, 5 ft contours, 2000, 1,011 acres: .../leesvillelake2.pdf |
+| Tonight forecast | NWS grid CLE 116,61 | NWS grid CLE 109,46 | NWS grid CLE 105,51 | NWS grid CLE 123,73 | NWS grid CLE 110,50 | NWS grid PBZ 37,64 |
+| Barometer / observations | KYNG, Youngstown-Warren airport | KYNG | KAKR, Akron Fulton airport | KGKJ, Port Meadville airport | KYNG | KPHD, Harry Clever Field |
+| Alerts | OHC155, OHZ023 | OHC133, OHC099, OHC151, OHZ022, OHZ033, OHZ032 | OHC133, OHZ022 | OHC007, OHZ014 | OHC099, OHZ033 | OHC019, OHZ040 |
+| Boating rules shown | ODNR Mosquito Creek Lake Fishing Area and state park: no hp limit, no wake within 300 ft of shore, no skiing, tubing or PWC north of the SR 88 causeway | ODNR Berlin Lake Fishing Area: no hp limit by day, 10 mph at night | ODNR Kirwan Reservoir Fishing Area and West Branch State Park: unlimited hp, no wake within 300 ft of shore and west of the Rock Spring Road causeway | ODNR Pymatuning Lake Fishing Area: 20 hp | ODNR Lake Milton State Park: no restrictions | MWCD Leesville Lake page: 10 hp |
+
+Species come from each lake's ODNR fishing area and state park pages (MWCD for Leesville), ODNR Waterbody Report survey data and ODNR Fish Stocking records.
+
+Regulations (2026–27, ODNR Fishing Regulations PDF above): walleye, sauger and saugeye 6 combined with a 15″ minimum at Berlin, Lake Milton (including the Mahoning River between the two), Mosquito Creek and West Branch; no minimum at Leesville. The 30 crappie, 9″ minimum site rule lists Lake Milton and Mosquito Creek, not Berlin, West Branch or Leesville. Pymatuning follows the Ohio and Pennsylvania rules: crappie 20 a day, 9″; bass 5 a day, 12″; muskellunge 2 a day, 30″; walleye 6 a day, 15″; all other fish no limit; up to 3 lines with 3 hooks each; a Pennsylvania license on the Pennsylvania shore or any island; ice fishing under Pennsylvania's special rules. Muskellunge elsewhere: 1 a day statewide, no minimum.
+
+ODNR Fish Stocking dashboard (https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking, read Nov. 3, 2026), 2016 to 2025: Mosquito walleye every year (2025: 883,376 fingerlings, plus fry) and 125 bluegill catchables in 2025; Berlin walleye every year (2025: 404,931 fingerlings); West Branch walleye every year but 2023 (2025: 264,996), muskellunge every year (2025: 1,699) and blue catfish 2023 to 2025 (2025: 27,612); Pymatuning walleye every year but 2023 (2025: 293,132), no muskellunge stocked on the Ohio side; Lake Milton walleye every year (2025: 254,873) and muskellunge every year (2025: 1,096); Leesville saugeye every year (2025: 101,544), muskellunge every year (2025: 985) and channel catfish in odd years 2017 to 2025 (2025: 10,125).
+
+Dock season, ramp notices and drawdowns (`data/docks.json`, watched by `tools/check-docks.py`): Berlin's Bonner Road ramp is closed Sept. 14, 2026 to May 28, 2027 (Mill Creek ramp open in its place, ODNR); Mosquito's marina and beach lots have construction from Oct. 3 (ODNR park page); Lake Milton's fall drawdown typically begins Oct. 15, takes the lake down about 8 ft, and refill starts March 15 (ODNR).
+
+Map pins (`js/lake-map-data-mosquito.js`, `-berlin.js`, `-westbranch.js`, `-pymatuning.js`, `-milton.js`, `-leesville.js`; shorelines traced from OpenStreetMap, not for navigation):
+
+| Lake | Pin | Address | Sources |
+|---|---|---|---|
+| Mosquito Creek Lake | Main launch ramp (SR 305 entrance) (ramp) | Mosquito Lake State Park, State Route 305 entrance, Cortland | ODNR Mosquito Lake State Park page (Main Launch Ramp: 3 lanes, 5 courtesy docks, 200+ trailer spots, lit, flush restrooms); ODNR Mosquito Creek Lake Fishing Area page (no hp limit, 300 ft no wake); OpenStreetMap slipways 1066560150 to 1066560152 (coordinates) |
+| Mosquito Creek Lake | Marina concession ramp (ramp) | Mosquito Lake State Park, State Route 305 entrance | ODNR Mosquito Lake State Park page (Marina Concession Launch Ramp, 330-637-2075, fuel, bait; construction notice from Oct. 3); OpenStreetMap node 9793629784 (coordinates) |
+| Mosquito Creek Lake | Campground ramp (registered campers only) (ramp) | Campground, 3620 Hogland Blackstub Rd, Cortland | ODNR Mosquito Lake State Park page (Campground Launch Ramp, campers only, launch light); OpenStreetMap Campground Boat Launch (coordinates) |
+| Mosquito Creek Lake | Causeway ramp (SR 88 and SR 46) (ramp) | Southeast corner of State Route 88 and State Route 46 | ODNR Mosquito Lake State Park page (Causeway Launch Ramp: 2 lanes, 120+ spots, lit; no skiing, tubing or PWC north of SR 88); OpenStreetMap node 6788171433, Mecca Boat Ramp (coordinates) |
+| Mosquito Creek Lake | Causeway Bait and Tackle (ramp and bait) (shop) | 2233 Greenville Rd NE, Cortland | ODNR Mosquito Lake State Park page (Causeway Bait and Tackle Launch Ramp, 2233 Greenville Rd NE, 330-637-7076); Google listing (open, recent reviews; coordinates) |
+| Mosquito Creek Lake | Wildlife launch area (kayaks and small boats) (access) | Off Mahan Denman Rd NE, northwest side | ODNR Mosquito Lake State Park page (Wildlife Launch Area, ODNR Wildlife 440-685-4776); OpenStreetMap way 1182089442 (coordinates) |
+| Berlin Lake | Bonner Road ramp (closed to May 28, 2027) (ramp) | Bonner Road, Deerfield | ODNR Berlin Lake Fishing Area page (Bonner Road ramp closed 9/14/2026 to 5/28/2027); OpenStreetMap way 942253439, Berlin Lake Boat Ramp (coordinates) |
+| Berlin Lake | Mill Creek ramp (Corps) (ramp) | Mill Creek Recreation Area, US Army Corps of Engineers | ODNR Berlin Lake Fishing Area page (Mill Creek ramp open 9/7 to 11/25/2026 and 2/27 to 5/21/2027); US Army Corps of Engineers, Berlin water control manual (Mill Creek recreation area ramp); OpenStreetMap node 357402758 (coordinates) |
+| Berlin Lake | German Church Road ramp (ramp) | 15988 German Church Rd, Atwater | US Army Corps of Engineers, Berlin water control manual (German Church Road ramp, dry below 1009.31 ft); US Census Geocoder (address point) |
+| Berlin Lake | Les's Bait & Marina (shop) | 10583 Cobb Rd, Deerfield | Google listing (open, recent reviews; coordinates); US Army Corps of Engineers, Berlin water control manual (marina with boat ramp) |
+| West Branch Reservoir | East boat ramp (ramp) | West Branch State Park, east end near the dam | ODNR West Branch State Park page (East Boat Ramp: two paved lanes, lighting, flush restroom, courtesy docks); ODNR West Branch dock map (courtesy docks, 4 hour limit); OpenStreetMap East Boat Ramp (coordinates) |
+| West Branch Reservoir | West boat ramp (ramp) | West Branch State Park, south shore | ODNR West Branch State Park page (West Boat Ramp: two paved lanes, lighting, loaner board, vault latrine); OpenStreetMap West Ramp Shelter House (coordinates) |
+| West Branch Reservoir | Knapp Road ramp (primitive gravel) (ramp) | Knapp Road, west end of the lake | ODNR West Branch State Park page (Knapp Road Ramp, primitive gravel, west end); ODNR Kirwan Reservoir (West Branch) Fishing Area page (no wake west of the Rock Spring Road causeway); OpenStreetMap (coordinates) |
+| West Branch Reservoir | West Branch Marina and fishing pier (access) | 5678 Marina Dr, Ravenna | ODNR West Branch State Park page (West Branch Marina (330) 296-9209, accessible fishing pier); Google listing (address, coordinates) |
+| Pymatuning Lake | Padanaram boat ramp (north end) (ramp) | Padanaram area, north end of the Ohio side | ODNR Pymatuning State Park page (Padanaram Boat Ramp, two lanes, seasonal restrooms); ODNR Pymatuning Lake Fishing Area page (20 hp); OpenStreetMap (coordinates) |
+| Pymatuning Lake | Birches Landing boat ramp (ramp) | 7001 Pymatuning Lake Rd, Andover | ODNR Pymatuning State Park page (Birches Landing Boat Ramp, 7001 Pymatuning Lake Rd; road closure notice 8/5/26); OpenStreetMap Birches Boating Area slipway (coordinates) |
+| Pymatuning Lake | Campground boat ramp (campers) (ramp) | Pymatuning State Park Campground | ODNR Pymatuning State Park page (Campground Boat Ramp, single lane, courtesy dock); OpenStreetMap (coordinates) |
+| Pymatuning Lake | Gateway Bait & Tackle (shop) | 6517 OH-85, Andover | Google listing (open, recent reviews; coordinates) |
+| Lake Milton | Robinson Point ramp and fishing pier (ramp) | Robinson Point, Lake Milton State Park | ODNR Lake Milton State Park page (Robinson Point: two paved lanes, lighting, flush restrooms, accessible fishing pier); OpenStreetMap Robinson's Point Boat Launch (coordinates) |
+| Lake Milton | Pointview ramp (ramp) | Pointview Ave, Lake Milton | ODNR Lake Milton State Park page (Pointview: two paved lanes, lighting, vault latrine); OpenStreetMap (coordinates) |
+| Lake Milton | Lake Milton Marina (access) | 16790 Milton Ave, Lake Milton (Harry Meshel picnic area) | ODNR Lake Milton State Park page (Lake Milton Marina (330) 654-4991; fall drawdown from Oct. 15, about 8 ft); Google listing (address, coordinates) |
+| Lake Milton | North Coast Bait & Tackle (shop) | 16963 Mahoning Ave, Lake Milton | Google listing (open, recent reviews; coordinates) |
+| Leesville Lake | South Fork Marina ramp (ramp) | 4131 Deer Rd SW, Bowerston | MWCD Leesville Lake page (10 hp, two public ramps, 4131 Deer Road SW, Bowerston); MWCD South Fork Marina listing (boating and fishing supplies); OpenStreetMap way 1423647133 (coordinates) |
+| Leesville Lake | North Fork Marina (ramp) | 2126 Azalea Rd SW, Carrollton | MWCD Leesville Lake page (two public ramps, marinas); MWCD North Fork Marina listing (fishing supplies); Google listing (address, coordinates) |
+
+Bait nearby (`data/bait-shops.json`): each shop's Google Maps listing was open with recent reviews on Nov. 3, 2026. No confirmed open bait shop near West Branch; Leesville's nearest confirmed shop is about 50 minutes away.
+
+Gaps (said on the site, never filled in):
+- No public water temperature at any of the six. Pymatuning's level gauge is stale since June 4, 2026.
+- Pymatuning covers the Ohio side only.
+- Ramps not pinned: Trumbull Boat Club and the Corps SR 305 ramp (Mosquito); Dutch Harbor, Deer Creek and Willow Creek (Berlin); Camp and Rock Spring Road (West Branch); Cabin Beach and New Bowers (Pymatuning); Miller's Landing (Lake Milton). Leesville's North Fork Marina pin is from its Google listing.
+- No max depth listed by ODNR for West Branch, Lake Milton or Leesville. ODNR gives Lake Milton's build year as 1916 on the fishing page and 1913 on the park page.
+- No 2023 walleye stocking listed at Pymatuning or West Branch. No northern pike species page.
+- Berlin's ODNR survey PDFs are linked, not copied. No ODNR ice reports, and no community trips logged at these lakes yet.
+
 ## Lake-aware Species (js/species-lake.js)
 
 Which species live at each lake: the `species` list for each lake in `js/lakes.js` (the script also rewrites

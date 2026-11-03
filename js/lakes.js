@@ -3,10 +3,10 @@
  * Loaded in <head> on every page (before any other script), so html[data-lake] is set before first paint and the
  * lake-only blocks ([data-for="alum"] and so on, see css/styles.css) never flash the wrong lake.
  *
- * Active lake: ?lake=hoover|alum|buckeye|oshaughnessy|griggs|indian|delaware|deercreek|madison|knox|clearfork|seneca|dillon|logan|saltfork|burroak|dow in the URL first, then localStorage "nb-lake", then Hoover (the default).
+ * Active lake: ?lake=hoover|alum|buckeye|oshaughnessy|griggs|indian|delaware|deercreek|madison|knox|clearfork|seneca|dillon|logan|saltfork|burroak|dow|mosquito|berlin|westbranch|pymatuning|milton|leesville in the URL first, then localStorage "nb-lake", then Hoover (the default).
  * Home pages have their own address per lake: Hoover at the site root, every other lake at <id>/ (alum/, buckeye/,
  * oshaughnessy/, griggs/, indian/, delaware/, deercreek/, madison/, knox/, clearfork/, seneca/, dillon/, logan/,
- * saltfork/, burroak/, dow/). Those index.html files are built from index.html by tools/build-lake-pages.py
+ * saltfork/, burroak/, dow/, mosquito/, berlin/, westbranch/, pymatuning/, milton/, leesville/). Those index.html files are built from index.html by tools/build-lake-pages.py
  * and carry <meta name="nb-home" content="<id>">. On a lake's own home page that lake always wins. At the root, a ?lake= link
  * or a saved choice of another lake goes straight to that lake's address (location.replace, before anything
  * paints). Other pages keep ?lake= in the address bar for every lake but Hoover, a clean URL for Hoover, and their
@@ -14,7 +14,8 @@
  *
  * Also the shared gauge fetchers: USGS (usgsLatest, usgsSeries: new Water Data API first, legacy IV as fallback) and the
  * Corps CWMS API (cwmsFor, Alum Creek, Delaware Lake, Deer Creek Lake, Dillon Lake and Burr Oak Lake). Madison Lake, Knox Lake,
- * Clear Fork Reservoir, Lake Logan, Salt Fork Lake and Dow Lake have no public lake gauge (pool.src null): nothing is fetched and the pool card says so. js/usgs.js, js/pool-trend.js and js/lake-picker.js all use them.
+ * Clear Fork Reservoir, Lake Logan, Salt Fork Lake and Dow Lake have no public lake gauge (pool.src null): nothing is fetched and the pool card says so.
+ * Pymatuning Lake has a USGS gauge that stopped reporting (pool.src null plus pool.stale): the pool card names the gauge and its last date, never its old reading as current. js/usgs.js, js/pool-trend.js and js/lake-picker.js all use them.
  *
  * Adding a lake: one entry in LAKES plus its id in ORDER. The picker (js/lake-picker.js) reads name, short, aliases
  * (search), region, lat and lng (Near me) and pool (its Live level and Live temp tags) from that entry.
@@ -516,9 +517,182 @@
       map: { data: "NightBiteMapDataDow", chart: "assets/dow-chart.png" },
       spots: ["Boat ramp (northeast edge)", "Bank by the dam", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "largemouth-bass", "white-crappie", "channel-catfish"]
+    },
+    mosquito: {
+      id: "mosquito",
+      name: "Mosquito Creek Lake",
+      short: "Mosquito Creek Lake",
+      area: "Northeast Ohio",
+      lat: 41.33, lng: -80.76,
+      region: "northeast", owner: "US Army Corps of Engineers",
+      aliases: ["Mosquito", "Mosquito Lake", "Mosquito Lake State Park", "Cortland", "Mosquito Creek Reservoir"],
+      pool: {
+        src: "usgs", srcName: "USGS",
+        site: "03095000", param: "62615", temp: null,   // USGS 03095000 Mosquito Creek Lake near Cortland: lake elevation (62615, NAVD88), no water temp
+        fullPool: 901,     // ODNR fishing map summer pool
+        gaugeUrl: "https://waterdata.usgs.gov/monitoring-location/USGS-03095000/",
+        snapshot: { line: "898.77 ft · no temp · ~2.2 ft below full pool", at: "2026-11-03T10:45:00-05:00", when: "2026-11-03 10:45 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/CLE/116,61/forecast/hourly",
+        point: "https://api.weather.gov/points/41.33,-80.76",
+        grid: "https://api.weather.gov/gridpoints/CLE/116,61",
+        station: "KYNG",
+        stationName: "Youngstown, Youngstown-Warren Regional Airport (KYNG)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=41.33&lon=-80.76"
+      },
+      alerts: { zones: "OHC155,OHZ023", counties: "the Mosquito Creek Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataMosquito", chart: "assets/mosquito-chart.png" },
+      spots: ["SR 305 main ramp", "Causeway ramp (SR 88)", "Marina ramp", "Bank (other)", "Kayak launch"],
+      species: ["walleye", "black-crappie", "white-crappie", "yellow-perch", "largemouth-bass", "channel-catfish", "bluegill"]
+    },
+    berlin: {
+      id: "berlin",
+      name: "Berlin Lake",
+      short: "Berlin Lake",
+      area: "Northeast Ohio",
+      lat: 41.02, lng: -81.02,
+      region: "northeast", owner: "US Army Corps of Engineers",
+      aliases: ["Berlin", "Berlin Reservoir", "Berlin Center", "Deerfield", "Mill Creek"],
+      pool: {
+        src: "usgs", srcName: "USGS",
+        site: "03090000", param: "62615", temp: null,   // USGS 03090000 Berlin Lake near Berlin Center: lake elevation (62615, NAVD88), no water temp
+        fullPool: 1024,     // Corps summer pool (top of conservation 1,024.01 ft); the ODNR map's 832 ft label is on another datum
+        gaugeUrl: "https://waterdata.usgs.gov/monitoring-location/USGS-03090000/",
+        snapshot: { line: "1016.08 ft · no temp · ~7.9 ft below full pool", at: "2026-11-03T11:00:00-05:00", when: "2026-11-03 11:00 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/CLE/109,46/forecast/hourly",
+        point: "https://api.weather.gov/points/41.02,-81.02",
+        grid: "https://api.weather.gov/gridpoints/CLE/109,46",
+        station: "KYNG",
+        stationName: "Youngstown, Youngstown-Warren Regional Airport (KYNG)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=41.02&lon=-81.02"
+      },
+      alerts: { zones: "OHC133,OHC099,OHC151,OHZ022,OHZ033,OHZ032", counties: "the Berlin Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataBerlin", chart: "assets/berlin-chart.png" },
+      spots: ["Bonner Road ramp", "Mill Creek ramp", "German Church Road ramp", "Bank (other)", "Kayak launch"],
+      species: ["walleye", "white-bass", "smallmouth-bass", "largemouth-bass", "black-crappie", "white-crappie", "channel-catfish"]
+    },
+    westbranch: {
+      id: "westbranch",
+      name: "West Branch Reservoir",
+      short: "West Branch",
+      area: "Northeast Ohio",
+      lat: 41.14, lng: -81.11,
+      region: "northeast", owner: "US Army Corps of Engineers",
+      aliases: ["West Branch", "West Branch State Park", "Kirwan", "Michael J. Kirwan Reservoir", "Kirwan Reservoir", "Ravenna"],
+      pool: {
+        src: "usgs", srcName: "USGS",
+        site: "03092450", param: "62615", temp: null,   // USGS 03092450 West Branch Mahoning River at Kirwan Reservoir: lake elevation (62615, NAVD88), no water temp
+        fullPool: 985.5,     // ODNR fishing map summer pool (Corps dock map: 985.06 summer, 980.56 winter)
+        gaugeUrl: "https://waterdata.usgs.gov/monitoring-location/USGS-03092450/",
+        snapshot: { line: "980.44 ft · no temp · ~5.1 ft below full pool", at: "2026-11-03T11:15:00-05:00", when: "2026-11-03 11:15 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/CLE/105,51/forecast/hourly",
+        point: "https://api.weather.gov/points/41.14,-81.11",
+        grid: "https://api.weather.gov/gridpoints/CLE/105,51",
+        station: "KAKR",
+        stationName: "Akron, Akron Fulton International Airport (KAKR)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=41.14&lon=-81.11"
+      },
+      alerts: { zones: "OHC133,OHZ022", counties: "the West Branch area" },
+      push: null,
+      map: { data: "NightBiteMapDataWestbranch", chart: "assets/westbranch-chart.png" },
+      spots: ["East ramp", "West ramp", "Knapp Road ramp", "Marina fishing pier", "Bank (other)", "Kayak launch"],
+      species: ["muskellunge", "walleye", "blue-catfish", "channel-catfish", "largemouth-bass", "smallmouth-bass", "white-bass", "black-crappie", "white-crappie", "yellow-perch", "bluegill", "bullhead"]
+    },
+    pymatuning: {
+      id: "pymatuning",
+      name: "Pymatuning Lake",
+      short: "Pymatuning",
+      area: "Northeast Ohio",
+      lat: 41.58, lng: -80.525,
+      region: "northeast", owner: "Pennsylvania (managed with ODNR)",
+      aliases: ["Pymatuning", "Pymatuning Reservoir", "Pymatuning State Park", "Andover", "Jamestown"],
+      pool: {
+        src: null, srcName: null, temp: null,   // USGS 03100500 at Pymatuning Dam has posted nothing since June 4, 2026: no live level
+        fullPool: 1008,    // ODNR fishing map summer pool
+        gaugeUrl: null,
+        stale: { site: "03100500", last: "1008.12 ft", lastWhen: "June 4, 2026", url: "https://waterdata.usgs.gov/monitoring-location/USGS-03100500/" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/CLE/123,73/forecast/hourly",
+        point: "https://api.weather.gov/points/41.58,-80.525",
+        grid: "https://api.weather.gov/gridpoints/CLE/123,73",
+        station: "KGKJ",
+        stationName: "Port Meadville Airport (KGKJ)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=41.58&lon=-80.525"
+      },
+      alerts: { zones: "OHC007,OHZ014", counties: "the Pymatuning area" },
+      push: null,
+      map: { data: "NightBiteMapDataPymatuning", chart: "assets/pymatuning-chart.png" },
+      spots: ["Padanaram ramp", "Birches Landing ramp", "Campground ramp", "Bank (other)", "Kayak launch"],
+      species: ["walleye", "muskellunge", "yellow-perch", "black-crappie", "white-crappie", "white-bass", "largemouth-bass", "smallmouth-bass", "channel-catfish", "bluegill"]
+    },
+    milton: {
+      id: "milton",
+      name: "Lake Milton",
+      short: "Lake Milton",
+      area: "Northeast Ohio",
+      lat: 41.1, lng: -80.98,
+      region: "northeast", owner: "ODNR Ohio State Parks",
+      aliases: ["Milton", "Lake Milton State Park", "Milton Reservoir", "Craig Beach", "Pricetown"],
+      pool: {
+        src: "usgs", srcName: "USGS",
+        site: "03091000", param: "62615", temp: null,   // USGS 03091000 Lake Milton at Lake Milton: lake elevation (62615, NAVD88), no water temp
+        fullPool: 948,     // ODNR fishing map summer pool; fall drawdown of about 8 ft from Oct. 15
+        gaugeUrl: "https://waterdata.usgs.gov/monitoring-location/USGS-03091000/",
+        snapshot: { line: "944.02 ft · no temp · ~4.0 ft below full pool", at: "2026-11-03T10:45:00-05:00", when: "2026-11-03 10:45 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/CLE/110,50/forecast/hourly",
+        point: "https://api.weather.gov/points/41.1,-80.98",
+        grid: "https://api.weather.gov/gridpoints/CLE/110,50",
+        station: "KYNG",
+        stationName: "Youngstown, Youngstown-Warren Regional Airport (KYNG)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=41.1&lon=-80.98"
+      },
+      alerts: { zones: "OHC099,OHZ033", counties: "the Lake Milton area" },
+      push: null,
+      map: { data: "NightBiteMapDataMilton", chart: "assets/milton-chart.png" },
+      spots: ["Robinson Point ramp", "Pointview ramp", "Miller's Landing ramp", "Bank (other)", "Kayak launch"],
+      species: ["walleye", "muskellunge", "white-bass", "smallmouth-bass", "largemouth-bass", "black-crappie", "white-crappie", "channel-catfish", "bluegill", "yellow-perch", "bullhead"]
+    },
+    leesville: {
+      id: "leesville",
+      name: "Leesville Lake",
+      short: "Leesville Lake",
+      area: "East central Ohio",
+      lat: 40.48, lng: -81.17,
+      region: "northeast", owner: "Muskingum Watershed Conservancy District",
+      aliases: ["Leesville", "Leesville Lake Park", "MWCD", "Bowerston", "North Fork", "South Fork"],
+      pool: {
+        src: "usgs", srcName: "USGS",
+        site: "03120000", param: "62614", temp: null,   // USGS 03120000 Leesville Lake near Bowerston: lake elevation (62614), no water temp
+        fullPool: 963,     // Corps summer pool; the ODNR map's 997 ft label is on another datum
+        gaugeUrl: "https://waterdata.usgs.gov/monitoring-location/USGS-03120000/",
+        snapshot: { line: "962.49 ft · no temp · ~0.5 ft below full pool", at: "2026-11-03T11:15:00-05:00", when: "2026-11-03 11:15 ET" }
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/PBZ/37,64/forecast/hourly",
+        point: "https://api.weather.gov/points/40.48,-81.17",
+        grid: "https://api.weather.gov/gridpoints/PBZ/37,64",
+        station: "KPHD",
+        stationName: "Harry Clever Field Airport (KPHD)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.48&lon=-81.17"
+      },
+      alerts: { zones: "OHC019,OHZ040", counties: "the Leesville Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataLeesville", chart: "assets/leesville-chart.png" },
+      spots: ["South Fork Marina ramp", "North Fork Marina ramp", "Bank (other)", "Kayak launch"],
+      species: ["muskellunge", "saugeye", "hybrid-striped-bass", "largemouth-bass", "smallmouth-bass", "black-crappie", "white-crappie", "channel-catfish", "bluegill", "yellow-perch"]
     }
   };
-  var ORDER = ["hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware", "deercreek", "madison", "knox", "clearfork", "seneca", "dillon", "logan", "saltfork", "burroak", "dow"];
+  var ORDER = ["hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware", "deercreek", "madison", "knox", "clearfork", "seneca", "dillon", "logan", "saltfork", "burroak", "dow", "mosquito", "berlin", "westbranch", "pymatuning", "milton", "leesville"];
   // picker regions, in this order (js/lake-picker.js). A region with no lakes yet is hidden. Every lake above sets
   // region to one of these ids; lat and lng above (the lake's NWS forecast point, on the water) give Near me distances.
   var REGIONS = [

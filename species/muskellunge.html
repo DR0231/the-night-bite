@@ -31,8 +31,8 @@
   <link rel="preload" href="../assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../css/styles.css?v=v25-2026-11-03">
-  <script src="../js/lakes.js?v=v25-2026-11-03"></script>
+  <link rel="stylesheet" href="../css/styles.css?v=v26-2026-11-03">
+  <script src="../js/lakes.js?v=v26-2026-11-03"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Species", "item": "https://nightbiteoh.com/species/"}, {"@type": "ListItem", "position": 3, "name": "Muskellunge", "item": "https://nightbiteoh.com/species/muskellunge"}]}
   </script>
@@ -92,17 +92,26 @@
     <p class="lake-note" data-for="saltfork">Stocked by ODNR at Salt Fork Lake every year: 1,927 to 3,660 advanced fingerlings a year from 2016 to 2025.</p>
     <p class="lake-note" data-for="burroak">Not a regular at Burr Oak Lake: ODNR doesn't list it there. This page covers Alum Creek Lake.</p>
     <p class="lake-note" data-for="dow">Not a regular at Dow Lake: ODNR doesn't list it there. This page covers Alum Creek Lake.</p>
+    <p class="lake-note" data-for="mosquito">Not a regular at Mosquito Creek Lake: ODNR doesn't list it there. This page covers Alum Creek Lake.</p>
+    <p class="lake-note" data-for="berlin">Not a regular at Berlin Lake: ODNR doesn't list it there. This page covers Alum Creek Lake.</p>
+    <p class="lake-note" data-for="westbranch">Stocked by ODNR at West Branch every year: 1,699 advanced fingerlings in 2025.</p>
+    <p class="lake-note" data-for="pymatuning">ODNR lists muskie at Pymatuning. ODNR&rsquo;s stocking records since 2016 show no muskie stocked on the Ohio side. Pymatuning rules: 2 a day, 30″ minimum.</p>
+    <p class="lake-note" data-for="milton">Stocked by ODNR at Lake Milton every year: 1,096 advanced fingerlings in 2025.</p>
+    <p class="lake-note" data-for="leesville">Stocked by ODNR at Leesville Lake every year: 985 advanced fingerlings in 2025.</p>
     <!-- stocking-line -->
     <p class="meta sp-stock" data-for="alum">ODNR stocked muskellunge in Alum Creek every year from 2010 to 2019. <a href="../stocking?lake=alum#stocked">Stocking &amp; surveys</a></p>
     <p class="meta sp-stock" data-for="clearfork">ODNR stocked muskellunge in Clear Fork Reservoir every year from 2016 to 2025. <a href="../stocking?lake=clearfork#stocked">Stocking &amp; surveys</a></p>
     <p class="meta sp-stock" data-for="saltfork">ODNR stocked muskellunge in Salt Fork Lake every year from 2016 to 2025. <a href="../stocking?lake=saltfork#stocked">Stocking &amp; surveys</a></p>
+    <p class="meta sp-stock" data-for="westbranch">ODNR stocked muskellunge in West Branch Reservoir every year from 2016 to 2025. <a href="../stocking?lake=westbranch#stocked">Stocking &amp; surveys</a></p>
+    <p class="meta sp-stock" data-for="milton">ODNR stocked muskellunge in Lake Milton every year from 2016 to 2025. <a href="../stocking?lake=milton#stocked">Stocking &amp; surveys</a></p>
+    <p class="meta sp-stock" data-for="leesville">ODNR stocked muskellunge in Leesville Lake every year from 2016 to 2025. <a href="../stocking?lake=leesville#stocked">Stocking &amp; surveys</a></p>
     <!-- /stocking-line -->
 
     <div class="sp-now" id="sp-now" data-species="muskellunge" hidden></div>
     <!-- filled right here, before paint, from the month's picks for the active lake -->
-    <script src="../js/biting-data.js?v=v25-2026-11-03"></script>
-    <script src="../js/biting-data-lakes.js?v=v25-2026-11-03"></script>
-    <script src="../js/species-lake.js?v=v25-2026-11-03"></script>
+    <script src="../js/biting-data.js?v=v26-2026-11-03"></script>
+    <script src="../js/biting-data-lakes.js?v=v26-2026-11-03"></script>
+    <script src="../js/species-lake.js?v=v26-2026-11-03"></script>
 
     <nav class="species-subnav" aria-label="On this page">
       <a href="#season">Season</a>
@@ -148,8 +157,8 @@
 
     <section id="limits" class="species-section">
       <h2>Limits <span class="regs-tag">reminder, verify</span></h2>
-      <p class="meta">Statewide muskie rule from the Ohio Administrative Code and the ODNR Fishing Regulations 2026–27. Alum Creek has no muskie exception.</p>
-      <div class="table-wrap">
+      <p class="meta" data-for="hoover alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch milton leesville">Statewide muskie rule from the Ohio Administrative Code and the ODNR Fishing Regulations 2026–27. Alum Creek has no muskie exception.</p>
+      <div class="table-wrap" data-for="hoover alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch milton leesville">
         <table class="access-table regs-table">
           <thead>
             <tr><th scope="col">Rule</th><th scope="col">Reminder (verify 2026–27)</th></tr>
@@ -157,6 +166,18 @@
           <tbody>
           <tr><td>Daily bag</td><td>1 muskellunge or tiger muskie, combined (OAC 1501:31-13-08)</td></tr>
           <tr><td>Minimum length</td><td>None listed statewide (OAC 1501:31-13-09 has no muskie length rule)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="meta" data-for="pymatuning">Pymatuning has its own Ohio–Pennsylvania rules in the 2026–27 booklet: muskie 2 a day, 30″ minimum.</p>
+      <div class="table-wrap" data-for="pymatuning">
+        <table class="access-table regs-table">
+          <thead>
+            <tr><th scope="col">Rule</th><th scope="col">Reminder (verify 2026–27)</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Daily bag</td><td>2</td></tr>
+          <tr><td>Minimum length</td><td>30″</td></tr>
           </tbody>
         </table>
       </div>
@@ -220,14 +241,14 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="../js/refresh.js?v=v25-2026-11-03"></script>
-  <script src="../js/sw-update.js?v=v25-2026-11-03"></script>
-  <script src="../js/alerts.js?v=v25-2026-11-03"></script>
-  <script src="../js/nav.js?v=v25-2026-11-03"></script>
-  <script src="../js/visits.js?v=v25-2026-11-03"></script>
-  <script src="../js/lake-picker.js?v=v25-2026-11-03"></script>
-  <script src="../js/sticky-nav.js?v=v25-2026-11-03"></script>
-  <script src="../js/mode-toggle.js?v=v25-2026-11-03"></script>
+  <script src="../js/refresh.js?v=v26-2026-11-03"></script>
+  <script src="../js/sw-update.js?v=v26-2026-11-03"></script>
+  <script src="../js/alerts.js?v=v26-2026-11-03"></script>
+  <script src="../js/nav.js?v=v26-2026-11-03"></script>
+  <script src="../js/visits.js?v=v26-2026-11-03"></script>
+  <script src="../js/lake-picker.js?v=v26-2026-11-03"></script>
+  <script src="../js/sticky-nav.js?v=v26-2026-11-03"></script>
+  <script src="../js/mode-toggle.js?v=v26-2026-11-03"></script>
 
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

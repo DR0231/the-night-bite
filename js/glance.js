@@ -59,7 +59,7 @@
     if (m) {
       set(poolV, m[1], "ft"); set(poolS, "~" + m[3] + " ft " + m[4] + " full"); cell(poolV, true);
     } else {
-      set(poolV, "--"); set(poolS, NOGAUGE ? "No public gauge" : "Gauge unavailable"); cell(poolV, false);
+      set(poolV, "--"); set(poolS, NOGAUGE ? (P.stale ? "Gauge not reporting" : "No public gauge") : "Gauge unavailable"); cell(poolV, false);
     }
     if (!HASTEMP) {
       set(tempV, "--"); set(tempS, "No public temp gauge"); cell(tempV, false);

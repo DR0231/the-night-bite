@@ -2,6 +2,37 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-03-northeast-waters",
+      "date": "2026-11-03",
+      "tag": "New",
+      "title": "Six northeast waters",
+      "bullets": [
+        "Pick Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton or Leesville Lake with the lake picker. Each water has its own home page, map, ramps, rules, species notes, dock season and Bait nearby.",
+        "Five read their USGS lake gauge. Pymatuning's gauge hasn't reported since June 4, 2026, so it says so and shows no level as current. None of the six has a public water temp.",
+        "Rules worth knowing: a 15″ walleye minimum at Mosquito Creek, Berlin, West Branch and Lake Milton, and Pymatuning's own Ohio and Pennsylvania limits. Berlin's Bonner Road ramp is closed until May 28, 2027.",
+        "Stocking & surveys, Gear and Ice season cover all six, and the trip report form now lists all 23 waters.",
+        "Dock season adds dated notes for Hoover, Griggs, O’Shaughnessy, Delaware and Indian Lake, and Water notes Seneca’s 5 ft winter drawdown starting Nov. 15."
+      ],
+      "links": [
+        {
+          "label": "Water",
+          "href": "water"
+        },
+        {
+          "label": "Stocking & surveys",
+          "href": "stocking"
+        },
+        {
+          "label": "Gear",
+          "href": "gear"
+        },
+        {
+          "label": "Dock season",
+          "href": "water#docks"
+        }
+      ]
+    },
+    {
       "id": "2026-11-03-upkeep-checks",
       "date": "2026-11-03",
       "tag": "Improved",

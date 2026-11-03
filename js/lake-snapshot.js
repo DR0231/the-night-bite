@@ -4,6 +4,8 @@
  * Buckeye Lake this swaps in that lake's own last checked reading from js/lakes.js (pool.snapshot) before js/usgs.js
  * runs, so the card never shows Hoover's numbers under another lake's name. js/usgs.js then refreshes it live.
  * Lakes with no public gauge (pool.src null) get a plain "No public lake level gauge" line and the ODNR map pool instead.
+ * A lake whose USGS gauge stopped reporting (pool.stale, Pymatuning) says so, with the last date and a link, and never
+ * shows that old reading as the current level.
  * Placed inline right after #usgs-live-status. Does nothing on Hoover.
  */
 (function () {
@@ -19,6 +21,18 @@
     var n = document.createElement("a");
     n.href = href; n.target = "_blank"; n.rel = "noopener"; n.textContent = text;
     return n;
+  }
+  if (NOGAUGE && P.stale) {
+    var G = P.stale;
+    if (line) line.textContent = "USGS gauge not reporting";
+    if (checked) {
+      checked.textContent = "ODNR fishing map pool: " + P.fullPool + " ft. USGS gauge " + G.site + " last reported " + G.last + " on " + G.lastWhen + " and has posted nothing since, so there is no current reading to show. ";
+      checked.appendChild(a(G.url, "USGS gauge page"));
+      checked.appendChild(document.createTextNode("."));
+    }
+    if (temp) temp.textContent = "No public water temp gauge";
+    if (status) status.textContent = "The USGS lake level gauge here is not reporting right now. No water temp gauge. Never invented.";
+    return;
   }
   if (NOGAUGE) {
     if (line) line.textContent = "No public lake level gauge";

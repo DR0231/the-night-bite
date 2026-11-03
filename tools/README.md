@@ -34,7 +34,7 @@ python3 tools/check-all.py --target local --lakes dow --shots --log /workspace/n
 
 * Checks: check-meta, check-radius, check-docks (report only), check-glance, check-bait, check-waters (every lake unless `--lakes`) and sweep.
 * `--skip` leaves checks out.
-* A full run takes about 20 minutes. Most of that is check-waters on all 17 lakes.
+* A full run takes about 20 minutes. Most of that is check-waters on all 23 lakes.
 * Known failures go in `tools/known-failures.json` as `{check, match, target?, why}`. Add an entry only for a failure you have looked at and accepted. Then remove it once the failure is fixed.
 
 ### sweep.cjs

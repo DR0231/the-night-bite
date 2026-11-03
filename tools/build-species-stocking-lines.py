@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Adds a one line ODNR stocking or survey note to species pages, linking to /stocking for that lake.
 Every number here is copied from the ODNR district 1 PDFs listed in DATA-SOURCES.md (Stocking & surveys), or for Deer Creek Lake, Madison Lake, Knox Lake and Clear Fork Reservoir from ODNR's Fish Stocking dashboard (checked Oct. 30, 2026),
-and for Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake and Dow Lake from the same dashboard (checked Oct. 31, 2026).
+and for Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake and Dow Lake from the same dashboard (checked Oct. 31, 2026),
+and for Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton and Leesville Lake from the same dashboard (checked Nov. 3, 2026).
 Idempotent: rewrites the block between <!-- stocking-line --> markers. Run from the repo root."""
 import pathlib, re
 
@@ -17,20 +18,30 @@ LINES = {
         ("logan", "stocked", "ODNR stocked saugeye in Lake Logan every year from 2016 to 2025."),
         ("saltfork", "stocked", "ODNR stocked saugeye in Salt Fork Lake every year from 2016 to 2025."),
         ("dow", "stocked", "ODNR stocked saugeye in Dow Lake every year from 2016 to 2025."),
+        ("leesville", "stocked", "ODNR stocked saugeye in Leesville Lake every year from 2016 to 2025."),
     ],
     "blue-catfish": [
         ("hoover", "stocked", "ODNR stocked blue catfish in Hoover in 7 of the years from 2011 to 2018."),
         ("seneca", "stocked", "ODNR stocked blue catfish in Seneca Lake in 7 of the years from 2016 to 2024."),
         ("dillon", "stocked", "ODNR stocked blue catfish in Dillon Lake every year from 2022 to 2025."),
         ("burroak", "stocked", "ODNR stocked blue catfish in Burr Oak Lake every year from 2022 to 2025."),
+        ("westbranch", "stocked", "ODNR stocked blue catfish in West Branch Reservoir every year from 2023 to 2025."),
     ],
     "walleye": [
         ("hoover", "stocked", "ODNR stocked 288,728 walleye fingerlings in Hoover in 2019."),
+        ("mosquito", "stocked", "ODNR stocked walleye in Mosquito Creek Lake every year from 2016 to 2025, as fry and fingerlings."),
+        ("berlin", "stocked", "ODNR stocked walleye in Berlin Lake every year from 2016 to 2025, as fry and fingerlings."),
+        ("westbranch", "stocked", "ODNR stocked walleye in West Branch Reservoir every year from 2016 to 2025 except 2023."),
+        ("pymatuning", "stocked", "ODNR stocked walleye in Pymatuning Lake every year from 2016 to 2025 except 2023."),
+        ("milton", "stocked", "ODNR stocked walleye in Lake Milton every year from 2016 to 2025."),
     ],
     "muskellunge": [
         ("alum", "stocked", "ODNR stocked muskellunge in Alum Creek every year from 2010 to 2019."),
         ("clearfork", "stocked", "ODNR stocked muskellunge in Clear Fork Reservoir every year from 2016 to 2025."),
         ("saltfork", "stocked", "ODNR stocked muskellunge in Salt Fork Lake every year from 2016 to 2025."),
+        ("westbranch", "stocked", "ODNR stocked muskellunge in West Branch Reservoir every year from 2016 to 2025."),
+        ("milton", "stocked", "ODNR stocked muskellunge in Lake Milton every year from 2016 to 2025."),
+        ("leesville", "stocked", "ODNR stocked muskellunge in Leesville Lake every year from 2016 to 2025."),
     ],
     "black-crappie": [
         ("hoover", "growth", "ODNR trap nets: Hoover crappie average 9.9 in at age 3 (Ohio 9.5)."),
@@ -53,6 +64,10 @@ LINES = {
         ("logan", "stocked", "ODNR stocked channel catfish in Lake Logan every other year from 2016 to 2024."),
         ("burroak", "stocked", "ODNR stocked channel catfish in Burr Oak Lake every other year from 2016 to 2024."),
         ("dow", "stocked", "ODNR stocked channel catfish in Dow Lake in 2017 and 2019."),
+        ("leesville", "stocked", "ODNR stocked channel catfish in Leesville Lake every other year from 2017 to 2025."),
+    ],
+    "bluegill": [
+        ("mosquito", "stocked", "ODNR stocked 125 bluegill catchables in Mosquito Creek Lake in 2025."),
     ],
     "yellow-perch": [
         ("knox", "stocked", "ODNR stocked yellow perch fingerlings in Knox Lake in 2019 and every year from 2022 to 2025."),

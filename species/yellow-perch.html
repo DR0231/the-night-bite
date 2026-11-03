@@ -31,8 +31,8 @@
   <link rel="preload" href="../assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../css/styles.css?v=v25-2026-11-03">
-  <script src="../js/lakes.js?v=v25-2026-11-03"></script>
+  <link rel="stylesheet" href="../css/styles.css?v=v26-2026-11-03">
+  <script src="../js/lakes.js?v=v26-2026-11-03"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Species", "item": "https://nightbiteoh.com/species/"}, {"@type": "ListItem", "position": 3, "name": "Yellow perch", "item": "https://nightbiteoh.com/species/yellow-perch"}]}
   </script>
@@ -92,15 +92,21 @@
     <p class="lake-note" data-for="saltfork">ODNR fish surveys record yellow perch at Salt Fork Lake.</p>
     <p class="lake-note" data-for="burroak">Not a regular at Burr Oak Lake: ODNR doesn't list it there. This page covers Buckeye Lake.</p>
     <p class="lake-note" data-for="dow">Not a regular at Dow Lake: ODNR doesn't list it there. This page covers Buckeye Lake.</p>
+    <p class="lake-note" data-for="mosquito">ODNR lists yellow perch at Mosquito Creek Lake.</p>
+    <p class="lake-note" data-for="berlin">Not a regular at Berlin Lake: ODNR doesn't list it there. This page covers Buckeye Lake.</p>
+    <p class="lake-note" data-for="westbranch">ODNR lists yellow perch at West Branch Reservoir.</p>
+    <p class="lake-note" data-for="pymatuning">ODNR lists yellow perch at Pymatuning Lake.</p>
+    <p class="lake-note" data-for="milton">ODNR lists yellow perch at Lake Milton.</p>
+    <p class="lake-note" data-for="leesville">ODNR lists yellow perch at Leesville Lake.</p>
     <!-- stocking-line -->
     <p class="meta sp-stock" data-for="knox">ODNR stocked yellow perch fingerlings in Knox Lake in 2019 and every year from 2022 to 2025. <a href="../stocking?lake=knox#stocked">Stocking &amp; surveys</a></p>
     <!-- /stocking-line -->
 
     <div class="sp-now" id="sp-now" data-species="yellow-perch" hidden></div>
     <!-- filled right here, before paint, from the month's picks for the active lake -->
-    <script src="../js/biting-data.js?v=v25-2026-11-03"></script>
-    <script src="../js/biting-data-lakes.js?v=v25-2026-11-03"></script>
-    <script src="../js/species-lake.js?v=v25-2026-11-03"></script>
+    <script src="../js/biting-data.js?v=v26-2026-11-03"></script>
+    <script src="../js/biting-data-lakes.js?v=v26-2026-11-03"></script>
+    <script src="../js/species-lake.js?v=v26-2026-11-03"></script>
 
     <nav class="species-subnav" aria-label="On this page">
       <a href="#season">Season</a>
@@ -146,14 +152,26 @@
 
     <section id="limits" class="species-section">
       <h2>Limits <span class="regs-tag">reminder, verify</span></h2>
-      <p class="meta">Statewide yellow perch rule from the Ohio Administrative Code and the ODNR Fishing Regulations 2026–27. Buckeye Lake has no perch exception.</p>
-      <div class="table-wrap">
+      <p class="meta" data-for="hoover alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch milton leesville">Statewide yellow perch rule from the Ohio Administrative Code and the ODNR Fishing Regulations 2026–27. Buckeye Lake has no perch exception.</p>
+      <div class="table-wrap" data-for="hoover alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch milton leesville">
         <table class="access-table regs-table">
           <thead>
             <tr><th scope="col">Rule</th><th scope="col">Reminder (verify 2026–27)</th></tr>
           </thead>
           <tbody>
           <tr><td>Daily bag</td><td>30 (OAC 1501:31-13-08)</td></tr>
+          <tr><td>Minimum length</td><td>None</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="meta" data-for="pymatuning">Pymatuning has its own Ohio–Pennsylvania rules in the 2026–27 booklet: yellow perch fall under all other fish, with no limit.</p>
+      <div class="table-wrap" data-for="pymatuning">
+        <table class="access-table regs-table">
+          <thead>
+            <tr><th scope="col">Rule</th><th scope="col">Reminder (verify 2026–27)</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Daily bag</td><td>No limit (all other fish)</td></tr>
           <tr><td>Minimum length</td><td>None</td></tr>
           </tbody>
         </table>
@@ -218,14 +236,14 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="../js/refresh.js?v=v25-2026-11-03"></script>
-  <script src="../js/sw-update.js?v=v25-2026-11-03"></script>
-  <script src="../js/alerts.js?v=v25-2026-11-03"></script>
-  <script src="../js/nav.js?v=v25-2026-11-03"></script>
-  <script src="../js/visits.js?v=v25-2026-11-03"></script>
-  <script src="../js/lake-picker.js?v=v25-2026-11-03"></script>
-  <script src="../js/sticky-nav.js?v=v25-2026-11-03"></script>
-  <script src="../js/mode-toggle.js?v=v25-2026-11-03"></script>
+  <script src="../js/refresh.js?v=v26-2026-11-03"></script>
+  <script src="../js/sw-update.js?v=v26-2026-11-03"></script>
+  <script src="../js/alerts.js?v=v26-2026-11-03"></script>
+  <script src="../js/nav.js?v=v26-2026-11-03"></script>
+  <script src="../js/visits.js?v=v26-2026-11-03"></script>
+  <script src="../js/lake-picker.js?v=v26-2026-11-03"></script>
+  <script src="../js/sticky-nav.js?v=v26-2026-11-03"></script>
+  <script src="../js/mode-toggle.js?v=v26-2026-11-03"></script>
 
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

@@ -9,7 +9,7 @@
  *    with last deploy's styles or scripts. (Up to v11 these were cache first, which showed the multi-lake
  *    picker unstyled and the old Hoover-only map script after a deploy.) Pages ask for them with ?v=VERSION.
  *  · Fonts, images: stale while revalidate (instant from cache, refreshed in the background).
- *  · Home pages: the root (Hoover) and every lake home page (alum/, buckeye/, oshaughnessy/, griggs/, indian/, delaware/, deercreek/, madison/, knox/, clearfork/, seneca/, dillon/, logan/, saltfork/, burroak/, dow/) are precached, so each lake opens offline.
+ *  · Home pages: the root (Hoover) and every lake home page (alum/, buckeye/, oshaughnessy/, griggs/, indian/, delaware/, deercreek/, madison/, knox/, clearfork/, seneca/, dillon/, logan/, saltfork/, burroak/, dow/, mosquito/, berlin/, westbranch/, pymatuning/, milton/, leesville/) are precached, so each lake opens offline.
  *  · Whisperwood is never touched: nothing under whisperwood/ (or whisperwood.html) is cached or intercepted.
  *  · Cross origin requests (NWS, USGS, links out) pass straight through. The page itself keeps the last good
  *    readings in localStorage and labels them "Offline. Last updated ..." (js/refresh.js, NightBiteOffline).
@@ -19,7 +19,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v25-2026-11-03";
+var VERSION = "v26-2026-11-03";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
@@ -42,6 +42,12 @@ var PRECACHE = [
   "saltfork/",
   "burroak/",
   "dow/",
+  "mosquito/",
+  "berlin/",
+  "westbranch/",
+  "pymatuning/",
+  "milton/",
+  "leesville/",
   "species/",
   "water.html",
   "ice.html",
@@ -103,6 +109,12 @@ var PRECACHE = [
   "js/lake-map-data-saltfork.js",
   "js/lake-map-data-burroak.js",
   "js/lake-map-data-dow.js",
+  "js/lake-map-data-mosquito.js",
+  "js/lake-map-data-berlin.js",
+  "js/lake-map-data-westbranch.js",
+  "js/lake-map-data-pymatuning.js",
+  "js/lake-map-data-milton.js",
+  "js/lake-map-data-leesville.js",
   "js/lake-picker.js",
   "js/lake-snapshot.js",
   "js/lakes.js",
@@ -154,6 +166,12 @@ var PRECACHE = [
   "assets/saltfork-chart.png",
   "assets/burroak-chart.png",
   "assets/dow-chart.png",
+  "assets/mosquito-chart.png",
+  "assets/berlin-chart.png",
+  "assets/westbranch-chart.png",
+  "assets/pymatuning-chart.png",
+  "assets/milton-chart.png",
+  "assets/leesville-chart.png",
   "assets/horizon-center.png",
   "assets/horizon-thin.png",
   "assets/horizon-tile.png",
@@ -216,6 +234,18 @@ var PRECACHE = [
   "assets/map/burroak-map-wide.png",
   "assets/map/dow-map-tall.png",
   "assets/map/dow-map-wide.png",
+  "assets/map/mosquito-map-tall.png",
+  "assets/map/mosquito-map-wide.png",
+  "assets/map/berlin-map-tall.png",
+  "assets/map/berlin-map-wide.png",
+  "assets/map/westbranch-map-tall.png",
+  "assets/map/westbranch-map-wide.png",
+  "assets/map/pymatuning-map-tall.png",
+  "assets/map/pymatuning-map-wide.png",
+  "assets/map/milton-map-tall.png",
+  "assets/map/milton-map-wide.png",
+  "assets/map/leesville-map-tall.png",
+  "assets/map/leesville-map-wide.png",
   "assets/map/pin-access.png",
   "assets/map/pin-ramp.png",
   "assets/map/pin-shop.png",

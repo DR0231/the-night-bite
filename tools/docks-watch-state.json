@@ -20,7 +20,7 @@
       "View Dock Availability (set date in drop down to see live availability) ."
     ],
     "url": "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "recparks-alerts": {
     "hash": "bdd74bcd8fea1137",
@@ -28,7 +28,7 @@
       "The Trabue-Murphy boat ramp is closed until further notice due to uneven subsurface conditions that could cause damage to boats."
     ],
     "url": "https://columbusrecparks.com/facilities/alerts/",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "recparks-hoover": {
     "hash": "f19cfaf4dcf2e33c",
@@ -37,7 +37,7 @@
       "Motors in excess of 10 horsepower may remain in a non-tilt position provided the prop is removed prior to launch and remains so while on the waterway."
     ],
     "url": "https://columbusrecparks.com/parks/hoover-reservoir-parkland/",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "odnr-drawdowns": {
     "hash": "e51e2840eae2a805",
@@ -53,7 +53,7 @@
       "The USACE is postponing the start date of the drawdown at Delaware, Dillon, Paint Creek state parks due to drought conditions."
     ],
     "url": "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "odnr-alum": {
     "hash": "b1e114531fd24868",
@@ -71,7 +71,7 @@
       "To see what this journey was like, you can walk the Heritage of Freedom Trail near the New Galena boat ramp."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "odnr-buckeye": {
     "hash": "cb21a50511432413",
@@ -91,7 +91,7 @@
       "You may enter the path at either the North Shore boat ramp or Lieb's Island."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "alum-marina": {
     "hash": "ce6577e26bf36940",
@@ -108,7 +108,7 @@
       "You have 24 hours from the booking date to cancel, or a $50 cancellation fee will be charged."
     ],
     "url": "https://www.alumcreekmarina.net/docking.html",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "recparks-oshaughnessy": {
     "hash": "f9073db80a45ff5a",
@@ -117,7 +117,7 @@
       "Prohibited: Jet skis, tubing and swimming are not permitted in any City of Columbus reservoir."
     ],
     "url": "https://columbusrecparks.com/parks/oshaughnessy-reservoir/",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "recparks-griggs": {
     "hash": "8468a82a97b272d6",
@@ -127,7 +127,7 @@
       "The Trabue-Murphy boat ramp is closed until further notice due to uneven subsurface conditions that could cause damage to boats."
     ],
     "url": "https://columbusrecparks.com/parks/griggs-park/",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "odnr-indian": {
     "hash": "477b0d7b45c2dfbf",
@@ -151,7 +151,7 @@
       "The archery range is located near the recycling station at the Moundwood Boat ramp."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "odnr-delaware": {
     "hash": "a3900aaef9c1395a",
@@ -170,7 +170,19 @@
       "Three boat ramps are conveniently located around the lake."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
+  },
+  "odnr-delaware-lottery": {
+    "hash": "37966d81156c833e",
+    "snippets": [
+      "Applications are open October 1 through October 31.",
+      "Even if an owner has more than one boat, they may not apply for more than one dock lottery at the same park.",
+      "See rules at ohiodnr.gov/docklottery .",
+      "The Dock Lottery Application will appear below from October 1 through October 31.",
+      "The dock season is April 15 to October 1."
+    ],
+    "url": "https://ohiodnr.gov/discover-and-learn/safety-conservation/about-odnr/division-parks-watercraft/boating-paddling-ohio/dock-lotteries/delaware",
+    "seen": "2026-11-03"
   },
   "odnr-deercreek": {
     "hash": "645ecf26f9acb666",
@@ -185,7 +197,7 @@
       "Two boat launch ramps provide access to the lake."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "odnr-madison": {
     "hash": "63198d96ef21b9d5",
@@ -196,7 +208,7 @@
       "Components Global Components Alerts Statewide Alerts --"
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "odnr-knox": {
     "hash": "a9cb58ecc7584839",
@@ -209,7 +221,7 @@
       "The marina and main boat ramp are located on the lower section of the reservoir along Armentrout Road."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "odnr-clearfork": {
     "hash": "89f93fe574324492",
@@ -221,7 +233,7 @@
       "No fee is charged for launching boats."
     ],
     "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
   },
   "mansfield-clearfork": {
     "hash": "65a5be5b7e7d0d06",
@@ -238,6 +250,145 @@
       "These organizations sell and rent equipment for boating and fishing at the Clearfork Park Marina."
     ],
     "url": "https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/",
-    "seen": "2026-10-30"
+    "seen": "2026-11-03"
+  },
+  "mwcd-seneca": {
+    "hash": "4c182ec270fd7633",
+    "snippets": [
+      "499 campsites (Marina Point: 199 sites Parkside campground: 300)",
+      "A limited number of campsites are designated for seasonal camping.",
+      "A seasonal camping permit is available for a seven (7) month period, April 1 – October 31.",
+      "Boat Clubs & Docking Associations",
+      "Contact the Senecaville Fish Hatchery at (740) 685-5541 or Seneca Marina for updated catch reports.",
+      "Courtesy boat dock for cabin area.",
+      "Enjoy the beautiful park setting all summer with seasonal camping.",
+      "For more information about becoming a seasonal camper, click here.",
+      "For those who want to experience the lake life, Seneca Lake Marina offers boat rentals, retail sales, and docking.",
+      "One located along State Route 574, at Old Parkside, Marina Point, Park Central and one at Seneca Marina.",
+      "The Dockside Restaurant is right above the marina if you want a bite to eat after your day on the lake.",
+      "The marina offers boat rentals, retail sales, and docking.",
+      "There are 5 public launch ramps.",
+      "Whether you choose to stay in the campground all season or prefer the convenience of a campsite ready for your enjoyment, seasonal camping offers a discount from the daily camping rate."
+    ],
+    "url": "https://www.mwcd.org/places/seneca-lake/",
+    "seen": "2026-11-03"
+  },
+  "mwcd-seneca-marina": {
+    "hash": "f0690403c3551c8f",
+    "snippets": [
+      "Boat Clubs & Docking Associations",
+      "Call Marina Office for availability and seasonal rates:",
+      "Daily, weekly, or seasonal dockage.",
+      "Need Marina Sales and Services?",
+      "Open during posted marina hours",
+      "Relax with waterfront dining located above the marina.",
+      "Seneca Lake Marina - Muskingum Watershed Conservancy District",
+      "Whether you’re here for a weekend getaway or a full boating season, we offer everything you need."
+    ],
+    "url": "https://www.mwcd.org/seneca-lake-marina/",
+    "seen": "2026-11-03"
+  },
+  "mwcd-drawdowns": {
+    "hash": "98095ffcac59d658",
+    "snippets": [
+      "Army Corps of Engineers to coordinate drawdowns and project schedules,” said Dave Lautenschleger, chief of engineering. “The winter drawdown gives us valuable time to inspect and maintain infrastructure while lake levels are low.",
+      "Boat Clubs & Docking Associations",
+      "MWCD Announces Winter Drawdown Schedule",
+      "MWCD Announces Winter Drawdown Schedule - Muskingum Watershed Conservancy District",
+      "New Philadelphia, OH (October 29, 2026) — The Muskingum Watershed Conservancy District has released its annual winter drawdown schedule, a critical part of the organization’s flood-control and maintenance operations.",
+      "The 2026-27 drawdown will begin in early November, with water levels expected to return to normal by February."
+    ],
+    "url": "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/",
+    "seen": "2026-11-03"
+  },
+  "odnr-dillon": {
+    "hash": "a1b0ecbbffb1bab9",
+    "snippets": [
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --",
+      "The park offers over 90 docks for lease on a seasonal basis as well as four docks for overnight rentals.",
+      "Two boat ramps provide access to the lake.",
+      "Water still draws visitors as the large lake offers unlimited-horsepower boating, a marina, and several boat ramps."
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park",
+    "seen": "2026-11-03"
+  },
+  "odnr-logan": {
+    "hash": "3749946874736fd0",
+    "snippets": [
+      "Another smaller ramp is located about 1.5 miles northeast, also off Lake Logan Road.",
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --",
+      "For boat rental information or to make a reservation, visit lakeloganmarina.com or call 740-380-2956.",
+      "Seasonal boat docks are available for rent.",
+      "The Lake Logan Marina offers canoes, kayaks, paddleboards, pedal boats, and pontoon boats for rent in Spring, Summer, and Fall.",
+      "The park offers a boat ramp on the southeast portion of the lake off Lake Logan Road.",
+      "Towns appeared and vanished as quickly as mines opened and closed."
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park",
+    "seen": "2026-11-03"
+  },
+  "odnr-saltfork": {
+    "hash": "6a168788433ef8a6",
+    "snippets": [
+      "A dock lottery is held in the autumn for rental docks that come open the following spring.",
+      "A mixture of woodlands and open meadows, this loop is not near the horse camp but does go past Salt Fork Marina where flush restrooms are available.",
+      "BeachGuard — water quality alerts, Memorial Day to Labor Day, from the Ohio Department of Health",
+      "Begins and ends at horse camp or may continue to White Loop B at Sugartree Marina.",
+      "Boaters will appreciate the park's two marinas and eight launch ramps; hikers will be challenged by a trail system that offers a variety of lengths and levels of difficulty; history buffs can visit the historic Kennedy Stone House ; and golfers will enjoy the top-rated 18-hole golf course.",
+      "Cabin Area Launch : Two asphalt lanes located in the main cabin parking lot.",
+      "Campground Launch : Single asphalt lane for registered campers, near the camper’s beach, Limited parking.",
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --",
+      "Eco-Discovery Center Hours: Monday-Tuesday closed, Wednesday-Friday 10am to 5pm; 11am to 6pm Sat & Sun.",
+      "Launching at this ramp provides quick access to one of the ski zones.",
+      "Morning Glory Launch : Two asphalt lanes located off Old Twenty-One Road on the north side of the park.",
+      "Nearby courtesy docks are available to registered lodge and cabin guests.",
+      "North Salem Launch : Two asphalt lanes located off of Plainfield Road on the north side of the park.",
+      "Park Office Launch : Two asphalt lanes behind the park office.",
+      "Salt Fork Marina : 740-432-8883 (managed by Great Ohio Lodges; two launch areas)",
+      "Salt Fork Marina North Launch : Two asphalt lanes in the North parking lot of Salt Fork Marina.",
+      "Salt Fork Marina Shelter : Located in the north parking area of Salt Fork Marina.",
+      "Salt Fork Marina South Launch : Two asphalt lanes in the South parking lot of Salt Fork Marina.",
+      "Sugartree Marina : 740-439-4009 (managed by Great Ohio Lodges)",
+      "Sugartree Marina Launch : Two asphalt lanes in the marina parking area.",
+      "There are 8 boat launch ramps on the lake.",
+      "There is a resting area with horse ties, picnic tables and flush restrooms at Sugartree Marina where Loop A turns into Loop B.",
+      "Trails may potentially be closed in the winter under extremely wet and muddy conditions.",
+      "Two marinas are open seasonally offering 469 rental docks, comfort stations, gasoline fuel stations, parking facilities, concession areas, and a variety of rental boats."
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park",
+    "seen": "2026-11-03"
+  },
+  "odnr-burroak": {
+    "hash": "9c643882ae91e032",
+    "snippets": [
+      "BeachGuard - water quality alerts, Memorial Day to Labor Day, from the Ohio Dept. of Health",
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --",
+      "Dock 4 offers a paved area for accessible fishing",
+      "Four launch ramps provide access to the lake:",
+      "Guests have access to a boat launch, tennis court, basketball court, miniature golf, playground, exercise room, and indoor swimming pool.",
+      "Primitive sites are located at some dock areas around the lake.",
+      "Seasonal dock rentals are managed by the park office",
+      "Shoreline fishing is permitted, however, fishing from rented seasonal docks is prohibits-- signs are posted."
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park",
+    "seen": "2026-11-03"
+  },
+  "odnr-strouds": {
+    "hash": "949f7695801018d4",
+    "snippets": [
+      "Closed Orphan Well Plugging Contracts",
+      "Components Global Components Alerts Site Alerts --",
+      "Components Global Components Alerts Statewide Alerts --",
+      "There is a launch ramp located at the northeastern edge of the lake with 3 tie-up stakes and a seasonal kayak rack with rentable storage (through state park)."
+    ],
+    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park",
+    "seen": "2026-11-03"
   }
 }

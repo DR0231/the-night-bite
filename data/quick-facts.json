@@ -1,10 +1,11 @@
 {
-  "_about": "Quick facts on each lake home page, written into the HTML by tools/build-lake-pages.py (no JavaScript). Every line is copied from text the site already sources (water.html lake facts cards, the home page map notes and How to read this, js/lake-map-data-*.js); the gauge link comes from js/lakes.js. Leave a field out when there is no official source. checked = the date the facts were last checked against the sources listed; it also becomes the page's WebPage dateModified. title and description (every lake but Hoover) are that lake home page's <title> and meta description, written by tools/build-lake-pages.py; Hoover's live in index.html itself.",
+  "_about": "Quick facts on each lake home page, written into the HTML by tools/build-lake-pages.py (no JavaScript). Every line is copied from text the site already sources (water.html lake facts cards, the home page map notes and How to read this, js/lake-map-data-*.js); the gauge link comes from js/lakes.js. docks (optional) = a dated end of season dock line under Ramps and access, from an official page, or a news story quoting the agency when D'Angelo approves it, named as such in the text (checked, text, source [label, url]). Leave a field out when there is no official source. checked = the date the facts were last checked against the sources listed; it also becomes the page's WebPage dateModified. title and description (every lake but Hoover) are that lake home page's <title> and meta description, written by tools/build-lake-pages.py; Hoover's live in index.html itself.",
   "lakes": {
     "hoover": {
       "checked": "2026-10-31",
       "motors": "10 hp limit and 10 mph; idle speed within 100 ft of shore. Boats 22 ft max.",
       "ramps": "Five public ramps: Oxbow Road, Sunbury Road, Twin Bridges, Red Bank and Walnut Street. Shore access on the Mudflats Boardwalk.",
+      "docks": {"checked": "2026-11-03", "text": "The city lists the marina dock season as May 1 to Oct. 31, so the marina docks are done for 2026. No date posted yet for pulling the ramp docks.", "source": ["Columbus Recreation and Parks, Marinas & Docks", "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"]},
       "pool": "Summer pool is 894 ft, the level the ODNR contour map is drawn at.",
       "night": "City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
       "sources": [
@@ -45,6 +46,7 @@
       "description": "O'Shaughnessy Reservoir fishing: live USGS level, 40 mph by day and 10 mph after sunset, Home Road and Bellepoint ramps, tonight's bite. Unofficial.",
       "motors": "Unlimited horsepower; 40 mph by day. Idle speed within 100 ft of shore and bridges. Boats 22 ft or shorter, no personal watercraft.",
       "ramps": "Home Road ramp and marina, and the Bellepoint ramp. Canoe and kayak launches at Twin Lakes and on the east side.",
+      "docks": {"checked": "2026-11-03", "text": "The city lists the marina dock season as May 1 to Oct. 31, so the marina docks are done for 2026. No date posted yet for pulling the ramp docks.", "source": ["Columbus Recreation and Parks, Marinas & Docks", "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"]},
       "pool": "Full pool is the City dam crest, 848.5 ft. ODNR fishing map depths are based on 847.9 ft.",
       "night": "10 mph from sunset to sunrise (City code). City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
       "sources": [
@@ -59,6 +61,7 @@
       "description": "Griggs Reservoir fishing: live USGS level, 10 mph after sunset, the Griggs boat launch and docks, tonight's bite and species. Unofficial.",
       "motors": "Unlimited horsepower; 40 mph by day. Idle speed within 100 ft of shore and bridges. Boats 22 ft or shorter, no personal watercraft.",
       "ramps": "Griggs boat launch south of Fishinger Road, plus the marina and public boat docks.",
+      "docks": {"checked": "2026-11-03", "text": "The city lists the marina dock season as May 1 to Oct. 31, so the marina docks are done for 2026. No date posted yet for pulling the ramp docks.", "source": ["Columbus Recreation and Parks, Marinas & Docks", "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"]},
       "pool": "Full pool is the City dam crest, 756.18 ft. ODNR fishing map depths are based on 757 ft.",
       "night": "10 mph from sunset to sunrise (City code). City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
       "sources": [
@@ -73,6 +76,7 @@
       "description": "Indian Lake fishing: live USGS lake level, no hp limit, five state park ramps and the Old Field Beach jetties, tonight's bite. Unofficial.",
       "motors": "No horsepower limit. No wake within 300 ft of any shoreline, in channels and where marked.",
       "ramps": "Five state park launch ramps: Moundwood, Lakeview Harbor, Blackhawk, Chippewa and Cranetown Island. Fishing jetties at Old Field Beach.",
+      "docks": {"checked": "2026-11-03", "text": "Peak of Ohio reported on Oct. 24, 2026 that ODNR reminds boaters \u201call boats must be removed from state docks by November 1,\u201d so the state docks are done for 2026. ODNR\u2019s own pages do not post the date.", "source": ["Peak of Ohio, Oct. 24, 2026", "https://www.peakofohio.com/local-news/odnr-shares-end-of-season-boating-reminders-for-indian-lake/"]},
       "pool": "Normal summer pool is 996.3 ft, the level the ODNR fishing map is drawn at.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
       "sources": [
@@ -87,6 +91,7 @@
       "description": "Delaware Lake fishing: live Corps lake level, unlimited hp, three state park ramps, tonight's bite and species. Unofficial.",
       "motors": "Unlimited horsepower. Follow the posted no wake buoys.",
       "ramps": "Three state park ramps: the main marina ramp, Sherwood Road on the east side and the southwest launch area.",
+      "docks": {"checked": "2026-11-03", "text": "ODNR lists the lease dock season as April 15 to Oct. 1, so the lease docks are done for 2026. No date posted yet for pulling the launch docks.", "source": ["ODNR, Delaware Dock Lottery", "https://ohiodnr.gov/discover-and-learn/safety-conservation/about-odnr/division-parks-watercraft/boating-paddling-ohio/dock-lotteries/delaware"]},
       "pool": "Normal summer pool is 915 ft. ODNR lists a winter drawdown to about 910 ft.",
       "night": "State park hours are sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours.",
       "sources": [
@@ -231,6 +236,89 @@
         ["ODNR, Strouds Run State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park"],
         ["ODNR, Dow Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area"],
         ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dowlake2.pdf"]
+      ]
+    },
+    "mosquito": {
+      "checked": "2026-11-03",
+      "title": "Mosquito Creek Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Mosquito Creek Lake fishing: live USGS lake level, no hp limit, five state park ramps, marina lot construction notice, tonight's bite. Unofficial.",
+      "motors": "No horsepower limit. No wake within 300 ft of shore, and no skiing, tubing or PWCs north of the SR 88 causeway.",
+      "ramps": "ODNR counts five state park launch ramps. The main ramp off SR 305 (3 lanes) and the causeway ramp at SR 88 and SR 46 (2 lanes) are both lit. Road construction at the marina and beach lots since Oct. 3, 2026.",
+      "pool": "Summer pool is 901 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Mosquito Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park"],
+        ["ODNR, Mosquito Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-creek-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mosquitocreeklake2.pdf"]
+      ]
+    },
+    "berlin": {
+      "checked": "2026-11-03",
+      "title": "Berlin Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Berlin Lake fishing: live USGS lake level, no hp limit by day and 10 mph at night, Bonner Road ramp closed to May 2027, tonight's bite. Unofficial.",
+      "motors": "No horsepower limit by day; 10 mph on the whole lake at night.",
+      "ramps": "Bonner Road ramp is closed for renovation from Sept. 14, 2026 to May 28, 2027. Mill Creek ramp is open Sept. 7 to Nov. 25, 2026 and Feb. 27 to May 21, 2027.",
+      "pool": "Corps summer pool (top of conservation) is 1,024 ft; the lake can swing as much as 20 ft in a year.",
+      "sources": [
+        ["ODNR, Berlin Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area"],
+        ["US Army Corps of Engineers, Berlin Lake", "https://water.usace.army.mil/overview/lrp/locations/berlin"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/berlinlake2.pdf"]
+      ]
+    },
+    "westbranch": {
+      "checked": "2026-11-03",
+      "title": "West Branch Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "West Branch (Kirwan Reservoir) fishing: live USGS lake level, unlimited hp, five state park ramps, no wake west of Rock Spring Road, tonight's bite. Unofficial.",
+      "motors": "Unlimited horsepower. No wake within 300 ft of shore and everywhere west of the Rock Spring Road causeway.",
+      "ramps": "Five state park ramps: East and West (two lanes, lit), the campground ramp, and gravel ramps at Rock Spring Road and Knapp Road. Marina with an accessible fishing pier.",
+      "pool": "Summer pool is 985.5 ft, the level the ODNR fishing map is drawn at.",
+      "night": "Park hours are sunup to sundown; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, West Branch State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park"],
+        ["ODNR, Kirwan Reservoir (West Branch) Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kirwan-reservoir-west-branch-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mjkirwanreservoir.pdf"]
+      ]
+    },
+    "pymatuning": {
+      "checked": "2026-11-03",
+      "title": "Pymatuning Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Pymatuning Lake fishing on the Ohio side: 20 hp limit, Ohio or PA license rules, five state park ramps, tonight's bite. USGS gauge not reporting. Unofficial.",
+      "motors": "20 hp limit.",
+      "ramps": "Five Ohio state park ramps: Padanaram, Birches Landing, Cabin Beach, New Bowers and the campers only campground ramp. The road from Cabin Beach to Birches Marina is closed for good.",
+      "pool": "Summer pool is 1,008 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Pymatuning State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park"],
+        ["ODNR, Pymatuning Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pymatuninglake2.pdf"]
+      ]
+    },
+    "milton": {
+      "checked": "2026-11-03",
+      "title": "Lake Milton Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Lake Milton fishing: live USGS lake level, no hp limit, three lit ramps, fall drawdown from Oct. 15, tonight's bite and species. Unofficial.",
+      "motors": "No horsepower limit.",
+      "ramps": "Three state park ramps, two lanes each and lit: Miller's Landing, Robinson Point (with an accessible fishing pier) and Pointview.",
+      "pool": "Summer pool is 948 ft, the level the ODNR fishing map is drawn at. The fall drawdown usually starts Oct. 15 and takes the lake down about 8 ft; refill starts March 15.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "sources": [
+        ["ODNR, Lake Milton State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park"],
+        ["ODNR, Lake Milton Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakemilton2.pdf"]
+      ]
+    },
+    "leesville": {
+      "checked": "2026-11-03",
+      "title": "Leesville Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "description": "Leesville Lake fishing: live USGS lake level, 10 hp limit, muskie water, two MWCD ramps and two marinas, tonight's bite and species. Unofficial.",
+      "motors": "10 hp limit.",
+      "ramps": "MWCD lists two public launch ramps, an accessible kayak launch and an accessible fishing pier, plus South Fork and North Fork marinas.",
+      "pool": "Corps summer pool is 963 ft. No road circles the lake, so plan where you launch.",
+      "sources": [
+        ["MWCD, Leesville Lake", "https://www.mwcd.org/places/leesville-lake/"],
+        ["ODNR, Leesville Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/leesville-lake-fishing-area"],
+        ["US Army Corps of Engineers, Leesville Lake", "https://water.usace.army.mil/overview/lrh/locations/leesville"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/leesvillelake2.pdf"]
       ]
     }
   }

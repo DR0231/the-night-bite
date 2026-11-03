@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Builds stocking.html (Stocking & surveys) from ODNR public PDFs. Values typed from the PDF tables and checked against
 the rendered PDFs, Oct. 27, 2026 (Indian Lake and Delaware Lake: Oct. 29, 2026, from pdftotext -layout of the same PDFs). The six east and
-southeast lakes (Seneca, Dillon, Logan, Salt Fork, Burr Oak, Dow) come from ODNR's Fish Stocking dashboard, read Oct. 31, 2026. Reuses ice.html's head and footer. Run, then tools/stamp-version.py."""
+southeast lakes (Seneca, Dillon, Logan, Salt Fork, Burr Oak, Dow) come from ODNR's Fish Stocking dashboard, read Oct. 31, 2026; the six northeast lakes (Mosquito Creek, Berlin, West Branch, Pymatuning, Lake Milton, Leesville) Nov. 3, 2026. Reuses ice.html's head and footer. Run, then tools/stamp-version.py."""
 import pathlib, re
 R = pathlib.Path(__file__).resolve().parent.parent
 ice = (R / "ice.html").read_text()
@@ -9,7 +9,7 @@ head = ice[:ice.index("  <main id=\"main\">")]
 foot = ice[ice.index("  </main>"):]
 head = re.sub(r"<title>[^<]*</title>", "<title>Stocking &amp; surveys: Ohio lakes | The Night Bite</title>", head, count=1)
 head = re.sub(r'<meta name="description" content="[^"]*">',
-              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake and 14 more Ohio lakes, with sources.">', head)
+              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake and 20 more Ohio lakes, with sources.">', head)
 head = head.replace('<link rel="canonical" href="https://nightbiteoh.com/ice">', '<link rel="canonical" href="https://nightbiteoh.com/stocking">')
 assert "stocking" in head
 # ice.html's own scripts at the bottom stay (refresh, sw-update, alerts, nav, lake-picker); nothing else is needed
@@ -37,6 +37,12 @@ ODNR_MAP = {
     "saltfork": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
     "burroak": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
     "dow": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "mosquito": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "berlin": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "westbranch": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "pymatuning": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "milton": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "leesville": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
 }
 AREA = {
     "hoover": ("ODNR, Hoover Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area"),
@@ -56,6 +62,12 @@ AREA = {
     "saltfork": ("ODNR, Salt Fork Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area"),
     "burroak": ("ODNR, Burr Oak Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-lake-fishing-area"),
     "dow": ("ODNR, Dow Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area"),
+    "mosquito": ("ODNR, Mosquito Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-creek-lake-fishing-area"),
+    "berlin": ("ODNR, Berlin Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area"),
+    "westbranch": ("ODNR, Kirwan Reservoir (West Branch) Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kirwan-reservoir-west-branch-fishing-area"),
+    "pymatuning": ("ODNR, Pymatuning Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-lake-fishing-area"),
+    "milton": ("ODNR, Lake Milton Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-fishing-area"),
+    "leesville": ("ODNR, Leesville Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/leesville-lake-fishing-area"),
 }
 PDFMAP = {
     "hoover": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf",
@@ -75,6 +87,12 @@ PDFMAP = {
     "saltfork": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/saltforklake2.pdf",
     "burroak": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/burroaklake2.pdf",
     "dow": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dowlake2.pdf",
+    "mosquito": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mosquitocreeklake2.pdf",
+    "berlin": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/berlinlake2.pdf",
+    "westbranch": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mjkirwanreservoir.pdf",
+    "pymatuning": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pymatuninglake2.pdf",
+    "milton": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakemilton2.pdf",
+    "leesville": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/leesvillelake2.pdf",
 }
 STOCK_DB = "https://ohiodnr.gov/buy-and-apply/hunting-fishing-boating/fishing-resources/fish-stocking-records"
 
@@ -182,9 +200,10 @@ NOTE = "Copied from the PDF; a dash means none listed."
 
 # Lakes with no ODNR lake PDFs whose stocking is read from ODNR's public Fish Stocking dashboard (Tableau), last ten years.
 # Read Oct. 30, 2026 (dashboard "data updated 10/27/2026"). Deer Creek and Clear Fork list one species only.
-DB = ("deercreek", "madison", "knox", "clearfork", "seneca", "dillon", "logan", "saltfork", "burroak", "dow")
+DB = ("deercreek", "madison", "knox", "clearfork", "seneca", "dillon", "logan", "saltfork", "burroak", "dow", "mosquito", "berlin", "westbranch", "pymatuning", "milton", "leesville")
 DB_NAME = {"deercreek": "Deer Creek Lake", "madison": "Madison Lake", "knox": "Knox Lake", "clearfork": "Clear Fork Reservoir",
-           "seneca": "Seneca Lake", "dillon": "Dillon Lake", "logan": "Lake Logan", "saltfork": "Salt Fork Lake", "burroak": "Burr Oak Lake", "dow": "Dow Lake"}
+           "seneca": "Seneca Lake", "dillon": "Dillon Lake", "logan": "Lake Logan", "saltfork": "Salt Fork Lake", "burroak": "Burr Oak Lake", "dow": "Dow Lake",
+           "mosquito": "Mosquito Creek Lake", "berlin": "Berlin Lake", "westbranch": "West Branch Reservoir", "pymatuning": "Pymatuning Lake", "milton": "Lake Milton", "leesville": "Leesville Lake"}
 DASH = "https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking"
 DB_STOCK = {
     "deercreek": [("Saugeye", ("Fingerlings",), [
@@ -225,6 +244,12 @@ DB_STOCK = {
         (2016, "3,014"), (2017, "3,010"), (2018, "3,001"), (2019, "3,001"), (2020, "2,586"), (2021, "2,504"), (2022, "2,510")]),
         ("Channel catfish", ("Fingerlings", "Yearlings",), [
         (2017, "5,836", "2,915"), (2019, "", "4,299")])],
+    "mosquito": [('Walleye', ('Fingerlings', 'Fry'), [(2016, '', '9,373,000'), (2017, '753,854', '14,115,481'), (2018, '368,886', '7,234,070'), (2019, '417,945', '10,111,820'), (2020, '457,609', '9,304,430'), (2021, '713,424', '7,421,710'), (2022, '2,030,140', '9,325,513'), (2023, '397,714', '9,362,733'), (2024, '1,440,834', '9,941,065'), (2025, '883,376', '6,737,985')]), ('Bluegill', ('Catchables',), [(2025, '125')])],
+    "berlin": [('Walleye', ('Fingerlings', 'Fry'), [(2016, '', '3,449,935'), (2017, '395,081', '4,492,786'), (2018, '', '6,710,980'), (2019, '316,282', '3,300,000'), (2020, '313,951', '5,484,600'), (2021, '330,016', '3,155,424'), (2022, '775,590', '3,132,000'), (2023, '328,853', '3,152,152'), (2024, '610,170', '3,134,610'), (2025, '404,931', '1,715,090')])],
+    "westbranch": [('Muskellunge', ('Advanced fingerlings',), [(2016, '2,629'), (2017, '2,629'), (2018, '3,418'), (2019, '1,876'), (2020, '2,730'), (2021, '1,362'), (2022, '2,643'), (2023, '2,607'), (2024, '2,624'), (2025, '1,699')]), ('Walleye', ('Fingerlings',), [(2016, '142,089'), (2017, '496,186'), (2018, '264,166'), (2019, '270,243'), (2020, '340,676'), (2021, '136,017'), (2022, '526,433'), (2024, '519,672'), (2025, '264,996')]), ('Blue catfish', ('Advanced fingerlings',), [(2023, '26,235'), (2024, '20,456'), (2025, '27,612')])],
+    "pymatuning": [('Walleye', ('Fingerlings',), [(2016, '298,251'), (2017, '644,339'), (2018, '377,790'), (2019, '415,021'), (2020, '294,420'), (2021, '294,984'), (2022, '299,812'), (2024, '293,785'), (2025, '293,132')])],
+    "milton": [('Walleye', ('Fingerlings', 'Fry'), [(2016, '93,806', ''), (2017, '280,714', ''), (2018, '170,951', ''), (2019, '170,189', '1,765,620'), (2020, '170,549', ''), (2021, '270,621', ''), (2022, '340,517', ''), (2023, '97,875', ''), (2024, '204,697', ''), (2025, '254,873', '')]), ('Muskellunge', ('Advanced fingerlings',), [(2016, '1,695'), (2017, '1,691'), (2018, '2,415'), (2019, '1,049'), (2020, '1,828'), (2021, '1,037'), (2022, '1,774'), (2023, '1,696'), (2024, '1,726'), (2025, '1,096')])],
+    "leesville": [('Saugeye', ('Fingerlings', 'Fry'), [(2016, '60,336', '1,268,000'), (2017, '180,503', ''), (2018, '62,936', ''), (2019, '203,451', ''), (2020, '101,323', ''), (2021, '136,497', ''), (2022, '202,451', ''), (2023, '105,717', ''), (2024, '225,959', ''), (2025, '101,544', '')]), ('Muskellunge', ('Advanced fingerlings',), [(2016, '1,192'), (2017, '1,041'), (2018, '1,127'), (2019, '1,065'), (2020, '1,049'), (2021, '761'), (2022, '1,451'), (2023, '1,148'), (2024, '1,560'), (2025, '985')]), ('Channel catfish', ('Advanced fingerlings', 'Yearlings'), [(2017, '', '4,737'), (2019, '', '4,727'), (2021, '', '5,022'), (2023, '5,000', ''), (2025, '10,125', '')])],
 }
 DB_SAYS = {
     "deercreek": "What ODNR does say: the Corps of Engineers finished the dam in 1968. The lake impounds 1,290 acres from Deer Creek and Clark Run, and its level can change up to 20 ft because the watershed is large for the lake. ODNR says early spring saugeye below the dam is the fishery the park is famous for.",
@@ -237,10 +262,16 @@ DB_SAYS = {
     "saltfork": "What ODNR does say: the earthen dam was finished in 1967. Trees and shrubs were left standing in many bays and an artificial reef was built on the north branch for fish cover; boulders line parts of the shore. ODNR links crappie, largemouth and smallmouth surveys; they aren&rsquo;t copied here.",
     "burroak": "What ODNR does say: largemouth bass from 3 to 23 inches, a consistent producer of fish over 18, and one of the top bass lakes in the area. White crappie lead, most 7 to 8 inches with fish over 15 every year; channel catfish 10 to 25 inches; flatheads occasionally. ODNR links channel catfish, crappie and largemouth surveys and an angler survey; they aren&rsquo;t copied here.",
     "dow": "What ODNR does say: the dam creating Dow Lake was finished in 1960. ODNR&rsquo;s fishing page lists 171 acres at normal pool, 6.4 miles of shoreline and 33 ft at the deepest. 10 hp limit. ODNR stocked rainbow trout here through 2022.",
+    "mosquito": "What ODNR does say: the Corps of Engineers built Mosquito Creek Lake in 1944, damming Mosquito Creek 9 miles upstream from Niles. It is 7,241 acres, 24 ft at the deepest, with no horsepower limit and a 300 ft no wake zone along shore.",
+    "berlin": "What ODNR does say: the Corps of Engineers built Berlin Lake in 1942 on the Mahoning River. Mean depth is 23 ft and maximum 55 ft, and the level can swing as much as 20 ft in a year. The bottom is mud, sand and gravel, with rock ledges along the old channel at low pool. ODNR links walleye stocking, channel catfish, crappie, largemouth, smallmouth and walleye surveys and an angler survey; they aren&rsquo;t copied here.",
+    "westbranch": "What ODNR does say: the Corps of Engineers finished Michael J. Kirwan Reservoir in 1965 for flood control, water supply, recreation and fish and wildlife, and West Branch State Park opened in 1966. The 2,650 acre lake has unlimited horsepower, with no wake 300 ft from shore and west of the Rock Spring Road causeway.",
+    "pymatuning": "What ODNR does say: Pennsylvania dammed Pymatuning in 1933 and Congress ratified the Ohio and Pennsylvania compact in 1937. It is 16,349 acres, the largest inland lake in Ohio, with 14,334 fishable acres and 30 ft at the deepest. ODNR manages it with the Pennsylvania Fish and Boat Commission.",
+    "milton": "What ODNR does say: the City of Youngstown built Lake Milton in 1916 as an industrial water supply, with a concrete dam on the Mahoning River. Today it is a multiple use reservoir for water supply, flood control and recreation, with no horsepower restrictions. The Corps of Engineers monitors its conditions.",
+    "leesville": "What ODNR does say: Leesville Lake was built across McGuire Creek in 1938, just below its north and south forks, as one of the Muskingum Watershed Conservancy District lakes. Its 27 miles of shoreline are best seen by boat, since no road circles the lake.",
 }
 
-DB_NETS = {k: "Linked by ODNR, not copied" for k in ("seneca", "saltfork", "burroak")}
-DB_ANG = {k: "Linked by ODNR, not copied" for k in ("seneca", "burroak")}
+DB_NETS = {k: "Linked by ODNR, not copied" for k in ("seneca", "saltfork", "burroak", "berlin")}
+DB_ANG = {k: "Linked by ODNR, not copied" for k in ("seneca", "burroak", "berlin")}
 
 def db_block(lake):
     st = DB_STOCK[lake]
@@ -410,6 +441,18 @@ main = f'''  <main id="main">
 {db_block("burroak")}    </div>
     <div data-for="dow">
 {db_block("dow")}    </div>
+    <div data-for="mosquito">
+{db_block("mosquito")}    </div>
+    <div data-for="berlin">
+{db_block("berlin")}    </div>
+    <div data-for="westbranch">
+{db_block("westbranch")}    </div>
+    <div data-for="pymatuning">
+{db_block("pymatuning")}    </div>
+    <div data-for="milton">
+{db_block("milton")}    </div>
+    <div data-for="leesville">
+{db_block("leesville")}    </div>
     <div data-for="buckeye">
       <div class="card data-glance">
         <p class="data-none">ODNR&rsquo;s Buckeye Lake fishing area page has no stocking tables, net surveys, angler survey or fishing forecast. This page says so rather than guess.</p>
@@ -431,7 +474,7 @@ main = f'''  <main id="main">
         Source: <a href="{AREA["griggs"][1]}"{EXT}>{AREA["griggs"][0]}</a>. ODNR&rsquo;s <a href="https://ohiodnr.gov/discover-and-learn/education-training/wild-ohio-harvest-community/fishing-tips"{EXT}>Hybrid Striped Bass Fishing Tips</a> list Griggs among the lakes stocked with hybrid striped bass, and ODNR&rsquo;s <a href="https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/central-ohio-is-a-fishing-destination-for-crappie-bass-and-catfish"{EXT}>June 12, 2026 news release</a> says Griggs has a strong population of large hybrids, often over 20 inches. No numbers are posted.</p>
       </div>
     </div>
-    <p class="meta data-dates" data-for="{" ".join(DB)}">Stocking numbers for <span data-lk="name">Hoover Reservoir</span> are read from ODNR&rsquo;s public <a href="{DASH}"{EXT}>Fish Stocking dashboard</a> (data updated Oct. 27, 2026), last ten years. Checked Oct. 30, 2026; the six east and southeast lakes Oct. 31, 2026.</p>
+    <p class="meta data-dates" data-for="{" ".join(DB)}">Stocking numbers for <span data-lk="name">Hoover Reservoir</span> are read from ODNR&rsquo;s public <a href="{DASH}"{EXT}>Fish Stocking dashboard</a> (data updated Oct. 27, 2026), last ten years. Checked Oct. 30, 2026; the six east and southeast lakes Oct. 31, 2026; the six northeast lakes Nov. 3, 2026.</p>
     <p class="meta data-dates" data-for="{" ".join(DATA + NONE)}">ODNR&rsquo;s lake PDFs run through 2019. Newer stocking is in ODNR&rsquo;s <a href="{STOCK_DB}"{EXT}>Fish Stocking Database</a> on DataOhio, which asked for a sign in, so it isn&rsquo;t copied here. Checked Oct. 27, 2026.</p>
 '''
 main += section("stocked", "Fish stocked", stocked, "", db_stocked)

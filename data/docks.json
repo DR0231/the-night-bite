@@ -1,6 +1,6 @@
 {
   "_readme": "Dock season status for water.html#docks. Edit here, then run: python3 tools/build-docks.py && python3 tools/stamp-version.py. Status is one of: in, ending, out, unannounced. 'ending' needs 'ends' (YYYY-MM-DD) and flips to 'after' text on the page once that date passes. Never set 'out' without an official source saying so. 'checked' is the date someone last read every source below. tools/check-docks.py watches the 'watch' list.",
-  "checked": "2026-10-29",
+  "checked": "2026-11-03",
   "lakes": {
     "hoover": {
       "name": "Hoover",
@@ -226,10 +226,13 @@
       "items": [
         {
           "name": "State park docks",
-          "status": "unannounced",
-          "label": "Not announced",
-          "note": "ODNR has not posted a 2026 date for pulling the seasonal rental or courtesy docks.",
-          "source": "odnr-indian"
+          "status": "ending",
+          "ends": "2026-11-01",
+          "label": "Boats out by Nov. 1",
+          "after_label": "Season over",
+          "note": "Peak of Ohio reported on Oct. 24, 2026 that ODNR reminds boaters &ldquo;all boats must be removed from state docks by November 1.&rdquo; ODNR&rsquo;s own pages do not post the date.",
+          "after_note": "Peak of Ohio reported on Oct. 24, 2026 that ODNR reminds boaters &ldquo;all boats must be removed from state docks by November 1,&rdquo; so the state docks are done for 2026. ODNR&rsquo;s own pages do not post the date.",
+          "source": "peak-indian-docks"
         },
         {
           "name": "Winter drawdown",
@@ -251,6 +254,7 @@
       ],
       "sources": [
         "odnr-indian",
+        "peak-indian-docks",
         "odnr-drawdowns"
       ]
     },
@@ -258,10 +262,20 @@
       "name": "Delaware Lake",
       "items": [
         {
-          "name": "State park docks",
+          "name": "Lease docks",
+          "status": "ending",
+          "ends": "2026-10-01",
+          "label": "Season ends Oct. 1",
+          "after_label": "Season over",
+          "note": "ODNR lists the Delaware lease dock season as April 15 to Oct. 1.",
+          "after_note": "ODNR lists the Delaware lease dock season as April 15 to Oct. 1, so the lease docks are done for 2026.",
+          "source": "odnr-delaware-lottery"
+        },
+        {
+          "name": "Launch docks",
           "status": "unannounced",
           "label": "Not announced",
-          "note": "ODNR has not posted a 2026 date for pulling the seasonal rental or launch docks.",
+          "note": "ODNR has not posted a 2026 date for pulling the launch docks.",
           "source": "odnr-delaware"
         },
         {
@@ -297,6 +311,7 @@
       ],
       "sources": [
         "odnr-delaware",
+        "odnr-delaware-lottery",
         "odnr-drawdowns"
       ]
     },
@@ -459,10 +474,13 @@
         },
         {
           "name": "Winter level",
-          "status": "unannounced",
-          "label": "Not posted",
-          "note": "Seneca is an MWCD lake, so it is not on ODNR&rsquo;s state park drawdown list, and MWCD posts no winter pool date. The USGS gauge at Senecaville shows the level.",
-          "source": "mwcd-seneca"
+          "status": "ending",
+          "ends": "2026-11-14",
+          "label": "Drawdown Nov. 15",
+          "after_label": "Drawdown under way",
+          "note": "MWCD says the winter drawdown starts Nov. 15: 5 ft, from 832.2 ft to 827.2 ft over about 35 days. The USGS gauge at Senecaville shows the level.",
+          "after_note": "MWCD started the winter drawdown Nov. 15: 5 ft, from 832.2 ft to 827.2 ft over about 35 days, with a partial refill to 830.2 ft by Mar. 15, 2027. The USGS gauge at Senecaville shows the level.",
+          "source": "mwcd-drawdowns"
         },
         {
           "name": "Launch ramps",
@@ -490,7 +508,8 @@
       ],
       "sources": [
         "mwcd-seneca",
-        "mwcd-seneca-marina"
+        "mwcd-seneca-marina",
+        "mwcd-drawdowns"
       ]
     },
     "dillon": {
@@ -727,6 +746,259 @@
         "odnr-strouds",
         "odnr-drawdowns"
       ]
+    },
+    "mosquito": {
+      "name": "Mosquito Creek Lake",
+      "checked": "2026-11-03",
+      "items": [
+        {
+          "name": "Courtesy docks and marina",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR lists courtesy docks at the ramps and a fuel dock at the marina concession but has not posted a 2026 date for pulling docks.",
+          "source": "odnr-mosquito"
+        },
+        {
+          "name": "Marina and beach lots",
+          "status": "unannounced",
+          "label": "Construction",
+          "note": "ODNR notice: road construction at the marina and beach parking lots since Oct. 3, 2026, until further notice.",
+          "source": "odnr-mosquito"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists the main SR 305 ramp, the marina, campground and causeway ramps, the Causeway Bait ramp and a wildlife kayak launch.",
+          "source": "odnr-mosquito"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Mosquito Marina",
+          "+13306372075",
+          "330-637-2075",
+          ""
+        ],
+        [
+          "Mosquito Lake State Park office",
+          "+13306372856",
+          "330-637-2856",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-mosquito"
+      ]
+    },
+    "berlin": {
+      "name": "Berlin Lake",
+      "checked": "2026-11-03",
+      "items": [
+        {
+          "name": "Bonner Road ramp",
+          "status": "out",
+          "label": "Closed to May 28, 2027",
+          "note": "ODNR: closed for renovation from Sept. 14, 2026 to May 28, 2027.",
+          "source": "odnr-berlin"
+        },
+        {
+          "name": "Mill Creek ramp",
+          "status": "ending",
+          "label": "Open to Nov. 25",
+          "note": "ODNR opens Mill Creek while Bonner Road is closed: Sept. 7 to Nov. 25, 2026, then Feb. 27 to May 21, 2027.",
+          "source": "odnr-berlin",
+          "ends": "2026-11-25",
+          "after_label": "Reopens Feb. 27",
+          "after_note": "ODNR lists Mill Creek open again from Feb. 27 to May 21, 2027 while Bonner Road is closed."
+        },
+        {
+          "name": "Winter level",
+          "status": "unannounced",
+          "label": "Not posted",
+          "note": "ODNR says the level can swing as much as 20 ft in a year. The Corps runs the dam; the level card on Home shows the USGS reading.",
+          "source": "odnr-berlin"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "ODNR Wildlife District 3",
+          "+13306442293",
+          "330-644-2293",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-berlin"
+      ]
+    },
+    "westbranch": {
+      "name": "West Branch Reservoir",
+      "checked": "2026-11-03",
+      "items": [
+        {
+          "name": "Marina and courtesy docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR lists the West Branch Marina and courtesy docks at the East and West ramps in boating season, but has not posted a 2026 date for pulling them.",
+          "source": "odnr-westbranch"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists five ramps: East, West, the campground ramp, Rock Spring Road and Knapp Road.",
+          "source": "odnr-westbranch"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "West Branch Marina",
+          "+13302969209",
+          "330-296-9209",
+          ""
+        ],
+        [
+          "West Branch State Park office",
+          "+13302350030",
+          "330-235-0030",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-westbranch"
+      ]
+    },
+    "pymatuning": {
+      "name": "Pymatuning Lake",
+      "checked": "2026-11-03",
+      "items": [
+        {
+          "name": "Marina and courtesy docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR lists the Birches Landing marina and a courtesy dock at the campground ramp but has not posted a 2026 date for pulling docks.",
+          "source": "odnr-pymatuning"
+        },
+        {
+          "name": "Cabin Beach to Birches road",
+          "status": "out",
+          "label": "Closed for good",
+          "note": "ODNR notice (Aug. 5, 2026): the road from the south end of Cabin Beach to Birches Marina is permanently closed for a bike path. Use other routes.",
+          "source": "odnr-pymatuning"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists Padanaram, Birches Landing, Cabin Beach, New Bowers and the campground ramp on the Ohio side.",
+          "source": "odnr-pymatuning"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Pymatuning State Park office",
+          "+14402614551",
+          "440-261-4551",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-pymatuning"
+      ]
+    },
+    "milton": {
+      "name": "Lake Milton",
+      "checked": "2026-11-03",
+      "items": [
+        {
+          "name": "Marina",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "ODNR lists the Lake Milton Marina but has not posted a 2026 date for pulling docks.",
+          "source": "odnr-milton"
+        },
+        {
+          "name": "Fall drawdown",
+          "status": "unannounced",
+          "label": "Seasonal",
+          "note": "ODNR: the fall drawdown typically begins Oct. 15 and takes the lake down about 8 ft; refill starts March 15, weather permitting.",
+          "source": "odnr-milton"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "ODNR lists three ramps: Miller&rsquo;s Landing, Robinson Point and Pointview.",
+          "source": "odnr-milton"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "Lake Milton Marina",
+          "+13306544991",
+          "330-654-4991",
+          ""
+        ],
+        [
+          "Lake Milton State Park office",
+          "+13302350030",
+          "330-235-0030",
+          ""
+        ]
+      ],
+      "sources": [
+        "odnr-milton"
+      ]
+    },
+    "leesville": {
+      "name": "Leesville Lake",
+      "checked": "2026-11-03",
+      "items": [
+        {
+          "name": "Marina docks",
+          "status": "unannounced",
+          "label": "Not announced",
+          "note": "MWCD lists the South Fork and North Fork marinas but has not posted a date for pulling docks.",
+          "source": "mwcd-leesville"
+        },
+        {
+          "name": "Launch ramps",
+          "status": "unannounced",
+          "label": "No closure posted",
+          "note": "MWCD lists two public launch ramps and an accessible kayak launch.",
+          "source": "mwcd-leesville"
+        }
+      ],
+      "history": "",
+      "history_url": "",
+      "calls": [
+        [
+          "North Fork Marina",
+          "+13306274270",
+          "330-627-4270",
+          ""
+        ],
+        [
+          "MWCD, Atwood Lake Park office",
+          "+13303436780",
+          "330-343-6780",
+          ""
+        ]
+      ],
+      "sources": [
+        "mwcd-leesville"
+      ]
     }
   },
   "watch": [
@@ -942,6 +1214,21 @@
       ]
     },
     {
+      "id": "peak-indian-docks",
+      "label": "Peak of Ohio, ODNR end of season boating reminders for Indian Lake (Oct. 24, 2026)",
+      "url": "https://www.peakofohio.com/local-news/odnr-shares-end-of-season-boating-reminders-for-indian-lake/",
+      "lakes": [
+        "indian"
+      ],
+      "keywords": [
+        "dock",
+        "november",
+        "remov",
+        "buoy",
+        "no-wake"
+      ]
+    },
+    {
       "id": "odnr-delaware",
       "label": "ODNR, Delaware State Park",
       "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park",
@@ -958,6 +1245,21 @@
         "remov",
         "alert",
         "marina"
+      ]
+    },
+    {
+      "id": "odnr-delaware-lottery",
+      "label": "ODNR, Delaware Dock Lottery",
+      "url": "https://ohiodnr.gov/discover-and-learn/safety-conservation/about-odnr/division-parks-watercraft/boating-paddling-ohio/dock-lotteries/delaware",
+      "lakes": [
+        "delaware"
+      ],
+      "keywords": [
+        "dock season",
+        "april",
+        "october",
+        "remov",
+        "lottery"
       ]
     },
     {
@@ -1096,6 +1398,21 @@
       ]
     },
     {
+      "id": "mwcd-drawdowns",
+      "label": "MWCD, Winter Drawdown Schedule (Oct. 2026)",
+      "url": "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/",
+      "lakes": [
+        "seneca"
+      ],
+      "keywords": [
+        "seneca",
+        "drawdown",
+        "november",
+        "dock",
+        "ramp"
+      ]
+    },
+    {
       "id": "odnr-dillon",
       "label": "ODNR, Dillon State Park",
       "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park",
@@ -1188,6 +1505,121 @@
         "remov",
         "alert",
         "marina"
+      ]
+    },
+    {
+      "id": "odnr-mosquito",
+      "label": "ODNR, Mosquito Lake State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park",
+      "lakes": [
+        "mosquito"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-berlin",
+      "label": "ODNR, Berlin Lake Fishing Area",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area",
+      "lakes": [
+        "berlin"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-westbranch",
+      "label": "ODNR, West Branch State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park",
+      "lakes": [
+        "westbranch"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-pymatuning",
+      "label": "ODNR, Pymatuning State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park",
+      "lakes": [
+        "pymatuning"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "odnr-milton",
+      "label": "ODNR, Lake Milton State Park",
+      "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park",
+      "lakes": [
+        "milton"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina"
+      ]
+    },
+    {
+      "id": "mwcd-leesville",
+      "label": "Muskingum Watershed Conservancy District, Leesville Lake",
+      "url": "https://www.mwcd.org/places/leesville-lake/",
+      "lakes": [
+        "leesville"
+      ],
+      "keywords": [
+        "dock",
+        "ramp",
+        "launch",
+        "drawdown",
+        "closed",
+        "closure",
+        "remov",
+        "alert",
+        "marina",
+        "season"
       ]
     }
   ]

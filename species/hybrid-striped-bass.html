@@ -31,8 +31,8 @@
   <link rel="preload" href="../assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../css/styles.css?v=v25-2026-11-03">
-  <script src="../js/lakes.js?v=v25-2026-11-03"></script>
+  <link rel="stylesheet" href="../css/styles.css?v=v26-2026-11-03">
+  <script src="../js/lakes.js?v=v26-2026-11-03"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Species", "item": "https://nightbiteoh.com/species/"}, {"@type": "ListItem", "position": 3, "name": "Hybrid striped bass (wiper)", "item": "https://nightbiteoh.com/species/hybrid-striped-bass"}]}
   </script>
@@ -92,6 +92,12 @@
     <p class="lake-note" data-for="saltfork">Not a regular at Salt Fork Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
     <p class="lake-note" data-for="burroak">Not a regular at Burr Oak Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
     <p class="lake-note" data-for="dow">Not a regular at Dow Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
+    <p class="lake-note" data-for="mosquito">Not a regular at Mosquito Creek Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
+    <p class="lake-note" data-for="berlin">Not a regular at Berlin Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
+    <p class="lake-note" data-for="westbranch">Not a regular at West Branch Reservoir: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
+    <p class="lake-note" data-for="pymatuning">Not a regular at Pymatuning Lake: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
+    <p class="lake-note" data-for="milton">Not a regular at Lake Milton: ODNR doesn't list it there. The rest of this page is Hoover notes.</p>
+    <p class="lake-note" data-for="leesville">ODNR lists hybrid striped bass at Leesville Lake.</p>
     <!-- stocking-line -->
     <p class="meta sp-stock" data-for="oshaughnessy">ODNR lists O’Shaughnessy among the lakes it stocks with hybrid striped bass; no numbers are posted. <a href="../stocking?lake=oshaughnessy#stocked">Stocking &amp; surveys</a></p>
     <p class="meta sp-stock" data-for="griggs">ODNR lists Griggs among the lakes it stocks with hybrid striped bass; no numbers are posted. <a href="../stocking?lake=griggs#stocked">Stocking &amp; surveys</a></p>
@@ -100,9 +106,9 @@
 
     <div class="sp-now" id="sp-now" data-species="hybrid-striped-bass" hidden></div>
     <!-- filled right here, before paint, from the month's picks for the active lake -->
-    <script src="../js/biting-data.js?v=v25-2026-11-03"></script>
-    <script src="../js/biting-data-lakes.js?v=v25-2026-11-03"></script>
-    <script src="../js/species-lake.js?v=v25-2026-11-03"></script>
+    <script src="../js/biting-data.js?v=v26-2026-11-03"></script>
+    <script src="../js/biting-data-lakes.js?v=v26-2026-11-03"></script>
+    <script src="../js/species-lake.js?v=v26-2026-11-03"></script>
 
     <nav class="species-subnav" aria-label="On this page">
       <a href="#season">Season</a>
@@ -207,12 +213,31 @@
       <p data-for="saltfork">Not a regular at Salt Fork Lake, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
       <p data-for="burroak">Not a regular at Burr Oak Lake, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
       <p data-for="dow">Not a regular at Dow Lake, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
+      <p data-for="mosquito">Not a regular at Mosquito Creek Lake, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
+      <p data-for="berlin">Not a regular at Berlin Lake, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
+      <p data-for="westbranch">Not a regular at West Branch Reservoir, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
+      <p data-for="pymatuning">Not a regular at Pymatuning Lake, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
+      <p data-for="milton">Not a regular at Lake Milton, so there are no where notes for this lake. See the Hoover notes on the Hoover view.</p>
+      <div data-for="leesville">
+      <div class="mode-panel" data-mode="bank">
+      <ul>
+        <li>Shore by the South Fork and North Fork marinas. No road circles the lake, so most of the shore is boat access (ODNR).</li>
+        <li>Public ramps, parks and shore only. Pins on the <a href="../water#maps">water maps</a>.</li>
+      </ul>
+      </div>
+      <div class="mode-panel" data-mode="boat" hidden>
+      <ul>
+        <li>10 hp limit (MWCD); 27 miles of shoreline.</li>
+        <li>Contours on the ODNR fishing map; check no wake zones before a night run.</li>
+      </ul>
+      </div>
+      </div>
     </section>
 
     <section id="limits" class="species-section">
       <h2>Limits <span class="regs-tag">reminder, verify</span></h2>
-      <p class="meta">Honest framing: white bass confirmed on ODNR Hoover page; hybrids often lumped in the same aggregate regs in Ohio. Verify presence and HuntFish OH before targeting/keeping.</p>
-      <div class="table-wrap">
+      <p class="meta" data-for="hoover alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch milton leesville">Honest framing: white bass confirmed on ODNR Hoover page; hybrids often lumped in the same aggregate regs in Ohio. Verify presence and HuntFish OH before targeting/keeping.</p>
+      <div class="table-wrap" data-for="hoover alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch milton leesville">
         <table class="access-table regs-table">
           <thead>
             <tr><th scope="col">Rule</th><th scope="col">Reminder (verify 2026–27)</th></tr>
@@ -220,6 +245,18 @@
           <tbody>
           <tr><td>Striped / hybrid striped / white bass combined</td><td>Daily 30</td></tr>
           <tr><td>Over 15″</td><td>No more than 4 of the 30</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="meta" data-for="pymatuning">Pymatuning has its own Ohio–Pennsylvania rules in the 2026–27 booklet: hybrid striped bass fall under all other fish, with no limit.</p>
+      <div class="table-wrap" data-for="pymatuning">
+        <table class="access-table regs-table">
+          <thead>
+            <tr><th scope="col">Rule</th><th scope="col">Reminder (verify 2026–27)</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Daily bag</td><td>No limit (all other fish)</td></tr>
+          <tr><td>Minimum length</td><td>None</td></tr>
           </tbody>
         </table>
       </div>
@@ -246,6 +283,12 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
       <p class="meta" data-for="saltfork">Sized for bank reality and small boats. Salt Fork Lake allows unlimited horsepower, with speed and ski zones.</p>
       <p class="meta" data-for="burroak">Sized for bank reality and small boats. Burr Oak Lake has a 10 hp limit.</p>
       <p class="meta" data-for="dow">Sized for bank reality and small boats. Dow Lake has a 10 hp limit.</p>
+      <p class="meta" data-for="mosquito">Sized for bank reality and small boats. Mosquito Creek Lake has no horsepower limit, with no wake 300 ft from shore.</p>
+      <p class="meta" data-for="berlin">Sized for bank reality and small boats. Berlin Lake has no horsepower limit by day and 10 mph at night.</p>
+      <p class="meta" data-for="westbranch">Sized for bank reality and small boats. West Branch allows unlimited horsepower, with no wake 300 ft from shore.</p>
+      <p class="meta" data-for="pymatuning">Sized for bank reality and small boats. Pymatuning has a 20 hp limit.</p>
+      <p class="meta" data-for="milton">Sized for bank reality and small boats. Lake Milton has no horsepower restrictions.</p>
+      <p class="meta" data-for="leesville">Sized for bank reality and small boats. Leesville Lake has a 10 hp limit.</p>
       <div class="mode-panel" data-mode="bank">
       <ul>
         <li>Same as white bass / light saltwater-ish spinning if fish run larger.</li>
@@ -306,14 +349,14 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="../js/refresh.js?v=v25-2026-11-03"></script>
-  <script src="../js/sw-update.js?v=v25-2026-11-03"></script>
-  <script src="../js/alerts.js?v=v25-2026-11-03"></script>
-  <script src="../js/nav.js?v=v25-2026-11-03"></script>
-  <script src="../js/visits.js?v=v25-2026-11-03"></script>
-  <script src="../js/lake-picker.js?v=v25-2026-11-03"></script>
-  <script src="../js/sticky-nav.js?v=v25-2026-11-03"></script>
-  <script src="../js/mode-toggle.js?v=v25-2026-11-03"></script>
+  <script src="../js/refresh.js?v=v26-2026-11-03"></script>
+  <script src="../js/sw-update.js?v=v26-2026-11-03"></script>
+  <script src="../js/alerts.js?v=v26-2026-11-03"></script>
+  <script src="../js/nav.js?v=v26-2026-11-03"></script>
+  <script src="../js/visits.js?v=v26-2026-11-03"></script>
+  <script src="../js/lake-picker.js?v=v26-2026-11-03"></script>
+  <script src="../js/sticky-nav.js?v=v26-2026-11-03"></script>
+  <script src="../js/mode-toggle.js?v=v26-2026-11-03"></script>
 
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
