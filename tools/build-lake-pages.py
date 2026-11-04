@@ -385,7 +385,8 @@ def root_jsonld(title):
          "alternateName": ["Night Bite OH", "The Night Bite Ohio", "nightbiteoh.com"], "url": SITE,
          "inLanguage": "en-US", "publisher": {"@id": ORG_ID}},
         {"@context": "https://schema.org", "@type": "Organization", "@id": ORG_ID, "name": "The Night Bite", "url": SITE,
-         "logo": {"@type": "ImageObject", "url": SITE + "assets/icons/icon-512.png", "width": 512, "height": 512}},
+         "logo": {"@type": "ImageObject", "url": SITE + "assets/icons/icon-512.png", "width": 512, "height": 512},
+         "sameAs": ["https://www.facebook.com/profile.php?id=61596457070134", "https://www.instagram.com/nightbiteohio/", "https://x.com/NightBiteOH"]},
         {"@context": "https://schema.org", "@type": "WebPage", "@id": SITE + "#webpage", "url": SITE, "name": title,
          "isPartOf": {"@id": WEBSITE_ID}, "dateModified": checked or None, "inLanguage": "en-US"},
     ]

@@ -2,6 +2,17 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-04-follow-along",
+      "date": "2026-11-04",
+      "tag": "New",
+      "title": "Follow along on Facebook, Instagram and X",
+      "bullets": [
+        "The About page now has links to The Night Bite on Facebook, Instagram and X, right near the top.",
+        "Follow along between trips for new waters, updates and what's biting."
+      ],
+      "links": []
+    },
+    {
       "id": "2026-11-04-easier-to-read",
       "date": "2026-11-04",
       "tag": "New",
