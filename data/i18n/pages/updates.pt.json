@@ -7,6 +7,7 @@
  "strings": {
   "updates.00128dea": "Esta noite em Hoover, alertas do tempo e o mapa do lago",
   "updates.0066fffe": "O título e a descrição da página de cada lago agora ficam em um só arquivo ao lado dos Dados rápidos, então adicionar a próxima água é mais rápido e fica mais difícil pular uma etapa.",
+  "updates.01f97734": "Acompanhe no Facebook, Instagram e X",
   "updates.045a6de9": "Só os nomes de lagos, rampas, espécies e órgãos e os números ficam como estão, e todo idioma que não seja o inglês usa a fonte legível do seu celular.",
   "updates.0759b0fd": "Toda página de lago agora começa o título e o cabeçalho principal com o nome da água, como Hoover Reservoir fishing, para que os resultados de busca mostrem qual água você está vendo.",
   "updates.07ebb1ed": "A página inicial agora é um seletor para todas as 23 águas. Cada quadro mostra a carta da água (norte para cima) e a linha do medidor. Busque por água ou por cidade, ou filtre para Centro, Leste e Sudeste, ou Nordeste de Ohio com as etiquetas de região.",
@@ -22,6 +23,7 @@
   "updates.284cb67a": "Página de Buckeye Lake",
   "updates.28a71e4c": "Espécies conhece seu lago: mostra primeiro os peixes desse lago, marca o que está mordendo lá este mês e lista rampas e acessos.",
   "updates.29af01ff": "Página de Alum Creek",
+  "updates.29b813e3": "Acompanhe entre as pescarias para novas águas, novidades e o que está mordendo.",
   "updates.2d492336": "Cartões, botões, o seletor de lagos e Iscas por perto agora compartilham o mesmo canto nítido.",
   "updates.2efa588a": "Peixamento e levantamentos, Equipamento e Temporada de gelo cobrem as seis, e o formulário de relato de pescaria agora lista todas as 23 águas.",
   "updates.32eedef4": "Compartilhe nightbiteoh.com/docks para mandar qualquer pessoa direto para a situação mais recente dos píeres.",
@@ -38,6 +40,7 @@
   "updates.590cf468": "A nova página Peixamentos e levantamentos mostra o histórico de peixamento, crescimento e dados de pesquisa com pescadores do ODNR para Hoover e Alum Creek.",
   "updates.5a4c4907": "Torneios agora fica no fim da página do Diário.",
   "updates.5c8b8cd9": "Diário: suas pescarias aparecem primeiro, você pode fazer backup ou passar suas pescarias para outro celular, e Compartilhar uma pescaria agora envia para revisão antes de qualquer publicação.",
+  "updates.5d0e8250": "A página Sobre agora tem links para The Night Bite no Facebook, Instagram e X, bem no topo.",
   "updates.5ebb2ca6": "Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake e Dow Lake ganham cada um uma página inicial com Hoje à noite em resumo, o mapa, rampas e píeres, regras, peixamento e Iscas por perto, tudo das páginas de MWCD, ODNR, USGS, Army Corps e NWS.",
   "updates.5f1a3f26": "Uma etiqueta de regras noturnas mostra o horário oficial de fechamento com contagem regressiva, e os avisos de tempestade aparecem na barra de alertas do tempo.",
   "updates.617e6527": "Seis águas do nordeste",

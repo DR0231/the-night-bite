@@ -7,6 +7,7 @@
  "strings": {
   "updates.00128dea": "Ce soir à Hoover, alertes météo et carte du lac",
   "updates.0066fffe": "Le titre et la description de chaque page de lac sont maintenant dans un seul fichier à côté de En bref, donc ajouter le prochain plan d’eau est plus rapide et on oublie moins d’étapes.",
+  "updates.01f97734": "Suivez-nous sur Facebook, Instagram et X",
   "updates.045a6de9": "Seuls les noms de lacs, de rampes, d’espèces et d’organismes et les nombres restent tels quels, et toute langue autre que l’anglais utilise la police lisible de ton téléphone.",
   "updates.0759b0fd": "Chaque page de lac commence maintenant par le nom du plan d’eau dans son titre et son grand titre, comme Hoover Reservoir fishing, pour que les résultats de recherche montrent quel plan d’eau tu regardes.",
   "updates.07ebb1ed": "La page d’accueil est maintenant un sélecteur pour les 23 plans d’eau. Chaque tuile montre la carte du plan d’eau (nord en haut) et sa ligne de jauge. Cherche par plan d’eau ou par ville, ou filtre sur Central, East and Southeast ou Northeast Ohio avec les pastilles de région.",
@@ -22,6 +23,7 @@
   "updates.284cb67a": "Accueil Buckeye Lake",
   "updates.28a71e4c": "Espèces connaît votre lac : il montre d’abord les poissons de ce lac, signale ce qui y mord ce mois-ci et liste mises à l’eau et accès.",
   "updates.29af01ff": "Accueil Alum Creek",
+  "updates.29b813e3": "Suivez-nous entre deux sorties pour les nouvelles eaux, les nouveautés et ce qui mord.",
   "updates.2d492336": "Les cartes, les boutons, le sélecteur de lacs et Appâts à proximité partagent maintenant un même coin net.",
   "updates.2efa588a": "Empoissonnement et relevés, Matériel et Saison des glaces couvrent les six, et le formulaire de sortie liste maintenant les 23 plans d’eau.",
   "updates.32eedef4": "Partagez nightbiteoh.com/docks pour envoyer n’importe qui directement au dernier statut des pontons.",
@@ -38,6 +40,7 @@
   "updates.590cf468": "La nouvelle page Empoissonnement et relevés montre l’historique d’alevinage, la croissance et les enquêtes pêcheurs de l’ODNR pour Hoover et Alum Creek.",
   "updates.5a4c4907": "Les tournois sont maintenant en bas de la page Journal.",
   "updates.5c8b8cd9": "Journal : tes sorties passent en premier, tu peux les sauvegarder ou les transférer sur un autre téléphone, et Partager une sortie envoie maintenant pour relecture avant toute publication.",
+  "updates.5d0e8250": "La page À propos a maintenant des liens vers The Night Bite sur Facebook, Instagram et X, tout en haut.",
   "updates.5ebb2ca6": "Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake et Dow Lake ont chacun une page d’accueil avec Ce soir en un coup d'œil, la carte, les rampes et quais, les règles, l’empoissonnement et Appâts à proximité, le tout tiré des pages de MWCD, ODNR, USGS, Army Corps et NWS.",
   "updates.5f1a3f26": "Une pastille de règles de nuit affiche l’heure de fermeture officielle avec un compte à rebours, et les bulletins d’orage s’affichent dans la barre d’alertes météo.",
   "updates.617e6527": "Six plans d’eau du nord-est",

@@ -7,6 +7,7 @@
  "strings": {
   "updates.00128dea": "今晚 Hoover、天气警报和湖泊地图",
   "updates.0066fffe": "每个湖的页面标题和描述现在都放在速览旁边的同一个文件里，添加下一个水域更快，也更不容易漏步骤。",
+  "updates.01f97734": "在 Facebook、Instagram 和 X 上关注我们",
   "updates.045a6de9": "只有湖泊、下水坡道、鱼种和机构的名称以及数字保持原样，英语以外的语言都使用手机的易读字体。",
   "updates.0759b0fd": "每个湖泊页面的标题和主标题现在都以水域名称开头，比如 Hoover Reservoir fishing，这样搜索结果能看出是哪个水域。",
   "updates.07ebb1ed": "首页现在是全部 23 个水域的选择器。每个卡片显示水域地图（上北）和水位计那一行。可以按水域或城镇搜索，也可以用地区标签缩小到中部、东部和东南部，或 Ohio 东北部。",
@@ -22,6 +23,7 @@
   "updates.284cb67a": "Buckeye Lake 首页",
   "updates.28a71e4c": "鱼种页面了解你的湖：先显示该湖的鱼，标出本月那里正在开口的鱼，并列出下水坡道和通道。",
   "updates.29af01ff": "Alum Creek 首页",
+  "updates.29b813e3": "在两次出钓之间关注我们，了解新水域、更新和鱼情。",
   "updates.2d492336": "卡片、按钮、湖泊选择器和附近饵料店现在共用同一种利落的圆角。",
   "updates.2efa588a": "放流与调查、装备和冰钓季节都涵盖这六个水域，出钓报告表现在列出全部 23 个水域。",
   "updates.32eedef4": "分享 nightbiteoh.com/docks，就能让任何人直接看到最新码头状态。",
@@ -38,6 +40,7 @@
   "updates.590cf468": "新的放流与调查页面显示 Hoover 和 Alum Creek 的 ODNR 放流历史、生长和钓友调查数据。",
   "updates.5a4c4907": "比赛现在位于日志页面底部。",
   "updates.5c8b8cd9": "日志：你的出钓排在最前面，可以备份出钓或转移到另一部手机，分享一次出钓现在会先提交审核再发布。",
+  "updates.5d0e8250": "关于页面顶部现在有 The Night Bite 的 Facebook、Instagram 和 X 链接。",
   "updates.5ebb2ca6": "Seneca Lake、Dillon Lake、Lake Logan、Salt Fork Lake、Burr Oak Lake 和 Dow Lake 各有一个首页，包括今晚概览、地图、下水坡道和码头、规则、放流和附近饵料店，全部来自 MWCD、ODNR、USGS、Army Corps 和 NWS 的页面。",
   "updates.5f1a3f26": "夜间规则标签显示官方关闭时间和倒计时，雷暴通报显示在天气警报栏里。",
   "updates.617e6527": "东北部的六个水域",

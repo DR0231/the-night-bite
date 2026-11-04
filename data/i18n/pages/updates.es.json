@@ -7,6 +7,7 @@
  "strings": {
   "updates.00128dea": "Esta noche en Hoover, alertas del tiempo y el mapa del lago",
   "updates.0066fffe": "El título y la descripción de la página de cada lago ahora están en un solo archivo junto a sus Datos rápidos, así que añadir la próxima agua es más rápido y es menos probable saltarse un paso.",
+  "updates.01f97734": "Síguenos en Facebook, Instagram y X",
   "updates.045a6de9": "Solo los nombres de lagos, rampas, especies y agencias y los números quedan como están escritos, y todos los idiomas distintos del inglés usan la fuente legible de tu teléfono.",
   "updates.0759b0fd": "Cada página de lago ahora empieza con el nombre del agua en su título y encabezado principal, como Hoover Reservoir fishing, para que los resultados de búsqueda muestren qué agua estás viendo.",
   "updates.07ebb1ed": "La página de inicio ahora es un selector para las 23 aguas. Cada mosaico muestra el mapa del agua (norte arriba) y su línea de medidor. Busca por agua o por pueblo, o filtra por Central, East and Southeast o Northeast Ohio con las fichas de región.",
@@ -22,6 +23,7 @@
   "updates.284cb67a": "Inicio de Buckeye Lake",
   "updates.28a71e4c": "Especies conoce tu lago: muestra primero los peces de ese lago, marca lo que pica ahí este mes y lista rampas y accesos.",
   "updates.29af01ff": "Inicio de Alum Creek",
+  "updates.29b813e3": "Síguenos entre salidas para nuevas aguas, novedades y lo que está picando.",
   "updates.2d492336": "Las tarjetas, los botones, el selector de lagos y Carnada cerca ahora comparten una misma esquina nítida.",
   "updates.2efa588a": "Siembras y estudios, Equipo y Temporada de hielo cubren las seis, y el formulario de reporte de salidas ahora lista las 23 aguas.",
   "updates.32eedef4": "Comparte nightbiteoh.com/docks para mandar a cualquiera directo al estado más reciente de los muelles.",
@@ -38,6 +40,7 @@
   "updates.590cf468": "La nueva página Siembras y estudios muestra el historial de siembras de ODNR, el crecimiento y los datos de encuestas a pescadores de Hoover y Alum Creek.",
   "updates.5a4c4907": "Torneos ahora está al final de la página de Bitácora.",
   "updates.5c8b8cd9": "Bitácora: tus salidas van primero, puedes respaldarlas o pasarlas a otro teléfono, y Compartir una salida ahora envía para revisión antes de publicar nada.",
+  "updates.5d0e8250": "La página Acerca de ahora tiene enlaces a The Night Bite en Facebook, Instagram y X, justo arriba.",
   "updates.5ebb2ca6": "Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake y Dow Lake tienen cada uno una página de inicio con Esta noche de un vistazo, el mapa, rampas y muelles, normas, siembras y Carnada cerca, todo de páginas de MWCD, ODNR, USGS, Army Corps y NWS.",
   "updates.5f1a3f26": "Una etiqueta de normas nocturnas muestra la hora oficial de cierre con una cuenta regresiva, y los avisos de tormenta aparecen en la barra de alertas del tiempo.",
   "updates.617e6527": "Seis aguas del noreste",
