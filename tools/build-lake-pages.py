@@ -270,6 +270,8 @@ for lake, L in LAKES.items():
     h = sub1(r'(<meta property="og:image" content=")[^"]*(")', r"\g<1>" + SITE + f"assets/og/og-{lake}.png" + r"\2", h)
     h = sub1(r'(<meta property="og:image:alt" content=")[^"]*(")', r"\g<1>" + esc(f"The Night Bite: {L['name']} fishing hub, a pixel lantern over a moonlit tree line") + r"\2", h)
     h = fill(h, lake, L["name"], url, L["title"])
+    # the map image alt names this lake (the template carries Hoover's)
+    h = h.replace("Outline map of Hoover Reservoir with pins", f"Outline map of {L['name']} with pins", 1)
     # this lake's own snapshot in the pool card (not Hoover's) and the glance strip baked from it, so the first paint,
     # a page with JavaScript off and a page whose USGS or NWS calls fail all show a stamped reading, never "--"
     _c = REG["lakes"][lake]
