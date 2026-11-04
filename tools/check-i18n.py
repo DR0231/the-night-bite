@@ -37,7 +37,7 @@ for k, v in en.items():
 boot = (ROOT / "js" / "a11y-boot.js").read_text()
 m = re.search(r"LANGS = \{([^}]*)\}", boot)
 listed = set(re.findall(r"(\w[\w-]*):", m.group(1))) if m else set()
-files = sorted(p.stem for p in D.glob("*.json"))
+files = sorted(p.stem for p in D.glob("*.json") if not p.stem.lower().startswith("whisperwood"))  # Whisperwood is never translated
 for l in sorted(set(files) ^ listed):
     errs.append(f"{l}: " + ("has a string file but is not in LANGS in js/a11y-boot.js" if l in files else "is in LANGS but has no data/i18n/" + l + ".json"))
 report = []

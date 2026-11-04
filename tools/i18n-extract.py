@@ -46,7 +46,7 @@ def pages():
     for p in sorted(ROOT.glob("*.html")):
         if p.stem not in SKIP_PAGES: out.append(("index" if p.stem == "index" else p.stem, p))
     for p in sorted(ROOT.glob("*/index.html")):
-        if p.parent.name in ("species", "tools", "previews", "workers", "assets"): continue
+        if p.parent.name in ("species", "tools", "previews", "workers", "assets") or p.parent.name in SKIP_PAGES: continue
         out.append((p.parent.name, p))
     for p in sorted((ROOT / "species").glob("*.html")):
         out.append(("species" if p.stem == "index" else "species-" + p.stem, p))
@@ -187,6 +187,7 @@ def main():
             j["_meta"]["pages"] = want; changed.append(str(lf.relative_to(ROOT)))
             if not a.check: lf.write_text(json.dumps(j, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     for p in PAGES.glob("*.json"):
+        if p.name.split(".")[0] in SKIP_PAGES: continue  # Whisperwood is never translated
         if p.name not in keep_files:
             changed.append(str(p.relative_to(ROOT)) + " (stale)")
             if not a.check: p.unlink()
