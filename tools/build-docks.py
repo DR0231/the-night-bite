@@ -4,8 +4,12 @@
 Edit data/docks.json, then from the repo root:  python3 tools/build-docks.py && python3 tools/stamp-version.py
 Statuses: in, ending (needs "ends"; js/docks.js flips it to the after text once the date passes in Columbus),
 out (only when an official source says the docks are out), unannounced (the honest default).
+An "ending" item whose date has already passed (ET) when this runs is written with its after text already in place
+(class is-over), so a reader with JavaScript off never sees "Season ends Oct. 31" in November. js/docks.js does the
+same swap in the browser for dates that pass between builds. Rerun this script (check-all and promote run it) to
+rebake after a date passes.
 """
-import datetime, html, json, pathlib, re, sys
+import datetime, html, json, pathlib, re, sys, zoneinfo
 
 R = pathlib.Path(__file__).resolve().parent.parent
 D = json.loads((R / "data" / "docks.json").read_text())
@@ -41,20 +45,23 @@ for lake in D["lakes"].values():
                 sys.exit(f"spaced dash in {it['name']} {k}")
 
 checked = D["checked"]
+TODAY = datetime.datetime.now(zoneinfo.ZoneInfo("America/New_York")).date().isoformat()
 out = ['      <p class="docks-intro">Who pulls the docks and when, from the City of Columbus, ODNR and marina pages. '
        '<strong>Not announced</strong> means no official date is posted yet.</p>']
 for key, lake in D["lakes"].items():
     out.append(f'      <div data-for="{key}" class="docks-lake">')
     out.append(f'        <ul class="dock-status" aria-label="{lake["name"]} dock status">')
     for it in lake["items"]:
-        extra = ""
+        extra, cls, label, note = "", PILL[it["status"]], it["label"], it["note"]
         if it["status"] == "ending":
             extra = (f' data-ends="{it["ends"]}" data-after-label="{attr(it["after_label"])}"'
                      f' data-after-note="{attr(it["after_note"])}"')
-        out.append(f'          <li class="dock-item {PILL[it["status"]]}"{extra}>')
+            if TODAY > it["ends"]:   # same test as js/docks.js: the day after "ends" in Columbus
+                cls, label, note = "is-over", it["after_label"], it["after_note"]
+        out.append(f'          <li class="dock-item {cls}"{extra}>')
         out.append(f'            <p class="dock-head"><span class="dock-name">{it["name"]}</span> '
-                   f'<span class="dock-pill">{it["label"]}</span></p>')
-        out.append(f'            <p class="dock-note">{it["note"]}</p>')
+                   f'<span class="dock-pill">{label}</span></p>')
+        out.append(f'            <p class="dock-note">{note}</p>')
         out.append('          </li>')
     out.append('        </ul>')
     if lake.get("history"):

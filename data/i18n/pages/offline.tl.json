@@ -1,0 +1,14 @@
+{
+ "_meta": {
+  "lang": "tl",
+  "page": "offline",
+  "review": "draft"
+ },
+ "strings": {
+  "offline.339f750b": ", ang pahina ng tubig mo na may huling reading ng pool at panahon",
+  "offline.8c5c8561": "at kung ano ang kumakagat ngayong buwan",
+  "offline.cf591706": "Pagbalik ng signal, i-reload para makuha ang pahina.",
+  "offline.dc9caf67": "Hindi pa naka-save ang pahinang ito sa teleponong ito. Gumagana pa rin kahit walang signal ang mga pahinang nabuksan mo na.",
+  "offline.f690c8ed": "Ang log mo"
+ }
+}

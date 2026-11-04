@@ -1,0 +1,43 @@
+{
+ "_meta": {
+  "lang": "pl",
+  "page": "index",
+  "review": "draft"
+ },
+ "strings": {
+  "index.03971123": "Regiony",
+  "index.0f01ed56": "Przykład",
+  "index.1928f95c": "Android",
+  "index.23a72ab2": "Albo stuknij przycisk Zainstaluj, gdy się pojawi.",
+  "index.2e184a9f": "Poziom i temp. na żywo",
+  "index.37b80ed5": "W Safari stuknij",
+  "index.4024c72d": "· nie ODNR / miasto / USGS",
+  "index.40354734": "Stuknij „Zainstaluj aplikację” lub „Dodaj do ekranu głównego”.",
+  "index.4380d61f": "Nocne wędkowanie bywa niebezpieczne w burzę, upał i przy słabej widoczności. Załóż kamizelkę ratunkową, gdy trzeba. Strona każdej wody ma własne limity dla łodzi i zasady. Zobacz",
+  "index.45f81cbc": "Stuknij „Do ekranu początkowego”. Przewiń menu, jeśli tego nie widzisz.",
+  "index.4957404d": "Wschodnio-centralne Ohio",
+  "index.4d1176b5": "Centrum",
+  "index.4d96dde3": "Nieoficjalny serwis o nocnym wędkowaniu w Ohio z klimatem nocnego pomostu, jedna strona główna na każdą wodę",
+  "index.51cbb35c": "Udostępnij.",
+  "index.5370c168": "(trzy kropki)",
+  "index.6e6b02b1": "Używasz aplikacji. Otwarte strony działają nawet bez zasięgu.",
+  "index.7321b4ce": "Stuknij Dodaj.",
+  "index.86b1f04a": "Wschód i południowy wschód",
+  "index.8b8965bf": "Północny wschód",
+  "index.96bb7bdb": "ikonę Udostępnij",
+  "index.97f2142c": "iPhone",
+  "index.9b03b878": "Przeglądarka zapyta przed dodaniem.",
+  "index.a8661d83": "Nie ma jeszcze wód o tej nazwie",
+  "index.bae44a41": "Ostatnio wybrane",
+  "index.bfa17ff0": "Strony gatunków z przypomnieniami o limitach według przepisów ODNR 2026–27",
+  "index.c0908888": "Jeden przykładowy wpis w dzienniku, oznaczony",
+  "index.c6e2a6d0": "Południowo-wschodnie Ohio",
+  "index.e0f2f8e2": "Tylko przeglądam",
+  "index.e3305e61": "Wszystkie wody",
+  "index.e5f79aa1": "Zainstaluj aplikację",
+  "index.e77ccfbe": "Poziom na żywo",
+  "index.ed4ec706": "W Chrome stuknij menu",
+  "index.ed642a6c": "Zachodnio-centralne Ohio",
+  "index.edea1ded": "Pokaż wszystkie wody"
+ }
+}

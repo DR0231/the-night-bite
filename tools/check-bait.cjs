@@ -3,7 +3,8 @@ const {chromium}=require('/usr/local/lib/pnpm/5/.pnpm/playwright-core@1.59.1/nod
 const na=require(require('path').join(__dirname,'no-analytics.cjs'));
 const BASE=process.env.BASE||'https://dr0231.github.io/night-bite-preview/';
 const data=require(require('path').join(__dirname,'..','data','bait-shops.json')).lakes;
-const IDS=require(require('path').join(__dirname,'registry.cjs')).order();   // every lake in js/lakes.js
+const ONLY=(process.env.NB_LAKES||'').split(',').filter(Boolean);   // NB_LAKES=a,b (set by check-all.py) limits the lakes
+const IDS=require(require('path').join(__dirname,'registry.cjs')).order().filter(l=>!ONLY.length||ONLY.includes(l));   // default every lake in js/lakes.js
 // the analytics beacon we block ourselves logs ERR_BLOCKED_BY_CLIENT; ignore that line only when every failed request was ours
 const realErrs=(errs,rf)=>errs.filter(e=>!(/ERR_BLOCKED_BY_CLIENT/.test(e)&&rf.length&&rf.every(u=>na.PATTERN.test(u))));
 let pass=0,fail=0;const out=[];function ok(n,c,i){c?pass++:fail++; if(!c||process.env.V) out.push((c?'PASS ':'FAIL ')+n+(i!==undefined?' :: '+JSON.stringify(i):''));}

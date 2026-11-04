@@ -1,5 +1,8 @@
 // The Night Bite: full check of every page a set of waters has (lake home plus its ?lake= views of the shared pages).
-// Usage: node tools/check-waters.cjs [BASE] [OUTDIR] [ids,comma,separated]   (default ids: every lake in js/lakes.js)
+// Usage: node tools/check-waters.cjs [BASE] [OUTDIR] [ids,comma,separated | --all-lakes [--group N] [--fresh]]
+//   No ids: the lakes whose files differ from origin/main (git diff, uncommitted and untracked too) plus hoover, printed.
+//   --all-lakes: every lake, in groups of 5 (NB_GROUP_SIZE), each run as its own child into OUTDIR/group-N/ with a
+//   group-N.json result; rerunning skips groups that passed, so an interrupted run resumes. --group N runs one group.
 //   BASE defaults to the preview. Every run blocks analytics and the visits counter (tools/no-analytics.cjs).
 // Per page at 390, 820 and 1280: status 200, no console or page errors, no sideways scroll, every image loaded with alt.
 // Once per page (390): title, meta description, OG tags, canonical, JSON-LD parses, lake home WebPage dateModified
@@ -10,10 +13,35 @@ const PW = process.env.PLAYWRIGHT_CORE || '/usr/local/lib/pnpm/5/.pnpm/playwrigh
 const { chromium } = require(PW);
 const path = require('path'), fs = require('fs');
 const NA = require(path.join(__dirname, 'no-analytics.cjs'));
-const BASE = (process.argv[2] || 'https://dr0231.github.io/night-bite-preview/').replace(/\/?$/, '/');
-const OUT = (process.argv[3] || '/tmp/check-waters').replace(/\/?$/, '/'); fs.mkdirSync(OUT, { recursive: true });
+const FLAGS = process.argv.slice(2).filter(x => x.startsWith('--')), POS = process.argv.slice(2).filter((x, i, l) => !x.startsWith('--') && l[i - 1] !== '--group');
+const BASE = (POS[0] || 'https://dr0231.github.io/night-bite-preview/').replace(/\/?$/, '/');
+const OUT = (POS[1] || '/tmp/check-waters').replace(/\/?$/, '/'); fs.mkdirSync(OUT, { recursive: true });
 const R = require(path.join(__dirname, 'registry.cjs'));
-const IDS = process.argv[4] ? process.argv[4].split(',') : R.order();   // default: every lake in js/lakes.js
+if (FLAGS.includes('--all-lakes')) {   // explicit full run, in resumable groups; each group is a child run of this script
+  const size = +process.env.NB_GROUP_SIZE || 5, all = R.order(), gi = process.argv.indexOf('--group'), only = gi > 0 ? process.argv[gi + 1] : null;
+  const groups = []; for (let i = 0; i < all.length; i += size) groups.push(all.slice(i, i + size));
+  if (only && !(+only >= 1 && +only <= groups.length)) { console.error(`check-waters: no group ${only}; groups are 1 to ${groups.length}`); process.exit(2); }
+  if (FLAGS.includes('--fresh')) for (const f of fs.readdirSync(OUT)) if (/^group-\d+\.json$/.test(f)) fs.unlinkSync(OUT + f);
+  console.log(`check-waters --all-lakes: ${all.length} lakes in ${groups.length} groups of ${size}, results in ${OUT}`);
+  let worst = 0;
+  groups.forEach((g, i) => {
+    const k = String(i + 1), res = OUT + 'group-' + k + '.json';
+    if (only && only !== k) return;
+    if (fs.existsSync(res) && JSON.parse(fs.readFileSync(res, 'utf8')).exit === 0) { console.log(`  group ${k} (${g.join(',')}): done earlier, skipped`); return; }
+    const t0 = Date.now(), p = require('child_process').spawnSync(process.execPath, [__filename, BASE, OUT + 'group-' + k + '/', g.join(',')], { encoding: 'utf8', maxBuffer: 64 << 20 });
+    const tail = (p.stdout || '').trim().split('\n').pop();
+    fs.writeFileSync(res, JSON.stringify({ group: k, lakes: g, exit: p.status, secs: Math.round((Date.now() - t0) / 1000), result: tail, at: new Date().toISOString() }, null, 1) + '\n');
+    console.log(`  group ${k} (${g.join(',')}): exit ${p.status} :: ${tail}`); worst = Math.max(worst, p.status || 0);
+  });
+  process.exit(worst ? 1 : 0);
+}
+let IDS = POS[2] ? POS[2].split(',') : null;
+if (!IDS) {   // never every lake by accident: changed lakes plus hoover
+  const ch = R.changed('origin/main'); const set = new Set([...(ch.lakes || []), 'hoover']);
+  IDS = R.order().filter(l => set.has(l));
+  console.log(`check-waters scope: lakes changed vs origin/main: ${(ch.lakes || []).join(',') || 'none'}, plus hoover -> ${IDS.join(',')}` + (ch.error ? ` (${ch.error})` : '') + ' (pass ids or --all-lakes for more)');
+}
+const badIds = IDS.filter(l => !R.order().includes(l)); if (badIds.length) { console.error('check-waters: unknown lake(s): ' + badIds.join(',')); process.exit(2); }
 const QF = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'quick-facts.json'), 'utf8')).lakes;
 const SITE = 'https://nightbiteoh.com/';
 const results = []; let fails = 0;
@@ -69,8 +97,12 @@ const PAGES = IDS.flatMap(l => [home(l), ...['water', 'stocking', 'gear', 'ice',
           const main = q('main') || document.body;
           const own = h => /^https:\/\/(nightbiteoh\.com|dr0231\.github\.io)\b/.test(h);
           const srcA = a => (/^https?:/.test(a.href) && !own(a.href)) || /^(\.\.\/)?(stocking|water|species\/[a-z-]+|[a-z-]+)(\?lake=[a-z]+)?(#[\w-]+)?$|^#[\w-]+$/.test(a.getAttribute('href'));
+          // user-entry boxes (forms and their inputs, the private trip list marked data-user-entry) hold what the reader types,
+          // not lake data, so their digits don't make a block need a source; everything else in the block still counts
+          const dataText = b => { const c = b.cloneNode(true); c.querySelectorAll('form, input, select, textarea, [data-user-entry]').forEach(x => x.remove());
+            if (b.matches('form, [data-user-entry]')) return ''; return c.textContent; };
           const blocks = [...main.querySelectorAll('.card, .how-to-read, .data-glance, .glance-cell, section.lake-section, .stock-lake, .rules-card')]
-            .filter(vis).filter(b => /\d/.test(b.innerText) && !b.closest('nav'))
+            .filter(vis).filter(b => /\d/.test(dataText(b)) && !b.closest('nav'))
             .filter(b => !b.querySelector('.card, .how-to-read'))
             .filter(b => !/^\/gear/.test(location.pathname.replace(/^\/night-bite-preview/, '')) || b.closest('[data-for]'))   // gear kits are general tackle, not lake data
             .map(b => { const own2 = [b, ...b.querySelectorAll('a[href]')].filter(a => a.matches('a[href]'));

@@ -31,8 +31,9 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v27-2026-11-03">
-  <script src="js/lakes.js?v=v27-2026-11-03"></script>
+  <script src="js/a11y-boot.js?v=v28-2026-11-04"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v28-2026-11-04">
+  <script src="js/lakes.js?v=v28-2026-11-04"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -47,20 +48,21 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li class="nav-core"><a href="./">Home</a></li>
-          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
-          <li class="nav-core"><a href="water" aria-current="page"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="species/">Species</a></li>
+          <li class="nav-core"><a href="water" aria-current="page"><span class="nav-label" data-short="Lake"><span class="nav-label-text">Water</span></span></a></li>
           <li class="nav-core"><a href="gear">Gear</a></li>
-          <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra nav-ww"><a href="whisperwood.html">Whisperwood Vale</a></li>
           <li class="nav-extra"><a href="log">Log</a></li>
           <li class="nav-extra"><a href="about">About</a></li>
-          <li class="nav-extra"><a href="updates" data-updates="2026-11-03">What&rsquo;s new</a></li>
-          <li class="nav-more-item">
+          <li class="nav-extra"><a href="updates" data-updates="2026-11-04">What&rsquo;s new</a></li>
+          <li class="nav-more-item nav-more-desk">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
               <a href="whisperwood.html">Whisperwood Vale</a>
               <a href="log">Log</a>
               <a href="about">About</a>
-              <a href="updates" data-updates="2026-11-03">What&rsquo;s new</a>
+              <a href="updates" data-updates="2026-11-04">What&rsquo;s new</a>
+              <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
         </ul>
@@ -304,7 +306,7 @@
         </a>
         <div class="card map-link-card">
           <h3>No public lake gauge</h3>
-          <p class="meta">USGS and Corps of Engineers · checked Oct. 30, 2026</p>
+          <p class="meta">USGS and Corps of Engineers · checked <time datetime="2026-10-30">Oct. 30, 2026</time></p>
           <p>No USGS or Corps gauge posts Madison Lake&rsquo;s level or water temp, so this site shows no live reading. Nothing is estimated.</p>
         </div>
       </div>
@@ -329,7 +331,7 @@
         </a>
         <div class="card map-link-card">
           <h3>No public lake gauge</h3>
-          <p class="meta">USGS and Corps of Engineers · checked Oct. 30, 2026</p>
+          <p class="meta">USGS and Corps of Engineers · checked <time datetime="2026-10-30">Oct. 30, 2026</time></p>
           <p>No USGS or Corps gauge posts Knox Lake&rsquo;s level or water temp, so this site shows no live reading. Nothing is estimated.</p>
         </div>
       </div>
@@ -354,7 +356,7 @@
         </a>
         <div class="card map-link-card">
           <h3>No public lake gauge</h3>
-          <p class="meta">USGS and Corps of Engineers · checked Oct. 30, 2026</p>
+          <p class="meta">USGS and Corps of Engineers · checked <time datetime="2026-10-30">Oct. 30, 2026</time></p>
           <p>No USGS or Corps gauge posts Clear Fork Reservoir&rsquo;s level or water temp, so this site shows no live reading. Nothing is estimated.</p>
         </div>
       <div class="card-grid cols-2" data-for="seneca">
@@ -428,7 +430,7 @@
         </a>
         <div class="card map-link-card">
           <h3>No public lake gauge</h3>
-          <p class="meta">USGS and Corps of Engineers · checked Oct. 31, 2026</p>
+          <p class="meta">USGS and Corps of Engineers · checked <time datetime="2026-10-31">Oct. 31, 2026</time></p>
           <p>No USGS or Corps gauge posts Lake Logan&rsquo;s level or water temp, so this site shows no live reading. Nothing is estimated.</p>
         </div>
       </div>
@@ -453,7 +455,7 @@
         </a>
         <div class="card map-link-card">
           <h3>No public lake gauge</h3>
-          <p class="meta">USGS and Corps of Engineers · checked Oct. 31, 2026</p>
+          <p class="meta">USGS and Corps of Engineers · checked <time datetime="2026-10-31">Oct. 31, 2026</time></p>
           <p>No USGS or Corps gauge posts Salt Fork Lake&rsquo;s level or water temp, so this site shows no live reading. Nothing is estimated.</p>
         </div>
       </div>
@@ -503,7 +505,7 @@
         </a>
         <div class="card map-link-card">
           <h3>No public lake gauge</h3>
-          <p class="meta">USGS and Corps of Engineers · checked Oct. 31, 2026</p>
+          <p class="meta">USGS and Corps of Engineers · checked <time datetime="2026-10-31">Oct. 31, 2026</time></p>
           <p>No USGS or Corps gauge posts Dow Lake&rsquo;s level or water temp, so this site shows no live reading. Nothing is estimated.</p>
         </div>
       </div>
@@ -603,8 +605,8 @@
         </a>
         <div class="card map-link-card">
           <h3>USGS gauge not reporting</h3>
-          <p class="meta">USGS 03100500 · checked Nov. 3, 2026</p>
-          <p>The gauge last posted on June 4, 2026 and nothing since, so this site shows no live level. The old reading is not shown as current. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03100500/" target="_blank" rel="noopener">USGS-03100500</a>.</p>
+          <p class="meta">USGS 03100500 · checked <time datetime="2026-11-03">Nov. 3, 2026</time></p>
+          <p>The gauge last posted on <time datetime="2026-06-04">June 4, 2026</time> and nothing since, so this site shows no live level. The old reading is not shown as current. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03100500/" target="_blank" rel="noopener">USGS-03100500</a>.</p>
         </div>
       </div>
       <div class="card-grid cols-2" data-for="milton">
@@ -669,7 +671,7 @@
           <div><dt>Boats</dt><dd>22 ft max; sailboats 25 ft</dd></div>
           <div><dt>Horsepower</dt><dd>9.9 hp max, 10 mph</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Hoover Reservoir Fishing Area</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Boat rules from <a href="https://columbusrecparks.com/parks/hoover-reservoir/" target="_blank" rel="noopener">Columbus Recreation and Parks</a>. Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Hoover Reservoir Fishing Area</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Boat rules from <a href="https://columbusrecparks.com/parks/hoover-reservoir/" target="_blank" rel="noopener">Columbus Recreation and Parks</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
 
       <div class="card data-glance lake-facts" data-for="alum">
@@ -682,7 +684,7 @@
           <div><dt>Ramps</dt><dd>Four public launch ramps, one more for campers</dd></div>
           <div><dt>Horsepower</dt><dd>Unlimited on the south lake, no wake up north. The state park puts the line at US 36/SR 37, the Corps at Cheshire Road</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://www.lrd.usace.army.mil/Missions/Recreation/Display/Article/3632213/alum-creek-lake/" target="_blank" rel="noopener">US Army Corps of Engineers, Alum Creek Lake</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park" target="_blank" rel="noopener">ODNR, Alum Creek State Park</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Alum Creek Lake Fishing Area</a> (depth); the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/alumcreeklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://www.lrd.usace.army.mil/Missions/Recreation/Display/Article/3632213/alum-creek-lake/" target="_blank" rel="noopener">US Army Corps of Engineers, Alum Creek Lake</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park" target="_blank" rel="noopener">ODNR, Alum Creek State Park</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Alum Creek Lake Fishing Area</a> (depth); the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/alumcreeklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
 
       <div class="card data-glance lake-facts" data-for="buckeye">
@@ -695,7 +697,7 @@
           <div><dt>Bottom</dt><dd>Relatively flat, little woody cover</dd></div>
           <div><dt>Horsepower</dt><dd>No limit</dd></div>
         </dl>
-        <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area" target="_blank" rel="noopener">ODNR, Buckeye Lake Fishing Area</a>. Acres from the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a> and <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park" target="_blank" rel="noopener">ODNR, Buckeye Lake State Park</a>. Checked Oct. 31, 2026.</p>
+        <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area" target="_blank" rel="noopener">ODNR, Buckeye Lake Fishing Area</a>. Acres from the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a> and <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park" target="_blank" rel="noopener">ODNR, Buckeye Lake State Park</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
 
       <div class="card data-glance lake-facts" data-for="oshaughnessy">
@@ -708,7 +710,7 @@
           <div><dt>Bottom</dt><dd>Rock in the south, mud and silt in the north</dd></div>
           <div><dt>Horsepower</dt><dd>Unlimited; 40 mph by day, 10 mph from sunset to sunrise</dd></div>
         </dl>
-        <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/o-shaughnessy-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, O&rsquo;Shaughnessy Reservoir Fishing Area</a>. Horsepower and speed from <a href="https://columbusrecparks.com/parks/oshaughnessy-reservoir/" target="_blank" rel="noopener">Columbus Recreation and Parks</a>; the night limit from <a href="https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf" target="_blank" rel="noopener">Columbus City Code 921.01-1(G)</a> (ordinance 0698-2024). Checked Oct. 31, 2026.</p>
+        <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/o-shaughnessy-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, O&rsquo;Shaughnessy Reservoir Fishing Area</a>. Horsepower and speed from <a href="https://columbusrecparks.com/parks/oshaughnessy-reservoir/" target="_blank" rel="noopener">Columbus Recreation and Parks</a>; the night limit from <a href="https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf" target="_blank" rel="noopener">Columbus City Code 921.01-1(G)</a> (ordinance 0698-2024). Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
 
       <div class="card data-glance lake-facts" data-for="griggs">
@@ -721,7 +723,7 @@
           <div><dt>Clarity</dt><dd>Generally clear, muddy after heavy rain</dd></div>
           <div><dt>Horsepower</dt><dd>Unlimited; 40 mph by day, 10 mph from sunset to sunrise</dd></div>
         </dl>
-        <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/griggs-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Griggs Reservoir Fishing Area</a>. Horsepower and speed from <a href="https://columbusrecparks.com/parks/griggs-park/" target="_blank" rel="noopener">Columbus Recreation and Parks</a>; the night limit from <a href="https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf" target="_blank" rel="noopener">Columbus City Code 921.01-1(G)</a> (ordinance 0698-2024). Checked Oct. 31, 2026.</p>
+        <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/griggs-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Griggs Reservoir Fishing Area</a>. Horsepower and speed from <a href="https://columbusrecparks.com/parks/griggs-park/" target="_blank" rel="noopener">Columbus Recreation and Parks</a>; the night limit from <a href="https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf" target="_blank" rel="noopener">Columbus City Code 921.01-1(G)</a> (ordinance 0698-2024). Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
 
       <div class="card data-glance lake-facts" data-for="indian">
@@ -734,7 +736,7 @@
           <div><dt>Ramps</dt><dd>Five state park launch ramps</dd></div>
           <div><dt>Horsepower</dt><dd>No limit</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-fishing-area" target="_blank" rel="noopener">ODNR, Indian Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park" target="_blank" rel="noopener">ODNR, Indian Lake State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/indianlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Oct. 29, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-fishing-area" target="_blank" rel="noopener">ODNR, Indian Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park" target="_blank" rel="noopener">ODNR, Indian Lake State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/indianlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-10-29">Oct. 29, 2026</time>.</p>
       </div>
 
       <div class="card data-glance lake-facts" data-for="delaware">
@@ -747,7 +749,7 @@
           <div><dt>Ramps</dt><dd>Three state park ramps</dd></div>
           <div><dt>Horsepower</dt><dd>Unlimited</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-lake-fishing-area" target="_blank" rel="noopener">ODNR, Delaware Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park" target="_blank" rel="noopener">ODNR, Delaware State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/delawarelake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>; <a href="https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns" target="_blank" rel="noopener">ODNR winter drawdowns</a>. Checked Oct. 29, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-lake-fishing-area" target="_blank" rel="noopener">ODNR, Delaware Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park" target="_blank" rel="noopener">ODNR, Delaware State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/delawarelake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>; <a href="https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns" target="_blank" rel="noopener">ODNR winter drawdowns</a>. Checked <time datetime="2026-10-29">Oct. 29, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="deercreek">
         <p class="cond-label lake-facts-title">Deer Creek Lake facts</p>
@@ -759,7 +761,7 @@
           <div><dt>Ramps</dt><dd>Two state park ramps and a marina</dd></div>
           <div><dt>Horsepower</dt><dd>Unlimited</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Deer Creek Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park" target="_blank" rel="noopener">ODNR, Deer Creek State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/deercreeklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>; <a href="https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns" target="_blank" rel="noopener">ODNR, Winter Drawdowns</a>; <a href="https://www.lrd.usace.army.mil/Missions/Recreation/Display/Article/3632264/deer-creek-lake/" target="_blank" rel="noopener">US Army Corps of Engineers, Deer Creek Lake</a> (acres). Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Deer Creek Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park" target="_blank" rel="noopener">ODNR, Deer Creek State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/deercreeklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>; <a href="https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns" target="_blank" rel="noopener">ODNR, Winter Drawdowns</a>; <a href="https://www.lrd.usace.army.mil/Missions/Recreation/Display/Article/3632264/deer-creek-lake/" target="_blank" rel="noopener">US Army Corps of Engineers, Deer Creek Lake</a> (acres). Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="madison">
         <p class="cond-label lake-facts-title">Madison Lake facts</p>
@@ -772,7 +774,7 @@
           <div><dt>Ramps</dt><dd>One launch ramp</dd></div>
           <div><dt>Horsepower</dt><dd>Electric motors only, at no wake speed</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-fishing-area" target="_blank" rel="noopener">ODNR, Madison Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park" target="_blank" rel="noopener">ODNR, Madison Lake State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/madisonlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>; <a href="https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-3-17" target="_blank" rel="noopener">Ohio Adm. Code 1501:47-3-17</a> (no wake). Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-fishing-area" target="_blank" rel="noopener">ODNR, Madison Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park" target="_blank" rel="noopener">ODNR, Madison Lake State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/madisonlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>; <a href="https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-3-17" target="_blank" rel="noopener">Ohio Adm. Code 1501:47-3-17</a> (no wake). Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="knox">
         <p class="cond-label lake-facts-title">Knox Lake facts</p>
@@ -796,7 +798,7 @@
           <div><dt>Ramps</dt><dd>Public ramp and marina on the south side, no launch fee</dd></div>
           <div><dt>Horsepower</dt><dd>No limit, but idle speed and no wake on the whole lake (City code 971.04); ODNR&rsquo;s page says 8 mph</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Clear Fork Reservoir Fishing Area</a>; <a href="https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/" target="_blank" rel="noopener">City of Mansfield, Clearfork Reservoir Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/clearforkreservoir2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>; <a href="https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714" target="_blank" rel="noopener">Mansfield Codified Ordinances, chapter 971</a>. Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Clear Fork Reservoir Fishing Area</a>; <a href="https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/" target="_blank" rel="noopener">City of Mansfield, Clearfork Reservoir Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/clearforkreservoir2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>; <a href="https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714" target="_blank" rel="noopener">Mansfield Codified Ordinances, chapter 971</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="seneca">
         <p class="cond-label lake-facts-title">Seneca Lake facts</p>
@@ -808,7 +810,7 @@
           <div><dt>Horsepower</dt><dd>399 hp limit (MWCD)</dd></div>
           <div><dt>Lake level</dt><dd>USGS gauge 03141000; no public water temp</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://www.mwcd.org/places/seneca-lake/" target="_blank" rel="noopener">MWCD, Seneca Lake</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/seneca-lake-fishing-area" target="_blank" rel="noopener">ODNR, Seneca Lake Fishing Area</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/senecalake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://www.mwcd.org/places/seneca-lake/" target="_blank" rel="noopener">MWCD, Seneca Lake</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/seneca-lake-fishing-area" target="_blank" rel="noopener">ODNR, Seneca Lake Fishing Area</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/senecalake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="dillon">
         <p class="cond-label lake-facts-title">Dillon Lake facts</p>
@@ -820,7 +822,7 @@
           <div><dt>Horsepower</dt><dd>Unlimited; many coves are no wake</dd></div>
           <div><dt>Lake level</dt><dd>Corps of Engineers gauge; no public water temp</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-lake-fishing-area" target="_blank" rel="noopener">ODNR, Dillon Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park" target="_blank" rel="noopener">ODNR, Dillon State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dillonlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-lake-fishing-area" target="_blank" rel="noopener">ODNR, Dillon Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park" target="_blank" rel="noopener">ODNR, Dillon State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dillonlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="logan">
         <p class="cond-label lake-facts-title">Lake Logan facts</p>
@@ -832,7 +834,7 @@
           <div><dt>Ramps</dt><dd>Main ramp off Lake Logan Road and a smaller ramp about 1.5 miles northeast</dd></div>
           <div><dt>Horsepower</dt><dd>10 hp limit, 10 mph</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-fishing-area" target="_blank" rel="noopener">ODNR, Lake Logan Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park" target="_blank" rel="noopener">ODNR, Lake Logan State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakelogan2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-fishing-area" target="_blank" rel="noopener">ODNR, Lake Logan Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park" target="_blank" rel="noopener">ODNR, Lake Logan State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakelogan2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="saltfork">
         <p class="cond-label lake-facts-title">Salt Fork Lake facts</p>
@@ -844,7 +846,7 @@
           <div><dt>Horsepower</dt><dd>Unlimited, with speed and ski zones</dd></div>
           <div><dt>Lake level</dt><dd>No public gauge</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area" target="_blank" rel="noopener">ODNR, Salt Fork Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park" target="_blank" rel="noopener">ODNR, Salt Fork State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/saltforklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area" target="_blank" rel="noopener">ODNR, Salt Fork Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park" target="_blank" rel="noopener">ODNR, Salt Fork State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/saltforklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="burroak">
         <p class="cond-label lake-facts-title">Burr Oak Lake facts</p>
@@ -856,7 +858,7 @@
           <div><dt>Horsepower</dt><dd>10 hp; larger motors at idle only, no jet drives</dd></div>
           <div><dt>Lake level</dt><dd>Corps of Engineers gauge at Tom Jenkins Dam; no public water temp</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park" target="_blank" rel="noopener">ODNR, Burr Oak State Park</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-lake-fishing-area" target="_blank" rel="noopener">ODNR, Burr Oak Lake Fishing Area</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/burroaklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park" target="_blank" rel="noopener">ODNR, Burr Oak State Park</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-lake-fishing-area" target="_blank" rel="noopener">ODNR, Burr Oak Lake Fishing Area</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/burroaklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="dow">
         <p class="cond-label lake-facts-title">Dow Lake facts</p>
@@ -868,7 +870,7 @@
           <div><dt>Ramps</dt><dd>One ramp off Strouds Run Road, with a courtesy dock</dd></div>
           <div><dt>Horsepower</dt><dd>10 hp limit</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area" target="_blank" rel="noopener">ODNR, Dow Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park" target="_blank" rel="noopener">ODNR, Strouds Run State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dowlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Oct. 31, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area" target="_blank" rel="noopener">ODNR, Dow Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park" target="_blank" rel="noopener">ODNR, Strouds Run State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dowlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="mosquito">
         <p class="cond-label lake-facts-title">Mosquito Creek Lake facts</p>
@@ -881,7 +883,7 @@
           <div><dt>Horsepower</dt><dd>No limit; no wake within 300 ft of shore, no skiing, tubing or PWCs north of the SR 88 causeway</dd></div>
           <div><dt>Lake level</dt><dd>USGS gauge 03095000; no public water temp</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Mosquito Creek Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park" target="_blank" rel="noopener">ODNR, Mosquito Lake State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mosquitocreeklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Nov. 3, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Mosquito Creek Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park" target="_blank" rel="noopener">ODNR, Mosquito Lake State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mosquitocreeklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="berlin">
         <p class="cond-label lake-facts-title">Berlin Lake facts</p>
@@ -891,11 +893,11 @@
           <div><dt>Shoreline</dt><dd>79 miles on the map</dd></div>
           <div><dt>Depth</dt><dd>55 ft max, 23 ft average; the level can swing as much as 20 ft in a year (ODNR)</dd></div>
           <div><dt>Bottom</dt><dd>Mud, sand and gravel, with rock ledges along the old river channel at low pool (ODNR)</dd></div>
-          <div><dt>Ramps</dt><dd>Bonner Road (closed to May 28, 2027), Mill Creek (seasonal), German Church Road and Les&rsquo;s Bait &amp; Marina</dd></div>
+          <div><dt>Ramps</dt><dd>Bonner Road (closed to <time datetime="2027-05-28">May 28, 2027</time>), Mill Creek (seasonal), German Church Road and Les&rsquo;s Bait &amp; Marina</dd></div>
           <div><dt>Horsepower</dt><dd>No limit by day; 10 mph at night</dd></div>
           <div><dt>Lake level</dt><dd>USGS gauge 03090000; Corps summer pool 1,024 ft; no public water temp</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area" target="_blank" rel="noopener">ODNR, Berlin Lake Fishing Area</a>; <a href="https://water.usace.army.mil/overview/lrp/locations/berlin" target="_blank" rel="noopener">US Army Corps of Engineers, Berlin Lake</a>; <a href="https://water.usace.army.mil/cda/documents/wc/3445/Berlin%20WCM%202022%20Change1%20REDACTED.pdf" target="_blank" rel="noopener">Corps Berlin water control manual (PDF)</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/berlinlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Nov. 3, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area" target="_blank" rel="noopener">ODNR, Berlin Lake Fishing Area</a>; <a href="https://water.usace.army.mil/overview/lrp/locations/berlin" target="_blank" rel="noopener">US Army Corps of Engineers, Berlin Lake</a>; <a href="https://water.usace.army.mil/cda/documents/wc/3445/Berlin%20WCM%202022%20Change1%20REDACTED.pdf" target="_blank" rel="noopener">Corps Berlin water control manual (PDF)</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/berlinlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="westbranch">
         <p class="cond-label lake-facts-title">West Branch Reservoir facts</p>
@@ -907,7 +909,7 @@
           <div><dt>Horsepower</dt><dd>Unlimited; no wake within 300 ft of shore and west of the Rock Spring Road causeway</dd></div>
           <div><dt>Lake level</dt><dd>USGS gauge 03092450; no public water temp</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kirwan-reservoir-west-branch-fishing-area" target="_blank" rel="noopener">ODNR, Kirwan Reservoir (West Branch) Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park" target="_blank" rel="noopener">ODNR, West Branch State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mjkirwanreservoir.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Nov. 3, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kirwan-reservoir-west-branch-fishing-area" target="_blank" rel="noopener">ODNR, Kirwan Reservoir (West Branch) Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park" target="_blank" rel="noopener">ODNR, West Branch State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mjkirwanreservoir.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="pymatuning">
         <p class="cond-label lake-facts-title">Pymatuning Lake facts</p>
@@ -918,9 +920,9 @@
           <div><dt>Depth</dt><dd>30 ft max (ODNR)</dd></div>
           <div><dt>Ramps</dt><dd>Padanaram, Birches Landing, Cabin Beach, New Bowers and the campground ramp on the Ohio side</dd></div>
           <div><dt>Horsepower</dt><dd>20 hp limit</dd></div>
-          <div><dt>Lake level</dt><dd>USGS gauge 03100500 has posted nothing since June 4, 2026; no public water temp</dd></div>
+          <div><dt>Lake level</dt><dd>USGS gauge 03100500 has posted nothing since <time datetime="2026-06-04">June 4, 2026</time>; no public water temp</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-lake-fishing-area" target="_blank" rel="noopener">ODNR, Pymatuning Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park" target="_blank" rel="noopener">ODNR, Pymatuning State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pymatuninglake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Nov. 3, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-lake-fishing-area" target="_blank" rel="noopener">ODNR, Pymatuning Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park" target="_blank" rel="noopener">ODNR, Pymatuning State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pymatuninglake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="milton">
         <p class="cond-label lake-facts-title">Lake Milton facts</p>
@@ -933,7 +935,7 @@
           <div><dt>Winter pool</dt><dd>Drawdown of about 8 ft from about Oct. 15; refill starts March 15 (ODNR)</dd></div>
           <div><dt>Lake level</dt><dd>USGS gauge 03091000; no public water temp</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-fishing-area" target="_blank" rel="noopener">ODNR, Lake Milton Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park" target="_blank" rel="noopener">ODNR, Lake Milton State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakemilton2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Nov. 3, 2026.</p>
+        <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-fishing-area" target="_blank" rel="noopener">ODNR, Lake Milton Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park" target="_blank" rel="noopener">ODNR, Lake Milton State Park</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakemilton2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
       </div>
       <div class="card data-glance lake-facts" data-for="leesville">
         <p class="cond-label lake-facts-title">Leesville Lake facts</p>
@@ -945,7 +947,7 @@
           <div><dt>Horsepower</dt><dd>10 hp limit (MWCD)</dd></div>
           <div><dt>Lake level</dt><dd>USGS gauge 03120000; Corps summer pool 963 ft; no public water temp</dd></div>
         </dl>
-        <p class="meta">Sources: <a href="https://www.mwcd.org/places/leesville-lake/" target="_blank" rel="noopener">MWCD, Leesville Lake</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/leesville-lake-fishing-area" target="_blank" rel="noopener">ODNR, Leesville Lake Fishing Area</a>; <a href="https://water.usace.army.mil/overview/lrh/locations/leesville" target="_blank" rel="noopener">US Army Corps of Engineers, Leesville Lake</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/leesvillelake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked Nov. 3, 2026.</p>
+        <p class="meta">Sources: <a href="https://www.mwcd.org/places/leesville-lake/" target="_blank" rel="noopener">MWCD, Leesville Lake</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/leesville-lake-fishing-area" target="_blank" rel="noopener">ODNR, Leesville Lake Fishing Area</a>; <a href="https://water.usace.army.mil/overview/lrh/locations/leesville" target="_blank" rel="noopener">US Army Corps of Engineers, Leesville Lake</a>; the <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/leesvillelake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
       </div>
     </section>
 
@@ -1033,7 +1035,7 @@
       </p>
       <p data-for="pymatuning">
         ODNR contour depths assume a normal summer pool of <strong>1008 ft</strong>.
-        The USGS gauge has posted nothing since June 4, 2026, so there is no live correction here.
+        The USGS gauge has posted nothing since <time datetime="2026-06-04">June 4, 2026</time>, so there is no live correction here.
       </p>
       <p data-for="milton">
         ODNR contour depths assume a normal summer pool of <strong>948 ft</strong>.
@@ -1045,7 +1047,7 @@
       </p>
       <div class="card" id="pool-correction">
         <p class="pool-lead" id="correction-line">889.99 ft · 62°F · ~4.0 ft below full pool</p>
-        <script src="js/pool-readout.js?v=v27-2026-11-03"></script>
+        <script src="js/pool-readout.js?v=v28-2026-11-04"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-11-02T17:00:00.000-05:00">2026-11-02 17:00 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
@@ -1057,7 +1059,7 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.75rem;">
           Provisional snapshot; your browser may refresh it from USGS. If that fails it says unavailable. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v27-2026-11-03"></script>
+        <script src="js/lake-snapshot.js?v=v28-2026-11-04"></script>
         <details class="how-to-read" id="how-to-read">
           <summary>How to read this</summary>
           <div class="how-to-read-body">
@@ -1179,14 +1181,14 @@
               <li>The ODNR fishing map&rsquo;s depths are based on the <strong>901 ft</strong> normal summer pool (3 ft contours, surveyed 2004). Contours are off by about <strong>(901 − pool)</strong>.</li>
               <li><strong>No public water temp gauge</strong> on the lake, so the temp slot says n/a. Nothing is estimated.</li>
               <li>Lake level comes from USGS gauge 03095000 near Cortland. It is <strong>provisional</strong> and can be revised. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03095000/" target="_blank" rel="noopener">USGS-03095000</a>.</li>
-              <li><strong>No horsepower limit</strong>; no wake within 300 ft of shore, and no skiing, tubing or PWCs north of the SR 88 causeway (ODNR). ODNR notice: road construction at the marina and beach lots since Oct. 3, 2026.</li>
+              <li><strong>No horsepower limit</strong>; no wake within 300 ft of shore, and no skiing, tubing or PWCs north of the SR 88 causeway (ODNR). ODNR notice: road construction at the marina and beach lots since <time datetime="2026-10-03">Oct. 3, 2026</time>.</li>
             </ul>
             <ul data-for="berlin">
               <li><strong>Pool</strong> is lake surface elevation in feet as USGS posts it, not the depth of any hole or channel.</li>
               <li>The Corps summer pool is <strong>1,024 ft</strong>, and the lake can swing as much as 20 ft in a year. The ODNR fishing map (10 ft contours, surveyed 1999) labels its pool 832 ft on another datum, so no pool correction is worked out here.</li>
               <li><strong>No public water temp gauge</strong> on the lake, so the temp slot says n/a. Nothing is estimated.</li>
               <li>Lake level comes from USGS gauge 03090000 near Berlin Center. It is <strong>provisional</strong> and can be revised. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03090000/" target="_blank" rel="noopener">USGS-03090000</a>.</li>
-              <li><strong>Bonner Road ramp is closed</strong> for renovation from Sept. 14, 2026 to May 28, 2027 (ODNR). No horsepower limit by day, 10 mph on the whole lake at night. The Corps manual says the German Church Road ramp is dry below 1,009.31 ft.</li>
+              <li><strong>Bonner Road ramp is closed</strong> for renovation from <time datetime="2026-09-14">Sept. 14, 2026</time> to <time datetime="2027-05-28">May 28, 2027</time> (ODNR). No horsepower limit by day, 10 mph on the whole lake at night. The Corps manual says the German Church Road ramp is dry below 1,009.31 ft.</li>
             </ul>
             <ul data-for="westbranch">
               <li><strong>Pool</strong> is lake surface elevation in feet as USGS posts it, not the depth of any hole or channel.</li>
@@ -1196,7 +1198,7 @@
               <li><strong>Unlimited horsepower</strong>; no wake within 300 ft of shore and everywhere west of the Rock Spring Road causeway (ODNR).</li>
             </ul>
             <ul data-for="pymatuning">
-              <li><strong>USGS gauge not reporting</strong>: gauge 03100500 last posted 1008.12 ft on June 4, 2026 and nothing since, so the level slot says not reporting. That old reading is not shown as current. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03100500/" target="_blank" rel="noopener">USGS-03100500</a>.</li>
+              <li><strong>USGS gauge not reporting</strong>: gauge 03100500 last posted 1008.12 ft on <time datetime="2026-06-04">June 4, 2026</time> and nothing since, so the level slot says not reporting. That old reading is not shown as current. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03100500/" target="_blank" rel="noopener">USGS-03100500</a>.</li>
               <li>The ODNR fishing map&rsquo;s depths are based on the <strong>1,008 ft</strong> normal summer pool (3 ft contours, surveyed 2008). With no current reading, there is no pool correction to work out.</li>
               <li><strong>No public water temp gauge</strong> on the lake, so the temp slot says n/a. Nothing is estimated.</li>
               <li><strong>20 hp limit</strong> (ODNR). Ohio side only here: an Ohio or Pennsylvania license works from a boat, but a Pennsylvania license is needed on the Pennsylvania shore or any island (ODNR 2026–27 rules).</li>
@@ -1218,15 +1220,15 @@
           </div>
         </details>
       </div>
-      <p class="meta wq-line" id="water-quality"><span class="wq-label">Water quality.</span> Current bacteria and algae advisories at Ohio public beaches are on <a href="https://publicapps.odh.ohio.gov/beachguardpublic/" target="_blank" rel="noopener">Ohio Department of Health BeachGuard</a>. <a href="https://epa.ohio.gov/monitor-pollution/pollution-issues/harmful-algae-blooms" target="_blank" rel="noopener">Ohio EPA</a> explains the algae advisory signs posted at beaches and boat ramps.<span data-for="hoover"> Swimming isn&rsquo;t allowed on Columbus reservoirs, Hoover included.</span><span data-for="alum"> Alum Creek State Park has a 3,000 ft beach, open in daylight only (ODNR); check BeachGuard before you swim.</span><span data-for="buckeye"> Buckeye Lake State Park has two swimming areas, Fairfield Beach and Crystal Beach, open in daylight from Memorial Day to Labor Day (ODNR); check BeachGuard before you swim.</span><span data-for="oshaughnessy griggs"> Swimming isn&rsquo;t allowed on any City of Columbus reservoir (Columbus Rec and Parks).</span><span data-for="indian"> Indian Lake State Park has two swimming beaches (ODNR); check BeachGuard before you swim.</span><span data-for="delaware"> Delaware State Park has an 800 ft public beach (ODNR); check BeachGuard before you swim.</span><span data-for="deercreek"> Deer Creek State Park has a 1,700 ft swimming beach (ODNR); check BeachGuard before you swim.</span><span data-for="madison"> Madison Lake State Park has a 300 ft sand beach (ODNR); check BeachGuard before you swim.</span><span data-for="clearfork"> No swimming or wading anywhere on the lake above the dam (<a href="https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714" target="_blank" rel="noopener">Mansfield code 971.02</a>).</span><span data-for="seneca"> No swimming from sunset to sunrise on MWCD lakes (<a href="https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web2.pdf" target="_blank" rel="noopener">MWCD rules</a>); check BeachGuard before you swim.</span><span data-for="dillon"> Dillon State Park has a 1,360 ft swimming beach, open in daylight only (ODNR); check BeachGuard before you swim.</span><span data-for="logan"> Lake Logan State Park has a 527 ft beach on the north shore (ODNR); check BeachGuard before you swim.</span><span data-for="saltfork"> ODNR lists Salt Fork&rsquo;s 2,500 ft beach complex as under construction, with no facilities open (April 24, 2026); check BeachGuard before you swim.</span><span data-for="burroak"> Burr Oak State Park has a 500 ft beach on the north side (ODNR); check BeachGuard before you swim.</span><span data-for="dow"> Strouds Run State Park has a 700 ft beach on the east side of Dow Lake, open sunrise to sunset in summer (ODNR); check BeachGuard before you swim.</span><span data-for="mosquito"> Mosquito Lake State Park has a 600 ft beach (ODNR); check BeachGuard before you swim.</span><span data-for="westbranch"> West Branch State Park has a 700 ft beach and two boat swim areas (ODNR); check BeachGuard before you swim.</span><span data-for="pymatuning"> Pymatuning State Park has a 500 ft main beach plus Cabin and Campground beaches, swimming in daylight only (ODNR); check BeachGuard before you swim.</span><span data-for="milton"> Lake Milton State Park has a 600 ft beach (ODNR); check BeachGuard before you swim.</span><span data-for="leesville"> No swimming from sunset to sunrise on MWCD lakes (<a href="https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web2.pdf" target="_blank" rel="noopener">MWCD rules</a>); check BeachGuard before you swim.</span> Checked Oct. 31, 2026.</p>
+      <p class="meta wq-line" id="water-quality"><span class="wq-label">Water quality.</span> Current bacteria and algae advisories at Ohio public beaches are on <a href="https://publicapps.odh.ohio.gov/beachguardpublic/" target="_blank" rel="noopener">Ohio Department of Health BeachGuard</a>. <a href="https://epa.ohio.gov/monitor-pollution/pollution-issues/harmful-algae-blooms" target="_blank" rel="noopener">Ohio EPA</a> explains the algae advisory signs posted at beaches and boat ramps.<span data-for="hoover"> Swimming isn&rsquo;t allowed on Columbus reservoirs, Hoover included.</span><span data-for="alum"> Alum Creek State Park has a 3,000 ft beach, open in daylight only (ODNR); check BeachGuard before you swim.</span><span data-for="buckeye"> Buckeye Lake State Park has two swimming areas, Fairfield Beach and Crystal Beach, open in daylight from Memorial Day to Labor Day (ODNR); check BeachGuard before you swim.</span><span data-for="oshaughnessy griggs"> Swimming isn&rsquo;t allowed on any City of Columbus reservoir (Columbus Rec and Parks).</span><span data-for="indian"> Indian Lake State Park has two swimming beaches (ODNR); check BeachGuard before you swim.</span><span data-for="delaware"> Delaware State Park has an 800 ft public beach (ODNR); check BeachGuard before you swim.</span><span data-for="deercreek"> Deer Creek State Park has a 1,700 ft swimming beach (ODNR); check BeachGuard before you swim.</span><span data-for="madison"> Madison Lake State Park has a 300 ft sand beach (ODNR); check BeachGuard before you swim.</span><span data-for="clearfork"> No swimming or wading anywhere on the lake above the dam (<a href="https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714" target="_blank" rel="noopener">Mansfield code 971.02</a>).</span><span data-for="seneca"> No swimming from sunset to sunrise on MWCD lakes (<a href="https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web2.pdf" target="_blank" rel="noopener">MWCD rules</a>); check BeachGuard before you swim.</span><span data-for="dillon"> Dillon State Park has a 1,360 ft swimming beach, open in daylight only (ODNR); check BeachGuard before you swim.</span><span data-for="logan"> Lake Logan State Park has a 527 ft beach on the north shore (ODNR); check BeachGuard before you swim.</span><span data-for="saltfork"> ODNR lists Salt Fork&rsquo;s 2,500 ft beach complex as under construction, with no facilities open (<time datetime="2026-04-24">April 24, 2026</time>); check BeachGuard before you swim.</span><span data-for="burroak"> Burr Oak State Park has a 500 ft beach on the north side (ODNR); check BeachGuard before you swim.</span><span data-for="dow"> Strouds Run State Park has a 700 ft beach on the east side of Dow Lake, open sunrise to sunset in summer (ODNR); check BeachGuard before you swim.</span><span data-for="mosquito"> Mosquito Lake State Park has a 600 ft beach (ODNR); check BeachGuard before you swim.</span><span data-for="westbranch"> West Branch State Park has a 700 ft beach and two boat swim areas (ODNR); check BeachGuard before you swim.</span><span data-for="pymatuning"> Pymatuning State Park has a 500 ft main beach plus Cabin and Campground beaches, swimming in daylight only (ODNR); check BeachGuard before you swim.</span><span data-for="milton"> Lake Milton State Park has a 600 ft beach (ODNR); check BeachGuard before you swim.</span><span data-for="leesville"> No swimming from sunset to sunrise on MWCD lakes (<a href="https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web2.pdf" target="_blank" rel="noopener">MWCD rules</a>); check BeachGuard before you swim.</span> Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
     </section>
 
     <section id="photos" aria-labelledby="photos-title">
       <h2 id="photos-title">Public shore snapshots</h2>
       <p class="meta">Four public shore spots worth knowing. Photos here will only ever be real ones from these spots, never stock or generated lake images.</p>
       <ul class="photo-slots" data-for="hoover">
-        <li class="photo-slot"><strong>Walnut</strong> Public ramp</li>
-        <li class="photo-slot"><strong>Oxbow</strong> Public ramp</li>
+        <li class="photo-slot"><strong>Walnut Street</strong> Public ramp</li>
+        <li class="photo-slot"><strong>Oxbow Road</strong> Public ramp</li>
         <li class="photo-slot"><strong>Dam riprap</strong> Public shore</li>
         <li class="photo-slot"><strong>Smothers</strong> Public area</li>
       </ul>
@@ -1357,8 +1359,8 @@
         <li><strong>Old Big Walnut channel</strong> still runs under the lake. I treat it as the buried highway, where bait and current often line up after dark.</li>
         <li><strong>Dam / main basin</strong> is the deepest water on the 894 map (50 to 60 ft on that chart). Big water, boat traffic by day, more room to dig at night.</li>
         <li><strong>Causeway / Smothers cuts</strong> are the pinch points: bridges, cuts, and current funnels where I listen for bait and watch the graph harder.</li>
-        <li><strong>Walnut Road lower ramp:</strong> nearby flat vs drop. I use the flats for bank work and the nearby break when I’m in a boat and want a quick edge.</li>
-        <li><strong>Oxbow / upper arms:</strong> shallower, more bank and night work. Quieter when the middle lake is busy; watch for silted edges.</li>
+        <li><strong>Walnut Street ramp (lower lake):</strong> nearby flat vs drop. I use the flats for bank work and the nearby break when I’m in a boat and want a quick edge.</li>
+        <li><strong>Oxbow Road ramp and upper arms:</strong> shallower, more bank and night work. Quieter when the middle lake is busy; watch for silted edges.</li>
         <li><strong>10 hp and 10 mph</strong> limits apply, with idle speed within 100 ft of shore. Hoover is a <strong>Columbus drinking-water reservoir</strong>: keep it clean, keep wakes down, follow posted limits.</li>
       </ul>
       <ul class="notebook-list" data-for="alum">
@@ -1472,7 +1474,7 @@
         <li><strong>Deep and long.</strong> 55 ft at the deepest, with rock ledges along the old channel at low pool (ODNR).</li>
         <li><strong>Walleye</strong> are stocked as fry and fingerlings (ODNR).</li>
         <li><strong>Trotlines and floatlines</strong> are legal south and west of SR 225 (2026–27 rules).</li>
-        <li><strong>Bonner Road ramp is closed</strong> to May 28, 2027 (ODNR). 10 mph at night.</li>
+        <li><strong>Bonner Road ramp is closed</strong> to <time datetime="2027-05-28">May 28, 2027</time> (ODNR). 10 mph at night.</li>
       </ul>
       <ul class="notebook-list" data-for="westbranch">
         <li><strong>Many forks and coves.</strong> 2,729 acres and 56 miles of shore on ODNR&rsquo;s 5 ft contour map.</li>
@@ -1482,7 +1484,7 @@
       <ul class="notebook-list" data-for="pymatuning">
         <li><strong>Ohio&rsquo;s largest inland lake</strong> by ODNR&rsquo;s count, 30 ft at the deepest, shared with Pennsylvania.</li>
         <li><strong>Its own rules.</strong> Ohio and Pennsylvania share limits here; the Gear page has them.</li>
-        <li><strong>20 hp limit.</strong> The USGS lake gauge has posted nothing since June 4, 2026.</li>
+        <li><strong>20 hp limit.</strong> The USGS lake gauge has posted nothing since <time datetime="2026-06-04">June 4, 2026</time>.</li>
       </ul>
       <ul class="notebook-list" data-for="milton">
         <li><strong>A long river lake</strong> on the Mahoning, 1,693 acres on ODNR&rsquo;s 3 ft contour map. I-76 crosses it.</li>
@@ -1910,31 +1912,38 @@
             </tr>
           </thead>
           <tbody>
+            <!-- nb:hoover-ramps:table -->
             <tr>
-              <td>Oxbow</td>
+              <td>Oxbow Road ramp</td>
               <td data-label="Boat vs bank">Boat + bank</td>
-              <td data-label="Useful note">Upper end; quieter after dark when traffic thins.</td>
+              <td data-label="Useful note">Upper end, off Oxbow Rd. Quieter after dark when traffic thins.</td>
             </tr>
             <tr>
-              <td>Redbank</td>
+              <td>Sunbury Road ramp</td>
+              <td data-label="Boat vs bank">Boat</td>
+              <td data-label="Useful note">Upper lake, at the Sunbury Rd causeway.</td>
+            </tr>
+            <tr>
+              <td>Twin Bridges ramp</td>
+              <td data-label="Boat vs bank">Boat</td>
+              <td data-label="Useful note">Upper lake, off Red Bank Rd. Portable restroom.</td>
+            </tr>
+            <tr>
+              <td>Red Bank ramp</td>
               <td data-label="Boat vs bank">Boat + bank</td>
-              <td data-label="Useful note">Middle-lake access.</td>
+              <td data-label="Useful note">Middle lake, off Maxtown Rd. The city map shows the marina and a reservable shelter here.</td>
             </tr>
             <tr>
-              <td>Walnut Road</td>
+              <td>Walnut Street ramp</td>
               <td data-label="Boat vs bank">Boat + bank</td>
-              <td data-label="Useful note">Lower ramp toward the dam; flats vs nearby drop.</td>
+              <td data-label="Useful note">Lower ramp toward the dam, off Walnut St. Flats next to a nearby drop.</td>
             </tr>
             <tr>
-              <td>Maxtown</td>
-              <td data-label="Boat vs bank">Boat + bank</td>
-              <td data-label="Useful note">Public ramp name on the city layout. Check hours.</td>
+              <td>Hoover Mudflats Boardwalk</td>
+              <td data-label="Boat vs bank">Bank</td>
+              <td data-label="Useful note">Shore access off Front St, Galena. Open 7 a.m. to 11 p.m.</td>
             </tr>
-            <tr>
-              <td>Marina / lower marina</td>
-              <td data-label="Boat vs bank">Boat (services vary)</td>
-              <td data-label="Useful note">Lower-end marina area on public maps; confirm open status.</td>
-            </tr>
+            <!-- /nb:hoover-ramps:table -->
             <tr>
               <td>General bank</td>
               <td data-label="Boat vs bank">Bank</td>
@@ -2165,7 +2174,7 @@
             <tr><th scope="col">Ramp / area</th><th scope="col">Boat vs bank</th><th scope="col">Useful note</th></tr>
           </thead>
           <tbody>
-            <tr><td>Main ramp (SR 305)</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">3 lanes, 5 courtesy docks, over 200 trailer spots, lit (ODNR). Marina and beach lots under construction since Oct. 3, 2026.</td></tr>
+            <tr><td>Main ramp (SR 305)</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">3 lanes, 5 courtesy docks, over 200 trailer spots, lit (ODNR). Marina and beach lots under construction since <time datetime="2026-10-03">Oct. 3, 2026</time>.</td></tr>
             <tr><td>Marina ramp</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">1 lane, fuel dock and bait sales (ODNR). Marina 330-637-2075.</td></tr>
             <tr><td>Causeway ramp (SR 88 and SR 46)</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">2 lanes, over 120 trailer spots, lit. No skiing, tubing or PWCs north of the causeway (ODNR).</td></tr>
             <tr><td>Campground ramp</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">Registered campers only, with a launch light (ODNR).</td></tr>
@@ -2180,8 +2189,8 @@
             <tr><th scope="col">Ramp / area</th><th scope="col">Boat vs bank</th><th scope="col">Useful note</th></tr>
           </thead>
           <tbody>
-            <tr><td>Bonner Road ramp</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note"><strong>Closed</strong> for renovation Sept. 14, 2026 to May 28, 2027 (ODNR).</td></tr>
-            <tr><td>Mill Creek ramp (Corps)</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">Open Sept. 7 to Nov. 25, 2026 and Feb. 27 to May 21, 2027 while Bonner Road is closed (ODNR).</td></tr>
+            <tr><td>Bonner Road ramp</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note"><strong>Closed</strong> for renovation <time datetime="2026-09-14">Sept. 14, 2026</time> to <time datetime="2027-05-28">May 28, 2027</time> (ODNR).</td></tr>
+            <tr><td>Mill Creek ramp (Corps)</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">Open Sept. 7 to <time datetime="2026-11-25">Nov. 25, 2026</time> and Feb. 27 to <time datetime="2027-05-21">May 21, 2027</time> while Bonner Road is closed (ODNR).</td></tr>
             <tr><td>German Church Road ramp</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">Dry below 1,009.31 ft, per the Corps water control manual. Check the level first.</td></tr>
             <tr><td>Les&rsquo;s Bait &amp; Marina</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">Bait shop and marina with a ramp (Corps manual). 330-584-6741.</td></tr>
             <tr><td>General bank</td><td data-label="Boat vs bank">Bank</td><td data-label="Useful note">Public Corps and wildlife area land only. ODNR Wildlife District 3: 330-644-2293.</td></tr>
@@ -2209,7 +2218,7 @@
           </thead>
           <tbody>
             <tr><td>Padanaram ramp</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">Two lanes at the north end, seasonal restrooms (ODNR).</td></tr>
-            <tr><td>Birches Landing ramp</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">7001 Pymatuning Lake Rd, with a marina. The road from the south end of Cabin Beach to Birches is closed for good (ODNR, Aug. 5, 2026).</td></tr>
+            <tr><td>Birches Landing ramp</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">7001 Pymatuning Lake Rd, with a marina. The road from the south end of Cabin Beach to Birches is closed for good (ODNR, <time datetime="2026-08-05">Aug. 5, 2026</time>).</td></tr>
             <tr><td>Cabin Beach ramp</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">At Marvin and Cabin Beach roads (ODNR).</td></tr>
             <tr><td>New Bowers ramp</td><td data-label="Boat vs bank">Boat + bank</td><td data-label="Useful note">Accessible shore fishing platforms (ODNR).</td></tr>
             <tr><td>Campground ramp</td><td data-label="Boat vs bank">Boat</td><td data-label="Useful note">Single lane for campers, with a courtesy dock (ODNR).</td></tr>
@@ -2288,7 +2297,7 @@
               <li>No boating within 100 ft downriver of the dam.</li>
               <li>No swimming in any City of Columbus reservoir.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://library.municode.com/oh/columbus/codes/code_of_ordinances?nodeId=TIT9STPAPUPRCO_CH921WARE" target="_blank" rel="noopener">Columbus City Code 921.01</a>; <a href="https://columbusrecparks.com/parks/hoover-reservoir-parkland/" target="_blank" rel="noopener">Columbus Rec and Parks, Hoover Reservoir</a>. Questions: Columbus Watershed Management, <a href="tel:+16146451721">614-645-1721</a>. Checked Oct. 27, 2026.</p>
+            <p class="meta">Sources: <a href="https://library.municode.com/oh/columbus/codes/code_of_ordinances?nodeId=TIT9STPAPUPRCO_CH921WARE" target="_blank" rel="noopener">Columbus City Code 921.01</a>; <a href="https://columbusrecparks.com/parks/hoover-reservoir-parkland/" target="_blank" rel="noopener">Columbus Rec and Parks, Hoover Reservoir</a>. Questions: Columbus Watershed Management, <a href="tel:+16146451721">614-645-1721</a>. Checked <time datetime="2026-10-27">Oct. 27, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2299,7 +2308,7 @@
             <ul>
               <li>ODNR: outboard motors of <strong>unlimited horsepower</strong> are allowed, but portions of the lake are <strong>no wake zones</strong>. Follow the buoys.</li>
             </ul>
-            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Alum Creek Lake Fishing Area</a>. State park: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park" target="_blank" rel="noopener">ODNR, Alum Creek State Park</a>. Checked Oct. 27, 2026.</p>
+            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Alum Creek Lake Fishing Area</a>. State park: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park" target="_blank" rel="noopener">ODNR, Alum Creek State Park</a>. Checked <time datetime="2026-10-27">Oct. 27, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2311,7 +2320,7 @@
               <li>ODNR: <strong>no horsepower restrictions</strong>.</li>
               <li>ODNR&rsquo;s fishing map marks a <strong>300 ft no wake zone</strong> along the shore.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area" target="_blank" rel="noopener">ODNR, Buckeye Lake Fishing Area</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. State park: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park" target="_blank" rel="noopener">ODNR, Buckeye Lake State Park</a>. Checked Oct. 27, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area" target="_blank" rel="noopener">ODNR, Buckeye Lake Fishing Area</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. State park: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park" target="_blank" rel="noopener">ODNR, Buckeye Lake State Park</a>. Checked <time datetime="2026-10-27">Oct. 27, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2327,7 +2336,7 @@
               <li>Idle speed within <strong>100 ft</strong> of the shoreline or bridges on all City reservoirs.</li>
               <li>Park hours are 7 a.m. to 11 p.m.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://columbusrecparks.com/parks/oshaughnessy-reservoir/" target="_blank" rel="noopener">Columbus Rec and Parks, O&rsquo;Shaughnessy Reservoir</a>; <a href="https://landstewardshipcolumbus.com/faqs/" target="_blank" rel="noopener">Land Stewardship Columbus, FAQs</a> (idle rule); <a href="https://library.municode.com/oh/columbus/codes/code_of_ordinances?nodeId=TIT9STPAPUPRCO_CH921WARE" target="_blank" rel="noopener">Columbus City Code 921</a>; <a href="https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf" target="_blank" rel="noopener">ordinance 0698-2024</a> (night limit, passed April 2024). Questions: Columbus Watershed Management, <a href="tel:+16146451721">614-645-1721</a>. Checked Oct. 31, 2026.</p>
+            <p class="meta">Sources: <a href="https://columbusrecparks.com/parks/oshaughnessy-reservoir/" target="_blank" rel="noopener">Columbus Rec and Parks, O&rsquo;Shaughnessy Reservoir</a>; <a href="https://landstewardshipcolumbus.com/faqs/" target="_blank" rel="noopener">Land Stewardship Columbus, FAQs</a> (idle rule); <a href="https://library.municode.com/oh/columbus/codes/code_of_ordinances?nodeId=TIT9STPAPUPRCO_CH921WARE" target="_blank" rel="noopener">Columbus City Code 921</a>; <a href="https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf" target="_blank" rel="noopener">ordinance 0698-2024</a> (night limit, passed April 2024). Questions: Columbus Watershed Management, <a href="tel:+16146451721">614-645-1721</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2344,7 +2353,7 @@
               <li>Park hours are 7 a.m. to 11 p.m.</li>
               <li>The Trabue-Murphy ramp is closed until further notice.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://columbusrecparks.com/parks/griggs-park/" target="_blank" rel="noopener">Columbus Rec and Parks, Griggs Park</a>; <a href="https://landstewardshipcolumbus.com/faqs/" target="_blank" rel="noopener">Land Stewardship Columbus, FAQs</a> (idle rule); <a href="https://library.municode.com/oh/columbus/codes/code_of_ordinances?nodeId=TIT9STPAPUPRCO_CH921WARE" target="_blank" rel="noopener">Columbus City Code 921</a>; <a href="https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf" target="_blank" rel="noopener">ordinance 0698-2024</a> (night limit, passed April 2024). Questions: Columbus Watershed Management, <a href="tel:+16146451721">614-645-1721</a>. Checked Oct. 31, 2026.</p>
+            <p class="meta">Sources: <a href="https://columbusrecparks.com/parks/griggs-park/" target="_blank" rel="noopener">Columbus Rec and Parks, Griggs Park</a>; <a href="https://landstewardshipcolumbus.com/faqs/" target="_blank" rel="noopener">Land Stewardship Columbus, FAQs</a> (idle rule); <a href="https://library.municode.com/oh/columbus/codes/code_of_ordinances?nodeId=TIT9STPAPUPRCO_CH921WARE" target="_blank" rel="noopener">Columbus City Code 921</a>; <a href="https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf" target="_blank" rel="noopener">ordinance 0698-2024</a> (night limit, passed April 2024). Questions: Columbus Watershed Management, <a href="tel:+16146451721">614-645-1721</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2357,7 +2366,7 @@
               <li>ODNR&rsquo;s fishing map: open to speed except within <strong>300 ft</strong> of any shoreline, in channels, or where marked no wake. Speed zones are marked with &ldquo;open zone&rdquo; buoys.</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-fishing-area" target="_blank" rel="noopener">ODNR, Indian Lake Fishing Area</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/indianlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. State park: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park" target="_blank" rel="noopener">ODNR, Indian Lake State Park</a>. Checked Oct. 29, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-fishing-area" target="_blank" rel="noopener">ODNR, Indian Lake Fishing Area</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/indianlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. State park: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park" target="_blank" rel="noopener">ODNR, Indian Lake State Park</a>. Checked <time datetime="2026-10-29">Oct. 29, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2370,7 +2379,7 @@
               <li>Follow posted no wake buoys and swim area markers.</li>
               <li>Park hours are sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park" target="_blank" rel="noopener">ODNR, Delaware State Park</a>. Lake: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-lake-fishing-area" target="_blank" rel="noopener">ODNR, Delaware Lake Fishing Area</a>. Checked Oct. 29, 2026.</p>
+            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park" target="_blank" rel="noopener">ODNR, Delaware State Park</a>. Lake: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-lake-fishing-area" target="_blank" rel="noopener">ODNR, Delaware Lake Fishing Area</a>. Checked <time datetime="2026-10-29">Oct. 29, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2383,7 +2392,7 @@
               <li>Boaters may swim from boats only in the marked boat-swim area in the cove by the lodge (ODNR).</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park" target="_blank" rel="noopener">ODNR, Deer Creek State Park</a>. Lake: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Deer Creek Lake Fishing Area</a>. Checked Oct. 30, 2026.</p>
+            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park" target="_blank" rel="noopener">ODNR, Deer Creek State Park</a>. Lake: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Deer Creek Lake Fishing Area</a>. Checked <time datetime="2026-10-30">Oct. 30, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2396,7 +2405,7 @@
               <li>The north end of the lake is a waterfowl hunting area in season.</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park" target="_blank" rel="noopener">ODNR, Madison Lake State Park</a>. Checked Oct. 30, 2026.</p>
+            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park" target="_blank" rel="noopener">ODNR, Madison Lake State Park</a>. Checked <time datetime="2026-10-30">Oct. 30, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2409,7 +2418,7 @@
               <li>Larger outboards may run at <strong>no wake or idle speed only</strong>.</li>
               <li>Standing timber fills the upper lake; go slow after dark.</li>
             </ul>
-            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area" target="_blank" rel="noopener">ODNR, Knox Lake Fishing Area</a>. Checked Oct. 30, 2026.</p>
+            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area" target="_blank" rel="noopener">ODNR, Knox Lake Fishing Area</a>. Checked <time datetime="2026-10-30">Oct. 30, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2425,7 +2434,7 @@
               <li>Shore fishing on the south and west shores only (City and ODNR).</li>
               <li>Hunting is allowed on the north and west shores in season (City).</li>
             </ul>
-            <p class="meta">Sources: <a href="https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714" target="_blank" rel="noopener">Mansfield Codified Ordinances, chapter 971</a>; <a href="https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/" target="_blank" rel="noopener">City of Mansfield, Clearfork Reservoir Park</a>. Lake: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Clear Fork Reservoir Fishing Area</a>. Checked Oct. 31, 2026.</p>
+            <p class="meta">Sources: <a href="https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714" target="_blank" rel="noopener">Mansfield Codified Ordinances, chapter 971</a>; <a href="https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/" target="_blank" rel="noopener">City of Mansfield, Clearfork Reservoir Park</a>. Lake: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Clear Fork Reservoir Fishing Area</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2440,7 +2449,7 @@
               <li>No swimming from sunset to sunrise (MWCD rules).</li>
               <li>Trotlines and floatlines are allowed south of State Route 147 (ODNR 2026–27 rules).</li>
             </ul>
-            <p class="meta">Sources: <a href="https://www.mwcd.org/places/seneca-lake/" target="_blank" rel="noopener">MWCD, Seneca Lake</a>; <a href="https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web2.pdf" target="_blank" rel="noopener">MWCD rules and regulations (PDF)</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked Oct. 31, 2026.</p>
+            <p class="meta">Sources: <a href="https://www.mwcd.org/places/seneca-lake/" target="_blank" rel="noopener">MWCD, Seneca Lake</a>; <a href="https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web2.pdf" target="_blank" rel="noopener">MWCD rules and regulations (PDF)</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2454,7 +2463,7 @@
               <li>Swimming in designated areas in daylight only (ODNR).</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park" target="_blank" rel="noopener">ODNR, Dillon State Park</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-lake-fishing-area" target="_blank" rel="noopener">ODNR, Dillon Lake Fishing Area</a>. Checked Oct. 31, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park" target="_blank" rel="noopener">ODNR, Dillon State Park</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-lake-fishing-area" target="_blank" rel="noopener">ODNR, Dillon Lake Fishing Area</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2467,7 +2476,7 @@
               <li>Main ramp off Lake Logan Road, and a smaller ramp about 1.5 miles northeast (ODNR).</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park" target="_blank" rel="noopener">ODNR, Lake Logan State Park</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-fishing-area" target="_blank" rel="noopener">ODNR, Lake Logan Fishing Area</a>. Checked Oct. 31, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park" target="_blank" rel="noopener">ODNR, Lake Logan State Park</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-fishing-area" target="_blank" rel="noopener">ODNR, Lake Logan Fishing Area</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2480,7 +2489,7 @@
               <li>Boat camping is allowed in no wake zones, within 50 yards of shore (ODNR).</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park" target="_blank" rel="noopener">ODNR, Salt Fork State Park</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area" target="_blank" rel="noopener">ODNR, Salt Fork Lake Fishing Area</a>. Checked Oct. 31, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park" target="_blank" rel="noopener">ODNR, Salt Fork State Park</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area" target="_blank" rel="noopener">ODNR, Salt Fork Lake Fishing Area</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2494,7 +2503,7 @@
               <li>No fishing from rented seasonal docks; signs are posted (ODNR).</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park" target="_blank" rel="noopener">ODNR, Burr Oak State Park</a>. Checked Oct. 31, 2026.</p>
+            <p class="meta">Source: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park" target="_blank" rel="noopener">ODNR, Burr Oak State Park</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2507,7 +2516,7 @@
               <li>One ramp off Strouds Run Road (County Road 20), with a courtesy dock (ODNR).</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area" target="_blank" rel="noopener">ODNR, Dow Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park" target="_blank" rel="noopener">ODNR, Strouds Run State Park</a>. Checked Oct. 31, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area" target="_blank" rel="noopener">ODNR, Dow Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park" target="_blank" rel="noopener">ODNR, Strouds Run State Park</a>. Checked <time datetime="2026-10-31">Oct. 31, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2519,10 +2528,10 @@
               <li>ODNR: <strong>no horsepower limit</strong>; no wake within 300 ft of shore.</li>
               <li>No skiing, tubing or PWCs north of the SR 88 causeway (ODNR).</li>
               <li>Trotlines and floatlines are allowed north of the causeway and south of the refuge buoys (ODNR 2026–27 rules).</li>
-              <li>ODNR notice: road construction at the marina and beach parking lots since Oct. 3, 2026, until further notice.</li>
+              <li>ODNR notice: road construction at the marina and beach parking lots since <time datetime="2026-10-03">Oct. 3, 2026</time>, until further notice.</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Mosquito Creek Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park" target="_blank" rel="noopener">ODNR, Mosquito Lake State Park</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked Nov. 3, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-creek-lake-fishing-area" target="_blank" rel="noopener">ODNR, Mosquito Creek Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park" target="_blank" rel="noopener">ODNR, Mosquito Lake State Park</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2532,11 +2541,11 @@
           <div class="how-to-read-body">
             <ul>
               <li>ODNR: <strong>no horsepower limit</strong> by day; <strong>10 mph</strong> at night.</li>
-              <li>Bonner Road ramp closed Sept. 14, 2026 to May 28, 2027; Mill Creek ramp open Sept. 7 to Nov. 25, 2026 and Feb. 27 to May 21, 2027 (ODNR).</li>
+              <li>Bonner Road ramp closed <time datetime="2026-09-14">Sept. 14, 2026</time> to <time datetime="2027-05-28">May 28, 2027</time>; Mill Creek ramp open Sept. 7 to <time datetime="2026-11-25">Nov. 25, 2026</time> and Feb. 27 to <time datetime="2027-05-21">May 21, 2027</time> (ODNR).</li>
               <li>Trotlines and floatlines are allowed south and west of SR 225 (ODNR 2026–27 rules).</li>
               <li>Single hook rule from March 1 to April 30 on the Mahoning River from the Berlin dam down to Lake Milton (ODNR 2026–27 rules).</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area" target="_blank" rel="noopener">ODNR, Berlin Lake Fishing Area</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked Nov. 3, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area" target="_blank" rel="noopener">ODNR, Berlin Lake Fishing Area</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2549,7 +2558,7 @@
               <li>The whole lake west of the Rock Spring Road causeway is no wake (ODNR).</li>
               <li>Park hours are sunup to sundown; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kirwan-reservoir-west-branch-fishing-area" target="_blank" rel="noopener">ODNR, Kirwan Reservoir (West Branch) Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park" target="_blank" rel="noopener">ODNR, West Branch State Park</a>. Checked Nov. 3, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kirwan-reservoir-west-branch-fishing-area" target="_blank" rel="noopener">ODNR, Kirwan Reservoir (West Branch) Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park" target="_blank" rel="noopener">ODNR, West Branch State Park</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2561,10 +2570,10 @@
               <li>ODNR: <strong>20 horsepower</strong> limit.</li>
               <li>Ohio and Pennsylvania share the fishing rules here. From a boat either state&rsquo;s license works; on the Pennsylvania shore or any island you need a Pennsylvania license (ODNR 2026–27 rules).</li>
               <li>Up to 3 lines with up to 3 hooks each (ODNR 2026–27 rules).</li>
-              <li>ODNR notice (Aug. 5, 2026): the road from the south end of Cabin Beach to Birches Marina is permanently closed.</li>
+              <li>ODNR notice (<time datetime="2026-08-05">Aug. 5, 2026</time>): the road from the south end of Cabin Beach to Birches Marina is permanently closed.</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-lake-fishing-area" target="_blank" rel="noopener">ODNR, Pymatuning Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park" target="_blank" rel="noopener">ODNR, Pymatuning State Park</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked Nov. 3, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-lake-fishing-area" target="_blank" rel="noopener">ODNR, Pymatuning Lake Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park" target="_blank" rel="noopener">ODNR, Pymatuning State Park</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2578,7 +2587,7 @@
               <li>Single hook rule from March 1 to April 30 on the Mahoning River from the Berlin dam down to Lake Milton (ODNR 2026–27 rules).</li>
               <li>Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.</li>
             </ul>
-            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-fishing-area" target="_blank" rel="noopener">ODNR, Lake Milton Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park" target="_blank" rel="noopener">ODNR, Lake Milton State Park</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked Nov. 3, 2026.</p>
+            <p class="meta">Sources: <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-fishing-area" target="_blank" rel="noopener">ODNR, Lake Milton Fishing Area</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park" target="_blank" rel="noopener">ODNR, Lake Milton State Park</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2592,7 +2601,7 @@
               <li>No swimming from sunset to sunrise (MWCD rules).</li>
               <li>ODNR lists no lake specific fishing rules for Leesville; statewide rules apply (2026–27).</li>
             </ul>
-            <p class="meta">Sources: <a href="https://www.mwcd.org/places/leesville-lake/" target="_blank" rel="noopener">MWCD, Leesville Lake</a>; <a href="https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web2.pdf" target="_blank" rel="noopener">MWCD rules and regulations (PDF)</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked Nov. 3, 2026.</p>
+            <p class="meta">Sources: <a href="https://www.mwcd.org/places/leesville-lake/" target="_blank" rel="noopener">MWCD, Leesville Lake</a>; <a href="https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web2.pdf" target="_blank" rel="noopener">MWCD rules and regulations (PDF)</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27</a>. Checked <time datetime="2026-11-03">Nov. 3, 2026</time>.</p>
           </div>
         </details>
       </div>
@@ -2606,9 +2615,9 @@
       <p class="docks-intro">Who pulls the docks and when, from the City of Columbus, ODNR and marina pages. <strong>Not announced</strong> means no official date is posted yet.</p>
       <div data-for="hoover" class="docks-lake">
         <ul class="dock-status" aria-label="Hoover dock status">
-          <li class="dock-item is-ending" data-ends="2026-10-31" data-after-label="Season over" data-after-note="Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.">
-            <p class="dock-head"><span class="dock-name">City marina docks</span> <span class="dock-pill">Season ends Oct. 31</span></p>
-            <p class="dock-note">Columbus Recreation and Parks lists the public dock season at its Griggs, Hoover and O&rsquo;Shaughnessy marinas as May 1 to Oct. 31.</p>
+          <li class="dock-item is-over" data-ends="2026-10-31" data-after-label="Season over" data-after-note="Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.">
+            <p class="dock-head"><span class="dock-name">City marina docks</span> <span class="dock-pill">Season over</span></p>
+            <p class="dock-note">Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.</p>
           </li>
           <li class="dock-item is-unannounced">
             <p class="dock-head"><span class="dock-name">Ramp docks</span> <span class="dock-pill">Not announced</span></p>
@@ -2631,9 +2640,9 @@
             <p class="dock-head"><span class="dock-name">Winter drawdown</span> <span class="dock-pill">2026 not posted</span></p>
             <p class="dock-note">ODNR&rsquo;s drawdown list still shows last winter: 3 ft, Oct. 1 to Nov. 1, 2025, for flood control, refilled Mar. 15 to Apr. 15, 2026. The Corps of Engineers sets the timing.</p>
           </li>
-          <li class="dock-item is-ending" data-ends="2026-10-31" data-after-label="Nov. hours not listed" data-after-note="The marina lists hours for April to October only. Call before you go.">
-            <p class="dock-head"><span class="dock-name">Alum Creek Marina</span> <span class="dock-pill">October weekends</span></p>
-            <p class="dock-note">The marina lists April and October hours as Saturday and Sunday only, 9 am to 6 pm. Its 12 overnight slips take stays of up to 4 days.</p>
+          <li class="dock-item is-over" data-ends="2026-10-31" data-after-label="Nov. hours not listed" data-after-note="The marina lists hours for April to October only. Call before you go.">
+            <p class="dock-head"><span class="dock-name">Alum Creek Marina</span> <span class="dock-pill">Nov. hours not listed</span></p>
+            <p class="dock-note">The marina lists hours for April to October only. Call before you go.</p>
           </li>
         </ul>
         <ul class="dock-calls">
@@ -2660,9 +2669,9 @@
       </div>
       <div data-for="oshaughnessy" class="docks-lake">
         <ul class="dock-status" aria-label="O&rsquo;Shaughnessy dock status">
-          <li class="dock-item is-ending" data-ends="2026-10-31" data-after-label="Season over" data-after-note="Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.">
-            <p class="dock-head"><span class="dock-name">City marina docks</span> <span class="dock-pill">Season ends Oct. 31</span></p>
-            <p class="dock-note">Columbus Recreation and Parks lists the public dock season at its Griggs, Hoover and O&rsquo;Shaughnessy marinas as May 1 to Oct. 31.</p>
+          <li class="dock-item is-over" data-ends="2026-10-31" data-after-label="Season over" data-after-note="Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.">
+            <p class="dock-head"><span class="dock-name">City marina docks</span> <span class="dock-pill">Season over</span></p>
+            <p class="dock-note">Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.</p>
           </li>
           <li class="dock-item is-unannounced">
             <p class="dock-head"><span class="dock-name">Ramp docks</span> <span class="dock-pill">Not announced</span></p>
@@ -2677,9 +2686,9 @@
       </div>
       <div data-for="griggs" class="docks-lake">
         <ul class="dock-status" aria-label="Griggs dock status">
-          <li class="dock-item is-ending" data-ends="2026-10-31" data-after-label="Season over" data-after-note="Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.">
-            <p class="dock-head"><span class="dock-name">City marina docks</span> <span class="dock-pill">Season ends Oct. 31</span></p>
-            <p class="dock-note">Columbus Recreation and Parks lists the public dock season at its Griggs, Hoover and O&rsquo;Shaughnessy marinas as May 1 to Oct. 31.</p>
+          <li class="dock-item is-over" data-ends="2026-10-31" data-after-label="Season over" data-after-note="Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.">
+            <p class="dock-head"><span class="dock-name">City marina docks</span> <span class="dock-pill">Season over</span></p>
+            <p class="dock-note">Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.</p>
           </li>
           <li class="dock-item is-out">
             <p class="dock-head"><span class="dock-name">Trabue-Murphy ramp</span> <span class="dock-pill">Closed</span></p>
@@ -2698,9 +2707,9 @@
       </div>
       <div data-for="indian" class="docks-lake">
         <ul class="dock-status" aria-label="Indian Lake dock status">
-          <li class="dock-item is-ending" data-ends="2026-11-01" data-after-label="Season over" data-after-note="Peak of Ohio reported on Oct. 24, 2026 that ODNR reminds boaters &ldquo;all boats must be removed from state docks by November 1,&rdquo; so the state docks are done for 2026. ODNR&rsquo;s own pages do not post the date.">
-            <p class="dock-head"><span class="dock-name">State park docks</span> <span class="dock-pill">Boats out by Nov. 1</span></p>
-            <p class="dock-note">Peak of Ohio reported on Oct. 24, 2026 that ODNR reminds boaters &ldquo;all boats must be removed from state docks by November 1.&rdquo; ODNR&rsquo;s own pages do not post the date.</p>
+          <li class="dock-item is-over" data-ends="2026-11-01" data-after-label="Season over" data-after-note="Peak of Ohio reported on Oct. 24, 2026 that ODNR reminds boaters &ldquo;all boats must be removed from state docks by November 1,&rdquo; so the state docks are done for 2026. ODNR&rsquo;s own pages do not post the date.">
+            <p class="dock-head"><span class="dock-name">State park docks</span> <span class="dock-pill">Season over</span></p>
+            <p class="dock-note">Peak of Ohio reported on Oct. 24, 2026 that ODNR reminds boaters &ldquo;all boats must be removed from state docks by November 1,&rdquo; so the state docks are done for 2026. ODNR&rsquo;s own pages do not post the date.</p>
           </li>
           <li class="dock-item is-unannounced">
             <p class="dock-head"><span class="dock-name">Winter drawdown</span> <span class="dock-pill">Not listed</span></p>
@@ -2714,9 +2723,9 @@
       </div>
       <div data-for="delaware" class="docks-lake">
         <ul class="dock-status" aria-label="Delaware Lake dock status">
-          <li class="dock-item is-ending" data-ends="2026-10-01" data-after-label="Season over" data-after-note="ODNR lists the Delaware lease dock season as April 15 to Oct. 1, so the lease docks are done for 2026.">
-            <p class="dock-head"><span class="dock-name">Lease docks</span> <span class="dock-pill">Season ends Oct. 1</span></p>
-            <p class="dock-note">ODNR lists the Delaware lease dock season as April 15 to Oct. 1.</p>
+          <li class="dock-item is-over" data-ends="2026-10-01" data-after-label="Season over" data-after-note="ODNR lists the Delaware lease dock season as April 15 to Oct. 1, so the lease docks are done for 2026.">
+            <p class="dock-head"><span class="dock-name">Lease docks</span> <span class="dock-pill">Season over</span></p>
+            <p class="dock-note">ODNR lists the Delaware lease dock season as April 15 to Oct. 1, so the lease docks are done for 2026.</p>
           </li>
           <li class="dock-item is-unannounced">
             <p class="dock-head"><span class="dock-name">Launch docks</span> <span class="dock-pill">Not announced</span></p>
@@ -3081,30 +3090,12 @@
       Fishing after dark can be dangerous in storms, heat, and low visibility. Wear a life jacket when the situation calls for it.
       Contours are not for navigation. Confirm licenses, limits, and closures yourself.
     </div>
-    <div class="callout" data-for="alum buckeye indian delaware deercreek madison knox dillon logan saltfork burroak dow mosquito berlin westbranch milton">
-      The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not the Corps of Engineers</strong>,
-      and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.
-    </div>
-    <div class="callout" data-for="hoover">
-      The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not the City of Columbus</strong>,
-      and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.
-    </div>
-    <div class="callout" data-for="oshaughnessy griggs">
-      The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not the City of Columbus</strong>,
-      and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.
-    </div>
-    <div class="callout" data-for="clearfork">
-      The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not the City of Mansfield</strong>,
-      and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.
-    </div>
-    <div class="callout" data-for="pymatuning">
-      The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not the Pennsylvania Fish and Boat Commission</strong>,
-      and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.
-    </div>
-    <div class="callout" data-for="seneca leesville">
-      The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not MWCD</strong>,
-      and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.
-    </div>
+    <details class="info-tip" data-for="alum buckeye indian delaware deercreek madison knox dillon logan saltfork burroak dow mosquito berlin westbranch milton"><summary><span class="info-i" aria-hidden="true">i</span><span class="sr-only">Who runs this page</span></summary><p class="info-tip-body">The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not the Corps of Engineers</strong>, and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.</p></details>
+    <details class="info-tip" data-for="hoover"><summary><span class="info-i" aria-hidden="true">i</span><span class="sr-only">Who runs this page</span></summary><p class="info-tip-body">The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not the City of Columbus</strong>, and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.</p></details>
+    <details class="info-tip" data-for="oshaughnessy griggs"><summary><span class="info-i" aria-hidden="true">i</span><span class="sr-only">Who runs this page</span></summary><p class="info-tip-body">The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not the City of Columbus</strong>, and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.</p></details>
+    <details class="info-tip" data-for="clearfork"><summary><span class="info-i" aria-hidden="true">i</span><span class="sr-only">Who runs this page</span></summary><p class="info-tip-body">The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not the City of Mansfield</strong>, and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.</p></details>
+    <details class="info-tip" data-for="pymatuning"><summary><span class="info-i" aria-hidden="true">i</span><span class="sr-only">Who runs this page</span></summary><p class="info-tip-body">The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not the Pennsylvania Fish and Boat Commission</strong>, and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.</p></details>
+    <details class="info-tip" data-for="seneca leesville"><summary><span class="info-i" aria-hidden="true">i</span><span class="sr-only">Who runs this page</span></summary><p class="info-tip-body">The Night Bite is unofficial and personal: <strong>not ODNR</strong>, <strong>not MWCD</strong>, and <strong>not USGS</strong>. This page is a notebook, not an official bulletin.</p></details>
   </main>
 
   <footer class="site-footer">
@@ -3117,24 +3108,26 @@
         <a href="whisperwood.html">Whisperwood Vale</a>
         <a href="log">Log</a>
         <a href="about">About</a>
-        <a href="updates" data-updates="2026-11-03">What&rsquo;s new</a>
+        <a href="updates" data-updates="2026-11-04">What&rsquo;s new</a>
         <a href="privacy">Privacy</a>
+        <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
       <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v27-2026-11-03"></script>
-  <script src="js/sw-update.js?v=v27-2026-11-03"></script>
-  <script src="js/alerts.js?v=v27-2026-11-03"></script>
-  <script src="js/nav.js?v=v27-2026-11-03"></script>
-  <script src="js/visits.js?v=v27-2026-11-03"></script>
-  <script src="js/lake-picker.js?v=v27-2026-11-03"></script>
-  <script src="js/usgs.js?v=v27-2026-11-03"></script>
-  <script src="js/local-notes.js?v=v27-2026-11-03"></script>
-  <script src="js/fold-anchors.js?v=v27-2026-11-03"></script>
-  <script src="js/docks.js?v=v27-2026-11-03"></script>
-  <script src="js/scrollspy.js?v=v27-2026-11-03"></script>
+  <script src="js/refresh.js?v=v28-2026-11-04"></script>
+  <script src="js/sw-update.js?v=v28-2026-11-04"></script>
+  <script src="js/alerts.js?v=v28-2026-11-04"></script>
+  <script src="js/nav.js?v=v28-2026-11-04"></script>
+  <script src="js/visits.js?v=v28-2026-11-04"></script>
+  <script src="js/lake-picker.js?v=v28-2026-11-04"></script>
+  <script src="js/usgs.js?v=v28-2026-11-04"></script>
+  <script src="js/local-notes.js?v=v28-2026-11-04"></script>
+  <script src="js/fold-anchors.js?v=v28-2026-11-04"></script>
+  <script src="js/docks.js?v=v28-2026-11-04"></script>
+  <script src="js/scrollspy.js?v=v28-2026-11-04"></script>
+  <script src="js/a11y.js?v=v28-2026-11-04" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

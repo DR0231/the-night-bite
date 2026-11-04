@@ -22,7 +22,7 @@ What it does (the v20/v21 promote steps, generalized):
   · css: the "Preview copy only" block is dropped. sw.js: PREFIX nb-live-, VERSION (--version, default the next vN
     with today's date). DATA-SOURCES.md: live title. Anything else is copied as is.
   · --whats-new FILE: a JSON entry (id, tag, title, bullets, links; date defaults to today) added at the top of
-    live data/updates.json. Then the build order runs in the live tree: build-lake-pages, build-meta,
+    live data/updates.json. Then the build order runs in the live tree: build-lake-pages, build-docks, build-meta,
     stamp-version, build-updates.
 Checks (real mode refuses, dry run reports and exits 1): a new dated What's new entry in live data/updates.json that
 is not in live HEAD; VERSION newer than live HEAD's; no preview URLs, chip or noindex,nofollow on any page; beacon
@@ -284,7 +284,7 @@ if a.whats_new:
         (T / "data/updates.json").write_text(registry.dump_like(up_t, up))
 
 build_log = []
-for b in ("build-lake-pages.py", "build-meta.py", "stamp-version.py", "build-updates.py"):
+for b in ("build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py"):
     p = subprocess.run([sys.executable, str(T / "tools" / b)], cwd=T, capture_output=True, text=True)
     last = (p.stdout.strip().splitlines() or [""])[-1]
     build_log.append(f"{b}: {'ok' if p.returncode == 0 else 'FAILED'} {last}")

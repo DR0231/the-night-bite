@@ -4,7 +4,10 @@
  * WaterServices IV API only as a fallback until it is switched off (Feb. 22, 2027).
  * Site: 03228400 (Hoover Reservoir at Central College, OH).
  * Human lead: "892.97 ft · 83°F · ~1.0 ft below full pool"
- * On failure: “unavailable, check USGS” + link. Never invent readings.
+ * On failure: keeps the last reading on the card (the last live one saved on this phone, or the snapshot baked into
+ * the page) with its Checked time and says the refresh failed; only a page with no reading at all says
+ * “unavailable, check USGS”. #correction-line carries data-source="live|saved|snapshot" and data-refresh-failed,
+ * which js/glance.js reads for its "last updated X hours ago" line. Never invent readings.
  */
 (function () {
   if (window.__nightbiteUsgsLoaded) return;
@@ -98,7 +101,7 @@
       '" target="_blank" rel="noopener">' + SRC_NAME + '</a>';
     if (statusEl) {
       statusEl.innerHTML =
-        (msg || "unavailable, check " + SRC_NAME) + " · " + link + ".";
+        "unavailable, check " + link + ".";
     }
     if (lineEl) {
       lineEl.innerHTML =
@@ -170,20 +173,30 @@
   var SAVE_KEY = LK ? LK.key("nb-usgs-last") : "nb-usgs-last";
   var OFF = window.NightBiteOffline;
 
-  // offline: show the last saved live reading if it's newer than the snapshot baked into the page
-  function showSaved() {
-    var saved = OFF && OFF.load(SAVE_KEY, 14 * 864e5);
+  // offline, or a live refresh that failed: show the last saved live reading if it's newer than the snapshot baked
+  // into the page, else keep the baked snapshot. failed: say the refresh failed instead of "Offline."
+  function showSaved(failed) {
+    var saved = OFF ? OFF.load(SAVE_KEY, 14 * 864e5) : null;
     var baked = checkedEl && checkedEl.querySelector("time");
     var bakedAt = baked ? new Date(baked.getAttribute("datetime")).valueOf() : 0;
     var at = null;
+    var src = "snapshot";
     if (saved && saved.pool && new Date(saved.pool.dateTime).valueOf() >= (bakedAt || 0)) {
       applyPoolAndTemp(saved.pool, saved.temp);
       at = new Date(saved.pool.dateTime);
-    } else if (bakedAt) {
+      src = "saved";
+    } else if (bakedAt && lineEl && !lineEl.hasAttribute("data-live-failed")) {
       at = new Date(bakedAt);   // the page's own snapshot is the newest we have
     }
     if (!at) return false;
-    if (statusEl) statusEl.textContent = OFF.label(at);
+    if (lineEl) lineEl.setAttribute("data-source", src);
+    if (failed) {
+      if (statusEl) statusEl.innerHTML = 'Live refresh failed, check <a href="' + GAUGE_URL + '" target="_blank" rel="noopener">' + SRC_NAME +
+        '</a>. Showing the reading from ' + (OFF ? OFF.when(at) : formatEt(at.toISOString())) + '.';
+      if (lineEl) lineEl.setAttribute("data-refresh-failed", "1");
+      return true;
+    }
+    if (statusEl && OFF) statusEl.textContent = OFF.label(at);
     if (lineEl) lineEl.setAttribute("data-offline", "1");
     return true;
   }
@@ -210,7 +223,7 @@
         var ok = applyPoolAndTemp(pool, temp);
         if (ok) hadLive = true;
         if (ok && OFF && pool) OFF.save(SAVE_KEY, { pool: pool, temp: temp });
-        if (ok && lineEl) lineEl.removeAttribute("data-offline");
+        if (ok && lineEl) { lineEl.removeAttribute("data-offline"); lineEl.removeAttribute("data-refresh-failed"); lineEl.setAttribute("data-source", "live"); }
         if (ok && OFF && OFF.isOffline() && pool && statusEl) {
           // the browser answered from its own HTTP cache while offline: say how old it is
           statusEl.textContent = OFF.label(new Date(pool.dateTime));
@@ -218,6 +231,8 @@
           return;
         }
         if (!ok) {
+          if (hadLive) { if (lineEl) lineEl.setAttribute("data-refresh-failed", "1"); return; }
+          if (showSaved(true)) return;
           unavailable("unavailable, check " + SRC_NAME);
           return;
         }
@@ -229,15 +244,16 @@
             "Live " + SRC_NAME + " refresh updated " + bits.join(" + ") + " (provisional).";
         }
         if (!PARAM_TEMP && pool && statusEl) {
-          statusEl.textContent += " No public water temp gauge on this lake.";
+          statusEl.textContent += " No public water temp gauge on this lake.";   // pg.live_pool, one node
         } else if (!pool || !temp) {
           var miss = !pool ? "pool" : "temp";
           if (statusEl) {
+            // each piece its own text node so js/i18n.js can match it (pg.live_*_p, pg.miss_*)
             statusEl.innerHTML =
-              statusEl.textContent +
-              " · " +
+              "<span>" + statusEl.innerHTML +
+              "</span> · <span>" +
               miss +
-              ' unavailable, check <a href="' +
+              ' unavailable, check</span> <a href="' +
               GAUGE_URL +
               '" target="_blank" rel="noopener">' + SRC_NAME + '</a>.';
           }
@@ -255,8 +271,12 @@
         if (hadLive && statusEl) {
           // a failed auto refresh keeps the last live reading on screen
           statusEl.innerHTML = 'Refresh failed, check <a href="' + GAUGE_URL + '" target="_blank" rel="noopener">' + SRC_NAME + '</a>. Showing the last reading.';
+          if (lineEl) lineEl.setAttribute("data-refresh-failed", "1");
           return;
         }
+        if (hadLive) { if (lineEl) lineEl.setAttribute("data-refresh-failed", "1"); return; }
+        // USGS or the Corps blocked or down: keep the last reading with its time, never blank the card
+        if (showSaved(true)) return;
         unavailable("unavailable, check " + SRC_NAME);
       });
   }

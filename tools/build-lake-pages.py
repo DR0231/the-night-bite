@@ -12,7 +12,10 @@ Each copy:
   · says which lake it is (<meta name="nb-home" content="alum">), which js/lakes.js reads before first paint;
   · has its own title, description, canonical, og:url, og:title, og:description, og:image and JSON-LD url;
   · has the lake's names already filled in [data-lk] spots, so nothing swaps after paint;
-  · has its own Quick facts block and JSON-LD (see below).
+  · has its own Quick facts block and JSON-LD (see below);
+  · keeps only its own lake's blocks and pool chart (tools/lake_isolate.py drops every other lake's data-for element
+    and sets <html data-lake="<id>">); the template keeps all of them. tools/check-lake-isolation.py checks this.
+sitemap.xml gets today's <lastmod> (ET) for every lake home, and the root, whose content changed on this build.
 
 Hoover's pool snapshot (the USGS snapshot routine's three lines: correction-line, the Checked time, water-temp) is
 edited in hoover/index.html, the page visitors see. This script copies those three lines from hoover/index.html into
@@ -24,6 +27,8 @@ data/quick-facts.json (motors and speed, ramps and access, pool, night rules, so
 JSON-LD (between <!-- nb:jsonld --> markers): every lake home gets its own WebPage, part of the WebSite that the
 site root (the water picker) declares. Each WebPage carries dateModified = that lake's "checked" date, the same date
 the page shows as "Facts checked". The template's own two blocks are refreshed with Hoover's.
+Tonight at a glance: tools/glance_bake.py bakes the strip from each page's own pool card (level, temp, Checked time)
+and, for lakes other than Hoover, writes that lake's snapshot from js/lakes.js into the pool card's static lines.
 Never edit the <lake>/index.html copies by hand (except the three snapshot lines in hoover/index.html); they are overwritten.
 """
 import datetime, html, json, pathlib, re, sys
@@ -41,6 +46,8 @@ ORG_ID = SITE + "#organization"
 # <title> and meta description from data/quick-facts.json ("title", "description"). A new lake needs no edit here.
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import registry  # noqa: E402
+import glance_bake  # noqa: E402  (the static Tonight at a glance strip and pool card snapshot lines)
+import lake_isolate  # noqa: E402  (each lake home keeps only its own data-for blocks and chart)
 import importlib.util  # noqa: E402
 
 REG = registry.load(root)
@@ -61,6 +68,11 @@ for _id in REG["order"]:
     LAKES[_id] = {"name": REG["lakes"][_id]["name"], "short": REG["lakes"][_id]["short"],
                   "title": _f["title"], "desc": _f["description"]}
 
+
+import importlib.util as _ilu
+_wd = _ilu.spec_from_file_location("wrap_dates", str(__import__("pathlib").Path(__file__).resolve().parent / "wrap-dates.py"))
+_wdm = _ilu.module_from_spec(_wd); _wd.loader.exec_module(_wdm)
+def WRAP_DATES(h): return _wdm.wrap(h)[0]
 
 def sub1(pattern, repl, text, flags=0):
     new, n = re.subn(pattern, repl, text, count=1, flags=flags)
@@ -132,9 +144,14 @@ def quick_facts(lake):
         pool += "No public gauge, so this site shows no live level."
     rows.append(("Normal pool", pool))
     if F.get("night"):
-        rows.append(("Night rules", t(F["night"])))
+        night = t(F["night"])
+        H = F.get("hours") or {}
+        if H.get("source"):
+            night += f' Source: <a href="{H["source"][1]}" target="_blank" rel="noopener">{t(H["source"][0])}</a>.'
+        rows.append(("Night rules", night))
     srcs = "; ".join(f'<a href="{u}" target="_blank" rel="noopener">{t(n)}</a>' for n, u in F["sources"])
-    dl = "\n".join(f"          <div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in rows)
+    # rule lines get data-nb-rule: js/i18n.js adds a translated "draft, check the official source" note in other languages
+    dl = "\n".join(f"          <div><dt>{k}</dt><dd{' data-nb-rule' if k in ('Motors and speed', 'Night rules') else ''}>{v}</dd></div>" for k, v in rows)
     return (
         '    <!-- nb:quick-facts (tools/build-lake-pages.py) -->\n'
         '    <details class="how-to-read quick-facts" id="quick-facts">\n'
@@ -144,10 +161,43 @@ def quick_facts(lake):
         '        <dl class="qf-list">\n'
         f'{dl}\n'
         '        </dl>\n'
-        f'        <p class="meta qf-src">Sources: {srcs}. Unofficial summary; posted signs and the agencies above have the final word.</p>\n'
+        f'        <p class="meta qf-src">Sources: {srcs}.</p>\n'
+        '        <details class="info-tip"><summary><span class="info-i" aria-hidden="true">i</span><span class="sr-only">About these facts</span></summary><p class="info-tip-body">Unofficial summary. Posted signs and the agencies above have the final word.</p></details>\n'
         '      </div>\n'
         '    </details>\n'
         '    <!-- /nb:quick-facts -->'
+    )
+
+
+def clock_label(hhmm):
+    """"23:00" -> "11 p.m.", "06:30" -> "6:30 a.m." (the site's AP style)."""
+    h, m = (int(x) for x in hhmm.split(":"))
+    ap = "a.m." if h < 12 else "p.m."
+    h12 = h % 12 or 12
+    return f"{h12}{':%02d' % m if m else ''} {ap}"
+
+
+def night_chip(lake):
+    """Night-rules chip under the hero (S5), from data/quick-facts.json "hours". Official source only; no hours, no chip.
+    Static text works without JS; js/night-rules.js adds the live ET countdown from the data-* attributes."""
+    H = FACTS[lake].get("hours")
+    if not H or H.get("none"):
+        return '    <!-- nb:night-rules (tools/build-lake-pages.py) -->\n    <!-- /nb:night-rules -->'
+    o, c = H.get("open"), H.get("close")
+    attrs = f' data-open="{o or ""}" data-close="{c or ""}" data-authority="{H["authority"]}"'
+    if H.get("fishing_after_hours"):
+        attrs += ' data-after="fishing"'
+    reopen = clock_label(o) if o and ":" in o else ""
+    if reopen:
+        attrs += f' data-reopen="{reopen}"'
+    return (
+        '    <!-- nb:night-rules (tools/build-lake-pages.py) -->\n'
+        f'    <a class="night-chip" id="night-rules" href="{H["source"][1]}" target="_blank" rel="noopener"{attrs}>\n'
+        f'      <span class="night-chip-text">{t(H["chip"])}</span>\n'
+        '      <span class="night-chip-left" data-nr="left" hidden></span>\n'
+        f'      <span class="sr-only"> Source: {t(H["source"][0])} (opens in a new tab)</span>\n'
+        '    </a>\n'
+        '    <!-- /nb:night-rules -->'
     )
 
 
@@ -168,6 +218,7 @@ def jsonld(lake, name, url, title):
 
 def fill(h, lake, name, url, title):
     h = sub1(r"[ \t]*<!-- nb:quick-facts.*?<!-- /nb:quick-facts -->", lambda m: quick_facts(lake), h, re.S)
+    h = sub1(r"[ \t]*<!-- nb:night-rules.*?<!-- /nb:night-rules -->", lambda m: night_chip(lake), h, re.S)
     h = sub1(r"[ \t]*<!-- nb:jsonld.*?<!-- /nb:jsonld -->", lambda m: jsonld(lake, name, url, title), h, re.S)
     return h
 
@@ -185,6 +236,8 @@ if _hv.exists():
 
 # the template's own Quick facts and JSON-LD: Hoover's, so it reads like the page it becomes
 new_src = fill(src, "hoover", "Hoover Reservoir", SITE + "hoover/", LAKES["hoover"]["title"])
+# and its glance strip, baked from Hoover's own pool card lines (tools/glance_bake.py)
+new_src = glance_bake.bake(new_src, REG["lakes"]["hoover"].get("pool") or {}, (REG["lakes"]["hoover"].get("nws") or {}).get("page"), card=False)
 if new_src != TEMPLATE.read_text():
     TEMPLATE.write_text(new_src)
     print("wrote tools/lake-home.html (Hoover quick facts, JSON-LD, snapshot lines)")
@@ -193,6 +246,14 @@ TEMPLATE_NOTE = re.compile(r"<!-- Template for every lake home.*?-->\n", re.S)
 src = TEMPLATE_NOTE.sub("", src, count=1)
 # the template's own noindex (it is copied to live with the tools, but is not a page); never on the lake homes
 src = re.sub(r'[ \t]*<meta name="robots" content="noindex" data-nb-template>\n', "", src, count=1)
+
+# sitemap.xml <lastmod>: today (ET) for every page whose content changed on this build (version stamps ignored)
+LASTMOD = set()
+
+
+def unstamped(text):
+    return re.sub(r"v\d+-\d{4}-\d\d-\d\d", "", text)
+
 
 for lake, L in LAKES.items():
     url = SITE + lake + "/"
@@ -209,15 +270,25 @@ for lake, L in LAKES.items():
     h = sub1(r'(<meta property="og:image" content=")[^"]*(")', r"\g<1>" + SITE + f"assets/og/og-{lake}.png" + r"\2", h)
     h = sub1(r'(<meta property="og:image:alt" content=")[^"]*(")', r"\g<1>" + esc(f"The Night Bite: {L['name']} fishing hub, a pixel lantern over a moonlit tree line") + r"\2", h)
     h = fill(h, lake, L["name"], url, L["title"])
+    # this lake's own snapshot in the pool card (not Hoover's) and the glance strip baked from it, so the first paint,
+    # a page with JavaScript off and a page whose USGS or NWS calls fail all show a stamped reading, never "--"
+    _c = REG["lakes"][lake]
+    h = glance_bake.bake(h, _c.get("pool") or {}, (_c.get("nws") or {}).get("page"), card=lake != "hoover")
     # in-page links and Home links: with <base href="../"> they would otherwise point at the root page
     h = re.sub(r'href="#', f'href="{lake}/#', h)
     h = re.sub(r'href="\./"', f'href="{lake}/"', h)
     # lake names in place before first paint (js/lakes.js would fill the same text)
     for key in ("name", "short"):
         h = re.sub(r'(<span[^>]*data-lk="' + key + r'"[^>]*>)[^<]*(</span>)', r"\g<1>" + L[key] + r"\2", h)
+    # only this lake's blocks and chart: the template carries every lake's; switching lakes is a page load
+    h = lake_isolate.isolate(h, lake)
+    # S13: written dates in <time datetime> so js/i18n.js writes them with Intl in the picked language
+    h = WRAP_DATES(h)
     h = h.replace("<!DOCTYPE html>\n", "<!DOCTYPE html>\n<!-- Built from tools/lake-home.html by tools/build-lake-pages.py. Do not edit by hand (except the three snapshot lines in hoover/index.html). -->\n", 1)
     out = root / lake / "index.html"
     out.parent.mkdir(exist_ok=True)
+    if out.exists() and unstamped(out.read_text()) != unstamped(h):
+        LASTMOD.add(url)
     out.write_text(h)
     print(f"wrote {out.relative_to(root)}")
 
@@ -225,7 +296,7 @@ for lake, L in LAKES.items():
 # The site root (index.html) is the water picker: plain links to every lake home, grouped by region in the order of
 # REGIONS in js/lakes.js (empty regions left out), and the site-wide JSON-LD (WebSite, Organization, WebPage).
 # Written between markers, so a new lake in js/lakes.js shows up here with no edit to index.html.
-def chart_img(lid):
+def chart_img(lid, eager=False):
     """The picker tile's chart: assets/tiles/<id>.png (north up, no arrow; tools/build-tile-charts.py makes it from the
     pool card chart). Drawn at a whole-number scale (1x to 3x) that fits a 148px tall well, so pixels stay crisp."""
     src = f"assets/tiles/{lid}.png"
@@ -235,7 +306,11 @@ def chart_img(lid):
     b = f.read_bytes()
     w, h = int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big")   # PNG IHDR
     k = max(1, min(3, 148 // h, 300 // w))
-    return f'<img src="{src}" alt="" width="{w * k}" height="{h * k}" decoding="async">'
+    lazy = "" if eager else ' loading="lazy"'
+    return f'<img src="{src}" alt="" width="{w * k}" height="{h * k}"{lazy} decoding="async">'
+
+
+EAGER_TILES = 4   # the first row on the widest layout loads at once; the rest load as they scroll into view
 
 
 def picker_tile(lid):
@@ -248,7 +323,7 @@ def picker_tile(lid):
     area = (f'<span class="wp-area">{html.escape(c["area"], quote=False)}</span>'
             if c.get("area") and c["area"].lower() != rname.lower() else "")
     return (f'          <li class="wp-item"><a class="wp-tile" href="{registry.home(lid)}" data-water="{lid}" data-q="{esc(q)}">'
-            f'<span class="wp-art" aria-hidden="true">{chart_img(lid)}</span>'
+            f'<span class="wp-art" aria-hidden="true">{chart_img(lid, REG["order"].index(lid) < EAGER_TILES)}</span>'
             f'<span class="wp-head"><span class="wp-name">{html.escape(c["name"], quote=False)}</span>'
             f'{area}</span>'
             f'<span class="wp-gauge"{" data-live" if pool.get("src") else ""}>{gauge}</span></a></li>')
@@ -303,6 +378,20 @@ r_title = html.unescape(re.search(r"<title>([^<]*)</title>", r).group(1))
 new_r = sub1(r"[ \t]*<!-- nb:water-picker.*?<!-- /nb:water-picker -->", lambda m: water_picker(), r, re.S)
 new_r = sub1(r"[ \t]*<!-- nb:water-chips.*?<!-- /nb:water-chips -->", lambda m: picker_chips(), new_r, re.S)
 new_r = sub1(r"[ \t]*<!-- nb:jsonld.*?<!-- /nb:jsonld -->", lambda m: root_jsonld(r_title), new_r, re.S)
+new_r = WRAP_DATES(new_r)
 if new_r != r:
+    if unstamped(new_r) != unstamped(r):
+        LASTMOD.add(SITE)
     ROOT_PAGE.write_text(new_r)
     print("wrote index.html (water picker tiles and region chips, site JSON-LD)")
+
+if LASTMOD:
+    import zoneinfo
+    today = datetime.datetime.now(zoneinfo.ZoneInfo("America/New_York")).date().isoformat()
+    SM = root / "sitemap.xml"
+    sm = SM.read_text()
+    for u in sorted(LASTMOD):
+        sm = re.sub(r"(<loc>" + re.escape(u) + r"</loc>\s*<lastmod>)[^<]*(</lastmod>)", r"\g<1>" + today + r"\2", sm)
+    if sm != SM.read_text():
+        SM.write_text(sm)
+        print(f"sitemap.xml: lastmod {today} for {len(LASTMOD)} changed page(s)")

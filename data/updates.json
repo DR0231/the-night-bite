@@ -2,6 +2,19 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-04-easier-to-read",
+      "date": "2026-11-04",
+      "tag": "New",
+      "title": "Easier to read, day or night",
+      "bullets": [
+        "Display panel (More menu and footer): text size, readable text in your phone's own font, less motion, high contrast and red light. Saved on this phone only.",
+        "The Display panel got a cleaner look: small cards for Text size, Screen and Language, amber switches, and Reset and Done at the bottom.",
+        "Bigger tap targets and clear focus outlines on phones.",
+        "Languages: pick one in Display or from Language in the footer. Every piece of text now switches to the language you pick, rules included as draft translations that point to the official source. Choose from Español, 简体中文, Tagalog, Tiếng Việt, Français, 한국어, Português, हिन्दी, Русский, Kreyòl ayisyen, Deutsch, Polski, Italiano, 日本語, العربية, اردو and فارسی; Arabic, Urdu and Persian read right to left.",
+        "Only lake, ramp, species and agency names and numbers stay as written, and every language other than English uses your phone's readable font."
+      ]
+    },
+    {
       "id": "2026-11-03-pick-your-water",
       "date": "2026-11-03",
       "tag": "New",

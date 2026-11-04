@@ -1,6 +1,7 @@
 /**
  * The Night Bite: site-wide NWS alert banner.
- * Shows only when a Warning or Watch is active for the lake's area (Hoover: Delaware or Franklin County, Ohio,
+ * Shows only when a Warning or Watch is active for the lake's area, or a Special Weather Statement that names
+ * thunderstorms or lightning (S5: the storm heads-up NWS issues before or instead of a warning) (Hoover: Delaware or Franklin County, Ohio,
  * named in page text only as "the Hoover area")
  * (county zones OHC041, OHC049 and forecast zones OHZ046, OHZ055). Source: api.weather.gov/alerts/active.
  * Silent when there is nothing active or the API can't be reached (the conditions card covers outages).
@@ -23,7 +24,8 @@
     var now = Date.now(), seen = {}, out = [];
     ((json && json.features) || []).forEach(function (f) {
       var p = f.properties || {};
-      if (!/(Warning|Watch)\b/i.test(p.event || "")) return;
+      var storm = /^Special Weather Statement$/i.test(p.event || "") && /thunder|lightning/i.test((p.headline || "") + " " + (p.description || ""));
+      if (!storm && !/(Warning|Watch)\b/i.test(p.event || "")) return;
       if (p.status && p.status !== "Actual") return;
       if (p.messageType === "Cancel") return;
       var end = p.ends || p.expires;
@@ -31,10 +33,10 @@
       var key = p.event + "|" + (end || "");
       if (seen[key]) return;
       seen[key] = 1;
-      out.push({ id: p.id || f.id || key, event: p.event, until: end, area: p.areaDesc || "" });
+      out.push({ id: p.id || f.id || key, event: storm ? "Storm statement" : p.event, until: end, area: p.areaDesc || "", rank: storm ? 2 : (/Watch/i.test(p.event) ? 1 : 0) });
     });
-    // warnings before watches
-    out.sort(function (a, b) { return (/Watch/i.test(a.event) ? 1 : 0) - (/Watch/i.test(b.event) ? 1 : 0); });
+    // warnings, then watches, then storm statements
+    out.sort(function (a, b) { return a.rank - b.rank; });
     return out;
   }
 

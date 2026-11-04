@@ -1,5 +1,5 @@
 {
-  "_about": "Quick facts on each lake home page, written into the HTML by tools/build-lake-pages.py (no JavaScript). Every line is copied from text the site already sources (water.html lake facts cards, the home page map notes and How to read this, js/lake-map-data-*.js); the gauge link comes from js/lakes.js. docks (optional) = a dated end of season dock line under Ramps and access, from an official page, or a news story quoting the agency when D'Angelo approves it, named as such in the text (checked, text, source [label, url]). Leave a field out when there is no official source. checked = the date the facts were last checked against the sources listed; it also becomes the page's WebPage dateModified. title and description are that lake home page's <title> and meta description (Hoover's page is hoover/ since the site root became the water picker), written by tools/build-lake-pages.py.",
+  "_about": "Quick facts on each lake home page, written into the HTML by tools/build-lake-pages.py (no JavaScript). Every line is copied from text the site already sources (water.html lake facts cards, the home page map notes and How to read this, js/lake-map-data-*.js); the gauge link comes from js/lakes.js. docks (optional) = a dated end of season dock line under Ramps and access, from an official page, or a news story quoting the agency when D'Angelo approves it, named as such in the text (checked, text, source [label, url]). Leave a field out when there is no official source. checked = the date the facts were last checked against the sources listed; it also becomes the page's WebPage dateModified. title and description are that lake home page's <title> and meta description (Hoover's page is hoover/ since the site root became the water picker), written by tools/build-lake-pages.py. hours (optional) = the night-rules chip under the hero (js/night-rules.js): authority (city, odnr, mwcd), open and close as HH:MM 24h ET or sunrise/sunset (null when the source gives no clock time), fishing_after_hours (true only when the source says so, else null), chip (short line), source [label, url] (the official page that states it), checked. {none: true, note} = no official page states hours; the Night rules row says so and no chip shows. tools/check-hours.py checks every entry.",
   "lakes": {
     "hoover": {
       "checked": "2026-10-31",
@@ -10,6 +10,7 @@
       "docks": {"checked": "2026-11-03", "text": "The city lists the marina dock season as May 1 to Oct. 31, so the marina docks are done for 2026. No date posted yet for pulling the ramp docks.", "source": ["Columbus Recreation and Parks, Marinas & Docks", "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"]},
       "pool": "Summer pool is 894 ft, the level the ODNR contour map is drawn at.",
       "night": "City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
+      "hours": {"authority": "city", "open": "07:00", "close": "23:00", "fishing_after_hours": null, "chip": "City park closes 11 p.m.", "source": ["Columbus Recreation and Parks, Hoover Reservoir", "https://columbusrecparks.com/parks/hoover-reservoir/"], "checked": "2026-11-03"},
       "sources": [
         ["Columbus Recreation and Parks, Hoover Reservoir", "https://columbusrecparks.com/parks/hoover-reservoir/"],
         ["ODNR, Hoover Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area"],
@@ -27,7 +28,9 @@
         ["US Army Corps of Engineers, Alum Creek Lake", "https://www.lrd.usace.army.mil/Missions/Recreation/Display/Article/3632213/alum-creek-lake/"],
         ["ODNR, Alum Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park"],
         ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/alumcreeklake2.pdf"]
-      ]
+      ],
+      "night": "State park hours are sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "sunrise", "close": "sunset", "fishing_after_hours": true, "chip": "Park hours end at sunset, fishing allowed after (ODNR)", "source": ["ODNR, Alum Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park"], "checked": "2026-11-03"}
     },
     "buckeye": {
       "checked": "2026-10-31",
@@ -40,7 +43,9 @@
         ["ODNR, Buckeye Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area"],
         ["ODNR, Buckeye Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park"],
         ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf"]
-      ]
+      ],
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Buckeye Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park"], "checked": "2026-11-03"}
     },
     "oshaughnessy": {
       "checked": "2026-10-31",
@@ -51,10 +56,11 @@
       "docks": {"checked": "2026-11-03", "text": "The city lists the marina dock season as May 1 to Oct. 31, so the marina docks are done for 2026. No date posted yet for pulling the ramp docks.", "source": ["Columbus Recreation and Parks, Marinas & Docks", "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"]},
       "pool": "Full pool is the City dam crest, 848.5 ft. ODNR fishing map depths are based on 847.9 ft.",
       "night": "10 mph from sunset to sunrise (City code). City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
+      "hours": {"authority": "city", "open": "07:00", "close": "23:00", "fishing_after_hours": null, "chip": "City park closes 11 p.m.", "source": ["Columbus Recreation and Parks, O’Shaughnessy Reservoir", "https://columbusrecparks.com/parks/oshaughnessy-reservoir/"], "checked": "2026-11-03"},
       "sources": [
-        ["Columbus Recreation and Parks, O\u2019Shaughnessy Reservoir", "https://columbusrecparks.com/parks/oshaughnessy-reservoir/"],
+        ["Columbus Recreation and Parks, O’Shaughnessy Reservoir", "https://columbusrecparks.com/parks/oshaughnessy-reservoir/"],
         ["Columbus City Code 921.01-1(G)", "https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf"],
-        ["ODNR, O\u2019Shaughnessy Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/o-shaughnessy-reservoir-fishing-area"]
+        ["ODNR, O’Shaughnessy Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/o-shaughnessy-reservoir-fishing-area"]
       ]
     },
     "griggs": {
@@ -66,6 +72,7 @@
       "docks": {"checked": "2026-11-03", "text": "The city lists the marina dock season as May 1 to Oct. 31, so the marina docks are done for 2026. No date posted yet for pulling the ramp docks.", "source": ["Columbus Recreation and Parks, Marinas & Docks", "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"]},
       "pool": "Full pool is the City dam crest, 756.18 ft. ODNR fishing map depths are based on 757 ft.",
       "night": "10 mph from sunset to sunrise (City code). City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
+      "hours": {"authority": "city", "open": "07:00", "close": "23:00", "fishing_after_hours": null, "chip": "City park closes 11 p.m.", "source": ["Columbus Recreation and Parks, Griggs Park", "https://columbusrecparks.com/parks/griggs-park/"], "checked": "2026-11-03"},
       "sources": [
         ["Columbus Recreation and Parks, Griggs Park", "https://columbusrecparks.com/parks/griggs-park/"],
         ["Columbus City Code 921.01-1(G)", "https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf"],
@@ -78,9 +85,10 @@
       "description": "Indian Lake fishing: live USGS lake level, no hp limit, five state park ramps and the Old Field Beach jetties, tonight's bite. Unofficial.",
       "motors": "No horsepower limit. No wake within 300 ft of any shoreline, in channels and where marked.",
       "ramps": "Five state park launch ramps: Moundwood, Lakeview Harbor, Blackhawk, Chippewa and Cranetown Island. Fishing jetties at Old Field Beach.",
-      "docks": {"checked": "2026-11-03", "text": "Peak of Ohio reported on Oct. 24, 2026 that ODNR reminds boaters \u201call boats must be removed from state docks by November 1,\u201d so the state docks are done for 2026. ODNR\u2019s own pages do not post the date.", "source": ["Peak of Ohio, Oct. 24, 2026", "https://www.peakofohio.com/local-news/odnr-shares-end-of-season-boating-reminders-for-indian-lake/"]},
+      "docks": {"checked": "2026-11-03", "text": "Peak of Ohio reported on Oct. 24, 2026 that ODNR reminds boaters “all boats must be removed from state docks by November 1,” so the state docks are done for 2026. ODNR’s own pages do not post the date.", "source": ["Peak of Ohio, Oct. 24, 2026", "https://www.peakofohio.com/local-news/odnr-shares-end-of-season-boating-reminders-for-indian-lake/"]},
       "pool": "Normal summer pool is 996.3 ft, the level the ODNR fishing map is drawn at.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Indian Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park"], "checked": "2026-11-03"},
       "sources": [
         ["ODNR, Indian Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park"],
         ["ODNR, Indian Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-fishing-area"],
@@ -96,6 +104,7 @@
       "docks": {"checked": "2026-11-03", "text": "ODNR lists the lease dock season as April 15 to Oct. 1, so the lease docks are done for 2026. No date posted yet for pulling the launch docks.", "source": ["ODNR, Delaware Dock Lottery", "https://ohiodnr.gov/discover-and-learn/safety-conservation/about-odnr/division-parks-watercraft/boating-paddling-ohio/dock-lotteries/delaware"]},
       "pool": "Normal summer pool is 915 ft. ODNR lists a winter drawdown to about 910 ft.",
       "night": "State park hours are sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "sunrise", "close": "sunset", "fishing_after_hours": true, "chip": "Park hours end at sunset, fishing allowed after (ODNR)", "source": ["ODNR, Delaware State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park"], "checked": "2026-10-29"},
       "sources": [
         ["ODNR, Delaware State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park"],
         ["ODNR, Delaware Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-lake-fishing-area"],
@@ -110,6 +119,7 @@
       "ramps": "Two state park ramps and a marina. Shore access below the dam.",
       "pool": "Summer pool is 810.5 ft on the ODNR fishing map. ODNR lists a winter drawdown to about 796 ft.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Deer Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park"], "checked": "2026-10-31"},
       "sources": [
         ["ODNR, Deer Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park"],
         ["ODNR, Deer Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-lake-fishing-area"],
@@ -124,6 +134,7 @@
       "ramps": "One launch ramp, with shore fishing by it.",
       "pool": "Summer pool is 965 ft, the level the ODNR fishing map is drawn at.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Madison Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park"], "checked": "2026-10-31"},
       "sources": [
         ["ODNR, Madison Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park"],
         ["ODNR, Madison Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-fishing-area"],
@@ -140,16 +151,19 @@
       "sources": [
         ["ODNR, Knox Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area"],
         ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/knoxlake2.pdf"]
-      ]
+      ],
+      "night": "ODNR's Knox Lake Fishing Area page lists no hours, so there's no official night rule to show; follow posted signs.",
+      "hours": {"none": true, "note": "ODNR's Knox Lake Fishing Area page lists no hours, so there's no official night rule to show; follow posted signs.", "checked": "2026-11-03"}
     },
     "clearfork": {
       "checked": "2026-10-31",
       "title": "Clear Fork Reservoir Fishing: Map, Rules | The Night Bite",
       "description": "Clear Fork Reservoir fishing: idle speed, no wake lake, the free south side ramp, night parking rules, tonight's bite. No public level gauge. Unofficial.",
-      "motors": "No horsepower limit, but idle speed and no wake on the whole lake (City code). ODNR\u2019s page says 8 mph.",
+      "motors": "No horsepower limit, but idle speed and no wake on the whole lake (City code). ODNR’s page says 8 mph.",
       "ramps": "Free public ramp and marina on the south side. Shore fishing on the south and west shores only.",
       "pool": "Summer pool is 1,202 ft, the level the ODNR fishing map is drawn at.",
       "night": "City code bars parking from dark to dawn outside designated camping areas, so check posted City signs before a night trip.",
+      "hours": {"authority": "city", "open": null, "close": null, "fishing_after_hours": null, "chip": "No parking dark to dawn outside camping areas (City code)", "source": ["Mansfield Codified Ordinances, chapter 971", "https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714"], "checked": "2026-10-31"},
       "sources": [
         ["City of Mansfield, Clearfork Reservoir Park", "https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/"],
         ["Mansfield Codified Ordinances, chapter 971", "https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714"],
@@ -164,10 +178,12 @@
       "ramps": "MWCD lists five public launch ramps, plus the Seneca Lake Marina.",
       "pool": "Summer pool is 832 ft, the level the ODNR fishing map is drawn at.",
       "night": "MWCD areas close from 11 p.m. to 6 a.m. except to people fishing, hunting or boating.",
+      "hours": {"authority": "mwcd", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)", "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"], "checked": "2026-11-03"},
       "sources": [
         ["MWCD, Seneca Lake", "https://www.mwcd.org/places/seneca-lake/"],
         ["ODNR, Seneca Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/seneca-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/senecalake2.pdf"]
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/senecalake2.pdf"],
+        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"]
       ]
     },
     "dillon": {
@@ -178,6 +194,7 @@
       "ramps": "Two state park ramps at the south end: the marina ramp and Big Run.",
       "pool": "Summer pool is 737 ft, the level the ODNR fishing map is drawn at.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Dillon State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park"], "checked": "2026-10-31"},
       "sources": [
         ["ODNR, Dillon State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park"],
         ["ODNR, Dillon Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-lake-fishing-area"],
@@ -192,6 +209,7 @@
       "ramps": "Main ramp and marina off Lake Logan Road, and a smaller ramp about 1.5 miles northeast.",
       "pool": "Summer pool is 759 ft, the level the ODNR fishing map is drawn at.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Lake Logan State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park"], "checked": "2026-10-31"},
       "sources": [
         ["ODNR, Lake Logan State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park"],
         ["ODNR, Lake Logan Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-fishing-area"],
@@ -203,9 +221,10 @@
       "title": "Salt Fork Lake Fishing: Map, Ramps, Rules | The Night Bite",
       "description": "Salt Fork Lake fishing: unlimited hp with speed zones, Sugartree and Morning Glory ramps, the lake map, tonight's bite. No public gauge. Unofficial.",
       "motors": "Unlimited horsepower, with marked speed and ski zones.",
-      "ramps": "ODNR\u2019s fishing page counts 10 ramps and the park page names 8, including Sugartree Marina and Morning Glory. Two marinas.",
+      "ramps": "ODNR’s fishing page counts 10 ramps and the park page names 8, including Sugartree Marina and Morning Glory. Two marinas.",
       "pool": "Summer pool is 800 ft, the level the ODNR fishing map is drawn at.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Salt Fork State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park"], "checked": "2026-10-31"},
       "sources": [
         ["ODNR, Salt Fork State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park"],
         ["ODNR, Salt Fork Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area"],
@@ -220,6 +239,7 @@
       "ramps": "Four ramps: Dock 1 with the marina, Dock 3, Dock 4 and the Lodge ramp.",
       "pool": "Summer pool is 721 ft, the level the ODNR fishing map is drawn at.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Burr Oak State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park"], "checked": "2026-10-31"},
       "sources": [
         ["ODNR, Burr Oak State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park"],
         ["ODNR, Burr Oak Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-lake-fishing-area"],
@@ -234,6 +254,7 @@
       "ramps": "One ramp off Strouds Run Road, with a courtesy dock. Shore fishing by the dam.",
       "pool": "Summer pool is 660 ft, the level the ODNR fishing map is drawn at.",
       "night": "Strouds Run State Park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Strouds Run hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Strouds Run State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park"], "checked": "2026-10-31"},
       "sources": [
         ["ODNR, Strouds Run State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park"],
         ["ODNR, Dow Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area"],
@@ -248,6 +269,7 @@
       "ramps": "ODNR counts five state park launch ramps. The main ramp off SR 305 (3 lanes) and the causeway ramp at SR 88 and SR 46 (2 lanes) are both lit. Road construction at the marina and beach lots since Oct. 3, 2026.",
       "pool": "Summer pool is 901 ft, the level the ODNR fishing map is drawn at.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Mosquito Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park"], "checked": "2026-11-03"},
       "sources": [
         ["ODNR, Mosquito Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park"],
         ["ODNR, Mosquito Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-creek-lake-fishing-area"],
@@ -265,7 +287,9 @@
         ["ODNR, Berlin Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area"],
         ["US Army Corps of Engineers, Berlin Lake", "https://water.usace.army.mil/overview/lrp/locations/berlin"],
         ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/berlinlake2.pdf"]
-      ]
+      ],
+      "night": "ODNR's Berlin Lake Fishing Area page lists no access hours, only a 10 mph limit on the lake at night; follow posted signs.",
+      "hours": {"none": true, "note": "ODNR's Berlin Lake Fishing Area page lists no access hours, only a 10 mph limit on the lake at night; follow posted signs.", "checked": "2026-11-03"}
     },
     "westbranch": {
       "checked": "2026-11-03",
@@ -275,6 +299,7 @@
       "ramps": "Five state park ramps: East and West (two lanes, lit), the campground ramp, and gravel ramps at Rock Spring Road and Knapp Road. Marina with an accessible fishing pier.",
       "pool": "Summer pool is 985.5 ft, the level the ODNR fishing map is drawn at.",
       "night": "Park hours are sunup to sundown; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "sunrise", "close": "sunset", "fishing_after_hours": true, "chip": "Park hours end at sunset, fishing allowed after (ODNR)", "source": ["ODNR, West Branch State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park"], "checked": "2026-11-03"},
       "sources": [
         ["ODNR, West Branch State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park"],
         ["ODNR, Kirwan Reservoir (West Branch) Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kirwan-reservoir-west-branch-fishing-area"],
@@ -289,6 +314,7 @@
       "ramps": "Five Ohio state park ramps: Padanaram, Birches Landing, Cabin Beach, New Bowers and the campers only campground ramp. The road from Cabin Beach to Birches Marina is closed for good.",
       "pool": "Summer pool is 1,008 ft, the level the ODNR fishing map is drawn at.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Pymatuning State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park"], "checked": "2026-11-03"},
       "sources": [
         ["ODNR, Pymatuning State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park"],
         ["ODNR, Pymatuning Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-lake-fishing-area"],
@@ -303,6 +329,7 @@
       "ramps": "Three state park ramps, two lanes each and lit: Miller's Landing, Robinson Point (with an accessible fishing pier) and Pointview.",
       "pool": "Summer pool is 948 ft, the level the ODNR fishing map is drawn at. The fall drawdown usually starts Oct. 15 and takes the lake down about 8 ft; refill starts March 15.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {"authority": "odnr", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)", "source": ["ODNR, Lake Milton State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park"], "checked": "2026-11-03"},
       "sources": [
         ["ODNR, Lake Milton State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park"],
         ["ODNR, Lake Milton Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-fishing-area"],
@@ -320,8 +347,11 @@
         ["MWCD, Leesville Lake", "https://www.mwcd.org/places/leesville-lake/"],
         ["ODNR, Leesville Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/leesville-lake-fishing-area"],
         ["US Army Corps of Engineers, Leesville Lake", "https://water.usace.army.mil/overview/lrh/locations/leesville"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/leesvillelake2.pdf"]
-      ]
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/leesvillelake2.pdf"],
+        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"]
+      ],
+      "night": "MWCD areas close from 11 p.m. to 6 a.m. except to people fishing, hunting or boating.",
+      "hours": {"authority": "mwcd", "open": "06:00", "close": "23:00", "fishing_after_hours": true, "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)", "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"], "checked": "2026-11-03"}
     }
   }
 }

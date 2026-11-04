@@ -19,7 +19,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v27-2026-11-03";
+var VERSION = "v28-2026-11-04";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
@@ -80,6 +80,26 @@ var PRECACHE = [
   "species/bullhead.html",
   "js/alerts.js",
   "js/astro.js",
+  "js/night-rules.js",
+  "js/i18n.js",
+  "data/i18n/en.json",
+  "data/i18n/es.json",
+  "data/i18n/zh.json",
+  "data/i18n/tl.json",
+  "data/i18n/vi.json",
+  "data/i18n/fr.json",
+  "data/i18n/ko.json",
+  "data/i18n/pt.json",
+  "data/i18n/hi.json",
+  "data/i18n/ru.json",
+  "data/i18n/ht.json",
+  "data/i18n/de.json",
+  "data/i18n/pl.json",
+  "data/i18n/it.json",
+  "data/i18n/ja.json",
+  "data/i18n/ar.json",
+  "data/i18n/ur.json",
+  "data/i18n/fa.json",
   "js/bait-nearby.js",
   "data/bait-shops.json",
   "js/biting-data.js",
@@ -123,6 +143,8 @@ var PRECACHE = [
   "js/log.js",
   "js/mode-toggle.js",
   "js/nav.js",
+  "js/a11y-boot.js",
+  "js/a11y.js",
   "js/updates-draft.js",
   "js/pack-list.js",
   "js/pool-readout.js",

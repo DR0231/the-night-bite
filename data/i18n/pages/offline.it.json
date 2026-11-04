@@ -1,0 +1,14 @@
+{
+ "_meta": {
+  "lang": "it",
+  "page": "offline",
+  "review": "draft"
+ },
+ "strings": {
+  "offline.339f750b": ", la pagina della tua acqua con le ultime letture di livello e meteo",
+  "offline.8c5c8561": "e cosa abbocca questo mese",
+  "offline.cf591706": "Quando torna il segnale, ricarica per vedere la pagina.",
+  "offline.dc9caf67": "Questa pagina non è ancora salvata su questo telefono. Le pagine che hai già aperto funzionano anche senza segnale.",
+  "offline.f690c8ed": "Il tuo diario"
+ }
+}

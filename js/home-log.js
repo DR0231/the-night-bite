@@ -50,7 +50,7 @@
       body.innerHTML =
         '<span class="sample-badge" title="Demo entry, not a live bite report">Example entry</span>' +
         '<p class="log-value">Channel catfish</p>' +
-        '<p class="meta">2026-08-15 · Oxbow · Cut shad</p>';
+        '<p class="meta">2026-08-15 · Oxbow Road ramp · Cut shad</p>';
     });
 
   function escapeHtml(s) {

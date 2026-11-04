@@ -4,6 +4,7 @@
     import registry
     R = registry.load()          # {"order": [...], "lakes": {...}, "regions": [...], "pages": [...]}
     registry.home("dow")         # "dow/"; Hoover is "hoover/" (the site root is the water picker)
+    registry.changed()           # {"lakes": [...], "files": [...], "shared": [...]} differing from origin/main
 
 Lakes and their order come from js/lakes.js, pages from sitemap.xml. Nothing is hard-coded here.
 dump_like(text, data) writes JSON in the same layout as an existing file (indent width, short lists on one line), so a
@@ -21,6 +22,18 @@ def load(root=None):
                          capture_output=True, text=True)
     if out.returncode:
         raise SystemExit("registry: " + (out.stderr.strip() or "node tools/registry.cjs failed"))
+    return json.loads(out.stdout)
+
+
+def changed(ref="origin/main", root=None):
+    """Lakes whose files differ from `ref` (commits, uncommitted and untracked edits): {ref, lakes, files, shared[, error]}.
+    Same mapping as R.changed in tools/registry.cjs, which it calls."""
+    args = ["node", str(pathlib.Path(__file__).resolve().parent / "registry.cjs"), "--changed", ref]
+    if root:
+        args += ["--root", str(root)]
+    out = subprocess.run(args, capture_output=True, text=True)
+    if out.returncode:
+        return {"ref": ref, "lakes": [], "files": [], "shared": [], "error": out.stderr.strip() or "registry.cjs --changed failed"}
     return json.loads(out.stdout)
 
 

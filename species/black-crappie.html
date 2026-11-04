@@ -31,8 +31,9 @@
   <link rel="preload" href="../assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../css/styles.css?v=v27-2026-11-03">
-  <script src="../js/lakes.js?v=v27-2026-11-03"></script>
+  <script src="../js/a11y-boot.js?v=v28-2026-11-04"></script>
+  <link rel="stylesheet" href="../css/styles.css?v=v28-2026-11-04">
+  <script src="../js/lakes.js?v=v28-2026-11-04"></script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Species", "item": "https://nightbiteoh.com/species/"}, {"@type": "ListItem", "position": 3, "name": "Black crappie", "item": "https://nightbiteoh.com/species/black-crappie"}]}
   </script>
@@ -50,20 +51,21 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li class="nav-core"><a href="../">Home</a></li>
-          <li class="nav-core"><a href="../species/" aria-current="page"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
-          <li class="nav-core"><a href="../water"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="../species/" aria-current="page">Species</a></li>
+          <li class="nav-core"><a href="../water"><span class="nav-label" data-short="Lake"><span class="nav-label-text">Water</span></span></a></li>
           <li class="nav-core"><a href="../gear">Gear</a></li>
-          <li class="nav-extra"><a href="../whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra nav-ww"><a href="../whisperwood.html">Whisperwood Vale</a></li>
           <li class="nav-extra"><a href="../log">Log</a></li>
           <li class="nav-extra"><a href="../about">About</a></li>
-          <li class="nav-extra"><a href="../updates" data-updates="2026-11-03">What&rsquo;s new</a></li>
-          <li class="nav-more-item">
+          <li class="nav-extra"><a href="../updates" data-updates="2026-11-04">What&rsquo;s new</a></li>
+          <li class="nav-more-item nav-more-desk">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
               <a href="../whisperwood.html">Whisperwood Vale</a>
               <a href="../log">Log</a>
               <a href="../about">About</a>
-              <a href="../updates" data-updates="2026-11-03">What&rsquo;s new</a>
+              <a href="../updates" data-updates="2026-11-04">What&rsquo;s new</a>
+              <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
         </ul>
@@ -107,9 +109,9 @@
 
     <div class="sp-now" id="sp-now" data-species="black-crappie" hidden></div>
     <!-- filled right here, before paint, from the month's picks for the active lake -->
-    <script src="../js/biting-data.js?v=v27-2026-11-03"></script>
-    <script src="../js/biting-data-lakes.js?v=v27-2026-11-03"></script>
-    <script src="../js/species-lake.js?v=v27-2026-11-03"></script>
+    <script src="../js/biting-data.js?v=v28-2026-11-04"></script>
+    <script src="../js/biting-data-lakes.js?v=v28-2026-11-04"></script>
+    <script src="../js/species-lake.js?v=v28-2026-11-04"></script>
 
     <nav class="species-subnav" aria-label="On this page">
       <a href="#season">Season</a>
@@ -349,7 +351,7 @@
       <div data-for="mosquito">
       <div class="mode-panel" data-mode="bank">
       <ul>
-        <li>Shore at Mosquito Lake State Park and along the SR 88 causeway (ODNR). The marina and beach lots have construction since Oct. 3, 2026.</li>
+        <li>Shore at Mosquito Lake State Park and along the SR 88 causeway (ODNR). The marina and beach lots have construction since <time datetime="2026-10-03">Oct. 3, 2026</time>.</li>
         <li>Public ramps, parks and shore only. Pins on the <a href="../water#maps">water maps</a>.</li>
       </ul>
       </div>
@@ -363,7 +365,7 @@
       <div data-for="berlin">
       <div class="mode-panel" data-mode="bank">
       <ul>
-        <li>Public ramps and Corps shore. The Bonner Road ramp is closed until May 28, 2027.</li>
+        <li>Public ramps and Corps shore. The Bonner Road ramp is closed until <time datetime="2027-05-28">May 28, 2027</time>.</li>
         <li>Public ramps, parks and shore only. Pins on the <a href="../water#maps">water maps</a>.</li>
       </ul>
       </div>
@@ -434,7 +436,7 @@
 
     <section id="limits" class="species-section">
       <h2>Limits <span class="regs-tag">reminder, verify</span></h2>
-      <p class="meta" data-for="hoover alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito milton"><span data-lk="short">Hoover</span> has its own crappie rule in the 2026–27 booklet: 30 a day, 9″ minimum. ODNR has proposed dropping the 9″ minimum from March 1, 2027, so check the current rules before you keep fish.</p>
+      <p class="meta" data-for="hoover alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito milton"><span data-lk="short">Hoover</span> has its own crappie rule in the 2026–27 booklet: 30 a day, 9″ minimum. ODNR has proposed dropping the 9″ minimum from <time datetime="2027-03-01">March 1, 2027</time>, so check the current rules before you keep fish.</p>
       <div class="table-wrap" data-for="hoover alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito milton">
         <table class="access-table regs-table">
           <thead>
@@ -539,9 +541,7 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
       </a>
     </div>
 
-    <div class="callout">
-      Unofficial notebook only, not ODNR, the City of Columbus, USGS or the US Army Corps of Engineers. License required ages 16+. Confirm regs before you keep fish.
-    </div>
+    <details class="info-tip"><summary><span class="info-i" aria-hidden="true">i</span><span class="sr-only">About this page</span></summary><p class="info-tip-body">Unofficial notebook only, not ODNR, the City of Columbus, USGS or the US Army Corps of Engineers. License required ages 16+. Confirm regs before you keep fish.</p></details>
   </main>
 
   <footer class="site-footer">
@@ -554,22 +554,24 @@ Cite: <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wi
         <a href="../whisperwood.html">Whisperwood Vale</a>
         <a href="../log">Log</a>
         <a href="../about">About</a>
-        <a href="../updates" data-updates="2026-11-03">What&rsquo;s new</a>
+        <a href="../updates" data-updates="2026-11-04">What&rsquo;s new</a>
         <a href="../privacy">Privacy</a>
+        <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
       <p class="footer-app"><a href="../#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="../js/refresh.js?v=v27-2026-11-03"></script>
-  <script src="../js/sw-update.js?v=v27-2026-11-03"></script>
-  <script src="../js/alerts.js?v=v27-2026-11-03"></script>
-  <script src="../js/nav.js?v=v27-2026-11-03"></script>
-  <script src="../js/visits.js?v=v27-2026-11-03"></script>
-  <script src="../js/lake-picker.js?v=v27-2026-11-03"></script>
-  <script src="../js/sticky-nav.js?v=v27-2026-11-03"></script>
-  <script src="../js/mode-toggle.js?v=v27-2026-11-03"></script>
+  <script src="../js/refresh.js?v=v28-2026-11-04"></script>
+  <script src="../js/sw-update.js?v=v28-2026-11-04"></script>
+  <script src="../js/alerts.js?v=v28-2026-11-04"></script>
+  <script src="../js/nav.js?v=v28-2026-11-04"></script>
+  <script src="../js/visits.js?v=v28-2026-11-04"></script>
+  <script src="../js/lake-picker.js?v=v28-2026-11-04"></script>
+  <script src="../js/sticky-nav.js?v=v28-2026-11-04"></script>
+  <script src="../js/mode-toggle.js?v=v28-2026-11-04"></script>
 
+  <script src="../js/a11y.js?v=v28-2026-11-04" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -11,7 +11,29 @@
   "usgs_site": null,
   "full_pool": null,
   "facts": {
-    "motors": {"text": "10 hp limit.", "source": ["ODNR, Example property page", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/example"]}
+    "motors": {
+      "text": "10 hp limit.",
+      "source": [
+        "ODNR, Example property page",
+        "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/example"
+      ]
+    }
   },
-  "sources": [["ODNR, Example property page", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/example"]]
+  "sources": [
+    [
+      "ODNR, Example property page",
+      "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/example"
+    ]
+  ],
+  "hours": {
+    "authority": "odnr",
+    "open": "06:00",
+    "close": "23:00",
+    "fishing_after_hours": true,
+    "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
+    "source": [
+      "ODNR, Example State Park",
+      "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/example-state-park"
+    ]
+  }
 }

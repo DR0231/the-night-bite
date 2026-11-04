@@ -1,0 +1,14 @@
+{
+ "_meta": {
+  "lang": "de",
+  "page": "offline",
+  "review": "draft"
+ },
+ "strings": {
+  "offline.339f750b": ", die Seite deines Gewässers mit den letzten Pegel- und Wetterwerten",
+  "offline.8c5c8561": "und was diesen Monat beißt",
+  "offline.cf591706": "Wenn der Empfang zurück ist, neu laden, um die Seite zu bekommen.",
+  "offline.dc9caf67": "Diese Seite ist noch nicht auf diesem Handy gespeichert. Seiten, die du schon geöffnet hast, funktionieren auch ohne Empfang.",
+  "offline.f690c8ed": "Dein Logbuch"
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "_meta": {
+  "lang": "vi",
+  "page": "log",
+  "review": "draft"
+ },
+ "strings": {
+  "log.0dc9d9b4": "Tên câu lạc bộ hoặc sự kiện",
+  "log.2d610a9e": "Các chuyến đi do bạn đọc gửi, được kiểm tra trước khi đăng.",
+  "log.35810b8c": ", chỉ đăng khi có người gửi. The Night Bite",
+  "log.3879d2a5": "Chuyến đi của cộng đồng",
+  "log.557f2555": "không phải",
+  "log.78d157cf": "là ban tổ chức giải chính thức, không phải ODNR, và không phải câu lạc bộ tổ chức. Không có gì ở đây là bịa ra, nên danh sách ngắn là danh sách trung thực.",
+  "log.8768ba5d": "Giờ bắt đầu, loài cá, chỉ thông tin công khai…",
+  "log.8993cf87": "Hiện những hồ nào",
+  "log.9450b0b4": "Gửi ở bên dưới",
+  "log.990b5dad": "vd. bến hạ thuyền Walnut Street",
+  "log.a9a13761": "https://",
+  "log.ce88bdae": "Sự kiện của câu lạc bộ bên thứ ba tại",
+  "log.d177b20a": "Hồ:",
+  "log.f0bfa978": "Hiện chưa có sự kiện nào. Bạn biết một sự kiện?"
+ }
+}

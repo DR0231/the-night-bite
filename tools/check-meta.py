@@ -13,6 +13,10 @@ Every public page (same list as tools/build-meta.py) must have:
   · every <script type="application/ld+json"> block parses as JSON and has @context https://schema.org and @type
 404.html and offline.html need a title and description only. Warnings (not errors): descriptions over 160
 characters, titles over 70, spaced dashes in title or description, an indexable canonical missing from sitemap.xml.
+Across pages (errors): two indexable pages with the same <title>, meta description or first <h1> text (404, offline
+and noindex redirect pages left out), so every lake and page can be found and shared on its own.
+Header nav (error): the old two-span labels (nav-label-full + nav-label-short, read as "SpeciesSpecies", "WaterLake")
+anywhere but whisperwood.html; tools/nav-labels.py rewrites them.
 """
 import html, json, os, pathlib, re, sys
 
@@ -25,6 +29,7 @@ OG = ["og:site_name", "og:type", "og:title", "og:description", "og:url", "og:ima
 TW = ["twitter:card", "twitter:title", "twitter:description", "twitter:image"]
 
 errors, warnings, checked = [], [], 0
+seen = {"title": {}, "description": {}, "h1": {}}   # text -> first page that used it
 sitemap = set(re.findall(r"<loc>([^<]+)</loc>", (root / "sitemap.xml").read_text()))
 
 
@@ -40,6 +45,10 @@ for p in sorted(root.rglob("*.html")):
     src = p.read_text()
     head = src[:src.find("</head>")]
     err = lambda m: errors.append(f"{rel}: {m}")
+    if 'class="nav-label-short"' in src and not rel.startswith("whisperwood"):
+        err("old two-span nav labels (run python3 tools/nav-labels.py)")
+    if 'class="nav-more-item"' in src and not rel.startswith("whisperwood"):
+        err("nav More not marked for desktop (run python3 tools/nav-desk-more.py)")
     titles = re.findall(r"<title>([^<]*)</title>", head)
     descs = metas(head, "name", "description")
     if len(titles) != 1 or not titles[0].strip():
@@ -103,6 +112,16 @@ for p in sorted(root.rglob("*.html")):
     noindex = re.search(r'<meta name="robots" content="[^"]*noindex', head) and 'http-equiv="refresh"' in head
     if not noindex and canon not in sitemap:
         warnings.append(f"{rel}: canonical {canon} is not in sitemap.xml")
+    if not noindex:
+        h1 = re.search(r"<h1\b[^>]*>(.*?)</h1>", src, re.S)
+        h1 = " ".join(html.unescape(re.sub(r"<[^>]+>", "", h1.group(1))).split()) if h1 else ""
+        for kind, text in (("title", html.unescape(title)), ("description", html.unescape(desc)), ("h1", h1)):
+            if not text:
+                continue
+            if text in seen[kind]:
+                err(f"same {kind} as {seen[kind][text]}: {text[:70]}")
+            else:
+                seen[kind][text] = rel
 
 for w in warnings:
     print("warn:", w)

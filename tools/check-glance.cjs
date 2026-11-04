@@ -2,9 +2,9 @@
 // Usage: node tools/check-glance.cjs [BASE] [OUTDIR]   (lakes from js/lakes.js, other pages from sitemap.xml)
 //   BASE defaults to the preview (https://dr0231.github.io/night-bite-preview/); OUTDIR gets the log and a Hoover phone shot.
 // Blocks analytics and the visits counter (tools/no-analytics.cjs). Checks per lake and width: 4 cells plus the bite,
-// the right source links (gauge, NWS) or a quiet "No public gauge", sunset filled, no sideways scroll, no console or CSP
-// errors. Then NWS blocked (wind says so, page fine), and offline after one visit (the service worker copy still fills
-// the strip). Exit code 1 on any FAIL.
+// the right source links (gauge, NWS) or a "No gauge" state linked to the pool card note, sunset filled, no sideways scroll, no console or CSP
+// errors. Then NWS blocked (wind says "Check NWS", bite "Needs forecast", page fine), and offline after one visit (the service worker copy still fills
+// the strip). Exit code 1 on any FAIL. APIs blocked and JavaScript off: tools/check-glance-fallback.cjs.
 const PW = process.env.PLAYWRIGHT_CORE || '/usr/local/lib/pnpm/5/.pnpm/playwright-core@1.59.1/node_modules/playwright-core';
 const { chromium } = require(PW);
 const NA = require('./no-analytics.cjs');
@@ -14,7 +14,9 @@ const fs = require('fs'); fs.mkdirSync(OUT, { recursive: true });
 const SIZES = [[390, 844, 'phone'], [820, 1180, 'tablet'], [1280, 800, 'desktop']];
 // lakes, which have no gauge and which have a USGS temp gauge: all from js/lakes.js (tools/registry.cjs)
 const R = require('./registry.cjs');
-const LAKES = R.order(), NOGAUGE = R.noGauge(), TEMP = R.hasTemp();
+// NB_LAKES=a,b limits the per-lake pass to those lakes (check-all.py sets it from its lake scope); default every lake
+const ONLY = (process.env.NB_LAKES || '').split(',').filter(Boolean);
+const LAKES = ONLY.length ? R.order().filter(l => ONLY.includes(l)) : R.order(), NOGAUGE = R.noGauge(), TEMP = R.hasTemp();
 const home = l => BASE + R.home(l);
 // the analytics beacon we block ourselves logs ERR_BLOCKED_BY_CLIENT; ignore that line only when every failed request was ours
 const realErrs = (errs, rf) => errs.filter(e => !(/ERR_BLOCKED_BY_CLIENT/.test(e) && rf.length && rf.every(u => NA.PATTERN.test(u))));
@@ -54,17 +56,33 @@ async function read(page) {
       if (!r) { check(t + ' strip present', false); await page.close(); continue; }
       check(t + ' title + 4 cells + bite', r.title === 'Tonight at a glance' && r.cells === 4 && !!r.bite, `${r.title} / ${r.cells} / bite ${r.bite}`);
       if (NOGAUGE.includes(lake)) {
-        check(t + ' level: quiet no gauge, no link', r.pool.v === '--' && (r.pool.s === 'No public gauge' || (R.lakes()[lake].pool.stale && r.pool.s === 'Gauge not reporting')) && r.pool.href === null, JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
+        check(t + ' level: "No gauge" state, linked to the pool card note', (R.lakes()[lake].pool.stale ? r.pool.v === 'No reading' && r.pool.s === 'Gauge not reporting' : r.pool.v === 'No gauge' && r.pool.s === 'No public gauge') && /#pool-snapshot$/.test(r.pool.href || ''), JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
       } else {
         check(t + ' level from gauge, links to gauge', /^\d+\.\d+ ft$/.test(r.pool.v) && /waterdata\.usgs\.gov|water\.usace\.army\.mil/.test(r.pool.href || '') && r.pool.target === '_blank', JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
       }
-      if (TEMP.includes(lake)) check(t + ' water temp from USGS, links to gauge', (/^-?\d+ °F$/.test(r.temp.v) || r.temp.s === 'No reading right now') && /waterdata\.usgs\.gov/.test(r.temp.href || ''), JSON.stringify([r.temp.v, r.temp.s, r.temp.href]));
-      else check(t + ' water temp: quiet no temp gauge, no link', r.temp.v === '--' && r.temp.s === 'No public temp gauge' && r.temp.href === null, JSON.stringify([r.temp.v, r.temp.s]));
-      check(t + ' sunset filled', /^\d{1,2}:\d{2} (AM|PM)$/.test(r.sunset.v), JSON.stringify([r.sunset.v, r.sunset.s, r.sunset.href]));
-      check(t + ' wind from NWS, links to NWS page', (/mph|Calm/.test(r.wind.v) || r.wind.s === 'NWS not available') && /forecast\.weather\.gov\/MapClick/.test(r.wind.href || ''), JSON.stringify([r.wind.v, r.wind.s, r.wind.href]));
+      if (TEMP.includes(lake)) check(t + ' water temp from USGS, links to gauge', (/^-?\d+ °F$/.test(r.temp.v) || r.temp.v === 'No reading') && /waterdata\.usgs\.gov/.test(r.temp.href || ''), JSON.stringify([r.temp.v, r.temp.s, r.temp.href]));
+      else check(t + ' water temp: "No gauge" state, linked to the pool card note', r.temp.v === 'No gauge' && r.temp.s === 'No public gauge' && /#pool-snapshot$/.test(r.temp.href || ''), JSON.stringify([r.temp.v, r.temp.s, r.temp.href]));
+      check(t + ' sunset filled', /^\d{1,2}:\d{2} (AM|PM)( [A-Z][a-z]{2})?$/.test(r.sunset.v.replace(/\s+/g, ' ')), JSON.stringify([r.sunset.v, r.sunset.s, r.sunset.href]));
+      check(t + ' wind from NWS, links to NWS page', (/mph|Calm/.test(r.wind.v) || r.wind.v === 'Check NWS') && /forecast\.weather\.gov\/MapClick/.test(r.wind.href || ''), JSON.stringify([r.wind.v, r.wind.s, r.wind.href]));
       const hs = [r.pool.h, r.temp.h, r.sunset.h, r.wind.h];
       check(t + ' equal cell heights (1px row rule), no clipped values', Math.max(...hs) - Math.min(...hs) <= 1 && ![r.pool, r.temp, r.sunset, r.wind].some(c => c.over), hs.join(','));
       check(t + ' no sideways scroll', !r.sideways);
+      // S4: the "How the bite is rated" explainer lists the same inputs and numbers as RULES in js/conditions.js
+      const bx = await page.evaluate(() => {
+        const R = window.NightBiteBiteRules, d = document.getElementById('bite-how'); if (!R || !d) return { missing: !R ? 'RULES' : '#bite-how' };
+        const get = p => p.split('.').reduce((o, k) => o == null ? undefined : o[k], R);
+        const fmt = (el, v) => el.getAttribute('data-fmt') === 'pct' ? Math.round(v * 100) + '%' : /\.pts\./.test(el.getAttribute('data-r')) ? (v > 0 ? '+' + v : v < 0 ? '\u2212' + Math.abs(v) : '0') : String(v);
+        const bad = [...d.querySelectorAll('[data-r]')].filter(el => { const v = get(el.getAttribute('data-r')); return typeof v !== 'number' || fmt(el, v) !== el.textContent.trim(); })
+          .map(el => el.getAttribute('data-r') + '=' + el.textContent.trim());
+        const pts = []; const walk = (o, pre) => Object.keys(o).forEach(k => typeof o[k] === 'object' && !Array.isArray(o[k]) ? walk(o[k], pre + k + '.') : typeof o[k] === 'number' && pts.push(pre + k)); walk(R, '');
+        const shown = new Set([...d.querySelectorAll('[data-r]')].map(el => el.getAttribute('data-r')));
+        const glance = document.querySelector('#glance .glance-bite');
+        return { inputs: [...d.querySelectorAll('[data-rule]')].map(li => li.getAttribute('data-rule')).join(','), want: R.inputs.join(','), bad, unshown: pts.filter(p => !shown.has(p)),
+          tonight: (d.querySelector('[data-bite-tonight]') || {}).textContent || '', link: glance ? /#bite-how$/.test(glance.getAttribute('href') || '') : false };
+      });
+      check(t + ' bite explainer: same inputs as RULES', !bx.missing && bx.inputs === bx.want, bx.missing || bx.inputs + ' vs ' + bx.want);
+      check(t + ' bite explainer: every RULES number shown and matching', !bx.missing && !bx.bad.length && !bx.unshown.length, bx.missing || JSON.stringify({ bad: bx.bad, unshown: bx.unshown }));
+      check(t + ' bite explainer: tonight line filled, glance Bite links to it', !bx.missing && /^Tonight: /.test(bx.tonight) && bx.link, bx.missing || bx.tonight);
       const errs = errsNow();
       check(t + ' no console or CSP errors', errs.length === 0, errs.join(' | ').slice(0, 300));
       if (lake === 'hoover' && name === 'phone') {
@@ -104,7 +122,8 @@ async function read(page) {
       page.on('pageerror', e => perr.push(e.message));
       await page.goto(home(lake) + '?t=' + Date.now()); await sleep(5000);
       const r = await read(page);
-      check(`NWS blocked ${lake}: wind says NWS not available, link kept`, r.wind.v === '--' && r.wind.s === 'NWS not available' && /forecast\.weather\.gov/.test(r.wind.href || ''), JSON.stringify([r.wind.v, r.wind.s, r.cond]));
+      check(`NWS blocked ${lake}: wind says Check NWS / NWS not reachable, link kept`, r.wind.v === 'Check NWS' && r.wind.s === 'NWS not reachable' && /forecast\.weather\.gov/.test(r.wind.href || ''), JSON.stringify([r.wind.v, r.wind.s, r.cond]));
+      check(`NWS blocked ${lake}: bite says Needs forecast, never --`, r.bite === 'Needs forecast', r.bite);
       check(`NWS blocked ${lake}: sunset still filled, no script errors`, /\d:\d\d/.test(r.sunset.v) && perr.length === 0, r.sunset.v + ' ' + perr.join('|'));
       await page.close();
     }

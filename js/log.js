@@ -1,35 +1,19 @@
 /**
- * The Night Bite — trip log (localStorage only)
- * Key: nightbite-log-v1
- * Only the user's own entries are stored. The one SAMPLE demo card normally
- * comes from data/community-log.json (js/community-log.js); SAMPLE_TRIPS below
- * is a fallback shown here only when that JSON fails to load, so the page
- * always shows exactly one SAMPLE card.
+ * The Night Bite: your trips on the Log page (localStorage nightbite-log-v1, this device only).
+ * Example (sample) trips are never stored or shown here. Backup: "Save a backup" downloads
+ * night-bite-log-YYYY-MM-DD.json; "Open a backup" reads one with FileReader, checks every entry and adds the new
+ * ones to what is saved (never replaces). No network. window.NightBiteLogIO is used by tools/check-log-io.cjs.
  */
 (function () {
   var STORAGE_KEY = "nightbite-log-v1";
   var SAMPLES_SEEDED_KEY = "nightbite-samples-seeded-v2";
-  // null = community log not loaded yet, "ok" = JSON loaded, "failed" = fetch failed
-  var communityStatus = window.__nightbiteCommunityLog || null;
   // lakes (js/lakes.js): every entry carries a lake; entries saved before lakes existed are Hoover trips
   var LK = window.NightBiteLake, LAKES = window.NightBiteLakes;
   var LAKE = LK ? LK.id : "hoover";
   function lakeShort(id) { return (LAKES && LAKES.all[id] && LAKES.all[id].short) || "Hoover"; }
+  // old Hoover ramp spellings show as the official names (the saved text is left as it was)
+  function spotName(e) { return (LAKES && LAKES.spotName) ? LAKES.spotName(e.lake || "hoover", e.location) : e.location; }
   function showAll() { return window.NightBiteLogFilter === "all"; }
-
-  var SAMPLE_TRIPS = [
-    {
-      id: "sample-1",
-      sample: true,
-      lake: "hoover",
-      date: "2025-07-12",
-      location: "Oxbow (upper ramp)",
-      bait: "Cut shad",
-      species: "Channel catfish",
-      disposition: "Released",
-      notes: "Two keeper-size channels before midnight. Warm humid night, light breeze off the upper end. Example trip for demo only."
-    }
-  ];
 
   function loadEntries() {
     try {
@@ -65,9 +49,6 @@
 
   function entriesToShow() {
     var entries = loadEntries();
-    if (communityStatus === "failed") {
-      SAMPLE_TRIPS.forEach(function (s) { entries.push(Object.assign({}, s)); });
-    }
     return showAll() ? entries : entries.filter(function (e) { return e.lake === LAKE; });
   }
   // write the lake field into old entries once, so the stored notebook is tagged too
@@ -82,13 +63,25 @@
   }
 
   function formatDate(iso) {
-    if (!iso) return "—";
+    if (!iso) return "";
     var parts = iso.split("-");
     if (parts.length !== 3) return iso;
     var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     var m = parseInt(parts[1], 10) - 1;
     return months[m] + " " + parseInt(parts[2], 10) + ", " + parts[0];
   }
+  // S13: the date as <time datetime>, English text; js/i18n.js rewrites it with Intl in the picked language
+  function dateTag(iso) {
+    var t = formatDate(iso);
+    return /^\d{4}-\d{2}-\d{2}$/.test(iso || "") ? '<time datetime="' + iso + '">' + escapeHtml(t) + "</time>" : escapeHtml(t);
+  }
+  // aria-label text is not walked as a date, so it uses Intl directly in the page language
+  function dateLabel(iso) {
+    var L = document.documentElement.lang || "en", p = (iso || "").split("-");
+    if (L === "en" || p.length !== 3) return formatDate(iso);
+    try { return new Intl.DateTimeFormat(L, { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" }).format(Date.UTC(+p[0], +p[1] - 1, +p[2])); } catch (e) { return formatDate(iso); }
+  }
+
 
   function renderList() {
     var list = document.getElementById("log-list");
@@ -99,30 +92,35 @@
       return (b.date || "").localeCompare(a.date || "");
     });
 
+    var empty = document.getElementById("log-empty"), add = document.getElementById("add-private");
+    var total = loadEntries().length;
     if (entries.length === 0) {
-      list.innerHTML = showAll() || LAKE === "hoover"
-        ? '<div class="empty-log"><p>No trips yet. Add one below; it’s saved only on this device.</p></div>'
-        : '<div class="empty-log"><p>No ' + escapeHtml(lakeShort(LAKE)) + ' trips yet. Add one below; it’s saved only on this device.</p></div>';
+      list.innerHTML = "";
+      list.hidden = true;
+      if (empty) {
+        empty.textContent = total && !showAll()
+          ? "No " + lakeShort(LAKE) + " trips saved on this phone yet. All lakes shows your other trips."
+          : "No trips saved on this phone yet. Add your first one below.";
+        empty.hidden = false;
+      }
+      if (add && !total) add.open = true;
       return;
     }
+    list.hidden = false;
+    if (empty) empty.hidden = true;
 
     list.innerHTML = entries.map(function (e) {
-      var badge = e.sample
-        ? '<span class="sample-badge" title="Demo entry, not a live bite report">Example</span>'
-        : '<span class="meta">Your entry</span>';
-      var delBtn = e.sample
-        ? ""
-        : '<div class="trip-actions"><button type="button" class="btn btn-danger" data-delete="' +
-          escapeAttr(e.id) +
-          '">Remove</button></div>';
+      var badge = '<span class="meta">Your trip</span>';
+      var delBtn = '<div class="trip-actions"><button type="button" class="btn btn-danger" data-delete="' +
+          escapeAttr(e.id) + '" aria-label="Remove ' + escapeAttr((e.species || "trip") + ", " + dateLabel(e.date)) + '">Remove</button></div>';
       return (
         '<article class="paper-card" data-id="' + escapeAttr(e.id) + '">' +
         badge +
         ' <span class="lake-tag">' + escapeHtml(lakeShort(e.lake)) + "</span>" +
         "<h3>" + escapeHtml(e.species || "Unknown") + "</h3>" +
         '<dl class="trip-dl">' +
-        "<dt>Date</dt><dd>" + escapeHtml(formatDate(e.date)) + "</dd>" +
-        "<dt>Spot</dt><dd>" + escapeHtml(e.location || "—") + "</dd>" +
+        "<dt>Date</dt><dd>" + dateTag(e.date) + "</dd>" +
+        "<dt>Spot</dt><dd>" + escapeHtml(spotName(e) || "—") + "</dd>" +
         "<dt>Bait</dt><dd>" + escapeHtml(e.bait || "—") + "</dd>" +
         "<dt>Keep?</dt><dd>" + escapeHtml(e.disposition || "—") + "</dd>" +
         "</dl>" +
@@ -209,7 +207,7 @@
     var clearBtn = document.getElementById("clear-user-entries");
     if (clearBtn) {
       clearBtn.addEventListener("click", function () {
-        if (window.confirm("Remove all your personal entries?")) {
+        if (window.confirm("Remove all the trips saved on this phone?")) {
           clearUserEntries();
         }
       });
@@ -220,6 +218,97 @@
       dateInput.value = new Date().toISOString().slice(0, 10);
     }
   }
+
+  /* ---------- backup: export and import (on this device, no network) ---------- */
+  var LIMITS = { location: 120, bait: 120, species: 80, disposition: 40, notes: 500 };
+  function today() {
+    var d = new Date(), z = function (n) { return (n < 10 ? "0" : "") + n; };
+    return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
+  }
+  function exportData() {
+    return { app: "the-night-bite", kind: "trip-log", version: 1, exported: new Date().toISOString(), entries: loadEntries() };
+  }
+  function exportText() { return JSON.stringify(exportData(), null, 2); }
+  function fileName() { return "night-bite-log-" + today() + ".json"; }
+  function key(e) {
+    var lake = e.lake || "hoover";
+    var n = function (v) { return String(v || "").trim().toLowerCase().replace(/\s+/g, " "); };
+    return [lake, e.date, n(LAKES && LAKES.spotName ? LAKES.spotName(lake, e.location) : e.location), n(e.species), n(e.bait), n(e.disposition), n(e.notes)].join("|");
+  }
+  // one entry from a file -> a clean entry, or null when it isn't a trip
+  function clean(e, i) {
+    if (!e || typeof e !== "object" || Array.isArray(e) || e.sample) return null;
+    if (typeof e.date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) return null;
+    var lake = e.lake == null || e.lake === "" ? "hoover" : e.lake;
+    if (typeof lake !== "string" || (LAKES && LAKES.all && !LAKES.all[lake])) return null;
+    var out = { id: "", sample: false, lake: lake, date: e.date };
+    for (var k in LIMITS) {
+      var v = e[k] == null ? "" : e[k];
+      if (typeof v !== "string") return null;
+      out[k] = v.slice(0, LIMITS[k]);
+    }
+    if (!out.species && !out.location && !out.bait && !out.notes) return null;
+    out.id = typeof e.id === "string" && /^[\w-]{1,64}$/.test(e.id) ? e.id : "user-import-" + Date.now() + "-" + i;
+    return out;
+  }
+  // text of a backup file -> { added, dupes, skipped } or { error }; merges, never replaces
+  function importText(text) {
+    if (typeof text !== "string" || text.length > 2000000) return { error: "That file is too big to be a Night Bite backup." };
+    var data;
+    try { data = JSON.parse(text); } catch (e) { return { error: "That file isn't a Night Bite backup (it isn't JSON)." }; }
+    var list = Array.isArray(data) ? data : (data && typeof data === "object" && Array.isArray(data.entries) ? data.entries : null);
+    if (!list || (data && data.app && data.app !== "the-night-bite")) return { error: "That file isn't a Night Bite backup." };
+    if (list.length > 5000) return { error: "That backup has more trips than this page can open." };
+    var have = loadEntries(), keys = {}, ids = {};
+    have.forEach(function (e) { keys[key(e)] = 1; ids[e.id] = 1; });
+    var added = 0, dupes = 0, skipped = 0;
+    list.forEach(function (raw, i) {
+      var e = clean(raw, i);
+      if (!e) { if (!(raw && raw.sample)) skipped++; return; }
+      var k = key(e);
+      if (keys[k]) { dupes++; return; }
+      while (ids[e.id]) e.id = "user-import-" + Date.now() + "-" + i + "-" + Math.floor(Math.random() * 1e6);
+      keys[k] = 1; ids[e.id] = 1; have.push(e); added++;
+    });
+    try { saveEntries(have); } catch (e) { return { error: "This browser wouldn't save the trips (storage is full or blocked)." }; }
+    renderList();
+    return { added: added, dupes: dupes, skipped: skipped };
+  }
+  function plural(n, one) { return n + " " + one + (n === 1 ? "" : "s"); }
+  function summary(r) {
+    if (r.error) return r.error;
+    var parts = [r.added ? "Added " + plural(r.added, "trip") + "." : "No new trips in that file."];
+    if (r.dupes) parts.push(plural(r.dupes, "trip") + " " + (r.dupes === 1 ? "was" : "were") + " already here.");
+    if (r.skipped) parts.push("Skipped " + r.skipped + " that didn't look like a trip.");
+    return parts.join(" ");
+  }
+  function initBackup() {
+    var out = document.getElementById("log-export"), btn = document.getElementById("log-import-btn"),
+      input = document.getElementById("log-import"), status = document.getElementById("log-io-status");
+    function say(t) { if (status) { status.textContent = t; status.hidden = false; } }
+    if (out) out.addEventListener("click", function () {
+      var n = loadEntries().length;
+      if (!n) { say("No trips saved on this phone yet, so there's nothing to back up."); return; }
+      var url = URL.createObjectURL(new Blob([exportText()], { type: "application/json" }));
+      var a = document.createElement("a"); a.href = url; a.download = fileName();
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      say("Saved " + plural(n, "trip") + " to " + fileName() + ".");
+    });
+    if (btn && input) {
+      btn.addEventListener("click", function () { input.value = ""; input.click(); });
+      input.addEventListener("change", function () {
+        var f = input.files && input.files[0];
+        if (!f) return;
+        if (f.size > 2000000) { say("That file is too big to be a Night Bite backup."); return; }
+        var r = new FileReader();
+        r.onload = function () { say(summary(importText(String(r.result)))); input.value = ""; };
+        r.onerror = function () { say("Couldn't read that file."); };
+        r.readAsText(f);
+      });
+    }
+  }
+  window.NightBiteLogIO = { exportData: exportData, exportText: exportText, importText: importText, fileName: fileName, summary: summary };
 
   // Boot
   // "This lake" and "All lakes" chips: one filter for the community list and your private trips
@@ -275,11 +364,7 @@
     purgeStoredSamples();
     renderList();
     initForm();
-    // community-log.js reports whether data/community-log.json loaded;
-    // the SAMPLE fallback above only renders when it failed.
-    document.addEventListener("nightbite:community-log", function (ev) {
-      communityStatus = ev.detail && ev.detail.status;
-      renderList();
-    });
+    initBackup();
   }
+  document.addEventListener("nb-lang", function () { renderList(); });
 })();

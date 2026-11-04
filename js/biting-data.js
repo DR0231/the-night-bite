@@ -66,14 +66,14 @@ window.NightBiteBiting = {
     },
     { // June
       picks: [
-        { id: "channel-catfish", where: "Flats next to drops by Walnut Road, Oxbow and the upper arms.", when: "After dark, once boat traffic dies", night: true },
+        { id: "channel-catfish", where: "Flats next to drops by the Walnut Street and Oxbow Road ramps and the upper arms.", when: "After dark, once boat traffic dies", night: true },
         { id: "flathead-catfish", where: "Timber, rock and channel bends, with live or fresh bait.", when: "Night. Prime season starts", night: true },
         { id: "black-crappie", where: "Schools on the edges of points near deep water. Small 1/16 oz jigs.", when: "Dawn and dusk", night: false }
       ]
     },
     { // July
       picks: [
-        { id: "channel-catfish", where: "Classic night fishery. Public flats near Walnut Road and the quiet upper arms.", when: "After dark, the best window", night: true },
+        { id: "channel-catfish", where: "Classic night fishery. Public flats near the Walnut Street ramp and the quiet upper arms.", when: "After dark, the best window", night: true },
         { id: "flathead-catfish", where: "Big flats hunt timber and channel bends. Live bait near cover.", when: "Night, prime time", night: true },
         { id: "blue-catfish", where: "Deeper basin and the old Big Walnut channel, cut bait.", when: "Night", night: true }
       ]

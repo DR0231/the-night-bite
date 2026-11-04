@@ -39,7 +39,7 @@
   }
 
   function render() {
-    var m = RE.exec(line.textContent || "");
+    var m = RE.exec((line.getAttribute("data-nb-out") === line.textContent && line.getAttribute("data-en") || line.textContent || ""));
     if (!m) {
       readout.hidden = true;
       line.classList.remove("is-mirrored");

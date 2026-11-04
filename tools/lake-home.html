@@ -34,8 +34,9 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="js/a11y-boot.js?v=v78-2026-11-03"></script>
   <link rel="stylesheet" href="css/styles.css?v=v63-2026-11-03">
-  <noscript><style>.glance,.glance-actions{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
+  <noscript><style>.glance-actions{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
   <script src="js/lakes.js?v=v63-2026-11-03"></script>
   <!-- nb:jsonld (tools/build-lake-pages.py) -->
   <script type="application/ld+json">
@@ -56,20 +57,21 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li class="nav-core"><a href="./" aria-current="page">Home</a></li>
-          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
-          <li class="nav-core"><a href="water"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="species/">Species</a></li>
+          <li class="nav-core"><a href="water"><span class="nav-label" data-short="Lake"><span class="nav-label-text">Water</span></span></a></li>
           <li class="nav-core"><a href="gear">Gear</a></li>
-          <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra nav-ww"><a href="whisperwood.html">Whisperwood Vale</a></li>
           <li class="nav-extra"><a href="log">Log</a></li>
           <li class="nav-extra"><a href="about">About</a></li>
           <li class="nav-extra"><a href="updates" data-updates="2026-10-29">What&rsquo;s new</a></li>
-          <li class="nav-more-item">
+          <li class="nav-more-item nav-more-desk">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
               <a href="whisperwood.html">Whisperwood Vale</a>
               <a href="log">Log</a>
               <a href="about">About</a>
               <a href="updates" data-updates="2026-10-29">What&rsquo;s new</a>
+              <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
         </ul>
@@ -85,38 +87,47 @@
       </div>
       <p class="hero-brand">The Night Bite</p>
       <h1 class="tagline" id="home-title"><span data-lk="name">Hoover Reservoir</span> fishing</h1>
+    <!-- nb:night-rules (tools/build-lake-pages.py) -->
+    <a class="night-chip" id="night-rules" href="https://columbusrecparks.com/parks/hoover-reservoir/" target="_blank" rel="noopener" data-open="07:00" data-close="23:00" data-authority="city" data-reopen="7 a.m.">
+      <span class="night-chip-text">City park closes 11 p.m.</span>
+      <span class="night-chip-left" data-nr="left" hidden></span>
+      <span class="sr-only"> Source: Columbus Recreation and Parks, Hoover Reservoir (opens in a new tab)</span>
+    </a>
+    <!-- /nb:night-rules -->
     </section>
 
-    <section class="glance" id="glance" aria-labelledby="glance-title">
+    <section class="glance" id="glance" aria-labelledby="glance-title" data-baked="snapshot">
+      <!-- baked by tools/glance_bake.py from this page's pool card; js/glance.js keeps it current -->
       <div class="glance-head">
         <h2 class="glance-title" id="glance-title">Tonight at a glance</h2>
-        <a class="glance-cell glance-bite" href="#conditions" data-empty>
+        <a class="glance-cell glance-bite" href="#bite-how" data-empty>
           <span class="glance-label">Bite</span>
-          <span class="glance-value" data-glance="bite">--</span>
+          <span class="glance-value glance-state" data-glance="bite">Needs forecast</span>
         </a>
       </div>
       <div class="glance-grid">
-        <a class="glance-cell" href="#pool-snapshot" data-cell="pool" data-empty>
+        <a class="glance-cell" href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener" data-cell="pool">
           <span class="glance-label">Lake level</span>
-          <span class="glance-value" data-glance="pool">--</span>
-          <span class="glance-sub" data-glance="pool-sub">Loading the gauge</span>
+          <span class="glance-value" data-glance="pool">889.99<span class="glance-unit"> ft</span></span>
+          <span class="glance-sub" data-glance="pool-sub">~4.0 ft below full</span>
         </a>
-        <a class="glance-cell" href="#pool-snapshot" data-cell="temp" data-empty>
+        <a class="glance-cell" href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener" data-cell="temp">
           <span class="glance-label">Water temp</span>
-          <span class="glance-value" data-glance="temp">--</span>
-          <span class="glance-sub" data-glance="temp-sub">Loading the gauge</span>
+          <span class="glance-value" data-glance="temp">62<span class="glance-unit"> °F</span></span>
+          <span class="glance-sub" data-glance="temp-sub">USGS gauge</span>
         </a>
         <a class="glance-cell" href="#conditions" data-cell="sunset" data-empty>
           <span class="glance-label">Sunset</span>
-          <span class="glance-value" data-glance="sunset">--</span>
-          <span class="glance-sub" data-glance="sunset-sub">Worked out on this phone</span>
+          <span class="glance-value glance-state" data-glance="sunset"><noscript>JS is off</noscript></span>
+          <span class="glance-sub" data-glance="sunset-sub">On this phone</span>
         </a>
-        <a class="glance-cell" href="#conditions" data-cell="wind" data-empty>
+        <a class="glance-cell" href="https://forecast.weather.gov/MapClick.php?lat=40.11&amp;lon=-82.88" target="_blank" rel="noopener" data-cell="wind" data-empty>
           <span class="glance-label">Wind tonight</span>
-          <span class="glance-value" data-glance="wind">--</span>
-          <span class="glance-sub" data-glance="wind-sub">Loading the forecast</span>
+          <span class="glance-value glance-state" data-glance="wind">Check NWS</span>
+          <span class="glance-sub" data-glance="wind-sub">At weather.gov</span>
         </a>
       </div>
+      <p class="glance-stamp" data-glance="stamp">Level and temp last checked <time datetime="2026-11-02T17:00:00.000-05:00">Nov. 2, 5 PM ET</time>, USGS gauge.</p>
     </section>
     <div class="glance-actions" id="glance-actions">
       <button type="button" class="glance-btn" data-act="share" aria-haspopup="dialog" aria-controls="tt-share" aria-describedby="glance-share-note">Share tonight</button>
@@ -252,12 +263,13 @@
       <summary><h2 class="qf-title">Quick facts</h2><span class="qf-checked">Facts checked <time datetime="2026-10-31">Oct. 31, 2026</time></span></summary>
       <div class="how-to-read-body">
         <dl class="qf-list">
-          <div><dt>Motors and speed</dt><dd>10 hp limit and 10 mph; idle speed within 100 ft of shore. Boats 22 ft max.</dd></div>
+          <div><dt>Motors and speed</dt><dd data-nb-rule>10 hp limit and 10 mph; idle speed within 100 ft of shore. Boats 22 ft max.</dd></div>
           <div><dt>Ramps and access</dt><dd>Five public ramps: Oxbow Road, Sunbury Road, Twin Bridges, Red Bank and Walnut Street. Shore access on the Mudflats Boardwalk.<br><span class="qf-docks">Docks, checked <time datetime="2026-11-03">Nov. 3, 2026</time>: The city lists the marina dock season as May 1 to Oct. 31, so the marina docks are done for 2026. No date posted yet for pulling the ramp docks. Source: <a href="https://columbusrecparks.com/facilities/rentals/marinas-and-docks/" target="_blank" rel="noopener">Columbus Recreation and Parks, Marinas &amp; Docks</a>. <a href="water#docks">Dock season, all lakes</a>.</span></dd></div>
           <div><dt>Normal pool</dt><dd>Summer pool is 894 ft, the level the ODNR contour map is drawn at. Live level: <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">USGS gauge 03228400</a>.</dd></div>
-          <div><dt>Night rules</dt><dd>City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.</dd></div>
+          <div><dt>Night rules</dt><dd data-nb-rule>City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip. Source: <a href="https://columbusrecparks.com/parks/hoover-reservoir/" target="_blank" rel="noopener">Columbus Recreation and Parks, Hoover Reservoir</a>.</dd></div>
         </dl>
-        <p class="meta qf-src">Sources: <a href="https://columbusrecparks.com/parks/hoover-reservoir/" target="_blank" rel="noopener">Columbus Recreation and Parks, Hoover Reservoir</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Hoover Reservoir Fishing Area</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>. Unofficial summary; posted signs and the agencies above have the final word.</p>
+        <p class="meta qf-src">Sources: <a href="https://columbusrecparks.com/parks/hoover-reservoir/" target="_blank" rel="noopener">Columbus Recreation and Parks, Hoover Reservoir</a>; <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area" target="_blank" rel="noopener">ODNR, Hoover Reservoir Fishing Area</a>; <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>.</p>
+        <details class="info-tip"><summary><span class="info-i" aria-hidden="true">i</span><span class="sr-only">About these facts</span></summary><p class="info-tip-body">Unofficial summary. Posted signs and the agencies above have the final word.</p></details>
       </div>
     </details>
     <!-- /nb:quick-facts -->
@@ -377,18 +389,18 @@
             </ul>
             <ul data-for="madison">
               <li><strong>No public lake level or water temp gauge</strong>: no USGS or Corps gauge posts Madison Lake, so the level and temp slots say not available. Nothing is estimated.</li>
-              <li>The ODNR fishing map&rsquo;s depths are based on the <strong>965 ft</strong> summer pool (2 ft contours, surveyed 2006). If the lake is down, real water is shallower than printed.</li>
-              <li><strong>Electric motors only</strong> (ODNR). Check Ohio&rsquo;s BeachGuard for advisories before swimming.</li>
+              <li>The <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/madisonlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>&rsquo;s depths are based on the <strong>965 ft</strong> summer pool (2 ft contours, surveyed 2006). If the lake is down, real water is shallower than printed.</li>
+              <li><strong>Electric motors only</strong> (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park" target="_blank" rel="noopener">ODNR</a>). Check Ohio&rsquo;s BeachGuard for advisories before swimming.</li>
             </ul>
             <ul data-for="knox">
               <li><strong>No public lake level or water temp gauge</strong>: no USGS or Corps gauge posts Knox Lake (the USGS Kokosing River gauge is on the river, not the lake), so the level and temp slots say not available. Nothing is estimated.</li>
-              <li>The ODNR fishing map&rsquo;s depths are based on the <strong>1,100 ft</strong> summer pool (3 ft contours, surveyed 2003). ODNR: over 24 ft near the dam, much of the lake 12 ft or less.</li>
-              <li><strong>10 hp limit</strong>; larger motors may run at no wake or idle only (ODNR).</li>
+              <li>The <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/knoxlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>&rsquo;s depths are based on the <strong>1,100 ft</strong> summer pool (3 ft contours, surveyed 2003). ODNR: over 24 ft near the dam, much of the lake 12 ft or less.</li>
+              <li><strong>10 hp limit</strong>; larger motors may run at no wake or idle only (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area" target="_blank" rel="noopener">ODNR</a>).</li>
             </ul>
             <ul data-for="clearfork">
               <li><strong>No public lake level or water temp gauge</strong>: no USGS or Corps gauge posts Clear Fork Reservoir, so the level and temp slots say not available. Nothing is estimated.</li>
-              <li>The ODNR fishing map&rsquo;s depths are based on the <strong>1,202 ft</strong> summer pool (3 ft contours, surveyed 1999). ODNR lists a 24 ft maximum depth; the City of Mansfield says 40 ft depths are not uncommon. Use the map as a guide.</li>
-              <li>City of Mansfield water supply lake: <strong>idle speed, no wake</strong> on the whole lake (City code; ODNR&rsquo;s page says 8 mph), no horsepower limit, no swimming.</li>
+              <li>The <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/clearforkreservoir2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>&rsquo;s depths are based on the <strong>1,202 ft</strong> summer pool (3 ft contours, surveyed 1999). ODNR lists a 24 ft maximum depth; the City of Mansfield says 40 ft depths are not uncommon. Use the map as a guide.</li>
+              <li>City of Mansfield water supply lake: <strong>idle speed, no wake</strong> on the whole lake (<a href="https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714" target="_blank" rel="noopener">City code</a>; ODNR&rsquo;s page says 8 mph), no horsepower limit, no swimming.</li>
             </ul>
             <ul data-for="seneca">
               <li><strong>Pool</strong> is lake surface elevation in feet as USGS posts it, not the depth of any hole or channel.</li>
@@ -406,13 +418,13 @@
             </ul>
             <ul data-for="logan">
               <li><strong>No public lake level or water temp gauge</strong>: no USGS or Corps gauge posts Lake Logan, so the level and temp slots say not available. Nothing is estimated.</li>
-              <li>The ODNR fishing map&rsquo;s depths are based on the <strong>759 ft</strong> summer pool (3 ft contours, surveyed 2006). If the lake is down, real water is shallower than printed. ODNR lists an 18 ft maximum depth.</li>
-              <li><strong>10 hp limit</strong> and a <strong>10 mph</strong> speed limit (ODNR). Check Ohio&rsquo;s BeachGuard for advisories before swimming.</li>
+              <li>The <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakelogan2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>&rsquo;s depths are based on the <strong>759 ft</strong> summer pool (3 ft contours, surveyed 2006). If the lake is down, real water is shallower than printed. ODNR lists an 18 ft maximum depth.</li>
+              <li><strong>10 hp limit</strong> and a <strong>10 mph</strong> speed limit (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-fishing-area" target="_blank" rel="noopener">ODNR</a>). Check Ohio&rsquo;s BeachGuard for advisories before swimming.</li>
             </ul>
             <ul data-for="saltfork">
               <li><strong>No public lake level or water temp gauge</strong>: no USGS or Corps gauge posts Salt Fork Lake, so the level and temp slots say not available. Nothing is estimated.</li>
-              <li>The ODNR fishing map&rsquo;s depths are based on the <strong>800 ft</strong> summer pool (5 ft contours, surveyed 1998). If the lake is down, real water is shallower than printed.</li>
-              <li><strong>Unlimited horsepower</strong>, with marked speed and ski zones (ODNR). Check Ohio&rsquo;s BeachGuard for advisories before swimming.</li>
+              <li>The <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/saltforklake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>&rsquo;s depths are based on the <strong>800 ft</strong> summer pool (5 ft contours, surveyed 1998). If the lake is down, real water is shallower than printed.</li>
+              <li><strong>Unlimited horsepower</strong>, with marked speed and ski zones (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area" target="_blank" rel="noopener">ODNR</a>). Check Ohio&rsquo;s BeachGuard for advisories before swimming.</li>
             </ul>
             <ul data-for="burroak">
               <li><strong>Pool</strong> is lake surface elevation in feet as the Corps posts it, not the depth of any hole or channel.</li>
@@ -423,8 +435,8 @@
             </ul>
             <ul data-for="dow">
               <li><strong>No public lake level or water temp gauge</strong>: no USGS or Corps gauge posts Dow Lake, so the level and temp slots say not available. Nothing is estimated.</li>
-              <li>The ODNR fishing map&rsquo;s depths are based on the <strong>660 ft</strong> summer pool (3 ft contours, surveyed 2006). If the lake is down, real water is shallower than printed. ODNR lists a 33 ft maximum depth.</li>
-              <li><strong>10 hp limit</strong> (ODNR). Check Ohio&rsquo;s BeachGuard for advisories before swimming.</li>
+              <li>The <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dowlake2.pdf" target="_blank" rel="noopener">ODNR fishing map</a>&rsquo;s depths are based on the <strong>660 ft</strong> summer pool (3 ft contours, surveyed 2006). If the lake is down, real water is shallower than printed. ODNR lists a 33 ft maximum depth.</li>
+              <li><strong>10 hp limit</strong> (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area" target="_blank" rel="noopener">ODNR</a>). Check Ohio&rsquo;s BeachGuard for advisories before swimming.</li>
             </ul>
             <ul data-for="mosquito">
               <li><strong>Pool</strong> is lake surface elevation in feet as USGS posts it, not the depth of any hole or channel.</li>
@@ -479,6 +491,21 @@
           <p class="cond-bite-line"><span class="cond-label">Tonight&rsquo;s bite</span> <span class="cond-bite-rate"></span> <span class="cond-bite-why"></span></p>
           <p class="cond-bite-note">A rule of thumb guide, not a promise.</p>
         </div>
+        <details class="how-to-read bite-how" id="bite-how">
+          <summary>How the bite is rated</summary>
+          <div class="how-to-read-body">
+            <p>The Bite is this site&rsquo;s own rule of thumb, not fishing science and not a forecast. It adds points from readings already on this page.</p>
+            <ul class="bite-rules">
+              <li data-rule="pressure"><strong>Barometer</strong>, the change over the last 3 hours at <span data-bite-src="station">the lake&rsquo;s NWS station</span>. Falling slowly <b data-r="pressure.pts.fallSlow">+2</b>, steady <b data-r="pressure.pts.steady">+1</b>, rising slowly <b data-r="pressure.pts.riseSlow">0</b>, falling fast <b data-r="pressure.pts.fallFast">0</b>, rising fast <b data-r="pressure.pts.riseFast">&minus;1</b>. Steady means within <b data-r="pressure.steady">0.02</b> inHg; fast means <b data-r="pressure.fast">0.06</b> inHg or more. <span class="bite-now" data-bite-now="pressure" hidden></span></li>
+              <li data-rule="wind"><strong>Wind</strong>, tonight&rsquo;s average NWS hourly speed from sunset to 2 AM (the top of each hour&rsquo;s range). Under <b data-r="wind.calm">3</b> mph <b data-r="wind.pts.calm">0</b>, 3 to <b data-r="wind.chop">12</b> mph <b data-r="wind.pts.chop">+1</b>, 13 to <b data-r="wind.breezy">18</b> mph <b data-r="wind.pts.breezy">0</b>, over 18 mph <b data-r="wind.pts.strong">&minus;2</b>. <span class="bite-now" data-bite-now="wind" hidden></span></li>
+              <li data-rule="moon"><strong>Moon</strong>, worked out on this phone. New or full moon tonight (or under <b data-r="moon.dark" data-fmt="pct">10%</b> or over <b data-r="moon.bright" data-fmt="pct">90%</b> lit) <b data-r="moon.pts.major">+1</b>, otherwise <b data-r="moon.pts.other">0</b>. <span class="bite-now" data-bite-now="moon" hidden></span></li>
+              <li data-rule="water"><strong>Water temp</strong>, from this lake&rsquo;s USGS gauge where one reports it. <b data-r="water.goodLo">55</b> to <b data-r="water.goodHi">80</b>&deg;F <b data-r="water.pts.good">+1</b>, colder than <b data-r="water.okLo">45</b> or warmer than <b data-r="water.okHi">86</b>&deg;F <b data-r="water.pts.bad">&minus;1</b>, anything between <b data-r="water.pts.ok">0</b>. It never makes a rating alone. <span class="bite-now" data-bite-now="water" hidden></span></li>
+              <li data-rule="storm"><strong>Thunder</strong> anywhere in tonight&rsquo;s NWS forecast makes it Tough, whatever the points. <span class="bite-now" data-bite-now="storm" hidden></span></li>
+            </ul>
+            <p><b data-r="rate.good">4</b> points or more is Good, <b data-r="rate.fair">2</b> or 3 is Fair, less is Tough. A missing reading counts 0, and with no barometer trend and no wind there is no rating.</p>
+            <p class="bite-tonight" data-bite-tonight hidden></p>
+          </div>
+        </details>
         <div class="cond-grid">
           <div class="cond-cell cond-wind" data-cond="wind" data-empty><span class="cond-label">Wind</span><span class="cond-wind-row"><span class="wind-sprite" role="img" aria-label="Wind not loaded yet"></span><span class="cond-value" aria-hidden="true">--</span></span><span class="cond-sub" aria-hidden="true"></span></div>
           <div class="cond-cell" data-cond="air" data-empty><span class="cond-label">Air</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
@@ -710,6 +737,7 @@
         <a href="about">About</a>
         <a href="updates" data-updates="2026-10-29">What&rsquo;s new</a>
         <a href="privacy">Privacy</a>
+        <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
       <p class="footer-app"><a href="#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
@@ -724,6 +752,7 @@
   <script src="js/usgs.js?v=v63-2026-11-03"></script>
   <script src="js/home-log.js?v=v63-2026-11-03"></script>
   <script src="js/astro.js?v=v63-2026-11-03"></script>
+  <script src="js/night-rules.js?v=v63-2026-11-03"></script>
   <script src="js/conditions.js?v=v63-2026-11-03"></script>
   <script src="js/pool-trend.js?v=v63-2026-11-03"></script>
   <script src="js/hoover-map-data.js?v=v63-2026-11-03"></script>
@@ -752,6 +781,7 @@
   <script src="js/hoover-map.js?v=v63-2026-11-03"></script>
   <script src="js/install-tip.js?v=v63-2026-11-03"></script>
   <script src="js/tonight-tools.js?v=v63-2026-11-03"></script>
+  <script src="js/a11y.js?v=v78-2026-11-03" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

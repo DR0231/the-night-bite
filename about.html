@@ -31,8 +31,9 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=v27-2026-11-03">
-  <script src="js/lakes.js?v=v27-2026-11-03"></script>
+  <script src="js/a11y-boot.js?v=v28-2026-11-04"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v28-2026-11-04">
+  <script src="js/lakes.js?v=v28-2026-11-04"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -47,20 +48,21 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li class="nav-core"><a href="./">Home</a></li>
-          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
-          <li class="nav-core"><a href="water"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="species/">Species</a></li>
+          <li class="nav-core"><a href="water"><span class="nav-label" data-short="Lake"><span class="nav-label-text">Water</span></span></a></li>
           <li class="nav-core"><a href="gear">Gear</a></li>
-          <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra nav-ww"><a href="whisperwood.html">Whisperwood Vale</a></li>
           <li class="nav-extra"><a href="log">Log</a></li>
           <li class="nav-extra"><a href="about" aria-current="page">About</a></li>
-          <li class="nav-extra"><a href="updates" data-updates="2026-11-03">What&rsquo;s new</a></li>
-          <li class="nav-more-item">
+          <li class="nav-extra"><a href="updates" data-updates="2026-11-04">What&rsquo;s new</a></li>
+          <li class="nav-more-item nav-more-desk">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
               <a href="whisperwood.html">Whisperwood Vale</a>
               <a href="log">Log</a>
               <a href="about">About</a>
-              <a href="updates" data-updates="2026-11-03">What&rsquo;s new</a>
+              <a href="updates" data-updates="2026-11-04">What&rsquo;s new</a>
+              <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
         </ul>
@@ -117,7 +119,7 @@
       <li><strong>Dillon Lake and Burr Oak Lake:</strong> US Army Corps of Engineers lake level gauges (Burr Oak is held by the Corps&rsquo; Tom Jenkins Dam). No public water temperature gauge, so none is shown.</li>
       <li><strong>Lake Logan, Salt Fork Lake and Dow Lake:</strong> no public USGS or Corps lake level or water temperature gauge, so neither is shown.</li>
       <li><strong>Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Lake Milton and Leesville Lake:</strong> USGS lake level gauges 03095000, 03090000, 03092450, 03091000 and 03120000. Berlin and Leesville compare with the Corps summer pool, since their ODNR maps use an older datum. No public water temperature gauge, so none is shown.</li>
-      <li><strong>Pymatuning Lake:</strong> USGS gauge 03100500 hasn&rsquo;t reported since June 4, 2026, so no level is shown as current. No public water temperature gauge.</li>
+      <li><strong>Pymatuning Lake:</strong> USGS gauge 03100500 hasn&rsquo;t reported since <time datetime="2026-06-04">June 4, 2026</time>, so no level is shown as current. No public water temperature gauge.</li>
       <li>Forecast, barometer and alerts for each lake come from the National Weather Service. All gauge readings are provisional.</li>
     </ul>
 
@@ -152,7 +154,7 @@
       <li><strong>Striped / hybrid striped / white bass:</strong> 30 combined; no more than 4 over 15″</li>
       <li><strong>Paddlefish:</strong> none may be taken within 2,000 ft of the Deer Creek dam (site-specific rule)</li>
       <li><strong>Walleye / sauger / saugeye:</strong> 6 combined; 15″ minimum at Mosquito Creek Lake, Berlin Lake, West Branch Reservoir and Lake Milton (site-specific rule); no minimum at the other lakes except Pymatuning (below)</li>
-      <li><strong>Crappie at 12 of the 23 lakes:</strong> 30 a day, black and white combined, 9″ minimum (site-specific rule for Hoover, Alum Creek, Buckeye Lake, O&rsquo;Shaughnessy, Indian, Delaware, Deer Creek, Seneca, Dillon, Salt Fork, Mosquito Creek and Lake Milton). Griggs, Madison, Knox, Clear Fork, Lake Logan, Burr Oak, Dow, Berlin, West Branch and Leesville are not on that list, so crappie there have no daily limit or minimum. ODNR has proposed dropping the 9″ minimum at Hoover from March 1, 2027</li>
+      <li><strong>Crappie at 12 of the 23 lakes:</strong> 30 a day, black and white combined, 9″ minimum (site-specific rule for Hoover, Alum Creek, Buckeye Lake, O&rsquo;Shaughnessy, Indian, Delaware, Deer Creek, Seneca, Dillon, Salt Fork, Mosquito Creek and Lake Milton). Griggs, Madison, Knox, Clear Fork, Lake Logan, Burr Oak, Dow, Berlin, West Branch and Leesville are not on that list, so crappie there have no daily limit or minimum. ODNR has proposed dropping the 9″ minimum at Hoover from <time datetime="2027-03-01">March 1, 2027</time></li>
       <li><strong>Muskellunge (Alum Creek, Clear Fork, Salt Fork, Lake Logan, West Branch, Lake Milton, Leesville):</strong> 1 a day, statewide rule; no minimum length listed statewide</li>
       <li><strong>Yellow perch (Buckeye Lake, Indian Lake, Knox Lake, Seneca Lake, Salt Fork, Mosquito Creek, West Branch, Lake Milton, Leesville):</strong> 30 a day, statewide rule</li>
       <li><strong>Bluegill / sunfish, carp, gar, bullhead:</strong> not on the statewide limits table, and none of the other 22 lakes has a site-specific rule for them</li>
@@ -193,20 +195,22 @@
         <a href="whisperwood.html">Whisperwood Vale</a>
         <a href="log">Log</a>
         <a href="about">About</a>
-        <a href="updates" data-updates="2026-11-03">What&rsquo;s new</a>
+        <a href="updates" data-updates="2026-11-04">What&rsquo;s new</a>
         <a href="privacy">Privacy</a>
+        <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
       <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v27-2026-11-03"></script>
-  <script src="js/sw-update.js?v=v27-2026-11-03"></script>
-  <script src="js/alerts.js?v=v27-2026-11-03"></script>
-  <script src="js/nav.js?v=v27-2026-11-03"></script>
-  <script src="js/visits.js?v=v27-2026-11-03"></script>
-  <script src="js/lake-picker.js?v=v27-2026-11-03"></script>
+  <script src="js/refresh.js?v=v28-2026-11-04"></script>
+  <script src="js/sw-update.js?v=v28-2026-11-04"></script>
+  <script src="js/alerts.js?v=v28-2026-11-04"></script>
+  <script src="js/nav.js?v=v28-2026-11-04"></script>
+  <script src="js/visits.js?v=v28-2026-11-04"></script>
+  <script src="js/lake-picker.js?v=v28-2026-11-04"></script>
 
+  <script src="js/a11y.js?v=v28-2026-11-04" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

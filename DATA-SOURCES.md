@@ -19,6 +19,7 @@ Checked 2026-10-22 (ET). Only details confirmed by a source below are shown on t
   - Moon: new or full (the principal phase falls tonight, or under 10% or over 90% lit) +1.
   - Water temp from USGS 03228400 when the gauge sends one: 55 to 80 F +1, 45 to 54 or 81 to 86 F 0, colder or warmer -1. Water temp alone never makes a rating; pressure or wind must be known.
   - 4 or more is Good, 2 or 3 is Fair, 1 or less is Tough. Thunder in tonight's window always makes it Tough.
+  - Every number above lives in one `RULES` object in js/conditions.js (also `window.NightBiteBiteRules`). Each lake home's "How the bite is rated" box (`#bite-how`, under the bite line; the glance Bite cell links to it) prints the same numbers, and tools/check-glance.cjs fails if any differ or an input is missing. With JS on, the box adds what each input gave tonight and which readings were missing. The station name is the lake's own NWS station; water temp only where the lake's USGS gauge reports it. No new inputs, no estimates.
 - Sunset, last light (end of civil twilight, Sun 6 degrees down), moonrise and moonset: computed in the browser (js/astro.js, port of SunCalc by Vladimir Agafonkin, BSD 2-Clause, with the Moon's position from the Meeus main terms and the standard parallax corrected rise and set altitude). Checked against the US Naval Observatory (aa.usno.navy.mil rstt/oneday) at 40.11 N 82.88 W for 2026-10-24, 10-25, 10-28, 11-02 and 11-10: sunset and last light within 2 minutes, moonrise and moonset within 2 minutes.
 - Fallback when NWS can't be reached: "Weather unavailable, check weather.gov" with a link to the NWS point forecast.
 
@@ -30,6 +31,7 @@ Checked 2026-10-22 (ET). Only details confirmed by a source below are shown on t
 
 ## USGS Water Data APIs (js/lakes.js: usgsLatest, usgsSeries), switched Oct. 27, 2026
 - Every USGS read (Tonight card, Tonight at a glance strip, lake picker, pool trend) goes through js/lakes.js. First try: the new USGS Water Data OGC API, `https://api.waterdata.usgs.gov/ogcapi/v1/collections/latest-continuous/items` (latest values) and `.../continuous/items` (7 day series), 8 second timeout, no API key (rate limited per IP by api.data.gov).
+- When a USGS or NWS read fails, or JavaScript is off, Tonight at a glance keeps the stamped snapshot (the same reading and Checked time as the pool card, baked in by tools/glance_bake.py) and says how old it is. Lakes with no public gauge say "No gauge" and link to the pool card note. Nothing is estimated.
 - Fallback: the legacy WaterServices IV API (`waterservices.usgs.gov/nwis/iv`). USGS adds a 2 second delay to it from Nov. 16, 2026 and turns it off Feb. 22, 2027 (https://waterdata.usgs.gov/blog/wdfn-waterservices-degradation/). Remove the fallback and its CSP host then.
 - If both fail: the saved offline reading, then "unavailable, check USGS".
 - Parity check, Oct. 27, 2026: Hoover 62614 890.60 ft and 00010 18.0 C, Buckeye 62614 891.45 ft, same in both APIs; 7 day series had the same point counts (Hoover 167, Buckeye 667).
@@ -57,6 +59,7 @@ The boardwalk pin is placed at the TrekOhio coordinate and snapped 1.6 to 1.9 ma
 
 Left out:
 - "Lit at night" for every ramp: no source says either way.
+- One list: the Water page Ramp / access table, both Log ramp selects and the Hoover `spots` in js/lakes.js are built from these pins by tools/build-hoover-ramps.py, and tools/check-ramp-names.py fails on an old spelling (Redbank, Walnut Road, Maxtown, Oxbow (upper ramp)). The city map marks the marina at Red Bank (RB), so the old "Marina / lower marina" row folded into Red Bank. Old saved trips with those names show the official name.
 - Restrooms at Oxbow, Sunbury Road, Red Bank and Walnut: not confirmed for those exact sites (an OpenStreetMap pit toilet near Sunbury Rd is about 0.5 mile from the ramp, so it wasn't used).
 - Shop hours: listings disagree (Old Dutchman shows 6 or 7 a.m. opening depending on the source).
 - Cheshire Market (5094 Cheshire Rd, Galena, live bait): real, but it is by Alum Creek, off this map.
@@ -431,3 +434,11 @@ Checked Oct. 27, 2026. Copied only from the agency that runs each lake; nothing 
 - "Tonight, in short" (home Tonight card, js/conditions.js renderLine) restates numbers already on the page in one line: sunset (or "after dark now"), tonight's NWS hourly wind range and top rain chance from sunset to 2 AM, storms if the storm line found any, the KCMH 3 hour pressure trend, the gauge water temp when there is one, and the pool card's "below full pool" figure and 7 day trend word. No score, no prediction; it hides when none of those are loaded. The separate "Tonight's bite" rule of thumb line is unchanged.
 - Local notes (water.html#notes) holds the owner's own notes. It ships with placeholder slots marked "Sample note, replace with your own" and no content. See LOCAL-NOTES.md.
 - ODNR fishing map layers (DOW_LakeFishing MapServer) are not embedded: the service publishes no copyright, description or reuse terms, so the site stays link only. The legacy USGS waterservices fallback stays in place.
+
+## Night-rules chip (S5, checked Nov 3, 2026)
+Hours per lake in data/quick-facts.json "hours", each with its source link.
+* City of Columbus parks (Hoover, O'Shaughnessy, Griggs): 7 a.m. to 11 p.m., Columbus Recreation and Parks page for each park. No after-hours fishing exception is stated there, so none is shown.
+* ODNR state parks: the "Contact & Hours" block on each state park page ("Park Hours: 6am to 11pm daily" or "Sunrise to Sunset"; "Visitors are permitted to actively engage in legitimate recreational activities outside these hours"). Re-read Nov 3 for Alum Creek, Buckeye Lake and Indian Lake; the others carry the wording already in their Night rules line.
+* MWCD (Seneca, Leesville): MWCD Rules and Regulations rule 1.13, https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf (no one present 11 p.m. to 6 a.m. except people fishing, hunting, boating or other legitimate recreation, or going to or from it).
+* Clearfork: Mansfield Codified Ordinances chapter 971 (no parking dark to dawn outside camping areas); no clock time, so no countdown.
+* No official hours: Knox Lake (ODNR Knox Lake Fishing Area page lists none) and Berlin Lake (ODNR Berlin Lake Fishing Area page lists none, only 10 mph at night). No chip.

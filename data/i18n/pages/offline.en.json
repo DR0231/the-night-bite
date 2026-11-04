@@ -1,0 +1,13 @@
+{
+ "_meta": {
+  "page": "offline",
+  "source": "offline.html"
+ },
+ "strings": {
+  "offline.339f750b": ", your water’s page with the last pool and weather readings",
+  "offline.8c5c8561": "and what’s biting this month",
+  "offline.cf591706": "When the signal comes back, reload to get the page.",
+  "offline.dc9caf67": "This page isn’t saved on this phone yet. Pages you’ve opened before still work without signal.",
+  "offline.f690c8ed": "Your log"
+ }
+}

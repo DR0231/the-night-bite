@@ -1,0 +1,23 @@
+{
+ "_meta": {
+  "lang": "es",
+  "page": "log",
+  "review": "draft"
+ },
+ "strings": {
+  "log.0dc9d9b4": "Nombre del club o del evento",
+  "log.2d610a9e": "Salidas que mandaron los lectores, revisadas antes de publicarse.",
+  "log.35810b8c": ", que solo aparecen cuando alguien envía uno. The Night Bite",
+  "log.3879d2a5": "Salidas de la comunidad",
+  "log.557f2555": "no",
+  "log.78d157cf": "no es director oficial de torneos, ni ODNR, ni anfitrión de clubes. Aquí no se inventa nada, así que una lista corta es una lista honesta.",
+  "log.8768ba5d": "Hora de inicio, especies, solo detalles públicos…",
+  "log.8993cf87": "Qué lagos mostrar",
+  "log.9450b0b4": "Envíalo abajo",
+  "log.990b5dad": "p. ej., rampa de Walnut Street",
+  "log.a9a13761": "https://",
+  "log.ce88bdae": "Eventos de clubes externos en",
+  "log.d177b20a": "Lago:",
+  "log.f0bfa978": "No hay eventos por ahora. ¿Conoces alguno?"
+ }
+}

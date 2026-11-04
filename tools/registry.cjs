@@ -4,7 +4,10 @@
 // as soon as it is in those files.
 //   const R = require('./registry.cjs'); R.lakes(), R.order(), R.home('dow'), R.sitemapPaths()
 //   node tools/registry.cjs [--root DIR]     prints {order, lakes, regions, pages} as JSON (used by the Python tools)
-const fs = require('fs'), path = require('path'), vm = require('vm');
+//   R.changed('origin/main')  lakes whose files differ from that ref (commits, uncommitted and untracked edits), used by
+//                             check-all.py and check-waters.cjs to scope a run when no lakes are named
+//   node tools/registry.cjs --changed [REF]   prints {ref, lakes, files, shared} as JSON
+const fs = require('fs'), path = require('path'), vm = require('vm'), cp = require('child_process');
 const SITE = 'https://nightbiteoh.com/';
 
 function load(root) {
@@ -23,10 +26,29 @@ function load(root) {
   return { root, order: box.ORDER, lakes: box.LAKES, regions: box.REGIONS, facts, pages };
 }
 
+// Files that differ from REF, mapped to lakes: a path whose folder or file name is a lake id (dow/index.html,
+// assets/tiles/dow.png, assets/maps/dow-map.svg). Anything else (css, js, data, shared pages) is listed under shared,
+// since it can touch every lake; callers still scope to the named lakes plus hoover and say so.
+function changed(ref, root) {
+  ref = ref || 'origin/main'; root = root || path.join(__dirname, '..');
+  const ids = load(root).order;
+  const git = args => { try { return cp.execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }); } catch (e) { return null; } };
+  const diff = git(['diff', '--name-only', ref]);
+  if (diff === null) return { ref, lakes: [], files: [], shared: [], error: `git diff ${ref} failed (no such ref?)` };
+  const files = [...new Set((diff + (git(['ls-files', '--others', '--exclude-standard']) || '')).split('\n').filter(Boolean))].sort();
+  const lakes = new Set(), shared = [];
+  for (const f of files) {
+    const parts = f.split('/'), stem = parts[parts.length - 1].replace(/\..*$/, '');
+    const hit = ids.find(id => parts[0] === id || stem === id || stem.startsWith(id + '-'));
+    if (hit) lakes.add(hit); else if (!/^(tools|README|LOCAL-NOTES|DATA-SOURCES|SERVICE-WORKER)/.test(f)) shared.push(f);
+  }
+  return { ref, lakes: ids.filter(id => lakes.has(id)), files, shared };
+}
+
 let cache = null;
 const get = () => cache || (cache = load(process.env.NB_ROOT));
 module.exports = {
-  SITE, load,
+  SITE, load, changed: (ref, root) => changed(ref, root || process.env.NB_ROOT),
   order: () => get().order,
   lakes: () => get().lakes,
   facts: () => get().facts,
@@ -39,6 +61,12 @@ module.exports = {
 
 if (require.main === module) {
   const i = process.argv.indexOf('--root');
+  const c = process.argv.indexOf('--changed');
+  if (c > 0) {
+    const ref = process.argv[c + 1] && !process.argv[c + 1].startsWith('--') ? process.argv[c + 1] : 'origin/main';
+    process.stdout.write(JSON.stringify(changed(ref, i > 0 ? process.argv[i + 1] : process.env.NB_ROOT)));
+    process.exit(0);
+  }
   const r = load(i > 0 ? process.argv[i + 1] : process.env.NB_ROOT);
   process.stdout.write(JSON.stringify({ order: r.order, lakes: r.lakes, regions: r.regions, pages: r.pages }));
 }

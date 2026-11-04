@@ -1,0 +1,14 @@
+{
+ "_meta": {
+  "lang": "pl",
+  "page": "offline",
+  "review": "draft"
+ },
+ "strings": {
+  "offline.339f750b": ", strona Twojej wody z ostatnim odczytem poziomu i pogody",
+  "offline.8c5c8561": "i co bierze w tym miesiącu",
+  "offline.cf591706": "Gdy zasięg wróci, odśwież, aby pobrać stronę.",
+  "offline.dc9caf67": "Ta strona nie jest jeszcze zapisana na tym telefonie. Strony otwarte wcześniej działają bez zasięgu.",
+  "offline.f690c8ed": "Twój dziennik"
+ }
+}

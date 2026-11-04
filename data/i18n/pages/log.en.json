@@ -1,0 +1,22 @@
+{
+ "_meta": {
+  "page": "log",
+  "source": "log.html"
+ },
+ "strings": {
+  "log.0dc9d9b4": "Club or event name",
+  "log.2d610a9e": "Trips readers sent in, checked before they go up.",
+  "log.35810b8c": ", listed only when someone submits one. The Night Bite is",
+  "log.3879d2a5": "Community trips",
+  "log.557f2555": "not",
+  "log.78d157cf": "an official tournament director, not ODNR, and not a club host. Nothing here is invented, so a short list is an honest list.",
+  "log.8768ba5d": "Start time, species, public details only…",
+  "log.8993cf87": "Which lakes to show",
+  "log.9450b0b4": "Submit it below",
+  "log.990b5dad": "e.g. Walnut Street ramp",
+  "log.a9a13761": "https://",
+  "log.ce88bdae": "Third-party club events at",
+  "log.d177b20a": "Lake:",
+  "log.f0bfa978": "No events listed right now. Know of one?"
+ }
+}

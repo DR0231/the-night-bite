@@ -87,7 +87,9 @@
       u.className = "pool-trend-unit";
       u.textContent = "ft";
       deltaEl.appendChild(u);
-      document.getElementById("pool-trend-word").textContent = word;
+      var wEl = document.getElementById("pool-trend-word");
+      wEl.setAttribute("data-en", word);   // js/conditions.js reads the English word; js/i18n.js may translate the text
+      wEl.textContent = word;
       box.querySelector(".pool-trend-from").textContent = day(pts[0].iso);
       svg.setAttribute("aria-label", "Pool level over the last 7 days: " + word.toLowerCase() + ", " +
         (change >= 0 ? "up " : "down ") + abs + " ft, from " + pts[0].v.toFixed(2) + " to " + last.v.toFixed(2) + " ft.");

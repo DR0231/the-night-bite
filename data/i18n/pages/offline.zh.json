@@ -1,0 +1,14 @@
+{
+ "_meta": {
+  "lang": "zh",
+  "page": "offline",
+  "review": "draft"
+ },
+ "strings": {
+  "offline.339f750b": "，你的水域页面，含最近一次的水位和天气读数",
+  "offline.8c5c8561": "以及本月什么鱼在咬钩",
+  "offline.cf591706": "信号恢复后，重新加载即可获取页面。",
+  "offline.dc9caf67": "这个页面还没有保存在这部手机上。你之前打开过的页面在没有信号时仍然可用。",
+  "offline.f690c8ed": "你的日志"
+ }
+}

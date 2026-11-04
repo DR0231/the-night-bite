@@ -105,6 +105,9 @@ async function linkStatus(u) {
       let st = 0;
       try { const r = await page.goto(BASE + p, { waitUntil: 'load', timeout: 45000 }); st = r ? r.status() : 0; } catch (e) { errs.push('goto ' + e.message); }
       await page.waitForTimeout(800);
+      // loading="lazy" images below the fold (picker tiles) never load in a headless pass: load them, then judge them
+      await page.evaluate(() => Promise.race([new Promise(r => setTimeout(r, 5000)), Promise.all([...document.images]
+        .filter(i => i.loading === 'lazy' && !i.complete).map(i => new Promise(r => { i.addEventListener('load', r); i.addEventListener('error', r); i.loading = 'eager'; })))])).catch(() => {});
       const real = errs.filter(e => !(/ERR_BLOCKED_BY_CLIENT/.test(e) && rf.length && rf.every(u => NA.PATTERN.test(u))))
         .filter(e => !(p === probe && /404/.test(e)));
       const d = await page.evaluate(() => {

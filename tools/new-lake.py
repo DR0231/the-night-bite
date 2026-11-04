@@ -17,7 +17,7 @@ What it writes (all from the entry; nothing is made up):
     (motors, ramps, pool, night). A fact without a source is left out, never guessed.
   · sitemap.xml: <id>/ after the last lake home. data/bait-shops.json: an empty list (the card says No shops confirmed yet).
   · then runs tools/build-tile-charts.py --lake <id> (the picker's north-up tile chart and its sw.js precache line,
-    once assets/<id>-chart.png exists), build-lake-pages.py, build-meta.py, stamp-version.py, build-updates.py
+    once assets/<id>-chart.png exists), build-lake-pages.py, build-docks.py, build-meta.py, stamp-version.py, build-updates.py
     (unless --no-build). build-lake-pages.py also refreshes every tile, so a chart added later needs no extra step.
 Sources must be official: USGS, Army Corps, ODNR (ohio.gov), NWS, MWCD, or a host already used in data/quick-facts.json
 (vetted city, park and marina pages). Another official city, park or marina host needs --allow-host HOST, after you
@@ -81,7 +81,7 @@ def build():
     if a.no_build or a.dry_run:
         print("build skipped" + (" (dry run)" if a.dry_run else ""))
         return
-    for b in ("build-tile-charts.py", "build-lake-pages.py", "build-meta.py", "stamp-version.py", "build-updates.py"):
+    for b in ("build-tile-charts.py", "build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py", "i18n-extract.py"):
         args = [sys.executable, str(ROOT / "tools" / b)]
         if b == "build-tile-charts.py":   # the north-up tile chart for the picker, plus its sw.js precache line
             args += ["--root", str(ROOT)] + (["--lake", BUILD_LAKE] if BUILD_LAKE else [])
@@ -300,6 +300,14 @@ js = re.sub(r"(var ORDER = \[[^\]]*)\]", lambda x: x.group(1) + f', "{slug}"]', 
 # ---------------------------------------------------------------- data files and sitemap
 L = {"checked": E.get("checked") or today, "title": title, "description": desc}
 L.update(facts)
+# night-rules chip (S5): "hours" from the entry, only with an official source; otherwise say so (tools/check-hours.py)
+H = E.get("hours")
+if H and H.get("source"):
+    need_source("hours", H["source"])
+    L["hours"] = dict(H, checked=H.get("checked") or today)
+else:
+    L["hours"] = {"none": True, "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.", "checked": today}
+    missing.append("hours: no official source, so no night-rules chip (the Night rules row says so)")
 L["sources"] = sources
 qf["lakes"][slug] = L
 bait_text = read("data/bait-shops.json"); bait = json.loads(bait_text)

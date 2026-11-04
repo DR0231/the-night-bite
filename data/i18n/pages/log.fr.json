@@ -1,0 +1,23 @@
+{
+ "_meta": {
+  "lang": "fr",
+  "page": "log",
+  "review": "draft"
+ },
+ "strings": {
+  "log.0dc9d9b4": "Nom du club ou de l’événement",
+  "log.2d610a9e": "Sorties envoyées par les lecteurs, vérifiées avant publication.",
+  "log.35810b8c": ", affichés seulement quand quelqu’un en propose un. The Night Bite",
+  "log.3879d2a5": "Sorties de la communauté",
+  "log.557f2555": "n’est pas",
+  "log.78d157cf": "un organisateur officiel de tournois, ni l’ODNR, ni un club hôte. Rien n’est inventé ici, donc une liste courte est une liste honnête.",
+  "log.8768ba5d": "Heure de début, espèces, détails publics uniquement…",
+  "log.8993cf87": "Lacs à afficher",
+  "log.9450b0b4": "Proposez le ci dessous",
+  "log.990b5dad": "ex. rampe de Walnut Street",
+  "log.a9a13761": "https://",
+  "log.ce88bdae": "Événements de clubs tiers sur",
+  "log.d177b20a": "Lac :",
+  "log.f0bfa978": "Aucun événement pour le moment. Vous en connaissez un ?"
+ }
+}

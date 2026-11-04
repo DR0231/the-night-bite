@@ -1,0 +1,14 @@
+{
+ "_meta": {
+  "lang": "vi",
+  "page": "offline",
+  "review": "draft"
+ },
+ "strings": {
+  "offline.339f750b": ", trang vùng nước của bạn với số đo mực nước và thời tiết gần nhất",
+  "offline.8c5c8561": "và cá gì đang ăn mồi tháng này",
+  "offline.cf591706": "Khi có sóng trở lại, hãy tải lại để xem trang.",
+  "offline.dc9caf67": "Trang này chưa được lưu trên điện thoại. Các trang bạn đã mở trước đó vẫn dùng được khi không có sóng.",
+  "offline.f690c8ed": "Nhật ký của bạn"
+ }
+}

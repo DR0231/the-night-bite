@@ -1,0 +1,14 @@
+{
+ "_meta": {
+  "lang": "fr",
+  "page": "offline",
+  "review": "draft"
+ },
+ "strings": {
+  "offline.339f750b": ", la page de votre plan d’eau avec les derniers relevés de niveau et de météo",
+  "offline.8c5c8561": "et ce qui mord ce mois-ci",
+  "offline.cf591706": "Quand le réseau revient, rechargez pour obtenir la page.",
+  "offline.dc9caf67": "Cette page n’est pas encore enregistrée sur ce téléphone. Les pages déjà ouvertes fonctionnent toujours sans réseau.",
+  "offline.f690c8ed": "Votre journal"
+ }
+}

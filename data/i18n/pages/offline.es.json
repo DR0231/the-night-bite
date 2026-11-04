@@ -1,0 +1,14 @@
+{
+ "_meta": {
+  "lang": "es",
+  "page": "offline",
+  "review": "draft"
+ },
+ "strings": {
+  "offline.339f750b": ", la página de tu agua con las últimas lecturas de nivel y del tiempo",
+  "offline.8c5c8561": "y lo que está picando este mes",
+  "offline.cf591706": "Cuando vuelva la señal, recarga para ver la página.",
+  "offline.dc9caf67": "Esta página todavía no está guardada en este teléfono. Las páginas que ya abriste siguen funcionando sin señal.",
+  "offline.f690c8ed": "Tu registro"
+ }
+}

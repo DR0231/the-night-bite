@@ -53,7 +53,7 @@
       alerts: { zones: "OHC041,OHC049,OHZ046,OHZ055", counties: "the Hoover area" },
       push: null,      // null: js/conditions.js keeps its own Hoover list (north to south lake)
       map: { data: "NightBiteMapData", chart: "assets/hoover-chart.png" },
-      spots: ["Oxbow (upper ramp)", "Redbank (middle ramp)", "Walnut Road (lower ramp)", "Bank (upper)", "Bank (middle)", "Bank (lower)", "Maxtown", "Marina / lower marina"],
+      /* nb:hoover-ramps (tools/build-hoover-ramps.py) */ spots: ["Oxbow Road ramp", "Sunbury Road ramp", "Twin Bridges ramp", "Red Bank ramp", "Walnut Street ramp", "Hoover Mudflats Boardwalk"], spotAliases: {"Oxbow (upper ramp)": "Oxbow Road ramp", "Oxbow": "Oxbow Road ramp", "Redbank (middle ramp)": "Red Bank ramp", "Redbank": "Red Bank ramp", "Maxtown": "Red Bank ramp", "Maxtown ramp": "Red Bank ramp", "Walnut Road (lower ramp)": "Walnut Street ramp", "Walnut Road": "Walnut Street ramp", "Walnut Road (public)": "Walnut Street ramp", "Other / not sure": "Other public area", "Other public / not sure": "Other public area"},
       species: ["channel-catfish", "blue-catfish", "flathead-catfish", "largemouth-bass", "smallmouth-bass", "black-crappie", "white-crappie", "bluegill", "white-bass", "hybrid-striped-bass", "saugeye", "walleye", "common-carp", "longnose-gar", "yellow-perch"]   // + yellow perch: ODNR Waterbody Report survey data
     },
     alum: {
@@ -870,8 +870,13 @@
   function bitingVar(lake) { return lake === "hoover" ? "NightBiteBiting" : "NightBiteBiting" + cap(lake); }
   function mapFile(lake) { return lake === "hoover" ? "hoover-map-data.js" : "lake-map-data-" + lake + ".js"; }
 
+  // a saved spot name as the page shows it now (old Hoover ramp spellings map to the official names)
+  function spotName(lake, name) {
+    var al = LAKES[lake || "hoover"] && LAKES[lake || "hoover"].spotAliases;
+    return (al && name && Object.prototype.hasOwnProperty.call(al, name)) ? al[name] : name;
+  }
   window.NightBiteLakes = { all: LAKES, order: ORDER, regions: REGIONS, speciesNames: SPECIES, storageKey: KEY, hrefFor: hrefFor, homeFor: homeFor, base: BASE, cwmsFor: cwmsFor,
-    usgsLatest: usgsLatest, usgsSeries: usgsSeries, bitingVar: bitingVar, mapFile: mapFile };
+    usgsLatest: usgsLatest, usgsSeries: usgsSeries, bitingVar: bitingVar, mapFile: mapFile, spotName: spotName };
   window.NightBiteLake = { id: id, cfg: LAKES[id], key: key, cwms: cwms, home: homeLake, chosen: chosen, root: atRoot, browsing: browsing };
 
   // Lake switches only (js/lake-picker.js sets the flag): a short cross-fade into the new page.

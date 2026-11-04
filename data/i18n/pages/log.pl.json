@@ -1,0 +1,23 @@
+{
+ "_meta": {
+  "lang": "pl",
+  "page": "log",
+  "review": "draft"
+ },
+ "strings": {
+  "log.0dc9d9b4": "Nazwa klubu lub wydarzenia",
+  "log.2d610a9e": "Wyprawy przysłane przez czytelników, sprawdzone przed publikacją.",
+  "log.35810b8c": ", publikowane tylko wtedy, gdy ktoś je zgłosi. The Night Bite",
+  "log.3879d2a5": "Wyprawy społeczności",
+  "log.557f2555": "nie jest",
+  "log.78d157cf": "oficjalnym organizatorem zawodów, nie jest ODNR ani gospodarzem klubu. Nic tu nie jest wymyślone, więc krótka lista to uczciwa lista.",
+  "log.8768ba5d": "Godzina startu, gatunki, tylko publiczne szczegóły…",
+  "log.8993cf87": "Które jeziora pokazać",
+  "log.9450b0b4": "Zgłoś je poniżej",
+  "log.990b5dad": "np. slip Walnut Street",
+  "log.a9a13761": "https://",
+  "log.ce88bdae": "Wydarzenia zewnętrznych klubów na",
+  "log.d177b20a": "Jezioro:",
+  "log.f0bfa978": "Obecnie brak wydarzeń. Znasz jakieś?"
+ }
+}

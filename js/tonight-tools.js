@@ -27,7 +27,7 @@
   row.hidden = false;
 
   function $(s, r) { return (r || document).querySelector(s); }
-  function txt(s) { var n = $(s); return n ? n.textContent.replace(/\s+/g, " ").trim() : ""; }
+  function txt(s) { var n = $(s); return n ? ((n.getAttribute("data-nb-out") === n.textContent && n.getAttribute("data-en")) || n.textContent).replace(/\s+/g, " ").trim() : ""; }
   function etNow() {
     try { return new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date()) + " ET"; }
     catch (e) { return new Date().toLocaleString(); }
@@ -155,7 +155,11 @@
     ]).catch(function () {}) : Promise.resolve();
     return Promise.all([fonts, img(LS.base + "assets/lantern.svg"), bitingData()]).then(function (a) {
       var lantern = a[1], r = readings(a[2]);
-      var NAVY = "#0a1628", MID = "#122038", LIGHT = "#1a2e4a", AMBER = "#f0a830", CREAM = "#f5edd8", CREAM2 = "#e8d5a3", MUTED = "#8a9aaa";
+      // the palette comes from the page's own CSS tokens, so red light (html[data-light="red"]) draws a red card
+      var cs = getComputedStyle(document.documentElement);
+      function tok(n, f) { return (cs.getPropertyValue(n) || "").trim() || f; }
+      var NAVY = tok("--navy", "#0a1628"), MID = tok("--navy-mid", "#122038"), LIGHT = tok("--navy-light", "#1a2e4a"), AMBER = tok("--amber", "#f0a830"),
+        CREAM = tok("--cream", "#f5edd8"), CREAM2 = tok("--cream-dark", "#e8d5a3"), MUTED = tok("--muted", "#8a9aaa");
       var HEAD = '{s}px "Night Bite Pixel", "Pixelify Sans", monospace';
       var SERIF = '{s}px "Source Serif 4", Georgia, serif', SERIF6 = '600 {s}px "Source Serif 4", Georgia, serif';
       function F(f, s) { return f.replace("{s}", s); }
@@ -219,6 +223,7 @@
   function openShare() {
     if (!shareDlg) return;
     shareMsg.textContent = "Drawing the card\u2026";
+    shareImg.removeAttribute("src");   // never show a card drawn in the other palette
     shareBtn.hidden = true;
     if (shareDlg.showModal) shareDlg.showModal(); else shareDlg.setAttribute("open", "");
     draw().then(function (o) {

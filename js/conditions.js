@@ -104,7 +104,7 @@
     if (A.moonTonight) {
       var mt = A.moonTonight(now);
       st.moon = mt;
-      setCell("moon", mt.name, "", Math.round(mt.fraction * 100) + "% lit");
+      setCell("moon", mt.name === "New" || mt.name === "Full" ? mt.name + " moon" : mt.name, "", Math.round(mt.fraction * 100) + "% lit");
       var mc = grid.querySelector('[data-cond="moon"]');
       if (mc) {
         mc.setAttribute("data-phase-index", String(mt.index));
@@ -131,7 +131,7 @@
     var f = tempF(p);
     if (f !== null) {
       var fl = feelsLike(f, windHi(p), p.relativeHumidity && p.relativeHumidity.value);
-      setCell("air", String(Math.round(f)), "°F", subNow === "Now" ? "Feels like " + Math.round(fl) + "°" : subNow + ", feels " + Math.round(fl) + "°");
+      setCell("air", String(Math.round(f)), "°F", subNow === "Now" ? "Feels like " + Math.round(fl) + "°" : subNow + ", feels " + Math.round(fl) + "°");   // pg.feels / pg.feels_at
     }
     var maxPop = null;
     for (var j = start; j < Math.min(periods.length, start + 12); j++) {
@@ -258,10 +258,10 @@
     var trend, sub;
     if (old && spanH >= 2 && spanH <= 4) {
       var dIn = (latest.pa - old.pa) / PA_PER_INHG, a = Math.abs(dIn), hrs = Math.round(spanH);
-      trend = a <= 0.02 ? "Steady" : dIn > 0 ? "Rising" : "Falling";
+      trend = a <= RULES.pressure.steady ? "Steady" : dIn > 0 ? "Rising" : "Falling";
       var dirWord = a < 0.005 ? "Flat" : dIn > 0 ? "Up" : "Down";
       sub = (dirWord === "Flat" ? "No change" : dirWord + " " + a.toFixed(2)) + " in " + hrs + "\u00a0hrs, " + trend.toLowerCase();
-      st.p3 = { d: dIn, hrs: hrs, trend: trend.toLowerCase(), fast: a >= 0.06 };
+      st.p3 = { d: dIn, hrs: hrs, trend: trend.toLowerCase(), fast: a >= RULES.pressure.fast };
     } else {
       trend = "unknown";
       sub = "Trend needs more readings";
@@ -412,55 +412,103 @@
   }
 
   /* ---- 2. Tonight's bite: a rule of thumb score, not a forecast ----
-     Pressure, last 3 h at KCMH: falling slowly (0.02 to 0.06 inHg) +2, steady (within 0.02) +1, rising slowly 0,
-       falling fast (0.06 or more) 0, rising fast (0.06 or more) -1, unknown 0.
+     Every number lives in RULES below. biteRating() scores from it and the "How the bite is rated" explainer on the
+     page (tools/lake-home.html, #bite-how) prints the same numbers with data-r paths that tools/check-glance.cjs
+     compares against window.NightBiteBiteRules, so the two can't drift.
+     Pressure, last 3 h at the lake's NWS station: falling slowly (0.02 to 0.06 inHg) +2, steady (within 0.02) +1,
+       rising slowly 0, falling fast (0.06 or more) 0, rising fast (0.06 or more) -1, unknown 0.
      Wind, tonight's average sustained NWS hourly speed: under 3 mph 0 (glassy), 3 to 12 mph +1 (a little chop),
        13 to 18 mph 0, over 18 mph -2 (rough for a 10 hp boat and hard on the bank).
      Moon: new or full moon (the principal phase falls tonight, or the disc is under 10% or over 90% lit) +1, otherwise 0.
-     Water, USGS 03228400 temp when the gauge sends one: 55 to 80 F +1, 45 to 54 or 81 to 86 F 0, colder or warmer -1.
+     Water, the lake's USGS gauge temp when it sends one: 55 to 80 F +1, 45 to 54 or 81 to 86 F 0, colder or warmer -1.
      Total 4 or more: Good. 2 or 3: Fair. 1 or less: Tough. Thunder in tonight's window always makes it Tough. */
-  function biteRating() {
-    var score = 0, why = [], known = 0;
+  var RULES = {
+    inputs: ["pressure", "wind", "moon", "water", "storm"],
+    pressure: { steady: 0.02, fast: 0.06, pts: { fallSlow: 2, steady: 1, riseSlow: 0, fallFast: 0, riseFast: -1 } },
+    wind: { calm: 3, chop: 12, breezy: 18, pts: { calm: 0, chop: 1, breezy: 0, strong: -2 } },
+    moon: { dark: 0.1, bright: 0.9, pts: { major: 1, other: 0 } },
+    water: { goodLo: 55, goodHi: 80, okLo: 45, okHi: 86, pts: { good: 1, ok: 0, bad: -1 } },
+    rate: { good: 4, fair: 2 }
+  };
+  window.NightBiteBiteRules = RULES;
+  var PP = RULES.pressure.pts, WP = RULES.wind.pts;
+  /* each input's part tonight: null when it isn't loaded, else { pts, word } */
+  function biteParts() {
+    var parts = { pressure: null, wind: null, moon: null, water: null, storm: !!st.storm };
     var p3 = st.p3;
     if (p3) {
-      known++;
-      if (p3.trend === "falling") { score += p3.fast ? 0 : 2; why.push(p3.fast ? "pressure dropping fast" : "pressure falling slowly"); }
-      else if (p3.trend === "steady") { score += 1; why.push("steady pressure"); }
-      else { score += p3.fast ? -1 : 0; why.push(p3.fast ? "pressure rising fast" : "pressure rising"); }
+      if (p3.trend === "falling") parts.pressure = p3.fast ? { pts: PP.fallFast, word: "pressure dropping fast" } : { pts: PP.fallSlow, word: "pressure falling slowly" };
+      else if (p3.trend === "steady") parts.pressure = { pts: PP.steady, word: "steady pressure" };
+      else parts.pressure = p3.fast ? { pts: PP.riseFast, word: "pressure rising fast" } : { pts: PP.riseSlow, word: "pressure rising" };
     }
     var win = tonight(Date.now()), list = win && periodsIn(st.periods, win.from, win.to);
     if (list && list.length) {
       var sum = 0, n = 0;
       list.forEach(function (p) { var w = windHi(p); if (w !== null) { sum += w; n++; } });
       if (n) {
-        known++;
-        var avg = Math.round(sum / n), dir = String(list[0].windDirection || "").toUpperCase();
+        var W = RULES.wind, avg = Math.round(sum / n), dir = String(list[0].windDirection || "").toUpperCase();
         var d = DIRS.indexOf(dir) < 0 ? "" : dir + " ";
-        if (avg < 3) why.push("calm water");
-        else if (avg <= 12) { score += 1; why.push((avg <= 7 ? "light " : "moderate ") + d + "wind"); }
-        else if (avg <= 18) why.push("breezy " + d + "wind");
-        else { score -= 2; why.push("strong " + d + "wind"); }
+        if (avg < W.calm) parts.wind = { pts: WP.calm, word: "calm water", avg: avg };
+        else if (avg <= W.chop) parts.wind = { pts: WP.chop, word: (avg <= 7 ? "light " : "moderate ") + d + "wind", avg: avg };
+        else if (avg <= W.breezy) parts.wind = { pts: WP.breezy, word: "breezy " + d + "wind", avg: avg };
+        else parts.wind = { pts: WP.strong, word: "strong " + d + "wind", avg: avg };
       }
     }
-    var mt = st.moon;
+    var mt = st.moon, M = RULES.moon;
     if (mt) {
-      var major = mt.name === "New" || mt.name === "Full" || mt.fraction < 0.1 || mt.fraction > 0.9;
-      if (major) { score += 1; why.push(mt.fraction > 0.5 ? "full moon" : "new moon"); }
+      var major = mt.name === "New" || mt.name === "Full" || mt.fraction < M.dark || mt.fraction > M.bright;
+      parts.moon = major ? { pts: M.pts.major, word: mt.fraction > 0.5 ? "full moon" : "new moon" } : { pts: M.pts.other, word: "" };
     }
     if (typeof st.waterF === "number") {
-      var w = Math.round(st.waterF);   // counts toward the score but can't carry the line alone
-      if (w >= 55 && w <= 80) score += 1;
-      else if (w < 45 || w > 86) score -= 1;
-      why.push(w + "°F water");
+      var T = RULES.water, w = Math.round(st.waterF);   // counts toward the score but can't carry the line alone
+      parts.water = { pts: w >= T.goodLo && w <= T.goodHi ? T.pts.good : w < T.okLo || w > T.okHi ? T.pts.bad : T.pts.ok, word: w + "°F water" };
     }
-    if (!known) return null;
-    var rate = score >= 4 ? "Good" : score >= 2 ? "Fair" : "Tough";
-    if (st.storm) { rate = "Tough"; why.unshift("storms possible"); }
-    return { rate: rate, score: score, why: why.slice(0, 4) };
+    return parts;
+  }
+  function biteRating() {
+    var parts = biteParts(), score = 0, why = [];
+    if (!parts.pressure && !parts.wind) return null;   // only pressure or wind can make a rating
+    ["pressure", "wind", "moon", "water"].forEach(function (k) {
+      var p = parts[k];
+      if (!p) return;
+      score += p.pts;
+      if (p.word) why.push(p.word);
+    });
+    var rate = score >= RULES.rate.good ? "Good" : score >= RULES.rate.fair ? "Fair" : "Tough";
+    if (parts.storm) { rate = "Tough"; why.unshift("storms possible"); }
+    return { rate: rate, score: score, why: why.slice(0, 4), parts: parts };
+  }
+  function signed(n) { return n > 0 ? "+" + n : n < 0 ? "\u2212" + Math.abs(n) : "0"; }
+  /* the explainer's "Tonight" notes: what each input gave, and which ones were missing */
+  function renderHow(b) {
+    var how = document.getElementById("bite-how");
+    if (!how) return;
+    var src = how.querySelector('[data-bite-src="station"]');
+    if (src) src.textContent = STATION_NAME;
+    var parts = (b && b.parts) || biteParts(), missing = [];
+    var NAMES = { pressure: "barometer trend", wind: "wind", moon: "moon", water: "water temp" };
+    ["pressure", "wind", "moon", "water"].forEach(function (k) {
+      var el = how.querySelector('[data-bite-now="' + k + '"]'), p = parts[k];
+      if (!p) missing.push(NAMES[k]);
+      if (!el) return;
+      el.textContent = p ? "Tonight: " + (p.word || "not new or full") + ", " + signed(p.pts) + "." : "Tonight: no reading, so 0.";
+      el.setAttribute("data-have", p ? "yes" : "no");
+      el.hidden = false;
+    });
+    var se = how.querySelector('[data-bite-now="storm"]');
+    if (se) { se.textContent = parts.storm ? "Tonight: thunder in the forecast, so Tough." : (st.periods ? "Tonight: no thunder in the forecast." : "Tonight: no forecast loaded."); se.hidden = false; }
+    var tot = how.querySelector("[data-bite-tonight]");
+    if (tot) {
+      var t = b ? "Tonight: " + signed(b.score) + " points, " + b.rate + "." : "Tonight: no rating yet. It needs the barometer trend or tonight's wind.";
+      if (missing.length) t += " Missing tonight: " + missing.join(", ") + ".";
+      tot.textContent = t;
+      tot.hidden = false;
+    }
   }
   function renderBite() {
     if (!biteEl) return;
     var b = biteRating();
+    try { renderHow(b); } catch (e) {}
     if (!b) { biteEl.hidden = true; return; }
     biteEl.querySelector(".cond-bite-rate").textContent = b.rate;
     var why = b.why.join(", ");
@@ -468,6 +516,16 @@
     biteEl.setAttribute("data-rate", b.rate.toLowerCase());
     biteEl.hidden = false;
   }
+  /* links to #bite-how (the glance Bite cell) open the explainer */
+  (function () {
+    function openHow() { var d = document.getElementById("bite-how"); if (d && location.hash === "#bite-how") d.open = true; }
+    window.addEventListener("hashchange", openHow);
+    document.addEventListener("click", function (e) {
+      var a = e.target && e.target.closest && e.target.closest('a[href$="#bite-how"]'), d = document.getElementById("bite-how");
+      if (a && d) d.open = true;
+    });
+    openHow();
+  })();
 
   /* ---- 6 and 7, plus moonset: the compact extras row ----
      Wind on the water: the wind piles bait (and fish) on the shore it blows toward, the opposite of where it comes from.
@@ -505,10 +563,10 @@
      gauge water temp, and the pool line and 7 day trend from the pool card. No score and no prediction. */
   function poolBits() {
     var out = [], line = document.getElementById("correction-line");
-    var m = line && /~?\s*([\d.]+)\s*ft\s+(below|above)\s+full pool/i.exec(line.textContent || "");
+    var m = line && /~?\s*([\d.]+)\s*ft\s+(below|above)\s+full pool/i.exec((line.getAttribute("data-nb-out") === line.textContent && line.getAttribute("data-en") || line.textContent || ""));
     if (m) out.push("pool " + m[1] + " ft " + m[2].toLowerCase() + " full");
     var tr = document.getElementById("pool-trend"), w = document.getElementById("pool-trend-word");
-    var word = tr && !tr.hidden && w && (w.textContent || "").trim().toLowerCase();
+    var word = tr && !tr.hidden && w && (w.getAttribute("data-en") || w.textContent || "").trim().toLowerCase();
     if (word && /^(rising|falling|steady)$/.test(word)) out.push(word + " over 7 days");
     return out.length ? [out.join(", ")] : [];
   }
@@ -541,7 +599,9 @@
     bits = bits.concat(poolBits());
     if (!bits.length) { lineEl.hidden = true; return; }
     var txt = bits.join(", ");
-    lineEl.querySelector(".cond-line-text").textContent = txt.charAt(0).toUpperCase() + txt.slice(1) + ".";
+    var lt = lineEl.querySelector(".cond-line-text"), en = txt.charAt(0).toUpperCase() + txt.slice(1) + ".";
+    // same English as last time: keep it (js/i18n.js may have translated it; rewriting would flap back to English)
+    if (lt.__nbEn !== en || !lt.textContent) { lt.__nbEn = en; lt.textContent = en; }
     lineEl.hidden = false;
   }
 
@@ -631,6 +691,7 @@
     lastOk = new Date(saved.savedAt);
     card.setAttribute("data-state", "ok");
     card.setAttribute("data-saved", "1");
+    if (saved.savedAt) card.setAttribute("data-saved-at", String(saved.savedAt));   // js/glance.js: "Saved NWS, 3h ago"
     return true;
   }
 
@@ -673,6 +734,7 @@
       lastOk = cached ? new Date(cached.at) : new Date();
       card.removeAttribute("data-offline");
       card.removeAttribute("data-saved");
+      card.removeAttribute("data-saved-at");
       stamp(lastOk);
       render();
       var offline = OFF && OFF.isOffline();
@@ -699,7 +761,8 @@
       });
     }).catch(function () {
       if (hasData) failRefresh();
-      else if (OFF && OFF.isOffline() && showSaved()) failRefresh();
+      // offline, or NWS blocked or down on the first load: the last forecast saved on this phone (3 days at most), labelled
+      else if (OFF && showSaved()) failRefresh();
       else fail();
     });
   }
