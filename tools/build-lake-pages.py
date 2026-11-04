@@ -247,6 +247,28 @@ src = TEMPLATE_NOTE.sub("", src, count=1)
 # the template's own noindex (it is copied to live with the tools, but is not a page); never on the lake homes
 src = re.sub(r'[ \t]*<meta name="robots" content="noindex" data-nb-template>\n', "", src, count=1)
 
+# share tags (og:* and twitter:*) exactly as tools/build-meta.py writes them, the ?v= stamps from sw.js VERSION
+# (as tools/stamp-version.py writes them) and the What's new data-updates date from the site root, so running this
+# script alone never regresses a lake home's own twitter: tags, stamps or New dot
+_bm = importlib.util.spec_from_file_location("build_meta", pathlib.Path(__file__).with_name("build-meta.py"))
+build_meta = importlib.util.module_from_spec(_bm); _bm.loader.exec_module(build_meta)
+_ver = re.search(r'var VERSION = "([^"]+)"', (root / "sw.js").read_text())
+STAMP_RE = re.compile(r'((?:src|href)=")((?:\.\./|/night-bite-preview/|/)?(?:css/[\w.-]+\.css|js/[\w.-]+\.js))(?:\?v=[^"]*)?(")')
+_upd = re.search(r'<a href="(?:\.\./|/night-bite-preview/|/)?updates" data-updates="([^"]*)"', (root / "index.html").read_text())
+UPD_RE = re.compile(r'(<a href="(?:\.\./|/night-bite-preview/|/)?updates")(?: data-updates="[^"]*")?')
+
+
+def finish(rel, h):
+    h, err = build_meta.share(rel, h)
+    if err:
+        sys.exit("build-lake-pages: " + err)
+    if _ver:
+        h = STAMP_RE.sub(lambda x: x.group(1) + x.group(2) + "?v=" + _ver.group(1) + x.group(3), h)
+    if _upd:
+        h = UPD_RE.sub(lambda m: f'{m.group(1)} data-updates="{_upd.group(1)}"', h)
+    return h
+
+
 # sitemap.xml <lastmod>: today (ET) for every page whose content changed on this build (version stamps ignored)
 LASTMOD = set()
 
@@ -287,6 +309,7 @@ for lake, L in LAKES.items():
     # S13: written dates in <time datetime> so js/i18n.js writes them with Intl in the picked language
     h = WRAP_DATES(h)
     h = h.replace("<!DOCTYPE html>\n", "<!DOCTYPE html>\n<!-- Built from tools/lake-home.html by tools/build-lake-pages.py. Do not edit by hand (except the three snapshot lines in hoover/index.html). -->\n", 1)
+    h = finish(f"{lake}/index.html", h)
     out = root / lake / "index.html"
     out.parent.mkdir(exist_ok=True)
     if out.exists() and unstamped(out.read_text()) != unstamped(h):

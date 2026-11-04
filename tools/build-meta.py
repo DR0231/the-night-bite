@@ -69,24 +69,32 @@ def block(rel, title, desc, url):
     return "".join("\n  " + l for l in lines)
 
 
-errors, changed = [], 0
-for rel, p in public_pages():
-    src = p.read_text()
+def share(rel, src):
+    """src with its og:* and twitter:* block rewritten from its own head; (new, error or None)."""
     head_end = src.find("</head>")
     head, rest = src[:head_end], src[head_end:]
     title = re.search(r"<title>([^<]*)</title>", head)
     desc = re.search(r'<meta name="description" content="([^"]*)">', head)
     canon = re.search(r'<link rel="canonical" href="([^"]*)">', head)
     if not (title and desc and canon):
-        errors.append(f"{rel}: needs <title>, meta description and canonical before share tags can be written")
-        continue
+        return src, f"{rel}: needs <title>, meta description and canonical before share tags can be written"
     head = re.sub(r'\n[ \t]*<meta (?:property="og:[^"]*"|name="twitter:[^"]*") content="[^"]*">', "", head)
     canon = re.search(r'<link rel="canonical" href="([^"]*)">', head)
     head = head[:canon.end()] + block(rel, title.group(1).strip(), desc.group(1), canon.group(1)) + head[canon.end():]
-    new = head + rest
-    if new != src:
-        p.write_text(new)
-        changed += 1
-if errors:
-    sys.exit("\n".join(errors))
-print(f"meta: share tags written, {changed} pages changed")
+    return head + rest, None
+
+
+if __name__ == "__main__":
+    errors, changed = [], 0
+    for rel, p in public_pages():
+        src = p.read_text()
+        new, err = share(rel, src)
+        if err:
+            errors.append(err)
+            continue
+        if new != src:
+            p.write_text(new)
+            changed += 1
+    if errors:
+        sys.exit("\n".join(errors))
+    print(f"meta: share tags written, {changed} pages changed")
