@@ -31,6 +31,7 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="js/a11y-boot.js?v=v28-2026-11-04"></script>
   <link rel="stylesheet" href="css/styles.css?v=v28-2026-11-04">
   <script src="js/lakes.js?v=v28-2026-11-04"></script>
 </head>
@@ -47,20 +48,21 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li class="nav-core"><a href="./">Home</a></li>
-          <li class="nav-core"><a href="species/"><span class="nav-label-full">Species</span><span class="nav-label-short">Species</span></a></li>
-          <li class="nav-core"><a href="water"><span class="nav-label-full">Water</span><span class="nav-label-short">Lake</span></a></li>
+          <li class="nav-core"><a href="species/">Species</a></li>
+          <li class="nav-core"><a href="water"><span class="nav-label" data-short="Lake"><span class="nav-label-text">Water</span></span></a></li>
           <li class="nav-core"><a href="gear">Gear</a></li>
-          <li class="nav-extra"><a href="whisperwood.html"><span class="nav-label-full">Whisperwood Vale</span><span class="nav-label-short">Whisperwood</span></a></li>
+          <li class="nav-extra nav-ww"><a href="whisperwood.html">Whisperwood Vale</a></li>
           <li class="nav-extra"><a href="log">Log</a></li>
           <li class="nav-extra"><a href="about">About</a></li>
           <li class="nav-extra"><a href="updates" data-updates="2026-11-04">What&rsquo;s new</a></li>
-          <li class="nav-more-item">
+          <li class="nav-more-item nav-more-desk">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
               <a href="whisperwood.html">Whisperwood Vale</a>
               <a href="log">Log</a>
               <a href="about">About</a>
               <a href="updates" data-updates="2026-11-04">What&rsquo;s new</a>
+              <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
         </ul>
@@ -75,7 +77,7 @@
       The Night Bite and Whisperwood Vale have no accounts, no cookies, and no ads. Visits are only counted, without cookies or anything personal.
       Most of what you do here stays in your own browser.
     </p>
-    <p class="meta">Last updated November 3, 2026.</p>
+    <p class="meta">Last updated November 4, 2026.</p>
 
     <h2>What stays in your browser</h2>
     <p>
@@ -83,7 +85,9 @@
       They are not sent to The Night Bite. Clearing this site&rsquo;s data in your browser removes them.
     </p>
     <ul>
-      <li><strong>The Log:</strong> your personal trip entries (<code>nightbite-log-v1</code>) and a flag for the example trips (<code>nightbite-samples-seeded-v2</code>).</li>
+      <li><strong>The Log:</strong> your personal trip entries (<code>nightbite-log-v1</code>). &ldquo;Save a backup&rdquo; writes them to a file on your own phone or computer, and &ldquo;Open a backup&rdquo; reads a file you pick and adds its trips here. Both happen on your device; nothing is uploaded.</li>
+      <li><strong>Display:</strong> your text size, readable text, less motion, high contrast and red light choices (<code>nb-a11y</code>), so the site looks the way you set it next visit. Saved on this device only and never sent anywhere; Reset in the Display panel clears it.</li>
+      <li><strong>Language:</strong> the language you pick in the Display panel (<code>nb-lang</code>, just its short code, like <code>es</code>), so menus and labels show in that language next visit. Saved on this device only and never sent anywhere; picking English or Reset clears it.</li>
       <li><strong>Gear:</strong> your packing checklist ticks (<code>nightbite-pack-v1</code>) and the bank / boat toggle (<code>nightbite-mode-v1</code>).</li>
       <li><strong>Offline readings:</strong> the last pool reading, 7 day pool trend and weather forecast your browser fetched (<code>nb-usgs-last</code>, <code>nb-trend-last</code>, <code>nb-cond-last</code>), so Home can show them, marked &ldquo;Offline&rdquo;, when you have no signal.</li>
       <li><strong>Your water:</strong> the last water you picked or opened (<code>nb-lake</code>, just its short id, like <code>berlin</code>), so the home page opens it first next visit. It is remembered on this device only and never sent anywhere; <a href="./?pick">Pick your water</a> lets you choose another.</li>
@@ -109,6 +113,7 @@
 
     <h2>Trip and tournament submissions</h2>
     <ul>
+      <li><strong>Share a trip:</strong> &ldquo;Send for review&rdquo; on <a href="log">Log</a> sends only what you typed in that form (lake, date, species, public ramp or area, time window, bait, keep or release, notes) to The Night Bite&rsquo;s own review queue on Cloudflare. It isn&rsquo;t published unless it&rsquo;s approved, and rejected trips are deleted. To stop repeat spam the queue keeps a scrambled, one-hour count per connection, never your IP address itself.</li>
       <li><strong>Email draft:</strong> the trip and <a href="log#tournaments">tournament</a> forms on <a href="log">Log</a> only build a draft in your own email app. Nothing is sent unless you send it.</li>
       <li><strong>GitHub issue:</strong> issues on GitHub are public and handled under GitHub&rsquo;s privacy statement.</li>
     </ul>
@@ -166,6 +171,7 @@
         <a href="about">About</a>
         <a href="updates" data-updates="2026-11-04">What&rsquo;s new</a>
         <a href="privacy">Privacy</a>
+        <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
       <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
@@ -178,6 +184,7 @@
   <script src="js/visits.js?v=v28-2026-11-04"></script>
   <script src="js/lake-picker.js?v=v28-2026-11-04"></script>
 
+<script src="js/a11y.js?v=v28-2026-11-04" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -15,6 +15,19 @@
       ]
     },
     {
+      "id": "2026-11-04-lake-pages-ramps-log",
+      "date": "2026-11-04",
+      "tag": "Improved",
+      "title": "Lake pages, ramps and the Log",
+      "bullets": [
+        "\"How the bite is rated\" now sits under the bite line, with tonight's points.",
+        "A night rules chip shows the official closing time with a countdown, and storm statements show in the weather alert bar.",
+        "Hoover ramps fixed: Oxbow Road, Sunbury Road, Twin Bridges, Red Bank and Walnut Street.",
+        "Log: your trips come first, you can back up or move your trips to another phone, and Share a trip now sends for review before anything is published.",
+        "Tonight at a glance works without JavaScript and says when it was last updated, and each water's page loads only its own water."
+      ]
+    },
+    {
       "id": "2026-11-03-pick-your-water",
       "date": "2026-11-03",
       "tag": "New",
