@@ -357,14 +357,23 @@ from the NWS forecast with its "Checked" time) and prints "--" for anything miss
 
 Built from `data/docks.json` by `tools/build-docks.py` (then `tools/stamp-version.py`). `js/docks.js` flips an
 "ending" line to its after text once the date passes in Columbus, and flags a check older than 14 days. No fetches.
+Hoover's rental item is the exception: after Oct. 31 the line says the rental season is closed, and it refuses
+wording that the docks were pulled.
 
-- Hoover: Columbus Recreation and Parks, Marinas & Docks: public dock season May 1 to Oct. 31 at the Griggs, Hoover
-  and O'Shaughnessy marinas, dock office 614-645-3337.
-  https://columbusrecparks.com/facilities/rentals/marinas-and-docks/ . Facility Alerts (no Hoover item on Oct. 28):
+- Hoover, rechecked Nov. 6, 2026: Columbus Recreation and Parks, Marinas & Docks lists public boat dock rentals
+  from May 1 to Oct. 31 (dock office 614-645-3337). That is the rental calendar. It is not a notice that the marina
+  docks or the public launch courtesy docks were pulled.
+  https://columbusrecparks.com/facilities/rentals/marinas-and-docks/ . Facility Alerts had no current Hoover dock
+  confirmation on Nov. 6. No alert is not evidence the docks are in.
   https://columbusrecparks.com/facilities/alerts/ . Hoover Reservoir Parkland (Watershed Management 614-645-1721):
-  https://columbusrecparks.com/parks/hoover-reservoir-parkland/ . Last year, news only: The Westerville News, Nov. 1,
-  2025, "The final sailboats were removed from Hoover Reservoir's city docks Friday" (Oct. 31, 2025):
-  https://www.thewestervillenews.com/p/summer-ends-when-boats-leave-hoover . No ramp dock pull date is posted.
+  https://columbusrecparks.com/parks/hoover-reservoir-parkland/ . ODNR's Hoover Reservoir Fishing Area page says
+  Columbus maintains the docks. It does not say they are in now.
+  https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area . An open ramp does not
+  mean a dock is installed. Physical presence of both the marina docks and the public launch courtesy docks is
+  unconfirmed. No on-the-water look has been made. Last year, news only, and not current presence: The Westerville
+  News, Nov. 1, 2025, "The final sailboats were removed from Hoover Reservoir's city docks Friday" (Oct. 31, 2025):
+  https://www.thewestervillenews.com/p/summer-ends-when-boats-leave-hoover . Griggs and O'Shaughnessy keep their own
+  dock lines.
 - Alum Creek: ODNR Alum Creek State Park (office 740-548-4631, dock lottery), Alum Creek Marina docking page
   (12 transient slips, max 4 days; April and October hours Sat. and Sun. only, 9 am to 6 pm; 740-548-6056).
   https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park and https://www.alumcreekmarina.net/docking.html
@@ -375,7 +384,7 @@ Built from `data/docks.json` by `tools/build-docks.py` (then `tools/stamp-versio
   control (Corps of Engineers); Buckeye Lake 3 ft, 11/15/25 to 12/15/25, refill 03/01/26 to 05/01/26, dock maintenance,
   seawall repair, shoreline maintenance.
   https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns
-- No 2026 dock pull dates are posted for any of the three on Oct. 28, 2026.
+- Alum Creek and Buckeye Lake: no 2026 dock pull date was posted when those pages were checked Oct. 28, 2026. Hoover is the Nov. 6 note above: rental season closed, physical presence unconfirmed.
 - Watching: `python3 tools/check-docks.py` reads every page in the `watch` list of `data/docks.json` and compares
   the dock, ramp, closure and drawdown sentences with `tools/docks-watch-state.json`. Last line `RESULT: CHANGED n`
   means read the +/- lines and the page, update `data/docks.json` (and `checked`), rebuild, then rerun with

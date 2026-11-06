@@ -16,6 +16,10 @@ Output: one line per source, then a last line that starts with RESULT:
 Exit code: 0 no change, 1 changed, 2 errors only.
 ohiodnr.gov refuses some networks (it answers 404 to everything); the script then reads the same public page through
 the r.jina.ai reader and says "via reader" on that line.
+
+Hoover: May 1 to Oct. 31 on the Columbus marinas page is the public boat dock rental calendar. It is not a notice
+that the marina docks or the public launch courtesy docks were pulled. Do not set Hoover status out, or an after
+label of Season over, from those dates. No city alert is not evidence the docks are in. Other waters are unchanged.
 """
 import datetime, hashlib, html, json, pathlib, re, sys, urllib.request
 

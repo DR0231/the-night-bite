@@ -326,6 +326,7 @@
   "pg.h_7_11": "7 a. m. a 11 p. m.",
   "pg.h_sun": "la salida a la puesta del sol",
   "pg.qf_docks_city": "La ciudad indica que la temporada de muelles de la marina va del 1 de mayo al 31 de octubre, así que los muelles de la marina terminaron en 2026. Aún no hay fecha publicada para retirar los muelles de las rampas.",
+  "pg.qf_docks_hoover": "Los alquileres de muelles públicos para botes van del 1 de mayo al 31 de octubre, así que la temporada de alquiler está cerrada. No está confirmado si los muelles de la marina y los muelles de cortesía de las rampas públicas están en el agua. Las alertas de la ciudad y ODNR no confirman si están puestos o no. Una rampa abierta no significa que haya un muelle instalado.",
   "pg.qf_motors_hoover": "Límite de 10 hp y 10 mph; velocidad mínima a menos de 100 ft de la orilla. Botes de 22 ft como máximo.",
   "pg.qf_ramps_hoover": "Cinco rampas públicas: Oxbow Road, Sunbury Road, Twin Bridges, Red Bank y Walnut Street. Acceso desde la orilla en el Mudflats Boardwalk.",
   "pg.qf_motors_city": "Caballos de fuerza sin límite; 40 mph de día. Velocidad mínima a menos de 100 ft de la orilla y los puentes. Botes de 22 ft o menos, sin motos acuáticas.",

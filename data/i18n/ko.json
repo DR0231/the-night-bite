@@ -326,6 +326,7 @@
   "pg.h_7_11": "오전 7시부터 오후 11시",
   "pg.h_sun": "일출부터 일몰",
   "pg.qf_docks_city": "시는 마리나 선착장 시즌을 5월 1일부터 10월 31일로 안내하므로 2026년 마리나 선착장은 끝났습니다. 램프 선착장 철거 날짜는 아직 공지되지 않았습니다.",
+  "pg.qf_docks_hoover": "공공 보트 선착장 대여는 5월 1일부터 10월 31일까지라서 대여 시즌은 닫혔어요. 마리나 선착장과 공공 진수 경사로의 무료 선착장이 물에 있는지는 확인되지 않았어요. 시 알림과 ODNR은 있는지 없는지를 확인하지 않아요. 경사로가 열려 있어도 선착장이 설치된 것은 아니에요.",
   "pg.qf_motors_hoover": "10 hp, 10 mph 제한. 물가 100 ft 이내는 저속. 보트는 최대 22 ft.",
   "pg.qf_ramps_hoover": "공공 램프 5곳: Oxbow Road, Sunbury Road, Twin Bridges, Red Bank, Walnut Street. Mudflats Boardwalk에서 물가 낚시 가능.",
   "pg.qf_motors_city": "마력 제한 없음, 낮에는 40 mph. 물가와 다리 100 ft 이내는 저속. 보트는 22 ft 이하, 수상 오토바이 금지.",

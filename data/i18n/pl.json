@@ -326,6 +326,7 @@
   "pg.h_7_11": "7:00 do 23:00",
   "pg.h_sun": "od wschodu do zachodu słońca",
   "pg.qf_docks_city": "Miasto podaje sezon pomostów w marinie od 1 maja do 31 października, więc pomosty w marinie są już zamknięte na 2026. Brak jeszcze daty zdjęcia pomostów przy slipach.",
+  "pg.qf_docks_hoover": "Wynajem publicznych pomostów dla łodzi trwa od 1 maja do 31 października, więc sezon wynajmu jest zamknięty. Nie potwierdzono, czy pomosty mariny i pomosty grzecznościowe publicznych slipów są w wodzie. Alerty miasta i ODNR nie potwierdzają, czy są na miejscu, czy nie. Otwarty slip nie znaczy, że pomost jest zainstalowany.",
   "pg.qf_motors_hoover": "Limit 10 hp i 10 mph; minimalna prędkość w odległości 100 ft od brzegu. Łodzie do 22 ft.",
   "pg.qf_ramps_hoover": "Pięć publicznych slipów: Oxbow Road, Sunbury Road, Twin Bridges, Red Bank i Walnut Street. Dostęp z brzegu przy Mudflats Boardwalk.",
   "pg.qf_motors_city": "Moc bez limitu; 40 mph w dzień. Minimalna prędkość w odległości 100 ft od brzegu i mostów. Łodzie do 22 ft, bez skuterów wodnych.",

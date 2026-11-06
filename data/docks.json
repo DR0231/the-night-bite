@@ -1,25 +1,27 @@
 {
-  "_readme": "Dock season status for water.html#docks. Edit here, then run: python3 tools/build-docks.py && python3 tools/stamp-version.py. Status is one of: in, ending, out, unannounced. 'ending' needs 'ends' (YYYY-MM-DD) and flips to 'after' text on the page once that date passes. Never set 'out' without an official source saying so. 'checked' is the date someone last read every source below. tools/check-docks.py watches the 'watch' list.",
+  "_readme": "Dock season status for water.html#docks. Edit here, then run: python3 tools/build-docks.py && python3 tools/stamp-version.py. Status is one of: in, ending, out, unannounced. 'ending' needs 'ends' (YYYY-MM-DD) and flips to 'after' text on the page once that date passes. Never set 'out' without an official source saying so. Hoover only: a 'rental': true item is the public boat dock rental calendar (May 1 to Oct. 31). When that date passes, say the rental season is closed. Do not write it as the marina docks or the public launch courtesy docks being pulled. Physical presence of both stays unconfirmed until a source says otherwise. An open ramp is not a dock. Other waters keep their own items. 'checked' is the date someone last read every source below. tools/check-docks.py watches the 'watch' list.",
   "checked": "2026-11-03",
   "lakes": {
     "hoover": {
       "name": "Hoover",
+      "checked": "2026-11-06",
       "items": [
         {
-          "name": "City marina docks",
+          "name": "Public boat dock rentals",
           "status": "ending",
+          "rental": true,
           "ends": "2026-10-31",
-          "label": "Season ends Oct. 31",
-          "after_label": "Season over",
-          "note": "Columbus Recreation and Parks lists the public dock season at its Griggs, Hoover and O&rsquo;Shaughnessy marinas as May 1 to Oct. 31.",
-          "after_note": "Columbus Recreation and Parks lists the public dock season as May 1 to Oct. 31, so the next season starts May 1.",
+          "label": "Through Oct. 31",
+          "after_label": "Rentals closed",
+          "note": "Columbus lists public boat dock rentals at Hoover from May 1 to Oct. 31. Those dates are the rental season. They are not a report that the docks left the water.",
+          "after_note": "Public boat dock rentals at Hoover ran May 1 to Oct. 31, so the rental season is closed. The rental calendar is not a report of which docks are in the water.",
           "source": "recparks-docks"
         },
         {
-          "name": "Ramp docks",
+          "name": "Marina and courtesy docks",
           "status": "unannounced",
-          "label": "Not announced",
-          "note": "Columbus has not posted a 2026 date for pulling the docks at the public ramps. No closure for Hoover is on the city&rsquo;s alerts page.",
+          "label": "Not confirmed",
+          "note": "Whether the marina docks and the public launch courtesy docks are in the water is unconfirmed. City alerts have no current confirmation of a pull. The lack of an alert is not evidence the docks are in. ODNR says Columbus maintains the docks and does not report whether they are in now. An open ramp does not mean a dock is installed.",
           "source": "recparks-alerts"
         }
       ],

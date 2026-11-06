@@ -7,7 +7,7 @@
       "description": "Hoover Reservoir fishing: live USGS lake level, 10 hp and 10 mph rules, five public ramps, tonight's bite and species. Unofficial.",
       "motors": "10 hp limit and 10 mph; idle speed within 100 ft of shore. Boats 22 ft max.",
       "ramps": "Five public ramps: Oxbow Road, Sunbury Road, Twin Bridges, Red Bank and Walnut Street. Shore access on the Mudflats Boardwalk.",
-      "docks": {"checked": "2026-11-03", "text": "The city lists the marina dock season as May 1 to Oct. 31, so the marina docks are done for 2026. No date posted yet for pulling the ramp docks.", "source": ["Columbus Recreation and Parks, Marinas & Docks", "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"]},
+      "docks": {"checked": "2026-11-06", "text": "Public boat dock rentals run May 1 to Oct. 31, so the rental season is closed. Whether the marina docks and the public launch courtesy docks are in the water is unconfirmed. City alerts and ODNR do not confirm they are in or out. An open ramp does not mean a dock is installed.", "source": ["Columbus Recreation and Parks, Marinas & Docks", "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"]},
       "pool": "Summer pool is 894 ft, the level the ODNR contour map is drawn at.",
       "night": "City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
       "hours": {"authority": "city", "open": "07:00", "close": "23:00", "fishing_after_hours": null, "chip": "City park closes 11 p.m.", "source": ["Columbus Recreation and Parks, Hoover Reservoir", "https://columbusrecparks.com/parks/hoover-reservoir/"], "checked": "2026-11-03"},
