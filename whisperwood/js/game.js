@@ -31,7 +31,7 @@ const UI = {
     if (text.indexOf("Tap Fish to hook") === 0) return "Hook";
     if (!text || text === "Tap Fish to cast") return "Fish";
     if (text.indexOf("Pick") === 0) return "Pick";
-    if (text.indexOf("Talk") === 0) return "Talk";
+    if (text.indexOf("Talk") === 0 || text.indexOf("to talk to ") !== -1) return "Talk";
     if (text.indexOf("Greet") === 0) return "Greet";
     if (text.indexOf("Sit") === 0) return "Sit";
     if (text.indexOf("Stand") === 0) return "Stand";
@@ -595,7 +595,8 @@ const UI = {
       this.els.prompt.classList.add("hidden");
       this.els.prompt.style.bottom = "";
     }
-    if (this.touch()) {
+    const movePad = document.getElementById("move-pad");
+    if (this.touch() || (movePad && movePad.classList.contains("is-touch"))) {
       if (!this._fishBtn) this._fishBtn = document.getElementById("btn-fish");
       if (this._fishBtn) {
         const verb = this.fishVerb(prompt);

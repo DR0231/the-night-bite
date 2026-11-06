@@ -25,10 +25,26 @@ const Npcs = {
   },
 
   try() {
-    const n = this.at(Player.x, Player.y);
+    const n = this.claims();
     if (!n) return false;
     this.talk(n);
     return true;
+  },
+
+  claims() {
+    const n = this.at(Player.x, Player.y);
+    if (!n) return null;
+    if (typeof World === "undefined" || !World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE)) return n;
+    const dx = n.x - Player.x, dy = n.y - Player.y;
+    const ax = Math.abs(dx), ay = Math.abs(dy);
+    const dir = Player.dir;
+    const facing = (dir === 0 && dy > 0 && ay >= ax) || (dir === 3 && dy < 0 && ay >= ax)
+      || (dir === 1 && dx < 0 && ax >= ay) || (dir === 2 && dx > 0 && ax >= ay);
+    const beside = Math.hypot(dx, dy) <= TILE_SIZE && (
+      (dir === 0 && dy >= -4) || (dir === 3 && dy <= 4)
+      || (dir === 1 && dx <= 4) || (dir === 2 && dx >= -4)
+    );
+    return (facing || beside) ? n : null;
   },
 
   /** Heart rating first, then one short line. Never a paragraph. */
@@ -242,9 +258,10 @@ const Npcs = {
   },
 };
 
-/* E does one thing at a time. Cottage, pickups, and people come first; then the
-   nearest of stump / weeds / boat / cooler / sign; fishing only if none of those
-   is in reach. hint() reads the same pick, so the prompt never lies about E. */
+/* E does one thing at a time. Cottage and pickups come first. A person takes E
+   when you face them, stand beside them, or no water is in reach. Then the
+   nearest of stump / weeds / boat / cooler / sign. Fishing only if none of
+   those is in reach. hint() reads the same pick, so the prompt never lies about E. */
 const Interact = {
   try() {
     if (World.id === "cottage" && Cottage.try()) return true;
@@ -269,7 +286,7 @@ const Interact = {
     if (World.id === "cottage") return Cottage.hint();
     const pick = Pickups.near();
     if (pick) return tt(`Press {fish} to pick ${pick}`, `Pick ${pick}`);
-    const n = Npcs.at(Player.x, Player.y);
+    const n = Npcs.claims();
     if (n) return tt(`Press {fish} to talk to ${n.name}`, `Talk to ${n.name}`);
     return "";
   },

@@ -482,7 +482,7 @@ const Fishing = {
     if (this.state === "reel") return "Reeling in…";
     if (this.state === "fail") return "It got away…";
     if (this.state === "catch") return "";
-    if (typeof Npcs !== "undefined" && Npcs.at(Player.x, Player.y)) return "";
+    if (typeof Npcs !== "undefined" && Npcs.claims()) return "";
     // Whatever E would really do wins the prompt; the Fish line only shows when E fishes.
     if (typeof Interact !== "undefined" && (Interact.priorityHint() || Interact.hint())) return "";
     const water = World.nearestWater(Player.x, Player.y, CONFIG.FISH_RANGE);
