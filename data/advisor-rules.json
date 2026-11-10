@@ -1,6 +1,6 @@
 {
     "packId": "ohio-sourced-rules",
-    "version": 2,
+    "version": 3,
     "rules": [
         {
             "ruleId": "channel-catfish-feed",
@@ -34,6 +34,17 @@
             "structure": "flats, windblown riprap, and channel edges",
             "bait": "cut shad or stink bait",
             "sourceNote": "Daily Angler catfish system (summer 70 to 85, stink bait best at 75 and up); The Night Bite species guide (flats and riprap at dusk)"
+        },
+        {
+            "ruleId": "channel-catfish-rising-inflow",
+            "species": "Channel Catfish",
+            "depthMinFt": 5.0,
+            "depthMaxFt": 5.0,
+            "structure": "feeder creek mouths where the water is flowing in",
+            "bait": "shad guts",
+            "sourceNote": "In-Fisherman, Channel Catfish in Reservoirs (Anderson, 2019), guide Stan Liberty: after several inches of rain the lake rose a couple of feet and his creek mouth spot went from its normal 1 ft depth to 5 ft for a day or two, anchored at the mouth on shad guts; point depth rule added in pack version 3",
+            "requiredTrend": "RISING",
+            "minTrendChangeFt": 1.0
         },
         {
             "ruleId": "blue-catfish-winter",
@@ -215,6 +226,28 @@
             "sourceNote": "Don Wirth, Crappie by Degrees guide panel (40 to 45 degree steps)"
         },
         {
+            "ruleId": "crappie-drawdown-fall",
+            "species": "Crappie",
+            "depthMinFt": 10.0,
+            "depthMaxFt": 15.0,
+            "structure": "flats just off the river channel",
+            "bait": "spider rig with a double minnow rig",
+            "sourceNote": "CrappieNOW, Deer Season Crappie (Huffman), guide Tim Howell: lakes in drawdown in November, crappie just off the river channel out in the flats in 10 to 15 ft of water on a spider rigged double minnow rig; Realtree fall drawdown pattern corroborating; temperature free level trend rule added in pack version 3",
+            "requiredTrend": "FALLING",
+            "minTrendChangeFt": 1.0
+        },
+        {
+            "ruleId": "crappie-rising-highwater",
+            "species": "Crappie",
+            "depthMinFt": 8.0,
+            "depthMaxFt": 8.0,
+            "structure": "flooded cover at the old shoreline, bushes and timber",
+            "bait": "jigs fished slowly in the cover, or a slip float and minnow",
+            "sourceNote": "CrappieNOW, Battling High Water (Huffman): crappie near the old shoreline in 8 ft of water, holding 1 to 3 ft under the surface, on slow jigging and slip float minnows; CrappieNOW (Wong) rise tip corroborating; point depth rule added in pack version 3",
+            "requiredTrend": "RISING",
+            "minTrendChangeFt": 1.0
+        },
+        {
             "ruleId": "saugeye-staging",
             "species": "Saugeye",
             "tempMinF": 40.0,
@@ -314,6 +347,28 @@
             "structure": "humps, ledges, drop offs, and weed edges",
             "bait": "deep crankbait, Carolina rig, or dark spinnerbait at night",
             "sourceNote": "Kevin VanDam six season bass table (post-spawn 70 to 75, summer 75 to 90 plus); The Night Bite species guide (weed edges and riprap after dark)"
+        },
+        {
+            "ruleId": "largemouth-rising-flood",
+            "species": "Largemouth Bass",
+            "depthMinFt": 1.5,
+            "depthMaxFt": 2.0,
+            "structure": "flooded brush and cover at the original bank line",
+            "bait": "spinnerbait or shallow crankbait",
+            "sourceNote": "Wired2Fish, The Best Way to Fish Flooded Fisheries for Bass (Browning, Ross Barnett Reservoir): targets the original bank line on a rise, 18 inches to two feet, spinnerbait and shallow crankbait; Bassmaster (Brauer, 3 ft or less on flooded brush) corroborating; temperature free level trend rule added in pack version 3",
+            "requiredTrend": "RISING",
+            "minTrendChangeFt": 1.0
+        },
+        {
+            "ruleId": "largemouth-falling-drawdown",
+            "species": "Largemouth Bass",
+            "depthMinFt": 2.0,
+            "depthMaxFt": 5.0,
+            "structure": "the last cover still in the water, dock fronts and laydown tips on steep banks",
+            "bait": "topwaters, square bills, or a flipped jig",
+            "sourceNote": "Bassmaster, Fishing the winter drawdown, Phase One (water falling): Brian Snowden targets bass in depths of 2 to 5 ft at the last cover still in the water, topwaters, square bills, flipped jig; source says bass without splitting species, filed under Largemouth; temperature free level trend rule added in pack version 3",
+            "requiredTrend": "FALLING",
+            "minTrendChangeFt": 1.0
         },
         {
             "ruleId": "smallmouth-fall",
