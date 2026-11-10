@@ -61,7 +61,7 @@ const UI = {
     return String(s == null ? "" : s).replace(/\{(fish|hook|cast|journal|pack|menu|move)\}/g, (all, key) => name[key]);
   },
   aimLine() {
-    if (this.touch()) return "Drag to aim · Fish to cast · Pack up to stop";
+    if (this.touch()) return "Drag to aim · Fish casts";
     if (document.documentElement.classList.contains("pad-input")) return "Stick aim · A to cast · Start to stop";
     return "WASD aim · E or Fish to cast · Esc or Pack up to stop";
   },
