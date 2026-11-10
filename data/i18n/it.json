@@ -605,6 +605,7 @@
   "pg.log_empty_lake": "Nessuna uscita a {lake} salvata su questo telefono per ora. Tutti i laghi mostra le altre uscite.",
   "pg.log_empty": "Nessuna uscita salvata su questo telefono per ora. Aggiungi la prima qui sotto.",
   "pg.log_backup_note": "Salva un file di backup, poi aprilo su un altro telefono o browser. Le uscite del file si aggiungono a quelle qui; non viene sostituito nulla.",
-  "pg.log_share_note": "Solo nomi pubblici di rampe e zone. Niente GPS segreti, niente proprietà private. Solo note di testo, niente foto. Le uscite inviate attendono una revisione e vengono pubblicate solo dopo l’approvazione."
+  "pg.log_share_note": "Solo nomi pubblici di rampe e zone. Niente GPS segreti, niente proprietà private. Solo note di testo, niente foto. Le uscite inviate attendono una revisione e vengono pubblicate solo dopo l’approvazione.",
+  "pg.temp_c_prov": "({num} °C) · provvisorio"
  }
 }

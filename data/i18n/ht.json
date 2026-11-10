@@ -605,6 +605,7 @@
   "pg.log_empty_lake": "Poko gen okenn sòti {lake} ki sove sou telefòn sa a. Tout lak yo montre lòt sòti ou yo.",
   "pg.log_empty": "Poko gen vwayaj ki anrejistre sou telefòn sa a. Ajoute premye a anba a.",
   "pg.log_backup_note": "Anrejistre yon fichye sovgad, epi louvri l sou yon lòt telefòn oswa navigatè. Vwayaj ki nan fichye a ajoute sou sa ki la yo; anyen pa ranplase.",
-  "pg.log_share_note": "Sèlman non piblik ranp ak zòn. Pa gen GPS sekrè, pa gen pwopriyete prive. Nòt tèks sèlman, pa gen foto. Vwayaj ou voye yo tann revizyon epi yo parèt sèlman lè yo apwouve."
+  "pg.log_share_note": "Sèlman non piblik ranp ak zòn. Pa gen GPS sekrè, pa gen pwopriyete prive. Nòt tèks sèlman, pa gen foto. Vwayaj ou voye yo tann revizyon epi yo parèt sèlman lè yo apwouve.",
+  "pg.temp_c_prov": "({num} °C) · pwovizwa"
  }
 }

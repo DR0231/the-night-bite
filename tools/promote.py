@@ -9,6 +9,8 @@ has said "push" in chat for this promotion. Without that word in chat, run the d
     python3 tools/promote.py --live --confirm-push --whats-new entry.json            # after "push": write live tree
     python3 tools/promote.py --live --confirm-push --whats-new entry.json --commit   # ...and commit (no push)
     python3 tools/promote.py --live --confirm-push --commit --push                  # ...pull --rebase, push (never force)
+    python3 tools/promote.py --small-fix                                            # dry run for a small fix (no What's new entry)
+    python3 tools/promote.py --live --confirm-push --small-fix --commit --push      # small fix: skip only the What's new requirement
     python3 tools/promote.py --live --confirm-push --live-dir /tmp/live-copy        # rehearse on a copy
 
 What it does (the v20/v21 promote steps, generalized):
@@ -24,9 +26,12 @@ What it does (the v20/v21 promote steps, generalized):
   · --whats-new FILE: a JSON entry or a JSON array of entries (id, tag, title, bullets, links; date defaults to today) added at the top of
     live data/updates.json. Then the build order runs in the live tree: build-lake-pages, build-docks, build-meta,
     stamp-version, build-updates.
+  · --small-fix: skip only the What's new entry requirement, for small fixes that get no entry. The VERSION bump
+    check and every other check still apply.
 Checks (real mode refuses, dry run reports and exits 1): a new dated What's new entry in live data/updates.json that
-is not in live HEAD; VERSION newer than live HEAD's; no preview URLs, chip or noindex,nofollow on any page; beacon
-once per page; live-only files and whisperwood/ unchanged; live tree clean before a real run.
+is not in live HEAD (skipped with --small-fix); VERSION newer than live HEAD's; no preview URLs, chip or
+noindex,nofollow on any page; beacon once per page; live-only files and whisperwood/ unchanged; live tree clean
+before a real run.
 Nothing is committed without --commit, nothing pushed without --push, and it never force-pushes. After a push it
 prints the IndexNow command; it does not run it.
 """
@@ -44,6 +49,7 @@ ap.add_argument("--all", action="store_true", help="transform every tracked prev
 ap.add_argument("--live-dir", default="/workspace/the-night-bite", help="live checkout (default /workspace/the-night-bite)")
 ap.add_argument("--version", help='sw.js VERSION for live (default next vN, e.g. "v22-2026-11-01")')
 ap.add_argument("--whats-new", metavar="FILE", help="JSON What's new entry, or a JSON array of entries, to add to live data/updates.json")
+ap.add_argument("--small-fix", action="store_true", help="skip only the What's new entry requirement (small fixes get no entry); the VERSION bump and every other check still apply")
 ap.add_argument("--live", action="store_true", help="REAL MODE: write into --live-dir. Only after D'Angelo said \"push\" in chat")
 ap.add_argument("--confirm-push", action="store_true", help="required with --live: confirms D'Angelo said \"push\" in chat")
 ap.add_argument("--commit", action="store_true", help="real mode: commit the promoted files in the live checkout")
@@ -303,8 +309,8 @@ head_up = json.loads(git(LIVE, "show", "HEAD:data/updates.json"))
 head_ids = {x.get("id") for x in head_up["entries"]}
 now_up = json.loads((T / "data/updates.json").read_text())
 new_entries = [x for x in now_up["entries"] if x.get("id") not in head_ids and x.get("date") and not x.get("draft")]
-if not new_entries:
-    problems.append("no new dated What's new entry in live data/updates.json (pass --whats-new FILE)")
+if not new_entries and not a.small_fix:
+    problems.append("no new dated What's new entry in live data/updates.json (pass --whats-new FILE, or --small-fix)")
 sw_now = re.search(r'var VERSION = "([^"]*)";', (T / "sw.js").read_text()).group(1)
 if not (vnum(sw_now) and vnum(old_ver) and vnum(sw_now) > vnum(old_ver)):
     problems.append(f"sw.js VERSION {sw_now} is not newer than live {old_ver}")
@@ -379,6 +385,8 @@ for n_ in notes:
     print("  note: " + n_)
 if new_entries:
     print("  What's new: " + "; ".join(f"{x['id']} ({x['date']}) {x['title']}" for x in new_entries))
+elif a.small_fix:
+    print("  What's new: skipped (--small-fix)")
 if tmp:
     shutil.rmtree(tmp)
 if problems:
@@ -386,14 +394,19 @@ if problems:
     for p_ in problems:
         print("  ! " + p_)
     sys.exit(1)
-print("checks: OK (new What's new entry, VERSION bumped, no preview leftovers, beacon once per page, live-only files untouched)")
+wn_ok = "What's new skipped (--small-fix)" if (a.small_fix and not new_entries) else "new What's new entry"
+print(f"checks: OK ({wn_ok}, VERSION bumped, no preview leftovers, beacon once per page, live-only files untouched)")
 if not REAL:
-    print('real mode, ONLY after D\'Angelo says "push" in chat: add --live --confirm-push' + (f" --whats-new {a.whats_new}" if a.whats_new else " --whats-new FILE"))
+    extra = f" --whats-new {a.whats_new}" if a.whats_new else (" --small-fix" if a.small_fix else " --whats-new FILE")
+    print('real mode, ONLY after D\'Angelo says "push" in chat: add --live --confirm-push' + extra)
     sys.exit(0)
 
 if a.commit:
-    title = new_entries[0]["title"]
-    msg = (f"Promote preview {base[:7] + '..' if base else ''}{ref[:7]} to live: What's new '{title}'; privacy and updates copy, "
+    if new_entries:
+        lead = f"What's new '{new_entries[0]["title"]}'"
+    else:
+        lead = "small fix (no What's new entry)"
+    msg = (f"Promote preview {base[:7] + '..' if base else ''}{ref[:7]} to live: {lead}; privacy and updates copy, "
            f"beacon, CSP, CNAME and IndexNow key kept; SW {sw_now}")
     git(LIVE, "add", "-A")
     git(LIVE, *GIT_ID, "commit", "-q", "-m", msg)

@@ -605,6 +605,7 @@
   "pg.log_empty_lake": "Na tym telefonie nie ma jeszcze zapisanych wypraw na {lake}. Wszystkie jeziora pokazuje pozostałe wyprawy.",
   "pg.log_empty": "Na tym telefonie nie ma jeszcze zapisanych wypraw. Dodaj pierwszą poniżej.",
   "pg.log_backup_note": "Zapisz plik kopii zapasowej, a potem otwórz go na nowym telefonie lub w przeglądarce. Wyprawy z pliku dołączają do tych tutaj; nic nie zostaje zastąpione.",
-  "pg.log_share_note": "Tylko publiczne nazwy slipów i miejsc. Żadnego tajnego GPS, żadnej własności prywatnej. Tylko notatki tekstowe, bez zdjęć. Wysłane wyprawy czekają na sprawdzenie i pojawiają się dopiero po zatwierdzeniu."
+  "pg.log_share_note": "Tylko publiczne nazwy slipów i miejsc. Żadnego tajnego GPS, żadnej własności prywatnej. Tylko notatki tekstowe, bez zdjęć. Wysłane wyprawy czekają na sprawdzenie i pojawiają się dopiero po zatwierdzeniu.",
+  "pg.temp_c_prov": "({num} °C) · tymczasowe"
  }
 }

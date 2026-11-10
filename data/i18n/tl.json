@@ -605,6 +605,7 @@
   "pg.log_empty_lake": "Wala pang naka-save na biyahe sa {lake} sa teleponong ito. Ipinapakita ng Lahat ng lawa ang iba mong biyahe.",
   "pg.log_empty": "Wala pang naka-save na biyahe sa teleponong ito. Idagdag ang una mo sa ibaba.",
   "pg.log_backup_note": "Mag-save ng backup file, saka buksan ito sa bagong telepono o browser. Idinadagdag ang mga biyahe sa file sa mga nandito; walang napapalitan.",
-  "pg.log_share_note": "Pampublikong pangalan lang ng rampa at lugar. Walang lihim na GPS, walang pribadong lupa. Mga text note lang, walang larawan. Hinihintay munang ma-review ang mga naipadalang biyahe at lalabas lang kapag naaprubahan."
+  "pg.log_share_note": "Pampublikong pangalan lang ng rampa at lugar. Walang lihim na GPS, walang pribadong lupa. Mga text note lang, walang larawan. Hinihintay munang ma-review ang mga naipadalang biyahe at lalabas lang kapag naaprubahan.",
+  "pg.temp_c_prov": "({num} °C) · pansamantala"
  }
 }

@@ -605,6 +605,7 @@
   "pg.log_empty_lake": "Chưa có chuyến đi {lake} nào được lưu trên điện thoại này. Tất cả các hồ hiển thị các chuyến khác của bạn.",
   "pg.log_empty": "Chưa có chuyến câu nào được lưu trên điện thoại này. Thêm chuyến đầu tiên ở bên dưới.",
   "pg.log_backup_note": "Lưu một tệp sao lưu, rồi mở nó trên điện thoại hoặc trình duyệt mới. Các chuyến trong tệp được thêm vào các chuyến ở đây; không có gì bị thay thế.",
-  "pg.log_share_note": "Chỉ dùng tên bến hạ thuyền và khu vực công cộng. Không GPS bí mật, không đất tư. Chỉ ghi chú bằng chữ, không ảnh. Chuyến đã gửi sẽ chờ duyệt và chỉ được đăng khi đã duyệt."
+  "pg.log_share_note": "Chỉ dùng tên bến hạ thuyền và khu vực công cộng. Không GPS bí mật, không đất tư. Chỉ ghi chú bằng chữ, không ảnh. Chuyến đã gửi sẽ chờ duyệt và chỉ được đăng khi đã duyệt.",
+  "pg.temp_c_prov": "({num} °C) · tạm thời"
  }
 }

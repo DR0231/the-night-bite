@@ -605,6 +605,7 @@
   "pg.log_empty_lake": "Ainda não há saídas em {lake} salvas neste celular. Todos os lagos mostra suas outras saídas.",
   "pg.log_empty": "Ainda não há pescarias salvas neste telefone. Adicione a primeira abaixo.",
   "pg.log_backup_note": "Salve um arquivo de backup e abra-o em outro telefone ou navegador. As pescarias do arquivo se somam às daqui; nada é substituído.",
-  "pg.log_share_note": "Só nomes públicos de rampas e áreas. Nada de GPS secreto nem propriedade privada. Só notas em texto, sem fotos. As pescarias enviadas aguardam revisão e só são publicadas depois de aprovadas."
+  "pg.log_share_note": "Só nomes públicos de rampas e áreas. Nada de GPS secreto nem propriedade privada. Só notas em texto, sem fotos. As pescarias enviadas aguardam revisão e só são publicadas depois de aprovadas.",
+  "pg.temp_c_prov": "({num} °C) · provisório"
  }
 }
