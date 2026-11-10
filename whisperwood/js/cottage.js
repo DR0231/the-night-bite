@@ -1051,7 +1051,7 @@ const Shop = {
         const needFish = FISH.find((f) => f.id === (rod.requireFish || it.requireFish));
         const feel = rod.tension > 1.2 ? "tension" : "timing";
         const own = have ? " (owned)" : " · " + feel;
-        return `<button type="button" data-buy="${esc(it.kind)}:${esc(it.id)}" ${have ? "disabled" : ""}>${esc(rod.name)} — ${esc(price)}c + a ${esc(needFish ? needFish.name : it.requireFish)}${esc(own)}</button>`;
+        return `<button type="button" data-buy="${esc(it.kind)}:${esc(it.id)}" ${have ? "disabled" : ""}>Rod · ${esc(rod.name)} — ${esc(price)}c + a ${esc(needFish ? needFish.name : it.requireFish)}${esc(own)}</button>`;
       }
       if (it.kind === "item") {
         const have = it.id !== "campfireKit" && (Save.data.inventory.items[it.id] | 0) > 0;
@@ -1072,16 +1072,18 @@ const Shop = {
       return `<button type="button" data-buy="upgrade:tank" ${have ? "disabled" : ""}>${esc(it.name)} — donate a ${esc(donate ? donate.name : it.requireFish)}${esc(done)}</button>`;
     }).join("");
     const sellable = FISH.filter((f) => Save.countLoose(f.id) > 0);
-    const sell = sellable.map((f) => {
+    const sellButtons = sellable.map((f) => {
       const n = Save.countLoose(f.id);
       const oldest = Save.oldestLoose(f.id);
       const price = oldest ? Save.sellPrice(oldest) : f.sell;
       const soft = oldest && Save.freshness(oldest) === "soft";
       return `<button type="button" data-sell="${esc(f.id)}">Sell ${esc(f.name)} (${esc(price)}c)${soft ? " (soft)" : ""} ×${esc(n)}</button>`;
-    }).join("") || "<p>Nothing to sell.</p>";
+    }).join("");
+    const sell = sellable.length ? `<button type="button" data-sell-all>Sell all fish</button>${sellButtons}` : "<p>Nothing to sell.</p>";
     el.innerHTML = `<p>${esc(Inventory.coins())} coins</p><div class="shop-cols"><div>${buy}</div><div>${sell}</div></div>`;
     el.querySelectorAll("[data-buy]").forEach((b) => b.addEventListener("click", () => this.buy(b.dataset.buy)));
     el.querySelectorAll("[data-sell]").forEach((b) => b.addEventListener("click", () => this.sell(b.dataset.sell)));
+    el.querySelectorAll("[data-sell-all]").forEach((b) => b.addEventListener("click", () => this.sellAll()));
   },
 
   buy(token) {
@@ -1153,6 +1155,23 @@ const Shop = {
     const unit = Save.takeOldestLoose(id);
     if (!unit) return;
     Inventory.addCoins(Save.sellPrice(unit));
+    Save.syncCaught();
+    try { AudioFX.coin(); } catch (err) { /* cue optional */ }
+    Save.mark("sell");
+    this.refresh();
+  },
+
+  sellAll() {
+    const ids = FISH.filter((f) => Save.countLoose(f.id) > 0).map((f) => f.id);
+    let sold = false;
+    for (const id of ids) {
+      let unit;
+      while ((unit = Save.takeOldestLoose(id))) {
+        Inventory.addCoins(Save.sellPrice(unit));
+        sold = true;
+      }
+    }
+    if (!sold) return;
     Save.syncCaught();
     try { AudioFX.coin(); } catch (err) { /* cue optional */ }
     Save.mark("sell");
