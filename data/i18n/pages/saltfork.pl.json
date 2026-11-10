@@ -33,6 +33,7 @@
   "saltfork.39ba5e3c": "lub cieplej niż",
   "saltfork.3b007e30": "Nocne wędkowanie bywa niebezpieczne w burzę, upał i przy słabej widoczności. Załóż kamizelkę ratunkową, gdy trzeba.",
   "saltfork.3dc63132": "Zamknij mapę",
+  "saltfork.3f359c5c": "Salt Fork trafia do ogólnostanowych 5 dziennie, minimum 12″ (",
   "saltfork.4024c72d": "· nie ODNR / miasto / USGS",
   "saltfork.40354734": "Stuknij „Zainstaluj aplikację” lub „Dodaj do ekranu głównego”.",
   "saltfork.432ef711": ", od 13 do",
@@ -48,6 +49,7 @@
   "saltfork.54828f47": "letnim poziomie (izobaty co 5 ft, pomiar z 1998). Jeśli poziom jest niższy, woda jest płytsza niż na mapie.",
   "saltfork.5610f4f5": "Legenda mapy",
   "saltfork.56a1fc16": "Muskie, saugeye, crappie, bass, white bass: sezon, miejsca, limity, sprzęt.",
+  "saltfork.56c8d0ec": "Nadchodzi zmiana zasad gry na basie.",
   "saltfork.56f508b5": ", zmiana w ciągu ostatnich 3 godzin na",
   "saltfork.5aaa995d": "). Przed kąpielą sprawdź ostrzeżenia w BeachGuard stanu Ohio.",
   "saltfork.5af92387": "Park stanowy jest otwarty od 6:00 do 23:00; ODNR pozwala na zwykłą rekreację, np. wędkowanie, poza tymi godzinami. Źródło:",
@@ -55,6 +57,7 @@
   "saltfork.67377df5": ", z oznaczonymi strefami prędkości i nart wodnych (",
   "saltfork.6df2b200": "Branie to własna, orientacyjna zasada tej strony, a nie nauka o wędkarstwie ani prognoza. Sumuje punkty z odczytów, które już są na tej stronie.",
   "saltfork.6e6b02b1": "Używasz aplikacji. Otwarte strony działają nawet bez zasięgu.",
+  "saltfork.70158bea": "Komunikat prasowy ODNR",
   "saltfork.716520d0": ", szybko spada",
   "saltfork.7321b4ce": "Stuknij Dodaj.",
   "saltfork.74875b11": "lub powyżej",
@@ -68,9 +71,11 @@
   "saltfork.86df14bd": ", powyżej 18 mph",
   "saltfork.88c5e801": "Mapa wędkarska ODNR @ 800, slipy przy przystaniach, strefy prędkości, brak publicznego wodowskazu.",
   "saltfork.8ae9ad38": "Wiatr jeszcze nie wczytany",
+  "saltfork.8ea1575d": "). Crappie pobyt na poziomie 30 dziennie, minimum 9″.",
   "saltfork.90468774": "Publiczny slip",
   "saltfork.93e91965": "stacji NWS przy jeziorze",
   "saltfork.93ef0dd8": "Na",
+  "saltfork.960aa84d": "porzucić tę zasadę; z",
   "saltfork.96bb7bdb": "ikonę Udostępnij",
   "saltfork.97f2142c": "iPhone",
   "saltfork.9b03b878": "Przeglądarka zapyta przed dodaniem.",
@@ -86,6 +91,7 @@
   "saltfork.b2f53719": "inHg lub więcej.",
   "saltfork.b83bf8c4": "Przeglądaj gatunki",
   "saltfork.bafd8678": "Bez limitu mocy, z oznaczonymi strefami prędkości i nart wodnych.",
+  "saltfork.bbd50a1e": "Nieoficjalne centrum rybackie w Ohio z atmosferą nocnego doku: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, zbiornik Nimisila, Jezioro Cowan Lake, Acton Lake Tappan Lake Piedmont Lake, Clendening Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, jezioro Wingfoot Lake East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake i Wellington Upground Reservoir Nimisila Reservoir",
   "saltfork.bc7737d0": "Strefy prędkości i nart wodnych · 4 bass dziennie, z podziałem na rozmiary · licencja od 16 lat.",
   "saltfork.bfa17ff0": "Strony gatunków z przypomnieniami o limitach według przepisów ODNR 2026–27",
   "saltfork.c0908888": "Jeden przykładowy wpis w dzienniku, oznaczony",
@@ -111,6 +117,6 @@
   "saltfork.f82eb2f1": "AM lub PM",
   "saltfork.f928db34": "Brak publicznego wodowskazu poziomu jeziora",
   "saltfork.f9bb7357": "Anuluj przypomnienie",
-  "saltfork.fa4885e0": "Nieoficjalny wędkarski serwis Ohio z klimatem nocnego pomostu: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton i Leesville Lake"
+  "saltfork.fa4234f2": "Dzisiaj w Salt Fork są 4 basy dziennie: nie więcej niż 2 poniżej 15″ i 2 w wieku 15″ lub więcej (2026, 27 zasad). Rada Przyrody Ohio głosowała za przyjęciem tej uchwały"
  }
 }

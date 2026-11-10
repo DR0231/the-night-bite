@@ -18,6 +18,7 @@
   "deercreek.134e9305": "गरज",
   "deercreek.13f453a4": "गाड़ी से लगने वाला समय मोटा अंदाज़ा है।",
   "deercreek.1405c071": "Deer Creek Lake का रूपरेखा मैप, जिसमें सार्वजनिक बोट रैंप और चारे की दुकानों के पिन हैं। हर पिन नीचे एक बटन है।",
+  "deercreek.1787f361": ", बहिर्प्रवाह लेबल किया गया। USACE इसे हर घंटे पोस्ट करता है। यह झील की सतह का तापमान नहीं है, और काटने की रेटिंग इसका उपयोग नहीं करती है।",
   "deercreek.1928f95c": "Android",
   "deercreek.19d18626": "रिमाइंडर का समय",
   "deercreek.1b742647": "बाँध के नीचे, किनारे से पहुँच",
@@ -28,6 +29,7 @@
   "deercreek.205a22bf": "सूरज और चाँद के समय आपके फ़ोन पर निकाले जाते हैं, US Naval Observatory से कुछ मिनटों के अंतर में।",
   "deercreek.22a689af": "(810.5 − पूल)",
   "deercreek.23a72ab2": "या जब Install बटन दिखे, उस पर टैप करें।",
+  "deercreek.240d6c73": "पानी का तापमान कोर बहिर्वाह रीडिंग है",
   "deercreek.27e90dfa": "पर",
   "deercreek.2d7eeba9": "खोलें",
   "deercreek.37b80ed5": "Safari में टैप करें",
@@ -49,6 +51,7 @@
   "deercreek.51a97c82": "ब्राउज़र में खेलें",
   "deercreek.51cbb35c": "शेयर।",
   "deercreek.5370c168": "(तीन बिंदु)",
+  "deercreek.53aeedc7": "USACE डियर क्रीक परियोजना पृष्ठ",
   "deercreek.546d378a": ", इस झील के USGS गेज से, जहाँ वह बताता है।",
   "deercreek.5610f4f5": "मैप की कुंजी",
   "deercreek.56f508b5": ", पिछले 3 घंटों का बदलाव, यहाँ:",
@@ -82,7 +85,6 @@
   "deercreek.a39224a8": "ODNR, Winter Drawdowns",
   "deercreek.a4a6d123": "इस फ़ोन पर सूचना दें",
   "deercreek.a63ba107": "मिनट, 5 मिनट के क़दम",
-  "deercreek.a7cdf779": "झील पर (Corps सिर्फ़ बाँध के नीचे बहाव का तापमान बताता है), इसलिए तापमान वाली जगह n/a दिखाती है। कुछ भी अनुमान से नहीं भरा गया।",
   "deercreek.a7fa610c": "लॉग खोलें",
   "deercreek.a8d4cf97": "। स्थिर का मतलब है इतने के भीतर:",
   "deercreek.a968dd29": "Corps का Deer Creek Lake पेज",
@@ -91,6 +93,7 @@
   "deercreek.b57ddad9": "1 अक्टूबर से 30 नवंबर तक (दोबारा भरना 1 अप्रैल से 15 मई तक), Corps तय करता है, और बताता है कि स्तर 20 ft तक बदल सकता है।",
   "deercreek.b700736b": "Corps of Engineers गेज",
   "deercreek.b83bf8c4": "मछलियाँ देखें",
+  "deercreek.bbd50a1e": "नाइट-डॉक वातावरण के साथ अनौपचारिक ओहियो मछली पकड़ने का केंद्र: Hoover, Alum Creek, Buckeye Lake, ओ'शॉघनेसी, Griggs, Indian Lake, Delaware Lake Madison Lake Deer Creek Lake Salt Fork Lake, मैडिसन झील, Knox Lake Dillon Lake क्लियर Mosquito Creek Lake Clear Fork Reservoir, Seneca Lake, Lake Milton Lake Logan West Branch Reservoir Leesville Lake, Caesar Creek Lake Pymatuning Lake Dow Lake Burr Oak Lake Berlin Lake Rocky Fork Lake Grand Lake St. Marys LaDue Reservoir, Paint Creek Lake, East Fork Lake झील, CJ Brown Reservoir Acton Lake, Tappan Lake Portage Lakes Charles Mill Lake Mogadore Reservoir, प्लेज़ेंट हिल Lake Loramie, Beach City Lake Nimisila Reservoir Cowan Lake Atwood Lake, ईस्ट Piedmont Lake East Branch Reservoir, Clendening Lake Guilford Lake, Pleasant Hill Lake Highlandtown Lake, Punderson Lake और Wellington Upground Reservoir Wingfoot Lake",
   "deercreek.bfa17ff0": "ODNR 2026–27 नियमों से सीमा याद दिलाने वाले मछलियों के पेज",
   "deercreek.c0908888": "लॉग की एक उदाहरण एंट्री, जिस पर निशान है",
   "deercreek.c1266ad5": ", इससे ठंडा",
@@ -114,9 +117,7 @@
   "deercreek.ef095ca1": ", बीच का कुछ भी",
   "deercreek.f132d7dd": "रैंप और",
   "deercreek.f264bcbd": "(ODNR)। तैरने से पहले चेतावनियों के लिए Ohio का BeachGuard देखें।",
-  "deercreek.f2eb9a7b": "पानी के तापमान का कोई सार्वजनिक गेज नहीं",
   "deercreek.f82eb2f1": "AM या PM",
-  "deercreek.f9bb7357": "रिमाइंडर रद्द करें",
-  "deercreek.fa4885e0": "रात के घाट वाले माहौल के साथ अनौपचारिक Ohio फ़िशिंग हब: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton और Leesville Lake"
+  "deercreek.f9bb7357": "रिमाइंडर रद्द करें"
  }
 }

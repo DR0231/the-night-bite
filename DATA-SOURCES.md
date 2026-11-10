@@ -17,7 +17,7 @@ Checked 2026-10-22 (ET). Only details confirmed by a source below are shown on t
   - Pressure, last 3 hours at KCMH: falling slowly (0.02 to 0.06 inHg) +2, steady +1, rising slowly 0, falling fast 0, rising fast -1.
   - Wind, average sustained NWS hourly speed over tonight's window: under 3 mph 0, 3 to 12 mph +1, 13 to 18 mph 0, over 18 mph -2.
   - Moon: new or full (the principal phase falls tonight, or under 10% or over 90% lit) +1.
-  - Water temp from USGS 03228400 when the gauge sends one: 55 to 80 F +1, 45 to 54 or 81 to 86 F 0, colder or warmer -1. Water temp alone never makes a rating; pressure or wind must be known.
+  - Water temp from USGS 03228400 when the gauge sends one (lake surface gauges only; a Corps outflow temperature, as at Alum Creek and Deer Creek Lake, is shown labelled outflow and never counts here): 55 to 80 F +1, 45 to 54 or 81 to 86 F 0, colder or warmer -1. Water temp alone never makes a rating; pressure or wind must be known.
   - 4 or more is Good, 2 or 3 is Fair, 1 or less is Tough. Thunder in tonight's window always makes it Tough.
   - Every number above lives in one `RULES` object in js/conditions.js (also `window.NightBiteBiteRules`). Each lake home's "How the bite is rated" box (`#bite-how`, under the bite line; the glance Bite cell links to it) prints the same numbers, and tools/check-glance.cjs fails if any differ or an input is missing. With JS on, the box adds what each input gave tonight and which readings were missing. The station name is the lake's own NWS station; water temp only where the lake's USGS gauge reports it. No new inputs, no estimates.
 - Sunset, last light (end of civil twilight, Sun 6 degrees down), moonrise and moonset: computed in the browser (js/astro.js, port of SunCalc by Vladimir Agafonkin, BSD 2-Clause, with the Moon's position from the Meeus main terms and the standard parallax corrected rise and set altitude). Checked against the US Naval Observatory (aa.usno.navy.mil rstt/oneday) at 40.11 N 82.88 W for 2026-10-24, 10-25, 10-28, 11-02 and 11-10: sunset and last light within 2 minutes, moonrise and moonset within 2 minutes.
@@ -36,6 +36,12 @@ Checked 2026-10-22 (ET). Only details confirmed by a source below are shown on t
 - If both fail: the saved offline reading, then "unavailable, check USGS".
 - Parity check, Oct. 27, 2026: Hoover 62614 890.60 ft and 00010 18.0 C, Buckeye 62614 891.45 ft, same in both APIs; 7 day series had the same point counts (Hoover 167, Buckeye 667).
 - `window.NightBiteUsgsVia` shows which API answered last ("ogcapi" or "waterservices").
+
+## Hoover depth contours (tools/build-odnr-contours.py)
+- Static ODNR-only map, rebuilt Nov. 5, 2026 under ODNR GIS Administrator Joe Wells's written Hoover permission. Real 10, 20, 30, 40, 50 and 60 ft contours from retained `data/odnr/hoover/bathymetry.geojson`; shoreline from retained `lake-background.geojson`. No intermediate depths or contours are invented. Survey 2001, map revision 2010, normal summer pool 894 ft.
+- Roads, small contour labels, Galena, Westerville, the dam, north arrow, access/facility symbols and stream channels are redrawn from the official ODNR fishing-map PDF: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf . The PDF and its extracted stream vectors are retained under `data/odnr/hoover/` for offline rebuilding.
+- Named ramp markers are Oxbow Road, Sunbury Road, Twin Bridges, Red Bank and Walnut Street. Names and coordinates come from `js/hoover-map-data.js` and the official City of Columbus map sources in the table below. The scale bar is calculated from the ODNR PDF's printed UTM NAD83 Zone 17 grid.
+- The public page loads only the self-hosted SVG/WebP; it makes no ODNR map or PDF requests. The SVG is self-contained and opens on demand; the WebP is in the offline cache.
 
 ## Map pins (js/hoover-map-data.js)
 Map art: the same traced outline as assets/hoover-chart.png (trace of a Google Maps screenshot, web mercator, north up). The trace was georeferenced to the OpenStreetMap Hoover Reservoir polygon (relation 241088, IoU 0.89), and each pin is the real lat/lng projected through that fit. Ramps within 2.5 map pixels of the traced shore are snapped onto it; Oxbow sits in a cove the trace filled in, so it keeps its true position.
@@ -80,7 +86,7 @@ Hoover stays the default. The active lake comes from `?lake=hoover|alum|buckeye`
 | Setting | Alum Creek Lake | Buckeye Lake |
 |---|---|---|
 | Lake level | US Army Corps of Engineers, Huntington District (LRH), CWMS Data API time series `AlumCr-Lake.Elev.Inst.15Minutes.0.OBS`, https://cwms-data.usace.army.mil/cwms-data/timeseries (public, CORS open, provisional). Page: https://water.usace.army.mil/overview/lrh/locations/alumcr . There is no USGS gauge on the lake. | USGS 395540082291600, Buckeye Lake, param 62614 (lake elevation, provisional), https://waterdata.usgs.gov/monitoring-location/USGS-395540082291600/ |
-| Water temp | None. No public lake temp gauge (the Corps temp sensor is in the outflow below the dam), so the site says "No public water temp gauge". | None. The USGS gauge measures level only. |
+| Water temp | USACE outflow water temperature, LRH CWMS time series `AlumCr-Outflow.Temp-Water.Inst.1Hour.0.OBS` (hourly, asked for with `unit=EN`, so F; a C series would be converted). Project page: https://water.usace.army.mil/office/lrh/project/alumcr (checked Nov. 9, 2026: 59.7 F at 3:00 p.m. ET). Labelled "outflow" on the pool card, the glance strip and the lake facts; never shown as lake surface temperature and never used by the bite rating. No lake surface temperature is posted. | None. The USGS gauge measures level only. |
 | Map pool (contour datum) | 888 ft normal summer pool, 5 ft contours, surveyed 2001, 3,330 acres: ODNR fishing map https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/alumcreeklake2.pdf | 891.75 ft normal summer pool, 2 ft contours, surveyed 1998, 2,873 acres, 300 ft no wake zone: ODNR fishing map https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf |
 | Tonight forecast | NWS grid ILN 85,94 (https://api.weather.gov/points/40.24,-82.97) | NWS grid ILN 103,81 (https://api.weather.gov/points/39.93,-82.49) |
 | Barometer / observations | KDLZ, Delaware airport (sea level pressure is null there, so the existing fallback to station pressure is used) | KVTA, Newark airport (same fallback) |
@@ -111,7 +117,7 @@ Map pins (`js/lake-map-data-alum.js`, `js/lake-map-data-buckeye.js`, built by a 
 What's biting now and species "Where" notes for these lakes (`js/biting-data-lakes.js`, species pages): ODNR lake pages above; Outdoor News, Jan 27, 2026, https://www.outdoornews.com/2026/01/27/alum-creeks-big-water-worth-the-angling-effort-in-delaware-county-ohio/ (coves north of the Cheshire Road bridge); Mount Vernon News, Mar 29, 2025, https://mountvernonnews.com/central-ohio-spring-fishing-forecast-buckeye-lake-alum-creek-knox-lake-and-pleasant-hill-lake (Buckeye warms first, crappie and saugeye in under 2 ft; Alum smallmouth move up early); Best Fishing in America lake guides (https://www.bestfishinginamerica.com/ohio-alum-creek-lake-fishing.html, https://www.bestfishinginamerica.com/ohio-buckeye-lake-fishing.html), used for typical structure only. Typical patterns, not a fishing report.
 
 Gaps (said on the site, never filled in):
-- No public water temperature for either lake.
+- No public lake surface temperature for either lake. Alum Creek shows the Corps outflow temperature instead, always labelled outflow.
 - Alum Creek's lake level is the Corps of Engineers reading, not USGS; values are provisional.
 - Ramp lighting, restrooms and shop hours are not shown unless a source says so.
 - No community trips logged at either lake yet; the sample trip is Hoover's.
@@ -180,7 +186,7 @@ Same system as the other lakes: `?lake=deercreek|madison|knox|clearfork`, home p
 |---|---|---|---|---|
 | Owner (boating rules) | US Army Corps of Engineers dam (finished 1968); ODNR runs the state park and fishing area | ODNR Ohio State Parks | ODNR Division of Wildlife | City of Mansfield water supply lake (finished 1949) |
 | Lake level | USACE Huntington District (LRH), CWMS time series `DeerCr-Lake.Elev.Inst.15Minutes.0.OBS`. Page: https://water.usace.army.mil/overview/lrh/locations/deercr | None (no public gauge) | None (the USGS Kokosing River gauge is on the river, not the lake) | None (no public gauge) |
-| Water temp | None. The Corps posts an outflow temperature only. | None | None | None |
+| Water temp | USACE outflow water temperature, LRH CWMS time series `DeerCr-Outflow.Temp-Water.Inst.1Hour.0.OBS` (hourly, `unit=EN`). Project page: https://water.usace.army.mil/office/lrh/project/deercr (checked Nov. 9, 2026: 52.54 F at 3:00 p.m. ET). Labelled "outflow"; never lake surface temperature, never in the bite rating. | None | None | None |
 | Full pool used | 810.5 ft, ODNR fishing map | 965 ft, ODNR fishing map | 1,100 ft, ODNR fishing map | 1,202 ft, ODNR fishing map (the City lists the spillway at 1202) |
 | Map pool (contour datum) | 810.5 ft, 5 ft contours, surveyed 1999, 1,301 acres, 17.9 mi shoreline: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/deercreeklake2.pdf | 965 ft, 2 ft contours, surveyed 2006, 98 acres: .../wildlife/maps/madisonlake2.pdf | 1,100 ft, 3 ft contours, surveyed 2003, 476 acres: .../wildlife/maps/knoxlake2.pdf | 1,202 ft, 3 ft contours, surveyed 1999, 1,033 acres: .../wildlife/maps/clearforkreservoir2.pdf |
 | Tonight forecast | NWS grid ILN 78,65 | NWS grid ILN 72,76 | NWS grid CLE 60,17 | NWS grid CLE 55,26 |
@@ -212,7 +218,7 @@ Map pins (`js/lake-map-data-deercreek.js`, `-madison.js`, `-knox.js`, `-clearfor
 No bait shop pins for these four: no official source was used for shops.
 
 Gaps (said on the site, never filled in):
-- No public lake level or water temperature at Madison Lake, Knox Lake or Clear Fork Reservoir; no public water temperature at Deer Creek Lake.
+- No public lake level or water temperature at Madison Lake, Knox Lake or Clear Fork Reservoir; no lake surface temperature at Deer Creek Lake (the site shows the Corps outflow temperature, labelled outflow).
 - Deer Creek Lake's level is the Corps of Engineers reading; values are provisional. It is drawn down in the fall, so fall readings sit below full pool.
 - No ODNR stocking or survey PDFs for these four on the Stocking page beyond the dashboard numbers above.
 - No ice reports, no 2026 dock pull dates, and no community trips logged at these lakes yet.
@@ -329,6 +335,121 @@ Gaps (said on the site, never filled in):
 - No 2023 walleye stocking listed at Pymatuning or West Branch. No northern pike species page.
 - Berlin's ODNR survey PDFs are linked, not copied. No ODNR ice reports, and no community trips logged at these lakes yet.
 
+## Lakes: Grand Lake St. Marys, Caesar Creek Lake and East Fork Lake, checked Nov. 9, 2026
+
+Same system as the other lakes: `?lake=grandlakestmarys|caesarcreek|eastfork`, home pages at `/grandlakestmarys/`, `/caesarcreek/`, `/eastfork/` (built by `tools/build-lake-pages.py`), per lake settings in `js/lakes.js`. Grand Lake St. Marys is region `northwest` ("West central Ohio"); Caesar Creek and East Fork are region `southwest` ("Southwest Ohio"). All three have a USGS lake gauge. None has a public lake surface temperature gauge. East Fork shows the Corps outflow temperature, labelled outflow; Caesar Creek names the Corps temperature profile with its date. Neither feeds the bite rating.
+
+| Setting | Grand Lake St. Marys | Caesar Creek Lake | East Fork Lake (William H. Harsha Lake) |
+|---|---|---|---|
+| Lake level | USGS 403204084342601, parameter 62614: https://waterdata.usgs.gov/monitoring-location/USGS-403204084342601/ | USGS 03242340, parameter 62614: https://waterdata.usgs.gov/monitoring-location/USGS-03242340/ | USGS 03247040, parameter 62614: https://waterdata.usgs.gov/monitoring-location/USGS-03247040/ |
+| Water temp | None. The site says "No public temperature gauge on this water" | No live temperature. USACE Louisville District temperature profile, latest Oct. 19, 2026: https://www.lrl-wc.usace.army.mil/reports/wq/CCK.html (named with its date, never shown as live). The unlabeled daily CWMS series CaesarCreek.Temp-Water.Inst.~1Day.0.lrldlb-raw is not used | USACE outflow temperature, every 15 minutes, CWMS LRL WHHarshaTW.Temp-Water.Inst.15Minutes.0.USGS-raw: https://cwms-data.usace.army.mil/cwms-data/timeseries?office=LRL&name=WHHarshaTW.Temp-Water.Inst.15Minutes.0.USGS-raw (65.66 F at 3:00 p.m. ET Nov. 9, 2026). Labelled outflow, not lake surface. The Corps profile (latest Oct. 16, 2026, https://www.lrl-wc.usace.army.mil/reports/wq/EFR.html) is named on the pool card |
+| Full pool used | 871 ft, ODNR fishing map | 849 ft, ODNR fishing map (Corps winter pool 846 ft) | 733 ft summer pool, ODNR fishing map (winter pool 729 ft) |
+| Map pool (contour datum) | 871 ft: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/grandlakestmarys2.pdf | 849 ft: .../caesarcreeklake2.pdf | 733 ft: .../eastforklake2.pdf |
+| Tonight forecast | NWS grid ILN 31,102 | NWS grid ILN 52,59 | NWS grid ILN 49,35 |
+| Barometer / observations | KAXV, Neil Armstrong airport | KGDK, Xenia airport | KI69, Batavia airport |
+| Alerts | OHC107, OHZ034 | OHC165, OHZ071 | OHC025, OHZ078 |
+| Boating rules shown | ODNR Grand Lake St. Marys State Park and Fishing Area: unlimited hp, no wake within 300 ft of shore, the state wildlife refuge on the southwest corner closed to boats | ODNR Caesar Creek State Park and Reservoir Fishing Area: unlimited hp | ODNR East Fork State Park and Lake Fishing Area: no hp limit, two of eight ramps hand powered only |
+
+Regulations (2026–27, ODNR Fishing Regulations PDF): crappie 30 a day, 9″ minimum at all three. Grand Lake St. Marys trotlines only in the area bounded by Prairie Creek, Big Chickasaw Creek and the buoy line. No paddlefish may be taken in Caesar Creek Lake or East Fork Lake or within 2,000 ft of either lake and dam. Muskellunge: 1 a day statewide, no minimum.
+
+ODNR Fish Stocking dashboard (https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking, read Nov. 9, 2026), 2016 to 2025: Grand Lake St. Marys yellow perch most years (2025: 397,834 fingerlings), triploid saugeye in 2025 (214,403 fingerlings plus fry) and channel catfish in 2017 (15,898); Caesar Creek saugeye every year (2025: 2,984,565 fry), muskellunge every year (2025: 1,828 advanced fingerlings), blue catfish 2018 to 2022 and 2024 (2024: 14,739) and rainbow trout in 2025; East Fork hybrid striped bass every year (2025: 1,150,000 fry), saugeye every year since 2018 (2025: 212,290), blue catfish every year since 2022 (2025: 21,091) and muskellunge only in 2016 (not listed as stocked on the site).
+
+Map pins (`js/lake-map-data-grandlakestmarys.js`, `-caesarcreek.js`, `-eastfork.js`; shorelines traced from OpenStreetMap, not for navigation): ramp names, roads and coordinates from the ODNR Watercraft boating facilities layer (gis.ohiodnr.gov FacilityGuide), checked against each ODNR state park and fishing area page. Grand Lake St. Marys: seven state ramps plus the City of Celina (Mercelina Park) and Village of Montezuma ramps. Caesar Creek: Wellman Meadows, Furnas Shores, North Pool, Campground and Haines (Young Rd). East Fork: North Shore (with fishing pier), Campground, Slade Road, Tate, Reisinger and Tunnel Mill. The chart mark is the state park marina ramp (Grand Lake St. Marys) or the dam (Caesar Creek Dam and William H. Harsha Dam, Corps CWMS locations).
+
+Bait nearby (`data/bait-shops.json`): each shop's Google Maps listing was open with recent reviews on Nov. 9, 2026. Drive times are OSRM estimates rounded to 5 minutes. Caesar Creek's are measured from the state park marina, because the lake's center point gave times that did not match the roads.
+
+Gaps (said on the site, never filled in):
+- No lake surface water temperature at any of the three. East Fork's is an outflow reading; Caesar Creek's profile is dated, not live.
+- Hand launches not pinned: Caesar Creek's North Pool hand launch and East Fork's two hand powered ramps.
+- ODNR's Grand Lake St. Marys park page says eight ramps; the fishing area page and boating layer list seven state ramps.
+- No ODNR ice reports, and no community trips logged at these lakes yet.
+
+## Lakes: Tier B batch 2, checked Nov. 9, 2026
+
+Ten more lakes, same system: `?lake=cjbrown|rockyfork|ladue|paintcreek|portagelakes|mogadore|loramie|nimisila|cowan|acton`, home pages at `/<id>/` (built by `tools/build-lake-pages.py`), per lake settings in `js/lakes.js`. Regions: `southwest` ("Southwest Ohio") for C.J. Brown, Rocky Fork, Paint Creek, Cowan and Acton; `northeast` ("Northeast Ohio") for LaDue, the Portage Lakes, Mogadore and Nimisila; `northwest` ("West central Ohio") for Lake Loramie. Verification records: build notes progress.md, "Tier B batch 2".
+
+| Lake | Lake level | Water temp | Map pool (contour datum) | Rules shown (ODNR pages, 2026–27 booklet, OAC) | Forecast, observations, alerts |
+|---|---|---|---|---|---|
+| C.J. Brown Reservoir | USGS 03268090, parameter 62614 (NGVD29): https://waterdata.usgs.gov/monitoring-location/USGS-03268090/ | No live temperature. USACE Louisville District temperature profile, latest Oct. 7, 2026: https://www.lrl-wc.usace.army.mil/reports/wq/CBR.html (named with its date, never shown as live, never in the bite rating). The unlabeled daily CWMS series is not used; USGS 03268100 (Buck Creek below the dam) is a stream gauge and is not used | 1,012 ft, 5 ft contours, surveyed 1998: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/cjbrownreservoir2.pdf | Unlimited hp; walleye, saugeye and sauger 6 a day, 15″ minimum | NWS grid ILN 60,79; observations Springfield airport (KSGH); alerts OHC023, OHZ053 |
+| Rocky Fork Lake | None (USGS 391111083263200 was a 1975 water quality site) | None | 880 ft, 3 ft contours, 1997: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/rockyforklake2.pdf | Unlimited hp; crappie 30 a day, 9″ | NWS grid ILN 71,45; observations Wilmington airport (KILN); alerts OHC071, OHZ080 |
+| LaDue Reservoir | None (USGS 04201900 posts no data) | None | 1,127 ft, 3 ft contours, 1999: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/laduereservoir2.pdf | Electric only; no bank fishing within 500 ft of the Black Brook and Bridge Creek dams (OAC 1501:31-13-07); walleye 15″ | NWS grid CLE 100,61; observations Cleveland Burke Lakefront airport (KBKL); alerts OHC055, OHZ013 |
+| Paint Creek Lake | USACE Huntington District CWMS `PaintCr-Lake.Elev.Inst.15Minutes.0.OBS` (USGS 03232460 posts no data). Page: https://water.usace.army.mil/office/lrh/project/paintcr | USACE outflow temperature, hourly, CWMS LRH `PaintCr-Outflow.Temp-Water.Inst.1Hour.0.OBS` (56.28 F at 7:00 p.m. ET Nov. 9, 2026). Labelled outflow, never lake surface, never in the bite rating | 798 ft, 5 ft contours, 1999: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/paintcreeklake2.pdf (Corps rule curve 798 ft summer, 787.5 ft winter) | Unlimited hp; crappie 30 a day, 9″; bass 4 a day, 2 under 15″ and 2 at 15″ or longer; no paddlefish in or within 2,000 ft of the lake and dam | NWS grid ILN 74,49; observations Washington Court House airport (KI23); alerts OHC071, OHZ080 |
+| Portage Lakes | None (USGS 405747081321700 was a 1977 water quality site; the Long Lake feeder gauge is on the canal, not used) | None | No pool elevation printed; surveyed 2004: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/portagelakes2.pdf | 400 hp, no wake except parts of Turkeyfoot Lake and East Reservoir on the posted schedule; crappie 30 a day, 9″ on East, North, Turkeyfoot and West; Long Lake bass 3 a day, none from 14″ to 20″, 1 at 20″ or longer (OAC 1501:31-13-09) | NWS grid CLE 91,42; observations Akron Fulton airport (KAKR); alerts OHC153, OHZ021 |
+| Mogadore Reservoir | None (USGS 04203990 posts no data) | None | 1,090 ft, 3 ft contours, 2009: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mogadorereservoir2.pdf | Electric only; no bank fishing within 500 ft of the dam, on bridges, or in the Ranfield Rd, Congress Lake Rd and SR 43 rights of way (OAC 1501:31-13-07) | NWS grid CLE 97,46; observations Akron Fulton airport (KAKR); alerts OHC133, OHZ022 |
+| Lake Loramie | USGS 03261800, parameter 62615 (NAVD88): https://waterdata.usgs.gov/monitoring-location/USGS-03261800/ . The ODNR map names no datum, so the difference from 955 ft is approximate. USGS 03261990 is the Loramie Creek retarding basin and is not used | None | 955 ft, 2 ft contours, 2006: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakeloramie2.pdf | No hp limit, no wake except the west end speed zone, no skiing or tubing; crappie 30 a day, 9″ | NWS grid ILN 38,96; observations Wapakoneta airport (KAXV); alerts OHC149, OHZ043 |
+| Nimisila Reservoir | None (USGS 03116400 posts no data). ODNR Portage Lakes State Park notice (11/03/26): being temporarily lowered while engineers study the dams; no target level given | None | 871 ft, 5 ft contours, 2004: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/nimisilalake2.pdf | Electric only; statewide limits | NWS grid CLE 92,40; observations Akron Canton airport (KCAK); alerts OHC153, OHZ021 |
+| Cowan Lake | None (USGS 03243800 has one 1980 sample). ODNR: drawn down 13.5 ft from Nov. 1, 2026 for dam work, construction early 2027 to spring 2028, refill target summer 2028 | None | 960 ft, 5 ft contours, 1999: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/cowanlake2.pdf | 10 hp; bass 5 a day, 15″ | NWS grid ILN 56,53; observations Wilmington airport (KILN); alerts OHC027, OHZ072 |
+| Acton Lake | None (USGS 03272450 posts no data) | None | 863 ft, 3 ft contours, 1999: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/actonlake2.pdf | Any motor, over 10 hp at no wake; bass 4 a day, 2 under 15″ and 2 at 15″ or longer | NWS grid ILN 26,59; observations Oxford airport (KOXD); alerts OHC135, OHZ060 |
+
+ODNR Fish Stocking dashboard (https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking, read Nov. 9, 2026), 2016 to 2025: C.J. Brown walleye every year (2025: 294,704 fingerlings) and muskellunge since 2018 (2025: 1,152 advanced fingerlings); Rocky Fork saugeye every year (2025: 261,205) and rainbow trout 2016 to 2019; LaDue walleye most years (2025: 172,562) and channel catfish every other year; Paint Creek saugeye every year (2025: 118,054); Turkeyfoot Lake (Portage Lakes) channel catfish every other year (2025: 5,700); Mogadore channel catfish every other year (2025: 10,009); Lake Loramie saugeye every year (2025: 87,656) and channel catfish most years to 2023; Nimisila channel catfish every other year (2024: 5,039 yearlings) and walleye 2016 to 2018; Cowan saugeye every year (2025: 104,229) and channel catfish 2020; Acton saugeye every year (2025: 89,006). The dashboard also lists East, West and North Reservoir and Long Lake rows with no county; those are not used.
+
+Map pins (`js/lake-map-data-<id>.js`; shorelines traced from OpenStreetMap, not for navigation): ramp names, roads and coordinates from the ODNR Watercraft boating facilities layer (gis.ohiodnr.gov), checked against each ODNR state park and fishing area page. The Portage Lakes and Mogadore maps join several OpenStreetMap water areas.
+
+Bait nearby (`data/bait-shops.json`): each shop's Google Maps listing was open with recent reviews on Nov. 9, 2026. Drive times are OSRM estimates from a main ramp, rounded to 5 minutes.
+
+Gaps (said on the site, never filled in):
+- No lake surface water temperature at any of the ten. Paint Creek's is an outflow reading; C.J. Brown's profile is dated, not live.
+- No public lake level at Rocky Fork, LaDue, the Portage Lakes, Mogadore, Nimisila, Cowan or Acton.
+- Portage Lakes: the ODNR map prints no pool elevation, so there is no contour correction; only Turkeyfoot Lake stocking is shown.
+- Nimisila: Summit Metro Parks' own page was not checked; ODNR's page says park land management moved to Summit Metroparks in 2015.
+- Acton: ODNR's Hueston Woods page posts no park hours, so no hours chip. LaDue, Mogadore and Nimisila: no hours posted.
+- No ODNR ice reports, and no community trips logged at these lakes yet.
+
+## Lakes: MWCD batch, checked Nov. 9, 2026
+
+Seven Muskingum Watershed Conservancy District lakes, same system: `?lake=tappan|piedmont|clendening|atwood|charlesmill|pleasanthill|beachcity`, home pages at `/<id>/`, per lake settings in `js/lakes.js`. Regions: `southeast` ("East central Ohio") for Tappan, Piedmont and Clendening; `northeast` ("East central Ohio") for Atwood and Beach City; `central` ("Central Ohio") for Charles Mill and Pleasant Hill. Verification records: build notes progress.md, "Verification records, MWCD batch".
+
+Common sources: MWCD Rules and Regulations (https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf): rule 1.13 (MWCD areas closed 11 p.m. to 6 a.m. except to people fishing, hunting or boating), rule 3.3 (horsepower). MWCD Winter Drawdown Schedule of Oct. 29, 2026 (https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/); partial refills by Mar. 15, 2027; Beach City is not on it. MWCD's lake levels page points to USACE Huntington District (https://water.usace.army.mil/office/lrh/basin/mus). The Corps rule curve winter minimums at Piedmont (905 ft) and Pleasant Hill (1,014 ft) differ from MWCD's winter levels; the pages use MWCD's. USGS 62614 (NGVD29) equals the CWMS reading at all four USGS lakes and the ODNR map pools equal MWCD's normal pools, so there is no datum mismatch. The 2026–27 rules are shown as in force; changes the Ohio Wildlife Council approved Oct. 28, 2026 (effective Mar. 1, 2027) are not written into these pages.
+
+| Lake | Lake level | Water temp | Map pool (contour datum) | Rules shown (MWCD rules, 2026–27 booklet, OAC) | Forecast, observations, alerts |
+|---|---|---|---|---|---|
+| Tappan Lake | USGS 03128000, parameter 62614 (NGVD29): https://waterdata.usgs.gov/monitoring-location/USGS-03128000/ | None (no USGS 00010, no USACE Temp-Water series) | 899.3 ft, 3 ft contours, 1998: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/tappanlake2.pdf | 399 hp; crappie 30 a day, 9″; trotlines only above the gas line causeway and SR 646; drawdown Nov. 15, 899.3 to 894.3 ft | NWS grid PBZ 37,57; observations Harry Clever Field (KPHD); alerts OHC067, OHZ049 |
+| Piedmont Lake | USGS 03125500, parameter 62614 (NGVD29): https://waterdata.usgs.gov/monitoring-location/USGS-03125500/ | None | 913 ft, 3 ft contours, 1998: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/piedmontlake2.pdf | 10 hp; crappie 30 a day, 9″; trotlines only in sections 11 and 12 of Kirkwood Township; drawdown Nov. 1, 913 to 908 ft | NWS grid PBZ 38,49; observations KPHD; alerts OHC013, OHZ059 |
+| Clendening Lake | USGS 03126500, parameter 62614 (NGVD29): https://waterdata.usgs.gov/monitoring-location/USGS-03126500/ | None | 898 ft, 5 ft contours, 2004: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/clendeninglake2.pdf | 10 hp; trotlines only east of SR 799; drawdown Nov. 15, 898 to 893 ft | NWS grid PBZ 36,54; observations KPHD; alerts OHC067, OHZ049 |
+| Atwood Lake | USGS 03121000, parameter 62614 (NGVD29): https://waterdata.usgs.gov/monitoring-location/USGS-03121000/ | None | 928 ft, 3 ft contours, 1999: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/atwoodlake2.pdf | 25 hp; trotlines only north and east of SR 542 at Dellroy; drawdown Nov. 8, 928 to 920 ft | NWS grid PBZ 34,66; observations KPHD; alerts OHC019, OHZ040 |
+| Charles Mill Lake | USACE Huntington District CWMS `CharlesMill-Lake.Elev.Inst.15Minutes.0.OBS` (USGS 03129500 posts no data) | None | 997 ft, 3 ft contours, 2021: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/charlesmilllake2.pdf | 10 hp, electric only on Sites Lake; trotlines only north of SR 430; drawdown Nov. 1, 997 to 992 ft | NWS grid CLE 63,30; observations Mansfield airport (KMFD); alerts OHC005, OHZ030 |
+| Pleasant Hill Lake | USACE CWMS `PleasantHill-Lake.Elev.Inst.15Minutes.0.OBS` (USGS 03133000 posts no data) | None | 1,020 ft, 3 ft contours, 2019: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pleasanthillreservoir2.pdf | Unlimited hp (MWCD; not in rule 3.3); crappie 30 a day, 9″; drawdown Nov. 15, 1,020 to 1,012 ft | NWS grid CLE 65,24; observations KMFD; alerts OHC139, OHZ029 |
+| Beach City Lake | USACE CWMS `BeachCity-Lake.Elev.Inst.15Minutes.0.OBS` (USGS 03123500 posts no data) | None | No ODNR fishing page or contour map. MWCD conservation (normal) pool 948 ft (https://www.mwcd.org/places/beach-city-lake/). ODNR Beach City Wildlife Area map: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/wildlife-area-maps/beachcity.pdf (its ramp symbol is out of date) | 10 hp; no public ramp (MWCD, USACE https://www.lrd.usace.army.mil/Submit-ArticleCS/Recreation/Article/3632236/beach-city-lake/); statewide limits; not on the drawdown schedule | NWS grid PBZ 23,69; observations KPHD; alerts OHC157, OHZ039 |
+
+ODNR Fish Stocking dashboard (read Nov. 9, 2026), 2016 to 2025: Tappan saugeye every year (2025: 341,199); Piedmont muskellunge (2025: 1,510) and saugeye (2025: 356,689) every year; Clendening saugeye every year (2025: 171,308) and blue catfish in 2016 to 2019, 2021, 2023 and 2025 (2025: 17,047); Atwood saugeye every year (2025: 234,488), blue catfish 2023 to 2025 (2025: 15,800) and channel catfish 2020; Charles Mill (dashboard name CHARLES MILL RESERVOIR) saugeye every year (2025: 135,674) and hybrid striped bass 2016 to 2020 and 2022 to 2025 (2025: 22,665); Pleasant Hill saugeye every year (2025: 117,484) and catchable channel catfish 2016 to 2018 and 2021 to 2023; Beach City no rows. Species lists: ODNR Waterbody Report and ODNR pages; Beach City from the ODNR wildlife area map.
+
+Map pins: ramp names, roads and coordinates from the ODNR Watercraft boating facilities layer (gis.ohiodnr.gov), checked against MWCD lake pages. Beach City has one pin, the dam day use area (USACE). Shorelines traced from OpenStreetMap, not for navigation.
+
+Bait nearby (`data/bait-shops.json`): each shop's Google Maps listing was open with recent reviews on Nov. 9, 2026. No shop confirmed near Beach City.
+
+Gaps (said on the site, never filled in):
+- No lake surface water temperature at any of the seven.
+- Beach City: no ODNR fishing page, no contour map, no ramp, no stocking rows, no bait shop confirmed.
+- ODNR's Tappan, Clendening, Atwood and Charles Mill pages post no species list; the Waterbody Report and stocking are used instead.
+- No ODNR ice reports, and no community trips logged at these lakes yet.
+
+## Lakes: Tier C batch 1, Northeast Ohio, checked Nov. 10, 2026
+
+Six more lakes, same system: `?lake=wingfoot|eastbranch|guilford|highlandtown|punderson|wellington`, home pages at `/<id>/`, per lake settings in `js/lakes.js`, region `northeast` ("Northeast Ohio"). Verification records: build notes progress.md, "Verification records, Tier C batch 1".
+
+Common sources: ODNR fishing area, wildlife area and state park pages; ODNR lake maps; ODNR GIS (DOW_LakeFishing layer 20 for acres and shoreline, DOW_LakeHPRestrictions, DOW_Facilities, Watercraft boating facilities); OAC 1501:47-5-03 (boating on DOW waters) and OAC 1501:31-13-07, -08 and -09 (2026–27 fishing rules, in force). The March 1, 2027 bass changes are linked to the ODNR news release (https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/ohios-spring-2027-turkey-hunting-seasons-updated-bass-fishing-regulations-approved-by-wildlife-council). USGS site service: no active lake gauge at any of the six (only sampling sites). USACE CWMS: none of the six is a Corps lake (the LRP "EastBranch" location is East Branch Clarion River Lake in Pennsylvania).
+
+| Lake | Lake level | Water temp | Map pool (contours) | Rules shown | Forecast, observations, alerts |
+|---|---|---|---|---|---|
+| Wingfoot Lake | None | None | 1,162 ft, 3 ft contours, 2009: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wingfootlake2.pdf | Any motor, idle speed, no wake (OAC 1501:47-5-03(E)); bass 3 a day, 14″ to 20″ slot until Mar. 1, 2027 | NWS grid CLE 97,44; observations KAKR; alerts OHC133, OHZ022 |
+| East Branch Reservoir | None | None | No ODNR fishing page or contour map. City of Akron water supply; Headwaters Park run by Geauga Park District (https://www.geaugaparkdistrict.org/) | Electric only (OAC 1501:47-5-03(B)), 1.5 hp or less at the Headwaters Park launch (Geauga Park District); statewide limits; Geauga Park District hours 6 a.m. to 11 p.m. | NWS grid CLE 104,68; observations Ashtabula airport (KHZY); alerts OHC055, OHZ013 |
+| Guilford Lake | None | None | 1,090 ft, 3 ft contours, 2008: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/guilfordlake2.pdf; ODNR acreage 361 (park page 396) | 10 hp; bass 3 a day, 14″ to 20″ slot until Mar. 1, 2027; dam rehabilitation drawdown about 20 ft (ODNR update Nov. 3, 2026) | NWS grid PBZ 45,79; observations Beaver Falls, Pa. airport (KBVI); alerts OHC029, OHZ041 |
+| Highlandtown Lake | None | None | 1,070 ft, 3 ft contours, 2008: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/highlandtownlake2.pdf | 10 hp (OAC 1501:47-5-03(C); ODNR's HP map layer says electric only); bass 4 a day, 2 under 15″ and 2 15″ or longer until Mar. 1, 2027 | NWS grid PBZ 50,72; observations KBVI; alerts OHC029, OHZ041 |
+| Punderson Lake | None | None | 1,144 ft, 5 ft contours, 2009: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pundersonlake2.pdf; 80 acres | Electric only (ODNR); statewide limits | NWS grid CLE 100,65; observations KBKL; alerts OHC055, OHZ013 |
+| Wellington Upground Reservoir | None | None | 885 ft, 3 ft contours, 2012: https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wellingtonupgroundreservoir.pdf | Electric only (OAC 1501:47-5-03(A)); sunrise to sunset access; statewide bass (the 15″ rule is for Wellington South Reservoir, a separate 26.5 acre water in ODNR GIS) | NWS grid CLE 66,48; observations Lorain / Elyria airport (KLPR); alerts OHC093, OHZ010 |
+
+ODNR Fish Stocking dashboard (read Nov. 10, 2026), 2016 to 2025: Wingfoot channel catfish 2016, 2022, 2024; Guilford hybrid striped bass 2016, 2018, 2019, 2020, 2022, 2023, channel catfish 2016, 2018, 2020; Highlandtown channel catfish 2016, 2020; Punderson bluegill 2025, channel catfish 2017, 2019, 2021, 2023, 2025, rainbow trout 2016, 2017, 2018, 2019, 2020, 2021, 2022, brown trout 2016; Wellington Upground yellow perch 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2024, 2025, channel catfish 2016, 2018, 2020, 2022, 2024. East Branch has no stocking rows; Wellington Reservoir South is a separate water and not shown.
+
+Map pins: ramp names and coordinates from the ODNR Watercraft boating facilities and DOW_Facilities layers (gis.ohiodnr.gov), checked against ODNR park and wildlife area maps; East Branch's Headwaters Park launch from Geauga Park District. Wingfoot's northwest launch (Farr Ln, ODNR wildlife area map) is named in the text, not pinned. Shorelines traced from OpenStreetMap, not for navigation.
+
+Bait nearby (`data/bait-shops.json`): each shop's Google Maps listing was open with recent reviews on Nov. 10, 2026. Punderson has no shop confirmed; ODNR says the park camp store sells bait.
+
+Gaps (said on the site, never filled in):
+- No public lake level or water temperature at any of the six.
+- East Branch: no ODNR fishing page, contour map, stocking rows or survey list beyond largemouth bass.
+- Guilford depths are far below the map until the dam refill (ODNR expects spring 2027).
+- No ODNR ice reports, and no community trips logged at these lakes yet.
+
 ## Lake-aware Species (js/species-lake.js)
 
 Which species live at each lake: the `species` list for each lake in `js/lakes.js` (the script also rewrites
@@ -357,23 +478,14 @@ from the NWS forecast with its "Checked" time) and prints "--" for anything miss
 
 Built from `data/docks.json` by `tools/build-docks.py` (then `tools/stamp-version.py`). `js/docks.js` flips an
 "ending" line to its after text once the date passes in Columbus, and flags a check older than 14 days. No fetches.
-Hoover's rental item is the exception: after Oct. 31 the line says the rental season is closed, and it refuses
-wording that the docks were pulled.
 
-- Hoover, rechecked Nov. 6, 2026: Columbus Recreation and Parks, Marinas & Docks lists public boat dock rentals
-  from May 1 to Oct. 31 (dock office 614-645-3337). That is the rental calendar. It is not a notice that the marina
-  docks or the public launch courtesy docks were pulled.
-  https://columbusrecparks.com/facilities/rentals/marinas-and-docks/ . Facility Alerts had no current Hoover dock
-  confirmation on Nov. 6. No alert is not evidence the docks are in.
+- Hoover: Columbus Recreation and Parks, Marinas & Docks: public dock season May 1 to Oct. 31 at the Griggs, Hoover
+  and O'Shaughnessy marinas, dock office 614-645-3337.
+  https://columbusrecparks.com/facilities/rentals/marinas-and-docks/ . Facility Alerts (no Hoover item on Oct. 28):
   https://columbusrecparks.com/facilities/alerts/ . Hoover Reservoir Parkland (Watershed Management 614-645-1721):
-  https://columbusrecparks.com/parks/hoover-reservoir-parkland/ . ODNR's Hoover Reservoir Fishing Area page says
-  Columbus maintains the docks. It does not say they are in now.
-  https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area . An open ramp does not
-  mean a dock is installed. Physical presence of both the marina docks and the public launch courtesy docks is
-  unconfirmed. No on-the-water look has been made. Last year, news only, and not current presence: The Westerville
-  News, Nov. 1, 2025, "The final sailboats were removed from Hoover Reservoir's city docks Friday" (Oct. 31, 2025):
-  https://www.thewestervillenews.com/p/summer-ends-when-boats-leave-hoover . Griggs and O'Shaughnessy keep their own
-  dock lines.
+  https://columbusrecparks.com/parks/hoover-reservoir-parkland/ . Last year, news only: The Westerville News, Nov. 1,
+  2025, "The final sailboats were removed from Hoover Reservoir's city docks Friday" (Oct. 31, 2025):
+  https://www.thewestervillenews.com/p/summer-ends-when-boats-leave-hoover . No ramp dock pull date is posted.
 - Alum Creek: ODNR Alum Creek State Park (office 740-548-4631, dock lottery), Alum Creek Marina docking page
   (12 transient slips, max 4 days; April and October hours Sat. and Sun. only, 9 am to 6 pm; 740-548-6056).
   https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park and https://www.alumcreekmarina.net/docking.html
@@ -384,7 +496,7 @@ wording that the docks were pulled.
   control (Corps of Engineers); Buckeye Lake 3 ft, 11/15/25 to 12/15/25, refill 03/01/26 to 05/01/26, dock maintenance,
   seawall repair, shoreline maintenance.
   https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns
-- Alum Creek and Buckeye Lake: no 2026 dock pull date was posted when those pages were checked Oct. 28, 2026. Hoover is the Nov. 6 note above: rental season closed, physical presence unconfirmed.
+- No 2026 dock pull dates are posted for any of the three on Oct. 28, 2026.
 - Watching: `python3 tools/check-docks.py` reads every page in the `watch` list of `data/docks.json` and compares
   the dock, ramp, closure and drawdown sentences with `tools/docks-watch-state.json`. Last line `RESULT: CHANGED n`
   means read the +/- lines and the page, update `data/docks.json` (and `checked`), rebuild, then rerun with
@@ -451,3 +563,13 @@ Hours per lake in data/quick-facts.json "hours", each with its source link.
 * MWCD (Seneca, Leesville): MWCD Rules and Regulations rule 1.13, https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf (no one present 11 p.m. to 6 a.m. except people fishing, hunting, boating or other legitimate recreation, or going to or from it).
 * Clearfork: Mansfield Codified Ordinances chapter 971 (no parking dark to dawn outside camping areas); no clock time, so no countdown.
 * No official hours: Knox Lake (ODNR Knox Lake Fishing Area page lists none) and Berlin Lake (ODNR Berlin Lake Fishing Area page lists none, only 10 mph at night). No chip.
+
+## Fishing rule changes from March 1, 2027, checked Nov. 9, 2026
+
+The 2026–27 rules stay on the site as the rules in force. Each change is shown as a dated "from March 1, 2027" note next to the current rule, linked to the ODNR news release.
+
+* Source: ODNR news release, Oct. 29, 2026, "Ohio's Spring 2027 Turkey Hunting Seasons, Updated Bass Fishing Regulations Approved by Wildlife Council" (https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/ohios-spring-2027-turkey-hunting-seasons-updated-bass-fishing-regulations-approved-by-wildlife-council). The Ohio Wildlife Council approved the change on Oct. 28, 2026; effective March 1, 2027.
+* Which waters: the filed redlines of OAC 1501:31-13-08 and 1501:31-13-09 (ACTION: Original, Aug. 31, 2026): https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/proposed-rules-csi-docs/2026/summer-fall/1501_31-13-08-Rule-OF.pdf and https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/proposed-rules-csi-docs/2026/summer-fall/1501_31-13-09-Rule-OF.pdf. Current text: https://codes.ohio.gov/ohio-administrative-code/rule-1501:31-13-08 and rule-1501:31-13-09.
+* Bass rules struck, so these go to the statewide 5 a day, 12″ minimum: Acton, Paint Creek and Salt Fork (13-08(O) 4 a day split); Long Lake in the Portage Lakes (13-08(P) and 13-09(I) slot); Cowan and Seneca (13-09(C) 15″ minimum); Knox (13-09(D) 18″ minimum); Burr Oak and Dow (13-09(G) 12″ to 15″ slot).
+* Crappie: Hoover is struck from the 30 a day list (13-08(L)) and the 9″ list (13-09(H)), so it follows the statewide crappie rule (no daily limit, no minimum). Every other 30 and 9 water on the site stays on both lists, including Paint Creek, Salt Fork, Seneca and the Portage Lakes' East, North, Turkeyfoot and West.
+* Fixed at the same time: the crappie species pages and the gear crappie line had shown the 30 a day, 9″ rule for Griggs, Madison, Knox, Clear Fork, Lake Logan, Burr Oak and Dow, which are not on 13-08(L) or 13-09(H); the bass species pages had listed Knox, Seneca, Salt Fork, Burr Oak and Dow under the statewide bass rule. Both now match the 2026–27 rules.

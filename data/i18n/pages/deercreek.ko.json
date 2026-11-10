@@ -18,6 +18,7 @@
   "deercreek.134e9305": "천둥",
   "deercreek.13f453a4": "운전 시간은 대략적이에요.",
   "deercreek.1405c071": "공공 보트 선착장과 미끼 가게 핀이 있는 Deer Creek Lake 윤곽 지도. 각 핀은 아래에 버튼으로도 있어요.",
+  "deercreek.1787f361": ", 유출로 표시됨. USACE 매 시간마다 게시합니다. 호수 표면 온도가 아니며 바이트 등급은 사용하지 않습니다.",
   "deercreek.1928f95c": "Android",
   "deercreek.19d18626": "알림 시간",
   "deercreek.1b742647": "댐 아래, 물가 접근로",
@@ -28,6 +29,7 @@
   "deercreek.205a22bf": "해와 달 시간은 휴대폰에서 계산하며, US Naval Observatory와 몇 분 이내로 맞아요.",
   "deercreek.22a689af": "(810.5 − 수위)",
   "deercreek.23a72ab2": "또는 설치 버튼이 보이면 탭하세요.",
+  "deercreek.240d6c73": "수온은 군단 유출량 수치입니다.",
   "deercreek.27e90dfa": "위치:",
   "deercreek.2d7eeba9": "열기:",
   "deercreek.37b80ed5": "Safari에서",
@@ -49,6 +51,7 @@
   "deercreek.51a97c82": "브라우저에서 플레이",
   "deercreek.51cbb35c": "공유를 탭하세요.",
   "deercreek.5370c168": "(점 세 개)",
+  "deercreek.53aeedc7": "USACE 디어 크릭 프로젝트 페이지",
   "deercreek.546d378a": ", 보고하는 USGS 수위계가 있으면 이 호수의 수위계 기준.",
   "deercreek.5610f4f5": "지도 범례",
   "deercreek.56f508b5": ", 최근 3시간 동안의 변화, 측정 위치:",
@@ -82,7 +85,6 @@
   "deercreek.a39224a8": "ODNR, Winter Drawdowns",
   "deercreek.a4a6d123": "이 휴대폰으로 알림 받기",
   "deercreek.a63ba107": "분, 5분 단위",
-  "deercreek.a7cdf779": "가 호수에 없어서(Corps는 댐 아래 방류 수온만 게시) 수온 칸은 n/a로 표시돼요. 추정한 값은 없어요.",
   "deercreek.a7fa610c": "기록 열기",
   "deercreek.a8d4cf97": ". 안정은 다음 이내:",
   "deercreek.a968dd29": "Corps Deer Creek Lake 페이지",
@@ -91,6 +93,7 @@
   "deercreek.b57ddad9": ", 10월 1일 ~ 11월 30일(재충수 4월 1일 ~ 5월 15일), Corps가 정하며 수위가 최대 20 ft까지 변할 수 있다고 해요.",
   "deercreek.b700736b": "Corps of Engineers 수위계",
   "deercreek.b83bf8c4": "어종 둘러보기",
+  "deercreek.bbd50a1e": "야간 부두 분위기를 지닌 비공식 오하이오 낚시 중심지: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Grand Lake St. Marys Leesville Lake, Caesar Creek Lake 호수, East Fork Lake, CJ Brown Reservoir 저수지, Rocky Fork Lake LaDue Reservoir, Paint Creek Lake, Portage Lakes Mogadore Reservoir, 로라미 호수, Lake Loramie, Nimisila Reservoir, Cowan Lake, Tappan Lake Acton Lake, Piedmont Lake 호수, 클렌 Clendening Lake, Atwood Lake, Charles Mill Lake 호수, Pleasant Hill Lake 호수, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake 및 Wellington Upground Reservoir",
   "deercreek.bfa17ff0": "ODNR 2026–27 규정의 한도 안내가 담긴 어종 페이지",
   "deercreek.c0908888": "예시 기록 하나, 표시:",
   "deercreek.c1266ad5": ", 다음보다 차가움:",
@@ -114,9 +117,7 @@
   "deercreek.ef095ca1": ", 그 사이 값은",
   "deercreek.f132d7dd": "선착장과",
   "deercreek.f264bcbd": "(ODNR). 수영하기 전에 Ohio BeachGuard에서 주의보를 확인하세요.",
-  "deercreek.f2eb9a7b": "공공 수온 측정기 없음",
   "deercreek.f82eb2f1": "오전 또는 오후",
-  "deercreek.f9bb7357": "알림 취소",
-  "deercreek.fa4885e0": "밤 선착장 분위기의 비공식 Ohio 낚시 허브: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake"
+  "deercreek.f9bb7357": "알림 취소"
  }
 }

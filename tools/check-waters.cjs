@@ -72,7 +72,7 @@ const PAGES = IDS.flatMap(l => [home(l), ...['water', 'stocking', 'gear', 'ice',
       const lake = p.split('?lake=')[1] || p.replace('/', '');
       const d = await page.evaluate(() => {
         const vis = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
-        const imgs = [...document.images].filter(vis).map(i => ({ src: i.currentSrc || i.src, ok: i.complete && i.naturalWidth > 0, alt: i.hasAttribute('alt') }));
+        const imgs = [...document.images].filter(vis).map(i => ({ src: i.currentSrc || i.src, ok: (i.complete && i.naturalWidth > 0), alt: i.hasAttribute('alt') }));
         const svgBad = [...document.querySelectorAll('svg[role=img]')].filter(s => !s.getAttribute('aria-label') && !s.querySelector('title')).length;
         return { ov: document.documentElement.scrollWidth - window.innerWidth, lake: document.documentElement.dataset.lake, imgs, svgBad };
       }).catch(e => ({ ov: 99, imgs: [], err: e.message }));
@@ -90,10 +90,11 @@ const PAGES = IDS.flatMap(l => [home(l), ...['water', 'stocking', 'gear', 'ice',
           const pickerIds = [...document.querySelectorAll('a[data-lake]')].map(e => e.dataset.lake).join(' ');
           const dlg = document.querySelector('dialog[open]'); if (dlg) dlg.close();
           document.querySelectorAll('details').forEach(x => x.open = true);
+          const vis = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
           await new Promise(r => setTimeout(r, 300));
+          await Promise.all([...document.images].filter(vis).map(i => i.complete && i.naturalWidth ? null : new Promise(r => { i.addEventListener("load", r, { once: true }); i.addEventListener("error", r, { once: true }); })));
           const q = s => document.querySelector(s); const c = s => (q(s) || {}).content || '';
           const ld = [...document.querySelectorAll('script[type="application/ld+json"]')].map(s => { try { return JSON.parse(s.textContent); } catch (e) { return { __bad: e.message }; } });
-          const vis = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
           const main = q('main') || document.body;
           const own = h => /^https:\/\/(nightbiteoh\.com|dr0231\.github\.io)\b/.test(h);
           const srcA = a => (/^https?:/.test(a.href) && !own(a.href)) || /^(\.\.\/)?(stocking|water|species\/[a-z-]+|[a-z-]+)(\?lake=[a-z]+)?(#[\w-]+)?$|^#[\w-]+$/.test(a.getAttribute('href'));

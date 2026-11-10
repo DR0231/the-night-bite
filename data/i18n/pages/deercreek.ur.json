@@ -18,6 +18,7 @@
   "deercreek.134e9305": "گرج چمک",
   "deercreek.13f453a4": "گاڑی کے سفر کے اوقات اندازاً ہیں۔",
   "deercreek.1405c071": "Deer Creek Lake کا خاکہ نقشہ، عوامی بوٹ ریمپس اور بیٹ کی دکانوں کے نشانات کے ساتھ۔ ہر نشان نیچے ایک بٹن ہے۔",
+  "deercreek.1787f361": ", لیبل شدہ اخراج USACE اسے ہر گھنٹے پوسٹ کرتا ہے۔ یہ جھیل کی سطح کا درجہ حرارت نہیں ہے، اور کاٹنے کی درجہ بندی اسے استعمال نہیں کرتی ہے۔",
   "deercreek.1928f95c": "Android",
   "deercreek.19d18626": "یاددہانی کا وقت",
   "deercreek.1b742647": "ڈیم کے نیچے، کنارے سے رسائی",
@@ -28,6 +29,7 @@
   "deercreek.205a22bf": "سورج اور چاند کے اوقات آپ کے فون پر حساب کیے جاتے ہیں، US Naval Observatory سے چند منٹ کے فرق کے ساتھ۔",
   "deercreek.22a689af": "(810.5 − پول)",
   "deercreek.23a72ab2": "یا جب انسٹال کا بٹن نظر آئے تو اس پر تھپتھپائیں۔",
+  "deercreek.240d6c73": "پانی کا درجہ حرارت کور آؤٹ فلو ریڈنگ ہے۔",
   "deercreek.27e90dfa": "بوقت",
   "deercreek.2d7eeba9": "کھولیں",
   "deercreek.37b80ed5": "Safari میں تھپتھپائیں",
@@ -49,6 +51,7 @@
   "deercreek.51a97c82": "براؤزر میں کھیلیں",
   "deercreek.51cbb35c": "شیئر۔",
   "deercreek.5370c168": "(تین نقطے)",
+  "deercreek.53aeedc7": "USACE ڈیئر کریک پروجیکٹ کا صفحہ",
   "deercreek.546d378a": "، اس جھیل کے USGS گیج سے جہاں یہ رپورٹ ہوتا ہے۔",
   "deercreek.5610f4f5": "نقشے کی کلید",
   "deercreek.56f508b5": "، پچھلے 3 گھنٹوں کی تبدیلی بمقام",
@@ -82,7 +85,6 @@
   "deercreek.a39224a8": "ODNR، Winter Drawdowns",
   "deercreek.a4a6d123": "اس فون پر مجھے مطلع کریں",
   "deercreek.a63ba107": "منٹ، 5 منٹ کے وقفے",
-  "deercreek.a7cdf779": "اس جھیل پر (Corps صرف ڈیم کے نیچے اخراج کا درجہ حرارت شائع کرتا ہے)، اس لیے درجہ حرارت کی جگہ n/a لکھا ہے۔ کچھ بھی اندازے سے نہیں لکھا گیا۔",
   "deercreek.a7fa610c": "لاگ کھولیں",
   "deercreek.a8d4cf97": "۔ مستحکم کا مطلب ہے",
   "deercreek.a968dd29": "Corps کا Deer Creek Lake صفحہ",
@@ -91,6 +93,7 @@
   "deercreek.b57ddad9": "1 اکتوبر سے 30 نومبر تک (دوبارہ بھرنا 1 اپریل تا 15 مئی)، جو Corps طے کرتا ہے، اور کہتا ہے کہ سطح 20 ft تک بدل سکتی ہے۔",
   "deercreek.b700736b": "Corps of Engineers کا گیج",
   "deercreek.b83bf8c4": "اقسام دیکھیں",
+  "deercreek.bbd50a1e": "اوہائیو کا غیر سرکاری ماہی گیری کا مرکز نائٹ-ڈاک ماحول کے ساتھ: Hoover ، Alum Creek ، Buckeye Lake ، او شاگنیسی، Griggs ، Indian Lake Delaware Lake لیک، Deer Creek Lake ، Madison Lake ، Knox Lake Seneca Lake ، Clear Fork Reservoir ، لاکی، Dillon Lake ، Lake Logan ، Salt Fork Lake ، Burr Oak Lake ، Dow Lake ، Mosquito Creek Lake ، Berlin Lake ، West Branch Reservoir ، Pymatuning Lake ، Lake Milton ، Leesville Lake ، Grand Lake St. Marys ، Caesar Creek Lake ، East Fork Lake ، CJ Brown Reservoir ، LaDue Reservoir Rocky Fork Lake Paint Creek Lake جھیل, Portage Lakes, Mogadore Reservoir, Lake Loramie, Nimisila Reservoir, Cowan Lake, Acton Lake, Tappan Lake جھیل, Piedmont Lake جھیل, Clendening Lake, Atwood Lake, Charles Mill Lake لیک, Pleasant Hill Lake, Wingfoot Lake Beach City Lake, East Branch Reservoir ، Guilford Lake ، Highlandtown Lake ، Punderson Lake اور Wellington Upground Reservoir",
   "deercreek.bfa17ff0": "ODNR کے 2026–27 قواعد سے حد کی یاددہانیوں والے اقسام کے صفحات",
   "deercreek.c0908888": "لاگ کا ایک مثالی اندراج، جس پر نشان ہے",
   "deercreek.c1266ad5": "، اس سے ٹھنڈا",
@@ -114,9 +117,7 @@
   "deercreek.ef095ca1": "، درمیان میں کچھ بھی",
   "deercreek.f132d7dd": "ریمپس اور",
   "deercreek.f264bcbd": "(ODNR)۔ تیراکی سے پہلے Ohio کے BeachGuard پر انتباہات دیکھیں۔",
-  "deercreek.f2eb9a7b": "پانی کے درجہ حرارت کا کوئی عوامی گیج نہیں",
   "deercreek.f82eb2f1": "AM یا PM",
-  "deercreek.f9bb7357": "یاددہانی منسوخ کریں",
-  "deercreek.fa4885e0": "رات کے ڈاک کے ماحول والا غیر سرکاری Ohio ماہی گیری مرکز: Hoover، Alum Creek، Buckeye Lake، O’Shaughnessy، Griggs، Indian Lake، Delaware Lake، Deer Creek Lake، Madison Lake، Knox Lake، Clear Fork Reservoir، Seneca Lake، Dillon Lake، Lake Logan، Salt Fork Lake، Burr Oak Lake، Dow Lake، Mosquito Creek Lake، Berlin Lake، West Branch Reservoir، Pymatuning Lake، Lake Milton اور Leesville Lake"
+  "deercreek.f9bb7357": "یاددہانی منسوخ کریں"
  }
 }

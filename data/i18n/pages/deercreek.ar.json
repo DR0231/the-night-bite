@@ -18,6 +18,7 @@
   "deercreek.134e9305": "الرعد",
   "deercreek.13f453a4": "أوقات القيادة تقريبية.",
   "deercreek.1405c071": "خريطة مخططة لـ Deer Creek Lake مع دبابيس لمنحدرات القوارب العامة ومتاجر الطُّعم. كل دبوس زر بالأسفل.",
+  "deercreek.1787f361": "، المسمى التدفق الخارجي. USACE ينشرها كل ساعة. إنها ليست درجة حرارة سطح البحيرة، ولا يستخدمها تصنيف العض.",
   "deercreek.1928f95c": "Android",
   "deercreek.19d18626": "وقت التذكير",
   "deercreek.1b742647": "تحت السد، وصول من الشاطئ",
@@ -28,6 +29,7 @@
   "deercreek.205a22bf": "أوقات الشمس والقمر تُحسب على هاتفك، بفارق دقائق قليلة عن US Naval Observatory.",
   "deercreek.22a689af": "(810.5 − المنسوب)",
   "deercreek.23a72ab2": "أو اضغط زر التثبيت عندما يظهر.",
+  "deercreek.240d6c73": "درجة حرارة الماء هي قراءة التدفق الخارجي للفيلق",
   "deercreek.27e90dfa": "عند",
   "deercreek.2d7eeba9": "افتح",
   "deercreek.37b80ed5": "في Safari، اضغط",
@@ -49,6 +51,7 @@
   "deercreek.51a97c82": "العب في المتصفح",
   "deercreek.51cbb35c": "مشاركة.",
   "deercreek.5370c168": "(ثلاث نقاط)",
+  "deercreek.53aeedc7": "صفحة مشروع USACE Deer Creek",
   "deercreek.546d378a": "، من مقياس USGS لهذه البحيرة حيث يتوفر.",
   "deercreek.5610f4f5": "مفتاح الخريطة",
   "deercreek.56f508b5": "، التغير خلال آخر 3 ساعات عند",
@@ -82,7 +85,6 @@
   "deercreek.a39224a8": "ODNR, Winter Drawdowns",
   "deercreek.a4a6d123": "نبّهني على هذا الهاتف",
   "deercreek.a63ba107": "الدقيقة، بخطوات 5 دقائق",
-  "deercreek.a7cdf779": "في البحيرة (ينشر Corps حرارة المياه الخارجة تحت السد فقط)، لذلك تظهر خانة الحرارة n/a. لا شيء مُقدَّر.",
   "deercreek.a7fa610c": "افتح السجل",
   "deercreek.a8d4cf97": ". الثبات يعني ضمن",
   "deercreek.a968dd29": "صفحة Corps عن Deer Creek Lake",
@@ -91,6 +93,7 @@
   "deercreek.b57ddad9": "من 1 أكتوبر إلى 30 نوفمبر (إعادة الملء من 1 أبريل إلى 15 مايو)، يحدده Corps، ويقول إن المنسوب قد يتغير حتى 20 ft.",
   "deercreek.b700736b": "مقياس Corps of Engineers",
   "deercreek.b83bf8c4": "تصفح الأنواع",
+  "deercreek.bbd50a1e": "مركز صيد غير رسمي في أوهايو مع أجواء الرصيف الليلي: Hoover ، Alum Creek ، Buckeye Lake ، أوشوغنيسي، Griggs ، Indian Lake ، Delaware Lake ، Deer Creek Lake ، Madison Lake ، Knox Lake ، Clear Fork Reservoir ، Seneca Lake ، Dillon Lake Salt Fork Lake Lake Logan ، بحيرة سالت فورك، Burr Oak Lake ، Dow Lake ، Mosquito Creek Lake., Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Nimisila Reservoir, بحيرة Cowan Lake, Acton Lake ، Tappan Lake ، Piedmont Lake ، Clendening Lake ، Atwood Lake ، Charles Mill Lake ، Pleasant Hill Lake ، Beach City Lake ، Wingfoot Lake ، East Branch Reservoir ، Guilford Lake ، Highlandtown Lake ، Punderson Lake Wellington Upground Reservoir",
   "deercreek.bfa17ff0": "صفحات الأنواع مع تذكيرات الحدود من قواعد ODNR 2026–27",
   "deercreek.c0908888": "مثال واحد في السجل، مُعلَّم",
   "deercreek.c1266ad5": "، أبرد من",
@@ -114,9 +117,7 @@
   "deercreek.ef095ca1": "، وأي شيء بينهما",
   "deercreek.f132d7dd": "المنحدرات و",
   "deercreek.f264bcbd": "(ODNR). راجع BeachGuard في Ohio للتحذيرات قبل السباحة.",
-  "deercreek.f2eb9a7b": "لا يوجد مقياس عام لحرارة الماء",
   "deercreek.f82eb2f1": "AM أو PM",
-  "deercreek.f9bb7357": "إلغاء التذكير",
-  "deercreek.fa4885e0": "مركز صيد غير رسمي في Ohio بأجواء الرصيف الليلي: Hoover، Alum Creek، Buckeye Lake، O’Shaughnessy، Griggs، Indian Lake، Delaware Lake، Deer Creek Lake، Madison Lake، Knox Lake، Clear Fork Reservoir، Seneca Lake، Dillon Lake، Lake Logan، Salt Fork Lake، Burr Oak Lake، Dow Lake، Mosquito Creek Lake، Berlin Lake، West Branch Reservoir، Pymatuning Lake، Lake Milton و Leesville Lake"
+  "deercreek.f9bb7357": "إلغاء التذكير"
  }
 }

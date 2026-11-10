@@ -33,6 +33,7 @@
   "saltfork.39ba5e3c": "または次より高い場合：",
   "saltfork.3b007e30": "夜釣りは嵐、暑さ、視界不良のときに危険です。必要なときはライフジャケットを着けましょう。",
   "saltfork.3dc63132": "地図を閉じる",
+  "saltfork.3f359c5c": "ソルトフォークは州全体に1日5本、最低12″ （",
   "saltfork.4024c72d": "· ODNR / 市 / USGS の公式情報ではありません",
   "saltfork.40354734": "「アプリをインストール」または「ホーム画面に追加」をタップ。",
   "saltfork.432ef711": "、13 から",
@@ -48,6 +49,7 @@
   "saltfork.54828f47": "の夏季水位です（等深線 5 ft、1998年測量）。湖の水位が低いと、実際の水深は地図より浅くなります。",
   "saltfork.5610f4f5": "凡例",
   "saltfork.56a1fc16": "Muskie、saugeye、crappie、bass、white bass：シーズン、場所、制限、道具。",
+  "saltfork.56c8d0ec": "ベースルールの変更が予定されています。",
   "saltfork.56f508b5": "、過去3時間の変化（地点：",
   "saltfork.5aaa995d": "）。泳ぐ前にOhio州の BeachGuard で注意報を確認してください。",
   "saltfork.5af92387": "州立公園の開園時間は 6:00 から 23:00 までです。ODNR は時間外の釣りなど正当なレクリエーションを認めています。出典：",
@@ -55,6 +57,7 @@
   "saltfork.67377df5": "。速度区域とスキー区域の表示あり（",
   "saltfork.6df2b200": "The Bite はこのサイト独自の目安で、釣りの科学でも予報でもありません。このページの数値から点数を足して出します。",
   "saltfork.6e6b02b1": "アプリで利用中です。一度開いたページは電波がなくても使えます。",
+  "saltfork.70158bea": "ODNRニュースリリース",
   "saltfork.716520d0": "、急下降",
   "saltfork.7321b4ce": "「追加」をタップ。",
   "saltfork.74875b11": "未満か",
@@ -68,9 +71,11 @@
   "saltfork.86df14bd": "、18 mph 超",
   "saltfork.88c5e801": "ODNR 釣り地図 @ 800、マリーナのスロープ、速度区域、公開の水位計なし。",
   "saltfork.8ae9ad38": "風の情報はまだ読み込まれていません",
+  "saltfork.8ea1575d": "）。クラッピーは1日30、最低9″で滞在します。",
   "saltfork.90468774": "公共ボートスロープ",
   "saltfork.93e91965": "湖の NWS 観測所",
   "saltfork.93ef0dd8": "この",
+  "saltfork.960aa84d": "そのルールを削除する。から",
   "saltfork.96bb7bdb": "共有アイコン",
   "saltfork.97f2142c": "iPhone",
   "saltfork.9b03b878": "追加する前にブラウザが確認します。",
@@ -86,6 +91,7 @@
   "saltfork.b2f53719": "inHg 以上です。",
   "saltfork.b83bf8c4": "魚種を見る",
   "saltfork.bafd8678": "馬力無制限。速度区域とスキー区域の表示あり。",
+  "saltfork.bbd50a1e": "ナイトドックの雰囲気のある非公式のオハイオ釣りハブ： Hoover、 Alum Creek、 Buckeye Lake、オショーネシー、 Griggs、 Indian Lake、 Delaware Lake、 Deer Creek Lake、 Madison Lake、 Knox Lake、 Clear Fork Reservoir、 Seneca Lake、 Lake Logan、 Dillon Lake、 Salt Fork Lake、 Burr Oak Lake湖、 Dow Lake、 Mosquito Creek Lake、 Berlin Lake、 West Branch Reservoir、ピマチューニング湖、 Pymatuning Lake、 Lake Milton、 Leesville Lake Grand Lake St. Marys、 Caesar Creek Lake、 East Fork Lake、 CJ Brown Reservoir、ロッキー・フォーク湖、 Rocky Fork Lake LaDue Reservoir、 Paint Creek Lakeクリーク湖、ポーテージ湖、 Mogadore Reservoir、ロラミーPortage Lakes、ニミシラNimisila Reservoir、 Lake Loramie、 Cowan Lake、 Acton Lake、 Tappan Lake、 Piedmont Lake、 Clendening Lake、 Atwood Lakeミル湖、 Charles Mill Lake、 Pleasant Hill Lake湖、 Beach City Lake、 East Branch Reservoir、 Wingfoot Lake、 Guilford Lake、 Punderson Lake Highlandtown Lake Wellington Upground Reservoir",
   "saltfork.bc7737d0": "速度・スキー区域 · bass は1日4匹、サイズ別 · 免許は16歳以上。",
   "saltfork.bfa17ff0": "ODNR 2026–27 規則に基づく制限の目安つき魚種ページ",
   "saltfork.c0908888": "釣行記録の例を1件、次の表示つきで：",
@@ -111,6 +117,6 @@
   "saltfork.f82eb2f1": "午前または午後",
   "saltfork.f928db34": "公開の湖水位計なし",
   "saltfork.f9bb7357": "リマインダーを取り消す",
-  "saltfork.fa4885e0": "夜の桟橋の雰囲気がある非公式のOhio釣り情報ハブ：Hoover、Alum Creek、Buckeye Lake、O’Shaughnessy、Griggs、Indian Lake、Delaware Lake、Deer Creek Lake、Madison Lake、Knox Lake、Clear Fork Reservoir、Seneca Lake、Dillon Lake、Lake Logan、Salt Fork Lake、Burr Oak Lake、Dow Lake、Mosquito Creek Lake、Berlin Lake、West Branch Reservoir、Pymatuning Lake、Lake Milton、Leesville Lake"
+  "saltfork.fa4234f2": "現在、ソルトフォークのバスは 1 日4で、 15″未満は2まで、 15″以上は2です (2026, 27ルール)。オハイオ州野生動物評議会は次のように投票しました。"
  }
 }

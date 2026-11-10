@@ -5,6 +5,7 @@
   "review": "draft"
  },
  "strings": {
+  "knox.05a30a50": "Сегодня окуней Knox Lake 5 в день с минимумом 18″ (2026, 27 правил). Совет дикой природы Огайо проголосовал за",
   "knox.072dc887": ", быстро растёт",
   "knox.07f6d49b": "балла или больше: «Хорошо»,",
   "knox.0905a81e": "Уровень по рыболовной карте ODNR: 1100 ft. Ни один датчик USGS или Corps не публикует уровень или температуру воды этого озера, поэтому показывать нечего.",
@@ -48,12 +49,14 @@
   "knox.5370c168": "(три точки)",
   "knox.546d378a": ", с датчика USGS на этом озере, если он передаёт данные.",
   "knox.5610f4f5": "Легенда",
+  "knox.56c8d0ec": "Грядут изменения в правилах баса.",
   "knox.56f508b5": ", изменение за последние 3 часа на",
   "knox.5c352c0c": ": ни один датчик USGS или Corps не публикует данные Knox Lake (датчик USGS на Kokosing River стоит на реке, а не на озере), поэтому в графах уровня и температуры стоит «нет данных». Ничего не оценивается на глаз.",
   "knox.5cba4b24": ". Медленно падает",
   "knox.6df2b200": "Клёв: это собственное эмпирическое правило сайта, а не наука о рыбалке и не прогноз. Оно складывает баллы из показаний, которые уже есть на этой странице.",
   "knox.6e6b02b1": "Вы пользуетесь приложением. Открытые страницы работают и без связи.",
   "knox.6ee2f669": "Пристань и главный спуск на Armentrout Road и спуск в верхней части озера. Доступ для переносных лодок на восточной стороне.",
+  "knox.70158bea": "пресс-релиз ODNR",
   "knox.716520d0": ", быстро падает",
   "knox.7321b4ce": "Нажмите «Добавить».",
   "knox.74875b11": "или больше",
@@ -70,6 +73,7 @@
   "knox.90468774": "Общественный спуск для лодок",
   "knox.93e91965": "станции NWS у озера",
   "knox.93ef0dd8": "The",
+  "knox.960aa84d": "отказаться от этого правила; от",
   "knox.96bb7bdb": "значок «Поделиться»",
   "knox.97f2142c": "iPhone",
   "knox.9b03b878": "Браузер спросит перед добавлением.",
@@ -81,8 +85,10 @@
   "knox.a7fa610c": "Открыть журнал",
   "knox.a8d4cf97": ". Стабильно значит в пределах",
   "knox.a9f3ee46": "карту со спусками для лодок",
+  "knox.b05b2208": "Knox Lake посещает штат 5 в день, минимум 12″ (",
   "knox.b2f53719": "inHg или больше.",
   "knox.b83bf8c4": "Смотреть виды",
+  "knox.bbd50a1e": "Неофициальный рыболовный центр Огайо с атмосферой ночного причала: Hoover, Alum Creek, Buckeye Lake, О'Шонесси, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, озеро Диллон, Dillon Lake Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Озеро Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Nimisila Reservoir, Cowan Lake, Acton Lake, Tappan Lake, Piedmont Lake, озеро Кленденинг, Clendening Lake Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake и Wellington Upground Reservoir",
   "knox.bd2d60bc": "ODNR, Knox Lake Fishing Area",
   "knox.bfa17ff0": "Страницы видов с напоминаниями о лимитах по правилам ODNR 2026–27",
   "knox.c0908888": "Одна запись в журнале для примера, отмечена",
@@ -109,7 +115,6 @@
   "knox.f6da20d9": "Нет общедоступного датчика уровня и температуры воды",
   "knox.f82eb2f1": "AM или PM",
   "knox.f928db34": "Нет общедоступного датчика уровня озера",
-  "knox.f9bb7357": "Отменить напоминание",
-  "knox.fa4885e0": "Неофициальный рыболовный портал Ohio с атмосферой ночного причала: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton и Leesville Lake"
+  "knox.f9bb7357": "Отменить напоминание"
  }
 }

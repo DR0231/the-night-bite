@@ -11,6 +11,8 @@
  *  · turns the stamp into "last updated X hours ago" (from the pool card's Checked <time>), every minute;
  *  · swaps in the live reading when js/usgs.js gets one, and keeps the last reading (with its time) when a refresh
  *    fails or the phone is offline; a lake with no gauge keeps its "No gauge" state, linked to the pool card note;
+ *    a lake with a Corps outflow temp shows it under an "Outflow temp" label (never as lake surface temperature), and a
+ *    lake with only a dated Corps temperature profile says "Profile only", linked to that profile;
  *  · shows tonight's NWS wind and the bite once the forecast loads, the saved forecast (with its age) when NWS is
  *    not reachable, and "Check NWS" / "Needs forecast" when there is nothing to show. Never a bare "--".
  * Every cell has a fixed height, so filling them in never moves the page.
@@ -27,10 +29,14 @@
   var windC = cond && cond.querySelector('[data-cond="wind"]');
   function q(k) { return box.querySelector('[data-glance="' + k + '"]'); }
   var poolV = q("pool"), poolS = q("pool-sub"), tempV = q("temp"), tempS = q("temp-sub");
+  // Numeric pool correction mirrors a live value, not a static interface label.
+  if (poolS) poolS.setAttribute("data-nb-keep", "");
   var sunV = q("sunset"), sunS = q("sunset-sub"), windV = q("wind"), windS = q("wind-sub"), biteV = q("bite");
   var stampEl = q("stamp");
-  var RE = /^\s*([\d.]+)\s*ft\s*·\s*(?:(-?\d+(?:\.\d+)?)\s*°F|no temp|temp —)\s*·\s*~?([\d.]+)\s*ft\s+(above|below)\s+full pool\s*$/;
+  var RE = /^\s*([\d.]+)\s*ft\s*·\s*(?:(-?\d+(?:\.\d+)?)\s*°F(?:\s+outflow)?|no temp|temp —|Corps profile [A-Z][a-z]{2,3}\.? \d{1,2})\s*·\s*~?([\d.]+)\s*ft\s+(above|below)\s+full pool\s*$/;
   var NOGAUGE = P.hasOwnProperty("src") && !P.src, HASTEMP = !!P.temp;
+  // Corps outflow water temperature (labelled outflow, never lake surface) or a dated Corps temperature profile only
+  var OUT = !HASTEMP && P.outflow || null, PROF = !HASTEMP && !OUT && P.profile || null;
   if (!LK) HASTEMP = true;   // js/lakes.js missing: Hoover, which has a temp gauge
   var SRC = P.srcName || "USGS";
 
@@ -41,6 +47,8 @@
     if (a && href) { a.href = href; a.target = "_blank"; a.rel = "noopener"; }
   }
   if (!NOGAUGE && P.gaugeUrl) { link("pool", P.gaugeUrl); if (HASTEMP) link("temp", P.gaugeUrl); }
+  if (OUT && OUT.url) link("temp", OUT.url);
+  if (PROF && PROF.url) link("temp", PROF.url);
   if (NW.page) link("wind", NW.page);
 
   // value text (+ unit), or a word state in label type
@@ -126,7 +134,13 @@
     m = m || lastM;
     if (m) { set(poolV, m[1], "ft"); set(poolS, "~" + m[3] + " ft " + m[4] + " full"); cell(poolV, true); }
     else { state(poolV, "Check gauge"); set(poolS, SRC + " gauge"); cell(poolV, false); }
-    if (!HASTEMP) { state(tempV, "No gauge"); set(tempS, "No public gauge"); cell(tempV, false); }
+    if (OUT) {
+      if (m && m[2] !== undefined) { set(tempV, String(Math.round(parseFloat(m[2]))), "°F"); set(tempS, "USACE outflow"); cell(tempV, true); }
+      else if (m) { state(tempV, "No reading"); set(tempS, "Not in the last check"); cell(tempV, false); }
+      else { state(tempV, "Check gauge"); set(tempS, "USACE outflow"); cell(tempV, false); }
+    }
+    else if (PROF) { state(tempV, "Profile only"); set(tempS, "Corps, " + PROF.short); cell(tempV, false); }
+    else if (!HASTEMP) { state(tempV, "No gauge"); set(tempS, "No public gauge"); cell(tempV, false); }
     else if (m && m[2] !== undefined) { set(tempV, String(Math.round(parseFloat(m[2]))), "°F"); set(tempS, SRC + " gauge"); cell(tempV, true); }
     else if (m) { state(tempV, "No reading"); set(tempS, "Not in the last check"); cell(tempV, false); }
     else { state(tempV, "Check gauge"); set(tempS, SRC + " gauge"); cell(tempV, false); }

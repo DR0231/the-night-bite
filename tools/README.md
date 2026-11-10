@@ -200,6 +200,11 @@ python3 tools/build-tile-charts.py --check         # change nothing; exit 1 if a
 - `node tools/check-log-io.cjs <base> [outDir]` (in check-all, about 10 s, phone width): with nothing saved the trip list is hidden, one line shows, Add a trip is open and Community is hidden (the JSON only has an Example trip); no Example card or dev notes (JSON file names, localStorage, mailto) in the page text. Then it saves two trips through the form plus one old-format trip (no `lake`, ramp "Redbank"), clicks Save a backup (file `night-bite-log-YYYY-MM-DD.json`), clears, opens the file and checks the same trips come back; the old trip shows as "Red Bank ramp" with its saved text kept. Opening it again adds nothing; non-JSON, foreign and bad entries are refused; a bare array merges. The status line is readable in red light and high contrast. It uses its own browser profile and clears it after, so it is safe against live.
 - Format and rules: README.md "Log page (dev notes)".
 
+## ODNR contour maps (`build-odnr-contours.py`)
+
+- `python3 tools/build-odnr-contours.py --lake hoover` renders the retained ODNR GeoJSON offline into `assets/maps/hoover-depth-contours.svg` and `.webp`. Add `--download` only when refreshing the raw files in `data/odnr/hoover/`; Pillow is needed for the WebP fallback.
+- Written ODNR permission covers Hoover only. Do not add another lake until its permission is confirmed. Keep the ODNR citation, revision/survey dates, units, PDF link and Not for navigation note on the page.
+
 ## Languages (`check-i18n.py`, `check-i18n.cjs`, `data/i18n/`)
 - Strings: `data/i18n/en.json` is the source (`{"_meta": {"lang", "name", "review"}, "strings": {key: text}}`). Each other language is `data/i18n/<code>.json` with the same keys, `_meta.name` in its own language and `_meta.review: "draft"` until a person reviews it. Add the code and name to `LANGS` in `js/a11y-boot.js` (the picker lists only those) and the file to `PRECACHE` in `sw.js`. Right-to-left languages also set `_meta.dir: "rtl"`.
 - Only UI chrome goes in the files: nav, Display panel, glance labels, night-rules chip and weather alert labels, Log form labels, footer. Never lake names, ramp names, species, levels, rules or regulations. `{name}` placeholders (for example `{time} left`) must survive.

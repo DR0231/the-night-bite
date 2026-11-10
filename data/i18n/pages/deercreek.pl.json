@@ -18,6 +18,7 @@
   "deercreek.134e9305": "Burza",
   "deercreek.13f453a4": "Czasy dojazdu są orientacyjne.",
   "deercreek.1405c071": "Zarys mapy Deer Creek Lake z pinezkami publicznych slipów i sklepów wędkarskich. Każda pinezka to przycisk poniżej.",
+  "deercreek.1787f361": ", oznaczony jako odpływ. USACE publikuje to co godzinę. Nie jest to temperatura powierzchni jeziora i ocena ugryzień jej nie uwzględnia.",
   "deercreek.1928f95c": "Android",
   "deercreek.19d18626": "Godzina przypomnienia",
   "deercreek.1b742647": "Poniżej zapory, dostęp z brzegu",
@@ -28,6 +29,7 @@
   "deercreek.205a22bf": "Godziny słońca i księżyca liczy Twój telefon, z dokładnością do kilku minut względem US Naval Observatory.",
   "deercreek.22a689af": "(810.5 − poziom)",
   "deercreek.23a72ab2": "Albo stuknij przycisk Zainstaluj, gdy się pojawi.",
+  "deercreek.240d6c73": "Temperatura wody to odczyt odpływu Korpusu",
   "deercreek.27e90dfa": "o",
   "deercreek.2d7eeba9": "Otwórz",
   "deercreek.37b80ed5": "W Safari stuknij",
@@ -49,6 +51,7 @@
   "deercreek.51a97c82": "Graj w przeglądarce",
   "deercreek.51cbb35c": "Udostępnij.",
   "deercreek.5370c168": "(trzy kropki)",
+  "deercreek.53aeedc7": "Strona projektu USACE Deer Creek",
   "deercreek.546d378a": ", z wodowskazu USGS tego jeziora, jeśli go podaje.",
   "deercreek.5610f4f5": "Legenda mapy",
   "deercreek.56f508b5": ", zmiana w ciągu ostatnich 3 godzin na",
@@ -82,7 +85,6 @@
   "deercreek.a39224a8": "ODNR, Winter Drawdowns",
   "deercreek.a4a6d123": "Powiadom mnie na tym telefonie",
   "deercreek.a63ba107": "Minuta, co 5 minut",
-  "deercreek.a7cdf779": "na jeziorze (Korpus podaje tylko temperaturę wody wypływającej poniżej zapory), więc pole temperatury pokazuje n/d. Nic nie jest szacowane.",
   "deercreek.a7fa610c": "Otwórz dziennik",
   "deercreek.a8d4cf97": ". Stałe oznacza w granicach",
   "deercreek.a968dd29": "strona Korpusu o Deer Creek Lake",
@@ -91,6 +93,7 @@
   "deercreek.b57ddad9": "od 1 października do 30 listopada (napełnianie od 1 kwietnia do 15 maja), ustalane przez Korpus, i mówi, że poziom może zmienić się nawet o 20 ft.",
   "deercreek.b700736b": "wodowskaz Korpusu Inżynieryjnego",
   "deercreek.b83bf8c4": "Przeglądaj gatunki",
+  "deercreek.bbd50a1e": "Nieoficjalne centrum rybackie w Ohio z atmosferą nocnego doku: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, zbiornik Nimisila, Jezioro Cowan Lake, Acton Lake Tappan Lake Piedmont Lake, Clendening Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, jezioro Wingfoot Lake East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake i Wellington Upground Reservoir Nimisila Reservoir",
   "deercreek.bfa17ff0": "Strony gatunków z przypomnieniami o limitach według przepisów ODNR 2026–27",
   "deercreek.c0908888": "Jeden przykładowy wpis w dzienniku, oznaczony",
   "deercreek.c1266ad5": ", zimniej niż",
@@ -114,9 +117,7 @@
   "deercreek.ef095ca1": ", wszystko pomiędzy",
   "deercreek.f132d7dd": "Slipy i",
   "deercreek.f264bcbd": "(ODNR). Przed kąpielą sprawdź ostrzeżenia w BeachGuard stanu Ohio.",
-  "deercreek.f2eb9a7b": "Brak publicznego pomiaru temperatury wody",
   "deercreek.f82eb2f1": "AM lub PM",
-  "deercreek.f9bb7357": "Anuluj przypomnienie",
-  "deercreek.fa4885e0": "Nieoficjalny wędkarski serwis Ohio z klimatem nocnego pomostu: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton i Leesville Lake"
+  "deercreek.f9bb7357": "Anuluj przypomnienie"
  }
 }

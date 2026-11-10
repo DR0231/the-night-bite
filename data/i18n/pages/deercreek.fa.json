@@ -18,6 +18,7 @@
   "deercreek.134e9305": "رعد و برق",
   "deercreek.13f453a4": "زمان‌های رانندگی تقریبی است.",
   "deercreek.1405c071": "نقشه طرح‌کلی Deer Creek Lake با نشانه‌هایی برای سکوهای عمومی قایق و فروشگاه‌های طعمه. هر نشانه یک دکمه در پایین است.",
+  "deercreek.1787f361": "، با برچسب خروج. USACE آن را هر ساعت پست می کند. دمای سطح دریاچه نیست و رتبه نیش از آن استفاده نمی کند.",
   "deercreek.1928f95c": "Android",
   "deercreek.19d18626": "زمان یادآوری",
   "deercreek.1b742647": "پایین سد، دسترسی از ساحل",
@@ -28,6 +29,7 @@
   "deercreek.205a22bf": "زمان‌های خورشید و ماه روی گوشی شما حساب می‌شود و با US Naval Observatory چند دقیقه بیشتر فاصله ندارد.",
   "deercreek.22a689af": "(810.5 − سطح آب)",
   "deercreek.23a72ab2": "یا وقتی دکمه نصب نمایش داده شد، روی آن بزنید.",
+  "deercreek.240d6c73": "دمای آب قرائت خروجی سپاه است",
   "deercreek.27e90dfa": "در",
   "deercreek.2d7eeba9": "باز کنید",
   "deercreek.37b80ed5": "در Safari بزنید روی",
@@ -49,6 +51,7 @@
   "deercreek.51a97c82": "بازی در مرورگر",
   "deercreek.51cbb35c": "اشتراک‌گذاری.",
   "deercreek.5370c168": "(سه نقطه)",
+  "deercreek.53aeedc7": "صفحه پروژه USACE Deer Creek",
   "deercreek.546d378a": "، از سنجه USGS این دریاچه، هر جا که گزارش دهد.",
   "deercreek.5610f4f5": "راهنمای نقشه",
   "deercreek.56f508b5": "، تغییر در 3 ساعت گذشته در",
@@ -82,7 +85,6 @@
   "deercreek.a39224a8": "ODNR، پایین آوردن سطح آب در زمستان",
   "deercreek.a4a6d123": "روی همین گوشی به من خبر بده",
   "deercreek.a63ba107": "دقیقه، گام‌های 5 دقیقه‌ای",
-  "deercreek.a7cdf779": "روی دریاچه (Corps فقط دمای آب خروجی پایین سد را منتشر می‌کند)، برای همین خانه دما n/a نشان می‌دهد. هیچ چیزی تخمینی نیست.",
   "deercreek.a7fa610c": "باز کردن گزارش",
   "deercreek.a8d4cf97": ". ثابت یعنی در محدوده",
   "deercreek.a968dd29": "صفحه Deer Creek Lake در Corps",
@@ -91,6 +93,7 @@
   "deercreek.b57ddad9": "از 1 اکتبر تا 30 نوامبر (پر شدن دوباره 1 آوریل تا 15 مه)، که Corps تعیین می‌کند، و می‌گوید سطح آب تا 20 ft تغییر می‌کند.",
   "deercreek.b700736b": "سنجه Corps of Engineers",
   "deercreek.b83bf8c4": "مرور گونه‌ها",
+  "deercreek.bbd50a1e": "مرکز ماهیگیری غیررسمی اوهایو با فضای اسکله شبانه: Hoover ، Alum Creek ، Buckeye Lake ، اوشاگنسی، Griggs ، Indian Lake ، Delaware Lake ، Deer Creek Lake ، Madison Lake ، Knox Lake ، Clear Fork Reservoir ، Seneca Lake لوک، Dillon Lake Lake Logan Salt Fork Lake ، Burr Oak Lake ، Dow Lake ، Mosquito Creek Lake ، Berlin Lake ، West Branch Reservoir ، Pymatuning Lake ، Lake Milton ، Leesville Lake ، Grand Lake St. Marys ، Caesar Creek Lake ، East Fork Lake ، CJ Brown Reservoir ، Rocky Fork Lake LaDue Reservoir ، Portage Lakes Paint Creek Lake ، Mogadore Reservoir ، Lake Loramie لورامی، مخزن Nimisila Reservoir ، دریاچه Cowan Lake ، Acton Lake ، Tappan Lake ، Piedmont Lake ، Clendening Lake ، Atwood Lake Charles Mill Lake Pleasant Hill Lake ، Beach City Lake Wingfoot Lake هیل، East Branch Reservoir ، ، Guilford Lake ، Highlandtown Lake ، Punderson Lake و Wellington Upground Reservoir",
   "deercreek.bfa17ff0": "صفحه‌های گونه‌ها با یادآوری محدودیت‌ها از قوانین ODNR 2026–27",
   "deercreek.c0908888": "یک نمونه یادداشت در دفترچه، با علامت",
   "deercreek.c1266ad5": "، سردتر از",
@@ -114,9 +117,7 @@
   "deercreek.ef095ca1": "، هر چیزی بین",
   "deercreek.f132d7dd": "سکوها و",
   "deercreek.f264bcbd": "(ODNR). پیش از شنا، هشدارها را در BeachGuard Ohio بررسی کنید.",
-  "deercreek.f2eb9a7b": "سنجه عمومی دمای آب وجود ندارد",
   "deercreek.f82eb2f1": "ق.ظ یا ب.ظ",
-  "deercreek.f9bb7357": "لغو یادآوری",
-  "deercreek.fa4885e0": "مرکز غیررسمی ماهیگیری Ohio با حال‌وهوای اسکله در شب: Hoover، Alum Creek، Buckeye Lake، O’Shaughnessy، Griggs، Indian Lake، Delaware Lake، Deer Creek Lake، Madison Lake، Knox Lake، Clear Fork Reservoir، Seneca Lake، Dillon Lake، Lake Logan، Salt Fork Lake، Burr Oak Lake، Dow Lake، Mosquito Creek Lake، Berlin Lake، West Branch Reservoir، Pymatuning Lake، Lake Milton و Leesville Lake"
+  "deercreek.f9bb7357": "لغو یادآوری"
  }
 }

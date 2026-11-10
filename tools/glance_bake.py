@@ -19,7 +19,7 @@ from zoneinfo import ZoneInfo
 
 ET = ZoneInfo("America/New_York")
 # same pattern as js/glance.js and js/pool-readout.js
-LINE_RE = re.compile(r"^\s*([\d.]+)\s*ft\s*·\s*(?:(-?\d+(?:\.\d+)?)\s*°F|no temp|temp —)\s*·\s*~?([\d.]+)\s*ft\s+(above|below)\s+full pool\s*$")
+LINE_RE = re.compile(r"^\s*([\d.]+)\s*ft\s*·\s*(?:(-?\d+(?:\.\d+)?)\s*°F(?:\s+outflow)?|no temp|temp —|Corps profile [A-Z][a-z]{2,3}\.? \d{1,2})\s*·\s*~?([\d.]+)\s*ft\s+(above|below)\s+full pool\s*$")
 GLANCE_RE = re.compile(r'[ \t]*<section class="glance" id="glance".*?</section>', re.S)
 
 
@@ -60,16 +60,21 @@ def pool_card(page, pool):
         temp, status = "No public water temp gauge", "The USGS lake level gauge here is not reporting right now. No water temp gauge. Never invented."
     elif not pool.get("src"):
         line = "No public lake level gauge"
-        checked = (f'ODNR fishing map pool: {t(pool["fullPool"])} ft. No USGS or Corps gauge posts this lake\u2019s level or '
+        fp = (f'ODNR fishing map pool: {t(pool["fullPool"])} ft. ' if pool.get("fullPool") is not None
+              else "No ODNR fishing map pool is posted for this lake. ")
+        checked = (fp + "No USGS or Corps gauge posts this lake\u2019s level or "
                    "water temp, so there is no live reading to show.").replace("\u2019", "'")
         temp, status = "No public water temp gauge", "No public lake level or water temp gauge on this lake. Never invented."
     elif S:
         line = S["line"]
         checked = (f'Checked: <time datetime="{a(S["at"])}">{t(S["when"])}</time>. '
                    f'<a href="{a(pool["gaugeUrl"])}" target="_blank" rel="noopener">Live {t(pool["srcName"])} gauge</a>.')
-        temp = None if pool.get("temp") else "No public water temp gauge"
-        status = (f'Provisional snapshot; your browser may refresh it from {t(pool["srcName"])}.'
-                  + ("" if pool.get("temp") else " No public water temp gauge on this lake.") + " Never invented.")
+        # a Corps outflow temp is labelled outflow (never lake surface); a Corps profile only says so (js/lake-snapshot.js)
+        temp = (None if pool.get("temp") else "USACE outflow temp, not lake surface" if pool.get("outflow")
+                else "No live water temp" if pool.get("profile") else "No public water temp gauge")
+        note = ("" if pool.get("temp") else " USACE outflow temp; it is not lake surface temperature." if pool.get("outflow")
+                else " No live water temp; the Corps posts a temperature profile." if pool.get("profile") else " No public water temp gauge on this lake.")
+        status = f'Provisional snapshot; your browser may refresh it from {t(pool["srcName"])}.' + note + " Never invented."
     else:
         return page
     page = re.sub(r'(<p class="pool-lead" id="correction-line">).*?(</p>)', lambda m: m.group(1) + t(line) + m.group(2), page, count=1, flags=re.S)
@@ -98,6 +103,8 @@ def glance(page, pool, nws_page, prefix=""):
     m = LINE_RE.match(line or "")
     src_name = pool.get("srcName") or "USGS"
     has_temp = bool(pool.get("temp"))
+    out = None if has_temp else pool.get("outflow")
+    prof = None if has_temp or out else pool.get("profile")
     if pool.get("stale"):
         st = pool["stale"]
         pc = cell("pool", "Lake level", "No reading", "Gauge not reporting", card, state=True, empty=True)
@@ -112,7 +119,13 @@ def glance(page, pool, nws_page, prefix=""):
     elif m and at:
         gauge = pool.get("gaugeUrl") or card
         pc = cell("pool", "Lake level", m.group(1), f"~{m.group(3)} ft {m.group(4)} full", gauge, unit="ft", ext=gauge != card)
-        if not has_temp:
+        if out:
+            tc = (cell("temp", "Outflow temp", str(round(float(m.group(2)))), "USACE outflow", out["url"], unit="°F", ext=True)
+                  if m.group(2) is not None else
+                  cell("temp", "Outflow temp", "No reading", "Not in the last check", out["url"], state=True, ext=True, empty=True))
+        elif prof:
+            tc = cell("temp", "Water temp", "Profile only", f'Corps, {prof["short"]}', prof["url"], state=True, ext=True, empty=True)
+        elif not has_temp:
             tc = cell("temp", "Water temp", "No gauge", "No public gauge", card, state=True, empty=True)
         elif m.group(2) is not None:
             tc = cell("temp", "Water temp", str(round(float(m.group(2)))), f"{src_name} gauge", gauge, unit="°F", ext=gauge != card)
@@ -125,6 +138,8 @@ def glance(page, pool, nws_page, prefix=""):
         gauge = pool.get("gaugeUrl") or card
         pc = cell("pool", "Lake level", "Check gauge", f"{src_name} gauge", gauge, state=True, ext=gauge != card, empty=True)
         tc = (cell("temp", "Water temp", "Check gauge", f"{src_name} gauge", gauge, state=True, ext=gauge != card, empty=True) if has_temp
+              else cell("temp", "Outflow temp", "Check gauge", "USACE outflow", out["url"], state=True, ext=True, empty=True) if out
+              else cell("temp", "Water temp", "Profile only", f'Corps, {prof["short"]}', prof["url"], state=True, ext=True, empty=True) if prof
               else cell("temp", "Water temp", "No gauge", "No public gauge", card, state=True, empty=True))
         stamp = f"No saved {t(src_name)} reading on this page yet. Tap Lake level for the live gauge."
         kind = "nosnap"

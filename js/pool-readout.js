@@ -5,13 +5,15 @@
  * Purely visual: the original line stays in the DOM for screen readers and is
  * shown again whenever its text doesn't match the expected format
  * (for example "unavailable, check USGS"). Never computes or invents values.
- * The temp slot accepts "no temp" and, for older routine output, "temp —".
+ * The temp slot accepts "no temp" and, for older routine output, "temp —". A Corps outflow reading ("60°F outflow",
+ * js/usgs.js) is labelled Outflow, never Water. A lake with only a dated Corps temperature profile ("Corps profile Oct. 19")
+ * shows that date under "Corps profile", never as a live reading.
  */
 (function () {
   var line = document.getElementById("correction-line");
   if (!line || !window.MutationObserver) return;
 
-  var RE = /^\s*([\d.]+)\s*ft\s*·\s*(?:(-?\d+(?:\.\d+)?)\s*°F|no temp|temp —)\s*·\s*~?([\d.]+)\s*ft\s+(above|below)\s+full pool\s*$/;
+  var RE = /^\s*([\d.]+)\s*ft\s*·\s*(?:(-?\d+(?:\.\d+)?)\s*°F(?:\s+outflow)?|no temp|temp —|Corps profile [A-Z][a-z]{2,3}\.? \d{1,2})\s*·\s*~?([\d.]+)\s*ft\s+(above|below)\s+full pool\s*$/;
   var readout = document.createElement("div");
   readout.className = "pool-readout";
   readout.setAttribute("aria-hidden", "true");
@@ -38,8 +40,16 @@
     return c;
   }
 
+  // the English line: js/i18n.js keeps it in data-en while data-nb-out still matches the translated text on screen
+  function english() {
+    var shown = line.textContent || "";
+    var en = line.getAttribute("data-en");
+    return en && line.getAttribute("data-nb-out") === shown ? en : shown;
+  }
+
   function render() {
-    var m = RE.exec((line.getAttribute("data-nb-out") === line.textContent && line.getAttribute("data-en") || line.textContent || ""));
+    var text = english();
+    var m = RE.exec(text);
     if (!m) {
       readout.hidden = true;
       line.classList.remove("is-mirrored");
@@ -47,8 +57,13 @@
     }
     readout.textContent = "";
     readout.appendChild(cell("Pool", m[1], "ft"));
-    readout.appendChild(cell("Water", m[2] !== undefined ? m[2] : "n/a", m[2] !== undefined ? "°F" : ""));
-    readout.appendChild(cell(m[4] === "above" ? "Above full pool" : "Below full pool", "~" + m[3], "ft"));
+    var outflow = /°F\s+outflow\s*·/.test(text);
+    var profile = /·\s*Corps profile ([A-Z][a-z]{2,3}\.? \d{1,2})\s*·/.exec(text);
+    if (profile) readout.appendChild(cell("Corps profile", profile[1], ""));   // dated, never a live reading
+    else readout.appendChild(cell(outflow ? "Outflow" : "Water", m[2] !== undefined ? m[2] : "n/a", m[2] !== undefined ? "°F" : ""));
+    var correction = cell(m[4] === "above" ? "Above full pool" : "Below full pool", "~" + m[3], "ft");
+    correction.setAttribute("data-nb-keep", "");
+    readout.appendChild(correction);
     readout.hidden = false;
     line.classList.add("is-mirrored");
   }

@@ -5,6 +5,7 @@
   "review": "draft"
  },
  "strings": {
+  "knox.05a30a50": "Oggi Knox Lake bass sono 5 al giorno con un minimo 18″ (2026, 27 regole). L'Ohio Wildlife Council ha votato",
   "knox.072dc887": ", in rapido aumento",
   "knox.07f6d49b": "punti o più è Buono,",
   "knox.0905a81e": "Livello della carta di pesca ODNR: 1100 ft. Nessun idrometro USGS o del Corps pubblica il livello o la temperatura dell’acqua di questo lago, quindi non c’è una lettura in tempo reale da mostrare.",
@@ -48,12 +49,14 @@
   "knox.5370c168": "(tre puntini)",
   "knox.546d378a": ", dalla stazione USGS di questo lago quando la fornisce.",
   "knox.5610f4f5": "Legenda della mappa",
+  "knox.56c8d0ec": "Cambiamento delle regole dei bassi in arrivo.",
   "knox.56f508b5": ", la variazione nelle ultime 3 ore a",
   "knox.5c352c0c": ": nessun idrometro USGS o del Corps copre Knox Lake (l’idrometro USGS del Kokosing River è sul fiume, non sul lago), quindi i riquadri di livello e temperatura dicono non disponibile. Non si stima nulla.",
   "knox.5cba4b24": ". In lento calo",
   "knox.6df2b200": "L’Abboccata è la regola pratica di questo sito, non scienza della pesca né una previsione. Somma punti da letture già presenti in questa pagina.",
   "knox.6e6b02b1": "Stai usando l’app. Le pagine già aperte funzionano anche senza segnale.",
   "knox.6ee2f669": "Porticciolo e rampa principale su Armentrout Road e una rampa nella parte alta del lago. Accesso per barche a mano sul lato est.",
+  "knox.70158bea": "Comunicato stampa ODNR",
   "knox.716520d0": ", in rapido calo",
   "knox.7321b4ce": "Tocca Aggiungi.",
   "knox.74875b11": "o oltre",
@@ -70,6 +73,7 @@
   "knox.90468774": "Rampa pubblica per barche",
   "knox.93e91965": "la stazione NWS del lago",
   "knox.93ef0dd8": "Il",
+  "knox.960aa84d": "abbandonare quella regola; da",
   "knox.96bb7bdb": "l’icona Condividi",
   "knox.97f2142c": "iPhone",
   "knox.9b03b878": "Il browser chiede prima di aggiungerlo.",
@@ -81,8 +85,10 @@
   "knox.a7fa610c": "Apri il diario",
   "knox.a8d4cf97": ". Stabile significa entro",
   "knox.a9f3ee46": "mappa con rampe per barche",
+  "knox.b05b2208": "Knox Lake va ai 5 al giorno in tutto lo stato, minimo 12″ (",
   "knox.b2f53719": "inHg o più.",
   "knox.b83bf8c4": "Sfoglia le specie",
+  "knox.bbd50a1e": "Centro di pesca non ufficiale dell'Ohio con atmosfera da molo notturno: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, Lago West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake CJ Brown Reservoir, Rocky Fork Lake, Lago LaDue Reservoir Paint Creek Lake, Portage Lakes Mogadore Reservoir, Lake Loramie, Lago Nimisila Reservoir, Cowan Lake, Lago Acton Lake, Tappan Lake, Piedmont Lake, Clendening Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, lago Beach City Lake, Wingfoot Lake East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake e Wellington Upground Reservoir",
   "knox.bd2d60bc": "ODNR, area di pesca di Knox Lake",
   "knox.bfa17ff0": "Pagine delle specie con promemoria dei limiti dalle regole ODNR 2026–27",
   "knox.c0908888": "Una voce di esempio del diario, segnata",
@@ -109,7 +115,6 @@
   "knox.f6da20d9": "Nessun idrometro pubblico per livello o temperatura dell’acqua",
   "knox.f82eb2f1": "AM o PM",
   "knox.f928db34": "Nessun idrometro pubblico del livello",
-  "knox.f9bb7357": "Annulla promemoria",
-  "knox.fa4885e0": "Portale di pesca non ufficiale dell’Ohio con atmosfera da pontile notturno: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton e Leesville Lake"
+  "knox.f9bb7357": "Annulla promemoria"
  }
 }

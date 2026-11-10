@@ -18,6 +18,7 @@
   "deercreek.134e9305": "Kulog",
   "deercreek.13f453a4": "Tantiya lang ang oras ng biyahe.",
   "deercreek.1405c071": "Balangkas na mapa ng Deer Creek Lake na may mga pin para sa mga pampublikong boat ramp at bait shop. Bawat pin ay may button sa ibaba.",
+  "deercreek.1787f361": ", may label na outflow. Pino-post ito USACE bawat oras. Hindi ito temperatura sa ibabaw ng lawa, at hindi ito ginagamit ng rating ng kagat.",
   "deercreek.1928f95c": "Android",
   "deercreek.19d18626": "Oras ng paalala",
   "deercreek.1b742647": "Sa ibaba ng dam, daanan sa pampang",
@@ -28,6 +29,7 @@
   "deercreek.205a22bf": "Kinukuwenta sa telepono mo ang oras ng araw at buwan, sa loob ng ilang minuto ng US Naval Observatory.",
   "deercreek.22a689af": "(810.5 − pool)",
   "deercreek.23a72ab2": "O i-tap ang Install button kapag lumabas ito.",
+  "deercreek.240d6c73": "Ang temperatura ng tubig ay ang pagbabasa ng Corps outflow",
   "deercreek.27e90dfa": "sa",
   "deercreek.2d7eeba9": "Buksan ang",
   "deercreek.37b80ed5": "Sa Safari, i-tap ang",
@@ -49,6 +51,7 @@
   "deercreek.51a97c82": "Laruin sa browser",
   "deercreek.51cbb35c": "Share.",
   "deercreek.5370c168": "(tatlong tuldok)",
+  "deercreek.53aeedc7": "Pahina ng proyekto USACE Deer Creek",
   "deercreek.546d378a": ", mula sa USGS gauge ng lawang ito kung mayroon itong ulat.",
   "deercreek.5610f4f5": "Gabay sa mapa",
   "deercreek.56f508b5": ", ang pagbabago sa nakaraang 3 oras sa",
@@ -82,7 +85,6 @@
   "deercreek.a39224a8": "ODNR, Winter Drawdowns",
   "deercreek.a4a6d123": "Abisuhan ako sa teleponong ito",
   "deercreek.a63ba107": "Minuto, tig-5 minuto",
-  "deercreek.a7cdf779": "sa lawa (outflow temp lang sa ibaba ng dam ang ipinopost ng Corps), kaya n/a ang nasa puwesto ng temp. Walang tinantiya.",
   "deercreek.a7fa610c": "Buksan ang log",
   "deercreek.a8d4cf97": ". Ang steady ay nasa loob ng",
   "deercreek.a968dd29": "Pahina ng Corps para sa Deer Creek Lake",
@@ -91,6 +93,7 @@
   "deercreek.b57ddad9": "mula Oktubre 1 hanggang Nobyembre 30 (pagpuno Abril 1 hanggang Mayo 15), itinakda ng Corps, at sinasabing maaaring magbago ang lebel nang hanggang 20 ft.",
   "deercreek.b700736b": "Gauge ng Corps of Engineers",
   "deercreek.b83bf8c4": "Tingnan ang mga species",
+  "deercreek.bbd50a1e": "Hindi opisyal na sentro ng pangingisda sa Ohio na may night-dock na atmosphere: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake Deer Creek Lake Madison Lake Knox Lake Lake, Clear Fork Reservoir, Seneca Lake Lake Logan, Dillon Lake Lake, Salt Fork Lake Logan, Burr Oak Lake Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Lake ng Nimisila Reservoir Cowan Lake, Tappan Acton Lake, Piedmont Lake Tappan Lake, Clendening Lake Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake at Wellington Upground Reservoir",
   "deercreek.bfa17ff0": "Mga pahina ng species na may paalala sa limit mula sa mga patakaran ng ODNR 2026–27",
   "deercreek.c0908888": "Isang halimbawang log entry, may markang",
   "deercreek.c1266ad5": ", mas malamig sa",
@@ -114,9 +117,7 @@
   "deercreek.ef095ca1": ", anumang nasa pagitan",
   "deercreek.f132d7dd": "Mga ramp at",
   "deercreek.f264bcbd": "(ODNR). Tingnan ang BeachGuard ng Ohio para sa mga abiso bago lumangoy.",
-  "deercreek.f2eb9a7b": "Walang pampublikong gauge ng temperatura ng tubig",
   "deercreek.f82eb2f1": "AM o PM",
-  "deercreek.f9bb7357": "Kanselahin ang paalala",
-  "deercreek.fa4885e0": "Hindi opisyal na hub ng pangingisda sa Ohio na may dating ng pantalan sa gabi: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton at Leesville Lake"
+  "deercreek.f9bb7357": "Kanselahin ang paalala"
  }
 }

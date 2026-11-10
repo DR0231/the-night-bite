@@ -5,6 +5,7 @@
   "review": "draft"
  },
  "strings": {
+  "knox.05a30a50": "Ngayon Knox Lake bass ay 5 sa isang araw na may minimum na 18″ (2026, 27 panuntunan). Ang Ohio Wildlife Council ay bumoto sa",
   "knox.072dc887": ", mabilis na tumataas",
   "knox.07f6d49b": "puntos o higit pa ay Good,",
   "knox.0905a81e": "Pool sa fishing map ng ODNR: 1100 ft. Walang USGS o Corps gauge na nagpo-post ng lebel o temperatura ng tubig ng lawang ito, kaya walang live na reading na maipapakita.",
@@ -48,12 +49,14 @@
   "knox.5370c168": "(tatlong tuldok)",
   "knox.546d378a": ", mula sa USGS gauge ng lawang ito kung mayroon itong ulat.",
   "knox.5610f4f5": "Gabay sa mapa",
+  "knox.56c8d0ec": "Paparating na ang pagbabago ng panuntunan ng bass.",
   "knox.56f508b5": ", ang pagbabago sa nakaraang 3 oras sa",
   "knox.5c352c0c": ": walang USGS o Corps gauge na nagpo-post para sa Knox Lake (nasa ilog ang USGS gauge sa Kokosing River, hindi sa lawa), kaya hindi available ang nasa puwesto ng lebel at temp. Walang tinantiya.",
   "knox.5cba4b24": ". Dahan-dahang bumababa",
   "knox.6df2b200": "Ang Bite ay sariling tantiya ng site na ito, hindi agham ng pangingisda at hindi forecast. Nagdaragdag ito ng puntos mula sa mga reading na nasa pahinang ito na.",
   "knox.6e6b02b1": "Ginagamit mo ang app. Gumagana pa rin ang mga pahinang nabuksan mo kahit walang signal.",
   "knox.6ee2f669": "Marina at pangunahing ramp sa Armentrout Road at isang ramp sa itaas na bahagi ng lawa. Carry-in access sa silangang bahagi.",
+  "knox.70158bea": "Paglabas ng balita ODNR",
   "knox.716520d0": ", mabilis na bumababa",
   "knox.7321b4ce": "I-tap ang Add.",
   "knox.74875b11": "o higit sa",
@@ -70,6 +73,7 @@
   "knox.90468774": "Pampublikong boat ramp",
   "knox.93e91965": "NWS station ng lawa",
   "knox.93ef0dd8": "Ang",
+  "knox.960aa84d": "upang ibagsak ang panuntunang iyon; mula sa",
   "knox.96bb7bdb": "ang Share icon",
   "knox.97f2142c": "iPhone",
   "knox.9b03b878": "Magtatanong muna ang browser mo bago ito idagdag.",
@@ -81,8 +85,10 @@
   "knox.a7fa610c": "Buksan ang log",
   "knox.a8d4cf97": ". Ang steady ay nasa loob ng",
   "knox.a9f3ee46": "mapa na may mga boat ramp",
+  "knox.b05b2208": "Knox Lake ay pumupunta sa statewide 5 sa isang araw, 12″ minimum (",
   "knox.b2f53719": "inHg o higit pa.",
   "knox.b83bf8c4": "Tingnan ang mga species",
+  "knox.bbd50a1e": "Hindi opisyal na sentro ng pangingisda sa Ohio na may night-dock na atmosphere: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake Deer Creek Lake Madison Lake Knox Lake Lake, Clear Fork Reservoir, Seneca Lake Lake Logan, Dillon Lake Lake, Salt Fork Lake Logan, Burr Oak Lake Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Lake ng Nimisila Reservoir Cowan Lake, Tappan Acton Lake, Piedmont Lake Tappan Lake, Clendening Lake Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake at Wellington Upground Reservoir",
   "knox.bd2d60bc": "ODNR, Knox Lake Fishing Area",
   "knox.bfa17ff0": "Mga pahina ng species na may paalala sa limit mula sa mga patakaran ng ODNR 2026–27",
   "knox.c0908888": "Isang halimbawang log entry, may markang",
@@ -109,7 +115,6 @@
   "knox.f6da20d9": "Walang pampublikong gauge ng lebel ng lawa o temperatura ng tubig",
   "knox.f82eb2f1": "AM o PM",
   "knox.f928db34": "Walang pampublikong gauge ng lebel ng lawa",
-  "knox.f9bb7357": "Kanselahin ang paalala",
-  "knox.fa4885e0": "Hindi opisyal na hub ng pangingisda sa Ohio na may dating ng pantalan sa gabi: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton at Leesville Lake"
+  "knox.f9bb7357": "Kanselahin ang paalala"
  }
 }

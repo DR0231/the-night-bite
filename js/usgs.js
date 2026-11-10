@@ -4,6 +4,10 @@
  * WaterServices IV API only as a fallback until it is switched off (Feb. 22, 2027).
  * Site: 03228400 (Hoover Reservoir at Central College, OH).
  * Human lead: "892.97 ft · 83°F · ~1.0 ft below full pool"
+ * Lakes with only a Corps outflow water temperature (pool.outflow: Alum Creek, Deer Creek Lake) read
+ * "886.45 ft · 60°F outflow · ~1.6 ft below full pool": always labelled outflow, never lake surface temperature, and
+ * never shared with the bite rating (window.NightBiteWaterF and nb:usgs carry lake surface temperature only).
+ * Lakes with only a Corps temperature profile (pool.profile) say so; no number is shown as live.
  * On failure: keeps the last reading on the card (the last live one saved on this phone, or the snapshot baked into
  * the page) with its Checked time and says the refresh failed; only a page with no reading at all says
  * “unavailable, check USGS”. #correction-line carries data-source="live|saved|snapshot" and data-refresh-failed,
@@ -22,6 +26,8 @@
   var MAP_POOL_FT = LP ? LP.fullPool : 894;
   var SRC_NAME = (LP && LP.srcName) || "USGS";
   var CWMS = !!(LP && LP.src === "cwms");
+  var OUTFLOW = (LP && LP.outflow) || null;   // Corps outflow water temperature, labelled outflow
+  var PROFILE = (LP && LP.profile) || null;   // Corps temperature profile only (dated, not live)
   var GAUGE_URL = (LP && LP.gaugeUrl) ||
     "https://waterdata.usgs.gov/monitoring-location/USGS-03228400/";
   var LS = window.NightBiteLakes;
@@ -73,14 +79,15 @@
     return Math.round(((c * 9) / 5 + 32) * 10) / 10;
   }
 
-  function humanLead(poolFt, tempF) {
+  function humanLead(poolFt, tempF, outflow) {
     var poolStr = (Math.round(poolFt * 100) / 100).toFixed(2);
     var delta = Math.abs(MAP_POOL_FT - poolFt);
     var deltaStr = (Math.round(delta * 10) / 10).toFixed(1);
     var rel = poolFt > MAP_POOL_FT ? "above" : "below";
     var tempPart =
       typeof tempF === "number" && isFinite(tempF)
-        ? Math.round(tempF) + "°F"
+        ? Math.round(tempF) + "°F" + (outflow ? " outflow" : "")
+        : PROFILE ? "Corps profile " + PROFILE.short   // dated profile, named, never a live reading
         : "no temp";
     return (
       poolStr +
@@ -112,14 +119,15 @@
     }
   }
 
-  function applyPoolAndTemp(pool, temp) {
+  function applyPoolAndTemp(pool, temp, out) {
     var poolFt = pool && pool.value;
     var tempC = temp && temp.value;
     var tempF =
       typeof tempC === "number" && isFinite(tempC) ? cToF(tempC) : null;
+    var outF = tempF === null && out && typeof out.f === "number" && isFinite(out.f) ? out.f : null;
 
     if (lineEl && typeof poolFt === "number" && isFinite(poolFt)) {
-      lineEl.textContent = humanLead(poolFt, tempF);
+      lineEl.textContent = humanLead(poolFt, tempF !== null ? tempF : outF, outF !== null);
       lineEl.removeAttribute("data-live-failed");
     } else if (lineEl && tempF !== null) {
       // temp only — keep pool from static HTML if present; do not invent pool
@@ -156,9 +164,15 @@
         "\">" +
         (whenTemp || when) +
         "</time>";
+    } else if (tempEl && outF !== null) {
+      // outflow water temperature from the Corps: labelled outflow, linked to the Corps project page
+      tempEl.innerHTML =
+        "<strong>" + outF + " °F</strong> outflow (" + out.c.toFixed(1) + " °C) · <time datetime=\"" +
+        String(out.dateTime).replace(/"/g, "") + "\">" + (formatEt(out.dateTime) || when) + "</time> · " +
+        '<a href="' + OUTFLOW.url + '" target="_blank" rel="noopener">USACE outflow gauge</a>';
     }
 
-    // share the water temp with the conditions card ("Tonight's bite")
+    // share the water temp (lake surface only: an outflow reading is never passed on) with the conditions card ("Tonight's bite")
     if (tempF !== null) {
       window.NightBiteWaterF = tempF;
       try { document.dispatchEvent(new CustomEvent("nb:usgs", { detail: { tempF: tempF, at: temp.dateTime } })); } catch (e) {}
@@ -182,7 +196,7 @@
     var at = null;
     var src = "snapshot";
     if (saved && saved.pool && new Date(saved.pool.dateTime).valueOf() >= (bakedAt || 0)) {
-      applyPoolAndTemp(saved.pool, saved.temp);
+      applyPoolAndTemp(saved.pool, saved.temp, saved.out);
       at = new Date(saved.pool.dateTime);
       src = "saved";
     } else if (bakedAt && lineEl && !lineEl.hasAttribute("data-live-failed")) {
@@ -202,7 +216,7 @@
   }
 
   // { pool, temp } from the lake's gauge: USGS (Hoover, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake; js/lakes.js picks the API) or the Corps CWMS API (Alum Creek, Delaware Lake)
-  function getReadings() {
+  function getLevel() {
     if (CWMS) {
       return LK.cwms(3).then(function (pts) {
         var last = pts[pts.length - 1];
@@ -214,15 +228,21 @@
       return { pool: r[PARAM_POOL] || null, temp: PARAM_TEMP ? r[PARAM_TEMP] || null : null };
     });
   }
+  // the outflow temp is asked for alongside; if the Corps doesn't answer, the level still shows
+  function getReadings() {
+    var o = OUTFLOW && LK && LK.outflow ? LK.outflow(6).catch(function () { return null; }) : Promise.resolve(null);
+    return Promise.all([getLevel(), o]).then(function (x) { x[0].out = x[1]; return x[0]; });
+  }
 
   function load() {
     getReadings()
       .then(function (r) {
         var pool = r.pool;
         var temp = r.temp;
-        var ok = applyPoolAndTemp(pool, temp);
+        var out = r.out || null;
+        var ok = applyPoolAndTemp(pool, temp, out);
         if (ok) hadLive = true;
-        if (ok && OFF && pool) OFF.save(SAVE_KEY, { pool: pool, temp: temp });
+        if (ok && OFF && pool) OFF.save(SAVE_KEY, { pool: pool, temp: temp, out: out });
         if (ok && lineEl) { lineEl.removeAttribute("data-offline"); lineEl.removeAttribute("data-refresh-failed"); lineEl.setAttribute("data-source", "live"); }
         if (ok && OFF && OFF.isOffline() && pool && statusEl) {
           // the browser answered from its own HTTP cache while offline: say how old it is
@@ -243,10 +263,14 @@
           statusEl.textContent =
             "Live " + SRC_NAME + " refresh updated " + bits.join(" + ") + " (provisional).";
         }
-        if (!PARAM_TEMP && pool && statusEl) {
+        if (!PARAM_TEMP && OUTFLOW && pool && out && statusEl) {
+          statusEl.textContent += " USACE outflow temp updated; it is not lake surface temperature.";   // pg.live_pool_out, one node
+        } else if (!PARAM_TEMP && PROFILE && pool && statusEl) {
+          statusEl.textContent += " No live water temp; the Corps posts a temperature profile.";   // pg.live_pool_prof, one node
+        } else if (!PARAM_TEMP && !OUTFLOW && pool && statusEl) {
           statusEl.textContent += " No public water temp gauge on this lake.";   // pg.live_pool, one node
-        } else if (!pool || !temp) {
-          var miss = !pool ? "pool" : "temp";
+        } else if (!pool || !(temp || out)) {
+          var miss = !pool ? "pool" : OUTFLOW ? "outflow temp" : "temp";
           if (statusEl) {
             // each piece its own text node so js/i18n.js can match it (pg.live_*_p, pg.miss_*)
             statusEl.innerHTML =
@@ -254,8 +278,8 @@
               "</span> · <span>" +
               miss +
               ' unavailable, check</span> <a href="' +
-              GAUGE_URL +
-              '" target="_blank" rel="noopener">' + SRC_NAME + '</a>.';
+              (miss === "outflow temp" ? OUTFLOW.url : GAUGE_URL) +
+              '" target="_blank" rel="noopener">' + (miss === "outflow temp" ? "USACE" : SRC_NAME) + '</a>.';
           }
         }
       })

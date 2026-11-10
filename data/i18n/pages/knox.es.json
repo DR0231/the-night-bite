@@ -5,6 +5,7 @@
   "review": "draft"
  },
  "strings": {
+  "knox.05a30a50": "Hoy en día, los bajos Knox Lake son 5 por día con un mínimo 18″ (2026, 27 reglas). El Consejo de Vida Silvestre de Ohio votó a favor",
   "knox.072dc887": ", subiendo rápido",
   "knox.07f6d49b": "puntos o más es Bueno,",
   "knox.0905a81e": "Nivel del mapa de pesca de ODNR: 1100 ft. Ningún medidor de USGS ni del Corps publica el nivel ni la temperatura del agua de este lago, así que no hay lectura en vivo.",
@@ -48,12 +49,14 @@
   "knox.5370c168": "(tres puntos)",
   "knox.546d378a": ", del medidor USGS de este lago cuando lo reporta.",
   "knox.5610f4f5": "Leyenda del mapa",
+  "knox.56c8d0ec": "Se acerca el cambio en las reglas del bajo.",
   "knox.56f508b5": ", el cambio en las últimas 3 horas en",
   "knox.5c352c0c": ": ningún medidor de USGS ni del Corps publica Knox Lake (el medidor USGS del Kokosing River está en el río, no en el lago), así que las casillas de nivel y temperatura dicen no disponible. No se estima nada.",
   "knox.5cba4b24": ". Bajando despacio",
   "knox.6df2b200": "La Picada es la regla práctica de este sitio, no ciencia pesquera ni un pronóstico. Suma puntos de lecturas que ya están en esta página.",
   "knox.6e6b02b1": "Estás usando la app. Las páginas que ya abriste funcionan sin señal.",
   "knox.6ee2f669": "Marina y rampa principal en Armentrout Road y una rampa en la parte alta del lago. Acceso para embarcaciones a mano en el lado este.",
+  "knox.70158bea": "Comunicado de prensa ODNR",
   "knox.716520d0": ", bajando rápido",
   "knox.7321b4ce": "Toca Añadir.",
   "knox.74875b11": "o más de",
@@ -70,6 +73,7 @@
   "knox.90468774": "Rampa pública para botes",
   "knox.93e91965": "la estación del NWS del lago",
   "knox.93ef0dd8": "El",
+  "knox.960aa84d": "abandonar esa regla; de",
   "knox.96bb7bdb": "el icono de Compartir",
   "knox.97f2142c": "iPhone",
   "knox.9b03b878": "Tu navegador pregunta antes de añadirlo.",
@@ -81,8 +85,10 @@
   "knox.a7fa610c": "Abrir la bitácora",
   "knox.a8d4cf97": ". Estable significa dentro de",
   "knox.a9f3ee46": "mapa con rampas para botes",
+  "knox.b05b2208": "Knox Lake llega al nivel estatal 5 por día, mínimo 12″ (",
   "knox.b2f53719": "inHg o más.",
   "knox.b83bf8c4": "Ver especies",
+  "knox.bbd50a1e": "Centro de pesca no oficial de Ohio con atmósfera de muelle nocturno: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Nimisila Reservoir, Cowan Lake, Acton Lake, Tappan Lake, Piedmont Lake, Clendening Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake y Wellington Upground Reservoir",
   "knox.bd2d60bc": "ODNR, Knox Lake Fishing Area",
   "knox.bfa17ff0": "Páginas de especies con recordatorios de límites de las reglas ODNR 2026–27",
   "knox.c0908888": "Una entrada de ejemplo, marcada",
@@ -109,7 +115,6 @@
   "knox.f6da20d9": "No hay medidor público del nivel ni de la temperatura del agua",
   "knox.f82eb2f1": "AM o PM",
   "knox.f928db34": "No hay medidor público del nivel del lago",
-  "knox.f9bb7357": "Cancelar recordatorio",
-  "knox.fa4885e0": "Centro de pesca no oficial de Ohio con ambiente de muelle nocturno: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton y Leesville Lake"
+  "knox.f9bb7357": "Cancelar recordatorio"
  }
 }

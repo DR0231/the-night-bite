@@ -5,6 +5,7 @@
   "review": "draft"
  },
  "strings": {
+  "knox.05a30a50": "Ngày nay, âm trầm của Knox Lake là 5 mỗi ngày với mức tối thiểu 18″ (quy tắc 2026, 27). Hội đồng Động vật Hoang dã Ohio đã bỏ phiếu về",
   "knox.072dc887": ", tăng nhanh",
   "knox.07f6d49b": "điểm trở lên là Good,",
   "knox.0905a81e": "Mực nước theo bản đồ câu cá ODNR: 1100 ft. Không có trạm đo USGS hay Corps nào công bố mực nước hoặc nhiệt độ nước của hồ này, nên không có số đo trực tiếp để hiển thị.",
@@ -48,12 +49,14 @@
   "knox.5370c168": "(ba chấm)",
   "knox.546d378a": ", từ trạm đo USGS của hồ này nếu có báo số liệu.",
   "knox.5610f4f5": "Chú giải bản đồ",
+  "knox.56c8d0ec": "Sắp có sự thay đổi quy tắc âm trầm.",
   "knox.56f508b5": ", mức thay đổi trong 3 giờ qua tại",
   "knox.5c352c0c": ": không có trạm đo USGS hay Corps nào cho Knox Lake (trạm đo USGS Kokosing River nằm trên sông, không phải trên hồ), nên ô mực nước và nhiệt độ ghi không có. Không có gì là ước tính.",
   "knox.5cba4b24": ". Giảm chậm",
   "knox.6df2b200": "The Bite là cách ước lượng riêng của trang này, không phải khoa học câu cá và không phải dự báo. Nó cộng điểm từ các số đo đã có trên trang này.",
   "knox.6e6b02b1": "Bạn đang dùng ứng dụng. Các trang bạn đã mở vẫn dùng được khi không có sóng.",
   "knox.6ee2f669": "Bến thuyền và bến hạ thuyền chính trên Armentrout Road, và một bến ở hồ phía trên. Lối hạ thuyền khiêng tay ở phía đông.",
+  "knox.70158bea": "Bản tin ODNR",
   "knox.716520d0": ", giảm nhanh",
   "knox.7321b4ce": "Chạm Thêm.",
   "knox.74875b11": "hoặc trên",
@@ -70,6 +73,7 @@
   "knox.90468774": "Bến hạ thuyền công cộng",
   "knox.93e91965": "trạm NWS của hồ",
   "knox.93ef0dd8": "Theo",
+  "knox.960aa84d": "bỏ quy tắc đó; từ",
   "knox.96bb7bdb": "biểu tượng Chia sẻ",
   "knox.97f2142c": "iPhone",
   "knox.9b03b878": "Trình duyệt sẽ hỏi trước khi thêm.",
@@ -81,8 +85,10 @@
   "knox.a7fa610c": "Mở nhật ký",
   "knox.a8d4cf97": ". Ổn định nghĩa là trong vòng",
   "knox.a9f3ee46": "bản đồ có bến hạ thuyền",
+  "knox.b05b2208": "Knox Lake đạt 5 trên toàn tiểu bang mỗi ngày, tối thiểu 12″ (",
   "knox.b2f53719": "inHg trở lên.",
   "knox.b83bf8c4": "Xem các loài cá",
+  "knox.bbd50a1e": "Trung tâm câu cá không chính thức của Ohio với bầu không khí bến tàu về đêm: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake Delaware Lake Madison Lake, Deer Deer Creek Lake Knox Lake, Madison Seneca Lake, Knox Lake, Clear Fork Reservoir, Dillon Lake, Dillon Lake Logan, Salt Fork Lake, Burr Oak Lake Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake Grand Lake St. Marys, Caesar Creek Lake East Fork Lake CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Hồ Nimisila Reservoir, Cowan Lake, Acton Lake, Tappan Lake, Piedmont Lake, Clendening Lake, Hồ Atwood Lake Charles Mill Lake Pleasant Hill Lake Beach City Lake, Wingfoot Lake East Branch Reservoir, Guilford Lake Highlandtown Lake, Punderson Lake và Wellington Upground Reservoir",
   "knox.bd2d60bc": "ODNR, Knox Lake Fishing Area",
   "knox.bfa17ff0": "Trang loài cá có nhắc nhở giới hạn theo quy định ODNR 2026 đến 2027",
   "knox.c0908888": "Một mục nhật ký ví dụ, có đánh dấu",
@@ -109,7 +115,6 @@
   "knox.f6da20d9": "Không có trạm đo mực nước hồ hay nhiệt độ nước công khai",
   "knox.f82eb2f1": "SA hoặc CH",
   "knox.f928db34": "Không có trạm đo mực nước hồ công khai",
-  "knox.f9bb7357": "Hủy nhắc",
-  "knox.fa4885e0": "Trang câu cá Ohio không chính thức với không khí bến tàu ban đêm: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton và Leesville Lake"
+  "knox.f9bb7357": "Hủy nhắc"
  }
 }

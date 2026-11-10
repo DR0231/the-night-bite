@@ -16,6 +16,7 @@
   "alum.106e9470": "आज रात के NWS पूर्वानुमान में कहीं भी हो तो रेटिंग Tough होगी, अंक चाहे जितने हों।",
   "alum.134e9305": "गरज",
   "alum.13f453a4": "गाड़ी से लगने वाला समय मोटा अंदाज़ा है।",
+  "alum.1787f361": ", बहिर्प्रवाह लेबल किया गया। USACE इसे हर घंटे पोस्ट करता है। यह झील की सतह का तापमान नहीं है, और काटने की रेटिंग इसका उपयोग नहीं करती है।",
   "alum.1828f3d1": "Corps का Alum Creek पेज",
   "alum.1928f95c": "Android",
   "alum.19d18626": "रिमाइंडर का समय",
@@ -26,6 +27,8 @@
   "alum.1f7b4dc0": "ODNR फ़िशिंग मैप @ 888, Corps रैंप, USACE झील स्तर, पूल सुधार।",
   "alum.205a22bf": "सूरज और चाँद के समय आपके फ़ोन पर निकाले जाते हैं, US Naval Observatory से कुछ मिनटों के अंतर में।",
   "alum.23a72ab2": "या जब Install बटन दिखे, उस पर टैप करें।",
+  "alum.240d6c73": "पानी का तापमान कोर बहिर्वाह रीडिंग है",
+  "alum.25af58c8": "USACE Alum Creek परियोजना पृष्ठ",
   "alum.27e90dfa": "पर",
   "alum.2d7eeba9": "खोलें",
   "alum.3429010b": "उत्तरी छोर पर नो वेक · पीने के पानी का जलाशय · लाइसेंस 16+ उम्र पर।",
@@ -45,7 +48,6 @@
   "alum.4c430e7a": "झील का स्तर US Army Corps of Engineers (Huntington District) से आता है, हर 15 मिनट में। यह",
   "alum.4e589220": "और इनमें बदलाव हो सकता है।",
   "alum.4f05cd64": "कैलेंडर में जोड़ें",
-  "alum.5175b841": "झील पर, इसलिए तापमान वाली जगह n/a दिखाती है। कुछ भी अनुमान से नहीं भरा गया।",
   "alum.51a97c82": "ब्राउज़र में खेलें",
   "alum.51cbb35c": "शेयर।",
   "alum.52d5ae90": "(888 − पूल)",
@@ -87,6 +89,7 @@
   "alum.b2f53719": "inHg या ज़्यादा।",
   "alum.b700736b": "Corps of Engineers गेज",
   "alum.b83bf8c4": "मछलियाँ देखें",
+  "alum.bbd50a1e": "नाइट-डॉक वातावरण के साथ अनौपचारिक ओहियो मछली पकड़ने का केंद्र: Hoover, Alum Creek, Buckeye Lake, ओ'शॉघनेसी, Griggs, Indian Lake, Delaware Lake Madison Lake Deer Creek Lake Salt Fork Lake, मैडिसन झील, Knox Lake Dillon Lake क्लियर Mosquito Creek Lake Clear Fork Reservoir, Seneca Lake, Lake Milton Lake Logan West Branch Reservoir Leesville Lake, Caesar Creek Lake Pymatuning Lake Dow Lake Burr Oak Lake Berlin Lake Rocky Fork Lake Grand Lake St. Marys LaDue Reservoir, Paint Creek Lake, East Fork Lake झील, CJ Brown Reservoir Acton Lake, Tappan Lake Portage Lakes Charles Mill Lake Mogadore Reservoir, प्लेज़ेंट हिल Lake Loramie, Beach City Lake Nimisila Reservoir Cowan Lake Atwood Lake, ईस्ट Piedmont Lake East Branch Reservoir, Clendening Lake Guilford Lake, Pleasant Hill Lake Highlandtown Lake, Punderson Lake और Wellington Upground Reservoir Wingfoot Lake",
   "alum.bfa17ff0": "ODNR 2026–27 नियमों से सीमा याद दिलाने वाले मछलियों के पेज",
   "alum.c0908888": "लॉग की एक उदाहरण एंट्री, जिस पर निशान है",
   "alum.c1266ad5": ", इससे ठंडा",
@@ -111,9 +114,7 @@
   "alum.ed4ec706": "Chrome में मेनू पर टैप करें",
   "alum.ef095ca1": ", बीच का कुछ भी",
   "alum.f132d7dd": "रैंप और",
-  "alum.f2eb9a7b": "पानी के तापमान का कोई सार्वजनिक गेज नहीं",
   "alum.f82eb2f1": "AM या PM",
-  "alum.f9bb7357": "रिमाइंडर रद्द करें",
-  "alum.fa4885e0": "रात के घाट वाले माहौल के साथ अनौपचारिक Ohio फ़िशिंग हब: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton और Leesville Lake"
+  "alum.f9bb7357": "रिमाइंडर रद्द करें"
  }
 }

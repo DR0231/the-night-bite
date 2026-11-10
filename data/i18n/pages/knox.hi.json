@@ -5,6 +5,7 @@
   "review": "draft"
  },
  "strings": {
+  "knox.05a30a50": "आज Knox Lake बास 18″ न्यूनतम (2026, 27 नियम) के साथ प्रतिदिन 5 हैं। ओहियो वन्यजीव परिषद ने मतदान किया",
   "knox.072dc887": ", तेज़ी से बढ़ रहा",
   "knox.07f6d49b": "अंक या ज़्यादा Good है,",
   "knox.0905a81e": "ODNR फ़िशिंग मैप पूल: 1100 ft। कोई USGS या Corps गेज इस झील का स्तर या पानी का तापमान नहीं बताता, इसलिए दिखाने को कोई लाइव रीडिंग नहीं है।",
@@ -48,12 +49,14 @@
   "knox.5370c168": "(तीन बिंदु)",
   "knox.546d378a": ", इस झील के USGS गेज से, जहाँ वह बताता है।",
   "knox.5610f4f5": "मैप की कुंजी",
+  "knox.56c8d0ec": "बास नियम में बदलाव आ रहा है.",
   "knox.56f508b5": ", पिछले 3 घंटों का बदलाव, यहाँ:",
   "knox.5c352c0c": ": कोई USGS या Corps गेज Knox Lake का डेटा नहीं देता (USGS का Kokosing River गेज नदी पर है, झील पर नहीं), इसलिए स्तर और तापमान वाली जगहें \"उपलब्ध नहीं\" दिखाती हैं। कुछ भी अनुमान से नहीं भरा गया।",
   "knox.5cba4b24": "। धीरे गिर रहा",
   "knox.6df2b200": "The Bite इस साइट का अपना अंदाज़ा है, न मछली विज्ञान, न पूर्वानुमान। यह इसी पेज पर पहले से मौजूद रीडिंग से अंक जोड़ता है।",
   "knox.6e6b02b1": "आप ऐप इस्तेमाल कर रहे हैं। जो पेज आपने खोले हैं, वे बिना सिग्नल के भी चलते हैं।",
   "knox.6ee2f669": "Armentrout Road पर मरीना और मुख्य रैंप, और ऊपरी झील का एक रैंप। पूर्व तरफ़ हाथ से नाव ले जाने की पहुँच।",
+  "knox.70158bea": "ODNR समाचार विज्ञप्ति",
   "knox.716520d0": ", तेज़ी से गिर रहा",
   "knox.7321b4ce": "Add पर टैप करें।",
   "knox.74875b11": "या इससे ज़्यादा",
@@ -70,6 +73,7 @@
   "knox.90468774": "सार्वजनिक बोट रैंप",
   "knox.93e91965": "झील का NWS स्टेशन",
   "knox.93ef0dd8": "यह",
+  "knox.960aa84d": "उस नियम को छोड़ना; से",
   "knox.96bb7bdb": "शेयर आइकन",
   "knox.97f2142c": "iPhone",
   "knox.9b03b878": "जोड़ने से पहले आपका ब्राउज़र पूछेगा।",
@@ -81,8 +85,10 @@
   "knox.a7fa610c": "लॉग खोलें",
   "knox.a8d4cf97": "। स्थिर का मतलब है इतने के भीतर:",
   "knox.a9f3ee46": "बोट रैंप वाला मैप",
+  "knox.b05b2208": "Knox Lake पूरे राज्य में प्रतिदिन 5 जाती है, न्यूनतम 12″ (",
   "knox.b2f53719": "inHg या ज़्यादा।",
   "knox.b83bf8c4": "मछलियाँ देखें",
+  "knox.bbd50a1e": "नाइट-डॉक वातावरण के साथ अनौपचारिक ओहियो मछली पकड़ने का केंद्र: Hoover, Alum Creek, Buckeye Lake, ओ'शॉघनेसी, Griggs, Indian Lake, Delaware Lake Madison Lake Deer Creek Lake Salt Fork Lake, मैडिसन झील, Knox Lake Dillon Lake क्लियर Mosquito Creek Lake Clear Fork Reservoir, Seneca Lake, Lake Milton Lake Logan West Branch Reservoir Leesville Lake, Caesar Creek Lake Pymatuning Lake Dow Lake Burr Oak Lake Berlin Lake Rocky Fork Lake Grand Lake St. Marys LaDue Reservoir, Paint Creek Lake, East Fork Lake झील, CJ Brown Reservoir Acton Lake, Tappan Lake Portage Lakes Charles Mill Lake Mogadore Reservoir, प्लेज़ेंट हिल Lake Loramie, Beach City Lake Nimisila Reservoir Cowan Lake Atwood Lake, ईस्ट Piedmont Lake East Branch Reservoir, Clendening Lake Guilford Lake, Pleasant Hill Lake Highlandtown Lake, Punderson Lake और Wellington Upground Reservoir Wingfoot Lake",
   "knox.bd2d60bc": "ODNR, Knox Lake Fishing Area",
   "knox.bfa17ff0": "ODNR 2026–27 नियमों से सीमा याद दिलाने वाले मछलियों के पेज",
   "knox.c0908888": "लॉग की एक उदाहरण एंट्री, जिस पर निशान है",
@@ -109,7 +115,6 @@
   "knox.f6da20d9": "झील स्तर या पानी के तापमान का कोई सार्वजनिक गेज नहीं",
   "knox.f82eb2f1": "AM या PM",
   "knox.f928db34": "झील स्तर का कोई सार्वजनिक गेज नहीं",
-  "knox.f9bb7357": "रिमाइंडर रद्द करें",
-  "knox.fa4885e0": "रात के घाट वाले माहौल के साथ अनौपचारिक Ohio फ़िशिंग हब: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton और Leesville Lake"
+  "knox.f9bb7357": "रिमाइंडर रद्द करें"
  }
 }

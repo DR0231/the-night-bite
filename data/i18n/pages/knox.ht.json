@@ -5,6 +5,7 @@
   "review": "draft"
  },
  "strings": {
+  "knox.05a30a50": "Jodi a Knox Lake bas se 5 yon jou ak yon minimòm 18″ (2026, 27 règ). Ohio Wildlife Council te vote",
   "knox.072dc887": ", k ap monte vit",
   "knox.07f6d49b": "pwen oswa plis se Bon,",
   "knox.0905a81e": "Nivo kat pèch ODNR: 1100 ft. Okenn jòj USGS oswa Corps pa poste nivo oswa tanp dlo lak sa a, kidonk pa gen done an dirèk pou montre.",
@@ -48,12 +49,14 @@
   "knox.5370c168": "(twa pwen)",
   "knox.546d378a": ", nan jòj USGS lak sa a kote youn bay li.",
   "knox.5610f4f5": "Lejann kat la",
+  "knox.56c8d0ec": "Chanjman règ bas ap vini.",
   "knox.56f508b5": ", chanjman nan 3 dènye èdtan yo nan",
   "knox.5c352c0c": ": okenn jòj USGS oswa Corps pa poste Knox Lake (jòj USGS Kokosing River a sou rivyè a, pa sou lak la), kidonk kaz nivo ak tanp yo di pa disponib. Nou pa estime anyen.",
   "knox.5cba4b24": ". K ap desann dousman",
   "knox.6df2b200": "Mòde a se pwòp règ pratik sit sa a, se pa syans lapèch ni previzyon. Li adisyone pwen ki soti nan done ki deja sou paj sa a.",
   "knox.6e6b02b1": "W ap itilize app la. Paj ou te deja louvri yo mache san siyal.",
   "knox.6ee2f669": "Marina ak ranp prensipal sou Armentrout Road ak yon ranp nan pati anwo lak la. Aksè pou pote bato alamen nan bò lès.",
+  "knox.70158bea": "Nouvèl ODNR",
   "knox.716520d0": ", k ap desann vit",
   "knox.7321b4ce": "Tape Ajoute.",
   "knox.74875b11": "oswa plis pase",
@@ -70,6 +73,7 @@
   "knox.90468774": "Ranp piblik pou bato",
   "knox.93e91965": "estasyon NWS lak la",
   "knox.93ef0dd8": "The",
+  "knox.960aa84d": "lage règ sa a; soti nan",
   "knox.96bb7bdb": "ikòn Pataje a",
   "knox.97f2142c": "iPhone",
   "knox.9b03b878": "Navigatè w la mande anvan l ajoute l.",
@@ -81,8 +85,10 @@
   "knox.a7fa610c": "Louvri jounal la",
   "knox.a8d4cf97": ". Estab vle di nan",
   "knox.a9f3ee46": "kat ak ranp pou bato",
+  "knox.b05b2208": "Knox Lake ale nan tout eta a 5 pa jou, 12″ minimòm (",
   "knox.b2f53719": "inHg oswa plis.",
   "knox.b83bf8c4": "Gade espès yo",
+  "knox.bbd50a1e": "Mwaye lapèch ki pa ofisyèl Ohio ak atmosfè waf lannwit: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake Burr Oak Lake Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir Lake Loramie Nimisila Reservoir Lake Loramie, Reservoir Cowan Lake Acton Lake, Tappan Lake, Piedmont Lake, Clendening Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake ak Wellington Upground Reservoir",
   "knox.bd2d60bc": "ODNR, Knox Lake Fishing Area",
   "knox.bfa17ff0": "Paj espès ak rapèl limit ki soti nan règ ODNR 2026–27 yo",
   "knox.c0908888": "Yon egzanp antre nan jounal la, make",
@@ -109,7 +115,6 @@
   "knox.f6da20d9": "Pa gen jòj piblik pou nivo oswa tanp dlo a",
   "knox.f82eb2f1": "AM oswa PM",
   "knox.f928db34": "Pa gen jòj piblik pou nivo lak la",
-  "knox.f9bb7357": "Anile rapèl la",
-  "knox.fa4885e0": "Sant lapèch Ohio ki pa ofisyèl, ak anbyans waf lannwit: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton ak Leesville Lake"
+  "knox.f9bb7357": "Anile rapèl la"
  }
 }

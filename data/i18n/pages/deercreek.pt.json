@@ -18,6 +18,7 @@
   "deercreek.134e9305": "Trovoada",
   "deercreek.13f453a4": "Os tempos de carro são aproximados.",
   "deercreek.1405c071": "Mapa do contorno de Deer Creek Lake com marcadores de rampas públicas e lojas de isca. Cada marcador é um botão abaixo.",
+  "deercreek.1787f361": ", rotulado como saída. USACE publica a cada hora. Não é a temperatura da superfície do lago e a classificação de mordida não a utiliza.",
   "deercreek.1928f95c": "Android",
   "deercreek.19d18626": "Horário do lembrete",
   "deercreek.1b742647": "Abaixo da barragem, acesso pela margem",
@@ -28,6 +29,7 @@
   "deercreek.205a22bf": "Os horários do sol e da lua são calculados no seu celular, com poucos minutos de diferença do US Naval Observatory.",
   "deercreek.22a689af": "(810.5 − cota)",
   "deercreek.23a72ab2": "Ou toque no botão Instalar quando aparecer.",
+  "deercreek.240d6c73": "A temperatura da água é a leitura do fluxo de saída do Corpo",
   "deercreek.27e90dfa": "às",
   "deercreek.2d7eeba9": "Abra o",
   "deercreek.37b80ed5": "No Safari, toque em",
@@ -49,6 +51,7 @@
   "deercreek.51a97c82": "Jogar no navegador",
   "deercreek.51cbb35c": "Compartilhar.",
   "deercreek.5370c168": "(três pontos)",
+  "deercreek.53aeedc7": "Página do projeto USACE Deer Creek",
   "deercreek.546d378a": ", do medidor USGS deste lago quando ele informa.",
   "deercreek.5610f4f5": "Legenda do mapa",
   "deercreek.56f508b5": ", a mudança nas últimas 3 horas em",
@@ -82,7 +85,6 @@
   "deercreek.a39224a8": "ODNR, rebaixamentos de inverno",
   "deercreek.a4a6d123": "Avisar-me neste celular",
   "deercreek.a63ba107": "Minutos, de 5 em 5",
-  "deercreek.a7cdf779": "no lago (o Corps publica só a temperatura de vazão abaixo da barragem), por isso o campo de temp. diz n/d. Nada é estimado.",
   "deercreek.a7fa610c": "Abrir o diário",
   "deercreek.a8d4cf97": ". Estável significa dentro de",
   "deercreek.a968dd29": "Página do Corps sobre Deer Creek Lake",
@@ -91,6 +93,7 @@
   "deercreek.b57ddad9": "de 1º de out. a 30 de nov. (reenchimento de 1º de abr. a 15 de maio), definido pelo Corps, e diz que o nível pode mudar até 20 ft.",
   "deercreek.b700736b": "Medidor do Corps of Engineers",
   "deercreek.b83bf8c4": "Ver espécies",
+  "deercreek.bbd50a1e": "Centro de pesca não oficial de Ohio com atmosfera noturna: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, reservatório Nimisila, Cowan Lake, Acton Lake Tappan Lake Piedmont Lake Clendening Lake Atwood Lake, Lago Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake e Nimisila Reservoir Wellington Upground Reservoir",
   "deercreek.bfa17ff0": "Páginas de espécies com lembretes de limites das regras ODNR 2026–27",
   "deercreek.c0908888": "Um exemplo de registro, marcado",
   "deercreek.c1266ad5": ", mais fria que",
@@ -114,9 +117,7 @@
   "deercreek.ef095ca1": ", qualquer valor entre",
   "deercreek.f132d7dd": "Rampas e",
   "deercreek.f264bcbd": "(ODNR). Confira o BeachGuard de Ohio para alertas antes de nadar.",
-  "deercreek.f2eb9a7b": "Sem medidor público de temperatura da água",
   "deercreek.f82eb2f1": "AM ou PM",
-  "deercreek.f9bb7357": "Cancelar lembrete",
-  "deercreek.fa4885e0": "Central de pesca não oficial de Ohio com clima de cais à noite: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton e Leesville Lake"
+  "deercreek.f9bb7357": "Cancelar lembrete"
  }
 }

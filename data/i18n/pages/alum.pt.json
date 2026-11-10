@@ -16,6 +16,7 @@
   "alum.106e9470": "em qualquer parte da previsão do NWS desta noite deixa Difícil, sejam quais forem os pontos.",
   "alum.134e9305": "Trovoada",
   "alum.13f453a4": "Os tempos de carro são aproximados.",
+  "alum.1787f361": ", rotulado como saída. USACE publica a cada hora. Não é a temperatura da superfície do lago e a classificação de mordida não a utiliza.",
   "alum.1828f3d1": "Página do Corps sobre Alum Creek",
   "alum.1928f95c": "Android",
   "alum.19d18626": "Horário do lembrete",
@@ -26,6 +27,8 @@
   "alum.1f7b4dc0": "Mapa de pesca do ODNR @ 888, rampas do Corps, nível do lago USACE, correção de cota.",
   "alum.205a22bf": "Os horários do sol e da lua são calculados no seu celular, com poucos minutos de diferença do US Naval Observatory.",
   "alum.23a72ab2": "Ou toque no botão Instalar quando aparecer.",
+  "alum.240d6c73": "A temperatura da água é a leitura do fluxo de saída do Corpo",
+  "alum.25af58c8": "Página do projeto USACE Alum Creek",
   "alum.27e90dfa": "às",
   "alum.2d7eeba9": "Abra o",
   "alum.3429010b": "Sem marola no extremo norte · reservatório de água potável · licença a partir de 16 anos.",
@@ -45,7 +48,6 @@
   "alum.4c430e7a": "O nível do lago vem do US Army Corps of Engineers (Huntington District), publicado a cada 15 minutos. Ele é",
   "alum.4e589220": "e podem ser revisados.",
   "alum.4f05cd64": "Adicionar ao calendário",
-  "alum.5175b841": "no lago, então o campo de temperatura mostra n/a. Nada é estimado.",
   "alum.51a97c82": "Jogar no navegador",
   "alum.51cbb35c": "Compartilhar.",
   "alum.52d5ae90": "(888 − cota)",
@@ -87,6 +89,7 @@
   "alum.b2f53719": "inHg ou mais.",
   "alum.b700736b": "Medidor do Corps of Engineers",
   "alum.b83bf8c4": "Ver espécies",
+  "alum.bbd50a1e": "Centro de pesca não oficial de Ohio com atmosfera noturna: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, reservatório Nimisila, Cowan Lake, Acton Lake Tappan Lake Piedmont Lake Clendening Lake Atwood Lake, Lago Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake e Nimisila Reservoir Wellington Upground Reservoir",
   "alum.bfa17ff0": "Páginas de espécies com lembretes de limites das regras ODNR 2026–27",
   "alum.c0908888": "Um exemplo de registro, marcado",
   "alum.c1266ad5": ", mais fria que",
@@ -111,9 +114,7 @@
   "alum.ed4ec706": "No Chrome, toque no menu",
   "alum.ef095ca1": ", qualquer valor entre",
   "alum.f132d7dd": "Rampas e",
-  "alum.f2eb9a7b": "Sem medidor público de temperatura da água",
   "alum.f82eb2f1": "AM ou PM",
-  "alum.f9bb7357": "Cancelar lembrete",
-  "alum.fa4885e0": "Central de pesca não oficial de Ohio com clima de cais à noite: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton e Leesville Lake"
+  "alum.f9bb7357": "Cancelar lembrete"
  }
 }

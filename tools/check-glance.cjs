@@ -31,7 +31,7 @@ async function read(page) {
     const g = document.getElementById('glance'); if (!g) return null;
     const cell = k => { const a = g.querySelector('[data-cell="' + k + '"]'); return a && {
       href: a.getAttribute('href'), target: a.getAttribute('target'), empty: a.hasAttribute('data-empty'), none: a.hasAttribute('data-none'),
-      v: a.querySelector('.glance-value').textContent.trim(), s: a.querySelector('.glance-sub').textContent.trim(),
+      v: a.querySelector('.glance-value').textContent.trim(), s: a.querySelector('.glance-sub').textContent.trim(), l: (a.querySelector('.glance-label') || {}).textContent,
       h: Math.round(a.getBoundingClientRect().height), w: Math.round(a.getBoundingClientRect().width),
       over: [...a.querySelectorAll('.glance-value')].some(e => e.scrollWidth > e.clientWidth + 1) }; };
     const b = g.querySelector('.glance-bite');
@@ -60,7 +60,10 @@ async function read(page) {
       } else {
         check(t + ' level from gauge, links to gauge', /^\d+\.\d+ ft$/.test(r.pool.v) && /waterdata\.usgs\.gov|water\.usace\.army\.mil/.test(r.pool.href || '') && r.pool.target === '_blank', JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
       }
-      if (TEMP.includes(lake)) check(t + ' water temp from USGS, links to gauge', (/^-?\d+ °F$/.test(r.temp.v) || r.temp.v === 'No reading') && /waterdata\.usgs\.gov/.test(r.temp.href || ''), JSON.stringify([r.temp.v, r.temp.s, r.temp.href]));
+      const PL = R.lakes()[lake].pool || {};
+      if (!PL.temp && PL.outflow) check(t + ' outflow temp from USACE, labelled outflow, links to the Corps feed', (/^-?\d+ °F$/.test(r.temp.v) || r.temp.v === 'No reading' || r.temp.v === 'Check gauge') && r.temp.l === 'Outflow temp' && r.temp.href === PL.outflow.url, JSON.stringify([r.temp.l, r.temp.v, r.temp.s, r.temp.href]));
+      else if (!PL.temp && PL.profile) check(t + ' water temp: "Profile only", dated, linked to the Corps profile', r.temp.v === 'Profile only' && r.temp.s === 'Corps, ' + PL.profile.short && r.temp.href === PL.profile.url, JSON.stringify([r.temp.v, r.temp.s, r.temp.href]));
+      else if (TEMP.includes(lake)) check(t + ' water temp from USGS, links to gauge', (/^-?\d+ °F$/.test(r.temp.v) || r.temp.v === 'No reading') && /waterdata\.usgs\.gov/.test(r.temp.href || ''), JSON.stringify([r.temp.v, r.temp.s, r.temp.href]));
       else check(t + ' water temp: "No gauge" state, linked to the pool card note', r.temp.v === 'No gauge' && r.temp.s === 'No public gauge' && /#pool-snapshot$/.test(r.temp.href || ''), JSON.stringify([r.temp.v, r.temp.s, r.temp.href]));
       check(t + ' sunset filled', /^\d{1,2}:\d{2} (AM|PM)( [A-Z][a-z]{2})?$/.test(r.sunset.v.replace(/\s+/g, ' ')), JSON.stringify([r.sunset.v, r.sunset.s, r.sunset.href]));
       check(t + ' wind from NWS, links to NWS page', (/mph|Calm/.test(r.wind.v) || r.wind.v === 'Check NWS') && /forecast\.weather\.gov\/MapClick/.test(r.wind.href || ''), JSON.stringify([r.wind.v, r.wind.s, r.wind.href]));

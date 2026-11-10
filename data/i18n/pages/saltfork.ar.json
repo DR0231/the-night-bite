@@ -33,6 +33,7 @@
   "saltfork.39ba5e3c": "أو أدفأ من",
   "saltfork.3b007e30": "الصيد ليلًا قد يكون خطرًا في العواصف والحر وضعف الرؤية. ارتدِ سترة النجاة عند الحاجة.",
   "saltfork.3dc63132": "إغلاق الخريطة",
+  "saltfork.3f359c5c": "يذهب Salt Fork إلى جميع أنحاء الولاية 5 يوميًا، بحد أدنى 12″ (",
   "saltfork.4024c72d": "· ليس ODNR / City / USGS",
   "saltfork.40354734": "اضغط «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».",
   "saltfork.432ef711": "، من 13 إلى",
@@ -48,6 +49,7 @@
   "saltfork.54828f47": "منسوب الصيف (خطوط كنتورية كل 5 ft، مسح 1998). إذا انخفضت البحيرة، فالماء الفعلي أضحل مما هو مطبوع.",
   "saltfork.5610f4f5": "مفتاح الخريطة",
   "saltfork.56a1fc16": "Muskie و saugeye و crappie و bass و white bass: الموسم والمكان والحدود والمعدات.",
+  "saltfork.56c8d0ec": "تغيير قاعدة باس القادمة.",
   "saltfork.56f508b5": "، التغير خلال آخر 3 ساعات عند",
   "saltfork.5aaa995d": "). راجع BeachGuard في Ohio للتحذيرات قبل السباحة.",
   "saltfork.5af92387": "ساعات المتنزه الحكومي من 6:00 إلى 23:00؛ ويسمح ODNR بالترفيه المشروع، مثل الصيد، خارج هذه الساعات. المصدر:",
@@ -55,6 +57,7 @@
   "saltfork.67377df5": "، مع مناطق معلَّمة للسرعة والتزلج (",
   "saltfork.6df2b200": "The Bite قاعدة تقريبية خاصة بهذا الموقع، وليست علم صيد ولا توقعًا. تجمع النقاط من القراءات الموجودة في هذه الصفحة.",
   "saltfork.6e6b02b1": "أنت تستخدم التطبيق. الصفحات التي فتحتها تعمل حتى بلا إشارة.",
+  "saltfork.70158bea": "بيان صحفي ODNR",
   "saltfork.716520d0": "، انخفاض سريع",
   "saltfork.7321b4ce": "اضغط إضافة.",
   "saltfork.74875b11": "أو أكثر من",
@@ -68,9 +71,11 @@
   "saltfork.86df14bd": "، أكثر من 18 mph",
   "saltfork.88c5e801": "خريطة الصيد من ODNR عند 800، منحدرات المرسى، مناطق السرعة، لا يوجد مقياس عام للمنسوب.",
   "saltfork.8ae9ad38": "لم تُحمَّل الرياح بعد",
+  "saltfork.8ea1575d": "). الكرابي يبقى بمعدل 30 في اليوم، بحد أدنى 9″.",
   "saltfork.90468774": "منحدر قوارب عام",
   "saltfork.93e91965": "محطة NWS الخاصة بالبحيرة",
   "saltfork.93ef0dd8": "إن",
+  "saltfork.960aa84d": "لإسقاط تلك القاعدة؛ من",
   "saltfork.96bb7bdb": "أيقونة المشاركة",
   "saltfork.97f2142c": "iPhone",
   "saltfork.9b03b878": "يسألك متصفحك قبل إضافته.",
@@ -86,6 +91,7 @@
   "saltfork.b2f53719": "inHg أو أكثر.",
   "saltfork.b83bf8c4": "تصفح الأنواع",
   "saltfork.bafd8678": "قوة محرك غير محدودة، مع مناطق معلَّمة للسرعة والتزلج.",
+  "saltfork.bbd50a1e": "مركز صيد غير رسمي في أوهايو مع أجواء الرصيف الليلي: Hoover ، Alum Creek ، Buckeye Lake ، أوشوغنيسي، Griggs ، Indian Lake ، Delaware Lake ، Deer Creek Lake ، Madison Lake ، Knox Lake ، Clear Fork Reservoir ، Seneca Lake ، Dillon Lake Salt Fork Lake Lake Logan ، بحيرة سالت فورك، Burr Oak Lake ، Dow Lake ، Mosquito Creek Lake., Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Nimisila Reservoir, بحيرة Cowan Lake, Acton Lake ، Tappan Lake ، Piedmont Lake ، Clendening Lake ، Atwood Lake ، Charles Mill Lake ، Pleasant Hill Lake ، Beach City Lake ، Wingfoot Lake ، East Branch Reservoir ، Guilford Lake ، Highlandtown Lake ، Punderson Lake Wellington Upground Reservoir",
   "saltfork.bc7737d0": "مناطق السرعة والتزلج · 4 bass في اليوم، مقسمة حسب الحجم · الرخصة من عمر 16+.",
   "saltfork.bfa17ff0": "صفحات الأنواع مع تذكيرات الحدود من قواعد ODNR 2026–27",
   "saltfork.c0908888": "مثال واحد في السجل، مُعلَّم",
@@ -111,6 +117,6 @@
   "saltfork.f82eb2f1": "AM أو PM",
   "saltfork.f928db34": "لا يوجد مقياس عام لمنسوب البحيرة",
   "saltfork.f9bb7357": "إلغاء التذكير",
-  "saltfork.fa4885e0": "مركز صيد غير رسمي في Ohio بأجواء الرصيف الليلي: Hoover، Alum Creek، Buckeye Lake، O’Shaughnessy، Griggs، Indian Lake، Delaware Lake، Deer Creek Lake، Madison Lake، Knox Lake، Clear Fork Reservoir، Seneca Lake، Dillon Lake، Lake Logan، Salt Fork Lake، Burr Oak Lake، Dow Lake، Mosquito Creek Lake، Berlin Lake، West Branch Reservoir، Pymatuning Lake، Lake Milton و Leesville Lake"
+  "saltfork.fa4234f2": "اليوم، يوجد 4 باس سالت فورك في اليوم: لا يزيد عن 2 تحت 15″ و 2 عند 15″ أو أكثر (2026, 27 قاعدة). صوت مجلس الحياة البرية في ولاية أوهايو على"
  }
 }

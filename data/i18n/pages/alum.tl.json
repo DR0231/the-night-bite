@@ -16,6 +16,7 @@
   "alum.106e9470": "saanman sa NWS forecast ngayong gabi ay ginagawa itong Tough, anuman ang puntos.",
   "alum.134e9305": "Kulog",
   "alum.13f453a4": "Tantiya lang ang oras ng biyahe.",
+  "alum.1787f361": ", may label na outflow. Pino-post ito USACE bawat oras. Hindi ito temperatura sa ibabaw ng lawa, at hindi ito ginagamit ng rating ng kagat.",
   "alum.1828f3d1": "Pahina ng Corps para sa Alum Creek",
   "alum.1928f95c": "Android",
   "alum.19d18626": "Oras ng paalala",
@@ -26,6 +27,8 @@
   "alum.1f7b4dc0": "Fishing map ng ODNR @ 888, mga ramp ng Corps, lebel ng lawa mula sa USACE, pagwawasto ng pool.",
   "alum.205a22bf": "Kinukuwenta sa telepono mo ang oras ng araw at buwan, sa loob ng ilang minuto ng US Naval Observatory.",
   "alum.23a72ab2": "O i-tap ang Install button kapag lumabas ito.",
+  "alum.240d6c73": "Ang temperatura ng tubig ay ang pagbabasa ng Corps outflow",
+  "alum.25af58c8": "Pahina ng proyekto USACE Alum Creek",
   "alum.27e90dfa": "sa",
   "alum.2d7eeba9": "Buksan ang",
   "alum.3429010b": "No wake sa hilagang dulo · reservoir ng inuming tubig · lisensiya sa edad 16 pataas.",
@@ -45,7 +48,6 @@
   "alum.4c430e7a": "Galing ang lebel ng lawa sa US Army Corps of Engineers (Huntington District), ipinopost tuwing 15 minuto. Ito ay",
   "alum.4e589220": "at maaaring baguhin.",
   "alum.4f05cd64": "Idagdag sa kalendaryo",
-  "alum.5175b841": "sa lawa, kaya n/a ang nasa puwesto ng temperatura. Walang tinantiya.",
   "alum.51a97c82": "Laruin sa browser",
   "alum.51cbb35c": "Share.",
   "alum.52d5ae90": "(888 − pool)",
@@ -87,6 +89,7 @@
   "alum.b2f53719": "inHg o higit pa.",
   "alum.b700736b": "Gauge ng Corps of Engineers",
   "alum.b83bf8c4": "Tingnan ang mga species",
+  "alum.bbd50a1e": "Hindi opisyal na sentro ng pangingisda sa Ohio na may night-dock na atmosphere: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake Deer Creek Lake Madison Lake Knox Lake Lake, Clear Fork Reservoir, Seneca Lake Lake Logan, Dillon Lake Lake, Salt Fork Lake Logan, Burr Oak Lake Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Lake ng Nimisila Reservoir Cowan Lake, Tappan Acton Lake, Piedmont Lake Tappan Lake, Clendening Lake Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake at Wellington Upground Reservoir",
   "alum.bfa17ff0": "Mga pahina ng species na may paalala sa limit mula sa mga patakaran ng ODNR 2026–27",
   "alum.c0908888": "Isang halimbawang log entry, may markang",
   "alum.c1266ad5": ", mas malamig sa",
@@ -111,9 +114,7 @@
   "alum.ed4ec706": "Sa Chrome, i-tap ang menu",
   "alum.ef095ca1": ", anumang nasa pagitan",
   "alum.f132d7dd": "Mga ramp at",
-  "alum.f2eb9a7b": "Walang pampublikong gauge ng temperatura ng tubig",
   "alum.f82eb2f1": "AM o PM",
-  "alum.f9bb7357": "Kanselahin ang paalala",
-  "alum.fa4885e0": "Hindi opisyal na hub ng pangingisda sa Ohio na may dating ng pantalan sa gabi: Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton at Leesville Lake"
+  "alum.f9bb7357": "Kanselahin ang paalala"
  }
 }

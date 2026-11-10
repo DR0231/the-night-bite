@@ -18,6 +18,7 @@
   "deercreek.134e9305": "Orage",
   "deercreek.13f453a4": "Les temps de trajet sont approximatifs.",
   "deercreek.1405c071": "Carte du contour de Deer Creek Lake avec des repères pour les rampes publiques et les boutiques d’appâts. Chaque repère est un bouton ci-dessous.",
+  "deercreek.1787f361": ", étiqueté sortie. USACE le publie toutes les heures. Il ne s’agit pas de la température de surface du lac et l’indice de morsure ne l’utilise pas.",
   "deercreek.1928f95c": "Android",
   "deercreek.19d18626": "Heure du rappel",
   "deercreek.1b742647": "Sous le barrage, accès depuis la rive",
@@ -28,6 +29,7 @@
   "deercreek.205a22bf": "Les heures du soleil et de la lune sont calculées sur votre téléphone, à quelques minutes près de l’US Naval Observatory.",
   "deercreek.22a689af": "(810.5 − niveau)",
   "deercreek.23a72ab2": "Ou touchez le bouton Installer quand il apparaît.",
+  "deercreek.240d6c73": "La température de l'eau est la lecture du débit de sortie du corps",
   "deercreek.27e90dfa": "à",
   "deercreek.2d7eeba9": "Ouvrez la",
   "deercreek.37b80ed5": "Dans Safari, touchez",
@@ -49,6 +51,7 @@
   "deercreek.51a97c82": "Jouer dans le navigateur",
   "deercreek.51cbb35c": "Partager.",
   "deercreek.5370c168": "(trois points)",
+  "deercreek.53aeedc7": "Page du projet USACE Deer Creek",
   "deercreek.546d378a": ", depuis la station USGS de ce lac quand elle la fournit.",
   "deercreek.5610f4f5": "Légende de la carte",
   "deercreek.56f508b5": ", la variation sur les 3 dernières heures à",
@@ -82,7 +85,6 @@
   "deercreek.a39224a8": "ODNR, abaissements hivernaux",
   "deercreek.a4a6d123": "M’avertir sur ce téléphone",
   "deercreek.a63ba107": "Minutes, par pas de 5",
-  "deercreek.a7cdf779": "sur le lac (le Corps publie seulement la température de sortie sous le barrage), donc la case temp. indique n/d. Rien n’est estimé.",
   "deercreek.a7fa610c": "Ouvrir le carnet",
   "deercreek.a8d4cf97": ". Stable signifie à moins de",
   "deercreek.a968dd29": "Page du Corps sur Deer Creek Lake",
@@ -91,6 +93,7 @@
   "deercreek.b57ddad9": "du 1er oct. au 30 nov. (remplissage du 1er avr. au 15 mai), décidé par le Corps, et précise que le niveau peut varier jusqu’à 20 ft.",
   "deercreek.b700736b": "Jauge du Corps of Engineers",
   "deercreek.b83bf8c4": "Voir les espèces",
+  "deercreek.bbd50a1e": "Centre de pêche non officiel de l'Ohio avec une atmosphère de quai de nuit: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake Deer Creek Lake Madison Lake Knox Lake Lake, Clear Fork Reservoir, Seneca Lake Lake, Dillon Lake Lake Logan, Salt Fork Lake Burr Oak Lake Dow Lake Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, CJ Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Nimisila Reservoir, Cowan Lake, Acton Lake, Tappan Lake, lac Piedmont Lake, Atwood Lake Clendening Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake et Wellington Upground Reservoir",
   "deercreek.bfa17ff0": "Pages espèces avec rappels de limites des règles ODNR 2026–27",
   "deercreek.c0908888": "Un exemple d’entrée du carnet, marqué",
   "deercreek.c1266ad5": ", plus froide que",
@@ -114,9 +117,7 @@
   "deercreek.ef095ca1": ", tout ce qui est entre",
   "deercreek.f132d7dd": "Rampes et",
   "deercreek.f264bcbd": "(ODNR). Consultez BeachGuard de l’Ohio pour les alertes avant de vous baigner.",
-  "deercreek.f2eb9a7b": "Pas de sonde publique de température de l’eau",
   "deercreek.f82eb2f1": "AM ou PM",
-  "deercreek.f9bb7357": "Annuler le rappel",
-  "deercreek.fa4885e0": "Site de pêche non officiel de l’Ohio, ambiance ponton de nuit : Hoover, Alum Creek, Buckeye Lake, O’Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton et Leesville Lake"
+  "deercreek.f9bb7357": "Annuler le rappel"
  }
 }

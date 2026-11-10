@@ -12,7 +12,8 @@ import json, os, pathlib, re, sys
 root = pathlib.Path(os.environ.get("NB_ROOT") or pathlib.Path(__file__).resolve().parent.parent)
 L = json.loads((root / "data" / "quick-facts.json").read_text())["lakes"]
 OFFICIAL = ("columbusrecparks.com", "ohiodnr.gov", "mwcd.org", "usace.army.mil", "mansfieldohio.gov",
-            "codelibrary.amlegal.com", "codes.ohio.gov", "mcclibraryfunctions.azurewebsites.us")
+            "codelibrary.amlegal.com", "codes.ohio.gov", "mcclibraryfunctions.azurewebsites.us",
+            "geaugaparkdistrict.org")
 TIME = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
 DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 errs, chips, none = [], 0, []

@@ -2,6 +2,267 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-10-bass-rules-march-2027",
+      "date": "2026-11-10",
+      "tag": "Improved",
+      "title": "Bass rules get simpler on March 1, 2027",
+      "bullets": [
+        "The Ohio Wildlife Council voted on Oct. 28, 2026 to drop most lake-by-lake bass rules. From March 1, 2027, Knox Lake, Seneca Lake, Salt Fork, Burr Oak, Dow Lake, Paint Creek Lake, Cowan Lake, Acton Lake and Long Lake in the Portage Lakes go to the statewide 5 a day, 12 in minimum. Other Ohio waters are on ODNR's list too.",
+        "Hoover's crappie rule comes off the same day: no daily limit and no 9 in minimum from March 1, 2027. Every other 30 a day, 9 in crappie water keeps its rule, Paint Creek, Salt Fork, Seneca and the Portage Lakes included.",
+        "Until then the 2026–27 rules stand, and each lake page shows today's rule with the change dated next to it, linked to ODNR's news release.",
+        "Fixed: the crappie and bass species pages now show the right 2026–27 rule for every lake."
+      ],
+      "links": [
+        {
+          "label": "ODNR news release",
+          "href": "https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/ohios-spring-2027-turkey-hunting-seasons-updated-bass-fishing-regulations-approved-by-wildlife-council"
+        },
+        {
+          "label": "Hoover Reservoir",
+          "href": "hoover/"
+        },
+        {
+          "label": "Knox Lake",
+          "href": "knox/"
+        },
+        {
+          "label": "Seneca Lake",
+          "href": "seneca/"
+        },
+        {
+          "label": "Salt Fork Lake",
+          "href": "saltfork/"
+        },
+        {
+          "label": "Burr Oak Lake",
+          "href": "burroak/"
+        },
+        {
+          "label": "Dow Lake",
+          "href": "dow/"
+        },
+        {
+          "label": "Paint Creek Lake",
+          "href": "paintcreek/"
+        },
+        {
+          "label": "Cowan Lake",
+          "href": "cowan/"
+        },
+        {
+          "label": "Acton Lake",
+          "href": "acton/"
+        },
+        {
+          "label": "Portage Lakes",
+          "href": "portagelakes/"
+        },
+        {
+          "label": "Largemouth bass",
+          "href": "species/largemouth-bass"
+        },
+        {
+          "label": "Black crappie",
+          "href": "species/black-crappie"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-tierc-northeast-six",
+      "date": "2026-11-10",
+      "tag": "New",
+      "title": "Six more Northeast Ohio waters: Wingfoot to Wellington",
+      "bullets": [
+        "Pick Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake or Wellington Upground Reservoir under Northeast Ohio. Each has its own home page.",
+        "Each lake has its own map and ramps, lake rules, species notes, dock season and Bait nearby. None of the six has a public level or water temp gauge, and each page says so.",
+        "Guilford Lake is drawn down about 20 ft for ODNR dam rehabilitation, with refill expected by spring 2027; the page links ODNR's project updates.",
+        "Wingfoot, Guilford and Highlandtown show today's site bass rule with the March 1, 2027 statewide change dated next to it, linked to ODNR's news release.",
+        "Stocking & surveys adds ten years of ODNR stocking where ODNR stocks these waters, from ODNR's Fish Stocking dashboard."
+      ],
+      "links": [
+        {
+          "label": "Water",
+          "href": "water"
+        },
+        {
+          "label": "Stocking & surveys",
+          "href": "stocking"
+        },
+        {
+          "label": "Wingfoot Lake",
+          "href": "wingfoot/"
+        },
+        {
+          "label": "East Branch Reservoir",
+          "href": "eastbranch/"
+        },
+        {
+          "label": "Guilford Lake",
+          "href": "guilford/"
+        },
+        {
+          "label": "Highlandtown Lake",
+          "href": "highlandtown/"
+        },
+        {
+          "label": "Punderson Lake",
+          "href": "punderson/"
+        },
+        {
+          "label": "Wellington Upground Reservoir",
+          "href": "wellington/"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-mwcd-seven",
+      "date": "2026-11-10",
+      "tag": "New",
+      "title": "Seven MWCD lakes: Tappan to Beach City",
+      "bullets": [
+        "Pick Tappan Lake, Piedmont Lake or Clendening Lake under East and Southeast Ohio, Atwood Lake or Beach City Lake under Northeast Ohio, or Charles Mill Lake or Pleasant Hill Lake under Central Ohio. Each has its own home page.",
+        "Each lake has its own map and ramps, lake rules, species notes, dock season and Bait nearby. MWCD areas close 11 p.m. to 6 a.m. except to people fishing, and each page says so.",
+        "Tappan, Piedmont, Clendening and Atwood read their USGS lake gauges; Charles Mill, Pleasant Hill and Beach City read the Army Corps lake level. None of the seven has a public water temp gauge, and the pages say so.",
+        "Each page shows MWCD’s winter drawdown with the official dates and levels. Beach City is not on the schedule and has no public ramp, and its page says so.",
+        "Stocking & surveys adds ten years of ODNR stocking for all seven, from ODNR’s Fish Stocking dashboard."
+      ],
+      "links": [
+        {
+          "label": "Water",
+          "href": "water"
+        },
+        {
+          "label": "Stocking & surveys",
+          "href": "stocking"
+        },
+        {
+          "label": "Tappan Lake",
+          "href": "tappan/"
+        },
+        {
+          "label": "Piedmont Lake",
+          "href": "piedmont/"
+        },
+        {
+          "label": "Clendening Lake",
+          "href": "clendening/"
+        },
+        {
+          "label": "Atwood Lake",
+          "href": "atwood/"
+        },
+        {
+          "label": "Charles Mill Lake",
+          "href": "charlesmill/"
+        },
+        {
+          "label": "Pleasant Hill Lake",
+          "href": "pleasanthill/"
+        },
+        {
+          "label": "Beach City Lake",
+          "href": "beachcity/"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-tier-b-ten",
+      "date": "2026-11-10",
+      "tag": "New",
+      "title": "Ten more lakes: C.J. Brown to Acton",
+      "bullets": [
+        "Pick C.J. Brown Reservoir, Rocky Fork Lake, Paint Creek Lake, Cowan Lake or Acton Lake under Southwest, LaDue Reservoir, the Portage Lakes, Mogadore Reservoir or Nimisila Reservoir under Northeast, or Lake Loramie under Northwest. Each has its own home page.",
+        "Each lake has its own map and ramps, lake rules, species notes, dock season and Bait nearby.",
+        "C.J. Brown and Lake Loramie read their USGS lake gauges, and Paint Creek reads the Army Corps lake level. Paint Creek shows the Corps outflow temperature, marked outflow and never counted in the bite rating; C.J. Brown names the Corps temperature profile with its date. The other seven have no public level or temperature gauge and say so.",
+        "Cowan Lake is being drawn down 13.5 ft for dam work through 2028, and Nimisila Reservoir is being lowered for a dam study (ODNR), and both pages say so.",
+        "Stocking & surveys adds ten years of ODNR stocking for all ten, from ODNR’s Fish Stocking dashboard."
+      ],
+      "links": [
+        {
+          "label": "Water",
+          "href": "water"
+        },
+        {
+          "label": "Stocking & surveys",
+          "href": "stocking"
+        },
+        {
+          "label": "C.J. Brown Reservoir",
+          "href": "cjbrown/"
+        },
+        {
+          "label": "Rocky Fork Lake",
+          "href": "rockyfork/"
+        },
+        {
+          "label": "LaDue Reservoir",
+          "href": "ladue/"
+        },
+        {
+          "label": "Paint Creek Lake",
+          "href": "paintcreek/"
+        },
+        {
+          "label": "Portage Lakes",
+          "href": "portagelakes/"
+        },
+        {
+          "label": "Mogadore Reservoir",
+          "href": "mogadore/"
+        },
+        {
+          "label": "Lake Loramie",
+          "href": "loramie/"
+        },
+        {
+          "label": "Nimisila Reservoir",
+          "href": "nimisila/"
+        },
+        {
+          "label": "Cowan Lake",
+          "href": "cowan/"
+        },
+        {
+          "label": "Acton Lake",
+          "href": "acton/"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-tier-b-three",
+      "date": "2026-11-10",
+      "tag": "New",
+      "title": "Grand Lake St. Marys, Caesar Creek Lake and East Fork Lake",
+      "bullets": [
+        "Pick Grand Lake St. Marys, Caesar Creek Lake or East Fork Lake with the lake picker, under the new Northwest and Southwest headings. Each has its own home page.",
+        "Each lake has its own map and ramps, lake rules, species notes, dock season and Bait nearby, and reads its USGS lake gauge.",
+        "Water temp is labelled for what it is: East Fork, Alum Creek and Deer Creek Lake show the Army Corps outflow temperature, marked outflow and never counted in the bite rating. Caesar Creek names the Corps temperature profile with its date. Grand Lake St. Marys has no public temperature gauge and says so.",
+        "Stocking & surveys adds ten years of ODNR stocking for all three, from ODNR’s Fish Stocking dashboard."
+      ],
+      "links": [
+        {
+          "label": "Water",
+          "href": "water"
+        },
+        {
+          "label": "Stocking & surveys",
+          "href": "stocking"
+        },
+        {
+          "label": "Grand Lake St. Marys",
+          "href": "grandlakestmarys/"
+        },
+        {
+          "label": "Caesar Creek Lake",
+          "href": "caesarcreek/"
+        },
+        {
+          "label": "East Fork Lake",
+          "href": "eastfork/"
+        }
+      ]
+    },
+    {
       "id": "2026-11-04-follow-along",
       "date": "2026-11-04",
       "tag": "New",

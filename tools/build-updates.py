@@ -13,7 +13,8 @@ It writes
     compares with what the visitor last saw to show the small New dot.
   · the <lastmod> of /updates in sitemap.xml.
 Checks: dates are YYYY-MM-DD, newest first; tag is New, Improved or Fixed; 2 to 5 bullets; no spaced dashes; every
-link points at a page in the repo, written without .html (water#docks, species/walleye, ./). whisperwood.html and everything under whisperwood/ are left alone.
+link points at a page in the repo, written without .html (water#docks, species/walleye, ./), or at an official
+source listed in OFFICIAL (ohiodnr.gov), which opens in a new tab. whisperwood.html and everything under whisperwood/ are left alone.
 """
 import datetime, html, json, pathlib, re, sys
 
@@ -27,7 +28,11 @@ def check_text(where, s):
     if re.search(r"\s[-\u2013\u2014]\s", s):
         errors.append(f"{where}: spaced dash in {s!r}")
 
+OFFICIAL = ("https://ohiodnr.gov/",)  # official sources a What's new link may point at (opens in a new tab)
+
 def link_ok(href):
+    if href.startswith(OFFICIAL):
+        return True
     path = href.split("#")[0]
     if path in ("", "./"):
         return (root / "index.html").exists()
@@ -105,7 +110,7 @@ for e in entries:
         out.append(f"            <li>{nowrap_phones(esc(b))}</li>")
     out.append("          </ul>")
     if e.get("links"):
-        links = "".join(f'<li><a href="{esc(l["href"])}">{esc(l["label"])}</a></li>' for l in e["links"])
+        links = "".join(f'<li><a href="{esc(l["href"])}"' + (' target="_blank" rel="noopener"' if l["href"].startswith(OFFICIAL) else '') + f'>{esc(l["label"])}</a></li>' for l in e["links"])
         out.append(f'          <ul class="update-links" aria-label="Changed pages">{links}</ul>')
     out.append("        </article>")
     out.append("      </li>")

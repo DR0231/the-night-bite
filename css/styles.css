@@ -2875,6 +2875,32 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
 .pool-chart img[data-for="pymatuning"] { width: 190px; height: 96px; }
 .pool-chart img[data-for="milton"] { width: 222px; height: 94px; }
 .pool-chart img[data-for="leesville"] { width: 90px; height: 96px; }
+.pool-chart img[data-for="grandlakestmarys"] { width: 178px; height: 94px; }
+.pool-chart img[data-for="caesarcreek"] { width: 96px; height: 96px; }
+.pool-chart img[data-for="eastfork"] { width: 126px; height: 96px; }
+.pool-chart img[data-for="cjbrown"] { width: 78px; height: 96px; }
+.pool-chart img[data-for="rockyfork"] { width: 214px; height: 96px; }
+.pool-chart img[data-for="ladue"] { width: 88px; height: 80px; }
+.pool-chart img[data-for="paintcreek"] { width: 96px; height: 80px; }
+.pool-chart img[data-for="portagelakes"] { width: 50px; height: 94px; }
+.pool-chart img[data-for="mogadore"] { width: 146px; height: 96px; }
+.pool-chart img[data-for="loramie"] { width: 122px; height: 94px; }
+.pool-chart img[data-for="nimisila"] { width: 54px; height: 96px; }
+.pool-chart img[data-for="cowan"] { width: 198px; height: 96px; }
+.pool-chart img[data-for="acton"] { width: 84px; height: 96px; }
+.pool-chart img[data-for="tappan"] { width: 128px; height: 96px; }
+.pool-chart img[data-for="piedmont"] { width: 72px; height: 92px; }
+.pool-chart img[data-for="clendening"] { width: 174px; height: 96px; }
+.pool-chart img[data-for="atwood"] { width: 144px; height: 96px; }
+.pool-chart img[data-for="charlesmill"] { width: 72px; height: 96px; }
+.pool-chart img[data-for="pleasanthill"] { width: 152px; height: 96px; }
+.pool-chart img[data-for="beachcity"] { width: 82px; height: 68px; }
+.pool-chart img[data-for="wingfoot"] { width: 106px; height: 96px; }
+.pool-chart img[data-for="eastbranch"] { width: 36px; height: 96px; }
+.pool-chart img[data-for="guilford"] { width: 114px; height: 96px; }
+.pool-chart img[data-for="highlandtown"] { width: 130px; height: 94px; }
+.pool-chart img[data-for="punderson"] { width: 54px; height: 86px; }
+.pool-chart img[data-for="wellington"] { width: 96px; height: 96px; }
 @media (max-width: 359px) {
   .pool-chart img[data-for="alum"] { width: 134px; height: 37px; }
   .pool-chart img[data-for="buckeye"] { width: 92px; height: 48px; }
@@ -2898,6 +2924,32 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
   .pool-chart img[data-for="pymatuning"] { width: 95px; height: 48px; }
   .pool-chart img[data-for="milton"] { width: 111px; height: 47px; }
   .pool-chart img[data-for="leesville"] { width: 45px; height: 48px; }
+  .pool-chart img[data-for="grandlakestmarys"] { width: 89px; height: 47px; }
+  .pool-chart img[data-for="caesarcreek"] { width: 48px; height: 48px; }
+  .pool-chart img[data-for="eastfork"] { width: 63px; height: 48px; }
+  .pool-chart img[data-for="cjbrown"] { width: 39px; height: 48px; }
+  .pool-chart img[data-for="rockyfork"] { width: 107px; height: 48px; }
+  .pool-chart img[data-for="ladue"] { width: 44px; height: 40px; }
+  .pool-chart img[data-for="paintcreek"] { width: 48px; height: 40px; }
+  .pool-chart img[data-for="portagelakes"] { width: 25px; height: 47px; }
+  .pool-chart img[data-for="mogadore"] { width: 73px; height: 48px; }
+  .pool-chart img[data-for="loramie"] { width: 61px; height: 47px; }
+  .pool-chart img[data-for="nimisila"] { width: 27px; height: 48px; }
+  .pool-chart img[data-for="cowan"] { width: 99px; height: 48px; }
+  .pool-chart img[data-for="acton"] { width: 42px; height: 48px; }
+  .pool-chart img[data-for="tappan"] { width: 64px; height: 48px; }
+  .pool-chart img[data-for="piedmont"] { width: 36px; height: 46px; }
+  .pool-chart img[data-for="clendening"] { width: 87px; height: 48px; }
+  .pool-chart img[data-for="atwood"] { width: 72px; height: 48px; }
+  .pool-chart img[data-for="charlesmill"] { width: 36px; height: 48px; }
+  .pool-chart img[data-for="pleasanthill"] { width: 76px; height: 48px; }
+  .pool-chart img[data-for="beachcity"] { width: 41px; height: 34px; }
+  .pool-chart img[data-for="wingfoot"] { width: 53px; height: 48px; }
+  .pool-chart img[data-for="eastbranch"] { width: 18px; height: 48px; }
+  .pool-chart img[data-for="guilford"] { width: 57px; height: 48px; }
+  .pool-chart img[data-for="highlandtown"] { width: 65px; height: 47px; }
+  .pool-chart img[data-for="punderson"] { width: 27px; height: 43px; }
+  .pool-chart img[data-for="wellington"] { width: 48px; height: 48px; }
 }
 .pool-chart-key > span[data-for="buckeye"] { margin-right: 0.5rem; }
 @media (min-width: 560px) { .pool-chart-key > span[data-for="buckeye"] { margin-right: 0; } }
@@ -4205,3 +4257,22 @@ html[data-contrast="more"] .night-chip { border-color: var(--amber); background:
 .social-pill:hover, .social-pill:focus-visible { border-color: var(--amber); color: var(--amber); }
 .social-pill:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 @media (min-width: 560px) { .social-label { width: auto; margin-right: 0.25rem; } }
+
+/* Hoover's permission-cleared ODNR contours: one quiet disclosure, no map runtime. */
+.contour-map { margin: var(--space-lg) 0; }
+.contour-map > summary { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-xs); }
+.contour-map-summary-note { color: var(--muted); font-family: var(--font-display); font-size: var(--text-label); text-transform: uppercase; letter-spacing: .05em; }
+.contour-map-figure { margin: var(--space-md) 0 0; }
+.contour-map-open { display: block; max-width: 28rem; margin: 0 auto; border: 1px solid var(--navy-light); border-radius: var(--radius); overflow: hidden; color: var(--cream); }
+.contour-map-open picture { display: block; }
+.contour-map-figure img { display: block; width: 100%; height: auto; background: #e0e0e0; }
+.contour-map-fullsize { display: block; padding: var(--space-sm); background: var(--navy-mid); color: var(--amber); text-align: center; font-family: var(--font-display); font-size: var(--text-sm); }
+.contour-map-figure figcaption { margin-top: var(--space-sm); color: var(--cream-dark); font-size: var(--text-sm); line-height: 1.5; }
+.contour-map-figure figcaption > span:not(.contour-map-key) { display: block; margin-bottom: var(--space-xs); }
+.contour-map-figure figcaption strong { color: var(--amber); }
+.contour-map-key { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .55rem; margin-bottom: var(--space-xs); font-family: var(--font-display); font-size: var(--text-label); }
+.contour-map-key-item { display: inline-flex; align-items: center; gap: .35rem; }
+.contour-key-shallow, .contour-key-deep { display: inline-block; width: 1.25rem; height: .75rem; border: 1px solid var(--cream-dark); }
+.contour-key-shallow { background: #c9eaf5; }
+.contour-key-deep { background: #174e7d; }
+.contour-map-credit { overflow-wrap: anywhere; }

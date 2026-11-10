@@ -105,10 +105,12 @@
     var lit = mo && /(\d+)% lit/.exec(mo.sub);
     r.moon = mo ? mo.v + (lit ? ", " + lit[1] + "% lit" : "") : "Moon " + DASH;
     // water temp: only where the lake has a public temp gauge (cfg.pool.temp); never guessed
-    var hasTemp = !!(cfg.pool && cfg.pool.temp);
-    var t = hasTemp && /(-?\d+)\s*\u00b0F/.exec(txt("#correction-line"));
+    // a Corps outflow temp is shown as outflow, never as lake surface; a Corps profile only is named, with its date
+    var hasTemp = !!(cfg.pool && cfg.pool.temp), out = !hasTemp && cfg.pool && cfg.pool.outflow, prof = !hasTemp && !out && cfg.pool && cfg.pool.profile;
+    var t = (hasTemp || out) && (out ? /(-?\d+)\s*\u00b0F outflow/ : /(-?\d+)\s*\u00b0F/).exec(txt("#correction-line"));
     r.water = t ? t[1] + "\u00b0F" : DASH;
-    r.waterSub = !hasTemp ? "No public temp gauge" : t ? (cfg.pool.srcName || "") + " lake gauge" : "No reading right now";
+    r.waterSub = out ? (t ? "USACE outflow, not surface" : "No reading right now") : prof ? "Corps profile " + prof.short :
+      !hasTemp ? "No public temp gauge" : t ? (cfg.pool.srcName || "") + " lake gauge" : "No reading right now";
     // lake level and bite rating, kept but smaller
     var poolCell = $('[data-glance="pool"]'), biteCell = $('[data-glance="bite"]');
     var poolOk = poolCell && !poolCell.closest(".glance-cell").hasAttribute("data-empty");
@@ -128,7 +130,8 @@
       "Sunset, moonrise and moon: worked out on this phone.",
       (cfg.pool && cfg.pool.stale ? "Level: the USGS gauge has not reported since " + cfg.pool.stale.lastWhen + "." :
       cfg.pool && !cfg.pool.src ? "Level: no public gauge on this lake." :
-      "Level" + (hasTemp ? " and water temp" : "") + ": " + (cfg.pool && cfg.pool.srcName ? cfg.pool.srcName + " gauge" : "gauge") + (poolOk && checked ? ", checked " + checked : poolOk ? "" : ", no reading") + "."),
+      "Level" + (hasTemp ? " and water temp" : "") + ": " + (cfg.pool && cfg.pool.srcName ? cfg.pool.srcName + " gauge" : "gauge") + (poolOk && checked ? ", checked " + checked : poolOk ? "" : ", no reading") + "." +
+      (out ? " Water temp: USACE outflow gauge, not lake surface temperature." : prof ? " Water temp: no live reading; Corps profile " + prof.short + "." : "")),
       "Biting now: this site\u2019s " + MONTHS[m] + " notes (typical patterns, not a report). Bite: rule of thumb from the NWS forecast."
     ].join(" ");
     r.date = (function () { try { return new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date()) + " ET"; } catch (e) { return ""; } })();

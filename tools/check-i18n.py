@@ -58,7 +58,7 @@ for l in files:
             for w in NAMES:
                 if re.search(r"(?<![A-Za-z])" + re.escape(w) + r"(?![A-Za-z])", en[k]) and w not in tr[k]: errs.append(f"{l}.json {k}: name '{w}' changed or dropped")
             for num in re.findall(r"\d+(?:[.,]\d+)?", en[k]):
-                if num not in tr[k] and not k.startswith("pg.h_") and k not in ("pg.qf_docks_city", "pg.qf_mwcd_night"): errs.append(f"{l}.json {k}: number {num} missing")
+                if num not in tr[k] and not k.startswith("pg.h_") and k not in ("pg.qf_docks_city", "pg.qf_docks_hoover", "pg.qf_mwcd_night"): errs.append(f"{l}.json {k}: number {num} missing")
         if not tr[k].strip(): errs.append(f"{l}.json {k}: empty")
     if "i18n.draft" not in tr: errs.append(f"{l}.json: no i18n.draft (the Draft translation marker)")
     report.append(f"{l} ({meta.get('name')}, {meta.get('review')}): {len(en) - len(miss)}/{len(en)} keys, {len(miss)} missing" + (": " + ", ".join(miss[:12]) if miss else ""))

@@ -21,7 +21,7 @@ What it does (the v20/v21 promote steps, generalized):
     /night-bite-preview/ becomes /, Whisperwood links relative, live's pool lead, Checked time and water temp kept.
   · css: the "Preview copy only" block is dropped. sw.js: PREFIX nb-live-, VERSION (--version, default the next vN
     with today's date). DATA-SOURCES.md: live title. Anything else is copied as is.
-  · --whats-new FILE: a JSON entry (id, tag, title, bullets, links; date defaults to today) added at the top of
+  · --whats-new FILE: a JSON entry or a JSON array of entries (id, tag, title, bullets, links; date defaults to today) added at the top of
     live data/updates.json. Then the build order runs in the live tree: build-lake-pages, build-docks, build-meta,
     stamp-version, build-updates.
 Checks (real mode refuses, dry run reports and exits 1): a new dated What's new entry in live data/updates.json that
@@ -43,7 +43,7 @@ ap.add_argument("--base", help="preview commit live already has (default: from l
 ap.add_argument("--all", action="store_true", help="transform every tracked preview file, not just base..ref")
 ap.add_argument("--live-dir", default="/workspace/the-night-bite", help="live checkout (default /workspace/the-night-bite)")
 ap.add_argument("--version", help='sw.js VERSION for live (default next vN, e.g. "v22-2026-11-01")')
-ap.add_argument("--whats-new", metavar="FILE", help="JSON What's new entry to add to live data/updates.json")
+ap.add_argument("--whats-new", metavar="FILE", help="JSON What's new entry, or a JSON array of entries, to add to live data/updates.json")
 ap.add_argument("--live", action="store_true", help="REAL MODE: write into --live-dir. Only after D'Angelo said \"push\" in chat")
 ap.add_argument("--confirm-push", action="store_true", help="required with --live: confirms D'Angelo said \"push\" in chat")
 ap.add_argument("--commit", action="store_true", help="real mode: commit the promoted files in the live checkout")
@@ -269,18 +269,24 @@ if "sw.js" not in todo:   # every promotion gets a new cache VERSION, even when 
     (T / "sw.js").write_text(re.sub(r'var VERSION = "[^"]*";', 'var VERSION = "%s";' % VER, sw, count=1))
 
 if a.whats_new:
-    E = json.loads(pathlib.Path(a.whats_new).read_text())
-    E.pop("draft", None)
-    E["date"] = E.get("date") or today
-    for k in ("id", "tag", "title", "bullets"):
-        if not E.get(k):
-            die(f"--whats-new entry needs {k}")
+    raw = json.loads(pathlib.Path(a.whats_new).read_text())
+    incoming = raw if isinstance(raw, list) else [raw]
     up_t = (T / "data/updates.json").read_text(); up = json.loads(up_t)
-    if any(x.get("id") == E["id"] for x in up["entries"]):
-        notes.append(f"What's new entry {E['id']} already in live data/updates.json; not added again")
-    else:
-        keys = ["id", "date", "tag", "title", "bullets", "links"]
-        up["entries"].insert(0, {k: E[k] for k in keys if k in E} | {k: v for k, v in E.items() if k not in keys})
+    added = 0
+    for E in incoming:
+        E = dict(E)
+        E.pop("draft", None)
+        E["date"] = E.get("date") or today
+        for k in ("id", "tag", "title", "bullets"):
+            if not E.get(k):
+                die(f"--whats-new entry needs {k}")
+        if any(x.get("id") == E["id"] for x in up["entries"]):
+            notes.append(f"What's new entry {E['id']} already in live data/updates.json; not added again")
+        else:
+            keys = ["id", "date", "tag", "title", "bullets", "links"]
+            up["entries"].insert(added, {k: E[k] for k in keys if k in E} | {k: v for k, v in E.items() if k not in keys})
+            added += 1
+    if added:
         (T / "data/updates.json").write_text(registry.dump_like(up_t, up))
 
 build_log = []
