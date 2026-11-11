@@ -3,6 +3,7 @@
 const Survival = {
   passing: false,
   needPrompt: "",
+  coldSaid: false,
 
   p() { return Save.data.player; },
 
@@ -123,7 +124,13 @@ const Survival = {
     this.refreshPips();
 
     this.needPrompt = "";
-    if (p.warmth < DESIGN.needWarn) this.needPrompt = World.id === "cottage" ? "You’re shivering. Tea." : "You’re shivering. Cottage or tea.";
+    const phone = UI.phone();
+    if (p.warmth >= DESIGN.needWarn) this.coldSaid = false;
+    else if (phone && !this.coldSaid && World.id !== "cottage") {
+      this.coldSaid = true;
+      UI.toastNote("Cold. Cottage or tea.");
+    }
+    if (p.warmth < DESIGN.needWarn) this.needPrompt = World.id === "cottage" ? "You’re shivering. Tea." : phone ? "Cold. Cottage or tea." : "You’re shivering. Cottage or tea.";
     else if (p.rest < DESIGN.needWarn) this.needPrompt = "You’re worn out.";
     else if (p.hunger < DESIGN.needWarn) this.needPrompt = "You’re hungry.";
 
