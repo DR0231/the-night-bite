@@ -145,7 +145,8 @@ Remembered water: `js/lakes.js` keeps the last water picked or opened in localSt
 home page always wins and updates it, so a shared `/berlin/` link opens Berlin. On the root, a saved water (or an old
 `/?lake=alum` link) goes straight to that lake's home page before paint (`location.replace`, no flash); lake pages never
 redirect, so there is no loop. `/?pick` keeps the picker open. Once a water is chosen, Home links on every page point at
-its home page; on a first visit they open the picker. All home pages are precached by `sw.js`. List new lakes in
+its home page; on a first visit they open the picker. `sw.js` precaches the picker and every lake home, so any water
+opens offline right after install (see SERVICE-WORKER.md). List new lakes in
 `sitemap.xml` too.
 
 ### Quick facts and structured data
