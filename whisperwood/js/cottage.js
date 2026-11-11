@@ -1079,7 +1079,9 @@ const Shop = {
       const soft = oldest && Save.freshness(oldest) === "soft";
       return `<button type="button" data-sell="${esc(f.id)}">Sell ${esc(f.name)} (${esc(price)}c)${soft ? " (soft)" : ""} ×${esc(n)}</button>`;
     }).join("");
-    const sell = sellable.length ? `<button type="button" data-sell-all>Sell all fish</button>${sellButtons}` : "<p>Nothing to sell.</p>";
+    const keep = this.keeps();
+    const spare = sellable.some((f) => Save.countLoose(f.id) > (keep[f.id] | 0));
+    const sell = !sellable.length ? "<p>Nothing to sell.</p>" : spare ? `<button type="button" data-sell-all>Sell spare fish</button>${sellButtons}` : sellButtons;
     el.innerHTML = `<p>${esc(Inventory.coins())} coins</p><div class="shop-cols"><div>${buy}</div><div>${sell}</div></div>`;
     el.querySelectorAll("[data-buy]").forEach((b) => b.addEventListener("click", () => this.buy(b.dataset.buy)));
     el.querySelectorAll("[data-sell]").forEach((b) => b.addEventListener("click", () => this.sell(b.dataset.sell)));
@@ -1161,19 +1163,45 @@ const Shop = {
     this.refresh();
   },
 
+  keeps() {
+    const keep = Object.create(null);
+    const rank = Skills.rank();
+    const items = Save.data.inventory.items || {};
+    for (const it of SHOP_CATALOG) {
+      const rod = it.kind === "rod" ? RODS[it.id] : null;
+      const id = (rod && rod.requireFish) || it.requireFish;
+      if (!id || (it.minRank && rank < it.minRank)) continue;
+      if (rod ? Inventory.ownsRod(it.id) : items[it.id]) continue;
+      keep[id] = Math.max(keep[id] | 0, 1);
+    }
+    const wren = NPC_DATA.find((n) => n.role === "shop");
+    const st = wren && Save.data.npcs[wren.id];
+    if (wren && wren.fav && st && !st.giftedToday) keep[wren.fav] = Math.max(keep[wren.fav] | 0, DESIGN.giftMinCaught);
+    return keep;
+  },
+
   sellAll() {
-    const ids = FISH.filter((f) => Save.countLoose(f.id) > 0).map((f) => f.id);
-    let sold = false;
-    for (const id of ids) {
+    const keep = this.keeps();
+    let sold = 0;
+    let coins = 0;
+    let kept = 0;
+    for (const f of FISH) {
+      const hold = Math.min(Save.countLoose(f.id), keep[f.id] | 0);
+      kept += hold;
       let unit;
-      while ((unit = Save.takeOldestLoose(id))) {
-        Inventory.addCoins(Save.sellPrice(unit));
-        sold = true;
+      while (Save.countLoose(f.id) > hold && (unit = Save.takeOldestLoose(f.id))) {
+        coins += Save.sellPrice(unit);
+        sold++;
       }
     }
     if (!sold) return;
+    Inventory.addCoins(coins);
     Save.syncCaught();
     try { AudioFX.coin(); } catch (err) { /* cue optional */ }
+    const line = kept ? `Sold ${sold} fish · +${coins}c. Kept ${kept} back.` : `Sold ${sold} fish · +${coins}c.`;
+    UI.toastNote(line);
+    const sub = document.getElementById("shop-line");
+    if (sub) sub.textContent = line;
     Save.mark("sell");
     this.refresh();
   },

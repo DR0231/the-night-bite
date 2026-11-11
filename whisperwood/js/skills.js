@@ -2,6 +2,7 @@
 
 const Skills = {
   offering: false,
+  _chain: false,
 
   get data() { return Save.data.skills; },
 
@@ -133,11 +134,20 @@ const Skills = {
       const p = PERKS[id];
       return `<button type="button" data-perk="${esc(id)}"><strong>${esc(p.name)}</strong><span>${esc(p.desc)}</span></button>`;
     }).join("");
+    const chained = !!this._chain;
+    const cue = chained ? "<p class=\"journal-sub rank-chain\">Another rank, close behind.</p>" : "";
     body.innerHTML = `
+      ${cue}
       <p class="journal-sub">Fisher rank ${esc(this.rank())}</p>
       <p>Your hands know the water a little better. Choose one.</p>
+      <p class="journal-sub rank-soft">No rush. The vale will wait.</p>
       <div class="perk-picks">${btns || "<p>Every habit you needed, you already have.</p>"}</div>`;
     el.classList.remove("hidden");
+    el.classList.remove("is-chained");
+    if (chained) {
+      void el.offsetWidth;
+      el.classList.add("is-chained");
+    }
     body.querySelectorAll("[data-perk]").forEach((b) => {
       b.addEventListener("click", () => this.pick(b.dataset.perk));
     });
@@ -162,7 +172,11 @@ const Skills = {
       UI.toastNote(`Fisher rank ${this.rank()}.`);
     }
     Save.mark("rank");
-    if (this.rank() < 8 && this.data.xp >= this.xpToNext()) this._addXp(0);
+    if (this.rank() < 8 && this.data.xp >= this.xpToNext()) {
+      this._chain = true;
+      this._addXp(0);
+      this._chain = false;
+    }
   },
 
   close() {

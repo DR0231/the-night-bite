@@ -158,8 +158,7 @@ const Survival = {
 
   wakeHome() {
     if (TimeCycle.phaseId() !== "dawn") Weather.skipTo("dawn");
-    TimeCycle.day = 1 + Math.floor(TimeCycle.seconds / CONFIG.DAY_LENGTH);
-    Save.data.clock.day = TimeCycle.day;
+    TimeCycle.update(0);
     let mail = Save.data.cottage.mail;
     if (!Array.isArray(mail)) mail = Save.data.cottage.mail = [];
     mail.unshift("Found you in the reeds. The kettle’s on. — Wren");
