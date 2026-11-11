@@ -1,7 +1,7 @@
 /**
  * The Night Bite: tournaments from data/tournaments.json + mailto submit.
- * Each event carries a "lake" id (hoover, alum, buckeye); events with no lake are Hoover events.
- * Only the selected lake's events are listed, so a Hoover event never shows on the Alum or Buckeye Lake view.
+ * Each event carries a lake id from js/lakes.js; events with no lake are Hoover events.
+ * Only the selected lake's events are listed, so a Hoover event never shows on another water's view.
  */
 (function () {
   var MAILTO = "contact@nightbiteoh.com";
@@ -49,13 +49,13 @@
           "</h3>" +
           '<dl class="trip-dl" style="color:var(--cream);">' +
           "<dt>Date</dt><dd>" +
-          escapeHtml(e.date || "—") +
+          escapeHtml(e.date || "Not listed") +
           "</dd>" +
           "<dt>Ramp</dt><dd>" +
-          escapeHtml(e.ramp || "—") +
+          escapeHtml(e.ramp || "Not listed") +
           "</dd>" +
           "<dt>Club</dt><dd>" +
-          escapeHtml(e.club || "—") +
+          escapeHtml(e.club || "Not listed") +
           "</dd>" +
           "</dl>" +
           (e.notes ? "<p>" + escapeHtml(e.notes) + "</p>" : "") +

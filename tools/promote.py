@@ -427,7 +427,7 @@ if not REAL:
 
 if a.commit:
     if new_entries:
-        lead = f"What's new '{new_entries[0]["title"]}'"
+        lead = f"What's new '{new_entries[0]['title']}'"
     else:
         lead = "small fix (no What's new entry)"
     msg = (f"Promote preview {base[:7] + '..' if base else ''}{ref[:7]} to live: {lead}; privacy and updates copy, "

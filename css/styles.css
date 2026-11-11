@@ -4039,6 +4039,7 @@ html[data-light="red"] body::before { opacity: 0 !important; }
 html[data-light="red"] .paper-card .meta { color: var(--muted); }
 html[data-light="red"] :where(img, svg, canvas, video, picture, iframe):not(.logo img, .hero-horizon img, .lantern-glow, .wp-empty-lantern, [src*="lantern"], .tt-share-img, .a11y-panel svg) { filter: var(--red-filter); }
 html[data-light="red"] :is(.hero-horizon, .page-horizon, .wind-sprite, .moon-sprite, .install-tip-share, .get-app-dots) { filter: var(--red-filter); }
+html[data-light="red"] :is(.contour-key-shallow, .contour-key-deep) { filter: var(--red-filter); }
 html[data-light="red"] ::selection { background: #3a0d08; color: #ff4422; }
 html[data-light="red"] input, html[data-light="red"] select, html[data-light="red"] textarea { accent-color: var(--amber); }
 

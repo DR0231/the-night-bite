@@ -251,7 +251,14 @@
           return;
         }
         if (!ok) {
-          if (hadLive) { if (lineEl) lineEl.setAttribute("data-refresh-failed", "1"); return; }
+          if (hadLive) {
+            if (statusEl) {
+              statusEl.innerHTML = 'Refresh failed, check <a href="' + GAUGE_URL + '" target="_blank" rel="noopener">' + SRC_NAME +
+                '</a>. Showing the last reading.';   // pg.refresh_failed_short
+            }
+            if (lineEl) lineEl.setAttribute("data-refresh-failed", "1");
+            return;
+          }
           if (showSaved(true)) return;
           unavailable("unavailable, check " + SRC_NAME);
           return;

@@ -120,9 +120,9 @@
         "<h3>" + escapeHtml(e.species || "Unknown") + "</h3>" +
         '<dl class="trip-dl">' +
         "<dt>Date</dt><dd>" + dateTag(e.date) + "</dd>" +
-        "<dt>Spot</dt><dd>" + escapeHtml(spotName(e) || "—") + "</dd>" +
-        "<dt>Bait</dt><dd>" + escapeHtml(e.bait || "—") + "</dd>" +
-        "<dt>Keep?</dt><dd>" + escapeHtml(e.disposition || "—") + "</dd>" +
+        "<dt>Spot</dt><dd>" + escapeHtml(spotName(e) || "Not listed") + "</dd>" +
+        "<dt>Bait</dt><dd>" + escapeHtml(e.bait || "Not listed") + "</dd>" +
+        "<dt>Keep?</dt><dd>" + escapeHtml(e.disposition || "Not listed") + "</dd>" +
         "</dl>" +
         (e.notes ? "<p>" + escapeHtml(e.notes) + "</p>" : "") +
         delBtn +

@@ -19,7 +19,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v36-2026-11-11";
+var VERSION = "v37-2026-11-11";
 var CACHE = PREFIX + VERSION;
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
@@ -609,7 +609,7 @@ self.addEventListener("fetch", function (event) {
   if (url.origin !== self.location.origin) return;     // NWS, USGS and every other site: untouched
   if (url.href.indexOf(SCOPE) !== 0) return;           // outside this site
   if (isWhisperwood(url)) return;                      // Whisperwood: never cached, never intercepted
-  if (url.pathname.slice(-6) === "sw.js") return;
+  if (url.pathname.endsWith("/sw.js") || url.pathname === "/sw.js") return;
   var accept = req.headers.get("Accept") || "";
   if (req.mode === "navigate" || accept.indexOf("text/html") !== -1) {
     event.respondWith(networkFirst(event, url, true));

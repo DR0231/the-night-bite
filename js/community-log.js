@@ -73,16 +73,16 @@
           dateTag(e.date) +
           "</dd>" +
           "<dt>Spot</dt><dd>" +
-          escapeHtml(((window.NightBiteLakes && window.NightBiteLakes.spotName) ? window.NightBiteLakes.spotName(e.lake || "hoover", e.ramp) : e.ramp) || "—") +
+          escapeHtml(((window.NightBiteLakes && window.NightBiteLakes.spotName) ? window.NightBiteLakes.spotName(e.lake || "hoover", e.ramp) : e.ramp) || "Not listed") +
           "</dd>" +
           "<dt>When</dt><dd>" +
-          escapeHtml(e.time_window || "—") +
+          escapeHtml(e.time_window || "Not listed") +
           "</dd>" +
           "<dt>Bait</dt><dd>" +
-          escapeHtml(e.bait || "—") +
+          escapeHtml(e.bait || "Not listed") +
           "</dd>" +
           "<dt>Keep?</dt><dd>" +
-          escapeHtml(e.keep_release || "—") +
+          escapeHtml(e.keep_release || "Not listed") +
           "</dd>" +
           "</dl>" +
           (e.notes ? "<p>" + escapeHtml(e.notes) + "</p>" : "") +

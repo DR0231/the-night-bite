@@ -7,9 +7,9 @@ R = pathlib.Path(__file__).resolve().parent.parent
 ice = (R / "ice.html").read_text()
 head = ice[:ice.index("  <main id=\"main\">")]
 foot = ice[ice.index("  </main>"):]
-head = re.sub(r"<title>[^<]*</title>", "<title>Stocking &amp; surveys: Ohio lakes | The Night Bite</title>", head, count=1)
+head = re.sub(r"<title>[^<]*</title>", "<title>Stocking &amp; surveys: Ohio waters | The Night Bite</title>", head, count=1)
 head = re.sub(r'<meta name="description" content="[^"]*">',
-              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake and 46 more Ohio lakes, with sources.">', head)
+              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake and 46 more Ohio waters, with sources.">', head)
 head = head.replace('<link rel="canonical" href="https://nightbiteoh.com/ice">', '<link rel="canonical" href="https://nightbiteoh.com/stocking">')
 assert "stocking" in head
 # ice.html's own scripts at the bottom stay (refresh, sw-update, alerts, nav, lake-picker); nothing else is needed

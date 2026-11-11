@@ -42,9 +42,9 @@ python3 tools/check-all.py --target local --all-lakes --group 3   # one group on
 * Start each run in the background and wait on it no more than about 5 minutes at a time. One lake group takes about 4 to 5 minutes.
 * `node tools/registry.cjs --changed [REF]` prints the changed lakes and files on their own.
 
-* Checks: check-meta, check-radius, check-docks (report only), check-hours, check-ramp-names, check-lake-isolation, check-glance, check-glance-fallback, check-bait, check-waters (the lake scope above), check-picker-flow, check-night-rules and sweep.
+* Checks: check-meta, check-radius, check-docks (report only), check-hours, check-ramp-names, check-lake-isolation, check-glance, check-glance-fallback, check-bait, check-waters (the lake scope above), check-picker-flow, check-a11y-settings, check-log-io, check-trip-queue, check-night-rules, check-i18n, check-manifest, check-i18n-browser and sweep.
 * `--skip` leaves checks out.
-* A scoped run takes a few minutes. A full `--all-lakes` run takes over 30 minutes across 23 lakes, which is why it is split into groups.
+* A scoped run takes a few minutes. A full `--all-lakes` run takes over 30 minutes across 49 waters, which is why it is split into groups.
 * Known failures go in `tools/known-failures.json` as `{check, match, target?, why}`. Add an entry only for a failure you have looked at and accepted. Then remove it once the failure is fixed.
 
 ### sweep.cjs

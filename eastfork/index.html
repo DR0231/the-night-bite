@@ -34,10 +34,10 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="js/a11y-boot.js?v=v36-2026-11-11"></script>
-  <link rel="stylesheet" href="css/styles.css?v=v36-2026-11-11">
+  <script src="js/a11y-boot.js?v=v37-2026-11-11"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v37-2026-11-11">
   <noscript><style>.glance-actions{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
-  <script src="js/lakes.js?v=v36-2026-11-11"></script>
+  <script src="js/lakes.js?v=v37-2026-11-11"></script>
   <!-- nb:jsonld (tools/build-lake-pages.py) -->
   <script type="application/ld+json">
   [{"@context": "https://schema.org", "@type": "WebPage", "@id": "https://nightbiteoh.com/eastfork/#webpage", "url": "https://nightbiteoh.com/eastfork/", "name": "East Fork Lake Fishing: Level, Ramps, Rules | The Night Bite", "isPartOf": {"@id": "https://nightbiteoh.com/#website"}, "about": {"@type": "LakeBodyOfWater", "name": "East Fork Lake"}, "dateModified": "2026-11-09", "inLanguage": "en-US"}]
@@ -190,18 +190,18 @@
       <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
         <p class="pool-lead" id="correction-line">730.31 ft · 66°F outflow · ~2.7 ft below full pool</p>
-        <script src="js/pool-readout.js?v=v36-2026-11-11"></script>
+        <script src="js/pool-readout.js?v=v37-2026-11-11"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-11-09T15:30:00-05:00">2026-11-09 15:30 ET</time>. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03247040/" target="_blank" rel="noopener">Live USGS gauge</a>.
         </p>
         <div class="water-stat" style="display:none">
-          <span class="label">Water temp</span>
+          <span class="label" data-for="eastfork">Outflow temp</span>
           <span class="value" id="water-temp">USACE outflow temp, not lake surface</span>
         </div>
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           Provisional snapshot; your browser may refresh it from USGS. USACE outflow temp; it is not lake surface temperature. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v36-2026-11-11"></script>
+        <script src="js/lake-snapshot.js?v=v37-2026-11-11"></script>
         <div class="pool-trend" id="pool-trend" hidden data-pending>
           <div class="pool-trend-head">
             <span class="pool-trend-label">Pool, last 7 days</span>
@@ -223,7 +223,7 @@
             <ul data-for="eastfork">
               <li><strong>Pool</strong> is lake surface elevation in feet as USGS posts it, not the depth of any hole or channel.</li>
               <li>The ODNR fishing map&rsquo;s depths are based on the <strong>733 ft</strong> summer pool (10 ft contours, surveyed 2003, revised 2018). Contours are off by about <strong>(733 − pool)</strong>. ODNR lists a 729 ft winter pool: the level is usually lowered around September and refilled from around March.</li>
-              <li><strong>Water temp is the Corps outflow reading</strong>, labelled outflow. USACE posts it every 15 minutes. It is not lake surface temperature, and the bite rating does not use it. <a href="https://cwms-data.usace.army.mil/cwms-data/timeseries?office=LRL&name=WHHarshaTW.Temp-Water.Inst.15Minutes.0.USGS-raw" target="_blank" rel="noopener">USACE William H. Harsha Lake tailwater temperature feed</a>.</li>
+              <li><strong>Outflow temp is the Corps outflow reading</strong>, labelled outflow. USACE posts it every 15 minutes. It is not lake surface temperature, and the bite rating does not use it. <a href="https://cwms-data.usace.army.mil/cwms-data/timeseries?office=LRL&name=WHHarshaTW.Temp-Water.Inst.15Minutes.0.USGS-raw" target="_blank" rel="noopener">USACE William H. Harsha Lake tailwater temperature feed</a>.</li>
               <li>The Corps also posts a temperature profile; the latest is dated <time datetime="2026-10-16">Oct. 16, 2026</time>. <a href="https://www.lrl-wc.usace.army.mil/reports/wq/EFR.html" target="_blank" rel="noopener">USACE East Fork Lake temperature profile</a>.</li>
               <li>Lake level comes from USGS gauge 03247040 near Bantam. It is <strong>provisional</strong> and can be revised. <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03247040/" target="_blank" rel="noopener">USGS-03247040</a>.</li>
               <li><strong>No horsepower limit</strong> (ODNR). No paddlefish may be taken in the lake or within 2,000 ft of it and the dam (2026–27 rules).</li>
@@ -292,7 +292,7 @@
         </details>
         <p class="meta bait-foot">Drive times are rough. <a class="bait-tell" href="mailto:contact@nightbiteoh.com?subject=Bait%20shop">Know a shop? Tell us</a></p>
       </section>
-      <script src="js/bait-nearby.js?v=v36-2026-11-11"></script>
+      <script src="js/bait-nearby.js?v=v37-2026-11-11"></script>
 
       <a class="bento-card bento-maps" href="water#maps">
         <h3>Water / maps</h3>
@@ -317,7 +317,7 @@
         <span class="card-cue" aria-hidden="true">Open the log</span>
       </a>
     </div>
-    <script src="js/glance.js?v=v36-2026-11-11"></script>
+    <script src="js/glance.js?v=v37-2026-11-11"></script>
 
 
 
@@ -355,7 +355,7 @@
         </details>
       </div>
     </section>
-    <script src="js/get-app.js?v=v36-2026-11-11"></script>
+    <script src="js/get-app.js?v=v37-2026-11-11"></script>
 
     <hr class="divider">
 
@@ -415,23 +415,23 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v36-2026-11-11"></script>
-  <script src="js/sw-update.js?v=v36-2026-11-11"></script>
-  <script src="js/alerts.js?v=v36-2026-11-11"></script>
-  <script src="js/nav.js?v=v36-2026-11-11"></script>
-  <script src="js/visits.js?v=v36-2026-11-11"></script>
-  <script src="js/lake-picker.js?v=v36-2026-11-11"></script>
-  <script src="js/usgs.js?v=v36-2026-11-11"></script>
-  <script src="js/home-log.js?v=v36-2026-11-11"></script>
-  <script src="js/astro.js?v=v36-2026-11-11"></script>
-  <script src="js/night-rules.js?v=v36-2026-11-11"></script>
-  <script src="js/conditions.js?v=v36-2026-11-11"></script>
-  <script src="js/pool-trend.js?v=v36-2026-11-11"></script>
-  <script src="js/lake-map-data-eastfork.js?v=v36-2026-11-11"></script>
-  <script src="js/hoover-map.js?v=v36-2026-11-11"></script>
-  <script src="js/install-tip.js?v=v36-2026-11-11"></script>
-  <script src="js/tonight-tools.js?v=v36-2026-11-11"></script>
-  <script src="js/a11y.js?v=v36-2026-11-11" defer></script>
+  <script src="js/refresh.js?v=v37-2026-11-11"></script>
+  <script src="js/sw-update.js?v=v37-2026-11-11"></script>
+  <script src="js/alerts.js?v=v37-2026-11-11"></script>
+  <script src="js/nav.js?v=v37-2026-11-11"></script>
+  <script src="js/visits.js?v=v37-2026-11-11"></script>
+  <script src="js/lake-picker.js?v=v37-2026-11-11"></script>
+  <script src="js/usgs.js?v=v37-2026-11-11"></script>
+  <script src="js/home-log.js?v=v37-2026-11-11"></script>
+  <script src="js/astro.js?v=v37-2026-11-11"></script>
+  <script src="js/night-rules.js?v=v37-2026-11-11"></script>
+  <script src="js/conditions.js?v=v37-2026-11-11"></script>
+  <script src="js/pool-trend.js?v=v37-2026-11-11"></script>
+  <script src="js/lake-map-data-eastfork.js?v=v37-2026-11-11"></script>
+  <script src="js/hoover-map.js?v=v37-2026-11-11"></script>
+  <script src="js/install-tip.js?v=v37-2026-11-11"></script>
+  <script src="js/tonight-tools.js?v=v37-2026-11-11"></script>
+  <script src="js/a11y.js?v=v37-2026-11-11" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
