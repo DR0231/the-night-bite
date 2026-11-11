@@ -90,7 +90,8 @@ python3 tools/promote.py --live --confirm-push --whats-new entry.json --commit -
 
 * Files: whatever changed in the preview since the range named in live's last "Promote preview A..B" commit (override with `--base`).
 * Live keeps its own privacy page, What's new data, CNAME, robots.txt, IndexNow key, Google verification file and Whisperwood.
-* Every promotion requires a new What's new entry and a newer sw.js VERSION. The default VERSION is the next vN with today's date.
+* Every promotion requires a new What's new entry (or `--small-fix`) and a newer sw.js VERSION, and runs
+  `sw-precache.py` on the live tree after the builds. The default VERSION is the next vN with today's date.
 * Nothing is committed without `--commit`, and nothing is pushed without `--push`. The push runs `git pull --rebase` first and never force-pushes.
 * After a push it prints the IndexNow command, `python3 tools/indexnow.py --since HEAD~1 --send`, for you to run once nightbiteoh.com serves the new pages.
 * To rehearse, copy the live checkout and run against the copy: `--live --confirm-push --live-dir /tmp/live-copy`.
@@ -102,9 +103,15 @@ python3 tools/build-lake-pages.py   # picker tile charts (build-tile-charts.py, 
                                     # + registry (title/description from data/quick-facts.json), the root picker tiles
 python3 tools/build-docks.py        # water.html#docks from data/docks.json; a date already past is baked as its after text
 python3 tools/build-meta.py         # share tags; og-<id>.png when it exists, else og-card.png
-python3 tools/stamp-version.py      # ?v=VERSION on CSS/JS links
+python3 tools/stamp-version.py      # ?v=VERSION on CSS/JS links, then sw-precache.py
 python3 tools/build-updates.py      # What's new page from data/updates.json
+python3 tools/sw-precache.py        # last: content hashes of the precached files into sw.js REVISIONS
 ```
+
+`python3 tools/sw-precache.py --check` changes nothing and exits 1 when sw.js `REVISIONS` is stale, the lake precache
+list is out of step with `js/lakes.js`, or a precached file is missing (GitHub static checks, and check-all as
+`check-sw-precache`). The lake list (every home plus its chart, map script and map images) is generated from the
+registry, so a new water is picked up automatically. See SERVICE-WORKER.md.
 
 ## Picker tile charts (`build-tile-charts.py`)
 

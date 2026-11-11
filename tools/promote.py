@@ -308,7 +308,7 @@ if a.whats_new:
         (T / "data/updates.json").write_text(registry.dump_like(up_t, up))
 
 build_log = []
-for b in ("build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py"):
+for b in ("build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py", "sw-precache.py"):   # sw-precache last: hashes of the final live files
     p = subprocess.run([sys.executable, str(T / "tools" / b)], cwd=T, capture_output=True, text=True)
     last = (p.stdout.strip().splitlines() or [""])[-1]
     build_log.append(f"{b}: {'ok' if p.returncode == 0 else 'FAILED'} {last}")

@@ -33,7 +33,8 @@ after a reload and is set before first paint, at 390 and 1280 on /, hoover/ and 
 check-trip-queue (Share a trip: queue down falls back to email/GitHub; a check trip sent for real lands pending, then is rejected and gone; needs /home/box/.nightbite/trip-queue-admin-token)
 check-log-io (Log empty states, no dev notes, backup export, clear, import round trip with an old-format trip, merge
 without duplicates, bad files refused; about 10 s), check-i18n (string files: missing keys per language, placeholders,
-protected words, draft flag; static), check-manifest (install name and water count in site.webmanifest; static), check-i18n-browser (language picker: Spanish applies, persists, falls back to English
+protected words, draft flag; static), check-manifest (install name and water count in site.webmanifest; static), check-sw-precache (sw.js REVISIONS match the
+precached files, none missing; static), check-i18n-browser (language picker: Spanish applies, persists, falls back to English
 for a missing key; facts stay English; about 20 s), sweep (every sitemap page).
 Every browser check loads tools/no-analytics.cjs. Against live nothing is written: static checks read the live
 checkout (--live-dir, default /workspace/the-night-bite) through NB_ROOT, and no build runs.
@@ -50,8 +51,8 @@ sys.stdout.reconfigure(line_buffering=True)
 TOOLS = pathlib.Path(__file__).resolve().parent
 ROOT = TOOLS.parent
 BASES = {"preview": "https://dr0231.github.io/night-bite-preview/", "live": "https://nightbiteoh.com/"}
-BUILDS = ["build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py", "wrap-dates.py", "i18n-extract.py"]
-CHECKS = ["check-meta", "check-radius", "check-hours", "check-ramp-names", "check-docks", "check-lake-isolation", "check-glance", "check-glance-fallback", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-log-io", "check-trip-queue", "check-night-rules", "check-i18n", "check-manifest", "check-i18n-browser", "sweep"]
+BUILDS = ["build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py", "wrap-dates.py", "i18n-extract.py", "sw-precache.py"]
+CHECKS = ["check-meta", "check-radius", "check-hours", "check-ramp-names", "check-docks", "check-lake-isolation", "check-glance", "check-glance-fallback", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-log-io", "check-trip-queue", "check-night-rules", "check-i18n", "check-manifest", "check-sw-precache", "check-i18n-browser", "sweep"]
 BROWSER = {"check-glance", "check-glance-fallback", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-log-io", "check-trip-queue", "check-i18n-browser", "sweep"}
 
 ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -257,6 +258,7 @@ def cmd_for(name):
         "check-ramp-names": ([py, str(TOOLS / "check-ramp-names.py")], static_env),
         "check-i18n": ([py, str(TOOLS / "check-i18n.py")], static_env),
         "check-manifest": ([py, str(TOOLS / "check-manifest.py")], static_env),
+        "check-sw-precache": ([py, str(TOOLS / "sw-precache.py"), "--check"], static_env),
         "check-i18n-browser": (["node", str(TOOLS / "check-i18n.cjs"), base, d], {}),
         "check-docks": ([py, str(TOOLS / "check-docks.py")], {}),
         "check-lake-isolation": ([py, str(TOOLS / "check-lake-isolation.py")], dict(static_env, NB_LAKES=",".join(LAKES))),
