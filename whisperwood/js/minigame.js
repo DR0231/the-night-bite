@@ -39,9 +39,9 @@ const Minigame = {
       this.marker = 0;
       this.dir = 1;
       this.sweet = 0.42 + Math.random() * 0.2;
-      const wide = kind === "timing" ? 0.18 : 0.11;
+      const wide = kind === "timing" ? 0.18 : 0.14;
       this.half = wide * bar;
-      this.speed = (kind === "timing" ? 1.15 : 1.85) * spd;
+      this.speed = (kind === "timing" ? 1.15 : 1.6) * spd;
     } else {
       this.value = 0.5;
       this.band = 0.5;

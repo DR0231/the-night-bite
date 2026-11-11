@@ -429,7 +429,7 @@ const WEATHERS = {
 const RODS = {
   willow: { id: "willow", name: "Willow Rod", bar: 1, speed: 1, tension: 0.70, reach: 1, caveLuck: 1,
     desc: "A balanced starter rod." },
-  finch: { id: "finch", name: "River Finch", bar: 0.82, speed: 1.28, tension: 1.05, reach: 0.84, caveLuck: 1,
+  finch: { id: "finch", name: "River Finch", bar: 1.3, speed: 1.05, tension: 1.05, reach: 0.84, caveLuck: 1,
     desc: "Quicker timing bar, shorter casts. Eases river taps, not the heavy fights.",
     cost: DESIGN.finchCost, requireFish: "swiftdarter" },
   spine: { id: "spine", name: "Cave Spine", bar: 1.06, speed: 0.9, tension: 1.48, reach: 1, caveLuck: 1.35,
