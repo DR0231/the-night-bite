@@ -1,0 +1,45 @@
+# Static gate on every push and pull request to main. Playwright and the other
+# browser checks are not in this workflow yet. tools/promote.py carries
+# .github/workflows/ to the live repo; ISSUE_TEMPLATE stays skipped.
+name: Static checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Python tools
+        run: python3 -m pip install --user beautifulsoup4 lxml pillow
+
+      - name: Run static checks
+        run: |
+          set -euo pipefail
+          python3 tools/check-meta.py
+          python3 tools/check-radius.py
+          python3 tools/check-hours.py
+          python3 tools/check-ramp-names.py
+          python3 tools/check-lake-isolation.py
+          python3 tools/check-i18n.py
+          python3 tools/check-manifest.py
+          python3 tools/build-tile-charts.py --check
+          python3 tools/nav-labels.py --check

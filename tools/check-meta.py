@@ -17,12 +17,60 @@ Across pages (errors): two indexable pages with the same <title>, meta descripti
 and noindex redirect pages left out), so every lake and page can be found and shared on its own.
 Header nav (error): the old two-span labels (nav-label-full + nav-label-short, read as "SpeciesSpecies", "WaterLake")
 anywhere but whisperwood.html; tools/nav-labels.py rewrites them.
+Lake count (error): a title or description that states a site-wide count ("23 Ohio lakes", "and 20 more Ohio
+waters") that does not match the registry in js/lakes.js. A correct count that still says "lakes" instead of
+"waters" is a warning only.
 """
 import html, json, os, pathlib, re, sys
 
 # NB_ROOT=<dir> checks another copy of the site (tools/check-all.py uses it to read the live checkout without writing)
 root = pathlib.Path(os.environ.get("NB_ROOT") or pathlib.Path(__file__).resolve().parent.parent)
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import registry  # noqa: E402
 SITE = "https://nightbiteoh.com/"
+REG = registry.load(root)
+WATER_COUNT = len(REG["order"])
+_LABELS = []
+for _id, _L in REG["lakes"].items():
+    for _key in ("name", "short"):
+        _v = (_L.get(_key) or "").strip()
+        if _v:
+            _LABELS.append((_v, _id))
+_LABELS.sort(key=lambda x: len(x[0]), reverse=True)
+MORE_RE = re.compile(r"\band (\d+) more Ohio (lakes|waters)\b", re.I)
+TOTAL_RE = re.compile(r"(?<!more )(\d+) Ohio (lakes|waters)\b", re.I)
+
+
+def named_waters(text):
+    found, used = set(), [False] * len(text)
+    for phrase, i in _LABELS:
+        for m in re.finditer(r"(?<![A-Za-z])" + re.escape(phrase) + r"(?![A-Za-z])", text):
+            if any(used[m.start():m.end()]):
+                continue
+            for j in range(m.start(), m.end()):
+                used[j] = True
+            found.add(i)
+    return found
+
+
+def count_errors(rel, label, text):
+    """Error on a stale site-wide water count; warn when a correct count still says lakes."""
+    out_err, out_warn = [], []
+    for m in MORE_RE.finditer(text):
+        num, noun = int(m.group(1)), m.group(2).lower()
+        named = len(named_waters(text[:m.start()]))
+        if named < 1 or named + num != WATER_COUNT:
+            out_err.append(f"{rel}: {label} names {named} waters and {num} more, which is not the registry ({WATER_COUNT})")
+        elif noun != "waters":
+            out_warn.append(f"{rel}: {label} count is right but says \"{noun}\"; use \"waters\" for the whole group")
+    for m in TOTAL_RE.finditer(text):
+        num, noun = int(m.group(1)), m.group(2).lower()
+        if num != WATER_COUNT:
+            out_err.append(f"{rel}: {label} count {num} does not match the registry ({WATER_COUNT} waters)")
+        elif noun != "waters":
+            out_warn.append(f"{rel}: {label} count is right but says \"{noun}\"; use \"waters\" for the whole group")
+    return out_err, out_warn
+
 BASIC_ONLY = {"404.html", "offline.html"}
 OG = ["og:site_name", "og:type", "og:title", "og:description", "og:url", "og:image",
       "og:image:width", "og:image:height", "og:image:alt"]
@@ -65,6 +113,9 @@ for p in sorted(root.rglob("*.html")):
     for label, text in (("title", title), ("description", desc)):
         if re.search(r" [-\u2013\u2014] ", text):
             warnings.append(f"{rel}: spaced dash in {label}")
+        ce, cw = count_errors(rel, label, html.unescape(text))
+        errors.extend(ce)
+        warnings.extend(cw)
     for i, block in enumerate(re.findall(r'<script type="application/ld\+json">(.*?)</script>', src, re.S)):
         try:
             data = json.loads(block)

@@ -17,12 +17,13 @@ What it does (the v20/v21 promote steps, generalized):
   · files: everything that changed in the preview between --base (default: the end of the range in live's last
     "Promote preview A..B" commit) and --ref (default origin/main), read from git, not the working tree. --all takes
     every tracked file instead. Live-only files are never written: CNAME, robots.txt, the IndexNow key file,
-    google*.html, privacy.html, data/updates.json, updates.html, whisperwood*, previews/, review/, .github/.
+    google*.html, privacy.html, data/updates.json, updates.html, whisperwood*, previews/, review/, and .github/ except .github/workflows/.
   · html: CSP gets Cloudflare Insights (live CSP kept when it differs), the analytics beacon before </body> (not
     offline.html), robots noindex,nofollow removed (404 and offline keep noindex), Preview chip removed,
     /night-bite-preview/ becomes /, Whisperwood links relative, live's pool lead, Checked time and water temp kept.
   · css: the "Preview copy only" block is dropped. sw.js: PREFIX nb-live-, VERSION (--version, default the next vN
-    with today's date). DATA-SOURCES.md: live title. Anything else is copied as is.
+    with today's date). DATA-SOURCES.md: live title. site.webmanifest: name "The Night Bite (Preview)" becomes
+    "The Night Bite". Anything else is copied as is.
   · --whats-new FILE: a JSON entry or a JSON array of entries (id, tag, title, bullets, links; date defaults to today) added at the top of
     live data/updates.json. Then the build order runs in the live tree: build-lake-pages, build-docks, build-meta,
     stamp-version, build-updates.
@@ -30,7 +31,7 @@ What it does (the v20/v21 promote steps, generalized):
     check and every other check still apply.
 Checks (real mode refuses, dry run reports and exits 1): a new dated What's new entry in live data/updates.json that
 is not in live HEAD (skipped with --small-fix); VERSION newer than live HEAD's; no preview URLs, chip or
-noindex,nofollow on any page; beacon once per page; live-only files and whisperwood/ unchanged; live tree clean
+noindex,nofollow on any page, and no Preview left in site.webmanifest's name; beacon once per page; live-only files and whisperwood/ unchanged; live tree clean
 before a real run.
 Nothing is committed without --commit, nothing pushed without --push, and it never force-pushes. After a push it
 prints the IndexNow command; it does not run it.
@@ -122,10 +123,13 @@ else:
 
 SKIP_EXACT = {"whisperwood.html", "robots.txt", "robots.live.txt", ".gitignore", "SERVICE-WORKER.md", "README.md",
               "privacy.html", "data/updates.json", "updates.html", "CNAME"}
-SKIP_PREFIX = ("whisperwood/", "previews/", "review/", ".github/")
+SKIP_PREFIX = ("whisperwood/", "previews/", "review/")
 
 
 def live_only(f):
+    # Workflows go to live so the static gate runs there too. Other .github/ files (issue templates) stay skipped.
+    if f.startswith(".github/"):
+        return not f.startswith(".github/workflows/")
     return (f in SKIP_EXACT or f.startswith(SKIP_PREFIX) or "__pycache__" in f
             or re.fullmatch(r"google[0-9a-f]+\.html", f) or re.fullmatch(r"[0-9a-f]{32}\.txt", f))
 
@@ -240,6 +244,14 @@ def transform(f, data, dst):
     if f == "DATA-SOURCES.md":
         s = data.decode("utf-8").replace("# Data sources (preview features)", "# Data sources (live data features)", 1)
         return re.sub(r" \(preview\)", "", s).encode("utf-8")
+    if f == "site.webmanifest":
+        s = data.decode("utf-8")
+        s2, n = re.subn(r'("name"\s*:\s*")The Night Bite \(Preview\)(")', r"\1The Night Bite\2", s, count=1)
+        if n == 1:
+            s = s2
+        name = json.loads(s).get("name", "")
+        assert "Preview" not in name and name == "The Night Bite", f
+        return s.encode("utf-8")
     return data
 
 
@@ -326,6 +338,18 @@ for p in sorted(T.rglob("*.html")):
     want = 0 if r in STUBS or r == "offline.html" else 1
     if s.count("static.cloudflareinsights.com/beacon.min.js") != want and r not in STUBS:
         problems.append(f"{r}: beacon count {s.count('static.cloudflareinsights.com/beacon.min.js')}, want {want}")
+man_p = T / "site.webmanifest"
+if man_p.exists():
+    ms = man_p.read_text(encoding="utf-8")
+    if "night-bite-preview" in ms or "dr0231.github.io" in ms.lower():
+        problems.append("site.webmanifest: preview URL left in")
+    try:
+        mname = json.loads(ms).get("name", "")
+    except ValueError:
+        mname = ""
+        problems.append("site.webmanifest: not valid JSON after promote")
+    if "Preview" in mname:
+        problems.append("site.webmanifest: Preview left in name")
 after_guard = snapshot(T, guard)
 for r in sorted(set(before_guard) | set(after_guard)):
     if before_guard.get(r) != after_guard.get(r):
