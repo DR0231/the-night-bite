@@ -5,7 +5,7 @@
 // the right source links (gauge, NWS) or a "No gauge" state linked to the pool card note, sunset filled, no sideways scroll, no console or CSP
 // errors. Then NWS blocked (wind says "Check NWS", bite "Needs forecast", page fine), and offline after one visit (the service worker copy still fills
 // the strip). Exit code 1 on any FAIL. APIs blocked and JavaScript off: tools/check-glance-fallback.cjs.
-const PW = process.env.PLAYWRIGHT_CORE || '/usr/local/lib/pnpm/5/.pnpm/playwright-core@1.59.1/node_modules/playwright-core';
+const PW = require(require('path').join(__dirname, 'playwright-path.cjs'));   // PLAYWRIGHT_CORE, then node_modules, then the box copy
 const { chromium } = require(PW);
 const NA = require('./no-analytics.cjs');
 const BASE = (process.argv[2] || 'https://dr0231.github.io/night-bite-preview/').replace(/\/?$/, '/');

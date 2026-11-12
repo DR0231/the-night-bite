@@ -26,7 +26,8 @@ What it does (the v20/v21 promote steps, generalized):
     "The Night Bite". Anything else is copied as is.
   · --whats-new FILE: a JSON entry or a JSON array of entries (id, tag, title, bullets, links; date defaults to today) added at the top of
     live data/updates.json. Then the build order runs in the live tree: build-lake-pages, build-docks, build-meta,
-    stamp-version, build-updates.
+    stamp-version, build-updates, footer-social (live-only privacy and updates pages get the footer follow row too),
+    wrap-dates, sw-precache.
   · --small-fix: skip only the What's new entry requirement, for small fixes that get no entry. The VERSION bump
     check and every other check still apply.
 Checks (real mode refuses, dry run reports and exits 1): a new dated What's new entry in live data/updates.json that
@@ -308,7 +309,7 @@ if a.whats_new:
         (T / "data/updates.json").write_text(registry.dump_like(up_t, up))
 
 build_log = []
-for b in ("build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py", "sw-precache.py"):   # sw-precache last: hashes of the final live files
+for b in ("build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py", "footer-social.py", "wrap-dates.py", "sw-precache.py"):   # sw-precache last: hashes of the final live files
     p = subprocess.run([sys.executable, str(T / "tools" / b)], cwd=T, capture_output=True, text=True)
     last = (p.stdout.strip().splitlines() or [""])[-1]
     build_log.append(f"{b}: {'ok' if p.returncode == 0 else 'FAILED'} {last}")

@@ -1,6 +1,8 @@
 # The Night Bite tools
 
-Run everything from the repo root of the preview checkout. Python 3 and Node 24 with Playwright (Chrome) are needed.
+Run everything from the repo root of the preview checkout. Python 3.10 or newer and Node 24 with Playwright (Chrome) are needed.
+Setup on a fresh clone: `pip install -r tools/requirements.txt` (bs4, lxml, Pillow, shapely) and `cd tools && npm install && npx playwright-core install chromium`.
+The browser checks find Playwright through `tools/playwright-path.cjs`: the `PLAYWRIGHT_CORE` environment variable first, then `node_modules`, then the box's pnpm copy.
 Every browser run loads `tools/no-analytics.cjs`, so no test visit is counted on Cloudflare Web Analytics or the visits counter.
 
 The scripts read their lists from the site itself, so a new lake or page needs no edit here:
@@ -105,8 +107,12 @@ python3 tools/build-docks.py        # water.html#docks from data/docks.json; a d
 python3 tools/build-meta.py         # share tags; og-<id>.png when it exists, else og-card.png
 python3 tools/stamp-version.py      # ?v=VERSION on CSS/JS links, then sw-precache.py
 python3 tools/build-updates.py      # What's new page from data/updates.json
+python3 tools/footer-social.py      # the Facebook, Instagram and X follow row in every footer (--check in GitHub static checks)
+python3 tools/wrap-dates.py         # written dates into <time datetime> so js/i18n.js shows them in the picked language
 python3 tools/sw-precache.py        # last: content hashes of the precached files into sw.js REVISIONS
 ```
+
+check-all and new-lake also run `i18n-extract.py` after wrap-dates. On live it runs as its own step after promote.
 
 `python3 tools/sw-precache.py --check` changes nothing and exits 1 when sw.js `REVISIONS` is stale, the lake precache
 list is out of step with `js/lakes.js`, or a precached file is missing (GitHub static checks, and check-all as
@@ -217,4 +223,5 @@ python3 tools/build-tile-charts.py --check         # change nothing; exit 1 if a
 - Only UI chrome goes in the files: nav, Display panel, glance labels, night-rules chip and weather alert labels, Log form labels, footer. Never lake names, ramp names, species, levels, rules or regulations. `{name}` placeholders (for example `{time} left`) must survive.
 - How it applies: `js/a11y-boot.js` sets `<html lang>` from `nb-lang` before paint; `js/a11y.js` loads `js/i18n.js` only when the language isn't English. It swaps text whose English matches a string, inside the chrome scopes listed at the top of `js/i18n.js`, and shows a "Draft translation" marker at the top of `<main>`. A missing key keeps English. Static HTML stays English.
 - `python3 tools/check-i18n.py` (static, in check-all): missing keys per language (listed), extra keys, placeholder mismatches, protected words (agencies, weather.gov) dropped, draft flag, files vs `LANGS`, and no lake or ramp names in en.json.
+- `data/i18n/tm/<lang>.json` is the translation memory (about 14 MB for all languages). Only `tools/i18n-extract.py` reads it, to write the small per page files in `data/i18n/pages/`; no browser code fetches it and it is not precached. It is deployed with the rest of the repo today. Keep it in the repo; whether to keep it out of the deploy is part of the open "dev files out of the deploy" item.
 - `node tools/check-i18n.cjs <base> [outDir]` (check-all name `check-i18n-browser`, about 20 s, phone width): Spanish applies from the footer Language button, persists over a reload, keeps lake name, rule chip and numbers, Log labels swap while species and ramps stay English, a missing key falls back to English, the marker reads in red light and high contrast, English restores everything.

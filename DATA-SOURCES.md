@@ -4,7 +4,7 @@ Updated 2026-10-24 (ET): Tonight at Hoover gets the hourly strip, Tonight's bite
 
 Updated 2026-10-22 (ET): boardwalk added; What's biting now added.
 
-Checked 2026-10-22 (ET). Only details confirmed by a source below are shown on the site. Anything missing was left out on purpose.
+Checked 2026-10-22 (ET) for the original sections. The waters added Nov. 9 and 10, 2026 were sourced on those dates (sections near the end), and the night rules for six of them on Nov. 11, 2026 ("Night rules, Nov. 11, 2026" at the end). Only details confirmed by a source below are shown on the site. Anything missing was left out on purpose.
 
 ## Tonight at Hoover card (js/conditions.js)
 - Forecast: National Weather Service API, `https://api.weather.gov/points/40.11,-82.88` resolves to office ILN (Wilmington, OH), gridpoint 89,88. Hourly forecast: `https://api.weather.gov/gridpoints/ILN/89,88/forecast/hourly`. Wind, air temp, rain chance (max of the next 12 hourly periods).
@@ -573,3 +573,16 @@ The 2026–27 rules stay on the site as the rules in force. Each change is shown
 * Bass rules struck, so these go to the statewide 5 a day, 12″ minimum: Acton, Paint Creek and Salt Fork (13-08(O) 4 a day split); Long Lake in the Portage Lakes (13-08(P) and 13-09(I) slot); Cowan and Seneca (13-09(C) 15″ minimum); Knox (13-09(D) 18″ minimum); Burr Oak and Dow (13-09(G) 12″ to 15″ slot).
 * Crappie: Hoover is struck from the 30 a day list (13-08(L)) and the 9″ list (13-09(H)), so it follows the statewide crappie rule (no daily limit, no minimum). Every other 30 and 9 water on the site stays on both lists, including Paint Creek, Salt Fork, Seneca and the Portage Lakes' East, North, Turkeyfoot and West.
 * Fixed at the same time: the crappie species pages and the gear crappie line had shown the 30 a day, 9″ rule for Griggs, Madison, Knox, Clear Fork, Lake Logan, Burr Oak and Dow, which are not on 13-08(L) or 13-09(H); the bass species pages had listed Knox, Seneca, Salt Fork, Burr Oak and Dow under the statewide bass rule. Both now match the 2026–27 rules.
+
+## Night rules, Nov. 11, 2026
+
+Quick facts always has a Night rules row now (tools/build-lake-pages.py stops if a water has neither a sourced line nor a plain absence note). Read Nov. 11, 2026:
+
+| Water | Night rules row | Source |
+| --- | --- | --- |
+| Acton Lake | State park hours 6 a.m. to 11 p.m.; legitimate recreation, like fishing, allowed outside those hours. Acton Lake is surrounded by Hueston Woods State Park (ODNR Acton Lake Fishing Area page), which is not on the rule's exception list. | ODNR, Ohio State Park Rules: Hours of Operation (https://ohiodnr.gov/rules-and-regulations/rules-and-regulations-by-division/state-parks-and-watercraft/ohio-state-park-rules/3-hours-of-operation) |
+| Nimisila Reservoir | Portage Lakes State Park hours 6 a.m. to 11 p.m.; legitimate recreation allowed outside those hours. The park page lists Nimisila Reservoir as one of its lakes. | ODNR, Portage Lakes State Park (https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-state-park) |
+| East Branch Reservoir | Headwaters Park open 6 a.m. to 11 p.m. daily. Nothing on the page about fishing after hours, so the site does not say it is allowed. | Geauga Park District, Headwaters Park (https://geaugaparkdistrict.org/park/headwaters-park/) |
+| Highlandtown Lake | No hours on either ODNR page; absence line. | ODNR Highlandtown Lake Fishing Area and Highlandtown Wildlife Area pages |
+| LaDue Reservoir | No access hours; absence line. The City of Akron page gives only boathouse hours (about sunrise to sunset, April to Labor Day), not access hours. | ODNR LaDue Reservoir Fishing Area; City of Akron, Watershed Division (https://www.akronohio.gov/departments/service/water_supply_bureau/watershed_division.php) |
+| Mogadore Reservoir | No access hours; absence line. Same City of Akron page, boathouse hours only. | ODNR Mogadore Reservoir Fishing Area; City of Akron, Watershed Division |

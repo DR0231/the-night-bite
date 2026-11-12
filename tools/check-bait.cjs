@@ -1,5 +1,5 @@
 // The Night Bite: Bait nearby check on every lake home at 390, 820 and 1440 (from nb-east-batch). Usage: BASE=<site/> node tools/check-bait.cjs (default the preview). Blocks analytics via tools/no-analytics.cjs.
-const {chromium}=require('/usr/local/lib/pnpm/5/.pnpm/playwright-core@1.59.1/node_modules/playwright-core');
+const {chromium}=require(require(require('path').join(__dirname,'playwright-path.cjs')));   // PLAYWRIGHT_CORE, then node_modules, then the box copy
 const na=require(require('path').join(__dirname,'no-analytics.cjs'));
 const BASE=process.env.BASE||'https://dr0231.github.io/night-bite-preview/';
 const data=require(require('path').join(__dirname,'..','data','bait-shops.json')).lakes;

@@ -1,0 +1,9 @@
+{
+  "name": "night-bite-tools",
+  "private": true,
+  "description": "Browser checks for The Night Bite (tools/*.cjs). Not part of the site. Install with: cd tools && npm install, then npx playwright-core install chromium.",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "playwright-core": "1.59.1"
+  }
+}

@@ -32,6 +32,8 @@ for lake, F in L.items():
         errs.append(f"{lake}: hours.checked missing or not YYYY-MM-DD")
     page = root / lake / "index.html"
     html = page.read_text() if page.exists() else ""
+    if html and "<dt>Night rules</dt>" not in html:
+        errs.append(f"{lake}: Quick facts has no Night rules row (run tools/build-lake-pages.py)")
     if H.get("none"):
         none.append(lake)
         if not H.get("note"):

@@ -1720,6 +1720,10 @@
         if (typeof v === "string" && nodes[i].textContent !== v) nodes[i].textContent = v;
       }
     }
+    // a[data-lk-home] points at a real lake home in the HTML (Hoover's, so it works with no JS and on a first visit);
+    // here it follows the active lake, keeping its #fragment (shared pages like ice.html)
+    var lh = document.querySelectorAll("a[data-lk-home]");
+    for (var k = 0; k < lh.length; k++) lh[k].href = homeFor(id) + (lh[k].hash || "");
     // Once a water is chosen, Home links (logo, nav, footer) go straight to that lake's home page; before that they
     // open the water picker at the root. Links that pick a lake (a[data-lake], the picker rows) are left alone:
     // rewriting those once sent the Hoover link to the lake already open (v42, v43). The picker page keeps its own.

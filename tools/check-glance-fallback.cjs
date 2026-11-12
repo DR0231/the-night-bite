@@ -9,7 +9,7 @@
 // Usage: node tools/check-glance-fallback.cjs [BASE] [OUTDIR] [--lakes a,b]
 //   lakes: --lakes, else NB_LAKES (check-all sets it), else hoover,alum,knox,pymatuning (USGS, Corps, no gauge, stale)
 // Blocks analytics (tools/no-analytics.cjs). Exit code 1 on any FAIL. Log: OUTDIR/check-glance-fallback.log
-const PW = process.env.PLAYWRIGHT_CORE || '/usr/local/lib/pnpm/5/.pnpm/playwright-core@1.59.1/node_modules/playwright-core';
+const PW = require(require('path').join(__dirname, 'playwright-path.cjs'));   // PLAYWRIGHT_CORE, then node_modules, then the box copy
 const { chromium } = require(PW);
 const NA = require('./no-analytics.cjs');
 const R = require('./registry.cjs');

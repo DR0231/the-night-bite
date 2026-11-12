@@ -64,13 +64,15 @@ for l in files:
     report.append(f"{l} ({meta.get('name')}, {meta.get('review')}): {len(en) - len(miss)}/{len(en)} keys, {len(miss)} missing" + (": " + ", ".join(miss[:12]) if miss else ""))
 print(f"check-i18n: {len(en)} English keys, languages {', '.join(files)}")
 for r in report: print("  " + r)
-for e in errs: print("FAIL " + e)
 # S12: per-page string files must match the built pages; STRICT groups in tools/i18n-extract.py fail on any gap
 import subprocess
 x = subprocess.run([sys.executable, str(ROOT / "tools" / "i18n-extract.py"), "--check"], capture_output=True, text=True, env={**os.environ, "NB_ROOT": str(ROOT)})
-print(x.stdout.rstrip())
+out = [l for l in x.stdout.splitlines() if not l.startswith("FAIL ")]
+if out: print("\n".join(out))
 for line in x.stdout.splitlines():
     if line.startswith("FAIL "): errs.append(line[5:])
 if x.returncode and not any(l.startswith("FAIL ") for l in x.stdout.splitlines()): errs.append("i18n-extract --check crashed: " + x.stderr.strip()[-300:])
+# printed last, so every counted error is listed (a crash, like a missing bs4 module, included)
+for e in errs: print("FAIL " + e)
 print(f"check-i18n: {len(errs)} errors")
 sys.exit(1 if errs else 0)

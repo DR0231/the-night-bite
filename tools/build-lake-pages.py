@@ -143,12 +143,16 @@ def quick_facts(lake):
     else:
         pool += "No public gauge, so this site shows no live level."
     rows.append(("Normal pool", pool))
-    if F.get("night"):
-        night = t(F["night"])
-        H = F.get("hours") or {}
-        if H.get("source"):
-            night += f' Source: <a href="{H["source"][1]}" target="_blank" rel="noopener">{t(H["source"][0])}</a>.'
-        rows.append(("Night rules", night))
+    # Night rules is never left out: a sourced line, or the plain absence note from hours {none: true, note}.
+    # On a night fishing site a missing row could read as permission, so a water with neither stops the build.
+    H = F.get("hours") or {}
+    night = F.get("night") or (H.get("note") if H.get("none") else None)
+    if not night:
+        raise SystemExit(f"{lake}: data/quick-facts.json needs a night line or hours {{none: true, note}}")
+    night = t(night)
+    if H.get("source"):
+        night += f' Source: <a href="{H["source"][1]}" target="_blank" rel="noopener">{t(H["source"][0])}</a>.'
+    rows.append(("Night rules", night))
     srcs = "; ".join(f'<a href="{u}" target="_blank" rel="noopener">{t(n)}</a>' for n, u in F["sources"])
     # rule lines get data-nb-rule: js/i18n.js adds a translated "draft, check the official source" note in other languages
     dl = "\n".join(f"          <div><dt>{k}</dt><dd{' data-nb-rule' if k in ('Motors and speed', 'Night rules') else ''}>{v}</dd></div>" for k, v in rows)
@@ -207,17 +211,106 @@ def jsonld(lake, name, url, title):
         "@context": "https://schema.org", "@type": "WebPage", "@id": url + "#webpage", "url": url, "name": title,
         "isPartOf": {"@id": WEBSITE_ID},
         "about": {"@type": "Reservoir" if name.endswith("Reservoir") else "LakeBodyOfWater", "name": name},
-        "dateModified": F["checked"], "inLanguage": "en-US",
+        "dateModified": F["checked"], "inLanguage": "en-US", "breadcrumb": {"@id": url + "#breadcrumb"},
     }
-    items = [page]
+    # Home (the water picker) > this water: the same trail the header's Pick your water link gives
+    crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "@id": url + "#breadcrumb", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE},
+        {"@type": "ListItem", "position": 2, "name": name, "item": url}]}
+    items = [page, crumbs]
     body = json.dumps(items, ensure_ascii=False)
     return ('  <!-- nb:jsonld (tools/build-lake-pages.py) -->\n'
             f'  <script type="application/ld+json">\n  {body}\n  </script>\n'
             '  <!-- /nb:jsonld -->')
 
 
+# Linking (review S1, V5): species pages and nearby waters, generated from js/lakes.js (species lists, regions, order),
+# stocking.html (which waters have ODNR stocking rows) and data/docks.json, so a new water picks them up on its build.
+SPECIES_NAMES = dict(re.findall(r'"([a-z-]+)": "([^"]+)"', re.search(r"var SPECIES = \{(.*?)\};", LAKES_JS, re.S).group(1)))
+SPECIES_PAGES = {p.stem for p in (root / "species").glob("*.html") if p.stem != "index"}
+REGION_NAME = {r["id"]: r["name"] for r in REG["regions"]}
+
+
+def _stocked():
+    """Waters whose block in stocking.html#stocked has at least one table row (ODNR stocking records)."""
+    s = (root / "stocking.html").read_text()
+    i = s.find('id="stocked"')
+    if i < 0:
+        return set()
+    sec = s[i:s.find("</section>", i)]
+    out = set()
+    for ids, body in re.findall(r'<div data-for="([^"]+)"(.*?)(?=<div data-for=|\Z)', sec, re.S):
+        if "<tr" in body:
+            out.update(ids.split())
+    return out
+
+
+STOCKED = _stocked()
+DOCKS = set(json.loads((root / "data" / "docks.json").read_text()).get("lakes", {}))
+
+
+def lake_species(lake):
+    return [sp for sp in (REG["lakes"][lake].get("species") or []) if sp in SPECIES_PAGES]
+
+
+def chips(items):
+    return "".join(f'<li><a class="lake-chip" href="{href}">{t(label)}</a></li>' for href, label in items)
+
+
+def lake_links(lake):
+    """Lake home block: this water's species pages, the other waters in its picker region, stocking and docks."""
+    c = REG["lakes"][lake]
+    sp = lake_species(lake)
+    region = c.get("region")
+    sibs = [o for o in REG["order"] if o != lake and REG["lakes"][o].get("region") == region]
+    parts = ['    <!-- nb:lake-links (tools/build-lake-pages.py) -->',
+             '    <section class="bento-card lake-links" id="more-waters" aria-labelledby="more-waters-title">',
+             '      <h2 id="more-waters-title">Species and more waters</h2>']
+    if sp:
+        parts += ['      <h3 class="lake-links-label">Species pages for this water</h3>',
+                  f'      <ul class="lake-chips">{chips([("species/" + x, SPECIES_NAMES.get(x, x)) for x in sp])}</ul>']
+    if sibs:
+        parts += ['      <details class="how-to-read lake-links-more">',
+                  f'        <summary>More waters in {t(REGION_NAME.get(region, region))}</summary>',
+                  f'        <div class="how-to-read-body"><ul class="lake-chips">{chips([(registry.home(o), REG["lakes"][o]["name"]) for o in sibs])}</ul></div>',
+                  '      </details>']
+    also = []
+    if lake in STOCKED:
+        also.append(f'<a href="stocking?lake={lake}#stocked">Stocking records</a>')
+    if lake in DOCKS:
+        also.append(f'<a href="water?lake={lake}#docks">Dock season</a>')
+    also.append('<a href="./?pick">All waters</a>')
+    parts += [f'      <p class="meta lake-links-also">{" &middot; ".join(also)}</p>',
+              '    </section>',
+              '    <!-- /nb:lake-links -->']
+    return "\n".join(parts)
+
+
+def species_lakes(sp, name):
+    """Species page block: every lake home whose js/lakes.js species list has this fish, grouped by picker region."""
+    lakes = [o for o in REG["order"] if sp in (REG["lakes"][o].get("species") or [])]
+    parts = ['    <!-- nb:species-lakes (tools/build-lake-pages.py) -->',
+             '    <section id="waters" class="species-section species-waters">',
+             '      <h2>Waters with this fish</h2>']
+    if not lakes:
+        parts += ['      <p>No water on this site lists it yet. A water is listed only when an ODNR source shows the fish there.</p>']
+    else:
+        parts += ['      <p class="meta">Lake homes on this site that list it, from ODNR sources. Open a region.</p>']
+        for r in REG["regions"]:
+            ls = [o for o in lakes if REG["lakes"][o].get("region") == r["id"]]
+            if not ls:
+                continue
+            parts += ['      <details class="how-to-read species-waters-region">',
+                      f'        <summary>{t(r["name"])}</summary>',
+                      f'        <div class="how-to-read-body"><ul class="lake-chips">{chips([("../" + registry.home(o), REG["lakes"][o]["name"]) for o in ls])}</ul></div>',
+                      '      </details>']
+    parts += ['    </section>', '    <!-- /nb:species-lakes -->']
+    return "\n".join(parts)
+
+
 def fill(h, lake, name, url, title):
     h = sub1(r"[ \t]*<!-- nb:quick-facts.*?<!-- /nb:quick-facts -->", lambda m: quick_facts(lake), h, re.S)
+    h = sub1(r"[ \t]*<!-- nb:lake-links.*?<!-- /nb:lake-links -->", lambda m: lake_links(lake), h, re.S)
     h = sub1(r"[ \t]*<!-- nb:night-rules.*?<!-- /nb:night-rules -->", lambda m: night_chip(lake), h, re.S)
     h = sub1(r"[ \t]*<!-- nb:jsonld.*?<!-- /nb:jsonld -->", lambda m: jsonld(lake, name, url, title), h, re.S)
     return h
@@ -410,6 +503,26 @@ if new_r != r:
         LASTMOD.add(SITE)
     ROOT_PAGE.write_text(new_r)
     print("wrote index.html (water picker tiles and region chips, site JSON-LD)")
+
+# species pages: the "Waters with this fish" block, between markers (first build puts it after the Notes section)
+for sp_page in sorted((root / "species").glob("*.html")):
+    if sp_page.stem == "index":
+        continue
+    s0 = sp_page.read_text()
+    sp_name = SPECIES_NAMES.get(sp_page.stem, sp_page.stem)
+    blk = species_lakes(sp_page.stem, sp_name)
+    if "<!-- nb:species-lakes" in s0:
+        s1 = sub1(r"[ \t]*<!-- nb:species-lakes.*?<!-- /nb:species-lakes -->", lambda m: blk, s0, re.S)
+    else:
+        m = re.search(r'\n    <div class="card-grid cols-2">', s0)
+        if not m:
+            sys.exit(f"build-lake-pages: {sp_page.relative_to(root)} has no card grid to put the waters block before")
+        s1 = s0[:m.start()] + "\n" + blk + "\n" + s0[m.start():]
+    if s1 != s0:
+        if unstamped(s1) != unstamped(s0):
+            LASTMOD.add(SITE + "species/" + sp_page.stem)
+        sp_page.write_text(s1)
+        print(f"wrote {sp_page.relative_to(root)} (waters with this fish)")
 
 if LASTMOD:
     import zoneinfo

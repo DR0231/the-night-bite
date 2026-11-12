@@ -4258,6 +4258,12 @@ html[data-contrast="more"] .night-chip { border-color: var(--amber); background:
 .social-pill:hover, .social-pill:focus-visible { border-color: var(--amber); color: var(--amber); }
 .social-pill:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 @media (min-width: 560px) { .social-label { width: auto; margin-right: 0.25rem; } }
+/* Footer: the same follow pills on every page (tools/footer-social.py), a size down so the footer stays short */
+.footer-social { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.4rem 0.5rem; margin: 0 0 var(--space-sm); }
+.footer-social .social-label { width: 100%; margin: 0; font-size: 0.75rem; }
+.footer-inner .footer-social .social-pill { gap: 0.4rem; min-height: 44px; padding: 0 0.9rem; font-family: var(--font-body); font-size: 0.9rem; letter-spacing: 0; color: var(--cream); }
+.footer-inner .footer-social .social-pill:hover, .footer-inner .footer-social .social-pill:focus-visible { color: var(--amber); }
+@media (min-width: 560px) { .footer-social .social-label { width: auto; margin-right: 0.25rem; } }
 
 /* Hoover's permission-cleared ODNR contours: one quiet disclosure, no map runtime. */
 .contour-map { margin: var(--space-lg) 0; }
@@ -4277,3 +4283,18 @@ html[data-contrast="more"] .night-chip { border-color: var(--amber); background:
 .contour-key-shallow { background: #c9eaf5; }
 .contour-key-deep { background: #174e7d; }
 .contour-map-credit { overflow-wrap: anywhere; }
+
+/* Linking (tools/build-lake-pages.py): species pages and nearby waters on lake homes, waters on species pages.
+   Plain links in pills, wrapped, thumb-sized; tokens only, so red light and high contrast follow. */
+.lake-links { margin-top: var(--space-lg); }
+.lake-links h2 { margin-top: 0; }
+.lake-links-label { margin: var(--space-sm) 0 0.4rem; font-family: var(--font-display); font-variant-ligatures: none; font-size: 0.8125rem; letter-spacing: 0.04em; color: var(--muted); }
+.lake-chips { display: flex; flex-wrap: wrap; gap: 0.4rem 0.45rem; margin: 0; padding: 0; list-style: none; }
+.how-to-read-body .lake-chips { padding: 0.25rem 0 0; }
+.how-to-read-body .lake-chips li { margin: 0; }
+.lake-chip { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.85rem; border: 1px solid rgb(var(--cream-rgb) / 0.22); border-radius: var(--radius-pill); background: rgb(var(--navy-rgb) / 0.5); color: var(--cream); font-size: 0.95rem; text-decoration: none; transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+.lake-chip:hover, .lake-chip:focus-visible { border-color: var(--amber); color: var(--amber); }
+.lake-chip:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.lake-links .lake-links-more { margin-top: var(--space-sm); }
+.lake-links-also { margin: var(--space-sm) 0 0; }
+.species-waters-region { margin-top: var(--space-sm); }

@@ -665,21 +665,23 @@
       ]
     },
     "ladue": {
-      "checked": "2026-11-09",
+      "checked": "2026-11-11",
       "title": "LaDue Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
       "description": "LaDue Reservoir fishing: electric motors only, walleye 6 a day and 15 in, two ramps, the lake map, tonight's bite. No public level gauge. Unofficial.",
       "motors": "Electric motors only; no gas motors or external fuel tanks (ODNR).",
       "ramps": "Two boat ramps: off Washington St north of US 422, and on SR 44 south of Taylor-May Rd (ODNR).",
       "pool": "Summer pool is 1,127 ft, the level the ODNR fishing map is drawn at.",
+      "night": "ODNR's LaDue Reservoir Fishing Area page and the City of Akron's watershed page list no access hours, so there's no official night rule to show; follow posted signs.",
       "hours": {
         "none": true,
-        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
-        "checked": "2026-11-09"
+        "note": "ODNR's LaDue Reservoir Fishing Area page and the City of Akron's watershed page list no access hours, so there's no official night rule to show; follow posted signs.",
+        "checked": "2026-11-11"
       },
       "sources": [
         ["ODNR, LaDue Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ladue-reservoir-fishing-area"],
         ["ODNR, LaDue Hunting Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ladue-hunting-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/laduereservoir2.pdf"]
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/laduereservoir2.pdf"],
+        ["City of Akron, Watershed Division", "https://www.akronohio.gov/departments/service/water_supply_bureau/watershed_division.php"]
       ]
     },
     "paintcreek": {
@@ -728,20 +730,22 @@
       ]
     },
     "mogadore": {
-      "checked": "2026-11-09",
+      "checked": "2026-11-11",
       "title": "Mogadore Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
       "description": "Mogadore Reservoir fishing: electric motors only, bank closures by the dam and roads, ramps, the lake map, tonight's bite. No public level gauge. Unofficial.",
       "motors": "Electric motors only; no gas motors or external fuel tanks (ODNR).",
       "ramps": "City of Akron boat house on SR 43, Ticknor Rd ramp and a boat stake area on Lansinger Rd (ODNR boating facilities list).",
       "pool": "Summer pool is 1,090 ft, the level the ODNR fishing map is drawn at.",
+      "night": "ODNR's Mogadore Reservoir Fishing Area page and the City of Akron's watershed page list no access hours, so there's no official night rule to show; follow posted signs.",
       "hours": {
         "none": true,
-        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
-        "checked": "2026-11-09"
+        "note": "ODNR's Mogadore Reservoir Fishing Area page and the City of Akron's watershed page list no access hours, so there's no official night rule to show; follow posted signs.",
+        "checked": "2026-11-11"
       },
       "sources": [
         ["ODNR, Mogadore Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mogadore-reservoir-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mogadorereservoir2.pdf"]
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mogadorereservoir2.pdf"],
+        ["City of Akron, Watershed Division", "https://www.akronohio.gov/departments/service/water_supply_bureau/watershed_division.php"]
       ]
     },
     "loramie": {
@@ -768,16 +772,21 @@
       ]
     },
     "nimisila": {
-      "checked": "2026-11-09",
+      "checked": "2026-11-11",
       "title": "Nimisila Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
       "description": "Nimisila Reservoir fishing: electric motors only, the lake is being lowered for a dam study, four ramps, the map, tonight's bite. No level gauge. Unofficial.",
       "motors": "Electric motors only (ODNR).",
       "ramps": "Four ramps off Christman Rd and South Main St (ODNR boating facilities list).",
       "pool": "Summer pool is 871 ft, the level the ODNR fishing map is drawn at. ODNR posted on Nov. 3, 2026 that the lake is being lowered for a dam study.",
+      "night": "Portage Lakes State Park hours are 6 a.m. to 11 p.m. (Nimisila is one of the park's lakes); ODNR allows legitimate recreation, like fishing, outside those hours.",
       "hours": {
-        "none": true,
-        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
-        "checked": "2026-11-09"
+        "authority": "odnr",
+        "open": "06:00",
+        "close": "23:00",
+        "fishing_after_hours": true,
+        "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
+        "source": ["ODNR, Portage Lakes State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-state-park"],
+        "checked": "2026-11-11"
       },
       "sources": [
         ["ODNR, Nimisila Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/nimisila-reservoir-fishing-area"],
@@ -809,21 +818,27 @@
       ]
     },
     "acton": {
-      "checked": "2026-11-09",
+      "checked": "2026-11-11",
       "title": "Acton Lake Fishing: Level, Ramps, Rules | The Night Bite",
       "description": "Acton Lake fishing: boats over 10 hp at no wake, one five lane ramp, bass 4 a day split rule, the lake map, tonight's bite. No public level gauge. Unofficial.",
       "motors": "Any motor size, but boats over 10 hp must run at no wake speed (ODNR).",
       "ramps": "One five lane launch ramp; the marina has a kayak launch, rentals and fuel (ODNR).",
       "pool": "Summer pool is 863 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m. (Acton Lake sits inside Hueston Woods State Park); ODNR allows legitimate recreation, like fishing, outside those hours.",
       "hours": {
-        "none": true,
-        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
-        "checked": "2026-11-09"
+        "authority": "odnr",
+        "open": "06:00",
+        "close": "23:00",
+        "fishing_after_hours": true,
+        "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
+        "source": ["ODNR, Ohio State Park Rules: Hours of Operation", "https://ohiodnr.gov/rules-and-regulations/rules-and-regulations-by-division/state-parks-and-watercraft/ohio-state-park-rules/3-hours-of-operation"],
+        "checked": "2026-11-11"
       },
       "sources": [
         ["ODNR, Hueston Woods State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hueston-woods-state-park"],
         ["ODNR, Acton Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/acton-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/actonlake2.pdf"]
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/actonlake2.pdf"],
+        ["ODNR, Ohio State Park Rules: Hours of Operation", "https://ohiodnr.gov/rules-and-regulations/rules-and-regulations-by-division/state-parks-and-watercraft/ohio-state-park-rules/3-hours-of-operation"]
       ]
     },
     "tappan": {
@@ -1032,11 +1047,12 @@
       ]
     },
     "eastbranch": {
-      "checked": "2026-11-10",
+      "checked": "2026-11-11",
       "title": "East Branch Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
       "description": "East Branch Reservoir fishing: electric motors only, bank closures north of US 322 and the east shore, Headwaters Park launch, tonight's bite. Unofficial.",
       "motors": "Electric motors only; no gas motors or external fuel tanks (OAC 1501:47-5-03). Geauga Park District allows electric motors of 1.5 hp or less.",
       "ramps": "One small craft launch at Headwaters Park, Geauga Park District.",
+      "night": "Headwaters Park is open 6 a.m. to 11 p.m. daily (Geauga Park District); check posted signs before a night trip.",
       "hours": {
         "authority": "city",
         "open": "06:00",
@@ -1044,7 +1060,7 @@
         "fishing_after_hours": null,
         "chip": "Headwaters Park open 6 a.m. to 11 p.m. (Geauga Park District)",
         "source": ["Geauga Park District, Headwaters Park", "https://geaugaparkdistrict.org/park/headwaters-park/"],
-        "checked": "2026-11-10"
+        "checked": "2026-11-11"
       },
       "sources": [
         ["Geauga Park District, Headwaters Park", "https://geaugaparkdistrict.org/park/headwaters-park/"],
@@ -1078,16 +1094,17 @@
       ]
     },
     "highlandtown": {
-      "checked": "2026-11-10",
+      "checked": "2026-11-11",
       "title": "Highlandtown Lake Fishing: Level, Ramps, Rules | The Night Bite",
       "description": "Highlandtown Lake fishing: 10 hp limit, bass 4 a day split at 15 in until March 2027, two wildlife area ramps, tonight's bite. Unofficial.",
       "motors": "10 hp or less (ODNR; OAC 1501:47-5-03).",
       "ramps": "Two wildlife area ramps off SR 39 in ODNR's boating facilities list.",
       "pool": "Summer pool is 1,070 ft, the level the ODNR fishing map is drawn at.",
+      "night": "ODNR's Highlandtown Lake Fishing Area and Highlandtown Wildlife Area pages list no hours, so there's no official night rule to show; follow posted signs.",
       "hours": {
         "none": true,
-        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
-        "checked": "2026-11-10"
+        "note": "ODNR's Highlandtown Lake Fishing Area and Highlandtown Wildlife Area pages list no hours, so there's no official night rule to show; follow posted signs.",
+        "checked": "2026-11-11"
       },
       "sources": [
         ["ODNR, Highlandtown Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/highlandtown-lake-fishing-area"],

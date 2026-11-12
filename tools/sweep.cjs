@@ -14,7 +14,7 @@
 // no sideways scroll. Once per page: one <title>, one non-empty <h1>, meta description, canonical = the sitemap address,
 // every image loaded with alt text. Then every link found: internal must answer 200, outside 404/410 fails, other
 // outside answers (403, 429, timeouts) are noted. Exit 1 on any FAIL. The game (whisperwood.html) is left to its own checks.
-const PW = process.env.PLAYWRIGHT_CORE || '/usr/local/lib/pnpm/5/.pnpm/playwright-core@1.59.1/node_modules/playwright-core';
+const PW = require(require('path').join(__dirname, 'playwright-path.cjs'));   // PLAYWRIGHT_CORE, then node_modules, then the box copy
 const { chromium } = require(PW);
 const fs = require('fs'), path = require('path'), cp = require('child_process');
 const NA = require(path.join(__dirname, 'no-analytics.cjs'));

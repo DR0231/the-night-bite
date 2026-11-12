@@ -6,7 +6,7 @@
 // api.weather.gov alert (Severe Thunderstorm Warning + a Special Weather Statement naming thunderstorms) must show the
 // banner above the fold with the warning first and "plus 1 more". No network for alerts; analytics blocked.
 // Exit 1 on any FAIL. No screenshots.
-const PW = process.env.PLAYWRIGHT_CORE || '/usr/local/lib/pnpm/5/.pnpm/playwright-core@1.59.1/node_modules/playwright-core';
+const PW = require(require('path').join(__dirname, 'playwright-path.cjs'));   // PLAYWRIGHT_CORE, then node_modules, then the box copy
 const { chromium } = require(PW);
 const NA = require('./no-analytics.cjs');
 const R = require('./registry.cjs');

@@ -186,6 +186,10 @@ def main(argv):
     import registry
     R = registry.load(root)
     check = "--check" in argv
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("wrap_dates_mod", pathlib.Path(__file__).resolve().parent / "wrap-dates.py")
+    wd = importlib.util.module_from_spec(spec); spec.loader.exec_module(wd)
+    wrap_dates = lambda h: wd.wrap(h)[0]
     files = [x for x in argv if not x.startswith("--")] or [registry.home(l) + "index.html" for l in R["order"]]
     bad = []
     for f in files:
@@ -194,6 +198,9 @@ def main(argv):
         c = R["lakes"][lake]
         old = p.read_text()
         new = bake(old, c.get("pool") or {}, (c.get("nws") or {}).get("page"), prefix=lake + "/", card=False)
+        # the full build wraps written dates after baking (build-lake-pages.py runs wrap-dates); do the same here so a
+        # standalone rebake keeps <time datetime> for js/i18n.js and --check compares like with like (Pymatuning's stale date)
+        new = wrap_dates(new)
         if new != old:
             if check:
                 bad.append(f)

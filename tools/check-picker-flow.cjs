@@ -10,7 +10,7 @@
  * Prints PASS/FAIL lines (check-all counts FAIL lines); exit 1 on any FAIL. Analytics blocked (tools/no-analytics.cjs).
  */
 const path = require('path');
-const PW = process.env.PLAYWRIGHT_CORE || '/usr/local/lib/pnpm/5/.pnpm/playwright-core@1.59.1/node_modules/playwright-core';
+const PW = require(require('path').join(__dirname, 'playwright-path.cjs'));   // PLAYWRIGHT_CORE, then node_modules, then the box copy
 const { chromium } = require(PW);
 const na = require(path.join(__dirname, 'no-analytics.cjs'));
 const B = (process.argv[2] || 'http://127.0.0.1:8765/night-bite-preview/').replace(/\/?$/, '/');

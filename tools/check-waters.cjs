@@ -9,7 +9,7 @@
 // matches the Quick facts checked date, visible copy has no spaced dashes, no county names, "Buckeye" only as
 // "Buckeye Lake" (or Buckeye Trail/State), every visible card or data block has an outside source link.
 // Then every link found: internal must be 200, outside 404/410 fails (403, 405, 429 and timeouts are noted, not failed).
-const PW = process.env.PLAYWRIGHT_CORE || '/usr/local/lib/pnpm/5/.pnpm/playwright-core@1.59.1/node_modules/playwright-core';
+const PW = require(require('path').join(__dirname, 'playwright-path.cjs'));   // PLAYWRIGHT_CORE, then node_modules, then the box copy
 const { chromium } = require(PW);
 const path = require('path'), fs = require('fs');
 const NA = require(path.join(__dirname, 'no-analytics.cjs'));

@@ -44,3 +44,4 @@ jobs:
           python3 tools/sw-precache.py --check
           python3 tools/build-tile-charts.py --check
           python3 tools/nav-labels.py --check
+          python3 tools/footer-social.py --check

@@ -1,0 +1,5 @@
+# Python tools for The Night Bite (tools/*.py). Python 3.10 or newer. Install with: pip install -r tools/requirements.txt
+beautifulsoup4>=4.12   # i18n-extract.py, check-i18n.py
+lxml>=5                # the HTML parser i18n-extract.py uses
+Pillow>=10             # build-tile-charts.py (without it the committed tiles stay as they are), build-odnr-contours.py
+shapely>=2             # build-odnr-contours.py only
