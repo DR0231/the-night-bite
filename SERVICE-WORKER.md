@@ -4,21 +4,26 @@ Files: `sw.js` (site root), `js/sw-update.js` (every page except whisperwood.htm
 `site.webmanifest`, `offline.html`, `js/install-tip.js` (Home only), `assets/icons/icon-maskable-192.png` and `-512.png`.
 Promoted from the preview copy (DR0231/night-bite-preview) on 2026-10-22; fetch rules, `?v=` stamping and
 `sw-update.js` promoted on 2026-10-24 (v6). The hashed precache diet (preview v127) and every-lake-home precache
-(preview v128) were promoted on 2026-11-11 as live v38.
+(preview v128) were promoted on 2026-11-11 as live v38. The per-lake "what's biting" split (preview v132) was
+promoted on 2026-11-11 as live v40.
 
 ## What it does
 
 * Scope is the folder `sw.js` sits in: `/` on nightbiteoh.com. Every path in `sw.js` and the manifest is relative,
   so the same file also runs on the preview copy under `/night-bite-preview/`.
-* Precache (since live v38, matching preview v128): 389 files, about 3.9 MB. The water picker (`./`),
-  `offline.html`, the manifest, favicons and icons, `css/styles.css`, the 44 shared scripts in `js/`, the Latin
+* Precache (since live v40, matching preview v132): 436 files, about 4.1 MB. The water picker (`./`),
+  `offline.html`, the manifest, favicons and icons, `css/styles.css`, the 42 shared scripts in `js/`, the Latin
   fonts, the picker tiles, Hoover's depth contours, the map pins, moon and wind sprites, and `data/quick-facts.json`,
   `bait-shops.json`, `community-log.json` and `tournaments.json`, plus every lake home and the chart, map script
-  (`js/lake-map-data-*.js`, or `js/hoover-map-data.js` for Hoover) and map images that home needs offline. The lake
+  (`js/lake-map-data-*.js`, or `js/hoover-map-data.js` for Hoover), map images and its own "what's biting" set
+  (`js/biting/<id>.js`, from `tools/biting-split.py`; the species and ice pages and the share card read it) that
+  its pages need offline. Before live v40 every install also took the combined `js/biting-data.js` and
+  `js/biting-data-lakes.js` (about 263 KB) and every species page loaded both. The lake
   list is written by `tools/sw-precache.py` from `js/lakes.js`, so a new water is picked up automatically. Up to live
   v37 (preview v126) it was all 436 files (about 6.4 MB): every page, all 18 language files and every lake's maps.
   Preview v127 cut that to the shell only (149 files, about 1.6 MB) and left unvisited lake homes offline until they
-  were opened online; live skipped that intermediate step and went to every lake home in v38.
+  were opened online; live skipped that intermediate step and went to every lake home in v38. Live v40 keeps every
+  lake home and adds that home's biting set instead of the two combined biting files.
 * Content hashes: `REVISIONS` in `sw.js` holds a 12 hex sha256 per precached file, written by
   `tools/sw-precache.py`. The precache (`PREFIX + "precache"`) is kept across deploys and each copy is saved under its
   hash, so a new worker downloads only the files whose hash changed. HTML hashes blank the `?v=` stamps first,
@@ -46,7 +51,7 @@ Promoted from the preview copy (DR0231/night-bite-preview) on 2026-10-22; fetch 
 * `js/sw-update.js` (renamed from `sw-register.js` in live v6 and preview v12 so an older worker has never cached it)
   reloads the page once when a new worker takes over a page an older one was controlling, only in the first 20
   seconds, and only if the old worker doesn't answer the `nb-hello` message with `assets: "network-first"` (live v19
-  and newer do, v38 included). There is no update toast; the update is silent.
+  and newer do, v40 included). There is no update toast; the update is silent.
 * Activate deletes every other cache with this `PREFIX` (the old per version caches like `nb-live-v37-2026-11-11`
   included) and every precache entry that is no longer listed, then claims open pages.
 * Pages that load `sw-update.js` have `worker-src 'self'` in their CSP meta. whisperwood.html keeps `worker-src 'none'`.
@@ -71,9 +76,9 @@ Promoted from the preview copy (DR0231/night-bite-preview) on 2026-10-22; fetch 
   forecast in localStorage (`nb-usgs-last`, `nb-trend-last`, `nb-cond-last`) and, with no signal, shows them with
   "Offline. Last updated HH:MM ET." Values only ever come from a real fetch.
 * Measured on the preview v127 change: a deploy with one changed page moved 437 files and 6.44 MB to each installed
-  phone before, and 2 files (`sw.js` and the page) and 63 KB after. Live v38 keeps that hashed update: a bump that
-  changes one page still downloads only that page (and `sw.js`). The first install is larger than the shell-only
-  preview v127 because every lake home is saved up front.
+  phone before, and 2 files (`sw.js` and the page) and 63 KB after. Live v40 keeps that hashed update: a bump that
+  changes one page still downloads only that page (and `sw.js`). The first install is 436 files, about 4.1 MB,
+  because every lake home and that home's biting set are saved up front.
 
 ## Promotion
 
@@ -103,7 +108,7 @@ self.addEventListener("activate", function (event) {
 });
 ```
 
-The kill switch removes every cache whose name starts with `nb-`, which covers the v38 precache, pages, data
+The kill switch removes every cache whose name starts with `nb-`, which covers the v40 precache, pages, data
 and assets caches too. Also make `js/sw-update.js` stop registering (or replace its body with
 `navigator.serviceWorker.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister(); }); });`).
 Don't delete `sw.js` outright: a 404 leaves already installed workers running until they expire.
