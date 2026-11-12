@@ -69,6 +69,16 @@ async function scenario(browser, name, opts, fn) {
   await ctx.route(NWS, r => { hits.nws++; return opts.nws ? opts.nws(r) : r.abort('failed'); });
   await ctx.route(USGS_SERIES, r => { hits.series++; return opts.series ? r.fulfill(opts.series()) : r.abort('failed'); });
   await ctx.route(USGS_LATEST, async r => { const n = hits.latest++; if (!opts.latest) return r.abort('failed'); const x = await opts.latest(n); return x ? r.fulfill(x) : r.abort('failed'); });
+  // the "old reading" path only replaces the baked first paint when the gauge's reading is newer than it
+  // (js/usgs.js). Live's Hoover snapshot can be a few days old, so a 9-day-old test reading would be
+  // dropped and the page would keep the snapshot. Backdate the Checked time so this case still runs.
+  if (opts.snapshotAt) {
+    await ctx.route(/\/hoover\/?(?:index\.html)?(?:\?|$)/, async r => {
+      const res = await r.fetch();
+      const body = (await res.text()).replace(/(id="correction-checked"[\s\S]*?datetime=")[^"]+/, '$1' + iso(opts.snapshotAt));
+      return r.fulfill({ response: res, body });
+    });
+  }
   const page = await ctx.newPage(); const perr = [];
   page.on('pageerror', e => perr.push(e.message));
   if (opts.saved) {   // a reading saved on this phone by an earlier visit
@@ -96,7 +106,7 @@ async function scenario(browser, name, opts, fn) {
     check('fresh: 7 day chart ends at Now', r.trendEnd === 'Now' && !r.trendOld, r.trendEnd);
   });
 
-  await scenario(browser, 'stale-9d', { latest: () => latest({ t: now - 9 * 24 * H, v: 890.40 }, { t: now - 9 * 24 * H, c: 16 }) }, async page => {
+  await scenario(browser, 'stale-9d', { snapshotAt: now - 20 * 24 * H, latest: () => latest({ t: now - 9 * 24 * H, v: 890.40 }, { t: now - 9 * 24 * H, c: 16 }) }, async page => {
     const r = await read(page);
     check('stale-9d: shown plainly as the last reading, not live', r.src === 'old' && /^890\.40 ft/.test(r.line) && Math.abs(Date.parse(r.checked) - (now - 9 * 24 * H)) < 6e4, JSON.stringify([r.src, r.line, r.checked]));
     check('stale-9d: status says no new reading, with its time', /^No new reading in 6 hours, check USGS\. Showing the reading from .+ ET\.$/.test(r.status) && !/^Live/.test(r.status), r.status);
