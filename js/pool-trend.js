@@ -20,6 +20,10 @@
     for (var k in attrs) n.setAttribute(k, attrs[k]);
     return n;
   }
+  function clock(iso) {
+    var d = new Date(iso), f = function (o) { o.timeZone = "America/New_York"; return new Intl.DateTimeFormat("en-US", o).format(d); };
+    return f({ hour: "numeric", minute: "2-digit" }) + " " + f({ weekday: "short" });
+  }
   function day(iso) {
     return new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short" }).format(new Date(iso));
   }
@@ -33,15 +37,20 @@
     return LS.usgsSeries((LP && LP.site) || "03228400", (LP && LP.param) || "62614", 7);   // USGS, new API first
   }
 
+  // each load gets a number, so a slow older answer never redraws over a newer one
+  var seq = 0;
   function load() {
+  var mine = ++seq;
   return points()
     .then(function (pts) {
+      if (mine !== seq) return;
       if (pts.length < 12) throw new Error("too few");
       if (OFF) OFF.save(SAVE_KEY, { pts: pts.filter(function (p, i) { return i % 4 === 0 || i === pts.length - 1; }) });   // hourly is plenty for the chart
       draw(pts);
       box.removeAttribute("data-offline");
     })
     .catch(function () {
+      if (mine !== seq) return;
       // offline: redraw the last saved week; a failed refresh keeps the last chart; otherwise stay hidden
       var saved = !box.hasAttribute("data-drawn") && OFF && OFF.isOffline() && OFF.load(SAVE_KEY, 14 * 864e5);
       if (saved && saved.pts && saved.pts.length >= 12) { draw(saved.pts); box.setAttribute("data-offline", "1"); return; }
@@ -78,6 +87,13 @@
       var last = pts[pts.length - 1];
       svg.appendChild(el("rect", { x: (x(last.t) - 3).toFixed(1), y: (y(last.v) - 3).toFixed(1), width: 6, height: 6, class: "pool-trend-now" }));
 
+      // the chart ends at its last reading: "Now" only when that reading is from the last 6 hours, else its own time
+      // ("9:00 AM Tue"), and an old chart's word stays out of "Tonight, in short" (js/conditions.js reads data-old)
+      var endEl = box.querySelector(".pool-trend-axis span:last-child");
+      var old = Date.now() - last.t > 6 * 36e5;
+      if (endEl) endEl.textContent = old ? clock(last.iso || last.t) : "Now";
+      if (old) box.setAttribute("data-old", "1"); else box.removeAttribute("data-old");
+
       var change = last.v - pts[0].v;
       var abs = Math.abs(change).toFixed(2);
       var word = Math.abs(change) < 0.05 ? "Steady" : change > 0 ? "Rising" : "Falling";
@@ -98,6 +114,7 @@
       box.setAttribute("data-drawn", "1");
   }
 
-  load();
+  // first load once the tab is visible (js/refresh.js), then every 15 minutes while visible
+  if (window.NightBiteRefresh && window.NightBiteRefresh.first) window.NightBiteRefresh.first(load); else load();
   if (window.NightBiteRefresh) window.NightBiteRefresh.add("pool-trend", load);
 })();

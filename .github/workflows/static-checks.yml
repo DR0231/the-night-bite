@@ -1,5 +1,7 @@
-# Static gate on every push and pull request to main. Playwright and the other
-# browser checks are not in this workflow yet. tools/promote.py carries
+# Gate on every push and pull request to main: the static checks, then one
+# browser check (check-live-readings: fake gauge answers, nothing real fetched)
+# against tools/serve.py with the runner's Google Chrome. The other browser
+# checks run from tools/check-all.py. tools/promote.py carries
 # .github/workflows/ to the live repo; ISSUE_TEMPLATE stays skipped.
 name: Static checks
 
@@ -46,3 +48,15 @@ jobs:
           python3 tools/build-tile-charts.py --check
           python3 tools/nav-labels.py --check
           python3 tools/footer-social.py --check
+          python3 tools/glance_bake.py --check
+          python3 tools/check-precache-refs.py
+
+      - name: Install the browser check tools
+        run: cd tools && npm install --no-audit --no-fund
+
+      - name: Live readings never shown stale (browser)
+        run: |
+          set -euo pipefail
+          python3 tools/serve.py --port 8642 &
+          sleep 2
+          node tools/check-live-readings.cjs http://127.0.0.1:8642/night-bite-preview/ /tmp/nb-live-readings

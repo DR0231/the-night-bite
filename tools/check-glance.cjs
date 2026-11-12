@@ -3,7 +3,8 @@
 //   BASE defaults to the preview (https://dr0231.github.io/night-bite-preview/); OUTDIR gets the log and a Hoover phone shot.
 // Blocks analytics and the visits counter (tools/no-analytics.cjs). Checks per lake and width: 4 cells plus the bite,
 // the right source links (gauge, NWS) or a "No gauge" state linked to the pool card note, sunset filled, no sideways scroll, no console or CSP
-// errors. Then NWS blocked (wind says "Check NWS", bite "Needs forecast", page fine), and offline after one visit (the service worker copy still fills
+// errors. Then NWS blocked (wind says "Check NWS", bite "Needs forecast", page fine), the share image with the gauges
+// blocked (it prints the snapshot reading's own time), and offline after one visit (the service worker copy still fills
 // the strip). Exit code 1 on any FAIL. APIs blocked and JavaScript off: tools/check-glance-fallback.cjs.
 const PW = require(require('path').join(__dirname, 'playwright-path.cjs'));   // PLAYWRIGHT_CORE, then node_modules, then the box copy
 const { chromium } = require(PW);
@@ -130,6 +131,22 @@ async function read(page) {
       check(`NWS blocked ${lake}: sunset still filled, no script errors`, /\d:\d\d/.test(r.sunset.v) && perr.length === 0, r.sunset.v + ' ' + perr.join('|'));
       await page.close();
     }
+    await ctx.close();
+  }
+  // share image with USGS and NWS blocked: the card shows its snapshot, and the image must print that reading's own
+  // time (the pool card's Checked time), never pass it off as tonight's (F2)
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' }); await NA.block(ctx);
+    await ctx.route(/api\.waterdata\.usgs\.gov|waterservices\.usgs\.gov|cwms-data\.usace\.army\.mil|api\.weather\.gov/, r => r.abort('failed'));
+    const page = await ctx.newPage(); const perr = []; page.on('pageerror', e => perr.push(e.message));
+    await page.goto(home('hoover') + '?t=' + Date.now()); await sleep(3500);
+    const at = await page.evaluate(() => { const t = document.querySelector('#correction-checked time'); return t ? t.getAttribute('datetime') : ''; });
+    const want = at ? new Intl.DateTimeFormat('en-US', Object.assign({ timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit' }, Date.now() - Date.parse(at) >= 6 * 864e5 ? { month: 'short', day: 'numeric' } : { weekday: 'short' })).format(new Date(at)) + ' ET' : '--';
+    await page.click('[data-act="share"]');
+    const alt = await page.waitForFunction(() => { const i = document.getElementById('tt-share-img'); return i && i.getAttribute('src') && i.getAttribute('alt'); }, null, { timeout: 15000 })
+      .then(h => h.jsonValue()).catch(() => '');
+    check('share image (gauges blocked): carries the reading\'s own time', alt.includes('(reading ' + want + ')'), JSON.stringify([want, alt]));
+    check('share image (gauges blocked): no script errors', perr.length === 0, perr.join('|'));
     await ctx.close();
   }
   // offline after one visit: the service worker copy shows the strip, saved values or quiet notes

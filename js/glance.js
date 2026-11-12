@@ -111,7 +111,7 @@
     if (!lastM || !at) return;                  // no reading with a time: keep the baked line
     var src = line.getAttribute("data-source") || "snapshot";
     var failed = line.hasAttribute("data-refresh-failed"), off = line.hasAttribute("data-offline");
-    var what = HASTEMP ? "Level and temp" : "Level";
+    var what = HASTEMP && lastM[2] !== undefined ? "Level and temp" : "Level";   // a line with no temp: the stamp speaks for the level only
     var text;
     if (src === "live" && !failed && !off) text = what + " live from the " + SRC + " gauge, updated " + ago(at) + " ";
     else text = (off ? "Offline. " : failed ? "Live refresh failed. " : "") + what + " last updated " + ago(at) + " ";
@@ -155,16 +155,20 @@
     var p = parts(windC), saved = cond && cond.hasAttribute("data-saved");
     var savedAt = cond && +cond.getAttribute("data-saved-at");
     var savedTxt = "Saved NWS" + (savedAt ? ", " + agoShort(savedAt) : "");
+    // a weather refresh that failed (or the phone went offline) keeps the last forecast: say how old it is
+    var failed = cond && (cond.hasAttribute("data-refresh-failed") || cond.hasAttribute("data-offline"));
+    var checkedAt = cond && +cond.getAttribute("data-checked-at");
+    var oldTxt = checkedAt ? "NWS, " + agoShort(checkedAt) : "NWS forecast";   // pg.nws_ago
     var tw = cond && /^(\d+)\|(\d+)\|([A-Z]*)$/.exec(cond.getAttribute("data-wind-tonight") || "");
     if (tw && p) {   // tonight's NWS hourly range, sunset (or now) to 2 AM, same numbers as "Tonight, in short"
       var lo = +tw[1], hi = +tw[2];
       if (hi === 0) set(windV, "Calm"); else set(windV, lo === hi ? String(hi) : lo + "\u2013" + hi, "mph" + (tw[3] ? " " + tw[3] : ""));
-      set(windS, saved ? savedTxt : "NWS, until 2 AM");
+      set(windS, saved ? savedTxt : failed ? oldTxt : "NWS, until 2 AM");
       cell(windV, true);
     } else if (p) {
       var g = /gusts (\d+)/.exec(p.sub);
       set(windV, p.v, p.u);
-      set(windS, saved || /saved/i.test(p.sub) ? savedTxt : "NWS" + (g ? ", gusts " + g[1] : " forecast"));
+      set(windS, saved || /saved/i.test(p.sub) ? savedTxt : failed ? oldTxt : "NWS" + (g ? ", gusts " + g[1] : " forecast"));
       cell(windV, true);
     } else {
       state(windV, "Check NWS");
@@ -184,5 +188,5 @@
   if (!window.MutationObserver) return;
   if (line) new MutationObserver(pool).observe(line, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ["data-source", "data-refresh-failed", "data-offline"] });
   if (checked) new MutationObserver(stamp).observe(checked, { childList: true, characterData: true, subtree: true, attributes: true });
-  if (cond) new MutationObserver(function () { sun(); wind(); rate(); }).observe(cond, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ["hidden", "data-empty", "data-state", "data-saved", "data-saved-at", "data-wind-tonight"] });
+  if (cond) new MutationObserver(function () { sun(); wind(); rate(); }).observe(cond, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ["hidden", "data-empty", "data-state", "data-saved", "data-saved-at", "data-wind-tonight", "data-refresh-failed", "data-offline", "data-checked-at"] });
 })();

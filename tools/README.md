@@ -44,7 +44,7 @@ python3 tools/check-all.py --target local --all-lakes --group 3   # one group on
 * Start each run in the background and wait on it no more than about 5 minutes at a time. One lake group takes about 4 to 5 minutes.
 * `node tools/registry.cjs --changed [REF]` prints the changed lakes and files on their own.
 
-* Checks: check-meta, check-radius, check-docks (report only), check-hours, check-ramp-names, check-lake-isolation, check-glance, check-glance-fallback, check-bait, check-waters (the lake scope above), check-picker-flow, check-a11y-settings, check-log-io, check-trip-queue, check-night-rules, check-i18n, check-manifest, check-i18n-browser and sweep.
+* Checks: check-meta, check-radius, check-docks (report only), check-hours, check-ramp-names, check-lake-isolation, check-glance-bake, check-precache-refs, check-glance, check-glance-fallback, check-live-readings, check-bait, check-waters (the lake scope above), check-picker-flow, check-a11y-settings, check-log-io, check-trip-queue, check-night-rules, check-i18n, check-manifest, check-i18n-browser and sweep.
 * `--skip` leaves checks out.
 * A scoped run takes a few minutes. A full `--all-lakes` run takes over 30 minutes across 49 waters, which is why it is split into groups.
 * Known failures go in `tools/known-failures.json` as `{check, match, target?, why}`. Add an entry only for a failure you have looked at and accepted. Then remove it once the failure is fixed.
@@ -204,11 +204,31 @@ python3 tools/build-tile-charts.py --check         # change nothing; exit 1 if a
   js/glance.js turns the stamp into "last updated X hours ago" and swaps in live values when they arrive.
 * After the weekly USGS snapshot routine edits Hoover's three snapshot lines, rebake the strip from them:
   `python3 tools/glance_bake.py hoover/index.html` (or run the normal build). `python3 tools/glance_bake.py --check`
-  exits 1 if any lake home's strip is out of step with its pool card.
+  exits 1 if any lake home's strip is out of step with its pool card. It runs in the GitHub gate and in check-all
+  (as check-glance-bake).
 * `check-glance-fallback.cjs [BASE] [OUT] [--lakes a,b]` loads each lake home with USGS, the Corps and NWS blocked
   and again with JavaScript off, at 320 and 430 px, and fails on any "--", "Loading", "unavailable" or
   "NWS not available" in the strip, a gauge lake without a visible timestamp, a missing "No gauge" state, clipped
-  text or sideways scroll. Default lakes hoover,alum,knox,pymatuning (USGS, Corps, no gauge, stale gauge).
+  text or sideways scroll. Default lakes hoover,alum,knox,pymatuning (USGS, Corps, no gauge, stale gauge). Then it
+  opens water.html?lake=<id> with the gauges blocked: Griggs and Indian Lake must show their own snapshot water temp
+  with its time, and no lake may keep Hoover's baked temp.
+
+## Live readings never shown stale (`check-live-readings.cjs`, Nov. 12, 2026)
+
+The rule: a gauge reading older than 6 hours is never tagged, labelled or shared as live (js/usgs.js shows the newest
+one plainly, with its time, as `data-source="old"`); the pool card is tagged live only when the level itself
+refreshed; only a fresh lake surface temp reaches the bite rating, and js/conditions.js drops it after 3 hours; a saved
+reading is shown as saved, never shared, and dropped when it came from another gauge; a slow older answer never
+replaces a newer one; the share image prints the reading's own time; nothing fetches in a hidden tab.
+
+* `node tools/check-live-readings.cjs [BASE] [OUT]` loads Hoover's home with fake USGS answers (Playwright routes;
+  nothing real is asked of USGS or the Corps) and checks each case: fresh, 9 days old, an old temp beside a fresh
+  level, a temp alone, a saved reading, a saved reading from another gauge, a 4 hour old temp, a slow older answer, an
+  old 7 day chart, a hidden tab, an expired alert, and Glance wind after a failed NWS refresh (real weather.gov for the
+  first load; skipped when it can't be reached). About 1 minute. It runs in the GitHub gate against tools/serve.py.
+* `python3 tools/check-precache-refs.py [--lakes a,b]` fails when a lake home, tools/lake-home.html or offline.html
+  loads a script, stylesheet or first-paint image that sw.js PRECACHE doesn't list (static; in the gate and check-all).
+* `check-lake-isolation.py` also fails when a gauged lake has no `pool.snapshot` (water.html would keep Hoover's line).
 
 ## Night-rules chip (S5)
 * `data/quick-facts.json` `hours` per lake feeds the chip under each lake hero (built by `build-lake-pages.py`, countdown in `js/night-rules.js`, Eastern time). Only from an official city, ODNR, Army Corps or MWCD page, linked as `source`. `fishing_after_hours` is `true` only when the source says so, otherwise `null`. No official hours: `{"none": true, "note": "..."}`; no chip, and the Night rules row says so.

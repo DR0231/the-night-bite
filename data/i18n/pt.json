@@ -606,6 +606,13 @@
   "pg.log_empty": "Ainda não há pescarias salvas neste telefone. Adicione a primeira abaixo.",
   "pg.log_backup_note": "Salve um arquivo de backup e abra-o em outro telefone ou navegador. As pescarias do arquivo se somam às daqui; nada é substituído.",
   "pg.log_share_note": "Só nomes públicos de rampas e áreas. Nada de GPS secreto nem propriedade privada. Só notas em texto, sem fotos. As pescarias enviadas aguardam revisão e só são publicadas depois de aprovadas.",
-  "pg.temp_c_prov": "({num} °C) · provisório"
+  "pg.temp_c_prov": "({num} °C) · provisório",
+  "pg.last_reading": "última leitura",
+  "pg.no_temp_6h": "Sem leitura da temperatura da água em 6 horas",
+  "pg.no_temp_check": "Sem temperatura da água na última verificação",
+  "pg.no_new_6h": "Sem leitura nova em 6 horas, consulte",
+  "pg.nws_ago": "NWS, {ago}",
+  "pg.stn_old": "Leitura de {station} antiga demais",
+  "pg.stn_nopress": "{station} não enviou pressão"
  }
 }

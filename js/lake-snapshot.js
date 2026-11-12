@@ -55,6 +55,24 @@
   var note = P.temp ? "" : P.outflow ? " USACE outflow temp; it is not lake surface temperature." :
     P.profile ? " No live water temp; the Corps posts a temperature profile." : " No public water temp gauge on this lake.";
   if (temp && !P.temp) temp.textContent = P.outflow ? "USACE outflow temp, not lake surface" : P.profile ? "No live water temp" : "No public water temp gauge";
+  // a lake with its own temp gauge (Griggs, Indian Lake): its own snapshot temp with its time, never the page's baked
+  // Hoover reading (water.html shows this line)
+  if (temp && P.temp) {
+    var tm = S && /·\s*(-?\d+(?:\.\d+)?)\s*°F\s*·/.exec(S.line);
+    if (tm) {
+      temp.textContent = "";
+      var b = document.createElement("strong");
+      b.textContent = tm[1] + " °F";
+      temp.appendChild(b);
+      temp.appendChild(document.createTextNode(" · "));
+      var tt = document.createElement("time");
+      tt.setAttribute("datetime", S.at);
+      tt.textContent = S.when;
+      temp.appendChild(tt);
+    } else {
+      temp.textContent = "No water temp in the last check";   // pg.no_temp_check
+    }
+  }
   if (status) {
     status.textContent = "Provisional snapshot; your browser may refresh it from " + P.srcName + "." + note + " Never invented.";
   }

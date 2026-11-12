@@ -6,6 +6,8 @@
 // <time> ("last updated X ago" with JavaScript, the absolute date and time without); lakes with no gauge show the
 // "No gauge" / "No reading" state linked to the pool card note; the pool card itself never says "unavailable" on a
 // gauge lake; nothing in the strip is clipped (no value, sub or stamp wider than its box); no sideways scroll.
+// Then water.html?lake=<id> with the gauges blocked: Griggs and Indian Lake (own temp gauge) show their own snapshot
+// temp with its time, and no lake in scope keeps Hoover's baked water temp.
 // Usage: node tools/check-glance-fallback.cjs [BASE] [OUTDIR] [--lakes a,b]
 //   lakes: --lakes, else NB_LAKES (check-all sets it), else hoover,alum,knox,pymatuning (USGS, Corps, no gauge, stale)
 // Blocks analytics (tools/no-analytics.cjs). Exit code 1 on any FAIL. Log: OUTDIR/check-glance-fallback.log
@@ -97,6 +99,32 @@ function read(page) {
       if (mode === 'apis-blocked') lines.push(`INFO ${w}px: ${blocked.length} gauge and NWS requests blocked`);
       await ctx.close();
     }
+  }
+  // water.html carries Hoover's baked pool card; with USGS blocked, a lake with its own temp gauge (Griggs, Indian Lake)
+  // must show its own snapshot temp with its time, and no other lake may keep Hoover's baked water temp (F3)
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+    await NA.block(ctx);
+    await ctx.route(BLOCK, r => r.abort('failed'));
+    const raw = await (await ctx.request.get(BASE + 'water.html')).text();
+    const bm = /id="water-temp">([\s\S]*?)<\/span>\s*<\/div>/.exec(raw);
+    const hooverTemp = bm ? (/<strong>([^<]+)<\/strong>/.exec(bm[1]) || [])[1] || '' : '';
+    const temps = R.hasTemp().filter(l => l !== 'hoover');
+    const shared = [...new Set(temps.concat(LAKES.filter(l => l !== 'hoover' && !NOGAUGE.includes(l))))];
+    for (const lake of shared) {
+      const page = await ctx.newPage(); const perr = []; page.on('pageerror', e => perr.push(e.message));
+      await page.goto(BASE + 'water.html?lake=' + lake + '&t=' + Date.now(), { waitUntil: 'load' });
+      await sleep(3500);
+      const w = await page.evaluate(() => { const e = document.getElementById('water-temp'); const t = e && e.querySelector('time');
+        return e ? { txt: e.textContent.replace(/\s+/g, ' ').trim(), at: t ? t.getAttribute('datetime') : '' } : null; });
+      const S = (R.lakes()[lake].pool || {}).snapshot || {};
+      if (!w) { check(`water.html ${lake}: water temp line present`, false); await page.close(); continue; }
+      check(`water.html ${lake}: no Hoover water temp under this lake`, !hooverTemp || !w.txt.includes(hooverTemp), JSON.stringify([hooverTemp, w.txt]));
+      if (temps.includes(lake)) check(`water.html ${lake}: its own snapshot temp with its time`, (w.at === S.at && /°F/.test(w.txt)) || w.txt === 'No water temp in the last check', JSON.stringify([w.txt, w.at, S.at]));
+      check(`water.html ${lake}: no script errors`, perr.length === 0, perr.join(' | ').slice(0, 300));
+      await page.close();
+    }
+    await ctx.close();
   }
   await browser.close();
   lines.push(`${fails ? 'FAILED' : 'ALL PASSED'}: ${lines.filter(l => l.startsWith('PASS')).length} pass, ${fails} fail`);

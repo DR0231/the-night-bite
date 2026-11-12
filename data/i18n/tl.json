@@ -606,6 +606,13 @@
   "pg.log_empty": "Wala pang naka-save na biyahe sa teleponong ito. Idagdag ang una mo sa ibaba.",
   "pg.log_backup_note": "Mag-save ng backup file, saka buksan ito sa bagong telepono o browser. Idinadagdag ang mga biyahe sa file sa mga nandito; walang napapalitan.",
   "pg.log_share_note": "Pampublikong pangalan lang ng rampa at lugar. Walang lihim na GPS, walang pribadong lupa. Mga text note lang, walang larawan. Hinihintay munang ma-review ang mga naipadalang biyahe at lalabas lang kapag naaprubahan.",
-  "pg.temp_c_prov": "({num} °C) · pansamantala"
+  "pg.temp_c_prov": "({num} °C) · pansamantala",
+  "pg.last_reading": "huling reading",
+  "pg.no_temp_6h": "Walang reading ng temperatura ng tubig sa loob ng 6 na oras",
+  "pg.no_temp_check": "Walang temperatura ng tubig sa huling check",
+  "pg.no_new_6h": "Walang bagong reading sa loob ng 6 na oras, tingnan ang",
+  "pg.nws_ago": "NWS, {ago}",
+  "pg.stn_old": "Masyadong luma ang reading ng {station}",
+  "pg.stn_nopress": "Walang ipinadalang pressure ang {station}"
  }
 }

@@ -3,7 +3,8 @@
  * Every 15 minutes while the tab is visible, plus right away when the tab comes back into view
  * and the last refresh is 15 minutes old or more. Nothing is fetched while the tab is hidden.
  * Scripts register with NightBiteRefresh.add(name, fn); fn(force) re-fetches and re-renders.
- * The first load is done by each script itself, so add() only stamps the time.
+ * The first load is done by each script itself through NightBiteRefresh.first(fn): right away when the tab is visible,
+ * else once it comes into view (a page opened in a background tab fetches nothing until it is looked at).
  */
 (function () {
   if (window.NightBiteRefresh) return;
@@ -40,10 +41,23 @@
     if (wentOffline && !document.hidden) { wentOffline = false; runAll("online"); }
   });
 
+  // a script's first load: now if the tab is visible, else when it first becomes visible (unless the shared refresh
+  // above already ran every task on that same return, so nothing is fetched twice)
+  function first(fn) {
+    if (!document.hidden) { fn(); return; }
+    var runs = stats.runs;
+    document.addEventListener("visibilitychange", function go() {
+      if (document.hidden) return;
+      document.removeEventListener("visibilitychange", go);
+      if (stats.runs === runs) fn();
+    });
+  }
+
   window.NightBiteRefresh = {
     EVERY: EVERY,
     stats: stats,
     add: function (name, fn) { tasks.push({ name: name, fn: fn }); },
+    first: first,
     run: runAll
   };
 })();
@@ -70,12 +84,16 @@
       return null;
     },
     isOffline: function () { return navigator.onLine === false; },
-    // "9:40 PM ET", or "Tue 9:40 PM ET" when it isn't today in Ohio
+    // "9:40 PM ET" today in Ohio, "Tue 9:40 PM ET" within the last 6 days, else "Nov. 3, 9:40 PM ET" (saved readings
+    // are kept up to 14 days, so a weekday alone could mean two different days)
     when: function (d) {
       d = new Date(d);
       var t = et(d, { hour: "numeric", minute: "2-digit" });
       var sameDay = et(d, { year: "numeric", month: "numeric", day: "numeric" }) === et(new Date(), { year: "numeric", month: "numeric", day: "numeric" });
-      return (sameDay ? "" : et(d, { weekday: "short" }) + " ") + t + " ET";
+      if (sameDay) return t + " ET";
+      if (Date.now() - d.valueOf() < 6 * 864e5) return et(d, { weekday: "short" }) + " " + t + " ET";
+      var MON = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+      return MON[+et(d, { month: "numeric" }) - 1] + " " + et(d, { day: "numeric" }) + ", " + t + " ET";
     },
     label: function (d) { return "Offline. Last updated " + this.when(d) + "."; }
   };

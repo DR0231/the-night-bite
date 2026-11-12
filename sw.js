@@ -29,7 +29,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v40-2026-11-11";
+var VERSION = "v41-2026-11-12";
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
 var PRECACHE_CACHE = PREFIX + "precache";
@@ -487,16 +487,16 @@ var REVISIONS = {
   "favicon.ico": "ec8fafebba48",
   "apple-touch-icon.png": "ae1b52f0a95b",
   "css/styles.css": "6036a96b18f5",
-  "js/alerts.js": "2c7b980aa108",
+  "js/alerts.js": "b41431d3558c",
   "js/astro.js": "a3ec0945f030",
   "js/night-rules.js": "c14111456232",
   "js/i18n.js": "e4390c024f98",
   "js/bait-nearby.js": "b75e87af32d4",
   "js/biting.js": "2035244affef",
   "js/community-log.js": "8115f19147eb",
-  "js/conditions.js": "411b3d05c3d9",
+  "js/conditions.js": "d5aa92a350ed",
   "js/get-app.js": "8345fce8e5c8",
-  "js/glance.js": "10a9bc96cc51",
+  "js/glance.js": "5a3e3b25ca44",
   "js/home-log.js": "09d0017c6cec",
   "js/hoover-map-data.js": "bf1c710139d3",
   "js/hoover-map.js": "eb007aca9278",
@@ -504,8 +504,8 @@ var REVISIONS = {
   "js/install-tip.js": "066437822918",
   "js/lake-picker.js": "03f6265ee9c9",
   "js/water-picker.js": "b48ce9fb2f0d",
-  "js/lake-snapshot.js": "9f0ac1a4d1ac",
-  "js/lakes.js": "20a37476658b",
+  "js/lake-snapshot.js": "79e1111b8d18",
+  "js/lakes.js": "daf4a6d193d2",
   "js/log.js": "69cf38e8db8a",
   "js/mode-toggle.js": "842ee5852866",
   "js/nav.js": "85c14199105b",
@@ -514,15 +514,15 @@ var REVISIONS = {
   "js/updates-draft.js": "954b481592ef",
   "js/pack-list.js": "f9a5e5d83c93",
   "js/pool-readout.js": "8d7a2674f345",
-  "js/pool-trend.js": "a619ea9620f8",
-  "js/refresh.js": "fdff32325088",
+  "js/pool-trend.js": "893f312f7b4a",
+  "js/refresh.js": "5cf574dfd455",
   "js/species-filter.js": "454f000c5ba6",
   "js/species-lake.js": "ac4ac5d278c6",
   "js/sticky-nav.js": "320454e88b43",
   "js/sw-update.js": "6e734dea5cc5",
-  "js/tonight-tools.js": "ffe093de83e1",
+  "js/tonight-tools.js": "1e186a856022",
   "js/tournaments.js": "fd4ba507c0c4",
-  "js/usgs.js": "a25e9832344f",
+  "js/usgs.js": "c3f519eee62d",
   "js/water.js": "23040b9980b5",
   "js/visits.js": "e0f046529c59",
   "js/scrollspy.js": "1b056c72b92f",

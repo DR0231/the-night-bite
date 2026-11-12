@@ -606,6 +606,13 @@
   "pg.log_empty": "Chưa có chuyến câu nào được lưu trên điện thoại này. Thêm chuyến đầu tiên ở bên dưới.",
   "pg.log_backup_note": "Lưu một tệp sao lưu, rồi mở nó trên điện thoại hoặc trình duyệt mới. Các chuyến trong tệp được thêm vào các chuyến ở đây; không có gì bị thay thế.",
   "pg.log_share_note": "Chỉ dùng tên bến hạ thuyền và khu vực công cộng. Không GPS bí mật, không đất tư. Chỉ ghi chú bằng chữ, không ảnh. Chuyến đã gửi sẽ chờ duyệt và chỉ được đăng khi đã duyệt.",
-  "pg.temp_c_prov": "({num} °C) · tạm thời"
+  "pg.temp_c_prov": "({num} °C) · tạm thời",
+  "pg.last_reading": "lần đo cuối",
+  "pg.no_temp_6h": "Không có số đo nhiệt độ nước trong 6 giờ",
+  "pg.no_temp_check": "Không có nhiệt độ nước trong lần kiểm tra cuối",
+  "pg.no_new_6h": "Không có số đo mới trong 6 giờ, xem",
+  "pg.nws_ago": "NWS, {ago}",
+  "pg.stn_old": "Số đo của {station} quá cũ",
+  "pg.stn_nopress": "{station} không gửi áp suất"
  }
 }

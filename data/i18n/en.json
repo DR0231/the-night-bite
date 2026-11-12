@@ -523,6 +523,13 @@
   "pg.log_empty": "No trips saved on this phone yet. Add your first one below.",
   "pg.log_backup_note": "Save a backup file, then open it on a new phone or browser. Trips in the file are added to the ones here; nothing is replaced.",
   "pg.log_share_note": "Public ramp and area names only. No secret GPS, no private property. Text notes only, no photos. Sent trips wait for review and only go up once they’re approved.",
-  "pg.temp_c_prov": "({num} °C) · provisional"
+  "pg.temp_c_prov": "({num} °C) · provisional",
+  "pg.last_reading": "last reading",
+  "pg.no_temp_6h": "No water temp reading in 6 hours",
+  "pg.no_temp_check": "No water temp in the last check",
+  "pg.no_new_6h": "No new reading in 6 hours, check",
+  "pg.nws_ago": "NWS, {ago}",
+  "pg.stn_old": "{station} reading too old",
+  "pg.stn_nopress": "{station} sent no pressure"
  }
 }

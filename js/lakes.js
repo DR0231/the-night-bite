@@ -1649,7 +1649,7 @@
       if (!out[codes[0]]) throw new Error("no reading");
       return via("ogcapi", out);
     }).catch(function () {
-      return getJson(USGS_IV + site + "&parameterCd=" + codes.join(",")).then(function (j) {
+      return getJson(USGS_IV + site + "&parameterCd=" + codes.join(","), 12000).then(function (j) {   // the legacy API gets a timeout too
         var s = ivSeries(j), out = {};
         codes.forEach(function (c) { if (s[c] && s[c].length) out[c] = s[c][s[c].length - 1]; });
         return via("waterservices", out);
@@ -1668,7 +1668,7 @@
       list.sort(function (a, b) { return new Date(a.dateTime) - new Date(b.dateTime); });
       return via("ogcapi", pts(list));
     }).catch(function () {
-      return getJson(USGS_IV + site + "&parameterCd=" + code + "&period=P" + days + "D").then(function (j) {
+      return getJson(USGS_IV + site + "&parameterCd=" + code + "&period=P" + days + "D", 12000).then(function (j) {
         return via("waterservices", pts(ivSeries(j)[code] || []));
       });
     });

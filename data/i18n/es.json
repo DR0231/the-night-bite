@@ -606,6 +606,13 @@
   "pg.log_empty": "Aún no hay salidas guardadas en este teléfono. Añade la primera abajo.",
   "pg.log_backup_note": "Guarda un archivo de respaldo y ábrelo en otro teléfono o navegador. Las salidas del archivo se suman a las de aquí; no se reemplaza nada.",
   "pg.log_share_note": "Solo nombres públicos de rampas y zonas. Nada de GPS secretos ni propiedad privada. Solo notas de texto, sin fotos. Las salidas enviadas esperan revisión y solo se publican cuando se aprueban.",
-  "pg.temp_c_prov": "({num} °C) · provisional"
+  "pg.temp_c_prov": "({num} °C) · provisional",
+  "pg.last_reading": "última lectura",
+  "pg.no_temp_6h": "Sin lectura de temperatura del agua en 6 horas",
+  "pg.no_temp_check": "Sin temperatura del agua en la última revisión",
+  "pg.no_new_6h": "Sin lectura nueva en 6 horas, consulta",
+  "pg.nws_ago": "NWS, {ago}",
+  "pg.stn_old": "Lectura de {station} demasiado antigua",
+  "pg.stn_nopress": "{station} no envió presión"
  }
 }

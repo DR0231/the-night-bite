@@ -606,6 +606,13 @@
   "pg.log_empty": "Nessuna uscita salvata su questo telefono per ora. Aggiungi la prima qui sotto.",
   "pg.log_backup_note": "Salva un file di backup, poi aprilo su un altro telefono o browser. Le uscite del file si aggiungono a quelle qui; non viene sostituito nulla.",
   "pg.log_share_note": "Solo nomi pubblici di rampe e zone. Niente GPS segreti, niente proprietà private. Solo note di testo, niente foto. Le uscite inviate attendono una revisione e vengono pubblicate solo dopo l’approvazione.",
-  "pg.temp_c_prov": "({num} °C) · provvisorio"
+  "pg.temp_c_prov": "({num} °C) · provvisorio",
+  "pg.last_reading": "ultima lettura",
+  "pg.no_temp_6h": "Nessuna lettura della temperatura dell’acqua in 6 ore",
+  "pg.no_temp_check": "Nessuna temperatura dell’acqua nell’ultimo controllo",
+  "pg.no_new_6h": "Nessuna nuova lettura in 6 ore, controlla",
+  "pg.nws_ago": "NWS, {ago}",
+  "pg.stn_old": "Lettura di {station} troppo vecchia",
+  "pg.stn_nopress": "{station} non ha inviato la pressione"
  }
 }

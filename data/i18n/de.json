@@ -606,6 +606,13 @@
   "pg.log_empty": "Noch keine Touren auf diesem Telefon gespeichert. Füge unten deine erste hinzu.",
   "pg.log_backup_note": "Speichere eine Sicherungsdatei und öffne sie dann auf einem neuen Telefon oder Browser. Touren aus der Datei kommen zu den hier gespeicherten dazu; nichts wird ersetzt.",
   "pg.log_share_note": "Nur öffentliche Rampen- und Gebietsnamen. Keine geheimen GPS-Punkte, kein Privatgelände. Nur Textnotizen, keine Fotos. Eingesendete Touren werden geprüft und erst nach der Freigabe veröffentlicht.",
-  "pg.temp_c_prov": "({num} °C) · vorläufig"
+  "pg.temp_c_prov": "({num} °C) · vorläufig",
+  "pg.last_reading": "letzter Messwert",
+  "pg.no_temp_6h": "Seit 6 Stunden kein Messwert der Wassertemperatur",
+  "pg.no_temp_check": "Keine Wassertemperatur bei der letzten Prüfung",
+  "pg.no_new_6h": "Seit 6 Stunden kein neuer Messwert, siehe",
+  "pg.nws_ago": "NWS, {ago}",
+  "pg.stn_old": "Messwert von {station} zu alt",
+  "pg.stn_nopress": "{station} hat keinen Luftdruck gesendet"
  }
 }

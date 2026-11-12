@@ -46,7 +46,14 @@
     try { document.dispatchEvent(new CustomEvent("nb:alerts", { detail: { list: list } })); } catch (e) {}
   }
 
+  // an alert past its end time is never shown, even when the refresh that would have dropped it failed
+  function current(list) {
+    var now = Date.now();
+    return (list || []).filter(function (a) { var t = a.until ? Date.parse(a.until) : NaN; return !isFinite(t) || t > now; });
+  }
+
   function render(list) {
+    list = current(list);
     var old = document.querySelector(".nws-alert");
     if (old) { old.remove(); document.documentElement.classList.remove("has-nws-alert"); }
     window.NightBiteAlertsActive = list;   // every active warning or watch, even one hidden from the banner (share card)
@@ -111,9 +118,14 @@
         try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), list: list })); } catch (e) {}
         render(list);
       })
-      .catch(function () {});   // on a failed refresh the current banner (if any) stays
+      .catch(function () {
+        // on a failed refresh the current banner stays, minus any alert whose end time has passed
+        var shownNow = window.NightBiteAlertsActive || [];
+        if (current(shownNow).length !== shownNow.length) render(shownNow);
+      });
   }
 
-  load(false);
+  // first load once the tab is visible (js/refresh.js), then every 15 minutes while visible
+  if (window.NightBiteRefresh && window.NightBiteRefresh.first) window.NightBiteRefresh.first(function () { load(false); }); else load(false);
   if (window.NightBiteRefresh) window.NightBiteRefresh.add("alerts", load);
 })();

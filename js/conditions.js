@@ -34,7 +34,14 @@
   var extraEl = card.querySelector(".cond-extra");
   var lineEl = card.querySelector(".cond-line");
   // what the derived lines (strip, storm, bite, extras) are built from; each loader fills its part, then render() redraws
-  var st = { periods: null, p3: null, thunder: null, waterF: null, stormAlert: false };
+  var st = { periods: null, p3: null, thunder: null, waterF: null, waterAt: null, stormAlert: false };
+  // the gauge water temp counts only while it is fresh: a lake surface reading from the last 3 hours (D'Angelo, Nov. 12, 2026).
+  // js/usgs.js sends it with its reading time and never sends an outflow, saved or old reading.
+  var WATER_MAX = 3 * 36e5;
+  function waterF() {
+    var t = st.waterAt ? Date.parse(st.waterAt) : NaN;
+    return typeof st.waterF === "number" && isFinite(t) && Date.now() - t <= WATER_MAX ? st.waterF : null;
+  }
 
   function timeEt(d, withDay) {
     if (!d) return null;
@@ -459,8 +466,8 @@
       var major = mt.name === "New" || mt.name === "Full" || mt.fraction < M.dark || mt.fraction > M.bright;
       parts.moon = major ? { pts: M.pts.major, word: mt.fraction > 0.5 ? "full moon" : "new moon" } : { pts: M.pts.other, word: "" };
     }
-    if (typeof st.waterF === "number") {
-      var T = RULES.water, w = Math.round(st.waterF);   // counts toward the score but can't carry the line alone
+    if (waterF() !== null) {
+      var T = RULES.water, w = Math.round(waterF());   // counts toward the score but can't carry the line alone
       parts.water = { pts: w >= T.goodLo && w <= T.goodHi ? T.pts.good : w < T.okLo || w > T.okHi ? T.pts.bad : T.pts.ok, word: w + "°F water" };
     }
     return parts;
@@ -563,10 +570,12 @@
      gauge water temp, and the pool line and 7 day trend from the pool card. No score and no prediction. */
   function poolBits() {
     var out = [], line = document.getElementById("correction-line");
-    var m = line && /~?\s*([\d.]+)\s*ft\s+(below|above)\s+full pool/i.exec((line.getAttribute("data-nb-out") === line.textContent && line.getAttribute("data-en") || line.textContent || ""));
+    // only a live level: a snapshot, saved, old or failed reading has its own time on the card, and this line has none
+    if (!line || line.getAttribute("data-source") !== "live" || line.hasAttribute("data-refresh-failed") || line.hasAttribute("data-offline")) return [];
+    var m = /~?\s*([\d.]+)\s*ft\s+(below|above)\s+full pool/i.exec((line.getAttribute("data-nb-out") === line.textContent && line.getAttribute("data-en") || line.textContent || ""));
     if (m) out.push("pool " + m[1] + " ft " + m[2].toLowerCase() + " full");
     var tr = document.getElementById("pool-trend"), w = document.getElementById("pool-trend-word");
-    var word = tr && !tr.hidden && w && (w.getAttribute("data-en") || w.textContent || "").trim().toLowerCase();
+    var word = tr && !tr.hidden && !tr.hasAttribute("data-old") && !tr.hasAttribute("data-offline") && w && (w.getAttribute("data-en") || w.textContent || "").trim().toLowerCase();
     if (word && /^(rising|falling|steady)$/.test(word)) out.push(word + " over 7 days");
     return out.length ? [out.join(", ")] : [];
   }
@@ -595,7 +604,7 @@
     }
     if (st.storm) bits.push("storms possible");
     if (st.p3) bits.push("pressure " + (st.p3.trend === "steady" ? "steady" : st.p3.trend));
-    if (typeof st.waterF === "number") bits.push(Math.round(st.waterF) + "°F water");
+    if (waterF() !== null) bits.push(Math.round(waterF()) + "°F water");
     bits = bits.concat(poolBits());
     if (!bits.length) { lineEl.hidden = true; return; }
     var txt = bits.join(", ");
@@ -626,6 +635,7 @@
   document.addEventListener("nb:usgs", function (e) {
     var f = e.detail && e.detail.tempF;
     st.waterF = typeof f === "number" && isFinite(f) ? f : null;
+    st.waterAt = st.waterF !== null ? (e.detail.at || null) : null;
     render();
   });
   document.addEventListener("nb:alerts", function (e) {
@@ -633,7 +643,7 @@
     st.stormAlert = list.some(function (a) { return /thunder|tornado/i.test(a.event || ""); });
     render();
   });
-  if (typeof window.NightBiteWaterF === "number") st.waterF = window.NightBiteWaterF;
+  if (typeof window.NightBiteWaterF === "number") { st.waterF = window.NightBiteWaterF; st.waterAt = window.NightBiteWaterAt || null; }
   if (window.NightBiteAlertsShown) st.stormAlert = window.NightBiteAlertsShown.some(function (a) { return /thunder|tornado/i.test(a.event || ""); });
 
   function fail() {
@@ -696,8 +706,10 @@
   }
 
   function failRefresh() {
-    // keep the last good numbers on screen and say how old they are
+    // keep the last good numbers on screen and say how old they are; js/glance.js reads the two attributes
     var t = timeEt(lastOk);
+    card.setAttribute("data-refresh-failed", "1");
+    if (lastOk) card.setAttribute("data-checked-at", String(lastOk.valueOf()));
     if (OFF && OFF.isOffline()) {
       card.setAttribute("data-offline", "1");
       if (statusEl) statusEl.textContent = OFF.label(lastOk);
@@ -733,6 +745,8 @@
       hasData = true;
       lastOk = cached ? new Date(cached.at) : new Date();
       card.removeAttribute("data-offline");
+      card.removeAttribute("data-refresh-failed");
+      card.removeAttribute("data-checked-at");
       card.removeAttribute("data-saved");
       card.removeAttribute("data-saved-at");
       stamp(lastOk);
@@ -767,7 +781,8 @@
     });
   }
 
-  load(false);
+  // first load once the tab is visible (js/refresh.js), then every 15 minutes while visible
+  if (window.NightBiteRefresh && window.NightBiteRefresh.first) window.NightBiteRefresh.first(function () { load(false); }); else load(false);
   if (window.NightBiteRefresh) window.NightBiteRefresh.add("conditions", load);
 
   function slimHourly(h) {

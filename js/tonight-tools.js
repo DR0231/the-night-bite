@@ -5,6 +5,7 @@
  * check first: wind and gusts, air and feels like, sky and rain chance (NWS forecast), any NWS watch or warning, sunset,
  * moonrise and moon (worked out on the phone), water temp where the lake has a public temp gauge, and the top 3 "biting
  * now" picks from the site's monthly notes. Lake level and the bite rating stay, smaller. Missing values print as "--".
+ * Water temp and level carry their reading's own time (the pool card's Checked time), or "--" when there is none.
  * No URL and no source footer on the image; the sources are listed in the dialog under it. Shares the PNG with the Web Share API where
  * the browser can share files, otherwise offers a download. Nothing leaves the phone unless you share it.
  *
@@ -53,7 +54,10 @@
   function etShort(iso) {
     var d = new Date(iso);
     if (!iso || isNaN(d.valueOf())) return "";
-    try { return new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short", hour: "numeric", minute: "2-digit" }).format(d); }
+    // a weekday alone reads as this week, so a reading 6 or more days old carries its date
+    var o = Date.now() - d.valueOf() >= 6 * 864e5 ? { month: "short", day: "numeric" } : { weekday: "short" };
+    o.timeZone = "America/New_York"; o.hour = "numeric"; o.minute = "2-digit";
+    try { return new Intl.DateTimeFormat("en-US", o).format(d); }
     catch (e) { return ""; }
   }
   function monthEt() {
@@ -102,6 +106,11 @@
     var hasTemp = !!(cfg.pool && cfg.pool.temp), out = !hasTemp && cfg.pool && cfg.pool.outflow, prof = !hasTemp && !out && cfg.pool && cfg.pool.profile;
     var t = (hasTemp || out) && (out ? /(-?\d+)\s*\u00b0F outflow/ : /(-?\d+)\s*\u00b0F/).exec(txt("#correction-line"));
     r.water = t ? t[1] + "\u00b0F" : DASH;
+    // the reading's own time (the pool card's Checked <time>), printed on the image under the water temp and after the
+    // level, so a shared card never passes an old or saved reading off as tonight's; no time prints as "--"
+    var readIso = (function () { var tm = $("#correction-checked time"); return tm ? tm.getAttribute("datetime") : ""; })();
+    var readWhen = etShort(readIso);
+    r.readAt = readWhen ? "Reading " + readWhen + " ET" : "Reading " + DASH;
     r.waterSub = out ? (t ? "USACE outflow, not surface" : "No reading right now") : prof ? "Corps profile " + prof.short :
       !hasTemp ? "No public temp gauge" : t ? (cfg.pool.srcName || "") + " lake gauge" : "No reading right now";
     // lake level and bite rating, kept but smaller
@@ -202,11 +211,12 @@
       tile(1, "Air", r.air, [r.airSub]);
       tile(2, "Sky", r.sky, [r.rain, r.storm ? { t: r.storm } : ""], { vs: 36 });
       tile(3, "Sunset", r.sunset, [r.moonrise, r.moon]);
-      tile(4, "Water temp", r.water, [r.waterSub]);
+      tile(4, "Water temp", r.water, [r.waterSub, r.water !== DASH ? r.readAt : ""]);
       tile(5, "Biting now", r.biting, null, { list: true });
       // level and bite rating: smaller, one line
       var by = 600;
-      var lvl = "Lake level " + r.level + (r.levelSub ? ", " + r.levelSub.charAt(0).toLowerCase() + r.levelSub.slice(1) : "");
+      var lvl = "Lake level " + r.level + (r.levelSub ? ", " + r.levelSub.charAt(0).toLowerCase() + r.levelSub.slice(1) : "") +
+        (r.level !== DASH ? " (" + r.readAt.charAt(0).toLowerCase() + r.readAt.slice(1) + ")" : "");
       text(lvl, 48, by, F(SERIF, 27), CREAM2, 720, 22);
       text("Tonight\u2019s bite: " + r.bite, W - 48, by, F(SERIF6, 27), r.bite === DASH ? MUTED : CREAM, 380, 22, true);
       return { canvas: c, r: r };
@@ -225,7 +235,8 @@
     draw().then(function (o) {
       var url = o.canvas.toDataURL("image/png");
       shareImg.src = url;
-      shareImg.alt = "Tonight at " + lakeName + ": wind " + o.r.wind + ", air " + o.r.air + ", " + o.r.sky + ", sunset " + o.r.sunset + ", water " + o.r.water + (o.r.biting.length ? ", biting now " + o.r.biting.join(", ") : "") + ".";
+      shareImg.alt = "Tonight at " + lakeName + ": wind " + o.r.wind + ", air " + o.r.air + ", " + o.r.sky + ", sunset " + o.r.sunset + ", water " + o.r.water +
+        (o.r.water !== DASH || o.r.level !== DASH ? " (" + o.r.readAt.charAt(0).toLowerCase() + o.r.readAt.slice(1) + ")" : "") + (o.r.biting.length ? ", biting now " + o.r.biting.join(", ") : "") + ".";
       var name = "night-bite-" + LK.id + "-" + etDate() + ".png";
       dlLink.href = url; dlLink.download = name;
       shareMsg.textContent = "Sources: " + o.r.src;
