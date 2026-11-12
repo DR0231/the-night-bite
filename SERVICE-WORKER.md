@@ -64,6 +64,9 @@ promoted on 2026-11-11 as live v40.
    that touches a precached file; `tools/check-all.py` and `tools/promote.py` run it last on their own.
 3. `python3 tools/sw-precache.py --check` (in the GitHub static checks and in check-all as `check-sw-precache`)
    fails when `REVISIONS` is stale or a precached file is missing (a missing file would fail every install).
+4. `python3 tools/check-precache-refs.py` (in the GitHub static checks and in check-all) fails when a lake home, the
+   lake home template or offline.html loads a script, stylesheet or first-paint image that `PRECACHE` doesn't list, so
+   a new `<script>` can't quietly break offline pages.
 * A precached file without a hash (say a line added by hand without running the tool) is keyed by `VERSION`
   instead, so it is downloaded again on every deploy, which is the old behaviour and never stale.
 * To precache another file, add its path to `PRECACHE` and run `sw-precache.py`. Keep the list small: anything a
