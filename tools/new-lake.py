@@ -17,7 +17,8 @@ What it writes (all from the entry; nothing is made up):
     (motors, ramps, pool, night). A fact without a source is left out, never guessed.
   · sitemap.xml: <id>/ after the last lake home. data/bait-shops.json: an empty list (the card says No shops confirmed yet).
   · then runs tools/build-tile-charts.py --lake <id> (the picker's north-up tile chart and its sw.js precache line,
-    once assets/<id>-chart.png exists), build-lake-pages.py, build-docks.py, build-meta.py, stamp-version.py, build-updates.py, wrap-dates.py
+    once assets/<id>-chart.png exists), build-lake-pages.py, build-docks.py, build-meta.py, biting-split.py (the lake's
+    js/biting/<id>.js, once js/biting-data-lakes.js has its set), stamp-version.py, build-updates.py, wrap-dates.py
     (unless --no-build). build-lake-pages.py also refreshes every tile, so a chart added later needs no extra step.
 Sources must be official: USGS, Army Corps, ODNR (ohio.gov), NWS, MWCD, or a host already used in data/quick-facts.json
 (vetted city, park and marina pages). Another official city, park or marina host needs --allow-host HOST, after you
@@ -81,7 +82,7 @@ def build():
     if a.no_build or a.dry_run:
         print("build skipped" + (" (dry run)" if a.dry_run else ""))
         return
-    for b in ("build-tile-charts.py", "build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py", "wrap-dates.py", "i18n-extract.py", "sw-precache.py"):
+    for b in ("build-tile-charts.py", "build-lake-pages.py", "build-docks.py", "build-meta.py", "biting-split.py", "stamp-version.py", "build-updates.py", "wrap-dates.py", "i18n-extract.py", "sw-precache.py"):
         args = [sys.executable, str(ROOT / "tools" / b)]
         if b == "build-tile-charts.py":   # the north-up tile chart for the picker, plus its sw.js precache line
             args += ["--root", str(ROOT)] + (["--lake", BUILD_LAKE] if BUILD_LAKE else [])
@@ -344,7 +345,10 @@ for rel, why in files.items():
     if not (ROOT / rel).exists():
         missing.append(f"{rel}: missing, {why}")
 if not re.search(r"NightBiteBiting" + cap + r"\b", read("js/biting-data-lakes.js")):
-    missing.append(f"js/biting-data-lakes.js: no NightBiteBiting{cap} (what's biting) entry")
+    missing.append(f"js/biting-data-lakes.js: no NightBiteBiting{cap} (what's biting) entry; add one from sources, then run "
+                   f"python3 tools/stamp-version.py (or tools/biting-split.py) to write js/biting/{slug}.js and its precache line")
+elif not (ROOT / f"js/biting/{slug}.js").exists():
+    missing.append(f"js/biting/{slug}.js: missing; run python3 tools/biting-split.py, then tools/sw-precache.py")
 missing.append("species and spots in js/lakes.js: empty; add from ODNR surveys or stocking records")
 missing.append("data/bait-shops.json: empty list (card says No shops confirmed yet); add shops from Google Maps listings that show the shop open with recent reviews")
 docks = json.loads(read("data/docks.json"))

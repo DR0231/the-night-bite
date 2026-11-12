@@ -1503,6 +1503,10 @@
   // site root, so pages in species/ and alum/ can find assets (lakes.js is always loaded as <root>/js/lakes.js)
   var BASE = "";
   try { BASE = document.currentScript.src.replace(/js\/lakes\.js(\?.*)?$/, ""); } catch (e) {}
+  // pages that show "what's biting" (species, ice) mark this script tag data-biting, so the active lake's set starts
+  // loading here in <head> and is usually in place before the page's own scripts ask for it
+  var wantsBiting = false;
+  try { wantsBiting = document.currentScript.hasAttribute("data-biting"); } catch (e) {}
   // a lake's home page: <id>/ for every lake (the site root is the water picker)
   function homeFor(lake) { return BASE + lake + "/"; }
 
@@ -1670,10 +1674,26 @@
     });
   }
 
-  // per-lake data files: "what's biting" (js/biting-data.js for Hoover, js/biting-data-lakes.js for the rest) and the
-  // map data (js/hoover-map-data.js, js/lake-map-data-<id>.js). One rule for every lake, so a new lake needs no edits here.
+  // per-lake data files: "what's biting" (js/biting/<id>.js, split from js/biting-data.js and js/biting-data-lakes.js
+  // by tools/biting-split.py) and the map data (js/hoover-map-data.js, js/lake-map-data-<id>.js). One rule for every
+  // lake, so a new lake needs no edits here.
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
   function bitingVar(lake) { return lake === "hoover" ? "NightBiteBiting" : "NightBiteBiting" + cap(lake); }
+  // one lake's "what's biting" set, loaded once on demand (precached with the lake home, so it works offline).
+  // Resolves to the data, or null when the lake has no set or the file can't load.
+  var bitingLoads = {};
+  function biting(lake) {
+    var key = bitingVar(lake);
+    if (window[key]) return Promise.resolve(window[key]);
+    if (!bitingLoads[lake]) bitingLoads[lake] = new Promise(function (ok) {
+      var sc = document.createElement("script");
+      sc.src = BASE + "js/biting/" + lake + ".js";
+      sc.onload = function () { ok(window[key] || null); };
+      sc.onerror = function () { delete bitingLoads[lake]; ok(null); };
+      document.head.appendChild(sc);
+    });
+    return bitingLoads[lake];
+  }
   function mapFile(lake) { return lake === "hoover" ? "hoover-map-data.js" : "lake-map-data-" + lake + ".js"; }
 
   // a saved spot name as the page shows it now (old Hoover ramp spellings map to the official names)
@@ -1682,8 +1702,9 @@
     return (al && name && Object.prototype.hasOwnProperty.call(al, name)) ? al[name] : name;
   }
   window.NightBiteLakes = { all: LAKES, order: ORDER, regions: REGIONS, speciesNames: SPECIES, storageKey: KEY, hrefFor: hrefFor, homeFor: homeFor, base: BASE, cwmsFor: cwmsFor,
-    usgsLatest: usgsLatest, usgsSeries: usgsSeries, bitingVar: bitingVar, mapFile: mapFile, spotName: spotName };
+    usgsLatest: usgsLatest, usgsSeries: usgsSeries, bitingVar: bitingVar, biting: biting, mapFile: mapFile, spotName: spotName };
   window.NightBiteLake = { id: id, cfg: LAKES[id], key: key, cwms: cwms, outflow: function (h) { return outflowTemp(id, h); }, home: homeLake, chosen: chosen, root: atRoot, browsing: browsing };
+  if (wantsBiting) biting(id);
 
   // Lake switches only (js/lake-picker.js sets the flag): a short cross-fade into the new page.
   // Registered here in <head> so it is in place before the first frame; every other navigation stays instant.

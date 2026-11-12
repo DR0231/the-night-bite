@@ -2,8 +2,8 @@
 """Write the content hash of every sw.js PRECACHE file into sw.js REVISIONS, so an installed phone only
 downloads the files that changed since its last worker (instead of all of them on every VERSION).
 
-Also fills the LAKE PRECACHE block in sw.js from js/lakes.js: every lake home plus the chart, map script
-and map images that home needs to render offline. A new water in the registry is picked up automatically.
+Also fills the LAKE PRECACHE block in sw.js from js/lakes.js: every lake home plus the chart, map script,
+map images and the lake's own "what's biting" set (js/biting/<id>.js) that its pages need offline. A new water in the registry is picked up automatically.
 
     python3 tools/sw-precache.py            # rewrite the lake list and REVISIONS (stamp-version.py and promote.py run this)
     python3 tools/sw-precache.py --check    # change nothing; exit 1 if the lake list or REVISIONS is stale, or a file is missing
@@ -25,6 +25,7 @@ LAKE_BLOCK = re.compile(r"(  // BEGIN LAKE PRECACHE\n)(.*?)(  // END LAKE PRECAC
 LAKE_ASSETS = (
     "assets/{id}-chart.png",
     "js/lake-map-data-{id}.js",
+    "js/biting/{id}.js",   # what's biting now (tools/biting-split.py), read by the species and ice pages and the share card
     "assets/map/{id}-map-tall.png",
     "assets/map/{id}-map-wide.png",
 )

@@ -64,6 +64,20 @@ node tools/sweep.cjs --shots water,species/saugeye --out /workspace/nb-checks/my
 * Each tab starts with no remembered lake.
 * Exit codes: 0 means everything passed, 1 means at least one FAIL, 2 means the sweep crashed.
 
+### biting-split.py
+
+```
+python3 tools/biting-split.py            # write js/biting/<id>.js from the combined sources
+python3 tools/biting-split.py --check    # change nothing; exit 1 if any file is stale, missing, extra or differs in value
+```
+
+* Edit `js/biting-data.js` (Hoover) and `js/biting-data-lakes.js` (every other lake), never `js/biting/`.
+* Each lake gets one compact file with only its own set, under the same variable name. `js/lakes.js` loads it on
+  demand (`NightBiteLakes.biting(id)`); pages that show biting data mark their `js/lakes.js` tag `data-biting` so the
+  load starts in `<head>`.
+* `stamp-version.py` runs it before `sw-precache.py`, which precaches each file with its lake home. The static gate
+  runs `--check`, which evaluates the sources and every output file with node and compares them value by value.
+
 ### new-lake.py
 
 ```

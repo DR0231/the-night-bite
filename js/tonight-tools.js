@@ -61,17 +61,10 @@
     catch (e) { return new Date().getMonth(); }
   }
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  // "What's biting now" data is not on the home page, so load the lake's file (already in the offline cache) on demand
+  // "What's biting now" data is not on the home page, so load this lake's own file (js/biting/<id>.js, already in the
+  // offline cache) on demand
   function bitingData() {
-    var key = window.NightBiteLakes ? window.NightBiteLakes.bitingVar(LK.id) : "NightBiteBiting";
-    if (window[key]) return Promise.resolve(window[key]);
-    return new Promise(function (ok) {
-      var sc = document.createElement("script");
-      sc.src = LS.base + (key === "NightBiteBiting" ? "js/biting-data.js" : "js/biting-data-lakes.js");
-      sc.onload = function () { ok(window[key] || null); };
-      sc.onerror = function () { ok(null); };
-      document.head.appendChild(sc);
-    });
+    return window.NightBiteLakes && window.NightBiteLakes.biting ? window.NightBiteLakes.biting(LK.id) : Promise.resolve(null);
   }
   function readings(bite) {
     var r = {};

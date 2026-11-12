@@ -41,6 +41,7 @@ jobs:
           python3 tools/check-lake-isolation.py
           python3 tools/check-i18n.py
           python3 tools/check-manifest.py
+          python3 tools/biting-split.py --check
           python3 tools/sw-precache.py --check
           python3 tools/build-tile-charts.py --check
           python3 tools/nav-labels.py --check
