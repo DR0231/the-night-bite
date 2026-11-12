@@ -68,7 +68,7 @@ const UI = {
   /* end control-names */
 
   anyMenu() {
-    return this.journalOpen || Inventory.open || Shop.openFlag || Board.open || Mail.open
+    return this.journalOpen || Save.stale || Inventory.open || Shop.openFlag || Board.open || Mail.open
       || (typeof Bench !== "undefined" && Bench.openFlag)
       || (typeof Tank !== "undefined" && Tank.openFlag)
       || (typeof Cooler !== "undefined" && Cooler.openFlag)
@@ -303,7 +303,7 @@ const UI = {
     if (typeof Pause !== "undefined") Pause.close();
     // Journal pauses movement and world time, but is not a bite-timer exploit:
     // wait/nibble packs up the rod; an open minigame fails on the spot.
-    if (Fishing.state === "wait" || Fishing.state === "nibble") Fishing.cancel();
+    if (Fishing.state === "wait" || Fishing.state === "nibble") Fishing.reelIn();
     else if (Fishing.state === "play") Minigame.failOpenMenu();
     this.journalOpen = true;
     this.els.journal.classList.remove("hidden");
@@ -489,8 +489,9 @@ const UI = {
     }
     const rodEl = document.getElementById("clock-rod");
     if (rodEl && typeof Inventory !== "undefined") {
-      const eq = Inventory.equipped();
-      const empty = eq === "none" || Inventory.baitCount(eq) <= 0;
+      const onLine = typeof Fishing !== "undefined" && (Fishing.state === "wait" || Fishing.state === "nibble" || Fishing.inFight());
+      const eq = onLine ? Fishing.castBait : Inventory.equipped();
+      const empty = eq === "none" || (!onLine && Inventory.baitCount(eq) <= 0);
       let bait = empty ? "empty hook" : ((BAIT[eq] && BAIT[eq].name) || eq);
       if (!empty && BAIT[eq] && BAIT[eq].prefer && SPOTS[BAIT[eq].prefer]) {
         bait += " · " + SPOTS[BAIT[eq].prefer].name;
@@ -696,7 +697,10 @@ const Game = {
       window.addEventListener("blur", leave);
       document.addEventListener("visibilitychange", () => { if (document.hidden) leave(); });
       document.addEventListener("visibilitychange", () => AudioFX.setHidden(document.hidden));
-      window.addEventListener("pagehide", () => Save.write());
+      window.addEventListener("pagehide", () => { if (!document.hidden) Save.write(); });
+      window.addEventListener("storage", () => Save.checkStale());
+      document.addEventListener("visibilitychange", () => Save.wake());
+      window.addEventListener("pageshow", () => Save.wake());
       if (window.valeDesktop) window.valeDesktop.onSaveRequest(() => Save.write());
       const hint = document.getElementById("hint");
       if (hint) hint.textContent = UI.text("{journal} Journal · {pack} Pack");

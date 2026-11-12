@@ -182,9 +182,7 @@ const Fishing = {
     const phase = TimeCycle.phaseId();
     const weather = TimeCycle.weatherId();
     const season = TimeCycle.season();
-    let hotspot = TimeCycle.hotspot() === this.spot.id ? DESIGN.hotspotBite : 1;
-    if (hotspot === 1 && Skills.has("homeshore") && Save.data.player.favoriteSpot === this.spot.id) hotspot = DESIGN.homeShoreBite;
-    const eq = Inventory.equipped();
+    const eq = this.castBait;
     const starved = (Save.data.player.hunger | 0) <= 0;
     const pool = [];
     const weights = [];
@@ -196,8 +194,7 @@ const Fishing = {
       if (starved && f.rarity === "Rare") continue;
       let w = f.rarity === "Rare" ? 1 : f.rarity === "Uncommon" ? 3 : 6;
       const bw = (f.bite && f.bite[phase]) != null ? f.bite[phase] : 1;
-      w *= bw * (WEATHERS[weather] ? WEATHERS[weather].bite : 1) * hotspot;
-      if (Skills.has("nightowl") && phase === "night") w *= DESIGN.nightOwlBite;
+      w *= bw;
       const bias = (f.baitBias && f.baitBias[eq] != null) ? f.baitBias[eq] : 1;
       w *= bias;
       if (w <= 0.01) continue;
@@ -243,13 +240,16 @@ const Fishing = {
       this.sag = 2 + (1 - ease) * 4;
       if (u >= 1) {
         b.x = b.homeX; b.y = b.homeY;
+        const baitM = Inventory.biteMult(this.spot.id);
         this.castBait = Inventory.consumeCastBait();
         this.state = "wait";
         this.t = 0;
-        const baitM = Inventory.biteMult(this.spot.id);
-        const hot = TimeCycle.hotspot() === this.spot.id ? DESIGN.hotspotWait : 1;
+        const home = Skills.has("homeshore") && Save.data.player.favoriteSpot === this.spot.id ? DESIGN.homeShoreBite : 1;
+        const hot = TimeCycle.hotspot() === this.spot.id ? DESIGN.hotspotWait : 1 / home;
+        const sky = WEATHERS[TimeCycle.weatherId()];
+        const owl = Skills.has("nightowl") && TimeCycle.phaseId() === "night" ? DESIGN.nightOwlBite : 1;
         const waitMul = this._rankMul(6, "rank6CastMul");
-        this.wait = Utils.lerp(feel.waitMin * waitMul, feel.waitMax * waitMul, Math.random()) / Math.max(0.35, baitM) * hot;
+        this.wait = Utils.lerp(feel.waitMin * waitMul, feel.waitMax * waitMul, Math.random()) / Math.max(0.35, baitM) / Math.max(DESIGN.weatherBiteMin, sky ? sky.bite : 1) / owl * hot;
         let nib = Utils.irand(Math.random, feel.nibbleCount[0], feel.nibbleCount[1]);
         if (baitM < 0.6) nib = Math.max(1, nib - 1);
         this.nibblesLeft = nib;

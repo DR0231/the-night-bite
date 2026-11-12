@@ -84,7 +84,7 @@ const AdminGuide = {
       <p>Rank ${typeof Skills !== "undefined" ? Skills.rank() : 1}. Hook window ×${(typeof Skills !== "undefined" && Skills.rank() >= 4) ? D.rank4HookMul : 1} from rank 4 (${D.rank4HookMul} on DESIGN). Cast wait ×${(typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1} from rank 6 (${D.rank6CastMul} on DESIGN). The hook window is not multiplied again at rank 6.</p>
       <p><strong>Still water</strong> (${Object.keys(SPOTS).filter((id) => SPOTS[id].mood === "still").map((id) => SPOTS[id].name).join(", ")}): wait ${this._secs(still.waitMin * ((typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1))}–${this._secs(still.waitMax * ((typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1))}s, ${still.nibbleCount[0]}–${still.nibbleCount[1]} nibbles, hook window ${this._secs(still.hookWindow * ((typeof Skills !== "undefined" && Skills.rank() >= 4) ? D.rank4HookMul : 1))}s.</p>
       <p><strong>Moving water</strong> (${Object.keys(SPOTS).filter((id) => SPOTS[id].mood === "moving").map((id) => SPOTS[id].name).join(", ")}): wait ${this._secs(moving.waitMin * ((typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1))}–${this._secs(moving.waitMax * ((typeof Skills !== "undefined" && Skills.rank() >= 6) ? D.rank6CastMul : 1))}s, ${moving.nibbleCount[0]}–${moving.nibbleCount[1]} nibbles, hook window ${this._secs(moving.hookWindow * ((typeof Skills !== "undefined" && Skills.rank() >= 4) ? D.rank4HookMul : 1))}s, bobber drifts.</p>
-      <p>Wait is divided by the bait multiplier (empty hook uses ×${D.emptyHookBite}). Today’s hotspot multiplies wait by ${D.hotspotWait} (faster bites). Reach: boat ${D.boatRange}px, sign ${D.signRange}px, cooler ${D.crateRange}px, stump ${D.sitRange}px, NPC wander ${D.npcWander}px. The pond stump skips to dusk or dawn, then rests ${D.stumpDays} vale day (the day you land on counts). Aim speed ${D.aimSpeed}, cast pad ${D.castAimPad}.</p>
+      <p>Wait is divided by the bait multiplier (empty hook uses ×${D.emptyHookBite}), the weather bite (never under ×${D.weatherBiteMin}) and Night owl ×${D.nightOwlBite} at night. Today’s hotspot multiplies wait by ${D.hotspotWait}; Home shore divides it by ${D.homeShoreBite} instead on your favorite water. None of these change which fish bites. Reach: boat ${D.boatRange}px, sign ${D.signRange}px, cooler ${D.crateRange}px, stump ${D.sitRange}px, NPC wander ${D.npcWander}px. The pond stump skips to dusk or dawn (at dusk it is only a rest, no skip), then rests ${D.stumpDays} vale day (the day you land on counts). Aim speed ${D.aimSpeed}, cast pad ${D.castAimPad}.</p>
       <p>Notes stay up ${D.toastBase}s plus ${D.toastPerChar}s per character, capped at ${D.toastMax}s. Longer than ${D.toastLongChars} characters, or a titled note, uses the small body line. First-evening nudges wait ${D.onboardDelay}s, then ${D.onboardGap}s apart, and stop after ${D.onboardWindow}s of play or once ${D.onboardSpecies} species are in the journal. Bait under ${D.baitLowWarn} says it is running low. Nothing auto-swaps.</p>
       <p>Opening the journal on wait/nibble packs the rod. Opening it during the minigame <strong>fails the fish</strong>.</p>
 
@@ -158,11 +158,11 @@ const AdminGuide = {
     const extra = {
       steadyhands: " Timing gold band ×1.12.",
       ironwrist: " Tension band ×1.2; fill need ×0.9.",
-      nightowl: ` Night rest drain ×${D.nightOwlRest}; night bite weights ×${D.nightOwlBite}.`,
+      nightowl: ` Night rest drain ×${D.nightOwlRest}; night wait ÷${D.nightOwlBite}.`,
       weathered: ` Rain/frost extra warmth ×${D.weatheredWarmth} (stacks with cloak ×${D.cloakWarmth}).`,
       forager: ` Ground pickups: ${Math.round(D.foragerChance * 100)}% chance +1 extra.`,
       campcook: ` Meals restore ×${D.campcookRestore} and the buff lasts until the day after you eat.`,
-      homeshore: ` Favorite journal water counts as a mild hotspot (×${D.homeShoreBite}) when it is not already the day’s hotspot (×${D.hotspotBite}).`,
+      homeshore: ` Favorite journal water waits ÷${D.homeShoreBite}, a mild hotspot, when it is not already the day’s hotspot (wait ×${D.hotspotWait}).`,
       barehook: ` Empty hook bite ×${D.bareHookBite} instead of ×${D.emptyHookBite}. No bait bias.`,
     };
     return extra[id] || "";
@@ -260,7 +260,7 @@ const AdminGuide = {
     return `
       <p class="journal-sub">${FISH.length} species in FISH[], ${Object.keys(SPOTS).length} waters in SPOTS.</p>
       <h3>How a fish is chosen</h3>
-      <p>Must match the water you cast into. Then: night-only needs night; rain-only needs rain; seasonal needs that season; hunger 0 skips rares. Weight: Common 6, Uncommon 3, Rare 1 × time-of-day bite × weather (${wx}) × hotspot ${D.hotspotBite} (or Home shore ${D.homeShoreBite}) × Night owl ${D.nightOwlBite} at night × equipped bait bias. Empty pool falls back to any fish of that spot (still skipping rares if starving).</p>
+      <p>Must match the water you cast into. Then: night-only needs night; rain-only needs rain; seasonal needs that season; hunger 0 skips rares. Weight: Common 6, Uncommon 3, Rare 1 × time-of-day bite × hooked bait bias. Weather (${wx}), the hotspot, Home shore and Night owl change only the wait. Empty pool falls back to any fish of that spot (still skipping rares if starving).</p>
       ${blocks}
     `;
   },

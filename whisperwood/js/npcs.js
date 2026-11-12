@@ -390,8 +390,10 @@ const Interact = {
       UI.toastNote("The stump is resting until tomorrow.");
       return true;
     }
-    const night = TimeCycle.phaseId() === "night";
-    Weather.skipTo(night ? "dawn" : "golden");
+    const phase = TimeCycle.phaseId();
+    const night = phase === "night";
+    const dusk = phase === "golden";
+    if (!dusk) Weather.skipTo(night ? "dawn" : "golden");
     const days = (typeof DESIGN !== "undefined" && (DESIGN.stumpDays | 0)) || 0;
     if (days > 0 && Save.data && Save.data.flags) {
       Save.data.flags.stumpUntil = this._valeDay() + days - 1;
@@ -399,7 +401,7 @@ const Interact = {
     }
     Survival.add("rest", 35);
     Survival.add("warmth", 15);
-    UI.toastNote(night ? "You dozed until dawn." : "You sat until golden hour.");
+    UI.toastNote(night ? "You dozed until dawn." : dusk ? "It's already dusk. You rest a while." : "You sat until golden hour.");
     return true;
   },
 

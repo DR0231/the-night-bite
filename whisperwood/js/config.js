@@ -105,7 +105,7 @@ const DESIGN = {
   caveWrongBait: 0.42,
   preferBait: 1.25,
   wrongPreferBait: 0.72,
-  hotspotBite: 1.35,
+  weatherBiteMin: 0.88,
   hotspotWait: 0.78,
   homeShoreBite: 1.18,
   nightOwlBite: 1.15,

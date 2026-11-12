@@ -2,6 +2,8 @@
 
 const SAVE_UNREADABLE_KEY = "whisperwood-save-v1-unreadable";
 const SAVE_AT_KEY = "whisperwood-save-v1-at";
+const SAVE_REV_KEY = "whisperwood-save-v1-rev";
+const STALE_GRACE_MS = 2000;
 const SAVE_VERSION = 1;
 const NO_CORNER = "There's no dry corner for your newer vale. Copy save first.";
 
@@ -13,6 +15,10 @@ const Save = {
   _loadWarn: "",
   _newerRaw: "",
   _writeWarned: false,
+  _tab: Math.random().toString(36).slice(2, 8),
+  _seen: null,
+  _shownAt: 0,
+  stale: false,
 
   blankJournalEntry() {
     return { caught: 0, biggest: 0, firstAt: 0, lastAt: 0, hooked: 0, landed: 0, gotAway: 0, shiny: 0, favorite: false, firstDay: 0 };
@@ -73,6 +79,8 @@ const Save = {
   },
 
   load() {
+    this._seen = this._stamp();
+    this._shownAt = performance.now();
     let raw = null;
     try { raw = localStorage.getItem(SAVE_KEY); } catch (e) { raw = null; }
     const isObj = (t) => { try { const p = JSON.parse(t); return !!p && typeof p === "object" && !Array.isArray(p); } catch (e) { return false; } };
@@ -379,11 +387,39 @@ const Save = {
     d.player.lastLogoutAt = Date.now();
   },
 
+  _stamp() {
+    try { return (localStorage.getItem(SAVE_REV_KEY) || "0") + "@" + (localStorage.getItem(SAVE_AT_KEY) || "0"); } catch (e) { return ""; }
+  },
+
+  checkStale() {
+    if (!this.stale && this._seen !== null && this._stamp() !== this._seen) this._goStale();
+    return this.stale;
+  },
+
+  _goStale() {
+    this.stale = true;
+    try {
+      if (!document.hidden && performance.now() - this._shownAt < STALE_GRACE_MS) { location.reload(); return; }
+      const el = document.getElementById("stale-tab");
+      if (el) el.classList.remove("hidden");
+      const btn = document.getElementById("stale-tab-reload");
+      if (btn) { btn.addEventListener("click", () => location.reload()); btn.focus(); }
+    } catch (e) {}
+  },
+
+  wake() {
+    if (document.hidden) return;
+    if (this.stale) location.reload();
+    else this._shownAt = performance.now();
+  },
+
   write() {
     if (this._writeBlocked) return;
+    if (this.checkStale()) return;
     try {
       this.pullFromWorld();
       const json = JSON.stringify(this.data);
+      localStorage.setItem(SAVE_REV_KEY, ((parseInt(this._seen, 10) || 0) + 1) + "." + this._tab);
       localStorage.setItem(SAVE_KEY, json);
       const at = Date.now();
       try { localStorage.setItem(SAVE_AT_KEY, String(at)); } catch (e) {}
@@ -396,6 +432,7 @@ const Save = {
         try { if (typeof UI !== "undefined") UI.toastWarn("The vale couldn't dry your save. This evening isn't saving for now."); } catch (e3) {}
       }
     }
+    this._seen = this._stamp();
   },
 
   mark(reason) {

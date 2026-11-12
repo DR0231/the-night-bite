@@ -38,7 +38,7 @@ const Player = {
     const moveTap = Input.pressed["w"] || Input.pressed["a"] || Input.pressed["s"] || Input.pressed["d"]
       || Input.pressed["arrowup"] || Input.pressed["arrowdown"] || Input.pressed["arrowleft"] || Input.pressed["arrowright"];
     if (this.fishing && moveTap && (Fishing.state === "wait" || Fishing.state === "nibble")) {
-      Fishing.cancel();
+      Fishing.reelIn();
     }
 
     if (this.locked || this.fishing) {

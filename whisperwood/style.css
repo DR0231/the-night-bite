@@ -1490,3 +1490,7 @@ html.stick-on #move-pad.is-touch ~ #stick-zone { display: block; position: fixed
 @media (prefers-reduced-motion: reduce) {
   .need-row.warn, .need-row.crit, #clock:not(.expanded) .need-row.warn, #clock:not(.expanded) .need-row.crit { animation: none; }
 }
+
+#stale-tab { position: fixed; z-index: 60; }
+#stale-tab .journal-panel { text-align: center; }
+#stale-tab-reload { display: block; margin: 12px auto 0; padding: 6px 16px; border: 2px solid var(--frame); background: #f6ecd2; color: var(--ink); font-size: 16px; line-height: 18px; cursor: pointer; }
