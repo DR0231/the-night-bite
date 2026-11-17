@@ -1,6 +1,6 @@
 # The Night Bite
 
-Static website: unofficial night fishing notebook for 49 Ohio waters, starting at Hoover Reservoir. Species pages, water and maps, trip log, tournaments, and gear kits. Cabin-notebook look. Night fishing is still a strength. Not ODNR, not City of Columbus, not USGS.
+Static website: unofficial night fishing notebook for 62 Ohio waters, starting at Hoover Reservoir. Species pages, water and maps, trip log, tournaments, and gear kits. Cabin-notebook look. Night fishing is still a strength. Not ODNR, not City of Columbus, not USGS.
 
 **Site name spelling:** *The Night Bite* (Night, not Nite).  
 **Live domain:** `nightbiteoh.com` (CNAME in repo). Serve over **HTTPS** in production.
@@ -81,7 +81,7 @@ Home · Species · Water · Log · Tournaments · Gear · About
 }
 ```
 
-`lake` is `hoover`, `alum`, `buckeye`, `oshaughnessy`, `griggs`, `indian`, `delaware`, `deercreek`, `madison`, `knox`, `clearfork`, `seneca`, `dillon`, `logan`, `saltfork`, `burroak`, `dow`, `mosquito`, `berlin`, `westbranch`, `pymatuning`, `milton`, `leesville`, `grandlakestmarys`, `caesarcreek`, `eastfork`, `cjbrown`, `rockyfork`, `ladue`, `paintcreek`, `portagelakes`, `mogadore`, `loramie`, `nimisila`, `cowan`, `acton`, `tappan`, `piedmont`, `clendening`, `atwood`, `charlesmill`, `pleasanthill`, `beachcity`, `wingfoot`, `eastbranch`, `guilford`, `highlandtown`, `punderson` or `wellington` (missing means `hoover`). Each lake view lists only its own events.
+`lake` is `hoover`, `alum`, `buckeye`, `oshaughnessy`, `griggs`, `indian`, `delaware`, `deercreek`, `madison`, `knox`, `clearfork`, `seneca`, `dillon`, `logan`, `saltfork`, `burroak`, `dow`, `mosquito`, `berlin`, `westbranch`, `pymatuning`, `milton`, `leesville`, `grandlakestmarys`, `caesarcreek`, `eastfork`, `cjbrown`, `rockyfork`, `ladue`, `paintcreek`, `portagelakes`, `mogadore`, `loramie`, `nimisila`, `cowan`, `acton`, `tappan`, `piedmont`, `clendening`, `atwood`, `charlesmill`, `pleasanthill`, `beachcity`, `wingfoot`, `eastbranch`, `guilford`, `highlandtown`, `punderson`, `wellington`, `kiser`, `hargus`, `stonelick`, `grant`, `lakewhite`, `lakerupert`, `jackson`, `wolfrun`, `tycoon`, `lakehope`, `findlayreservoirs`, `bresler` or `fergusonmetzger` (missing means `hoover`). Each lake view lists only its own events.
 
 3. **Zero invented events.** Empty list is the honest default. This site is not a tournament director.
 
