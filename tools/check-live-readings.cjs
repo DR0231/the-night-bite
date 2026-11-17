@@ -149,7 +149,7 @@ async function scenario(browser, name, opts, fn) {
   });
 
   const d2 = now - 2 * 24 * H;
-  await scenario(browser, 'saved', { saved: { savedAt: d2, g: GAUGE, pool: { value: 890.3, dateTime: iso(d2) }, temp: { value: 13.9, dateTime: iso(d2) }, out: null } }, async page => {
+  await scenario(browser, 'saved', { snapshotAt: now - 20 * 24 * H, saved: { savedAt: d2, g: GAUGE, pool: { value: 890.3, dateTime: iso(d2) }, temp: { value: 13.9, dateTime: iso(d2) }, out: null } }, async page => {
     const r = await read(page);
     check('saved: shown as saved after the failed refresh', r.src === 'saved' && r.failed && /^890\.30 ft/.test(r.line), JSON.stringify([r.src, r.line]));
     check('saved: status says the refresh failed, with the reading time', /^Live refresh failed, check USGS\. Showing the reading from .+ ET\.$/.test(r.status), r.status);
