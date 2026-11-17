@@ -2834,11 +2834,16 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
   .lake-sheet-panel, .lp-row, .lp-name, .lp-star span, .lp-search, .lp-near, .lp-region summary, .lp-region summary::before { transition: none; }
   .lp-region::details-content { transition: none; }
 }
-/* ---- lake switch: a short cross-fade (js/lakes.js skips it for every other navigation) ---- */
+/* ---- page to page: a short cross-fade between the site's own pages (browsers without cross-document view
+   transitions just navigate). Off with reduced motion, and under Less motion (js/lakes.js skips it, and this rule
+   stops any fade that still starts). ---- */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
   ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 200ms; animation-timing-function: var(--ease); }
 }
+html[data-motion="reduce"]::view-transition-group(*),
+html[data-motion="reduce"]::view-transition-old(*),
+html[data-motion="reduce"]::view-transition-new(*) { animation: none !important; }
 
 /* ---- log: lake tag and filter ---- */
 .lake-tag {
@@ -2901,6 +2906,19 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
 .pool-chart img[data-for="highlandtown"] { width: 130px; height: 94px; }
 .pool-chart img[data-for="punderson"] { width: 54px; height: 86px; }
 .pool-chart img[data-for="wellington"] { width: 96px; height: 96px; }
+.pool-chart img[data-for="kiser"] { width: 122px; height: 96px; }
+.pool-chart img[data-for="hargus"] { width: 62px; height: 96px; }
+.pool-chart img[data-for="stonelick"] { width: 196px; height: 96px; }
+.pool-chart img[data-for="grant"] { width: 42px; height: 96px; }
+.pool-chart img[data-for="lakewhite"] { width: 118px; height: 96px; }
+.pool-chart img[data-for="lakerupert"] { width: 88px; height: 96px; }
+.pool-chart img[data-for="jackson"] { width: 50px; height: 96px; }
+.pool-chart img[data-for="wolfrun"] { width: 108px; height: 94px; }
+.pool-chart img[data-for="tycoon"] { width: 80px; height: 96px; }
+.pool-chart img[data-for="lakehope"] { width: 70px; height: 96px; }
+.pool-chart img[data-for="findlayreservoirs"] { width: 82px; height: 96px; }
+.pool-chart img[data-for="bresler"] { width: 88px; height: 96px; }
+.pool-chart img[data-for="fergusonmetzger"] { width: 124px; height: 96px; }
 @media (max-width: 359px) {
   .pool-chart img[data-for="alum"] { width: 134px; height: 37px; }
   .pool-chart img[data-for="buckeye"] { width: 92px; height: 48px; }
@@ -2950,6 +2968,19 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
   .pool-chart img[data-for="highlandtown"] { width: 65px; height: 47px; }
   .pool-chart img[data-for="punderson"] { width: 27px; height: 43px; }
   .pool-chart img[data-for="wellington"] { width: 48px; height: 48px; }
+  .pool-chart img[data-for="kiser"] { width: 61px; height: 48px; }
+  .pool-chart img[data-for="hargus"] { width: 31px; height: 48px; }
+  .pool-chart img[data-for="stonelick"] { width: 98px; height: 48px; }
+  .pool-chart img[data-for="grant"] { width: 21px; height: 48px; }
+  .pool-chart img[data-for="lakewhite"] { width: 59px; height: 48px; }
+  .pool-chart img[data-for="lakerupert"] { width: 44px; height: 48px; }
+  .pool-chart img[data-for="jackson"] { width: 25px; height: 48px; }
+  .pool-chart img[data-for="wolfrun"] { width: 54px; height: 47px; }
+  .pool-chart img[data-for="tycoon"] { width: 40px; height: 48px; }
+  .pool-chart img[data-for="lakehope"] { width: 35px; height: 48px; }
+  .pool-chart img[data-for="findlayreservoirs"] { width: 41px; height: 48px; }
+  .pool-chart img[data-for="bresler"] { width: 44px; height: 48px; }
+  .pool-chart img[data-for="fergusonmetzger"] { width: 62px; height: 48px; }
 }
 .pool-chart-key > span[data-for="buckeye"] { margin-right: 0.5rem; }
 @media (min-width: 560px) { .pool-chart-key > span[data-for="buckeye"] { margin-right: 0; } }
@@ -3329,6 +3360,25 @@ html:not([data-lake]) .sp-away .species-card[data-lakes][data-lakes]:not([hidden
 .dock-note { font-size: var(--text-sm); line-height: 1.55; color: var(--cream-dark); }
 .dock-history { margin: 0 0 var(--space-sm); }
 .dock-stale { color: var(--amber); font-weight: 600; }
+
+/* Summary pages (night.html, drawdown.html, rules.html, species/trout.html): one row per water, same look as Dock season */
+.summary-list { list-style: none; margin: 0 0 var(--space-md); padding: 0; display: grid; gap: 0.5rem; }
+.summary-list > li {
+  margin: 0; padding: 0.75rem 0.875rem;
+  background: rgb(var(--cream-rgb) / 0.03); border: 1px solid rgb(var(--cream-rgb) / 0.12); border-left: 3px solid var(--navy-light);
+}
+.summary-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.375rem 0.75rem; margin: 0 0 0.3rem; }
+.summary-head a { font-weight: 600; }
+.summary-chip {
+  display: inline-flex; align-items: center; min-height: 1.5rem; padding: 0.1rem 0.5rem;
+  font-family: var(--font-display); font-size: var(--text-label); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.2;
+  color: var(--amber); border: 1px solid currentColor;
+}
+.summary-body { margin: 0; font-size: var(--text-sm); line-height: 1.55; color: var(--cream-dark); }
+.summary-src { display: block; margin-top: 0.25rem; color: var(--muted); }
+.summary-table caption { caption-side: top; text-align: left; padding-bottom: 0.375rem; color: var(--muted); font-size: var(--text-sm); }
+.summary-table th[scope="row"] { white-space: nowrap; }
+.sp-trout-note { margin-top: var(--space-sm); }
 
 /* Ice season (ice.html) */
 .ice-species { display: grid; gap: var(--space-sm); margin-top: var(--space-sm); }

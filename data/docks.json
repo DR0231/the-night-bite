@@ -968,6 +968,16 @@
    "checked": "2026-11-03",
    "items": [
     {
+     "name": "Winter level",
+     "status": "ending",
+     "ends": "2026-10-31",
+     "label": "Drawdown Nov. 1",
+     "after_label": "Drawdown under way",
+     "note": "MWCD says the winter drawdown starts Nov. 1: 5 ft, from 963 ft to 958 ft over about 35 days. The USGS gauge near Bowerston shows the level.",
+     "after_note": "MWCD started the winter drawdown Nov. 1: 5 ft, from 963 ft to 958 ft over about 35 days, with a partial refill to 961 ft by Mar. 15, 2027. The USGS gauge near Bowerston shows the level.",
+     "source": "mwcd-drawdowns"
+    },
+    {
      "name": "Marina docks",
      "status": "unannounced",
      "label": "Not announced",
@@ -999,7 +1009,8 @@
     ]
    ],
    "sources": [
-    "mwcd-leesville"
+    "mwcd-leesville",
+    "mwcd-drawdowns"
    ]
   },
   "grandlakestmarys": {
@@ -1872,6 +1883,402 @@
    "sources": [
     "odnr-wellington"
    ]
+  },
+  "kiser": {
+   "name": "Kiser Lake",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launches",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists one boat ramp and four small launch areas. No motors.",
+     "source": "odnr-kiser"
+    },
+    {
+     "name": "Marina",
+     "status": "unannounced",
+     "label": "Seasonal",
+     "note": "ODNR lists the marina April through October; Google shows its listing as permanently closed, so call first.",
+     "source": "odnr-kiser"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "Kiser Lake State Park office",
+     "+19378432717",
+     "(937) 843-2717",
+     ""
+    ],
+    [
+     "Kiser Lake marina",
+     "+19373623565",
+     "(937) 362-3565",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-kiser"
+   ]
+  },
+  "hargus": {
+   "name": "Hargus Creek Lake",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists one launch ramp. Electric and paddle only.",
+     "source": "odnr-hargus"
+    },
+    {
+     "name": "Marina",
+     "status": "unannounced",
+     "label": "Seasonal",
+     "note": "Seasonal boat rentals; call (740) 474-9201 for hours (ODNR).",
+     "source": "odnr-hargus"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "A.W. Marion State Park office (Deer Creek)",
+     "+17408693124",
+     "(740) 869-3124",
+     ""
+    ],
+    [
+     "Marina",
+     "+17404749201",
+     "(740) 474-9201",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-hargus"
+   ]
+  },
+  "stonelick": {
+   "name": "Stonelick Lake",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists one ramp on SR 727 and hand launches in the campground and behind the Sycamore Day Use Area.",
+     "source": "odnr-stonelick"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "Stonelick State Park office",
+     "+15137342730",
+     "(513) 734-2730",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-stonelick"
+   ]
+  },
+  "grant": {
+   "name": "Grant Lake",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR&rsquo;s boating layer lists the Grant Lake access off SR 68. 10 hp limit.",
+     "source": "odnr-grant"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "ODNR Wildlife District Five",
+     "+19373729261",
+     "(937) 372-9261",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-grant"
+   ]
+  },
+  "lakewhite": {
+   "name": "Lake White",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists one launch ramp at SR 551 and SR 104; a private marina offers more access.",
+     "source": "odnr-lakewhite"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "Lake White State Park office (Pike Lake)",
+     "+17404932212",
+     "(740) 493-2212",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-lakewhite"
+   ]
+  },
+  "lakerupert": {
+   "name": "Lake Rupert",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists the Wellston Wildlife Area ramp on SR 683. No wake.",
+     "source": "odnr-lakerupert"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "ODNR Wildlife District Four",
+     "+17405899930",
+     "(740) 589-9930",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-lakerupert"
+   ]
+  },
+  "jackson": {
+   "name": "Jackson Lake",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists an ADA friendly ramp on McCorkle Rd with a life jacket loaner board.",
+     "source": "odnr-jackson"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "Jackson Lake State Park office (Shawnee)",
+     "+17408586652",
+     "(740) 858-6652",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-jackson"
+   ]
+  },
+  "wolfrun": {
+   "name": "Wolf Run Lake",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists a launching ramp and tie-ups on the south side off SR 215.",
+     "source": "odnr-wolfrun"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "Wolf Run State Park office",
+     "+17407325035",
+     "(740) 732-5035",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-wolfrun"
+   ]
+  },
+  "tycoon": {
+   "name": "Tycoon Lake",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists a concrete ramp off Tycoon Rd with an accessible pier next to it. Idle speed.",
+     "source": "odnr-tycoon"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "ODNR Wildlife District Four",
+     "+17405899930",
+     "(740) 589-9930",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-tycoon"
+   ]
+  },
+  "lakehope": {
+   "name": "Lake Hope",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists one ramp on SR 278 by the dam.",
+     "source": "odnr-lakehope"
+    },
+    {
+     "name": "Boathouse",
+     "status": "unannounced",
+     "label": "Seasonal",
+     "note": "Rentals in spring, summer and fall; call (740) 596-4949 (ODNR).",
+     "source": "odnr-lakehope"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "Lake Hope State Park office",
+     "+17405964938",
+     "(740) 596-4938",
+     ""
+    ],
+    [
+     "Boathouse",
+     "+17405964949",
+     "(740) 596-4949",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-lakehope"
+   ]
+  },
+  "findlayreservoirs": {
+   "name": "Findlay Reservoirs",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Reservoir 1 ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "City operated ramp with a floating fishing pier. Electric only.",
+     "source": "odnr-findlayreservoirs"
+    },
+    {
+     "name": "Reservoir 2 ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "City operated ramp with restrooms and a floating fishing pier. 9.9 hp max.",
+     "source": "odnr-findlayreservoirs"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "ODNR Wildlife District Two",
+     "+14194245000",
+     "(419) 424-5000",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-findlayreservoirs"
+   ]
+  },
+  "bresler": {
+   "name": "Bresler Reservoir",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch ramp",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists the ramp and main lot on the east side off Kemp Rd. Electric only.",
+     "source": "odnr-bresler"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "ODNR Wildlife District Two",
+     "+14194245000",
+     "(419) 424-5000",
+     ""
+    ],
+    [
+     "City of Lima parks",
+     "+14192215195",
+     "(419) 221-5195",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-bresler"
+   ]
+  },
+  "fergusonmetzger": {
+   "name": "Ferguson and Metzger Reservoirs",
+   "checked": "2026-11-09",
+   "items": [
+    {
+     "name": "Launch ramps",
+     "status": "unannounced",
+     "label": "No closure posted",
+     "note": "ODNR lists primitive ramps on both reservoirs near the Reservoir Rd entrance. No gas motors.",
+     "source": "odnr-fergusonmetzger"
+    }
+   ],
+   "history": "",
+   "history_url": "",
+   "calls": [
+    [
+     "ODNR Wildlife District Two",
+     "+14194245000",
+     "(419) 424-5000",
+     ""
+    ],
+    [
+     "City of Lima parks",
+     "+14192215195",
+     "(419) 221-5195",
+     ""
+    ]
+   ],
+   "sources": [
+    "odnr-fergusonmetzger"
+   ]
   }
  },
  "watch": [
@@ -2275,6 +2682,7 @@
    "label": "MWCD, Winter Drawdown Schedule (Oct. 2026)",
    "url": "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/",
    "lakes": [
+    "leesville",
     "seneca",
     "tappan",
     "piedmont",
@@ -3002,6 +3410,253 @@
    "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wellington-upground-reservoir-fishing-area",
    "lakes": [
     "wellington"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-kiser",
+   "label": "ODNR, Kiser Lake State Park",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-state-park",
+   "lakes": [
+    "kiser"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-hargus",
+   "label": "ODNR, A.W. Marion State Park",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/a-w-marion-state-park",
+   "lakes": [
+    "hargus"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-stonelick",
+   "label": "ODNR, Stonelick State Park",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-state-park",
+   "lakes": [
+    "stonelick"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-grant",
+   "label": "ODNR, Grant Lake Wildlife Area",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grant-lake-wildlife-area",
+   "lakes": [
+    "grant"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-lakewhite",
+   "label": "ODNR, Lake White State Park",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-state-park",
+   "lakes": [
+    "lakewhite"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-lakerupert",
+   "label": "ODNR, Lake Rupert Fishing Area",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-rupert-fishing-area",
+   "lakes": [
+    "lakerupert"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-jackson",
+   "label": "ODNR, Jackson Lake State Park",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-state-park",
+   "lakes": [
+    "jackson"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-wolfrun",
+   "label": "ODNR, Wolf Run State Park",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-state-park",
+   "lakes": [
+    "wolfrun"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-tycoon",
+   "label": "ODNR, Tycoon Lake Fishing Area",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/tycoon-lake-fishing-area",
+   "lakes": [
+    "tycoon"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-lakehope",
+   "label": "ODNR, Lake Hope State Park",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-state-park",
+   "lakes": [
+    "lakehope"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-findlayreservoirs",
+   "label": "ODNR, Findlay Reservoirs #2 Fishing Area",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/findlay-reservoirs-2-fishing-area",
+   "lakes": [
+    "findlayreservoirs"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-bresler",
+   "label": "ODNR, Bresler Reservoir Fishing Area",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/bresler-reservoir-fishing-area",
+   "lakes": [
+    "bresler"
+   ],
+   "keywords": [
+    "dock",
+    "ramp",
+    "launch",
+    "drawdown",
+    "closed",
+    "closure",
+    "remov",
+    "alert",
+    "marina"
+   ]
+  },
+  {
+   "id": "odnr-fergusonmetzger",
+   "label": "ODNR, Ferguson & Metzger Reservoirs Fishing Area",
+   "url": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ferguson-metzger-reservoirs-fishing-area",
+   "lakes": [
+    "fergusonmetzger"
    ],
    "keywords": [
     "dock",

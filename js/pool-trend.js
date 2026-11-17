@@ -70,7 +70,7 @@
       function y(v) { return PAD + (hi - v) / (hi - lo) * (H - 2 * PAD); }
 
       var svg = box.querySelector("svg");
-      while (svg.firstChild) svg.removeChild(svg.firstChild);   // auto refresh redraws
+      svg.replaceChildren();   // auto refresh redraws
       svg.setAttribute("viewBox", "0 0 " + W + " " + H);
       // midnight ET ticks
       var A = window.NightBiteAstro;

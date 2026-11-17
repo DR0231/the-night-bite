@@ -54,11 +54,18 @@
   function etShort(iso) {
     var d = new Date(iso);
     if (!iso || isNaN(d.valueOf())) return "";
-    // a weekday alone reads as this week, so a reading 6 or more days old carries its date
-    var o = Date.now() - d.valueOf() >= 6 * 864e5 ? { month: "short", day: "numeric" } : { weekday: "short" };
-    o.timeZone = "America/New_York"; o.hour = "numeric"; o.minute = "2-digit";
-    try { return new Intl.DateTimeFormat("en-US", o).format(d); }
-    catch (e) { return ""; }
+    // the same words as the pool card (js/refresh.js): a reading from today is just its time, any other day carries
+    // its weekday and date ("Mon Nov. 9, 8:45 AM"), since a weekday alone reads as this week
+    var OFF = window.NightBiteOffline;
+    if (OFF && OFF.when) { try { return OFF.when(d).replace(/ ET$/, ""); } catch (e) {} }
+    var f = function (o) { o.timeZone = "America/New_York"; return new Intl.DateTimeFormat("en-US", o).format(d); };
+    var day = { year: "numeric", month: "numeric", day: "numeric" };
+    try {
+      var t = f({ hour: "numeric", minute: "2-digit" });
+      if (f(day) === new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "numeric", day: "numeric" }).format(new Date())) return t;
+      var MON = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+      return f({ weekday: "short" }) + " " + MON[+f({ month: "numeric" }) - 1] + " " + f({ day: "numeric" }) + ", " + t;
+    } catch (e) { return ""; }
   }
   function monthEt() {
     try { return parseInt(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", month: "numeric" }).format(new Date()), 10) - 1; }

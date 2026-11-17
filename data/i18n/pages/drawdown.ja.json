@@ -1,0 +1,32 @@
+{
+ "_meta": {
+  "lang": "ja",
+  "page": "drawdown",
+  "review": "draft"
+ },
+ "strings": {
+  "drawdown.0a088b31": "落とす",
+  "drawdown.0d803833": "MWCD冬季ドローダウン、 2026 ～ 27。 MWCDに記載されている海抜フィート単位のレベル。",
+  "drawdown.1641827a": "冬季水位",
+  "drawdown.276e1965": "湖が低いということは、浅いランプの端、新しい切り株、岸辺の干潟を意味します。夜間はゆっくりと走行し、出発前にランプを確認してください。",
+  "drawdown.2a13b042": "。各湖のページには独自のゲージが表示されるので、そこで今日のレベルを確認してください。",
+  "drawdown.3106e3eb": "対象となる水域ごとにそれを引用し、昨年の冬の日付がまだ表示されているときを言います。",
+  "drawdown.338becca": "ODNR の冬季水位低下",
+  "drawdown.3f077a13": "MWCD ではありません",
+  "drawdown.58c9f804": "ODNR、州立公園の湖に関する独自の冬季ドローダウン リストを保持しています。ドックシーズンの注意事項",
+  "drawdown.65c88290": "州立公園の湖",
+  "drawdown.77a3c4b5": "The Night Bite は非公式の個人サイトです：",
+  "drawdown.b1e37ce8": "MWCD湖、 2026, 27",
+  "drawdown.b65ca4c6": "補充時期",
+  "drawdown.c95b172d": "。その湖のページにはCorps of Engineersゲージが表示されます。",
+  "drawdown.d798782a": "MWCDによると、ドローダウンは11月初旬に始まり、2月までにレベルは通常に戻るはずで、2月までに部分的な補充が提案されている",
+  "drawdown.dfdc65ff": "Corps of Engineersはありません。日付とレベルはMWCDであり、ソースとともにコピーされます。 MWCDと軍団はそれらを変えることができます。",
+  "drawdown.e0223fef": "。確認日",
+  "drawdown.e334394f": "MWCD、冬のドローダウンスケジュール (",
+  "drawdown.e681adbc": "水のページ",
+  "drawdown.e9c2418b": "毎年冬になると、 Corps of Engineersマスキンガム湖の水位を下げて雪解け水と春の雨が降る余地を作ります。これは、このサイトの水域に関するMWCDのスケジュールです。これにより、後退する前にランプの端がどのくらい下がるかを知ることができます。",
+  "drawdown.f6bb0f46": "日数",
+  "drawdown.f8051bbd": "MWCDのスケジュールには載っていない:",
+  "drawdown.fc612a2f": "始まります"
+ }
+}

@@ -737,6 +737,152 @@
     "lng": -82.023919,
     "q": "Chatham General Store 6403 Avon Lake Rd, Medina, OH"
    }
+  ],
+  "kiser": [
+   {
+    "name": "Tom's Tackle",
+    "address": "2200 US-68, Urbana, OH",
+    "min": 30,
+    "lat": 40.1148551,
+    "lng": -83.7384616,
+    "q": "Tom's Tackle 2200 US-68, Urbana, OH"
+   }
+  ],
+  "hargus": [
+   {
+    "name": "J & R Live Bait",
+    "address": "1815 Cedar Hill Rd, Lancaster, OH",
+    "min": 35,
+    "lat": 39.7142409,
+    "lng": -82.6303382,
+    "q": "J & R Live Bait 1815 Cedar Hill Rd, Lancaster, OH"
+   }
+  ],
+  "stonelick": [
+   {
+    "name": "Boars Head Bait & Carry Out",
+    "address": "2818 Old State Rte 32, Batavia, OH",
+    "min": 30,
+    "lat": 39.0586371,
+    "lng": -84.1018352,
+    "q": "Boars Head Bait & Carry Out 2818 Old State Rte 32, Batavia, OH"
+   }
+  ],
+  "grant": [
+   {
+    "name": "68 Bait & Tackle",
+    "address": "12540 US-68, Mt Orab, OH",
+    "min": 5,
+    "lat": 38.9823636,
+    "lng": -83.9164133,
+    "q": "68 Bait & Tackle 12540 US-68, Mt Orab, OH"
+   }
+  ],
+  "lakewhite": [
+   {
+    "name": "Bill's Bait House",
+    "address": "4308 OH-220, Waverly, OH",
+    "min": 5,
+    "lat": 39.1090179,
+    "lng": -83.0394793,
+    "q": "Bill's Bait House 4308 OH-220, Waverly, OH"
+   },
+   {
+    "name": "JR's Bait & Tackle",
+    "address": "6687 OH-104, Jasper, OH",
+    "min": 5,
+    "lat": 39.0499292,
+    "lng": -83.0513157,
+    "q": "JR's Bait & Tackle 6687 OH-104, Jasper, OH"
+   }
+  ],
+  "lakerupert": [
+   {
+    "name": "Mike's Bait and Tackle",
+    "address": "1272 Pennsylvania Ave, Wellston, OH",
+    "min": 10,
+    "lat": 39.1115761,
+    "lng": -82.5343447,
+    "q": "Mike's Bait and Tackle 1272 Pennsylvania Ave, Wellston, OH"
+   }
+  ],
+  "jackson": [
+   {
+    "name": "Mike's Bait and Tackle",
+    "address": "1272 Pennsylvania Ave, Wellston, OH",
+    "min": 30,
+    "lat": 39.1115761,
+    "lng": -82.5343447,
+    "q": "Mike's Bait and Tackle 1272 Pennsylvania Ave, Wellston, OH"
+   }
+  ],
+  "wolfrun": [
+   {
+    "name": "T&L Sales LLC",
+    "address": "14171 Clay Pike Rd, Pleasant City, OH",
+    "min": 20,
+    "lat": 39.9300719,
+    "lng": -81.4806132,
+    "q": "T&L Sales LLC 14171 Clay Pike Rd, Pleasant City, OH"
+   },
+   {
+    "name": "Seneca Lake Marina",
+    "address": "16592 Lashley Rd, Senecaville, OH",
+    "min": 25,
+    "lat": 39.930895,
+    "lng": -81.428205,
+    "q": "Seneca Lake Marina 16592 Lashley Rd, Senecaville, OH"
+   }
+  ],
+  "tycoon": [
+   {
+    "name": "Outdoorsmen's Cave",
+    "address": "14728 OH-554, Bidwell, OH",
+    "min": 15,
+    "lat": 38.9216091,
+    "lng": -82.2932279,
+    "q": "Outdoorsmen's Cave 14728 OH-554, Bidwell, OH"
+   }
+  ],
+  "lakehope": [
+   {
+    "name": "Downs Bait & Guns",
+    "address": "30586 Lake Logan Rd, Logan, OH",
+    "min": 40,
+    "lat": 39.5413961,
+    "lng": -82.4506962,
+    "q": "Downs Bait & Guns 30586 Lake Logan Rd, Logan, OH"
+   }
+  ],
+  "findlayreservoirs": [
+   {
+    "name": "Findlay Bait and Tackle",
+    "address": "11729 Co Rd 9, Findlay, OH",
+    "min": 20,
+    "lat": 40.996994,
+    "lng": -83.6979122,
+    "q": "Findlay Bait and Tackle 11729 Co Rd 9, Findlay, OH"
+   }
+  ],
+  "bresler": [
+   {
+    "name": "Milans Bait & Archery",
+    "address": "2375 Reservoir Rd, Lima, OH",
+    "min": 20,
+    "lat": 40.7457505,
+    "lng": -84.0615668,
+    "q": "Milans Bait & Archery 2375 Reservoir Rd, Lima, OH"
+   }
+  ],
+  "fergusonmetzger": [
+   {
+    "name": "Milans Bait & Archery",
+    "address": "2375 Reservoir Rd, Lima, OH",
+    "min": 5,
+    "lat": 40.7457505,
+    "lng": -84.0615668,
+    "q": "Milans Bait & Archery 2375 Reservoir Rd, Lima, OH"
+   }
   ]
  }
 }

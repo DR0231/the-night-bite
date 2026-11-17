@@ -44,9 +44,9 @@ python3 tools/check-all.py --target local --all-lakes --group 3   # one group on
 * Start each run in the background and wait on it no more than about 5 minutes at a time. One lake group takes about 4 to 5 minutes.
 * `node tools/registry.cjs --changed [REF]` prints the changed lakes and files on their own.
 
-* Checks: check-meta, check-radius, check-docks (report only), check-hours, check-ramp-names, check-lake-isolation, check-glance-bake, check-precache-refs, check-glance, check-glance-fallback, check-live-readings, check-bait, check-waters (the lake scope above), check-picker-flow, check-a11y-settings, check-log-io, check-trip-queue, check-night-rules, check-i18n, check-manifest, check-i18n-browser and sweep.
+* Checks: check-meta, check-radius, check-docks (report only), check-hours, check-ramp-names, check-lake-isolation, check-glance-bake, check-precache-refs, check-glance, check-glance-fallback, check-live-readings, check-sw-deploys, check-bait, check-waters (the lake scope above), check-picker-flow, check-a11y-settings, check-log-io, check-trip-queue, check-night-rules, check-i18n, check-manifest, check-i18n-browser and sweep.
 * `--skip` leaves checks out.
-* A scoped run takes a few minutes. A full `--all-lakes` run takes over 30 minutes across 49 waters, which is why it is split into groups.
+* A scoped run takes a few minutes. A full `--all-lakes` run takes over 30 minutes across 62 waters, which is why it is split into groups.
 * Known failures go in `tools/known-failures.json` as `{check, match, target?, why}`. Add an entry only for a failure you have looked at and accepted. Then remove it once the failure is fixed.
 
 ### sweep.cjs
@@ -71,7 +71,7 @@ python3 tools/biting-split.py            # write js/biting/<id>.js from the comb
 python3 tools/biting-split.py --check    # change nothing; exit 1 if any file is stale, missing, extra or differs in value
 ```
 
-* Edit `js/biting-data.js` (Hoover) and `js/biting-data-lakes.js` (every other lake), never `js/biting/`.
+* Edit `.github/build-inputs/biting-data.js` (Hoover) and `.github/build-inputs/biting-data-lakes.js` (every other lake), never `js/biting/`. They live under `.github/` because GitHub Pages never publishes that folder, so the combined files are build inputs, not site files.
 * Each lake gets one compact file with only its own set, under the same variable name. `js/lakes.js` loads it on
   demand (`NightBiteLakes.biting(id)`); pages that show biting data mark their `js/lakes.js` tag `data-biting` so the
   load starts in `<head>`.
@@ -118,6 +118,7 @@ python3 tools/promote.py --live --confirm-push --whats-new entry.json --commit -
 python3 tools/build-lake-pages.py   # picker tile charts (build-tile-charts.py, below), lake homes from tools/lake-home.html
                                     # + registry (title/description from data/quick-facts.json), the root picker tiles
 python3 tools/build-docks.py        # water.html#docks from data/docks.json; a date already past is baked as its after text
+python3 tools/build-summaries.py    # drawdown.html (data/drawdowns.json, MWCD's table) and night.html (Quick facts night lines), between nb:summary markers; --check in GitHub static checks
 python3 tools/build-meta.py         # share tags; og-<id>.png when it exists, else og-card.png
 python3 tools/stamp-version.py      # ?v=VERSION on CSS/JS links, then sw-precache.py
 python3 tools/build-updates.py      # What's new page from data/updates.json
@@ -230,6 +231,20 @@ replaces a newer one; the share image prints the reading's own time; nothing fet
   loads a script, stylesheet or first-paint image that sw.js PRECACHE doesn't list (static; in the gate and check-all).
 * `check-lake-isolation.py` also fails when a gauged lake has no `pool.snapshot` (water.html would keep Hoover's line).
 
+## Deploys never mix (`check-sw-deploys.cjs`, Nov. 16, 2026)
+
+The rule: a page never shows one deploy's HTML with another deploy's styles or scripts, on a slow connection, offline
+or across an update, and the kill switch leaves no `nb-` cache behind (SERVICE-WORKER.md, "Deploys never mix" and
+"Kill switch").
+
+* `node tools/check-sw-deploys.cjs [OUT] [--legacy DIR] [--code DIR] [--only a,b] [--expect-fail]` copies this
+  checkout into fake deploys (a marker in a page, in styles.css and in nav.js, its own VERSION, stamp-version.py),
+  serves them on its own Pages-like local server and drives Chrome through them: a 6 second styles.css or page after a
+  deploy, a saved page offline or slow after a deploy, four deploys in a row, a normal deploy with no reload, and the
+  kill switch alone or with tools/sw-kill-switch-page.js. `--legacy <older checkout>` adds the cases where the v134
+  worker hands over to this one. `--code <v134 checkout> --expect-fail` shows the old bugs (N1 and N2 fail there).
+  Each case gets its own browser. About 2 minutes. In the GitHub gate and check-all.
+
 ## Night-rules chip (S5)
 * `data/quick-facts.json` `hours` per lake feeds the chip under each lake hero (built by `build-lake-pages.py`, countdown in `js/night-rules.js`, Eastern time). Only from an official city, ODNR, Army Corps or MWCD page, linked as `source`. `fishing_after_hours` is `true` only when the source says so, otherwise `null`. No official hours: `{"none": true, "note": "..."}`; no chip, and the Night rules row says so.
 * `check-hours.py` (static, all lakes): every entry parses, has an official https source, and each lake home's chip matches it. `check-night-rules.cjs [BASE] [OUT]` (`NB_LAKES=a,b`): chip above the fold at 390, source link, countdown text, red light and high contrast, plus a mocked NWS storm banner above the fold. `new-lake.py` takes an optional `hours` object (see `new-lake.example.json`).
@@ -257,5 +272,5 @@ replaces a newer one; the share image prints the reading's own time; nothing fet
 - Only UI chrome goes in the files: nav, Display panel, glance labels, night-rules chip and weather alert labels, Log form labels, footer. Never lake names, ramp names, species, levels, rules or regulations. `{name}` placeholders (for example `{time} left`) must survive.
 - How it applies: `js/a11y-boot.js` sets `<html lang>` from `nb-lang` before paint; `js/a11y.js` loads `js/i18n.js` only when the language isn't English. It swaps text whose English matches a string, inside the chrome scopes listed at the top of `js/i18n.js`, and shows a "Draft translation" marker at the top of `<main>`. A missing key keeps English. Static HTML stays English.
 - `python3 tools/check-i18n.py` (static, in check-all): missing keys per language (listed), extra keys, placeholder mismatches, protected words (agencies, weather.gov) dropped, draft flag, files vs `LANGS`, and no lake or ramp names in en.json.
-- `data/i18n/tm/<lang>.json` is the translation memory (about 14 MB for all languages). Only `tools/i18n-extract.py` reads it, to write the small per page files in `data/i18n/pages/`; no browser code fetches it and it is not precached. It is deployed with the rest of the repo today. Keep it in the repo; whether to keep it out of the deploy is part of the open "dev files out of the deploy" item.
+- `.github/build-inputs/i18n-tm/<lang>.json` is the translation memory (about 14 MB for all languages). Only `tools/i18n-extract.py` (and `i18n-numcheck.py`) read it, to write the small per page files in `data/i18n/pages/`; no browser code fetches it and it is not precached. It sits under `.github/` because GitHub Pages never publishes that folder, so it stays in the repo but out of the deployed site (moved from `data/i18n/tm/` on Nov 16, 2026). `promote.py` carries `.github/build-inputs/` to live so live's builds can read it. `i18n-extract.py` stops if the folder is missing rather than write empty page files.
 - `node tools/check-i18n.cjs <base> [outDir]` (check-all name `check-i18n-browser`, about 20 s, phone width): Spanish applies from the footer Language button, persists over a reload, keeps lake name, rule chip and numbers, Log labels swap while species and ramps stay English, a missing key falls back to English, the marker reads in red light and high contrast, English restores everything.

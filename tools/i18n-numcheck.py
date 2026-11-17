@@ -35,7 +35,7 @@ OK = {"ja": {"7e24cd7c"}, "zh": {"7e24cd7c", "2f5d44c3"}}
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--lang"); ap.add_argument("--kind", default="num,month,to,gloss,bass,ratio,frag"); ap.add_argument("--tsv", action="store_true")
     a = ap.parse_args(); kinds = set(a.kind.split(",")); en = en_map(); bad = 0
-    for f in sorted(glob.glob(str(R / "tm/*.json"))):
+    for f in sorted(glob.glob(str(R.parent.parent / ".github" / "build-inputs" / "i18n-tm" / "*.json"))):
         l = pathlib.Path(f).stem
         if a.lang and l != a.lang: continue
         S = json.load(open(f))["strings"]; ratios = {}

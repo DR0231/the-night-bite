@@ -509,6 +509,8 @@ for sp_page in sorted((root / "species").glob("*.html")):
     if sp_page.stem == "index":
         continue
     s0 = sp_page.read_text()
+    if "<!-- nb:stocked-only -->" in s0:
+        continue   # species/trout.html: stocked fish on no water's species list, so no "Waters with this fish" block
     sp_name = SPECIES_NAMES.get(sp_page.stem, sp_page.stem)
     blk = species_lakes(sp_page.stem, sp_name)
     if "<!-- nb:species-lakes" in s0:

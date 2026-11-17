@@ -141,7 +141,12 @@ async function read(page) {
     const page = await ctx.newPage(); const perr = []; page.on('pageerror', e => perr.push(e.message));
     await page.goto(home('hoover') + '?t=' + Date.now()); await sleep(3500);
     const at = await page.evaluate(() => { const t = document.querySelector('#correction-checked time'); return t ? t.getAttribute('datetime') : ''; });
-    const want = at ? new Intl.DateTimeFormat('en-US', Object.assign({ timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit' }, Date.now() - Date.parse(at) >= 6 * 864e5 ? { month: 'short', day: 'numeric' } : { weekday: 'short' })).format(new Date(at)) + ' ET' : '--';
+    // F9: today just the time, any other day its weekday and date ("Mon Nov. 9, 8:45 AM", js/refresh.js NightBiteOffline.when)
+    const MON = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
+    const ef = (ms, o) => new Intl.DateTimeFormat('en-US', Object.assign({ timeZone: 'America/New_York' }, o)).format(new Date(ms));
+    const dayOf = ms => ef(ms, { year: 'numeric', month: 'numeric', day: 'numeric' });
+    const whenOf = ms => { const t = ef(ms, { hour: 'numeric', minute: '2-digit' }); return dayOf(ms) === dayOf(Date.now()) ? t : ef(ms, { weekday: 'short' }) + ' ' + MON[+ef(ms, { month: 'numeric' }) - 1] + ' ' + ef(ms, { day: 'numeric' }) + ', ' + t; };
+    const want = at ? whenOf(Date.parse(at)) + ' ET' : '--';
     await page.click('[data-act="share"]');
     const alt = await page.waitForFunction(() => { const i = document.getElementById('tt-share-img'); return i && i.getAttribute('src') && i.getAttribute('alt'); }, null, { timeout: 15000 })
       .then(h => h.jsonValue()).catch(() => '');

@@ -1159,6 +1159,279 @@
         ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wellingtonupgroundreservoir.pdf"],
         ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"]
       ]
+    },
+    "kiser": {
+      "checked": "2026-11-16",
+      "title": "Kiser Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Kiser Lake fishing: no motors, paddle and sail only, four launch areas and a ramp, hybrid striped bass and perch stocked, tonight's bite. Unofficial.",
+      "motors": "No motors: sailing and paddling only (ODNR).",
+      "ramps": "One boat ramp and four small launch areas; seasonal marina with boat, kayak and canoe rentals, (937) 362-3565 (ODNR).",
+      "pool": "Summer pool is 1,067 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {
+        "authority": "odnr",
+        "open": "06:00",
+        "close": "23:00",
+        "fishing_after_hours": true,
+        "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
+        "source": ["ODNR, Kiser Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-state-park"],
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Kiser Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-state-park"],
+        ["ODNR, Kiser Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/kiserlake2.pdf"]
+      ]
+    },
+    "hargus": {
+      "checked": "2026-11-16",
+      "title": "Hargus Creek Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Hargus Creek Lake fishing: electric and hand powered only, one ramp in A.W. Marion State Park, bass, bluegill, crappie and stocked cats, tonight's bite. Unofficial.",
+      "motors": "Electric motors and hand powered boats only (ODNR).",
+      "ramps": "One launch ramp; seasonal boat rentals at the marina, (740) 474-9201 (ODNR).",
+      "pool": "Summer pool is 821.5 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {
+        "authority": "odnr",
+        "open": "06:00",
+        "close": "23:00",
+        "fishing_after_hours": true,
+        "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
+        "source": ["ODNR, A.W. Marion State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/a-w-marion-state-park"],
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, A.W. Marion State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/a-w-marion-state-park"],
+        ["ODNR, Hargus Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hargus-creek-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/harguscreeklake2.pdf"]
+      ]
+    },
+    "stonelick": {
+      "checked": "2026-11-16",
+      "title": "Stonelick Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Stonelick Lake fishing: electric and hand powered only, ramp on SR 727, accessible piers off the dam, bass, crappie, bluegill and cats, tonight's bite. Unofficial.",
+      "motors": "Electric motors and hand powered boats only (ODNR).",
+      "ramps": "One launch ramp on SR 727 on the northwest side; hand launches in the campground and behind the Sycamore Day Use Area (ODNR).",
+      "pool": "Summer pool is 874.2 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {
+        "authority": "odnr",
+        "open": "06:00",
+        "close": "23:00",
+        "fishing_after_hours": true,
+        "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
+        "source": ["ODNR, Stonelick State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-state-park"],
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Stonelick State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-state-park"],
+        ["ODNR, Stonelick Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/stonelicklake2.pdf"]
+      ]
+    },
+    "grant": {
+      "checked": "2026-11-16",
+      "title": "Grant Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Grant Lake fishing: 10 hp limit, launch off SR 68 near Mt. Orab, accessible pier off Grant Rd, bass, crappie and stocked cats, tonight's bite. Unofficial.",
+      "motors": "10 hp limit (OAC 1501:47-5-03).",
+      "ramps": "Wildlife area launch off SR 68 (ODNR boating facilities layer); accessible fishing pier on the west side off Grant Rd (ODNR).",
+      "night": "ODNR's Grant Lake Wildlife Area page lists no hours, so there's no official night rule to show; follow posted signs.",
+      "hours": {
+        "none": true,
+        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Grant Lake Wildlife Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grant-lake-wildlife-area"],
+        ["ODNR, Accessible Fishing Areas", "https://ohiodnr.gov/go-and-do/outdoor/accessible-activities-facilities/accessible-fishing"],
+        ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"]
+      ]
+    },
+    "lakewhite": {
+      "checked": "2026-11-16",
+      "title": "Lake White Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Lake White fishing: unlimited horsepower, launch at SR 551 and SR 104, saugeye stocked every year, spotted bass record water, tonight's bite. Unofficial.",
+      "motors": "Unlimited horsepower (ODNR).",
+      "ramps": "One state park launch ramp at SR 551 and SR 104; a private marina offers more access (ODNR).",
+      "pool": "Summer pool is 573.75 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {
+        "authority": "odnr",
+        "open": "sunrise",
+        "close": "sunset",
+        "fishing_after_hours": true,
+        "chip": "Park open sunrise to sunset, fishing allowed after (ODNR)",
+        "source": ["ODNR, Lake White State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-state-park"],
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Lake White State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-state-park"],
+        ["ODNR, Lake White Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakewhite2.pdf"]
+      ]
+    },
+    "lakerupert": {
+      "checked": "2026-11-16",
+      "title": "Lake Rupert Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Lake Rupert fishing: any horsepower at no wake, Wellston Wildlife Area ramp on SR 683, saugeye stocked every year, 24 ft deep, tonight's bite. Unofficial.",
+      "motors": "No horsepower limit, but motorboats must run at no wake speed (ODNR); over 10 hp only at idle speed (OAC 1501:47-5-03).",
+      "ramps": "Wildlife area ramp on SR 683, half a mile north of SR 93 (ODNR boating facilities layer).",
+      "pool": "Summer pool is 708 ft, the level the ODNR fishing map is drawn at.",
+      "night": "ODNR's Lake Rupert Fishing Area and Wellston Wildlife Area pages list no hours, so there's no official night rule to show; follow posted signs.",
+      "hours": {
+        "none": true,
+        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Lake Rupert Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-rupert-fishing-area"],
+        ["ODNR, Wellston Wildlife Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wellston-wildlife-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakerupert2.pdf"],
+        ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"]
+      ]
+    },
+    "jackson": {
+      "checked": "2026-11-16",
+      "title": "Jackson Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Jackson Lake fishing: 10 hp, bigger motors at no wake, ADA ramp on McCorkle Rd, 12 ft deep at most, bass, crappie, stocked cats, tonight's bite. Unofficial.",
+      "motors": "10 hp limit for outboards; bigger motors only without a wake (ODNR fishing area page). The state park page says any horsepower at idle speed.",
+      "ramps": "ADA friendly launch ramp on McCorkle Rd just south of SR 279, with a life jacket loaner board (ODNR).",
+      "pool": "Summer pool is 700 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {
+        "authority": "odnr",
+        "open": "06:00",
+        "close": "23:00",
+        "fishing_after_hours": true,
+        "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
+        "source": ["ODNR, Jackson Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-state-park"],
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Jackson Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-state-park"],
+        ["ODNR, Jackson Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/jacksonlake2.pdf"]
+      ]
+    },
+    "wolfrun": {
+      "checked": "2026-11-16",
+      "title": "Wolf Run Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Wolf Run Lake fishing: 10 hp limit, ramp and tie-ups off SR 215, saugeye and perch stocked, bass, bluegill and crappie, tonight's bite. Unofficial.",
+      "motors": "Motors up to 10 hp (ODNR).",
+      "ramps": "Launch ramp and tie-ups on the south side, off SR 215, near the beach (ODNR).",
+      "pool": "Summer pool is 798 ft, the level the ODNR fishing map is drawn at.",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {
+        "authority": "odnr",
+        "open": "06:00",
+        "close": "23:00",
+        "fishing_after_hours": true,
+        "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
+        "source": ["ODNR, Wolf Run State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-state-park"],
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Wolf Run State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-state-park"],
+        ["ODNR, Wolf Run Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-lake-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wolfrunlake2.pdf"]
+      ]
+    },
+    "tycoon": {
+      "checked": "2026-11-16",
+      "title": "Tycoon Lake Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Tycoon Lake fishing: any motor at idle speed, concrete ramp and accessible pier off Tycoon Rd, bass, crappie and stocked cats, tonight's bite. Unofficial.",
+      "motors": "Any motor, idle speed only, no wake (ODNR; OAC 1501:47-5-03).",
+      "ramps": "Concrete ramp off Tycoon Rd with an accessible fishing pier next to it (ODNR).",
+      "pool": "Summer pool is 616.4 ft, the level the ODNR fishing map is drawn at.",
+      "night": "ODNR's Tycoon Lake Fishing Area and Wildlife Area pages list no hours, so there's no official night rule to show; follow posted signs.",
+      "hours": {
+        "none": true,
+        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Tycoon Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/tycoon-lake-fishing-area"],
+        ["ODNR, Tycoon Lake Wildlife Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/tycoon-lake-wildlife-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/tycoonlake2.pdf"],
+        ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"]
+      ]
+    },
+    "lakehope": {
+      "checked": "2026-11-16",
+      "title": "Lake Hope Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Lake Hope fishing: electric and hand powered only, one ramp on SR 278 by the dam, boathouse rentals, bluegill, crappie, bass and cats, tonight's bite. Unofficial.",
+      "motors": "Electric motors and hand powered boats only (ODNR).",
+      "ramps": "One boat ramp on SR 278 by the dam; the boathouse rents canoes, kayaks and pontoons spring to fall, (740) 596-4949 (ODNR).",
+      "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
+      "hours": {
+        "authority": "odnr",
+        "open": "06:00",
+        "close": "23:00",
+        "fishing_after_hours": true,
+        "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
+        "source": ["ODNR, Lake Hope State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-state-park"],
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Lake Hope State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-state-park"],
+        ["ODNR, Lake Hope Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakehope1.pdf"]
+      ]
+    },
+    "findlayreservoirs": {
+      "checked": "2026-11-16",
+      "title": "Findlay Reservoirs Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Findlay Reservoirs fishing: Reservoir 1 electric only, Reservoir 2 9.9 hp, city ramps, floating piers, walleye, saugeye, perch stocked, tonight's bite. Unofficial.",
+      "motors": "Reservoir 1: electric motors only. Reservoir 2: gas outboards up to 9.9 hp (ODNR).",
+      "ramps": "City operated ramps with floating fishing piers on both reservoirs; restrooms at the Reservoir 2 ramp (ODNR).",
+      "pool": "Summer pool is 815 ft, the level the ODNR fishing map is drawn at.",
+      "night": "ODNR's Findlay reservoir pages list no access hours, so there's no official night rule to show; follow posted signs.",
+      "hours": {
+        "none": true,
+        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Findlay Reservoir #1 Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/findlay-reservoir-1-fishing-area"],
+        ["ODNR, Findlay Reservoirs #2 Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/findlay-reservoirs-2-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/findlayreservoirs2.pdf"]
+      ]
+    },
+    "bresler": {
+      "checked": "2026-11-16",
+      "title": "Bresler Reservoir Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Bresler Reservoir fishing: electric motors only, ramp off Kemp Rd, upground reservoir 44 ft deep, walleye and yellow perch stocked, tonight's bite. Unofficial.",
+      "motors": "Electric motors only (ODNR).",
+      "ramps": "Boat ramp and main parking on the east side off Kemp Rd; more lots off Agerter Rd and Grubb Rd (ODNR).",
+      "pool": "Summer pool is 850.5 ft, the level the ODNR fishing map is drawn at.",
+      "night": "ODNR's Bresler Reservoir Fishing Area page lists no hours, so there's no official night rule to show; follow posted signs.",
+      "hours": {
+        "none": true,
+        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Bresler Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/bresler-reservoir-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/breslerreservoir2.pdf"]
+      ]
+    },
+    "fergusonmetzger": {
+      "checked": "2026-11-16",
+      "title": "Ferguson and Metzger Reservoirs Fishing: Map, Ramps, Rules | The Night Bite",
+      "description": "Ferguson and Metzger fishing: no gas motors, primitive ramps off Reservoir Rd, walleye, saugeye and perch stocked, crappie 30 a day, 9″ minimum. Unofficial.",
+      "motors": "Boats allowed on both reservoirs; gasoline motors prohibited (ODNR).",
+      "ramps": "Primitive boat ramps on both reservoirs near the Reservoir Rd entrance; two lots off Reservoir Rd and one off North Mumaugh Rd (ODNR).",
+      "pool": "Summer pool is 921 ft, the level the ODNR fishing map is drawn at.",
+      "night": "ODNR's Ferguson & Metzger Reservoirs Fishing Area page lists no hours, so there's no official night rule to show; follow posted signs.",
+      "hours": {
+        "none": true,
+        "note": "No official page we found states hours for this water, so there's no night rule to show; follow posted signs.",
+        "checked": "2026-11-17"
+      },
+      "sources": [
+        ["ODNR, Ferguson & Metzger Reservoirs Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ferguson-metzger-reservoirs-fishing-area"],
+        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/fergusonmetzgerreservoirs2.pdf"]
+      ]
     }
   }
 }

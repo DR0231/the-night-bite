@@ -1,0 +1,21 @@
+{
+ "_readme": "MWCD winter drawdown schedule for the waters on this site, copied from MWCD's own table. Edit here, then run python3 tools/build-summaries.py (it writes drawdown.html). Never add a row without the official source; a water MWCD does not list goes under not_listed.",
+ "season": "2026–27",
+ "checked": "2026-11-16",
+ "source_date": "2026-10-29",
+ "source": ["MWCD, Winter Drawdown Schedule", "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"],
+ "refill_by": "2027-03-15",
+ "normal_by": "February",
+ "rows": [
+  {"lake": "atwood", "normal": "928.00", "winter": "920.00", "drop": "8.0", "begins": "2026-11-08", "days": 42, "refill": "926.00"},
+  {"lake": "charlesmill", "normal": "997.00", "winter": "992.00", "drop": "5.0", "begins": "2026-11-01", "days": 35, "refill": "995.00"},
+  {"lake": "clendening", "normal": "898.00", "winter": "893.00", "drop": "5.0", "begins": "2026-11-15", "days": 35, "refill": "896.00"},
+  {"lake": "leesville", "normal": "963.00", "winter": "958.00", "drop": "5.0", "begins": "2026-11-01", "days": 35, "refill": "961.00"},
+  {"lake": "piedmont", "normal": "913.00", "winter": "908.00", "drop": "5.0", "begins": "2026-11-01", "days": 35, "refill": "911.00"},
+  {"lake": "pleasanthill", "normal": "1020.00", "winter": "1012.00", "drop": "8.0", "begins": "2026-11-15", "days": 42, "refill": "1018.00"},
+  {"lake": "seneca", "normal": "832.20", "winter": "827.20", "drop": "5.0", "begins": "2026-11-15", "days": 35, "refill": "830.20"},
+  {"lake": "tappan", "normal": "899.30", "winter": "894.30", "drop": "5.0", "begins": "2026-11-15", "days": 35, "refill": "897.30"}
+ ],
+ "not_listed": ["beachcity"],
+ "odnr": ["ODNR, Winter Drawdowns at Ohio State Park Lakes", "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns"]
+}

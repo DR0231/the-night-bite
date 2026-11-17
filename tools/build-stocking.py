@@ -9,7 +9,7 @@ head = ice[:ice.index("  <main id=\"main\">")]
 foot = ice[ice.index("  </main>"):]
 head = re.sub(r"<title>[^<]*</title>", "<title>Stocking &amp; surveys: Ohio waters | The Night Bite</title>", head, count=1)
 head = re.sub(r'<meta name="description" content="[^"]*">',
-              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake and 46 more Ohio waters, with sources.">', head)
+              '<meta name="description" content="ODNR stocking, net surveys and angler surveys for Hoover, Alum Creek, Buckeye Lake and 59 more Ohio waters, with sources.">', head)
 head = head.replace('<link rel="canonical" href="https://nightbiteoh.com/ice">', '<link rel="canonical" href="https://nightbiteoh.com/stocking">')
 assert "stocking" in head
 # ice.html's own scripts at the bottom stay (refresh, sw-update, alerts, nav, lake-picker); nothing else is needed
@@ -69,6 +69,19 @@ ODNR_MAP = {
     "highlandtown": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
     "punderson": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
     "wellington": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "kiser": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "hargus": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "stonelick": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "grant": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "lakewhite": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "lakerupert": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "jackson": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "wolfrun": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "tycoon": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "lakehope": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "findlayreservoirs": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "bresler": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
+    "fergusonmetzger": "https://experience.arcgis.com/experience/2a39044c75b04e68872564b4c6ec0638",
 }
 AREA = {
     "hoover": ("ODNR, Hoover Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area"),
@@ -120,6 +133,19 @@ AREA = {
     "highlandtown": ("ODNR, Highlandtown Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/highlandtown-lake-fishing-area"),
     "punderson": ("ODNR, Punderson Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/punderson-lake-fishing-area"),
     "wellington": ("ODNR, Wellington Upground Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wellington-upground-reservoir-fishing-area"),
+    "kiser": ("ODNR, Kiser Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-fishing-area"),
+    "hargus": ("ODNR, Hargus Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hargus-creek-lake-fishing-area"),
+    "stonelick": ("ODNR, Stonelick Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-lake-fishing-area"),
+    "grant": ("ODNR, Grant Lake Wildlife Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grant-lake-wildlife-area"),
+    "lakewhite": ("ODNR, Lake White Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-fishing-area"),
+    "lakerupert": ("ODNR, Lake Rupert Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-rupert-fishing-area"),
+    "jackson": ("ODNR, Jackson Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-fishing-area"),
+    "wolfrun": ("ODNR, Wolf Run Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-lake-fishing-area"),
+    "tycoon": ("ODNR, Tycoon Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/tycoon-lake-fishing-area"),
+    "lakehope": ("ODNR, Lake Hope Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-fishing-area"),
+    "findlayreservoirs": ("ODNR, Findlay Reservoirs #2 Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/findlay-reservoirs-2-fishing-area"),
+    "bresler": ("ODNR, Bresler Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/bresler-reservoir-fishing-area"),
+    "fergusonmetzger": ("ODNR, Ferguson & Metzger Reservoirs Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ferguson-metzger-reservoirs-fishing-area"),
 }
 PDFMAP = {
     "hoover": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf",
@@ -171,6 +197,19 @@ PDFMAP = {
     "highlandtown": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/highlandtownlake2.pdf",
     "punderson": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pundersonlake2.pdf",
     "wellington": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wellingtonupgroundreservoir.pdf",
+    "kiser": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/kiserlake2.pdf",
+    "hargus": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/harguscreeklake2.pdf",
+    "stonelick": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/stonelicklake2.pdf",
+    "grant": "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grant-lake-wildlife-area",
+    "lakewhite": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakewhite2.pdf",
+    "lakerupert": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakerupert2.pdf",
+    "jackson": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/jacksonlake2.pdf",
+    "wolfrun": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wolfrunlake2.pdf",
+    "tycoon": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/tycoonlake2.pdf",
+    "lakehope": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakehope1.pdf",
+    "findlayreservoirs": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/findlayreservoirs2.pdf",
+    "bresler": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/breslerreservoir2.pdf",
+    "fergusonmetzger": "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/fergusonmetzgerreservoirs2.pdf",
 }
 STOCK_DB = "https://ohiodnr.gov/buy-and-apply/hunting-fishing-boating/fishing-resources/fish-stocking-records"
 
@@ -278,10 +317,10 @@ NOTE = "Copied from the PDF; a dash means none listed."
 
 # Lakes with no ODNR lake PDFs whose stocking is read from ODNR's public Fish Stocking dashboard (Tableau), last ten years.
 # Read Oct. 30, 2026 (dashboard "data updated 10/27/2026"). Deer Creek and Clear Fork list one species only.
-DB = ("deercreek", "madison", "knox", "clearfork", "seneca", "dillon", "logan", "saltfork", "burroak", "dow", "mosquito", "berlin", "westbranch", "pymatuning", "milton", "leesville", "grandlakestmarys", "caesarcreek", "eastfork", "cjbrown", "rockyfork", "ladue", "paintcreek", "portagelakes", "mogadore", "loramie", "nimisila", "cowan", "acton", "tappan", "piedmont", "clendening", "atwood", "charlesmill", "pleasanthill", "beachcity", "wingfoot", "eastbranch", "guilford", "highlandtown", "punderson", "wellington")
+DB = ("deercreek", "madison", "knox", "clearfork", "seneca", "dillon", "logan", "saltfork", "burroak", "dow", "mosquito", "berlin", "westbranch", "pymatuning", "milton", "leesville", "grandlakestmarys", "caesarcreek", "eastfork", "cjbrown", "rockyfork", "ladue", "paintcreek", "portagelakes", "mogadore", "loramie", "nimisila", "cowan", "acton", "tappan", "piedmont", "clendening", "atwood", "charlesmill", "pleasanthill", "beachcity", "wingfoot", "eastbranch", "guilford", "highlandtown", "punderson", "wellington", "kiser", "hargus", "stonelick", "grant", "lakewhite", "lakerupert", "jackson", "wolfrun", "tycoon", "lakehope", "findlayreservoirs", "bresler", "fergusonmetzger")
 DB_NAME = {"deercreek": "Deer Creek Lake", "madison": "Madison Lake", "knox": "Knox Lake", "clearfork": "Clear Fork Reservoir",
            "seneca": "Seneca Lake", "dillon": "Dillon Lake", "logan": "Lake Logan", "saltfork": "Salt Fork Lake", "burroak": "Burr Oak Lake", "dow": "Dow Lake",
-           "mosquito": "Mosquito Creek Lake", "berlin": "Berlin Lake", "westbranch": "West Branch Reservoir", "pymatuning": "Pymatuning Lake", "milton": "Lake Milton", "leesville": "Leesville Lake", "grandlakestmarys": "Grand Lake St. Marys", "caesarcreek": "Caesar Creek Lake", "eastfork": "East Fork Lake", "cjbrown": "C.J. Brown Reservoir", "rockyfork": "Rocky Fork Lake", "ladue": "LaDue Reservoir", "paintcreek": "Paint Creek Lake", "portagelakes": "Portage Lakes", "mogadore": "Mogadore Reservoir", "loramie": "Lake Loramie", "nimisila": "Nimisila Reservoir", "cowan": "Cowan Lake", "acton": "Acton Lake", "tappan": "Tappan Lake", "piedmont": "Piedmont Lake", "clendening": "Clendening Lake", "atwood": "Atwood Lake", "charlesmill": "Charles Mill Lake", "pleasanthill": "Pleasant Hill Lake", "beachcity": "Beach City Lake", "wingfoot": "Wingfoot Lake", "eastbranch": "East Branch Reservoir", "guilford": "Guilford Lake", "highlandtown": "Highlandtown Lake", "punderson": "Punderson Lake", "wellington": "Wellington Upground Reservoir"}
+           "mosquito": "Mosquito Creek Lake", "berlin": "Berlin Lake", "westbranch": "West Branch Reservoir", "pymatuning": "Pymatuning Lake", "milton": "Lake Milton", "leesville": "Leesville Lake", "grandlakestmarys": "Grand Lake St. Marys", "caesarcreek": "Caesar Creek Lake", "eastfork": "East Fork Lake", "cjbrown": "C.J. Brown Reservoir", "rockyfork": "Rocky Fork Lake", "ladue": "LaDue Reservoir", "paintcreek": "Paint Creek Lake", "portagelakes": "Portage Lakes", "mogadore": "Mogadore Reservoir", "loramie": "Lake Loramie", "nimisila": "Nimisila Reservoir", "cowan": "Cowan Lake", "acton": "Acton Lake", "tappan": "Tappan Lake", "piedmont": "Piedmont Lake", "clendening": "Clendening Lake", "atwood": "Atwood Lake", "charlesmill": "Charles Mill Lake", "pleasanthill": "Pleasant Hill Lake", "beachcity": "Beach City Lake", "wingfoot": "Wingfoot Lake", "eastbranch": "East Branch Reservoir", "guilford": "Guilford Lake", "highlandtown": "Highlandtown Lake", "punderson": "Punderson Lake", "wellington": "Wellington Upground Reservoir", "kiser": "Kiser Lake", "hargus": "Hargus Creek Lake", "stonelick": "Stonelick Lake", "grant": "Grant Lake", "lakewhite": "Lake White", "lakerupert": "Lake Rupert", "jackson": "Jackson Lake", "wolfrun": "Wolf Run Lake", "tycoon": "Tycoon Lake", "lakehope": "Lake Hope", "findlayreservoirs": "Findlay Reservoirs", "bresler": "Bresler Reservoir", "fergusonmetzger": "Ferguson and Metzger Reservoirs"}
 DASH = "https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking"
 DB_STOCK = {
     "deercreek": [("Saugeye", ("Fingerlings",), [
@@ -354,6 +393,19 @@ DB_STOCK = {
     "highlandtown": [('Channel catfish', ('Fingerlings', 'Yearlings'), [(2016, '5,273', '3,196'), (2020, '', '1,008')])],
     "punderson": [('Bluegill', ('Catchables',), [(2025, '125')]), ('Channel catfish', ('Advanced fingerlings', 'Yearlings'), [(2017, '', '2,025'), (2019, '', '2,025'), (2021, '', '2,089'), (2023, '960', ''), (2025, '960', '')]), ('Rainbow trout', ('Catchables',), [(2016, '2,500'), (2017, '3,724'), (2018, '4,306'), (2019, '2,501'), (2020, '2,835'), (2021, '2,005'), (2022, '2,004')]), ('Brown trout', ('Yearlings',), [(2016, '1,306')])],
     "wellington": [('Yellow perch', ('Fingerlings',), [(2016, '87,057'), (2017, '40,596'), (2019, '64,155'), (2020, '39,760'), (2021, '79,982'), (2022, '79,707'), (2023, '40,103'), (2024, '39,750'), (2025, '39,918')]), ('Channel catfish', ('Fingerlings', 'Yearlings'), [(2016, '', '4,082'), (2018, '5,135', ''), (2020, '7,965', ''), (2022, '', '1,908'), (2024, '', '1,908')])],
+    "kiser": [('Hybrid striped bass', ('Fingerlings',), [(2016, '22,400'), (2017, '19,826'), (2018, '20,000'), (2019, '8,694'), (2020, '22,493'), (2021, '3,553'), (2022, '10,370'), (2023, '39,257'), (2024, '19,632')]), ('Yellow perch', ('Fingerlings',), [(2019, '164,104'), (2020, '98,693'), (2021, '202,588'), (2022, '133,946'), (2023, '98,731'), (2024, '49,408'), (2025, '98,603')]), ('Channel catfish', ('Advanced fingerlings', 'Fingerlings', 'Yearlings'), [(2016, '', '14,576', ''), (2017, '', '', '5,050'), (2019, '', '19,958', ''), (2021, '', '32,516', ''), (2023, '20,732', '', ''), (2025, '19,729', '', '')])],
+    "hargus": [('Channel catfish', ('Advanced fingerlings', 'Fingerlings', 'Yearlings'), [(2016, '', '', '3,587'), (2018, '', '7,170', ''), (2020, '', '7,150', ''), (2022, '', '', '3,575'), (2024, '3,618', '', '')])],
+    "stonelick": [('Channel catfish', ('Advanced fingerlings', 'Fingerlings', 'Yearlings'), [(2016, '', '5,438', '2,423'), (2018, '', '', '2,516'), (2020, '', '8,054', ''), (2022, '4,030', '', ''), (2024, '4,048', '', '')]), ('Rainbow trout', ('Catchables',), [(2016, '2,903'), (2017, '2,727'), (2018, '3,209'), (2019, '3,317'), (2020, '2,118'), (2021, '2,418'), (2022, '2,471')])],
+    "grant": [('Channel catfish', ('Advanced fingerlings', 'Fingerlings', 'Yearlings'), [(2016, '', '6,089', '2,898'), (2018, '', '', '2,505'), (2020, '', '8,921', ''), (2024, '8,932', '', '')])],
+    "lakewhite": [('Saugeye', ('Fingerlings',), [(2017, '33,443'), (2018, '20,705'), (2019, '34,120'), (2020, '34,196'), (2021, '33,497'), (2022, '35,071'), (2023, '33,462'), (2024, '35,939'), (2025, '33,789')]), ('Channel catfish', ('Advanced fingerlings', 'Fingerlings', 'Yearlings', 'Catchables'), [(2017, '', '', '', '202'), (2018, '', '', '2,500', ''), (2019, '', '', '5,244', ''), (2021, '', '16,650', '', ''), (2023, '8,325', '', '', ''), (2025, '8,334', '', '', '')]), ('Bluegill', ('All sizes',), [(2017, '120,802')])],
+    "lakerupert": [('Saugeye', ('Fingerlings',), [(2016, '56,474'), (2017, '65,478'), (2018, '20,833'), (2019, '65,599'), (2020, '65,449'), (2021, '63,570'), (2022, '65,400'), (2023, '60,347'), (2024, '65,575'), (2025, '46,616')]), ('Channel catfish', ('Fingerlings', 'Yearlings'), [(2016, '6,750', '3,417'), (2018, '', '2,498'), (2020, '8,356', '3,090')])],
+    "jackson": [('Channel catfish', ('Advanced fingerlings', 'Yearlings'), [(2017, '', '5,018'), (2019, '', '5,097'), (2021, '', '5,003'), (2023, '5,000', ''), (2025, '6,325', '')])],
+    "wolfrun": [('Saugeye', ('Fingerlings',), [(2016, '47,515'), (2017, '42,138'), (2018, '13,024'), (2019, '54,343'), (2020, '42,336'), (2021, '41,757'), (2022, '22,244'), (2023, '20,800'), (2024, '20,800'), (2025, '22,500')]), ('Yellow perch', ('Fingerlings',), [(2017, '54,366'), (2019, '83,292'), (2020, '53,045'), (2021, '52,037'), (2022, '52,656'), (2024, '26,057'), (2025, '52,016')]), ('Channel catfish', ('Yearlings', 'Catchables'), [(2016, '5,528', ''), (2018, '2,501', ''), (2020, '5,334', '406'), (2022, '2,522', '')]), ('Rainbow trout', ('Catchables',), [(2016, '3,005'), (2017, '3,001'), (2018, '3,257'), (2019, '3,000'), (2020, '2,595'), (2021, '2,377'), (2022, '2,506')]), ('Brown trout', ('Fingerlings',), [(2024, '27,593')])],
+    "tycoon": [('Channel catfish', ('Advanced fingerlings', 'Fingerlings', 'Yearlings'), [(2017, '', '5,850', '2,983'), (2021, '', '9,205', ''), (2023, '4,575', '', ''), (2025, '4,625', '', '')])],
+    "lakehope": [('Yellow perch', ('Fingerlings',), [(2016, '64,953'), (2017, '35,178'), (2019, '38,340'), (2020, '33,538'), (2021, '101,995'), (2022, '67,017')]), ('Channel catfish', ('Fingerlings', 'Yearlings'), [(2017, '', '3,368'), (2019, '', '3,354'), (2021, '6,742', '')])],
+    "findlayreservoirs": [('Walleye, Reservoir 1', ('Fingerlings',), [(2016, '13,795'), (2017, '37,700'), (2018, '26,902'), (2019, '28,840'), (2020, '18,932'), (2021, '19,056'), (2022, '18,986'), (2023, '19,055'), (2024, '19,322'), (2025, '18,695')]), ('Saugeye, Reservoir 1', ('Fingerlings',), [(2017, '38,192'), (2018, '11,392'), (2019, '40,970'), (2020, '18,788'), (2021, '18,685'), (2022, '18,632'), (2023, '19,027'), (2024, '18,832'), (2025, '18,643')]), ('Yellow perch, Reservoir 1', ('Fingerlings',), [(2016, '100,704'), (2017, '46,680'), (2019, '70,703'), (2020, '46,557'), (2021, '46,560'), (2022, '87,486'), (2023, '46,512'), (2024, '42,938'), (2025, '46,790')]), ('Walleye, Reservoir 2', ('Fingerlings',), [(2016, '42,765'), (2017, '131,396'), (2018, '32,819'), (2019, '74,984'), (2020, '64,980'), (2021, '64,498'), (2022, '64,550'), (2023, '64,530'), (2024, '65,352'), (2025, '64,468')]), ('Saugeye, Reservoir 2', ('Fingerlings',), [(2017, '136,400'), (2018, '38,637'), (2019, '131,445'), (2020, '64,596'), (2021, '64,607'), (2022, '64,745'), (2023, '64,692'), (2024, '64,838'), (2025, '64,663')]), ('Yellow perch, Reservoir 2', ('Fingerlings',), [(2016, '330,837'), (2017, '162,418'), (2018, '47,233'), (2019, '242,575'), (2020, '323,178'), (2021, '161,255'), (2022, '296,762'), (2023, '139,822'), (2024, '80,543'), (2025, '161,299')])],
+    "bresler": [('Walleye', ('Fingerlings',), [(2016, '33,108'), (2017, '118,076'), (2018, '35,959'), (2019, '80,752'), (2020, '58,515'), (2021, '58,542'), (2022, '204,770'), (2023, '116,771'), (2024, '117,990'), (2025, '87,390')]), ('Yellow perch', ('Fingerlings', 'Fry'), [(2016, '', '945,000'), (2017, '', '990,000'), (2018, '', '615,000'), (2019, '', '607,500'), (2020, '', '292,500'), (2021, '', '750,000'), (2022, '', '582,000'), (2024, '72,794', ''), (2025, '145,708', '')])],
+    "fergusonmetzger": [('Walleye, Ferguson', ('Fingerlings',), [(2016, '16,554'), (2017, '62,833'), (2018, '19,679'), (2019, '40,376'), (2020, '30,803'), (2021, '31,108'), (2022, '30,831'), (2023, '31,246'), (2024, '31,152'), (2025, '30,756')]), ('Saugeye, Ferguson', ('Fingerlings',), [(2017, '62,046'), (2018, '31,122'), (2019, '31,107'), (2020, '31,180'), (2021, '30,835'), (2022, '31,208'), (2023, '30,987'), (2024, '30,837'), (2025, '30,959')]), ('Yellow perch, Ferguson', ('Fingerlings',), [(2016, '158,976'), (2017, '80,845'), (2018, '17,367'), (2019, '114,804'), (2020, '77,595'), (2021, '77,789'), (2022, '78,260'), (2023, '77,470'), (2024, '38,608'), (2025, '77,093')]), ('Saugeye, Metzger', ('Fingerlings',), [(2016, '16,179'), (2017, '32,747'), (2018, '16,673'), (2019, '16,771'), (2020, '15,730'), (2021, '31,698'), (2022, '15,843'), (2023, '15,831'), (2024, '15,772'), (2025, '15,847')]), ('Yellow perch, Metzger', ('Fingerlings',), [(2016, '86,670'), (2017, '40,848'), (2018, '12,212'), (2019, '66,133'), (2020, '39,288'), (2021, '39,746'), (2022, '40,424'), (2023, '39,522'), (2024, '19,669'), (2025, '39,911')]), ('Channel catfish, Metzger', ('Advanced fingerlings',), [(2024, '8,016')])],
 }
 DB_SAYS = {
     "deercreek": "What ODNR does say: the Corps of Engineers finished the dam in 1968. The lake impounds 1,290 acres from Deer Creek and Clark Run, and its level can change up to 20 ft because the watershed is large for the lake. ODNR says early spring saugeye below the dam is the fishery the park is famous for.",
@@ -398,6 +450,19 @@ DB_SAYS = {
     "highlandtown": "What ODNR does say: Highlandtown Lake was built in 1966 and first stocked in 1967 with muskellunge, largemouth bass, bluegill and channel catfish, after habitat work on the lake bottom. Boats with motors of 10 hp or less are allowed.",
     "punderson": "What ODNR does say: Punderson Lake is a natural kettle lake, the largest and deepest in Ohio. It covers 80 acres, with steep drop offs into three kettles from 30 to 57 ft. Only electric motors are allowed. ODNR Wildlife bought it in 1948 and handed it to State Parks in 1951.",
     "wellington": "What ODNR does say: Wellington Upground Reservoir is a 160 acre water supply reservoir built by the Village of Wellington in the 1970s. The village owns it; ODNR Wildlife manages the fish under an agreement. Paddle craft and electric motors only, up to 23 ft, and shore angling is abundant.",
+    "kiser": "What ODNR does say: Kiser Lake is a relatively shallow lake with abundant vegetation, including large areas of lily pads, and 5.5 miles of shoreline. Boats with motors are not permitted; sailing and paddling are popular.",
+    "hargus": "What ODNR does say: Hargus Creek Lake is the 145 acre lake in A.W. Marion State Park, stocked with largemouth bass, bluegill, crappie and channel catfish. Hand powered boats and electric motors only, with one launch ramp.",
+    "stonelick": "What ODNR does say: Stonelick Lake is 200 acres, 3 to 15 ft deep, with 7.7 miles of shoreline. The dam across Stonelick Creek was built in 1949. Hand powered boats and electric motors only.",
+    "grant": "What ODNR does say: Grant Lake Wildlife Area is a 412 acre state wildlife area 1 mile south of Mt. Orab, bought from 1941 to 2003. An accessible pier on the west side off Grant Rd offers bluegill, largemouth bass and channel catfish.",
+    "lakewhite": "What ODNR does say: Lake White was impounded in 1935 on Pee Pee Creek and offers unlimited horsepower boating, with a launch ramp at SR 551 and SR 104. The current state record spotted bass was caught here in 1976.",
+    "lakerupert": "What ODNR does say: Lake Rupert was built in 1969 by ODNR and the city of Wellston. It is 327 acres with 9 miles of shoreline and is 24 ft deep at most. No horsepower limit, but motorboats must run at no wake speed.",
+    "jackson": "What ODNR does say: Jackson Lake was impounded in 1938 and is 251 acres at normal pool with 11 miles of shoreline. It is 12 ft deep at most, mostly 6 ft or less. Anglers catch bass, muskie, bluegill, catfish and carp.",
+    "wolfrun": "What ODNR does say: the Wolf Run Lake dam was completed in 1966 and the state park opened in 1968. Boats with motors up to 10 hp are allowed. The 220 acre lake is known for bass, bluegill, crappie, trout and catfish.",
+    "tycoon": "What ODNR does say: Tycoon Lake's two earthen dams on an old channel of Raccoon Creek were finished in 1960, and fish were first stocked in 1961. It is 18 ft deep at most, with stumps along the north shore and old fence rows. Any motor at idle speed only.",
+    "lakehope": "What ODNR does say: Lake Hope is 120 acres in Lake Hope State Park, inside Zaleski State Forest. One boat ramp on SR 278 by the dam; hand powered and electric motor boats only. Anglers catch bluegill, catfish, crappie and largemouth bass.",
+    "findlayreservoirs": "What ODNR does say: Findlay Reservoirs 1 and 2 are City of Findlay upground reservoirs filled from the Blanchard River and wells. Reservoir 2, built in 1968, is 645 acres, the largest upground reservoir in Ohio. Reservoir 1 is electric only; Reservoir 2 allows gas outboards up to 9.9 hp.",
+    "bresler": "What ODNR does say: Bresler Reservoir is a City of Lima upground reservoir filled from the Auglaize River, finished in late 1970. It is 582 acres and 44 ft deep near the northeast corner, with an underwater island along the south shore. Electric motors only.",
+    "fergusonmetzger": "What ODNR does say: Metzger Reservoir was built by the city of Lima in 1946 and Ferguson Reservoir in 1958. Ferguson is 305 acres, 3 to 33 ft deep, with a cattail bed on the east shore; Metzger is 154 acres with a flat bottom. Gasoline motors are prohibited.",
 }
 
 DB_NETS = {k: "Linked by ODNR, not copied" for k in ("seneca", "saltfork", "burroak", "berlin")}
@@ -637,6 +702,32 @@ main = f'''  <main id="main">
 {db_block("punderson")}    </div>
     <div data-for="wellington">
 {db_block("wellington")}    </div>
+    <div data-for="kiser">
+{db_block("kiser")}    </div>
+    <div data-for="hargus">
+{db_block("hargus")}    </div>
+    <div data-for="stonelick">
+{db_block("stonelick")}    </div>
+    <div data-for="grant">
+{db_block("grant")}    </div>
+    <div data-for="lakewhite">
+{db_block("lakewhite")}    </div>
+    <div data-for="lakerupert">
+{db_block("lakerupert")}    </div>
+    <div data-for="jackson">
+{db_block("jackson")}    </div>
+    <div data-for="wolfrun">
+{db_block("wolfrun")}    </div>
+    <div data-for="tycoon">
+{db_block("tycoon")}    </div>
+    <div data-for="lakehope">
+{db_block("lakehope")}    </div>
+    <div data-for="findlayreservoirs">
+{db_block("findlayreservoirs")}    </div>
+    <div data-for="bresler">
+{db_block("bresler")}    </div>
+    <div data-for="fergusonmetzger">
+{db_block("fergusonmetzger")}    </div>
     <div data-for="buckeye">
       <div class="card data-glance">
         <p class="data-none">ODNR&rsquo;s Buckeye Lake fishing area page has no stocking tables, net surveys, angler survey or fishing forecast. This page says so rather than guess.</p>

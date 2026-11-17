@@ -84,16 +84,15 @@
       return null;
     },
     isOffline: function () { return navigator.onLine === false; },
-    // "9:40 PM ET" today in Ohio, "Tue 9:40 PM ET" within the last 6 days, else "Nov. 3, 9:40 PM ET" (saved readings
-    // are kept up to 14 days, so a weekday alone could mean two different days)
+    // "9:40 PM ET" today in Ohio, else the weekday and the date, "Tue Nov. 3, 9:40 PM ET" (a weekday alone reads as
+    // this week, so "Mon 8:45 AM ET" seen on a Friday hid that the reading was four days old)
     when: function (d) {
       d = new Date(d);
       var t = et(d, { hour: "numeric", minute: "2-digit" });
       var sameDay = et(d, { year: "numeric", month: "numeric", day: "numeric" }) === et(new Date(), { year: "numeric", month: "numeric", day: "numeric" });
       if (sameDay) return t + " ET";
-      if (Date.now() - d.valueOf() < 6 * 864e5) return et(d, { weekday: "short" }) + " " + t + " ET";
       var MON = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
-      return MON[+et(d, { month: "numeric" }) - 1] + " " + et(d, { day: "numeric" }) + ", " + t + " ET";
+      return et(d, { weekday: "short" }) + " " + MON[+et(d, { month: "numeric" }) - 1] + " " + et(d, { day: "numeric" }) + ", " + t + " ET";
     },
     label: function (d) { return "Offline. Last updated " + this.when(d) + "."; }
   };

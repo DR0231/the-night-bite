@@ -14,7 +14,7 @@ How it works (S12, the lever for "every piece of text in the picked language"):
     and lines that hold no words once names and numbers are taken out.
   * Key = <page>.<first 8 hex of sha1 of the normalised English>, so a key is stable until the English changes, and an
     edit simply makes a new key (the old translation stays in the memory and is reused if the text comes back).
-  * Translations live once per language in data/i18n/tm/<lang>.json ({"strings": {hash: text}}), the translation
+  * Translations live once per language in .github/build-inputs/i18n-tm/<lang>.json ({"strings": {hash: text}}), the translation
     memory: a line shared by 23 lake homes is translated once. The tool writes data/i18n/pages/<page>.en.json (the
     English source for that page) and data/i18n/pages/<page>.<lang>.json (that page's lines from the memory), so a
     page fetches only its own strings. js/i18n.js loads them next to the shared file.
@@ -27,7 +27,8 @@ import argparse, hashlib, html, json, os, pathlib, re, sys
 from bs4 import BeautifulSoup, Comment, NavigableString
 
 ROOT = pathlib.Path(os.environ.get("NB_ROOT") or pathlib.Path(__file__).resolve().parent.parent)
-D = ROOT / "data" / "i18n"; PAGES = D / "pages"; TM = D / "tm"
+# the translation memory is a build input, kept under .github/ so GitHub Pages never publishes its 14 MB
+D = ROOT / "data" / "i18n"; PAGES = D / "pages"; TM = ROOT / ".github" / "build-inputs" / "i18n-tm"
 ATTRS = ["alt", "aria-label", "title", "placeholder"]
 SCOPES = ".site-header, .site-footer, .glance, #glance-actions, .a11y-panel, .night-chip, .nws-alert, #my-trips, #add-trip, [data-log-filter], .i18n-draft, .spy-label, a.sr-only[href$=\"#main\"]"
 KEEP = "h1, .cond-summary, [data-nb-keep]"
@@ -113,7 +114,7 @@ def extract(path, exact, tpl):
 
 # S13: the "What's biting" cards are filled from these data files by js/biting.js and js/species-lake.js; their
 # where/when/note lines go into one virtual page "js" (species names stay English, so they are left out)
-JS_DATA = ["js/biting-data.js", "js/biting-data-lakes.js"]
+JS_DATA = [".github/build-inputs/biting-data.js", ".github/build-inputs/biting-data-lakes.js"]
 def js_lines():
     import subprocess
     code = ("global.window={};" + "".join(f"require({json.dumps(str(ROOT / p))});" for p in JS_DATA) +
@@ -161,6 +162,8 @@ def main():
     NAMEWORDS = sorted(set(ck.get("names", [])), key=len, reverse=True)
     exact, tpl = en_tables()
     langs = sorted(p.stem for p in D.glob("*.json") if p.stem != "en")
+    if not TM.is_dir():
+        sys.exit(f"i18n-extract: no translation memory at {TM}; stopping so no page file is written empty")
     tm = {l: (json.loads((TM / f"{l}.json").read_text())["strings"] if (TM / f"{l}.json").exists() else {}) for l in langs}
     changed, keep_files, cov, gaps = [], set(), {}, []
     for page, path in pages() + [("js", None), ("map", None), ("docklist", None)]:

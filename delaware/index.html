@@ -34,10 +34,10 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="js/a11y-boot.js?v=v41-2026-11-12"></script>
-  <link rel="stylesheet" href="css/styles.css?v=v41-2026-11-12">
+  <script src="js/a11y-boot.js?v=v42-2026-11-17"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v42-2026-11-17">
   <noscript><style>.glance-actions{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
-  <script src="js/lakes.js?v=v41-2026-11-12"></script>
+  <script src="js/lakes.js?v=v42-2026-11-17"></script>
   <!-- nb:jsonld (tools/build-lake-pages.py) -->
   <script type="application/ld+json">
   [{"@context": "https://schema.org", "@type": "WebPage", "@id": "https://nightbiteoh.com/delaware/#webpage", "url": "https://nightbiteoh.com/delaware/", "name": "Delaware Lake Fishing: Level, Ramps, Rules | The Night Bite", "isPartOf": {"@id": "https://nightbiteoh.com/#website"}, "about": {"@type": "LakeBodyOfWater", "name": "Delaware Lake"}, "dateModified": "2026-10-29", "inLanguage": "en-US", "breadcrumb": {"@id": "https://nightbiteoh.com/delaware/#breadcrumb"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "@id": "https://nightbiteoh.com/delaware/#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Delaware Lake", "item": "https://nightbiteoh.com/delaware/"}]}]
@@ -63,14 +63,14 @@
           <li class="nav-extra nav-ww"><a href="whisperwood.html">Whisperwood Vale</a></li>
           <li class="nav-extra"><a href="log">Log</a></li>
           <li class="nav-extra"><a href="about">About</a></li>
-          <li class="nav-extra"><a href="updates" data-updates="2026-11-10">What&rsquo;s new</a></li>
+          <li class="nav-extra"><a href="updates" data-updates="2026-11-17">What&rsquo;s new</a></li>
           <li class="nav-more-item nav-more-desk">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
               <a href="whisperwood.html">Whisperwood Vale</a>
               <a href="log">Log</a>
               <a href="about">About</a>
-              <a href="updates" data-updates="2026-11-10">What&rsquo;s new</a>
+              <a href="updates" data-updates="2026-11-17">What&rsquo;s new</a>
               <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
@@ -82,7 +82,7 @@
   <main id="main" class="home">
     <section class="hero" aria-labelledby="home-title">
       <div class="hero-horizon" aria-hidden="true">
-        <img src="assets/horizon-center.png" alt="" width="160" height="46">
+        <img src="assets/horizon-center.png" alt="" width="160" height="46" fetchpriority="high">
         <span class="hero-dock-light"></span>
       </div>
       <p class="hero-brand">The Night Bite</p>
@@ -190,7 +190,7 @@
       <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
         <p class="pool-lead" id="correction-line">915.18 ft · no temp · ~0.2 ft above full pool</p>
-        <script src="js/pool-readout.js?v=v41-2026-11-12"></script>
+        <script src="js/pool-readout.js?v=v42-2026-11-17"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-10-29T13:15:00-04:00">2026-10-29 13:15 ET</time>. <a href="https://water.usace.army.mil/overview/lrh/locations/delaware" target="_blank" rel="noopener">Live USACE gauge</a>.
         </p>
@@ -201,7 +201,7 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           Provisional snapshot; your browser may refresh it from USACE. No public water temp gauge on this lake. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v41-2026-11-12"></script>
+        <script src="js/lake-snapshot.js?v=v42-2026-11-17"></script>
         <div class="pool-trend" id="pool-trend" hidden data-pending>
           <div class="pool-trend-head">
             <span class="pool-trend-label">Pool, last 7 days</span>
@@ -212,7 +212,7 @@
         </div>
         <figure class="pool-chart">
           <button type="button" class="pool-chart-open" id="map-open" aria-haspopup="dialog" aria-controls="hoover-map">
-            <img src="assets/delaware-chart.png" alt="" width="126" height="48" data-for="delaware">
+            <img src="assets/delaware-chart.png" alt="" width="126" height="48" data-for="delaware" loading="lazy" decoding="async">
             <span class="sr-only">Open the <span data-lk="short">Delaware Lake</span> map with boat ramps<span data-for="delaware"> and fishing access</span></span>
           </button>
           <figcaption><span class="pool-chart-name" data-lk="name">Delaware Lake</span><span class="pool-chart-key"><span data-for="delaware">&larr; North</span><span class="pool-chart-legend"><span class="pool-chart-dot" aria-hidden="true"></span><span data-for="delaware">Dam</span></span></span><span class="pool-chart-cue" aria-hidden="true">Tap the map for ramps &amp; <span data-for="delaware">access</span></span></figcaption>
@@ -291,7 +291,7 @@
         </details>
         <p class="meta bait-foot">Drive times are rough. <a class="bait-tell" href="mailto:contact@nightbiteoh.com?subject=Bait%20shop">Know a shop? Tell us</a></p>
       </section>
-      <script src="js/bait-nearby.js?v=v41-2026-11-12"></script>
+      <script src="js/bait-nearby.js?v=v42-2026-11-17"></script>
 
       <a class="bento-card bento-maps" href="water#maps">
         <h3>Water / maps</h3>
@@ -316,7 +316,7 @@
         <span class="card-cue" aria-hidden="true">Open the log</span>
       </a>
     </div>
-    <script src="js/glance.js?v=v41-2026-11-12"></script>
+    <script src="js/glance.js?v=v42-2026-11-17"></script>
 
 
 
@@ -327,7 +327,7 @@
       <ul class="lake-chips"><li><a class="lake-chip" href="species/black-crappie">Black crappie</a></li><li><a class="lake-chip" href="species/white-crappie">White crappie</a></li><li><a class="lake-chip" href="species/largemouth-bass">Largemouth bass</a></li><li><a class="lake-chip" href="species/smallmouth-bass">Smallmouth bass</a></li><li><a class="lake-chip" href="species/channel-catfish">Channel catfish</a></li><li><a class="lake-chip" href="species/bluegill">Bluegill / sunfish</a></li><li><a class="lake-chip" href="species/white-bass">White bass</a></li></ul>
       <details class="how-to-read lake-links-more">
         <summary>More waters in Central Ohio</summary>
-        <div class="how-to-read-body"><ul class="lake-chips"><li><a class="lake-chip" href="hoover/">Hoover Reservoir</a></li><li><a class="lake-chip" href="alum/">Alum Creek Lake</a></li><li><a class="lake-chip" href="buckeye/">Buckeye Lake</a></li><li><a class="lake-chip" href="oshaughnessy/">O'Shaughnessy Reservoir</a></li><li><a class="lake-chip" href="griggs/">Griggs Reservoir</a></li><li><a class="lake-chip" href="indian/">Indian Lake</a></li><li><a class="lake-chip" href="deercreek/">Deer Creek Lake</a></li><li><a class="lake-chip" href="madison/">Madison Lake</a></li><li><a class="lake-chip" href="knox/">Knox Lake</a></li><li><a class="lake-chip" href="clearfork/">Clear Fork Reservoir</a></li><li><a class="lake-chip" href="charlesmill/">Charles Mill Lake</a></li><li><a class="lake-chip" href="pleasanthill/">Pleasant Hill Lake</a></li></ul></div>
+        <div class="how-to-read-body"><ul class="lake-chips"><li><a class="lake-chip" href="hoover/">Hoover Reservoir</a></li><li><a class="lake-chip" href="alum/">Alum Creek Lake</a></li><li><a class="lake-chip" href="buckeye/">Buckeye Lake</a></li><li><a class="lake-chip" href="oshaughnessy/">O'Shaughnessy Reservoir</a></li><li><a class="lake-chip" href="griggs/">Griggs Reservoir</a></li><li><a class="lake-chip" href="indian/">Indian Lake</a></li><li><a class="lake-chip" href="deercreek/">Deer Creek Lake</a></li><li><a class="lake-chip" href="madison/">Madison Lake</a></li><li><a class="lake-chip" href="knox/">Knox Lake</a></li><li><a class="lake-chip" href="clearfork/">Clear Fork Reservoir</a></li><li><a class="lake-chip" href="charlesmill/">Charles Mill Lake</a></li><li><a class="lake-chip" href="pleasanthill/">Pleasant Hill Lake</a></li><li><a class="lake-chip" href="kiser/">Kiser Lake</a></li><li><a class="lake-chip" href="hargus/">Hargus Creek Lake</a></li></ul></div>
       </details>
       <p class="meta lake-links-also"><a href="water?lake=delaware#docks">Dock season</a> &middot; <a href="./?pick">All waters</a></p>
     </section>
@@ -335,7 +335,7 @@
 
     <section class="bento-card get-app" id="get-the-app" aria-labelledby="get-app-title">
       <div class="get-app-head">
-        <img class="get-app-icon" src="favicon.svg" alt="" width="32" height="32">
+        <img class="get-app-icon" src="favicon.svg" alt="" width="32" height="32" loading="lazy" decoding="async">
         <div class="get-app-intro">
           <h2 id="get-app-title">Get the app</h2>
           <p class="get-app-lead">Add The Night Bite to your home screen. It opens full screen with the lantern icon, and the pages you&rsquo;ve opened still work with no signal.</p>
@@ -367,13 +367,13 @@
         </details>
       </div>
     </section>
-    <script src="js/get-app.js?v=v41-2026-11-12"></script>
+    <script src="js/get-app.js?v=v42-2026-11-17"></script>
 
     <hr class="divider">
 
     <h2>What this site is</h2>
     <ul class="condensed-list">
-      <li data-for="delaware">Unofficial Ohio fishing hub with night-dock atmosphere: Hoover, Alum Creek, Buckeye Lake, O&rsquo;Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, C.J. Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Nimisila Reservoir, Cowan Lake, Acton Lake, Tappan Lake, Piedmont Lake, Clendening Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake and Wellington Upground Reservoir</li>
+      <li data-for="delaware">Unofficial Ohio fishing hub with night-dock atmosphere: Hoover, Alum Creek, Buckeye Lake, O&rsquo;Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, C.J. Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Nimisila Reservoir, Cowan Lake, Acton Lake, Tappan Lake, Piedmont Lake, Clendening Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake, Wellington Upground Reservoir, Kiser Lake, Hargus Creek Lake, Stonelick Lake, Grant Lake, Lake White, Lake Rupert, Jackson Lake, Wolf Run Lake, Tycoon Lake, Lake Hope, Findlay Reservoirs, Bresler Reservoir and Ferguson and Metzger Reservoirs</li>
       <li>Species pages with limit reminders from the ODNR 2026–27 rules</li>
       <li>One example log entry, marked <span class="sample-badge">Example</span> · not ODNR / City / USGS</li>
     </ul>
@@ -385,7 +385,7 @@
   </main>
 
 
-  <dialog class="map-dialog" id="hoover-map" aria-labelledby="map-title">
+  <dialog class="map-dialog" id="hoover-map" aria-labelledby="map-title" closedby="any">
     <div class="map-panel">
       <div class="map-head">
         <span class="map-grab" aria-hidden="true"></span>
@@ -393,12 +393,12 @@
         <button type="button" class="map-close" aria-label="Close map"><span aria-hidden="true"></span></button>
       </div>
       <ul class="map-legend" aria-label="Map key">
-        <li><img src="assets/map/pin-ramp.png" alt="" width="9" height="11">Public boat ramp</li>
+        <li><img src="assets/map/pin-ramp.png" alt="" width="9" height="11" loading="lazy" decoding="async">Public boat ramp</li>
         <li class="map-legend-hint">Tap a pin for details</li>
       </ul>
       <div class="map-stage">
         <div class="map-canvas">
-          <img src="assets/map/hoover-map-tall.png" alt="Outline map of Delaware Lake with pins for public boat ramps and bait shops. Each pin is a button below." width="96" height="324">
+          <img src="assets/map/hoover-map-tall.png" alt="Outline map of Delaware Lake with pins for public boat ramps and bait shops. Each pin is a button below." width="96" height="324" loading="lazy" decoding="async">
         </div>
       </div>
       <div class="map-card" id="map-card" role="region" hidden></div>
@@ -419,7 +419,7 @@
         <a href="whisperwood.html">Whisperwood Vale</a>
         <a href="log">Log</a>
         <a href="about">About</a>
-        <a href="updates" data-updates="2026-11-10">What&rsquo;s new</a>
+        <a href="updates" data-updates="2026-11-17">What&rsquo;s new</a>
         <a href="privacy">Privacy</a>
         <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
@@ -434,23 +434,23 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v41-2026-11-12"></script>
-  <script src="js/sw-update.js?v=v41-2026-11-12"></script>
-  <script src="js/alerts.js?v=v41-2026-11-12"></script>
-  <script src="js/nav.js?v=v41-2026-11-12"></script>
-  <script src="js/visits.js?v=v41-2026-11-12"></script>
-  <script src="js/lake-picker.js?v=v41-2026-11-12"></script>
-  <script src="js/usgs.js?v=v41-2026-11-12"></script>
-  <script src="js/home-log.js?v=v41-2026-11-12"></script>
-  <script src="js/astro.js?v=v41-2026-11-12"></script>
-  <script src="js/night-rules.js?v=v41-2026-11-12"></script>
-  <script src="js/conditions.js?v=v41-2026-11-12"></script>
-  <script src="js/pool-trend.js?v=v41-2026-11-12"></script>
-  <script src="js/lake-map-data-delaware.js?v=v41-2026-11-12"></script>
-  <script src="js/hoover-map.js?v=v41-2026-11-12"></script>
-  <script src="js/install-tip.js?v=v41-2026-11-12"></script>
-  <script src="js/tonight-tools.js?v=v41-2026-11-12"></script>
-  <script src="js/a11y.js?v=v41-2026-11-12" defer></script>
+  <script src="js/refresh.js?v=v42-2026-11-17"></script>
+  <script src="js/sw-update.js?v=v42-2026-11-17"></script>
+  <script src="js/alerts.js?v=v42-2026-11-17"></script>
+  <script src="js/nav.js?v=v42-2026-11-17"></script>
+  <script src="js/visits.js?v=v42-2026-11-17"></script>
+  <script src="js/lake-picker.js?v=v42-2026-11-17"></script>
+  <script src="js/usgs.js?v=v42-2026-11-17"></script>
+  <script src="js/home-log.js?v=v42-2026-11-17"></script>
+  <script src="js/astro.js?v=v42-2026-11-17"></script>
+  <script src="js/night-rules.js?v=v42-2026-11-17"></script>
+  <script src="js/conditions.js?v=v42-2026-11-17"></script>
+  <script src="js/pool-trend.js?v=v42-2026-11-17"></script>
+  <script src="js/lake-map-data-delaware.js?v=v42-2026-11-17"></script>
+  <script src="js/hoover-map.js?v=v42-2026-11-17"></script>
+  <script src="js/install-tip.js?v=v42-2026-11-17"></script>
+  <script src="js/tonight-tools.js?v=v42-2026-11-17"></script>
+  <script src="js/a11y.js?v=v42-2026-11-17" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

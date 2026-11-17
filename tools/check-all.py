@@ -30,7 +30,9 @@ its own pool snapshot for water.html; static, fast), check-glance-bake (each lak
 card; static), check-precache-refs (every script, style and first-paint image a lake home loads is in sw.js PRECACHE;
 static), check-live-readings (fake gauge answers on Hoover: a reading over 6 h old, a temp alone, a saved reading or a
 slow older answer is never shown or shared as live; the bite rating drops a temp over 3 h old; the share image prints the
-reading's time; nothing fetched in a hidden tab; expired alerts go; about 1 minute; browser),
+reading's time; nothing fetched in a hidden tab; expired alerts go; about 1 minute; browser), check-sw-deploys (this
+checkout's service worker across fake deploys on its own local server: a slow styles.css or page, a saved page
+offline after a deploy, the kill switch; never one deploy's page with another's styles; about 2 minutes; browser),
 check-glance, check-glance-fallback (USGS and NWS blocked, and JavaScript off, at 320 and 430 px: no placeholder,
 a visible timestamp), check-bait, check-waters (the lake scope above), check-picker-flow (the water picker and switching
 lakes from the header pill, about 1 minute), check-a11y-settings (Display panel: each setting applies, persists
@@ -57,9 +59,9 @@ sys.stdout.reconfigure(line_buffering=True)
 TOOLS = pathlib.Path(__file__).resolve().parent
 ROOT = TOOLS.parent
 BASES = {"preview": "https://dr0231.github.io/night-bite-preview/", "live": "https://nightbiteoh.com/"}
-BUILDS = ["build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py", "footer-social.py", "wrap-dates.py", "i18n-extract.py", "sw-precache.py"]
-CHECKS = ["check-meta", "check-radius", "check-hours", "check-ramp-names", "check-docks", "check-lake-isolation", "check-glance-bake", "check-precache-refs", "check-glance", "check-glance-fallback", "check-live-readings", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-log-io", "check-trip-queue", "check-night-rules", "check-i18n", "check-manifest", "check-biting-split", "check-sw-precache", "check-i18n-browser", "sweep"]
-BROWSER = {"check-glance", "check-glance-fallback", "check-live-readings", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-log-io", "check-trip-queue", "check-i18n-browser", "sweep"}
+BUILDS = ["build-lake-pages.py", "build-docks.py", "build-summaries.py", "build-meta.py", "stamp-version.py", "build-updates.py", "footer-social.py", "wrap-dates.py", "i18n-extract.py", "sw-precache.py"]
+CHECKS = ["check-meta", "check-radius", "check-hours", "check-ramp-names", "check-docks", "check-lake-isolation", "check-glance-bake", "check-precache-refs", "check-glance", "check-glance-fallback", "check-live-readings", "check-sw-deploys", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-log-io", "check-trip-queue", "check-night-rules", "check-i18n", "check-manifest", "check-biting-split", "check-sw-precache", "check-i18n-browser", "sweep"]
+BROWSER = {"check-glance", "check-glance-fallback", "check-live-readings", "check-sw-deploys", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-log-io", "check-trip-queue", "check-i18n-browser", "sweep"}
 
 ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
 ap.add_argument("--target", choices=["preview", "live", "local"], default="preview")
@@ -269,6 +271,7 @@ def cmd_for(name):
         "check-glance-bake": ([py, str(TOOLS / "glance_bake.py"), "--check"], static_env),
         "check-precache-refs": ([py, str(TOOLS / "check-precache-refs.py")], static_env),
         "check-live-readings": (["node", str(TOOLS / "check-live-readings.cjs"), base, d], {}),
+        "check-sw-deploys": (["node", str(TOOLS / "check-sw-deploys.cjs"), d], {}),
         "check-i18n-browser": (["node", str(TOOLS / "check-i18n.cjs"), base, d], {}),
         "check-docks": ([py, str(TOOLS / "check-docks.py")], {}),
         "check-lake-isolation": ([py, str(TOOLS / "check-lake-isolation.py")], dict(static_env, NB_LAKES=",".join(LAKES))),

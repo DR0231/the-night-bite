@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Split the "What's biting now" data into one small file per lake, so a page loads only the lake it shows.
 
-Sources (edit these, never the output): js/biting-data.js (Hoover, window.NightBiteBiting) and
-js/biting-data-lakes.js (every other lake, window.NightBiteBiting<Id>). Their sources are in DATA-SOURCES.md.
+Sources (edit these, never the output): .github/build-inputs/biting-data.js (Hoover, window.NightBiteBiting) and
+.github/build-inputs/biting-data-lakes.js (every other lake, window.NightBiteBiting<Id>). Their sources are in
+DATA-SOURCES.md. They sit under .github/ because GitHub Pages never publishes that folder: build inputs, not site files.
 Output: js/biting/<id>.js, one per lake in js/lakes.js that has a set, holding only that lake's own object
 (same variable name, same values, compact JSON). js/lakes.js loads it on demand (NightBiteLakes.biting(id)) and
 sw.js precaches it with the lake home (tools/sw-precache.py).
@@ -18,7 +19,7 @@ per-lake file can never drift from the data it was split from. A lake with no se
 import json, os, pathlib, subprocess, sys
 
 root = pathlib.Path(os.environ.get("NB_ROOT") or pathlib.Path(__file__).resolve().parent.parent)
-SOURCES = ["js/biting-data.js", "js/biting-data-lakes.js"]
+SOURCES = [".github/build-inputs/biting-data.js", ".github/build-inputs/biting-data-lakes.js"]
 OUT = "js/biting"
 HEAD = ("/* The Night Bite: what's biting now at {name}, 12 months. Built by tools/biting-split.py from {src};"
         " edit that file, not this one. Sources: DATA-SOURCES.md. Typical patterns, not a fishing report. */\n")

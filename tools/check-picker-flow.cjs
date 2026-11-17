@@ -7,6 +7,7 @@
  * saves that lake; with JavaScript off the tiles are plain links.
  * Lake switching on a lake home (header pill, at 390 and 1280): the sheet opens, the row for another lake goes to that
  * lake's own address, the new page shows that lake's H1 and only its own chart and blocks, and it becomes the saved lake.
+ * IME: Enter in the sheet search with isComposing or keyCode 229 does not navigate; a plain Enter still opens the top match.
  * Prints PASS/FAIL lines (check-all counts FAIL lines); exit 1 on any FAIL. Analytics blocked (tools/no-analytics.cjs).
  */
 const path = require('path');
@@ -93,6 +94,30 @@ const isolation = p => p.evaluate(() => {
         iso.charts.length === 1 && iso.charts[0].includes(next + '-chart'), { url: p.url(), ...iso });
       ok(W + next + ' becomes the saved lake', (await saved(p)) === next, await saved(p));
     }
+    await ctx.close();
+  }
+  // ---- IME Enter in the lake sheet search must not navigate
+  {
+    const ctx = await br.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+    await na.block(ctx);
+    const p = await ctx.newPage(); p.on('pageerror', e => errs.push('ime: ' + e.message));
+    await p.goto(B + 'hoover/', { waitUntil: 'load' });
+    await p.click('.lake-pill'); await p.waitForSelector('#lake-sheet[open]', { timeout: 3000 });
+    await p.fill('#lp-search', 'alum');
+    const fire = (opts) => p.evaluate((o) => {
+      const el = document.getElementById('lp-search');
+      const ev = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true, isComposing: !!o.isComposing });
+      if (o.keyCode != null) Object.defineProperty(ev, 'keyCode', { get: () => o.keyCode });
+      el.dispatchEvent(ev);
+      return { href: location.href, open: document.getElementById('lake-sheet').open, keyCode: ev.keyCode, isComposing: ev.isComposing };
+    }, opts);
+    const composing = await fire({ isComposing: true });
+    ok('IME isComposing Enter does not leave the sheet', lakeOf(p.url()) === 'hoover' && composing.open, composing);
+    const vk = await fire({ isComposing: false, keyCode: 229 });
+    ok('IME keyCode 229 Enter does not leave the sheet', lakeOf(p.url()) === 'hoover' && vk.open && vk.keyCode === 229, vk);
+    await Promise.all([p.waitForURL(/alum\//), p.press('#lp-search', 'Enter')]);
+    await p.waitForLoadState('load');
+    ok('plain Enter still opens the top match', lakeOf(p.url()) === 'alum' && (await saved(p)) === 'alum', { url: p.url(), saved: await saved(p) });
     await ctx.close();
   }
   // ---- JavaScript off

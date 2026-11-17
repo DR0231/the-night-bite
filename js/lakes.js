@@ -1475,9 +1475,386 @@
       map: { data: "NightBiteMapDataWellington", chart: "assets/wellington-chart.png" },
       spots: ["Jones Rd launch", "Bank (other)"],
       species: ["yellow-perch", "largemouth-bass", "smallmouth-bass", "black-crappie", "channel-catfish"]
+    },
+    kiser: {
+      id: "kiser",
+      name: "Kiser Lake",
+      short: "Kiser",
+      area: "West central Ohio",
+      lat: 40.19, lng: -83.965,
+      region: "central", owner: "ODNR Ohio State Parks",
+      aliases: ["Kiser", "Kiser Lake State Park", "St. Paris", "Conover"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 1067,    // ODNR fishing map summer pool (3 ft contours)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/51,89/forecast/hourly",
+        point: "https://api.weather.gov/points/40.19,-83.965",
+        grid: "https://api.weather.gov/gridpoints/ILN/51,89",
+        station: "KI74",
+        stationName: "Urbana Grimes Field (KI74)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.19&lon=-83.965"
+      },
+      alerts: { zones: "OHC021,OHZ052", counties: "the Kiser area" },
+      push: null,
+      map: { data: "NightBiteMapDataKiser", chart: "assets/kiser-chart.png" },
+      spots: ["Main launch ramp", "Nature center launch", "Grandview Heights launch", "Campground launch", "Fishing piers", "Bank (other)"],
+      species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "hybrid-striped-bass", "yellow-perch"]
+    },
+    hargus: {
+      id: "hargus",
+      name: "Hargus Creek Lake",
+      short: "Hargus",
+      area: "Central Ohio",
+      lat: 39.63, lng: -82.882,
+      region: "central", owner: "ODNR Ohio State Parks",
+      aliases: ["Hargus", "Hargus Lake", "A.W. Marion State Park", "AW Marion", "Circleville"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 821.5,    // ODNR fishing map summer pool (5 ft contours)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/90,67/forecast/hourly",
+        point: "https://api.weather.gov/points/39.63,-82.882",
+        grid: "https://api.weather.gov/gridpoints/ILN/90,67",
+        station: "KLCK",
+        stationName: "Rickenbacker Air National Guard Base (KLCK)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.63&lon=-82.882"
+      },
+      alerts: { zones: "OHC129,OHZ064", counties: "the Hargus area" },
+      push: null,
+      map: { data: "NightBiteMapDataHargus", chart: "assets/hargus-chart.png" },
+      spots: ["Launch ramp", "Marina", "Hargus Lake Trail", "Bank (other)"],
+      species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
+    },
+    stonelick: {
+      id: "stonelick",
+      name: "Stonelick Lake",
+      short: "Stonelick",
+      area: "Southwest Ohio",
+      lat: 39.22, lng: -84.07,
+      region: "southwest", owner: "ODNR Ohio State Parks",
+      aliases: ["Stonelick", "Stonelick State Park", "Edenton", "Pleasant Plain"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only; the Corps lists a Stonelick location with no data posted)
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 874.2,    // ODNR fishing map summer pool (3 ft contours)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/51,45/forecast/hourly",
+        point: "https://api.weather.gov/points/39.22,-84.07",
+        grid: "https://api.weather.gov/gridpoints/ILN/51,45",
+        station: "KI69",
+        stationName: "Batavia airport (KI69)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.22&lon=-84.07"
+      },
+      alerts: { zones: "OHC025,OHZ078", counties: "the Stonelick area" },
+      push: null,
+      map: { data: "NightBiteMapDataStonelick", chart: "assets/stonelick-chart.png" },
+      spots: ["West ramp", "Campground hand launch", "Accessible pier by the dam", "Sycamore Day Use Area", "Bank (other)"],
+      species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
+    },
+    grant: {
+      id: "grant",
+      name: "Grant Lake",
+      short: "Grant Lake",
+      area: "Southwest Ohio",
+      lat: 39.006, lng: -83.934,
+      region: "southwest", owner: "ODNR Division of Wildlife",
+      aliases: ["Grant Lake Wildlife Area", "Mt. Orab", "Mount Orab"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: null,    // no ODNR fishing map found; no pool elevation
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/56,35/forecast/hourly",
+        point: "https://api.weather.gov/points/39.006,-83.934",
+        grid: "https://api.weather.gov/gridpoints/ILN/56,35",
+        station: "KI69",
+        stationName: "Batavia airport (KI69)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.006&lon=-83.934"
+      },
+      alerts: { zones: "OHC015,OHZ079", counties: "the Grant Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataGrant", chart: "assets/grant-chart.png" },
+      spots: ["Grant Lake access, SR 68", "Accessible pier, Grant Rd", "Bank (other)"],
+      species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
+    },
+    lakewhite: {
+      id: "lakewhite",
+      name: "Lake White",
+      short: "Lake White",
+      area: "Southeast Ohio",
+      lat: 39.105, lng: -83.025,
+      region: "southeast", owner: "ODNR Ohio State Parks",
+      aliases: ["Lake White State Park", "Waverly", "Pee Pee Creek"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 573.75,    // ODNR fishing map summer pool (3 ft contours)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/ILN/88,43/forecast/hourly",
+        point: "https://api.weather.gov/points/39.105,-83.025",
+        grid: "https://api.weather.gov/gridpoints/ILN/88,43",
+        station: "KEOP",
+        stationName: "Pike airport near Waverly (KEOP)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.105&lon=-83.025"
+      },
+      alerts: { zones: "OHC131,OHZ082", counties: "the Lake White area" },
+      push: null,
+      map: { data: "NightBiteMapDataLakewhite", chart: "assets/lakewhite-chart.png" },
+      spots: ["State park ramp, SR 551", "North launch, SR 552", "Bank (other)"],
+      species: ["saugeye", "largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
+    },
+    lakerupert: {
+      id: "lakerupert",
+      name: "Lake Rupert",
+      short: "Rupert",
+      area: "Southeast Ohio",
+      lat: 39.19, lng: -82.52,
+      region: "southeast", owner: "ODNR Division of Wildlife",
+      aliases: ["Rupert", "Lake Rupert", "Wellston Wildlife Area", "Hamden", "Wellston"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 708,    // ODNR fishing map summer pool (3 ft contours)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/RLX/28,102/forecast/hourly",
+        point: "https://api.weather.gov/points/39.19,-82.52",
+        grid: "https://api.weather.gov/gridpoints/RLX/28,102",
+        station: "KJRO",
+        stationName: "Jackson airport (KJRO)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.19&lon=-82.52"
+      },
+      alerts: { zones: "OHC163,OHZ084", counties: "the Rupert area" },
+      push: null,
+      map: { data: "NightBiteMapDataLakerupert", chart: "assets/lakerupert-chart.png" },
+      spots: ["Wellston Wildlife Area ramp, SR 683", "Bank (other)"],
+      species: ["saugeye", "largemouth-bass", "black-crappie", "white-crappie", "channel-catfish", "yellow-perch"]
+    },
+    jackson: {
+      id: "jackson",
+      name: "Jackson Lake",
+      short: "Jackson Lake",
+      area: "Southeast Ohio",
+      lat: 38.9, lng: -82.598,
+      region: "southeast", owner: "ODNR Ohio State Parks",
+      aliases: ["Jackson Lake State Park", "Oak Hill", "McCorkle Rd"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 700,    // ODNR fishing map summer pool (3 ft contours)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/RLX/26,89/forecast/hourly",
+        point: "https://api.weather.gov/points/38.9,-82.598",
+        grid: "https://api.weather.gov/gridpoints/RLX/26,89",
+        station: "KJRO",
+        stationName: "Jackson airport (KJRO)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=38.9&lon=-82.598"
+      },
+      alerts: { zones: "OHC079,OHZ083", counties: "the Jackson Lake area" },
+      push: null,
+      map: { data: "NightBiteMapDataJackson", chart: "assets/jackson-chart.png" },
+      spots: ["State park ramp, McCorkle Rd", "Furnace ramp, SR 279", "Bank (other)"],
+      species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "muskellunge", "common-carp"]
+    },
+    wolfrun: {
+      id: "wolfrun",
+      name: "Wolf Run Lake",
+      short: "Wolf Run",
+      area: "East central Ohio",
+      lat: 39.8, lng: -81.53,
+      region: "southeast", owner: "ODNR Ohio State Parks",
+      aliases: ["Wolf Run", "Wolf Run State Park", "Caldwell"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 798,    // ODNR fishing map summer pool (3 ft contours)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/PBZ/28,32/forecast/hourly",
+        point: "https://api.weather.gov/points/39.8,-81.53",
+        grid: "https://api.weather.gov/gridpoints/PBZ/28,32",
+        station: "KZZV",
+        stationName: "Zanesville Municipal Airport (KZZV)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.8&lon=-81.53"
+      },
+      alerts: { zones: "OHC121,OHZ068", counties: "the Wolf Run area" },
+      push: null,
+      map: { data: "NightBiteMapDataWolfrun", chart: "assets/wolfrun-chart.png" },
+      spots: ["State park ramp, SR 215", "Bank (other)"],
+      species: ["saugeye", "largemouth-bass", "bluegill", "channel-catfish", "yellow-perch"]
+    },
+    tycoon: {
+      id: "tycoon",
+      name: "Tycoon Lake",
+      short: "Tycoon",
+      area: "Southeast Ohio",
+      lat: 38.926, lng: -82.351,
+      region: "southeast", owner: "ODNR Division of Wildlife",
+      aliases: ["Tycoon", "Tycoon Lake Wildlife Area", "Rio Grande", "Tycoon Rd"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 616.4,    // ODNR fishing map summer pool (3 ft contours)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/RLX/35,91/forecast/hourly",
+        point: "https://api.weather.gov/points/38.926,-82.351",
+        grid: "https://api.weather.gov/gridpoints/RLX/35,91",
+        station: "KJRO",
+        stationName: "Jackson airport (KJRO)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=38.926&lon=-82.351"
+      },
+      alerts: { zones: "OHC053,OHZ086", counties: "the Tycoon area" },
+      push: null,
+      map: { data: "NightBiteMapDataTycoon", chart: "assets/tycoon-chart.png" },
+      spots: ["Tycoon Rd ramp and accessible pier", "Bank (other)"],
+      species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
+    },
+    lakehope: {
+      id: "lakehope",
+      name: "Lake Hope",
+      short: "Lake Hope",
+      area: "Southeast Ohio",
+      lat: 39.328, lng: -82.35,
+      region: "southeast", owner: "ODNR Ohio State Parks",
+      aliases: ["Lake Hope State Park", "Zaleski", "Zaleski State Forest"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: null,    // ODNR fishing map (an older scanned map; no pool elevation printed)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/RLX/33,109/forecast/hourly",
+        point: "https://api.weather.gov/points/39.328,-82.35",
+        grid: "https://api.weather.gov/gridpoints/RLX/33,109",
+        station: "KUNI",
+        stationName: "Ohio University airport, Albany (KUNI)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=39.328&lon=-82.35"
+      },
+      alerts: { zones: "OHC163,OHZ084", counties: "the Lake Hope area" },
+      push: null,
+      map: { data: "NightBiteMapDataLakehope", chart: "assets/lakehope-chart.png" },
+      spots: ["SR 278 ramp by the dam", "Bank (other)"],
+      species: ["largemouth-bass", "bluegill", "channel-catfish", "yellow-perch"]
+    },
+    findlayreservoirs: {
+      id: "findlayreservoirs",
+      name: "Findlay Reservoirs",
+      short: "Findlay",
+      area: "Northwest Ohio",
+      lat: 41.015, lng: -83.575,
+      region: "northwest", owner: "City of Findlay",
+      aliases: ["Findlay", "Findlay Reservoir", "Findlay Reservoir 1", "Findlay Reservoir 2", "Riverbend"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake; the Blanchard River gauge nearby measures the river, not the reservoirs
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 815,    // ODNR fishing map pool (no contour interval printed)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/CLE/21,37/forecast/hourly",
+        point: "https://api.weather.gov/points/41.015,-83.575",
+        grid: "https://api.weather.gov/gridpoints/CLE/21,37",
+        station: "KFDY",
+        stationName: "Findlay Airport (KFDY)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=41.015&lon=-83.575"
+      },
+      alerts: { zones: "OHC063,OHZ017", counties: "the Findlay area" },
+      push: null,
+      map: { data: "NightBiteMapDataFindlayreservoirs", chart: "assets/findlayreservoirs-chart.png" },
+      spots: ["Reservoir 1 ramp", "Reservoir 2 ramp", "Floating piers", "Dike bank (other)"],
+      species: ["walleye", "saugeye", "yellow-perch", "white-bass"]
+    },
+    bresler: {
+      id: "bresler",
+      name: "Bresler Reservoir",
+      short: "Bresler",
+      area: "Northwest Ohio",
+      lat: 40.735, lng: -84.235,
+      region: "northwest", owner: "City of Lima",
+      aliases: ["Bresler", "Lima", "Kemp Rd", "Kemp Road"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 850.5,    // ODNR fishing map pool (5 ft contours)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/IWX/101,25/forecast/hourly",
+        point: "https://api.weather.gov/points/40.735,-84.235",
+        grid: "https://api.weather.gov/gridpoints/IWX/101,25",
+        station: "KAOH",
+        stationName: "Lima airport (KAOH)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.735&lon=-84.235"
+      },
+      alerts: { zones: "OHC003,OHZ025", counties: "the Bresler area" },
+      push: null,
+      map: { data: "NightBiteMapDataBresler", chart: "assets/bresler-chart.png" },
+      spots: ["Kemp Rd ramp", "Agerter Rd lot", "Grubb Rd lots", "Dike bank (other)"],
+      species: ["walleye", "yellow-perch", "white-bass"]
+    },
+    fergusonmetzger: {
+      id: "fergusonmetzger",
+      name: "Ferguson and Metzger Reservoirs",
+      short: "Ferguson & Metzger",
+      area: "Northwest Ohio",
+      lat: 40.745, lng: -84.04,
+      region: "northwest", owner: "City of Lima",
+      aliases: ["Ferguson", "Metzger", "Ferguson Reservoir", "Metzger Reservoir", "Lima", "Reservoir Rd"],
+      pool: {
+        // no public lake level or temperature gauge (USGS lists sampling sites only, no live data); not a Corps lake
+        src: null, srcName: null,
+        temp: null,
+        fullPool: 921,    // ODNR fishing map pool (3 ft contours)
+        gaugeUrl: null
+      },
+      nws: {
+        hourly: "https://api.weather.gov/gridpoints/IWX/108,26/forecast/hourly",
+        point: "https://api.weather.gov/points/40.745,-84.04",
+        grid: "https://api.weather.gov/gridpoints/IWX/108,26",
+        station: "KAOH",
+        stationName: "Lima airport (KAOH)",
+        page: "https://forecast.weather.gov/MapClick.php?lat=40.745&lon=-84.04"
+      },
+      alerts: { zones: "OHC003,OHZ025", counties: "the Ferguson & Metzger area" },
+      push: null,
+      map: { data: "NightBiteMapDataFergusonmetzger", chart: "assets/fergusonmetzger-chart.png" },
+      spots: ["Reservoir Rd ramps", "North Mumaugh Rd lot", "Bank (other)"],
+      species: ["walleye", "saugeye", "yellow-perch", "white-bass", "black-crappie", "largemouth-bass", "smallmouth-bass", "channel-catfish"]
     }
   };
-  var ORDER = ["hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware", "deercreek", "madison", "knox", "clearfork", "seneca", "dillon", "logan", "saltfork", "burroak", "dow", "mosquito", "berlin", "westbranch", "pymatuning", "milton", "leesville", "grandlakestmarys", "caesarcreek", "eastfork", "cjbrown", "rockyfork", "ladue", "paintcreek", "portagelakes", "mogadore", "loramie", "nimisila", "cowan", "acton", "tappan", "piedmont", "clendening", "atwood", "charlesmill", "pleasanthill", "beachcity", "wingfoot", "eastbranch", "guilford", "highlandtown", "punderson", "wellington"];
+  var ORDER = ["hoover", "alum", "buckeye", "oshaughnessy", "griggs", "indian", "delaware", "deercreek", "madison", "knox", "clearfork", "seneca", "dillon", "logan", "saltfork", "burroak", "dow", "mosquito", "berlin", "westbranch", "pymatuning", "milton", "leesville", "grandlakestmarys", "caesarcreek", "eastfork", "cjbrown", "rockyfork", "ladue", "paintcreek", "portagelakes", "mogadore", "loramie", "nimisila", "cowan", "acton", "tappan", "piedmont", "clendening", "atwood", "charlesmill", "pleasanthill", "beachcity", "wingfoot", "eastbranch", "guilford", "highlandtown", "punderson", "wellington", "kiser", "hargus", "stonelick", "grant", "lakewhite", "lakerupert", "jackson", "wolfrun", "tycoon", "lakehope", "findlayreservoirs", "bresler", "fergusonmetzger"];
   // picker regions, in this order (js/lake-picker.js). A region with no lakes yet is hidden. Every lake above sets
   // region to one of these ids; lat and lng above (the lake's NWS forecast point, on the water) give Near me distances.
   var REGIONS = [
@@ -1674,7 +2051,7 @@
     });
   }
 
-  // per-lake data files: "what's biting" (js/biting/<id>.js, split from js/biting-data.js and js/biting-data-lakes.js
+  // per-lake data files: "what's biting" (js/biting/<id>.js, split from .github/build-inputs/biting-data.js and biting-data-lakes.js
   // by tools/biting-split.py) and the map data (js/hoover-map-data.js, js/lake-map-data-<id>.js). One rule for every
   // lake, so a new lake needs no edits here.
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
@@ -1706,22 +2083,23 @@
   window.NightBiteLake = { id: id, cfg: LAKES[id], key: key, cwms: cwms, outflow: function (h) { return outflowTemp(id, h); }, home: homeLake, chosen: chosen, root: atRoot, browsing: browsing };
   if (wantsBiting) biting(id);
 
-  // Lake switches only (js/lake-picker.js sets the flag): a short cross-fade into the new page.
-  // Registered here in <head> so it is in place before the first frame; every other navigation stays instant.
-  // revealing: true from the first frame until this page's own fade in has finished. A switch picked inside that
+  // Page to page: a short cross-fade (css/styles.css @view-transition, only with no reduced-motion preference).
+  // Registered here in <head> so it is in place before the first frame. Less motion in the Display panel skips it
+  // too (CSS media queries can't see that setting). The old "nb-lake-switch" flag is only cleared now.
+  // revealing: true from the first frame until this page's own fade in has finished. A link tapped inside that
   // window skips its fade out, so two fades never overlap (Chrome aborts the second with "Page already revealed").
   var revealing = true;
   function revealed() { revealing = false; }
   function vt(e, clear) {
-    var switching = false;
-    try { switching = sessionStorage.getItem("nb-lake-switch") === "1"; if (clear) sessionStorage.removeItem("nb-lake-switch"); } catch (er) {}
+    try { if (clear) sessionStorage.removeItem("nb-lake-switch"); } catch (er) {}
     var t = e.viewTransition;
     if (!t) { if (clear) revealed(); return; }
-    // a skipped or interrupted fade (quick lake switches) rejects these; nothing to do, so keep the console quiet
+    // a skipped or interrupted fade (quick taps) rejects these; nothing to do, so keep the console quiet
     var quiet = function () {};
     try { [t.ready, t.finished, t.updateCallbackDone].forEach(function (pr) { if (pr && pr.catch) pr.catch(quiet); }); } catch (er) {}
+    var calm = document.documentElement.getAttribute("data-motion") === "reduce";
     var busy = !clear && (revealing || document.activeViewTransition);
-    if (!switching || busy) { try { t.skipTransition(); } catch (er) {} }
+    if (calm || busy) { try { t.skipTransition(); } catch (er) {} }
     if (clear) { try { t.finished.then(revealed, revealed); } catch (er) { revealed(); } }
   }
   window.addEventListener("pagereveal", function (e) { vt(e, true); });

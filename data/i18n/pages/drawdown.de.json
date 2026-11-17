@@ -1,0 +1,32 @@
+{
+ "_meta": {
+  "lang": "de",
+  "page": "drawdown",
+  "review": "draft"
+ },
+ "strings": {
+  "drawdown.0a088b31": "Fallen",
+  "drawdown.0d803833": "MWCD Winterrückgang, 2026 27 Pegel in Fuß über dem Meeresspiegel, wie MWCD sie auflistet.",
+  "drawdown.1641827a": "Winterstand",
+  "drawdown.276e1965": "Ein niedrigerer See bedeutet flache Rampenenden, neue Baumstümpfe und Wattflächen in Ufernähe. Fahren Sie nachts langsam und überprüfen Sie die Rampe, bevor Sie starten.",
+  "drawdown.2a13b042": ". Jede Seeseite zeigt ihren eigenen Pegel an. Überprüfen Sie daher dort den heutigen Pegel.",
+  "drawdown.3106e3eb": "Geben Sie es für jedes Gewässer an, das es umfasst, und geben Sie an, wann noch die Daten des letzten Winters angezeigt werden.",
+  "drawdown.338becca": "ODNR-Winterabsenkungen",
+  "drawdown.3f077a13": "nicht der MWCD",
+  "drawdown.58c9f804": "ODNR führt eine eigene Winter-Drawdown-Liste für State Park-Seen. Die Dock-Saisonnotizen zum",
+  "drawdown.65c88290": "Staatsparkseen",
+  "drawdown.77a3c4b5": "The Night Bite ist inoffiziell und privat:",
+  "drawdown.b1e37ce8": "MWCD Seen, 2026, 27",
+  "drawdown.b65ca4c6": "Nachfüllen bis",
+  "drawdown.c95b172d": ". Die Seeseite zeigt den Pegel Corps of Engineers.",
+  "drawdown.d798782a": "Laut MWCD beginnt der Rückgang Anfang November und die Werte sollten bis Februar wieder normal sein, wobei eine teilweise Wiederauffüllung bis Februar empfohlen wird",
+  "drawdown.dfdc65ff": "und nicht das Corps of Engineers. Daten und Ebenen sind MWCD, kopiert mit der Quelle. MWCD und das Corps können sie ändern.",
+  "drawdown.e0223fef": ". Geprüft",
+  "drawdown.e334394f": "MWCD, Winter-Inanspruchnahmeplan (",
+  "drawdown.e681adbc": "Wasserseite",
+  "drawdown.e9c2418b": "Jeden Winter senkt das Corps of Engineers die Muskingum-Seen ab, um Platz für Schneeschmelze und Frühlingsregen zu schaffen. Hier ist der Fahrplan des MWCD für die Gewässer auf dieser Seite, damit Sie wissen, wie weit ein Rampenende abfallen könnte, bevor Sie wieder absteigen.",
+  "drawdown.f6bb0f46": "Tage",
+  "drawdown.f8051bbd": "Nicht auf dem Zeitplan von MWCD:",
+  "drawdown.fc612a2f": "Beginnt"
+ }
+}

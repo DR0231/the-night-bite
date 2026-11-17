@@ -32,12 +32,12 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="js/a11y-boot.js?v=v41-2026-11-12"></script>
-  <link rel="stylesheet" href="css/styles.css?v=v41-2026-11-12">
-  <script src="js/lakes.js?v=v41-2026-11-12"></script>
+  <script src="js/a11y-boot.js?v=v42-2026-11-17"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v42-2026-11-17">
+  <script src="js/lakes.js?v=v42-2026-11-17"></script>
   <!-- nb:jsonld (tools/build-lake-pages.py) -->
   <script type="application/ld+json">
-  [{"@context": "https://schema.org", "@type": "WebSite", "@id": "https://nightbiteoh.com/#website", "name": "The Night Bite", "alternateName": ["Night Bite OH", "The Night Bite Ohio", "nightbiteoh.com"], "url": "https://nightbiteoh.com/", "inLanguage": "en-US", "publisher": {"@id": "https://nightbiteoh.com/#organization"}}, {"@context": "https://schema.org", "@type": "Organization", "@id": "https://nightbiteoh.com/#organization", "name": "The Night Bite", "url": "https://nightbiteoh.com/", "logo": {"@type": "ImageObject", "url": "https://nightbiteoh.com/assets/icons/icon-512.png", "width": 512, "height": 512}, "sameAs": ["https://www.facebook.com/profile.php?id=61596457070134", "https://www.instagram.com/nightbiteohio/", "https://x.com/NightBiteOH"]}, {"@context": "https://schema.org", "@type": "WebPage", "@id": "https://nightbiteoh.com/#webpage", "url": "https://nightbiteoh.com/", "name": "The Night Bite: Ohio Night Fishing, Live Lake Levels", "isPartOf": {"@id": "https://nightbiteoh.com/#website"}, "dateModified": "2026-11-11", "inLanguage": "en-US"}]
+  [{"@context": "https://schema.org", "@type": "WebSite", "@id": "https://nightbiteoh.com/#website", "name": "The Night Bite", "alternateName": ["Night Bite OH", "The Night Bite Ohio", "nightbiteoh.com"], "url": "https://nightbiteoh.com/", "inLanguage": "en-US", "publisher": {"@id": "https://nightbiteoh.com/#organization"}}, {"@context": "https://schema.org", "@type": "Organization", "@id": "https://nightbiteoh.com/#organization", "name": "The Night Bite", "url": "https://nightbiteoh.com/", "logo": {"@type": "ImageObject", "url": "https://nightbiteoh.com/assets/icons/icon-512.png", "width": 512, "height": 512}, "sameAs": ["https://www.facebook.com/profile.php?id=61596457070134", "https://www.instagram.com/nightbiteohio/", "https://x.com/NightBiteOH"]}, {"@context": "https://schema.org", "@type": "WebPage", "@id": "https://nightbiteoh.com/#webpage", "url": "https://nightbiteoh.com/", "name": "The Night Bite: Ohio Night Fishing, Live Lake Levels", "isPartOf": {"@id": "https://nightbiteoh.com/#website"}, "dateModified": "2026-11-16", "inLanguage": "en-US"}]
   </script>
   <!-- /nb:jsonld -->
 </head>
@@ -59,14 +59,14 @@
           <li class="nav-extra nav-ww"><a href="whisperwood.html">Whisperwood Vale</a></li>
           <li class="nav-extra"><a href="log">Log</a></li>
           <li class="nav-extra"><a href="about">About</a></li>
-          <li class="nav-extra"><a href="updates" data-updates="2026-11-10">What&rsquo;s new</a></li>
+          <li class="nav-extra"><a href="updates" data-updates="2026-11-17">What&rsquo;s new</a></li>
           <li class="nav-more-item nav-more-desk">
             <button type="button" class="nav-more-btn" aria-expanded="false" aria-controls="nav-more-panel">More</button>
             <div id="nav-more-panel" class="nav-more-panel" hidden>
               <a href="whisperwood.html">Whisperwood Vale</a>
               <a href="log">Log</a>
               <a href="about">About</a>
-              <a href="updates" data-updates="2026-11-10">What&rsquo;s new</a>
+              <a href="updates" data-updates="2026-11-17">What&rsquo;s new</a>
               <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
@@ -78,7 +78,7 @@
   <main id="main" class="home water-home">
     <section class="hero wp-hero" aria-labelledby="home-title">
       <div class="hero-horizon" aria-hidden="true">
-        <img src="assets/horizon-center.png" alt="" width="160" height="46">
+        <img src="assets/horizon-center.png" alt="" width="160" height="46" fetchpriority="high">
         <span class="hero-dock-light"></span>
       </div>
       <p class="hero-brand">The Night Bite</p>
@@ -131,6 +131,8 @@
           <li class="wp-item"><a class="wp-tile" href="clearfork/" data-water="clearfork" data-q="clear fork reservoir clear fork central ohio clear fork clearfork clear fork lake mansfield lexington"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/clearfork.png" alt="" width="180" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Clear Fork Reservoir</span></span><span class="wp-gauge">No public gauge</span></a></li>
           <li class="wp-item"><a class="wp-tile" href="charlesmill/" data-water="charlesmill" data-q="charles mill lake charles mill central ohio charles mill charles mill reservoir charles mill lake park mifflin mansfield mwcd"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/charlesmill.png" alt="" width="108" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Charles Mill Lake</span></span><span class="wp-gauge" data-live>Live level</span></a></li>
           <li class="wp-item"><a class="wp-tile" href="pleasanthill/" data-water="pleasanthill" data-q="pleasant hill lake pleasant hill central ohio pleasant hill pleasant hill reservoir pleasant hill lake park perrysville mohican mwcd"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/pleasanthill.png" alt="" width="228" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Pleasant Hill Lake</span></span><span class="wp-gauge" data-live>Live level</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="kiser/" data-water="kiser" data-q="kiser lake kiser west central ohio kiser kiser lake state park st. paris conover"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/kiser.png" alt="" width="183" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Kiser Lake</span><span class="wp-area">West central Ohio</span></span><span class="wp-gauge">No public gauge</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="hargus/" data-water="hargus" data-q="hargus creek lake hargus central ohio hargus hargus lake a.w. marion state park aw marion circleville"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/hargus.png" alt="" width="93" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Hargus Creek Lake</span></span><span class="wp-gauge">No public gauge</span></a></li>
         </ul>
       </section>
       <section class="wp-region" id="region-southeast" data-region="southeast" aria-labelledby="wp-h-southeast">
@@ -145,6 +147,12 @@
           <li class="wp-item"><a class="wp-tile" href="tappan/" data-water="tappan" data-q="tappan lake tappan lake east central ohio tappan tappan lake park deersville scio mwcd"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/tappan.png" alt="" width="192" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Tappan Lake</span><span class="wp-area">East central Ohio</span></span><span class="wp-gauge" data-live>Live level</span></a></li>
           <li class="wp-item"><a class="wp-tile" href="piedmont/" data-water="piedmont" data-q="piedmont lake piedmont lake east central ohio piedmont piedmont marina freeport mwcd"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/piedmont.png" alt="" width="108" height="138" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Piedmont Lake</span><span class="wp-area">East central Ohio</span></span><span class="wp-gauge" data-live>Live level</span></a></li>
           <li class="wp-item"><a class="wp-tile" href="clendening/" data-water="clendening" data-q="clendening lake clendening lake east central ohio clendening clendening marina tippecanoe freeport mwcd"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/clendening.png" alt="" width="261" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Clendening Lake</span><span class="wp-area">East central Ohio</span></span><span class="wp-gauge" data-live>Live level</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="lakewhite/" data-water="lakewhite" data-q="lake white lake white southeast ohio lake white state park waverly pee pee creek"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/lakewhite.png" alt="" width="177" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Lake White</span><span class="wp-area">Southeast Ohio</span></span><span class="wp-gauge">No public gauge</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="lakerupert/" data-water="lakerupert" data-q="lake rupert rupert southeast ohio rupert lake rupert wellston wildlife area hamden wellston"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/lakerupert.png" alt="" width="132" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Lake Rupert</span><span class="wp-area">Southeast Ohio</span></span><span class="wp-gauge">No public gauge</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="jackson/" data-water="jackson" data-q="jackson lake jackson lake southeast ohio jackson lake state park oak hill mccorkle rd"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/jackson.png" alt="" width="75" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Jackson Lake</span><span class="wp-area">Southeast Ohio</span></span><span class="wp-gauge">No public gauge</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="wolfrun/" data-water="wolfrun" data-q="wolf run lake wolf run east central ohio wolf run wolf run state park caldwell"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/wolfrun.png" alt="" width="162" height="141" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Wolf Run Lake</span><span class="wp-area">East central Ohio</span></span><span class="wp-gauge">No public gauge</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="tycoon/" data-water="tycoon" data-q="tycoon lake tycoon southeast ohio tycoon tycoon lake wildlife area rio grande tycoon rd"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/tycoon.png" alt="" width="120" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Tycoon Lake</span><span class="wp-area">Southeast Ohio</span></span><span class="wp-gauge">No public gauge</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="lakehope/" data-water="lakehope" data-q="lake hope lake hope southeast ohio lake hope state park zaleski zaleski state forest"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/lakehope.png" alt="" width="105" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Lake Hope</span><span class="wp-area">Southeast Ohio</span></span><span class="wp-gauge">No public gauge</span></a></li>
         </ul>
       </section>
       <section class="wp-region" id="region-northeast" data-region="northeast" aria-labelledby="wp-h-northeast">
@@ -175,6 +183,9 @@
         <ul class="wp-grid">
           <li class="wp-item"><a class="wp-tile" href="grandlakestmarys/" data-water="grandlakestmarys" data-q="grand lake st. marys grand lake st. marys west central ohio grand lake glsm grand lake st marys grand lake saint marys grand lake st. marys state park celina st. marys montezuma"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/grandlakestmarys.png" alt="" width="267" height="141" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Grand Lake St. Marys</span><span class="wp-area">West central Ohio</span></span><span class="wp-gauge" data-live>Live level</span></a></li>
           <li class="wp-item"><a class="wp-tile" href="loramie/" data-water="loramie" data-q="lake loramie lake loramie west central ohio loramie lake loramie state park minster fort loramie"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/loramie.png" alt="" width="183" height="141" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Lake Loramie</span><span class="wp-area">West central Ohio</span></span><span class="wp-gauge" data-live>Live level</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="findlayreservoirs/" data-water="findlayreservoirs" data-q="findlay reservoirs findlay northwest ohio findlay findlay reservoir findlay reservoir 1 findlay reservoir 2 riverbend"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/findlayreservoirs.png" alt="" width="123" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Findlay Reservoirs</span></span><span class="wp-gauge">No public gauge</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="bresler/" data-water="bresler" data-q="bresler reservoir bresler northwest ohio bresler lima kemp rd kemp road"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/bresler.png" alt="" width="132" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Bresler Reservoir</span></span><span class="wp-gauge">No public gauge</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="fergusonmetzger/" data-water="fergusonmetzger" data-q="ferguson and metzger reservoirs ferguson &amp; metzger northwest ohio ferguson metzger ferguson reservoir metzger reservoir lima reservoir rd"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/fergusonmetzger.png" alt="" width="186" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Ferguson and Metzger Reservoirs</span></span><span class="wp-gauge">No public gauge</span></a></li>
         </ul>
       </section>
       <section class="wp-region" id="region-southwest" data-region="southwest" aria-labelledby="wp-h-southwest">
@@ -187,6 +198,8 @@
           <li class="wp-item"><a class="wp-tile" href="paintcreek/" data-water="paintcreek" data-q="paint creek lake paint creek southwest ohio paint creek paint creek state park bainbridge greenfield"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/paintcreek.png" alt="" width="144" height="120" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Paint Creek Lake</span></span><span class="wp-gauge" data-live>Live level</span></a></li>
           <li class="wp-item"><a class="wp-tile" href="cowan/" data-water="cowan" data-q="cowan lake cowan lake southwest ohio cowan cowan lake state park wilmington clarksville"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/cowan.png" alt="" width="297" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Cowan Lake</span></span><span class="wp-gauge">No public gauge</span></a></li>
           <li class="wp-item"><a class="wp-tile" href="acton/" data-water="acton" data-q="acton lake acton lake southwest ohio acton hueston woods hueston woods state park oxford college corner"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/acton.png" alt="" width="126" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Acton Lake</span></span><span class="wp-gauge">No public gauge</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="stonelick/" data-water="stonelick" data-q="stonelick lake stonelick southwest ohio stonelick stonelick state park edenton pleasant plain"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/stonelick.png" alt="" width="294" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Stonelick Lake</span></span><span class="wp-gauge">No public gauge</span></a></li>
+          <li class="wp-item"><a class="wp-tile" href="grant/" data-water="grant" data-q="grant lake grant lake southwest ohio grant lake wildlife area mt. orab mount orab"><span class="wp-art" aria-hidden="true"><img src="assets/tiles/grant.png" alt="" width="63" height="144" loading="lazy" decoding="async"></span><span class="wp-head"><span class="wp-name">Grant Lake</span></span><span class="wp-gauge">No public gauge</span></a></li>
         </ul>
       </section>
       <!-- /nb:water-picker -->
@@ -194,7 +207,7 @@
 
     <section class="bento-card get-app" id="get-the-app" aria-labelledby="get-app-title">
       <div class="get-app-head">
-        <img class="get-app-icon" src="favicon.svg" alt="" width="32" height="32">
+        <img class="get-app-icon" src="favicon.svg" alt="" width="32" height="32" loading="lazy" decoding="async">
         <div class="get-app-intro">
           <h2 id="get-app-title">Get the app</h2>
           <p class="get-app-lead">Add The Night Bite to your home screen. It opens full screen with the lantern icon, and the pages you&rsquo;ve opened still work with no signal.</p>
@@ -226,7 +239,7 @@
         </details>
       </div>
     </section>
-    <script src="js/get-app.js?v=v41-2026-11-12"></script>
+    <script src="js/get-app.js?v=v42-2026-11-17"></script>
 
     <hr class="divider">
 
@@ -252,7 +265,7 @@
         <a href="whisperwood.html">Whisperwood Vale</a>
         <a href="log">Log</a>
         <a href="about">About</a>
-        <a href="updates" data-updates="2026-11-10">What&rsquo;s new</a>
+        <a href="updates" data-updates="2026-11-17">What&rsquo;s new</a>
         <a href="privacy">Privacy</a>
         <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
@@ -267,12 +280,12 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/water-picker.js?v=v41-2026-11-12"></script>
-  <script src="js/sw-update.js?v=v41-2026-11-12"></script>
-  <script src="js/nav.js?v=v41-2026-11-12"></script>
-  <script src="js/visits.js?v=v41-2026-11-12"></script>
-  <script src="js/install-tip.js?v=v41-2026-11-12"></script>
-  <script src="js/a11y.js?v=v41-2026-11-12" defer></script>
+  <script src="js/water-picker.js?v=v42-2026-11-17"></script>
+  <script src="js/sw-update.js?v=v42-2026-11-17"></script>
+  <script src="js/nav.js?v=v42-2026-11-17"></script>
+  <script src="js/visits.js?v=v42-2026-11-17"></script>
+  <script src="js/install-tip.js?v=v42-2026-11-17"></script>
+  <script src="js/a11y.js?v=v42-2026-11-17" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

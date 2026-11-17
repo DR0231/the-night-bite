@@ -69,6 +69,9 @@ const PAGES = IDS.flatMap(l => [home(l), ...['water', 'stocking', 'gear', 'ice',
       let st = 0;
       try { const r = await page.goto(BASE + p, { waitUntil: 'networkidle', timeout: 45000 }); st = r ? r.status() : 0; } catch (e) { errs.push('goto ' + e.message); }
       await page.waitForTimeout(500);
+      // loading="lazy" images below the fold never load in a headless pass (same as sweep.cjs): load them, then judge them
+      await page.evaluate(() => Promise.race([new Promise(r => setTimeout(r, 5000)), Promise.all([...document.images]
+        .filter(i => i.loading === 'lazy' && !i.complete).map(i => new Promise(r => { i.addEventListener('load', r); i.addEventListener('error', r); i.loading = 'eager'; })))])).catch(() => {});
       const lake = p.split('?lake=')[1] || p.replace('/', '');
       const d = await page.evaluate(() => {
         const vis = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
@@ -92,7 +95,7 @@ const PAGES = IDS.flatMap(l => [home(l), ...['water', 'stocking', 'gear', 'ice',
           document.querySelectorAll('details').forEach(x => x.open = true);
           const vis = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
           await new Promise(r => setTimeout(r, 300));
-          await Promise.all([...document.images].filter(vis).map(i => i.complete && i.naturalWidth ? null : new Promise(r => { i.addEventListener("load", r, { once: true }); i.addEventListener("error", r, { once: true }); })));
+          await Promise.race([new Promise(r => setTimeout(r, 8000)), Promise.all([...document.images].filter(vis).map(i => i.complete && i.naturalWidth ? null : new Promise(r => { i.addEventListener("load", r, { once: true }); i.addEventListener("error", r, { once: true }); i.loading = 'eager'; })))]);
           const q = s => document.querySelector(s); const c = s => (q(s) || {}).content || '';
           const ld = [...document.querySelectorAll('script[type="application/ld+json"]')].map(s => { try { return JSON.parse(s.textContent); } catch (e) { return { __bad: e.message }; } });
           const main = q('main') || document.body;

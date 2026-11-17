@@ -2,7 +2,8 @@
 /* Display settings (js/a11y-boot.js + js/a11y.js), end to end:
  *   node tools/check-a11y-settings.cjs <base> [outDir] [pages]     pages default: ",hoover/,species/" (comma list)
  * At 390 (phone, via the More menu) and 1280 (desktop, via the footer) on each page: the Display button shows, the
- * panel opens as a modal with focus inside and closes on Escape with focus back on a button; each text size sets
+ * panel opens as a modal with focus inside and closes on Escape or the X (a submit button in the dialog form) with
+ * focus back on a button; each text size sets
  * data-text and changes the root font size; Large and Extra large turn on readable text; Readable text swaps body, nav
  * and heading fonts to the system font while the logo keeps its pixel face; Less motion stops transitions; High contrast
  * sets data-contrast and keeps body/nav text >= 7:1; every setting persists after a reload and is on <html> before
@@ -78,6 +79,13 @@ const sys = f => /system-ui/.test(f) && !/Pixelify|Night Bite Pixel|Source Serif
       ok(W + 'panel is a labelled modal with focus inside', modal.modal && modal.focusIn && modal.label === 'a11y-title', modal);
       await p.keyboard.press('Escape'); await p.waitForTimeout(100);
       ok(W + 'Escape closes and returns focus to a button', await p.evaluate(() => !document.getElementById('a11y-panel').open && /^(BUTTON)$/.test(document.activeElement.tagName)));
+      await openPanel();
+      ok(W + 'X is a submit button in the dialog form', await p.evaluate(() => {
+        const b = document.querySelector('.a11y-close'), f = b && b.closest('form');
+        return !!b && b.type === 'submit' && b.value === 'close' && f && (f.getAttribute('method') || '').toLowerCase() === 'dialog';
+      }));
+      await p.click('.a11y-close'); await p.waitForTimeout(100);
+      ok(W + 'X closes and returns focus to a button', await p.evaluate(() => !document.getElementById('a11y-panel').open && /^(BUTTON)$/.test(document.activeElement.tagName)));
       // text sizes
       let prev = 0;
       for (const [v, lbl] of [['sm', 'Small'], ['', 'Default'], ['lg', 'Large'], ['xl', 'Extra large']]) {

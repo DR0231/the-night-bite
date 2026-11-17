@@ -3,8 +3,8 @@
  * choice). Uses only data already on the site:
  *   · which species live at each lake: the js/lakes.js species lists (sourced in DATA-SOURCES.md); data-lakes on
  *     each card mirrors them
- *   · what's biting this month: the lake's own set, js/biting/<id>.js (split from js/biting-data.js and
- *     js/biting-data-lakes.js by tools/biting-split.py), loaded through NightBiteLakes.biting
+ *   · what's biting this month: the lake's own set, js/biting/<id>.js (split from .github/build-inputs/biting-data.js
+ *     and biting-data-lakes.js by tools/biting-split.py), loaded through NightBiteLakes.biting
  *   · ramps and access: the lake's map data (js/hoover-map-data.js, js/lake-map-data-*.js), each place with its
  *     public sources
  *

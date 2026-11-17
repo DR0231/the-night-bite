@@ -1,0 +1,32 @@
+{
+ "_meta": {
+  "lang": "pl",
+  "page": "drawdown",
+  "review": "draft"
+ },
+ "strings": {
+  "drawdown.0a088b31": "Upuszczać",
+  "drawdown.0d803833": "Zimowa wypłata MWCD, 2026 27 Poziomy w stopach nad poziomem morza, zgodnie z listą MWCD.",
+  "drawdown.1641827a": "Poziom zimowy",
+  "drawdown.276e1965": "Niższe jezioro oznacza płytkie końce rampy, nowe pniaki i błotniste równiny w pobliżu brzegu. Jedź powoli w nocy i sprawdź rampę przed startem.",
+  "drawdown.2a13b042": ". Każda strona jeziora pokazuje swój własny wskaźnik, więc sprawdź tam dzisiejszy poziom.",
+  "drawdown.3106e3eb": "zacytuj go dla każdej wody, którą obejmuje, i powiedz, kiedy nadal pokazuje daty ostatniej zimy.",
+  "drawdown.338becca": "Zimowe obniżenia ODNR",
+  "drawdown.3f077a13": "nie MWCD",
+  "drawdown.58c9f804": "ODNR prowadzi własną listę wypłat zimowych dla jezior w parkach stanowych. Informacje o sezonie Dock na",
+  "drawdown.65c88290": "Jeziora w parku stanowym",
+  "drawdown.77a3c4b5": "The Night Bite jest nieoficjalne i prywatne:",
+  "drawdown.b1e37ce8": "Jeziora MWCD, 2026, 27",
+  "drawdown.b65ca4c6": "Uzupełnij do",
+  "drawdown.c95b172d": ". Na stronie jeziora widać wskaźnik Corps of Engineers.",
+  "drawdown.d798782a": "MWCD twierdzi, że spadki rozpoczynają się na początku listopada, a poziomy powinny wrócić do normy w lutym, przy sugerowanym częściowym uzupełnieniu do",
+  "drawdown.dfdc65ff": "a nie Corps of Engineers. Daty i poziomy to MWCD, skopiowane wraz ze źródłem. MWCD i Korpus mogą je zmienić.",
+  "drawdown.e0223fef": ". Sprawdzono",
+  "drawdown.e334394f": "MWCD, harmonogram wypłat zimowych (",
+  "drawdown.e681adbc": "Strona z wodą",
+  "drawdown.e9c2418b": "Każdej zimy Corps of Engineers obniża jeziora Muskingum, aby zrobić miejsce dla topniejącego śniegu i wiosennych deszczy. Oto harmonogram MWCD dla wód w tym miejscu, abyś wiedział, jak daleko może opaść koniec rampy, zanim się cofniesz.",
+  "drawdown.f6bb0f46": "Dni",
+  "drawdown.f8051bbd": "Nie w harmonogramie MWCD:",
+  "drawdown.fc612a2f": "Rozpoczyna się"
+ }
+}

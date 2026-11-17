@@ -1,0 +1,32 @@
+{
+ "_meta": {
+  "lang": "fr",
+  "page": "drawdown",
+  "review": "draft"
+ },
+ "strings": {
+  "drawdown.0a088b31": "Baisse",
+  "drawdown.0d803833": "\"Réduction hivernale MWCD, 2026 27. Niveaux en pieds au-dessus du niveau de la mer, tels que les répertorie MWCD.",
+  "drawdown.1641827a": "Niveau d’hiver",
+  "drawdown.276e1965": "Un lac plus bas signifie des extrémités de rampe peu profondes, de nouvelles souches et des vasières près de la rive. Allez-y lentement la nuit et vérifiez la rampe avant de vous lancer.",
+  "drawdown.2a13b042": ". Chaque page de lac affiche sa propre jauge, alors vérifiez le niveau d'aujourd'hui ici.",
+  "drawdown.3106e3eb": "citez-le pour chaque eau qu'il couvre et dites quand il affiche encore les dates de l'hiver dernier.",
+  "drawdown.338becca": "Abaissements hivernaux ODNR",
+  "drawdown.3f077a13": "pas le MWCD",
+  "drawdown.58c9f804": "ODNR tient sa propre liste de prélèvements hivernaux pour les lacs des parcs d'État. Les notes de la saison du Dock sur le",
+  "drawdown.65c88290": "Lacs du parc d'État",
+  "drawdown.77a3c4b5": "The Night Bite est un site personnel et non officiel :",
+  "drawdown.b1e37ce8": "27 MWCD, 2026",
+  "drawdown.b65ca4c6": "Recharge par",
+  "drawdown.c95b172d": ". Sa page sur le lac montre la jauge Corps of Engineers.",
+  "drawdown.d798782a": "MWCD indique que le retrait commence début novembre et que les niveaux devraient revenir à la normale d'ici février, avec une reconstitution partielle suggérée d'ici",
+  "drawdown.dfdc65ff": "et non le Corps of Engineers. Les dates et les niveaux sont des MWCD, copiés avec la source. MWCD et le Corps peuvent les changer.",
+  "drawdown.e0223fef": ". Vérifié le",
+  "drawdown.e334394f": "MWCD, Calendrier de prélèvement hivernal (",
+  "drawdown.e681adbc": "Page Eau",
+  "drawdown.e9c2418b": "Chaque hiver, le Corps of Engineers abaisse les lacs Muskingum pour faire place à la fonte des neiges et aux pluies printanières. Voici le programme du MWCD pour les eaux de ce site, afin que vous sachiez jusqu'où une extrémité de rampe pourrait descendre avant de reculer.",
+  "drawdown.f6bb0f46": "Jours",
+  "drawdown.f8051bbd": "Pas au programme du MWCD:",
+  "drawdown.fc612a2f": "Commence"
+ }
+}

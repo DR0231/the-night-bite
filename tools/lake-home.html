@@ -82,7 +82,7 @@
   <main id="main" class="home">
     <section class="hero" aria-labelledby="home-title">
       <div class="hero-horizon" aria-hidden="true">
-        <img src="assets/horizon-center.png" alt="" width="160" height="46">
+        <img src="assets/horizon-center.png" alt="" width="160" height="46" fetchpriority="high">
         <span class="hero-dock-light"></span>
       </div>
       <p class="hero-brand">The Night Bite</p>
@@ -108,12 +108,12 @@
       <div class="glance-grid">
         <a class="glance-cell" href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener" data-cell="pool">
           <span class="glance-label">Lake level</span>
-          <span class="glance-value" data-glance="pool">890.12<span class="glance-unit"> ft</span></span>
-          <span class="glance-sub" data-glance="pool-sub">~3.9 ft below full</span>
+          <span class="glance-value" data-glance="pool">889.85<span class="glance-unit"> ft</span></span>
+          <span class="glance-sub" data-glance="pool-sub">~4.2 ft below full</span>
         </a>
         <a class="glance-cell" href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener" data-cell="temp">
           <span class="glance-label">Water temp</span>
-          <span class="glance-value" data-glance="temp">60<span class="glance-unit"> °F</span></span>
+          <span class="glance-value" data-glance="temp">56<span class="glance-unit"> °F</span></span>
           <span class="glance-sub" data-glance="temp-sub">USGS gauge</span>
         </a>
         <a class="glance-cell" href="#conditions" data-cell="sunset" data-empty>
@@ -127,7 +127,7 @@
           <span class="glance-sub" data-glance="wind-sub">At weather.gov</span>
         </a>
       </div>
-      <p class="glance-stamp" data-glance="stamp">Level and temp last checked <time datetime="2026-11-09T08:45:00.000-05:00">Nov. 9, 8:45 AM ET</time>, USGS gauge.</p>
+      <p class="glance-stamp" data-glance="stamp">Level and temp last checked <time datetime="2026-11-16T08:45:00.000-05:00">Nov. 16, 8:45 AM ET</time>, USGS gauge.</p>
     </section>
     <div class="glance-actions" id="glance-actions">
       <button type="button" class="glance-btn" data-act="share" aria-haspopup="dialog" aria-controls="tt-share" aria-describedby="glance-share-note">Share tonight</button>
@@ -361,6 +361,58 @@
       Personal, unofficial Wellington Upground Reservoir hub in Ohio:
       species pages, water maps, trip log, and gear kits.
     </p>
+    <p class="lead" data-for="kiser">
+      Personal, unofficial Kiser Lake hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="hargus">
+      Personal, unofficial Hargus Creek Lake hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="stonelick">
+      Personal, unofficial Stonelick Lake hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="grant">
+      Personal, unofficial Grant Lake hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="lakewhite">
+      Personal, unofficial Lake White hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="lakerupert">
+      Personal, unofficial Lake Rupert hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="jackson">
+      Personal, unofficial Jackson Lake hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="wolfrun">
+      Personal, unofficial Wolf Run Lake hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="tycoon">
+      Personal, unofficial Tycoon Lake hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="lakehope">
+      Personal, unofficial Lake Hope hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="findlayreservoirs">
+      Personal, unofficial Findlay Reservoirs hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="bresler">
+      Personal, unofficial Bresler Reservoir hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
+    <p class="lead" data-for="fergusonmetzger">
+      Personal, unofficial Ferguson and Metzger Reservoirs hub in Ohio:
+      species pages, water maps, trip log, and gear kits.
+    </p>
 
     <!-- nb:quick-facts (tools/build-lake-pages.py) -->
     <details class="how-to-read quick-facts" id="quick-facts">
@@ -381,16 +433,16 @@
     <div class="bento-grid" aria-label="Next actions">
       <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
-        <p class="pool-lead" id="correction-line">890.12 ft · 60°F · ~3.9 ft below full pool</p>
+        <p class="pool-lead" id="correction-line">889.85 ft · 56°F · ~4.2 ft below full pool</p>
         <script src="js/pool-readout.js"></script>
         <p class="meta" id="correction-checked">
-          Checked: <time datetime="2026-11-09T08:45:00.000-05:00">2026-11-09 08:45 ET</time>.
+          Checked: <time datetime="2026-11-16T08:45:00.000-05:00">2026-11-16 08:45 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
         </p>
         <div class="water-stat" style="display:none">
           <span class="label" data-for="hoover buckeye oshaughnessy griggs indian delaware madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch pymatuning milton leesville grandlakestmarys caesarcreek cjbrown rockyfork ladue portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington">Water temp</span>
           <span class="label" data-for="alum deercreek eastfork paintcreek">Outflow temp</span>
-          <span class="value" id="water-temp"><strong>59.7 °F</strong> (15.4 °C)</span>
+          <span class="value" id="water-temp"><strong>55.9 °F</strong> (13.3 °C)</span>
         </div>
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           Provisional snapshot; your browser may refresh it from USGS. Never invented.
@@ -406,58 +458,71 @@
         </div>
         <figure class="pool-chart">
           <button type="button" class="pool-chart-open" id="map-open" aria-haspopup="dialog" aria-controls="hoover-map">
-            <img src="assets/hoover-chart.png" alt="" width="143" height="48" data-for="hoover">
-            <img src="assets/alum-chart.png" alt="" width="134" height="37" data-for="alum">
-            <img src="assets/buckeye-chart.png" alt="" width="92" height="48" data-for="buckeye">
-            <img src="assets/oshaughnessy-chart.png" alt="" width="145" height="38" data-for="oshaughnessy">
-            <img src="assets/griggs-chart.png" alt="" width="148" height="38" data-for="griggs">
-            <img src="assets/indian-chart.png" alt="" width="48" height="42" data-for="indian">
-            <img src="assets/delaware-chart.png" alt="" width="126" height="48" data-for="delaware">
-            <img src="assets/deercreek-chart.png" alt="" width="48" height="47" data-for="deercreek">
-            <img src="assets/madison-chart.png" alt="" width="132" height="48" data-for="madison">
-            <img src="assets/knox-chart.png" alt="" width="35" height="27" data-for="knox">
-            <img src="assets/clearfork-chart.png" alt="" width="60" height="48" data-for="clearfork">
-            <img src="assets/seneca-chart.png" alt="" width="49" height="47" data-for="seneca">
-            <img src="assets/dillon-chart.png" alt="" width="38" height="38" data-for="dillon">
-            <img src="assets/logan-chart.png" alt="" width="73" height="48" data-for="logan">
-            <img src="assets/saltfork-chart.png" alt="" width="48" height="48" data-for="saltfork">
-            <img src="assets/burroak-chart.png" alt="" width="73" height="48" data-for="burroak">
-            <img src="assets/dow-chart.png" alt="" width="60" height="47" data-for="dow">
-            <img src="assets/mosquito-chart.png" alt="" width="148" height="36" data-for="mosquito">
-            <img src="assets/berlin-chart.png" alt="" width="60" height="48" data-for="berlin">
-            <img src="assets/westbranch-chart.png" alt="" width="102" height="48" data-for="westbranch">
-            <img src="assets/pymatuning-chart.png" alt="" width="95" height="48" data-for="pymatuning">
-            <img src="assets/milton-chart.png" alt="" width="111" height="47" data-for="milton">
-            <img src="assets/leesville-chart.png" alt="" width="45" height="48" data-for="leesville">
-            <img src="assets/grandlakestmarys-chart.png" alt="" width="89" height="47" data-for="grandlakestmarys">
-            <img src="assets/caesarcreek-chart.png" alt="" width="48" height="48" data-for="caesarcreek">
-            <img src="assets/eastfork-chart.png" alt="" width="63" height="48" data-for="eastfork">
-            <img src="assets/cjbrown-chart.png" alt="" width="39" height="48" data-for="cjbrown">
-            <img src="assets/rockyfork-chart.png" alt="" width="107" height="48" data-for="rockyfork">
-            <img src="assets/ladue-chart.png" alt="" width="44" height="40" data-for="ladue">
-            <img src="assets/paintcreek-chart.png" alt="" width="48" height="40" data-for="paintcreek">
-            <img src="assets/portagelakes-chart.png" alt="" width="25" height="47" data-for="portagelakes">
-            <img src="assets/mogadore-chart.png" alt="" width="73" height="48" data-for="mogadore">
-            <img src="assets/loramie-chart.png" alt="" width="61" height="47" data-for="loramie">
-            <img src="assets/nimisila-chart.png" alt="" width="27" height="48" data-for="nimisila">
-            <img src="assets/cowan-chart.png" alt="" width="99" height="48" data-for="cowan">
-            <img src="assets/acton-chart.png" alt="" width="42" height="48" data-for="acton">
-            <img src="assets/tappan-chart.png" alt="" width="64" height="48" data-for="tappan">
-            <img src="assets/piedmont-chart.png" alt="" width="36" height="46" data-for="piedmont">
-            <img src="assets/clendening-chart.png" alt="" width="87" height="48" data-for="clendening">
-            <img src="assets/atwood-chart.png" alt="" width="72" height="48" data-for="atwood">
-            <img src="assets/charlesmill-chart.png" alt="" width="36" height="48" data-for="charlesmill">
-            <img src="assets/pleasanthill-chart.png" alt="" width="76" height="48" data-for="pleasanthill">
-            <img src="assets/beachcity-chart.png" alt="" width="41" height="34" data-for="beachcity">
-            <img src="assets/wingfoot-chart.png" alt="" width="53" height="48" data-for="wingfoot">
-            <img src="assets/eastbranch-chart.png" alt="" width="18" height="48" data-for="eastbranch">
-            <img src="assets/guilford-chart.png" alt="" width="57" height="48" data-for="guilford">
-            <img src="assets/highlandtown-chart.png" alt="" width="65" height="47" data-for="highlandtown">
-            <img src="assets/punderson-chart.png" alt="" width="27" height="43" data-for="punderson">
-            <img src="assets/wellington-chart.png" alt="" width="48" height="48" data-for="wellington">
-            <span class="sr-only">Open the <span data-lk="short">Hoover</span> map with boat ramps<span data-for="hoover alum buckeye mosquito berlin pymatuning milton"> and bait shops</span><span data-for="oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow westbranch leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington"> and fishing access</span></span>
+            <img src="assets/hoover-chart.png" alt="" width="143" height="48" data-for="hoover" loading="lazy" decoding="async">
+            <img src="assets/alum-chart.png" alt="" width="134" height="37" data-for="alum" loading="lazy" decoding="async">
+            <img src="assets/buckeye-chart.png" alt="" width="92" height="48" data-for="buckeye" loading="lazy" decoding="async">
+            <img src="assets/oshaughnessy-chart.png" alt="" width="145" height="38" data-for="oshaughnessy" loading="lazy" decoding="async">
+            <img src="assets/griggs-chart.png" alt="" width="148" height="38" data-for="griggs" loading="lazy" decoding="async">
+            <img src="assets/indian-chart.png" alt="" width="48" height="42" data-for="indian" loading="lazy" decoding="async">
+            <img src="assets/delaware-chart.png" alt="" width="126" height="48" data-for="delaware" loading="lazy" decoding="async">
+            <img src="assets/deercreek-chart.png" alt="" width="48" height="47" data-for="deercreek" loading="lazy" decoding="async">
+            <img src="assets/madison-chart.png" alt="" width="132" height="48" data-for="madison" loading="lazy" decoding="async">
+            <img src="assets/knox-chart.png" alt="" width="35" height="27" data-for="knox" loading="lazy" decoding="async">
+            <img src="assets/clearfork-chart.png" alt="" width="60" height="48" data-for="clearfork" loading="lazy" decoding="async">
+            <img src="assets/seneca-chart.png" alt="" width="49" height="47" data-for="seneca" loading="lazy" decoding="async">
+            <img src="assets/dillon-chart.png" alt="" width="38" height="38" data-for="dillon" loading="lazy" decoding="async">
+            <img src="assets/logan-chart.png" alt="" width="73" height="48" data-for="logan" loading="lazy" decoding="async">
+            <img src="assets/saltfork-chart.png" alt="" width="48" height="48" data-for="saltfork" loading="lazy" decoding="async">
+            <img src="assets/burroak-chart.png" alt="" width="73" height="48" data-for="burroak" loading="lazy" decoding="async">
+            <img src="assets/dow-chart.png" alt="" width="60" height="47" data-for="dow" loading="lazy" decoding="async">
+            <img src="assets/mosquito-chart.png" alt="" width="148" height="36" data-for="mosquito" loading="lazy" decoding="async">
+            <img src="assets/berlin-chart.png" alt="" width="60" height="48" data-for="berlin" loading="lazy" decoding="async">
+            <img src="assets/westbranch-chart.png" alt="" width="102" height="48" data-for="westbranch" loading="lazy" decoding="async">
+            <img src="assets/pymatuning-chart.png" alt="" width="95" height="48" data-for="pymatuning" loading="lazy" decoding="async">
+            <img src="assets/milton-chart.png" alt="" width="111" height="47" data-for="milton" loading="lazy" decoding="async">
+            <img src="assets/leesville-chart.png" alt="" width="45" height="48" data-for="leesville" loading="lazy" decoding="async">
+            <img src="assets/grandlakestmarys-chart.png" alt="" width="89" height="47" data-for="grandlakestmarys" loading="lazy" decoding="async">
+            <img src="assets/caesarcreek-chart.png" alt="" width="48" height="48" data-for="caesarcreek" loading="lazy" decoding="async">
+            <img src="assets/eastfork-chart.png" alt="" width="63" height="48" data-for="eastfork" loading="lazy" decoding="async">
+            <img src="assets/cjbrown-chart.png" alt="" width="39" height="48" data-for="cjbrown" loading="lazy" decoding="async">
+            <img src="assets/rockyfork-chart.png" alt="" width="107" height="48" data-for="rockyfork" loading="lazy" decoding="async">
+            <img src="assets/ladue-chart.png" alt="" width="44" height="40" data-for="ladue" loading="lazy" decoding="async">
+            <img src="assets/paintcreek-chart.png" alt="" width="48" height="40" data-for="paintcreek" loading="lazy" decoding="async">
+            <img src="assets/portagelakes-chart.png" alt="" width="25" height="47" data-for="portagelakes" loading="lazy" decoding="async">
+            <img src="assets/mogadore-chart.png" alt="" width="73" height="48" data-for="mogadore" loading="lazy" decoding="async">
+            <img src="assets/loramie-chart.png" alt="" width="61" height="47" data-for="loramie" loading="lazy" decoding="async">
+            <img src="assets/nimisila-chart.png" alt="" width="27" height="48" data-for="nimisila" loading="lazy" decoding="async">
+            <img src="assets/cowan-chart.png" alt="" width="99" height="48" data-for="cowan" loading="lazy" decoding="async">
+            <img src="assets/acton-chart.png" alt="" width="42" height="48" data-for="acton" loading="lazy" decoding="async">
+            <img src="assets/tappan-chart.png" alt="" width="64" height="48" data-for="tappan" loading="lazy" decoding="async">
+            <img src="assets/piedmont-chart.png" alt="" width="36" height="46" data-for="piedmont" loading="lazy" decoding="async">
+            <img src="assets/clendening-chart.png" alt="" width="87" height="48" data-for="clendening" loading="lazy" decoding="async">
+            <img src="assets/atwood-chart.png" alt="" width="72" height="48" data-for="atwood" loading="lazy" decoding="async">
+            <img src="assets/charlesmill-chart.png" alt="" width="36" height="48" data-for="charlesmill" loading="lazy" decoding="async">
+            <img src="assets/pleasanthill-chart.png" alt="" width="76" height="48" data-for="pleasanthill" loading="lazy" decoding="async">
+            <img src="assets/beachcity-chart.png" alt="" width="41" height="34" data-for="beachcity" loading="lazy" decoding="async">
+            <img src="assets/wingfoot-chart.png" alt="" width="53" height="48" data-for="wingfoot" loading="lazy" decoding="async">
+            <img src="assets/eastbranch-chart.png" alt="" width="18" height="48" data-for="eastbranch" loading="lazy" decoding="async">
+            <img src="assets/guilford-chart.png" alt="" width="57" height="48" data-for="guilford" loading="lazy" decoding="async">
+            <img src="assets/highlandtown-chart.png" alt="" width="65" height="47" data-for="highlandtown" loading="lazy" decoding="async">
+            <img src="assets/punderson-chart.png" alt="" width="27" height="43" data-for="punderson" loading="lazy" decoding="async">
+            <img src="assets/wellington-chart.png" alt="" width="48" height="48" data-for="wellington" loading="lazy" decoding="async">
+            <img src="assets/kiser-chart.png" alt="" width="61" height="48" data-for="kiser" loading="lazy" decoding="async">
+            <img src="assets/hargus-chart.png" alt="" width="31" height="48" data-for="hargus" loading="lazy" decoding="async">
+            <img src="assets/stonelick-chart.png" alt="" width="98" height="48" data-for="stonelick" loading="lazy" decoding="async">
+            <img src="assets/grant-chart.png" alt="" width="21" height="48" data-for="grant" loading="lazy" decoding="async">
+            <img src="assets/lakewhite-chart.png" alt="" width="59" height="48" data-for="lakewhite" loading="lazy" decoding="async">
+            <img src="assets/lakerupert-chart.png" alt="" width="44" height="48" data-for="lakerupert" loading="lazy" decoding="async">
+            <img src="assets/jackson-chart.png" alt="" width="25" height="48" data-for="jackson" loading="lazy" decoding="async">
+            <img src="assets/wolfrun-chart.png" alt="" width="54" height="47" data-for="wolfrun" loading="lazy" decoding="async">
+            <img src="assets/tycoon-chart.png" alt="" width="40" height="48" data-for="tycoon" loading="lazy" decoding="async">
+            <img src="assets/lakehope-chart.png" alt="" width="35" height="48" data-for="lakehope" loading="lazy" decoding="async">
+            <img src="assets/findlayreservoirs-chart.png" alt="" width="41" height="48" data-for="findlayreservoirs" loading="lazy" decoding="async">
+            <img src="assets/bresler-chart.png" alt="" width="44" height="48" data-for="bresler" loading="lazy" decoding="async">
+            <img src="assets/fergusonmetzger-chart.png" alt="" width="62" height="48" data-for="fergusonmetzger" loading="lazy" decoding="async">
+            <span class="sr-only">Open the <span data-lk="short">Hoover</span> map with boat ramps<span data-for="hoover alum buckeye mosquito berlin pymatuning milton"> and bait shops</span><span data-for="oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow westbranch leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington kiser hargus stonelick grant lakewhite lakerupert jackson wolfrun tycoon lakehope findlayreservoirs bresler fergusonmetzger"> and fishing access</span></span>
           </button>
-          <figcaption><span class="pool-chart-name" data-lk="name">Hoover Reservoir</span><span class="pool-chart-key"><span data-for="hoover alum oshaughnessy griggs delaware madison burroak mosquito pymatuning milton">&larr; North</span><span data-for="buckeye indian deercreek knox clearfork seneca dillon logan saltfork dow berlin westbranch leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington">&uarr; North</span><span class="pool-chart-legend"><span class="pool-chart-dot" aria-hidden="true"></span><span data-for="hoover">Dam park &amp; dock</span><span data-for="alum">Dam</span><span data-for="buckeye">Liebs Island ramp</span><span data-for="oshaughnessy griggs delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch pymatuning milton leesville caesarcreek eastfork paintcreek tappan piedmont clendening atwood charlesmill pleasanthill beachcity">Dam</span><span data-for="indian">Moundwood ramp</span><span data-for="wellington">Jones Rd launch</span><span data-for="punderson">Launch ramp</span><span data-for="highlandtown">North ramp</span><span data-for="guilford">Dam ramp</span><span data-for="eastbranch">Headwaters Park</span><span data-for="wingfoot">Wildlife area ramp</span><span data-for="acton">Main ramp</span><span data-for="cowan">Marina</span><span data-for="nimisila">C1 ramp</span><span data-for="loramie">Campground ramp</span><span data-for="mogadore">Boat house</span><span data-for="portagelakes">Turkeyfoot ramp</span><span data-for="ladue">SR 44 ramp</span><span data-for="rockyfork">North Beach ramp</span><span data-for="cjbrown">Main ramp</span><span data-for="grandlakestmarys">State park marina ramp</span></span></span><span class="pool-chart-cue" aria-hidden="true">Tap the map for ramps &amp; <span data-for="hoover alum buckeye mosquito berlin pymatuning milton">bait</span><span data-for="oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow westbranch leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington">access</span></span></figcaption>
+          <figcaption><span class="pool-chart-name" data-lk="name">Hoover Reservoir</span><span class="pool-chart-key"><span data-for="hoover alum oshaughnessy griggs delaware madison burroak mosquito pymatuning milton">&larr; North</span><span data-for="buckeye indian deercreek knox clearfork seneca dillon logan saltfork dow berlin westbranch leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington kiser hargus stonelick grant lakewhite lakerupert jackson wolfrun tycoon lakehope findlayreservoirs bresler fergusonmetzger">&uarr; North</span><span class="pool-chart-legend"><span class="pool-chart-dot" aria-hidden="true"></span><span data-for="hoover">Dam park &amp; dock</span><span data-for="alum">Dam</span><span data-for="buckeye">Liebs Island ramp</span><span data-for="oshaughnessy griggs delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch pymatuning milton leesville caesarcreek eastfork paintcreek tappan piedmont clendening atwood charlesmill pleasanthill beachcity">Dam</span><span data-for="indian">Moundwood ramp</span><span data-for="fergusonmetzger">Reservoir Rd ramps</span><span data-for="bresler">Kemp Rd ramp</span><span data-for="findlayreservoirs">City ramp</span><span data-for="lakehope">SR 278 ramp</span><span data-for="tycoon">Tycoon Rd ramp</span><span data-for="wolfrun">State park ramp</span><span data-for="jackson">State park ramp</span><span data-for="lakerupert">Wildlife area ramp</span><span data-for="lakewhite">State park ramp</span><span data-for="grant">Wildlife area access</span><span data-for="stonelick">West ramp</span><span data-for="hargus">Launch ramp</span><span data-for="kiser">Main ramp</span><span data-for="wellington">Jones Rd launch</span><span data-for="punderson">Launch ramp</span><span data-for="highlandtown">North ramp</span><span data-for="guilford">Dam ramp</span><span data-for="eastbranch">Headwaters Park</span><span data-for="wingfoot">Wildlife area ramp</span><span data-for="acton">Main ramp</span><span data-for="cowan">Marina</span><span data-for="nimisila">C1 ramp</span><span data-for="loramie">Campground ramp</span><span data-for="mogadore">Boat house</span><span data-for="portagelakes">Turkeyfoot ramp</span><span data-for="ladue">SR 44 ramp</span><span data-for="rockyfork">North Beach ramp</span><span data-for="cjbrown">Main ramp</span><span data-for="grandlakestmarys">State park marina ramp</span></span></span><span class="pool-chart-cue" aria-hidden="true">Tap the map for ramps &amp; <span data-for="hoover alum buckeye mosquito berlin pymatuning milton">bait</span><span data-for="oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow westbranch leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington kiser hargus stonelick grant lakewhite lakerupert jackson wolfrun tycoon lakehope findlayreservoirs bresler fergusonmetzger">access</span></span></figcaption>
         </figure>
         <details class="how-to-read" id="how-to-read">
           <summary>How to read this</summary>
@@ -805,6 +870,89 @@
               <li><strong>Paddle craft and electric motors only</strong>, boats up to 23 ft (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wellington-upground-reservoir-fishing-area" target="_blank" rel="noopener">ODNR</a>). Public access sunrise to sunset daily (ODNR).</li>
               <li><strong>Statewide bass rules.</strong> The 15″ bass minimum in the 2026–27 rules is for Wellington Reservoir South, a separate 26 acre reservoir in ODNR&rsquo;s lake data, not this one.</li>
             </ul>
+            <ul data-for="kiser">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Kiser Lake&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>1067 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>No motors.</strong> Sailing and paddling only on Kiser Lake (ODNR). Bass 3 a day under a 14″ to 20″ slot (2026–27 rules).</li>
+              <li><strong>Bass rule change coming.</strong> Today Kiser Lake bass are 3 a day: no more than 2 under 14″ and 1 at 20″ or longer, none from 14″ to 20″ (2026–27 rules). The Ohio Wildlife Council voted on <time datetime="2026-10-28">Oct. 28, 2026</time> to drop that rule; from <time datetime="2027-03-01">March 1, 2027</time> Kiser Lake goes to the statewide 5 a day, 12″ minimum (<a href="https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/ohios-spring-2027-turkey-hunting-seasons-updated-bass-fishing-regulations-approved-by-wildlife-council" target="_blank" rel="noopener">ODNR news release</a>).</li>
+            </ul>
+            <ul data-for="hargus">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Hargus Creek Lake&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>821.5 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>Electric motors and hand powered boats only</strong> (ODNR). Bass 4 a day split at 15″ (2026–27 rules).</li>
+              <li><strong>Bass rule change coming.</strong> Today Hargus Creek Lake bass are 4 a day: no more than 2 under 15″ and 2 at 15″ or longer (2026–27 rules). The Ohio Wildlife Council voted on <time datetime="2026-10-28">Oct. 28, 2026</time> to drop that rule; from <time datetime="2027-03-01">March 1, 2027</time> Hargus Creek Lake goes to the statewide 5 a day, 12″ minimum (<a href="https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/ohios-spring-2027-turkey-hunting-seasons-updated-bass-fishing-regulations-approved-by-wildlife-council" target="_blank" rel="noopener">ODNR news release</a>).</li>
+            </ul>
+            <ul data-for="stonelick">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Stonelick Lake&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>874.2 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>Electric motors and hand powered boats only</strong> (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-state-park" target="_blank" rel="noopener">ODNR</a>). Statewide bass and crappie limits.</li>
+            </ul>
+            <ul data-for="grant">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Grant Lake&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map gives no pool elevation, so there is no contour correction at all.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>10 hp limit</strong> (<a href="https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03" target="_blank" rel="noopener">OAC 1501:47-5-03</a>). Statewide bass and crappie limits.</li>
+            </ul>
+            <ul data-for="lakewhite">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Lake White&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>573.75 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>Unlimited horsepower</strong> (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-fishing-area" target="_blank" rel="noopener">ODNR</a>). Statewide bass and crappie limits.</li>
+            </ul>
+            <ul data-for="lakerupert">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Lake Rupert&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>708 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>No horsepower limit, no wake.</strong> ODNR says motorboats run at no wake speed; <a href="https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03" target="_blank" rel="noopener">OAC 1501:47-5-03</a> puts motors over 10 hp at idle speed. Bass 5 a day, none from 12″ to 15″ (2026–27 rules).</li>
+              <li><strong>Bass rule change coming.</strong> Today Lake Rupert bass are 5 a day, none longer than 12″ and shorter than 15″ (2026–27 rules). The Ohio Wildlife Council voted on <time datetime="2026-10-28">Oct. 28, 2026</time> to drop that rule; from <time datetime="2027-03-01">March 1, 2027</time> Lake Rupert goes to the statewide 5 a day, 12″ minimum (<a href="https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/ohios-spring-2027-turkey-hunting-seasons-updated-bass-fishing-regulations-approved-by-wildlife-council" target="_blank" rel="noopener">ODNR news release</a>).</li>
+            </ul>
+            <ul data-for="jackson">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Jackson Lake&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>700 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>10 hp limit; bigger motors at no wake</strong> (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-fishing-area" target="_blank" rel="noopener">ODNR fishing area page</a>). The <a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-state-park" target="_blank" rel="noopener">state park page</a> says any horsepower at idle speed. Statewide bass and crappie limits.</li>
+            </ul>
+            <ul data-for="wolfrun">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Wolf Run Lake&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>798 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>10 hp limit</strong> (ODNR). Bass 3 a day under a 14″ to 20″ slot (2026–27 rules).</li>
+              <li><strong>Bass rule change coming.</strong> Today Wolf Run Lake bass are 3 a day: no more than 2 under 14″ and 1 at 20″ or longer, none from 14″ to 20″ (2026–27 rules). The Ohio Wildlife Council voted on <time datetime="2026-10-28">Oct. 28, 2026</time> to drop that rule; from <time datetime="2027-03-01">March 1, 2027</time> Wolf Run Lake goes to the statewide 5 a day, 12″ minimum (<a href="https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/ohios-spring-2027-turkey-hunting-seasons-updated-bass-fishing-regulations-approved-by-wildlife-council" target="_blank" rel="noopener">ODNR news release</a>).</li>
+            </ul>
+            <ul data-for="tycoon">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Tycoon Lake&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>616.4 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>Any motor at idle speed, no wake</strong> (ODNR; <a href="https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03" target="_blank" rel="noopener">OAC 1501:47-5-03</a>). Bass 3 a day under a 14″ to 20″ slot (2026–27 rules).</li>
+              <li><strong>Bass rule change coming.</strong> Today Tycoon Lake bass are 3 a day: no more than 2 under 14″ and 1 at 20″ or longer, none from 14″ to 20″ (2026–27 rules). The Ohio Wildlife Council voted on <time datetime="2026-10-28">Oct. 28, 2026</time> to drop that rule; from <time datetime="2027-03-01">March 1, 2027</time> Tycoon Lake goes to the statewide 5 a day, 12″ minimum (<a href="https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/ohios-spring-2027-turkey-hunting-seasons-updated-bass-fishing-regulations-approved-by-wildlife-council" target="_blank" rel="noopener">ODNR news release</a>).</li>
+            </ul>
+            <ul data-for="lakehope">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Lake Hope&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map gives no pool elevation, so there is no contour correction at all.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>Electric motors and hand powered boats only</strong> (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-state-park" target="_blank" rel="noopener">ODNR</a>). Statewide bass and crappie limits.</li>
+            </ul>
+            <ul data-for="findlayreservoirs">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts the Findlay reservoirs&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>815 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>Reservoir 1: electric motors only. Reservoir 2: gas outboards up to 9.9 hp</strong> (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/findlay-reservoirs-2-fishing-area" target="_blank" rel="noopener">ODNR</a>). Statewide limits.</li>
+            </ul>
+            <ul data-for="bresler">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Bresler Reservoir&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>850.5 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>Electric motors only</strong> (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/bresler-reservoir-fishing-area" target="_blank" rel="noopener">ODNR</a>). Statewide limits.</li>
+            </ul>
+            <ul data-for="fergusonmetzger">
+              <li><strong>No public lake level gauge.</strong> No USGS or Corps gauge posts Ferguson and Metzger reservoirs&rsquo;s level, so the pool line says so instead of a number.</li>
+              <li>The ODNR fishing map is drawn at <strong>921 ft</strong>. Without a gauge there is no live contour correction.</li>
+              <li><strong>No public temperature gauge on this water</strong>, so the temp slot says n/a. Nothing is estimated.</li>
+              <li><strong>No gas motors</strong> on either reservoir (<a href="https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ferguson-metzger-reservoirs-fishing-area" target="_blank" rel="noopener">ODNR</a>). Crappie 30 a day, 9″ minimum (2026–27 rules).</li>
+            </ul>
           </div>
         </details>
       </section>
@@ -922,6 +1070,19 @@
         <p class="card-text" data-for="highlandtown">ODNR fishing map @ 1070 and the two wildlife area ramps.</p>
         <p class="card-text" data-for="punderson">ODNR fishing map @ 1144, the ramp and the three deep kettles.</p>
         <p class="card-text" data-for="wellington">ODNR fishing map @ 885 and the Jones Rd launch.</p>
+        <p class="card-text" data-for="kiser">ODNR fishing map @ 1067, the ramp and four launch areas.</p>
+        <p class="card-text" data-for="hargus">ODNR fishing map @ 821.5, the ramp and the marina.</p>
+        <p class="card-text" data-for="stonelick">ODNR fishing map @ 874.2, the ramp, the hand launch and the pier.</p>
+        <p class="card-text" data-for="grant">The SR 68 access and the accessible pier. No ODNR contour map.</p>
+        <p class="card-text" data-for="lakewhite">ODNR fishing map @ 573.75 and the two launches.</p>
+        <p class="card-text" data-for="lakerupert">ODNR fishing map @ 708, the ramp and the fish attractors.</p>
+        <p class="card-text" data-for="jackson">ODNR fishing map @ 700 and the two ramps.</p>
+        <p class="card-text" data-for="wolfrun">ODNR fishing map @ 798 and the south side ramp.</p>
+        <p class="card-text" data-for="tycoon">ODNR fishing map @ 616.4 and the Tycoon Rd ramp.</p>
+        <p class="card-text" data-for="lakehope">ODNR fishing map (scanned, no pool printed) and the SR 278 ramp.</p>
+        <p class="card-text" data-for="findlayreservoirs">ODNR fishing map @ 815, both ramps and the fish attractors.</p>
+        <p class="card-text" data-for="bresler">ODNR fishing map @ 850.5, the ramp and the fish attractors.</p>
+        <p class="card-text" data-for="fergusonmetzger">ODNR fishing map @ 921 and the Reservoir Rd ramps.</p>
         <span class="card-cue" aria-hidden="true">Open maps</span>
       </a>
       <a class="bento-card bento-species" href="species/">
@@ -974,6 +1135,19 @@
         <p class="card-text" data-for="highlandtown">Bass, crappie, bluegill, perch, cats: season, where, limits, gear.</p>
         <p class="card-text" data-for="punderson">Bass, bluegill, cats: season, where, limits, gear.</p>
         <p class="card-text" data-for="wellington">Perch, bass, crappie, cats: season, where, limits, gear.</p>
+        <p class="card-text" data-for="kiser">Bass, crappie, bluegill, cats, wipers: season, where, limits, gear.</p>
+        <p class="card-text" data-for="hargus">Bass, crappie, bluegill, cats: season, where, limits, gear.</p>
+        <p class="card-text" data-for="stonelick">Bass, crappie, bluegill, cats: season, where, limits, gear.</p>
+        <p class="card-text" data-for="grant">Bass, crappie, bluegill, cats: season, where, limits, gear.</p>
+        <p class="card-text" data-for="lakewhite">Saugeye, bass, crappie, bluegill, cats: season, where, limits, gear.</p>
+        <p class="card-text" data-for="lakerupert">Saugeye, bass, crappie, cats, perch: season, where, limits, gear.</p>
+        <p class="card-text" data-for="jackson">Bass, crappie, bluegill, cats, muskie: season, where, limits, gear.</p>
+        <p class="card-text" data-for="wolfrun">Saugeye, bass, bluegill, cats, perch: season, where, limits, gear.</p>
+        <p class="card-text" data-for="tycoon">Bass, crappie, bluegill, cats: season, where, limits, gear.</p>
+        <p class="card-text" data-for="lakehope">Bass, bluegill, cats, perch: season, where, limits, gear.</p>
+        <p class="card-text" data-for="findlayreservoirs">Walleye, saugeye, perch, white bass: season, where, limits, gear.</p>
+        <p class="card-text" data-for="bresler">Walleye, perch, white bass: season, where, limits, gear.</p>
+        <p class="card-text" data-for="fergusonmetzger">Walleye, saugeye, perch, crappie, bass: season, where, limits, gear.</p>
         <span class="card-cue" aria-hidden="true">Browse species</span>
       </a>
       <a class="bento-card bento-whisper" href="../whisperwood/play.html">
@@ -1000,7 +1174,7 @@
           <a class="contour-map-open" href="assets/maps/hoover-depth-contours.svg" target="_blank" rel="noopener" aria-label="Open the full-size Hoover depth contour map">
             <picture>
               <source srcset="assets/maps/hoover-depth-contours.webp" type="image/webp">
-              <img src="assets/maps/hoover-depth-contours.webp" alt="ODNR-style Hoover Reservoir depth map with blue bands at 10, 20, 30, 40, 50 and 60 ft. Small labels follow the contours. Roads, Galena, Westerville, the dam, north arrow, scale, and five named ramps show where you are." width="994" height="2240" decoding="async">
+              <img src="assets/maps/hoover-depth-contours.webp" alt="ODNR-style Hoover Reservoir depth map with blue bands at 10, 20, 30, 40, 50 and 60 ft. Small labels follow the contours. Roads, Galena, Westerville, the dam, north arrow, scale, and five named ramps show where you are." width="994" height="2240" decoding="async" loading="lazy">
             </picture>
             <span class="contour-map-fullsize">Open full-size map</span>
           </a>
@@ -1022,7 +1196,7 @@
       <ul class="lake-chips"><li><a class="lake-chip" href="species/channel-catfish">Channel catfish</a></li><li><a class="lake-chip" href="species/blue-catfish">Blue catfish</a></li><li><a class="lake-chip" href="species/flathead-catfish">Flathead catfish</a></li><li><a class="lake-chip" href="species/largemouth-bass">Largemouth bass</a></li><li><a class="lake-chip" href="species/smallmouth-bass">Smallmouth bass</a></li><li><a class="lake-chip" href="species/black-crappie">Black crappie</a></li><li><a class="lake-chip" href="species/white-crappie">White crappie</a></li><li><a class="lake-chip" href="species/bluegill">Bluegill / sunfish</a></li><li><a class="lake-chip" href="species/white-bass">White bass</a></li><li><a class="lake-chip" href="species/hybrid-striped-bass">Hybrid striped bass</a></li><li><a class="lake-chip" href="species/saugeye">Saugeye</a></li><li><a class="lake-chip" href="species/walleye">Walleye</a></li><li><a class="lake-chip" href="species/common-carp">Common carp</a></li><li><a class="lake-chip" href="species/longnose-gar">Longnose gar</a></li><li><a class="lake-chip" href="species/yellow-perch">Yellow perch</a></li></ul>
       <details class="how-to-read lake-links-more">
         <summary>More waters in Central Ohio</summary>
-        <div class="how-to-read-body"><ul class="lake-chips"><li><a class="lake-chip" href="alum/">Alum Creek Lake</a></li><li><a class="lake-chip" href="buckeye/">Buckeye Lake</a></li><li><a class="lake-chip" href="oshaughnessy/">O'Shaughnessy Reservoir</a></li><li><a class="lake-chip" href="griggs/">Griggs Reservoir</a></li><li><a class="lake-chip" href="indian/">Indian Lake</a></li><li><a class="lake-chip" href="delaware/">Delaware Lake</a></li><li><a class="lake-chip" href="deercreek/">Deer Creek Lake</a></li><li><a class="lake-chip" href="madison/">Madison Lake</a></li><li><a class="lake-chip" href="knox/">Knox Lake</a></li><li><a class="lake-chip" href="clearfork/">Clear Fork Reservoir</a></li><li><a class="lake-chip" href="charlesmill/">Charles Mill Lake</a></li><li><a class="lake-chip" href="pleasanthill/">Pleasant Hill Lake</a></li></ul></div>
+        <div class="how-to-read-body"><ul class="lake-chips"><li><a class="lake-chip" href="alum/">Alum Creek Lake</a></li><li><a class="lake-chip" href="buckeye/">Buckeye Lake</a></li><li><a class="lake-chip" href="oshaughnessy/">O'Shaughnessy Reservoir</a></li><li><a class="lake-chip" href="griggs/">Griggs Reservoir</a></li><li><a class="lake-chip" href="indian/">Indian Lake</a></li><li><a class="lake-chip" href="delaware/">Delaware Lake</a></li><li><a class="lake-chip" href="deercreek/">Deer Creek Lake</a></li><li><a class="lake-chip" href="madison/">Madison Lake</a></li><li><a class="lake-chip" href="knox/">Knox Lake</a></li><li><a class="lake-chip" href="clearfork/">Clear Fork Reservoir</a></li><li><a class="lake-chip" href="charlesmill/">Charles Mill Lake</a></li><li><a class="lake-chip" href="pleasanthill/">Pleasant Hill Lake</a></li><li><a class="lake-chip" href="kiser/">Kiser Lake</a></li><li><a class="lake-chip" href="hargus/">Hargus Creek Lake</a></li></ul></div>
       </details>
       <p class="meta lake-links-also"><a href="stocking?lake=hoover#stocked">Stocking records</a> &middot; <a href="water?lake=hoover#docks">Dock season</a> &middot; <a href="./?pick">All waters</a></p>
     </section>
@@ -1030,7 +1204,7 @@
 
     <section class="bento-card get-app" id="get-the-app" aria-labelledby="get-app-title">
       <div class="get-app-head">
-        <img class="get-app-icon" src="favicon.svg" alt="" width="32" height="32">
+        <img class="get-app-icon" src="favicon.svg" alt="" width="32" height="32" loading="lazy" decoding="async">
         <div class="get-app-intro">
           <h2 id="get-app-title">Get the app</h2>
           <p class="get-app-lead">Add The Night Bite to your home screen. It opens full screen with the lantern icon, and the pages you&rsquo;ve opened still work with no signal.</p>
@@ -1069,46 +1243,46 @@
     <h2>What this site is</h2>
     <ul class="condensed-list">
       <li data-for="hoover">Unofficial Hoover-only fishing hub with night-dock atmosphere</li>
-      <li data-for="alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch pymatuning milton leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington">Unofficial Ohio fishing hub with night-dock atmosphere: Hoover, Alum Creek, Buckeye Lake, O&rsquo;Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, C.J. Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Nimisila Reservoir, Cowan Lake, Acton Lake, Tappan Lake, Piedmont Lake, Clendening Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake and Wellington Upground Reservoir</li>
+      <li data-for="alum buckeye oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch pymatuning milton leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington kiser hargus stonelick grant lakewhite lakerupert jackson wolfrun tycoon lakehope findlayreservoirs bresler fergusonmetzger">Unofficial Ohio fishing hub with night-dock atmosphere: Hoover, Alum Creek, Buckeye Lake, O&rsquo;Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir, Seneca Lake, Dillon Lake, Lake Logan, Salt Fork Lake, Burr Oak Lake, Dow Lake, Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton, Leesville Lake, Grand Lake St. Marys, Caesar Creek Lake, East Fork Lake, C.J. Brown Reservoir, Rocky Fork Lake, LaDue Reservoir, Paint Creek Lake, Portage Lakes, Mogadore Reservoir, Lake Loramie, Nimisila Reservoir, Cowan Lake, Acton Lake, Tappan Lake, Piedmont Lake, Clendening Lake, Atwood Lake, Charles Mill Lake, Pleasant Hill Lake, Beach City Lake, Wingfoot Lake, East Branch Reservoir, Guilford Lake, Highlandtown Lake, Punderson Lake, Wellington Upground Reservoir, Kiser Lake, Hargus Creek Lake, Stonelick Lake, Grant Lake, Lake White, Lake Rupert, Jackson Lake, Wolf Run Lake, Tycoon Lake, Lake Hope, Findlay Reservoirs, Bresler Reservoir and Ferguson and Metzger Reservoirs</li>
       <li>Species pages with limit reminders from the ODNR 2026–27 rules</li>
       <li>One example log entry, marked <span class="sample-badge">Example</span> · not ODNR / City / USGS</li>
     </ul>
 
     <div class="callout warn">
       Night fishing can be dangerous in storms, heat, and low visibility. Wear a life jacket when it calls for it.
-      <span data-for="hoover">10 hp · drinking-water reservoir · license ages 16+.</span><span data-for="alum">No wake on the north end · drinking-water reservoir · license ages 16+.</span><span data-for="buckeye">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span><span data-for="oshaughnessy griggs">40 mph, 10 mph after sunset · idle within 100 ft of shore · drinking-water reservoir · license ages 16+.</span><span data-for="indian">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span><span data-for="delaware">Corps winter drawdown · check BeachGuard advisories · license ages 16+.</span><span data-for="deercreek">Corps fall drawdown to winter pool · check BeachGuard advisories · license ages 16+.</span><span data-for="madison">Electric motors only · check BeachGuard advisories · license ages 16+.</span><span data-for="knox">10 hp limit · 18 in bass minimum · license ages 16+.</span><span data-for="clearfork">Idle speed, no wake · water supply lake, no swimming · license ages 16+.</span><span data-for="seneca">399 hp limit · 15 in bass minimum · license ages 16+.</span><span data-for="dillon">Corps flood control lake · check BeachGuard advisories · license ages 16+.</span><span data-for="logan">10 hp, 10 mph · check BeachGuard advisories · license ages 16+.</span><span data-for="saltfork">Speed and ski zones · 4 bass a day, split by size · license ages 16+.</span><span data-for="burroak">10 hp limit · no bass 12 to 15 in · license ages 16+.</span><span data-for="dow">10 hp limit · no bass 12 to 15 in · license ages 16+.</span><span data-for="mosquito">No hp limit · 15 in walleye minimum · license ages 16+.</span><span data-for="berlin">10 mph at night · 15 in walleye minimum · license ages 16+.</span><span data-for="westbranch">No wake west of Rock Spring Road · 15 in walleye minimum · license ages 16+.</span><span data-for="pymatuning">20 hp limit · Pennsylvania license on the Pennsylvania shore · license ages 16+.</span><span data-for="milton">Fall drawdown from Oct. 15 · 15 in walleye minimum · license ages 16+.</span><span data-for="leesville">10 hp limit · MWCD lake · license ages 16+.</span><span data-for="grandlakestmarys">Unlimited hp · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="caesarcreek">Unlimited hp · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="eastfork">No hp limit · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="cjbrown">Unlimited hp · walleye 6 a day, 15 in minimum · license ages 16+.</span><span data-for="rockyfork">Unlimited hp · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="ladue">Electric only · walleye 6 a day, 15 in minimum · license ages 16+.</span><span data-for="paintcreek">Unlimited hp · crappie 30 a day, 9 in minimum · bass 4 a day split · license ages 16+.</span><span data-for="portagelakes">400 hp · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="mogadore">Electric only · statewide limits · license ages 16+.</span><span data-for="loramie">No hp limit, no wake except the west speed zone · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="nimisila">Electric only · statewide limits · license ages 16+.</span><span data-for="cowan">10 hp · bass 5 a day, 15 in minimum · license ages 16+.</span><span data-for="acton">Over 10 hp at no wake · bass 4 a day split · license ages 16+.</span><span data-for="tappan">399 hp limit · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="piedmont">10 hp limit · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="clendening">10 hp limit · MWCD lake · license ages 16+.</span><span data-for="atwood">25 hp limit · MWCD lake · license ages 16+.</span><span data-for="charlesmill">10 hp limit · MWCD lake · license ages 16+.</span><span data-for="pleasanthill">Unlimited hp · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="beachcity">10 hp limit · no public ramp · license ages 16+.</span><span data-for="wingfoot">Idle speed, no wake · bass 3 a day slot · license ages 16+.</span><span data-for="eastbranch">Electric only · statewide limits · license ages 16+.</span><span data-for="guilford">10 hp · bass 3 a day slot · license ages 16+.</span><span data-for="highlandtown">10 hp · bass 4 a day split · license ages 16+.</span><span data-for="punderson">Electric only · statewide limits · license ages 16+.</span><span data-for="wellington">Paddle and electric only · statewide limits · license ages 16+.</span> See <a href="about">About</a>.
+      <span data-for="hoover">10 hp · drinking-water reservoir · license ages 16+.</span><span data-for="alum">No wake on the north end · drinking-water reservoir · license ages 16+.</span><span data-for="buckeye">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span><span data-for="oshaughnessy griggs">40 mph, 10 mph after sunset · idle within 100 ft of shore · drinking-water reservoir · license ages 16+.</span><span data-for="indian">No wake within 300 ft of shore · shallow lake, check algae advisories · license ages 16+.</span><span data-for="delaware">Corps winter drawdown · check BeachGuard advisories · license ages 16+.</span><span data-for="deercreek">Corps fall drawdown to winter pool · check BeachGuard advisories · license ages 16+.</span><span data-for="madison">Electric motors only · check BeachGuard advisories · license ages 16+.</span><span data-for="knox">10 hp limit · 18 in bass minimum · license ages 16+.</span><span data-for="clearfork">Idle speed, no wake · water supply lake, no swimming · license ages 16+.</span><span data-for="seneca">399 hp limit · 15 in bass minimum · license ages 16+.</span><span data-for="dillon">Corps flood control lake · check BeachGuard advisories · license ages 16+.</span><span data-for="logan">10 hp, 10 mph · check BeachGuard advisories · license ages 16+.</span><span data-for="saltfork">Speed and ski zones · 4 bass a day, split by size · license ages 16+.</span><span data-for="burroak">10 hp limit · no bass 12 to 15 in · license ages 16+.</span><span data-for="dow">10 hp limit · no bass 12 to 15 in · license ages 16+.</span><span data-for="mosquito">No hp limit · 15 in walleye minimum · license ages 16+.</span><span data-for="berlin">10 mph at night · 15 in walleye minimum · license ages 16+.</span><span data-for="westbranch">No wake west of Rock Spring Road · 15 in walleye minimum · license ages 16+.</span><span data-for="pymatuning">20 hp limit · Pennsylvania license on the Pennsylvania shore · license ages 16+.</span><span data-for="milton">Fall drawdown from Oct. 15 · 15 in walleye minimum · license ages 16+.</span><span data-for="leesville">10 hp limit · MWCD lake · license ages 16+.</span><span data-for="grandlakestmarys">Unlimited hp · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="caesarcreek">Unlimited hp · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="eastfork">No hp limit · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="cjbrown">Unlimited hp · walleye 6 a day, 15 in minimum · license ages 16+.</span><span data-for="rockyfork">Unlimited hp · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="ladue">Electric only · walleye 6 a day, 15 in minimum · license ages 16+.</span><span data-for="paintcreek">Unlimited hp · crappie 30 a day, 9 in minimum · bass 4 a day split · license ages 16+.</span><span data-for="portagelakes">400 hp · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="mogadore">Electric only · statewide limits · license ages 16+.</span><span data-for="loramie">No hp limit, no wake except the west speed zone · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="nimisila">Electric only · statewide limits · license ages 16+.</span><span data-for="cowan">10 hp · bass 5 a day, 15 in minimum · license ages 16+.</span><span data-for="acton">Over 10 hp at no wake · bass 4 a day split · license ages 16+.</span><span data-for="tappan">399 hp limit · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="piedmont">10 hp limit · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="clendening">10 hp limit · MWCD lake · license ages 16+.</span><span data-for="atwood">25 hp limit · MWCD lake · license ages 16+.</span><span data-for="charlesmill">10 hp limit · MWCD lake · license ages 16+.</span><span data-for="pleasanthill">Unlimited hp · crappie 30 a day, 9 in minimum · license ages 16+.</span><span data-for="beachcity">10 hp limit · no public ramp · license ages 16+.</span><span data-for="wingfoot">Idle speed, no wake · bass 3 a day slot · license ages 16+.</span><span data-for="eastbranch">Electric only · statewide limits · license ages 16+.</span><span data-for="guilford">10 hp · bass 3 a day slot · license ages 16+.</span><span data-for="highlandtown">10 hp · bass 4 a day split · license ages 16+.</span><span data-for="punderson">Electric only · statewide limits · license ages 16+.</span><span data-for="wellington">Paddle and electric only · statewide limits · license ages 16+.</span><span data-for="kiser">No motors · bass 3 a day slot · license ages 16+.</span><span data-for="hargus">Electric only · bass 4 a day split · license ages 16+.</span><span data-for="stonelick">Electric only · statewide limits · license ages 16+.</span><span data-for="grant">10 hp · statewide limits · license ages 16+.</span><span data-for="lakewhite">Unlimited hp · statewide limits · license ages 16+.</span><span data-for="lakerupert">Any hp at no wake · bass 5 a day slot · license ages 16+.</span><span data-for="jackson">10 hp, bigger motors no wake · statewide limits · license ages 16+.</span><span data-for="wolfrun">10 hp · bass 3 a day slot · license ages 16+.</span><span data-for="tycoon">Idle speed, no wake · bass 3 a day slot · license ages 16+.</span><span data-for="lakehope">Electric only · statewide limits · license ages 16+.</span><span data-for="findlayreservoirs">Res. 1 electric, Res. 2 9.9 hp · statewide limits · license ages 16+.</span><span data-for="bresler">Electric only · statewide limits · license ages 16+.</span><span data-for="fergusonmetzger">No gas motors · crappie 30 a day, 9″ · license ages 16+.</span> See <a href="about">About</a>.
     </div>
   </main>
 
 
-  <dialog class="map-dialog" id="hoover-map" aria-labelledby="map-title">
+  <dialog class="map-dialog" id="hoover-map" aria-labelledby="map-title" closedby="any">
     <div class="map-panel">
       <div class="map-head">
         <span class="map-grab" aria-hidden="true"></span>
-        <h2 id="map-title">Ramps &amp; <span data-for="hoover alum buckeye mosquito berlin pymatuning milton">bait</span><span data-for="oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow westbranch leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington">access</span> at <span data-lk="short">Hoover</span></h2>
+        <h2 id="map-title">Ramps &amp; <span data-for="hoover alum buckeye mosquito berlin pymatuning milton">bait</span><span data-for="oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow westbranch leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington kiser hargus stonelick grant lakewhite lakerupert jackson wolfrun tycoon lakehope findlayreservoirs bresler fergusonmetzger">access</span> at <span data-lk="short">Hoover</span></h2>
         <button type="button" class="map-close" aria-label="Close map"><span aria-hidden="true"></span></button>
       </div>
       <ul class="map-legend" aria-label="Map key">
-        <li><img src="assets/map/pin-ramp.png" alt="" width="9" height="11">Public boat ramp</li>
-        <li data-for="hoover alum buckeye mosquito berlin pymatuning milton"><img src="assets/map/pin-shop.png" alt="" width="9" height="11">Bait shop</li>
-        <li data-for="hoover"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Boardwalk, shore access</li>
-        <li data-for="buckeye"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Fishing pier, shore access</li>
-        <li data-for="oshaughnessy"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Canoe and kayak access</li>
-        <li data-for="griggs"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Boat docks, shore access</li>
-        <li data-for="indian"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Beach jetties, shore access</li>
-        <li data-for="deercreek"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Below the dam, shore access</li>
-        <li data-for="madison"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Shore access by the ramp</li>
-        <li data-for="knox"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Carry-in access</li>
-        <li data-for="clearfork"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Picnic areas, shore access</li>
-        <li data-for="dow"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Shore fishing by the dam</li>
-        <li data-for="mosquito"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Kayak launch by the refuge</li>
-        <li data-for="westbranch"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Marina and fishing pier</li>
-        <li data-for="milton"><img src="assets/map/pin-access.png" alt="" width="9" height="11">Marina</li>
+        <li><img src="assets/map/pin-ramp.png" alt="" width="9" height="11" loading="lazy" decoding="async">Public boat ramp</li>
+        <li data-for="hoover alum buckeye mosquito berlin pymatuning milton"><img src="assets/map/pin-shop.png" alt="" width="9" height="11" loading="lazy" decoding="async">Bait shop</li>
+        <li data-for="hoover"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Boardwalk, shore access</li>
+        <li data-for="buckeye"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Fishing pier, shore access</li>
+        <li data-for="oshaughnessy"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Canoe and kayak access</li>
+        <li data-for="griggs"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Boat docks, shore access</li>
+        <li data-for="indian"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Beach jetties, shore access</li>
+        <li data-for="deercreek"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Below the dam, shore access</li>
+        <li data-for="madison"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Shore access by the ramp</li>
+        <li data-for="knox"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Carry-in access</li>
+        <li data-for="clearfork"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Picnic areas, shore access</li>
+        <li data-for="dow"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Shore fishing by the dam</li>
+        <li data-for="mosquito"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Kayak launch by the refuge</li>
+        <li data-for="westbranch"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Marina and fishing pier</li>
+        <li data-for="milton"><img src="assets/map/pin-access.png" alt="" width="9" height="11" loading="lazy" decoding="async">Marina</li>
         <li class="map-legend-hint">Tap a pin for details</li>
       </ul>
       <div class="map-stage">
         <div class="map-canvas">
-          <img src="assets/map/hoover-map-tall.png" alt="Outline map of Hoover Reservoir with pins for public boat ramps and bait shops. Each pin is a button below." width="96" height="324">
+          <img src="assets/map/hoover-map-tall.png" alt="Outline map of Hoover Reservoir with pins for public boat ramps and bait shops. Each pin is a button below." width="96" height="324" loading="lazy" decoding="async">
         </div>
       </div>
       <div class="map-card" id="map-card" role="region" hidden></div>
@@ -1162,6 +1336,19 @@
         <p data-for="highlandtown">Highlandtown Wildlife Area: 10 hp limit (OAC 1501:47-5-03). The two wildlife area ramps in ODNR&rsquo;s boating list are pinned. ODNR&rsquo;s pages post no hours for the wildlife area; follow posted signs. Shoreline traced from OpenStreetMap, not for navigation.</p>
         <p data-for="punderson">Punderson State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Electric motors only, one launch ramp. A natural kettle lake with three deep holes, 57 ft at most. Shoreline traced from OpenStreetMap, not for navigation.</p>
         <p data-for="wellington">Village of Wellington water supply reservoir with an ODNR fishing agreement: paddle craft and electric motors only, boats up to 23 ft. Public access sunrise to sunset daily (ODNR). The launch and parking lot off Jones Rd is pinned. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="kiser">Kiser Lake State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. No motors on the lake. The boat ramp, three small launch areas and the marina from ODNR&rsquo;s boating layer are pinned. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="hargus">A.W. Marion State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Electric motors and hand powered boats only. The one launch ramp and the marina are pinned. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="stonelick">Stonelick State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Electric motors and hand powered boats only. The ramp, the campground hand launch and the accessible pier by the dam are pinned. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="grant">Grant Lake Wildlife Area: 10 hp limit (OAC 1501:47-5-03). The wildlife area access off SR 68 is pinned; the accessible pier is on the west side off Grant Rd. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="lakewhite">Lake White State Park: open sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours. Unlimited horsepower. The two launches in ODNR&rsquo;s boating layer are pinned; a private marina offers more access. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="lakerupert">Wellston Wildlife Area: any horsepower, but motors over 10 hp only at idle speed, no wake (OAC 1501:47-5-03). The wildlife area ramp on SR 683 is pinned. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="jackson">Jackson Lake State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. 10 hp limit, bigger motors at no wake (ODNR fishing area page; the park page says any horsepower at idle speed). The state park ramp and the Furnace ramp from ODNR&rsquo;s boating layer are pinned. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="wolfrun">Wolf Run State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. 10 hp limit. The south side ramp is pinned. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="tycoon">Tycoon Lake Wildlife Area: any motor, idle speed only, no wake (OAC 1501:47-5-03). The concrete ramp off Tycoon Rd, with its accessible pier, is pinned. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="lakehope">Lake Hope State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Electric motors and hand powered boats only. The one ramp, on SR 278 by the dam, is pinned. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="findlayreservoirs">City of Findlay water supply reservoirs with an ODNR fishing agreement: electric motors only on Reservoir 1, gas outboards up to 9.9 hp on Reservoir 2. The two city ramps are pinned. Shorelines traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="bresler">City of Lima water supply reservoir: electric motors only. The Kemp Rd ramp and main lot are pinned. Shoreline traced from OpenStreetMap, not for navigation.</p>
+        <p data-for="fergusonmetzger">City of Lima water supply reservoirs: no gas motors on either. The primitive ramps by the Reservoir Rd entrance are pinned. Shorelines traced from OpenStreetMap, not for navigation.</p>
       </details>
     </div>
   </dialog>
@@ -1252,6 +1439,19 @@
   <script src="js/lake-map-data-highlandtown.js"></script>
   <script src="js/lake-map-data-punderson.js"></script>
   <script src="js/lake-map-data-wellington.js"></script>
+  <script src="js/lake-map-data-kiser.js"></script>
+  <script src="js/lake-map-data-hargus.js"></script>
+  <script src="js/lake-map-data-stonelick.js"></script>
+  <script src="js/lake-map-data-grant.js"></script>
+  <script src="js/lake-map-data-lakewhite.js"></script>
+  <script src="js/lake-map-data-lakerupert.js"></script>
+  <script src="js/lake-map-data-jackson.js"></script>
+  <script src="js/lake-map-data-wolfrun.js"></script>
+  <script src="js/lake-map-data-tycoon.js"></script>
+  <script src="js/lake-map-data-lakehope.js"></script>
+  <script src="js/lake-map-data-findlayreservoirs.js"></script>
+  <script src="js/lake-map-data-bresler.js"></script>
+  <script src="js/lake-map-data-fergusonmetzger.js"></script>
   <script src="js/hoover-map.js"></script>
   <script src="js/install-tip.js"></script>
   <script src="js/tonight-tools.js"></script>

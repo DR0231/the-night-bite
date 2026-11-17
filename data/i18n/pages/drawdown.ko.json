@@ -1,0 +1,32 @@
+{
+ "_meta": {
+  "lang": "ko",
+  "page": "drawdown",
+  "review": "draft"
+ },
+ "strings": {
+  "drawdown.0a088b31": "떨어지다",
+  "drawdown.0d803833": "MWCD 겨울 감소, 2026, 27. MWCD 에 나열된 수준(해발 피트)입니다.",
+  "drawdown.1641827a": "겨울 수위",
+  "drawdown.276e1965": "호수가 낮다는 것은 경사로 끝이 얕다는 뜻이고, 제방 근처에 새로운 그루터기와 갯벌이 있다는 뜻입니다. 밤에는 천천히 이동하고 출발하기 전에 경사로를 확인하세요.",
+  "drawdown.2a13b042": ". 각 호수 페이지에는 자체 게이지가 표시되므로 거기서 오늘의 레벨을 확인하세요.",
+  "drawdown.3106e3eb": "그것이 덮고 있는 각 물에 대해 그것을 인용하고, 그것이 여전히 지난 겨울의 날짜를 나타내는 때를 말하십시오.",
+  "drawdown.338becca": "ODNR 겨울 수위 저하",
+  "drawdown.3f077a13": "MWCD 아님",
+  "drawdown.58c9f804": "ODNR 주립공원 호수에 대한 자체 겨울 결점 목록을 유지합니다. Dock 시즌 노트",
+  "drawdown.65c88290": "주립공원 호수",
+  "drawdown.77a3c4b5": "The Night Bite는 비공식 개인 사이트예요:",
+  "drawdown.b1e37ce8": "MWCD 호수, 2026, 27",
+  "drawdown.b65ca4c6": "리필 기준",
+  "drawdown.c95b172d": ". 호수 페이지에는 Corps of Engineers 게이지가 표시됩니다.",
+  "drawdown.d798782a": "MWCD 감소가 11월 초에 시작되며 2월까지 수준이 정상으로 돌아올 것이라고 밝혔습니다.",
+  "drawdown.dfdc65ff": "Corps of Engineers 아닙니다. 날짜와 레벨은 소스와 함께 복사된 MWCD 입니다. MWCD 와 군단은 이를 변경할 수 있습니다.",
+  "drawdown.e0223fef": ". 확인일:",
+  "drawdown.e334394f": "MWCD, 겨울 하락 일정(",
+  "drawdown.e681adbc": "워터페이지",
+  "drawdown.e9c2418b": "매년 겨울 Corps of Engineers 눈이 녹고 봄비를 위한 공간을 마련하기 위해 머킹검 호수를 낮춥니다. 이 사이트의 물에 대한 MWCD 의 일정은 다음과 같습니다. 따라서 뒤로 물러나기 전에 경사로 끝이 얼마나 멀리 떨어질 수 있는지 알 수 있습니다.",
+  "drawdown.f6bb0f46": "날",
+  "drawdown.f8051bbd": "MWCD 일정에 ​​포함되지 않음:",
+  "drawdown.fc612a2f": "시작"
+ }
+}

@@ -258,6 +258,7 @@
     dlg.close();
   }
   dlg.addEventListener("close", function () {
+    panel.style.transform = "";
     document.documentElement.classList.remove("map-open");
     closeCard(false);
     openBtn.focus();
@@ -267,6 +268,8 @@
   dlg.addEventListener("cancel", function (e) {
     if (!card.hidden) { e.preventDefault(); closeCard(true); }
   });
+  // closedby="any" (in the HTML) lets the browser close on a tap on the backdrop. The dialog box itself fills the
+  // screen around the panel, so a tap there lands on the dialog, not the backdrop: this listener stays in every browser.
   dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });
   // with a card open, a tap on the map (not on a pin) folds the card back down to the map
   stage.addEventListener("click", function (e) {

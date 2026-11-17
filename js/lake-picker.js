@@ -254,6 +254,7 @@
   search.addEventListener("input", paint);
   search.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {   // Enter opens the top match
+      if (e.isComposing || e.keyCode === 229) return;   // IME is still composing (CJK)
       var first = body.querySelector(".lp-lake");
       if (first && search.value.trim()) { e.preventDefault(); first.click(); }
     }

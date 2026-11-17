@@ -1,0 +1,32 @@
+{
+ "_meta": {
+  "lang": "vi",
+  "page": "drawdown",
+  "review": "draft"
+ },
+ "strings": {
+  "drawdown.0a088b31": "Làm rơi",
+  "drawdown.0d803833": "Giải ngân mùa đông MWCD, 2026, 27. Mức độ tính bằng feet so với mực nước biển, như MWCD liệt kê chúng.",
+  "drawdown.1641827a": "Mực nước mùa đông",
+  "drawdown.276e1965": "Hồ thấp hơn có nghĩa là đoạn cuối của đoạn đường cạn, những gốc cây mới và bãi bùn gần bờ. Đi chậm vào ban đêm và kiểm tra đoạn đường nối trước khi phóng.",
+  "drawdown.2a13b042": ". Mỗi trang hồ hiển thị thước đo riêng, vì vậy hãy kiểm tra cấp độ ngày hôm nay ở đó.",
+  "drawdown.3106e3eb": "trích dẫn nó cho từng vùng nước mà nó bao phủ và cho biết thời điểm nó vẫn hiển thị những ngày tháng của mùa đông năm ngoái.",
+  "drawdown.338becca": "Hạ mực nước mùa đông của ODNR",
+  "drawdown.3f077a13": "không phải MWCD",
+  "drawdown.58c9f804": "ODNR giữ danh sách giảm giá mùa đông của riêng mình cho các hồ trong công viên tiểu bang. Ghi chú mùa Dock trên",
+  "drawdown.65c88290": "Hồ công viên tiểu bang",
+  "drawdown.77a3c4b5": "The Night Bite là trang không chính thức và cá nhân:",
+  "drawdown.b1e37ce8": "Hồ MWCD, 2026, 27",
+  "drawdown.b65ca4c6": "Nạp tiền bằng",
+  "drawdown.c95b172d": ". Trang hồ của nó hiển thị thước đo Corps of Engineers.",
+  "drawdown.d798782a": "MWCD cho biết việc rút tiền bắt đầu vào đầu tháng 11 và mức độ sẽ trở lại bình thường vào tháng 2, với đề xuất nạp thêm một phần vào khoảng",
+  "drawdown.dfdc65ff": "chứ không phải Corps of Engineers. Ngày và cấp độ là của MWCD, được sao chép cùng với nguồn. MWCD và Quân đoàn có thể thay đổi chúng.",
+  "drawdown.e0223fef": ". Đã kiểm tra",
+  "drawdown.e334394f": "MWCD, Lịch trình rút vốn mùa đông (",
+  "drawdown.e681adbc": "trang nước",
+  "drawdown.e9c2418b": "Mỗi mùa đông, Corps of Engineers lại hạ thấp hồ Muskingum để nhường chỗ cho tuyết tan và mưa xuân. Đây là lịch trình của MWCD dành cho vùng biển trên địa điểm này, để bạn biết đoạn cuối đoạn đường nối có thể tụt xuống bao xa trước khi bạn lùi xuống.",
+  "drawdown.f6bb0f46": "Ngày",
+  "drawdown.f8051bbd": "Không có trong lịch trình của MWCD:",
+  "drawdown.fc612a2f": "Bắt đầu"
+ }
+}

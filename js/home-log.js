@@ -23,7 +23,7 @@
         return;
       }
       if (!trips.length) throw new Error("empty");
-      var trip = trips.slice().sort(function (a, b) {
+      var trip = trips.toSorted(function (a, b) {
         return String(b.date).localeCompare(String(a.date));
       })[0];
       var badge = trip.sample

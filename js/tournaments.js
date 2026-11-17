@@ -27,8 +27,7 @@
       return;
     }
     listEl.innerHTML = events
-      .slice()
-      .sort(function (a, b) {
+      .toSorted(function (a, b) {
         return (a.date || "").localeCompare(b.date || "");
       })
       .map(function (e) {

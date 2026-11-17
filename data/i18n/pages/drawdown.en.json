@@ -1,0 +1,31 @@
+{
+ "_meta": {
+  "page": "drawdown",
+  "source": "drawdown.html"
+ },
+ "strings": {
+  "drawdown.0a088b31": "Drop",
+  "drawdown.0d803833": "MWCD winter drawdown, 2026–27. Levels in feet above sea level, as MWCD lists them.",
+  "drawdown.1641827a": "Winter level",
+  "drawdown.276e1965": "A lower lake means shallow ramp ends, new stumps and mud flats near the bank. Go slow at night and check the ramp before you launch.",
+  "drawdown.2a13b042": ". Each lake page shows its own gauge, so check today’s level there.",
+  "drawdown.3106e3eb": "quote it for each water it covers, and say when it still shows last winter’s dates.",
+  "drawdown.338becca": "ODNR winter drawdowns",
+  "drawdown.3f077a13": "not MWCD",
+  "drawdown.58c9f804": "ODNR keeps its own winter drawdown list for state park lakes. The Dock season notes on the",
+  "drawdown.65c88290": "State park lakes",
+  "drawdown.77a3c4b5": "The Night Bite is unofficial and personal:",
+  "drawdown.b1e37ce8": "MWCD lakes, 2026–27",
+  "drawdown.b65ca4c6": "Refill by",
+  "drawdown.c95b172d": ". Its lake page shows the Corps of Engineers gauge.",
+  "drawdown.d798782a": "MWCD says the drawdown starts in early November and levels should be back to normal by February, with a suggested partial refill by",
+  "drawdown.dfdc65ff": "and not the Corps of Engineers. Dates and levels are MWCD’s, copied with the source. MWCD and the Corps can change them.",
+  "drawdown.e0223fef": ". Checked",
+  "drawdown.e334394f": "MWCD, Winter Drawdown Schedule (",
+  "drawdown.e681adbc": "Water page",
+  "drawdown.e9c2418b": "Every winter the Corps of Engineers lowers the Muskingum lakes to make room for snowmelt and spring rain. Here is MWCD’s schedule for the waters on this site, so you know how far a ramp end might drop before you back down.",
+  "drawdown.f6bb0f46": "Days",
+  "drawdown.f8051bbd": "Not on MWCD’s schedule:",
+  "drawdown.fc612a2f": "Starts"
+ }
+}

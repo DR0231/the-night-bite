@@ -129,8 +129,9 @@ SKIP_PREFIX = ("whisperwood/", "previews/", "review/")
 
 def live_only(f):
     # Workflows go to live so the static gate runs there too. Other .github/ files (issue templates) stay skipped.
+    # .github/build-inputs/ (translation memory, biting sources) goes too: live's builds read it, Pages never serves it.
     if f.startswith(".github/"):
-        return not f.startswith(".github/workflows/")
+        return not f.startswith((".github/workflows/", ".github/build-inputs/"))
     return (f in SKIP_EXACT or f.startswith(SKIP_PREFIX) or "__pycache__" in f
             or re.fullmatch(r"google[0-9a-f]+\.html", f) or re.fullmatch(r"[0-9a-f]{32}\.txt", f))
 
@@ -309,7 +310,7 @@ if a.whats_new:
         (T / "data/updates.json").write_text(registry.dump_like(up_t, up))
 
 build_log = []
-for b in ("build-lake-pages.py", "build-docks.py", "build-meta.py", "stamp-version.py", "build-updates.py", "footer-social.py", "wrap-dates.py", "sw-precache.py"):   # sw-precache last: hashes of the final live files
+for b in ("build-lake-pages.py", "build-docks.py", "build-summaries.py", "build-meta.py", "stamp-version.py", "build-updates.py", "footer-social.py", "wrap-dates.py", "sw-precache.py"):   # sw-precache last: hashes of the final live files
     p = subprocess.run([sys.executable, str(T / "tools" / b)], cwd=T, capture_output=True, text=True)
     last = (p.stdout.strip().splitlines() or [""])[-1]
     build_log.append(f"{b}: {'ok' if p.returncode == 0 else 'FAILED'} {last}")

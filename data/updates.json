@@ -2,6 +2,89 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-17-thirteen-waters-and-new-pages",
+      "date": "2026-11-17",
+      "tag": "New",
+      "title": "Thirteen more waters, plus drawdowns, night access, 2027 rules and trout",
+      "bullets": [
+        "Thirteen more waters to pick: Kiser Lake and Hargus Creek Lake under Central Ohio; Stonelick Lake and Grant Lake under Southwest Ohio; Lake White, Lake Rupert, Jackson Lake, Wolf Run Lake, Tycoon Lake and Lake Hope under East and Southeast Ohio; Findlay Reservoirs, Bresler Reservoir and Ferguson and Metzger Reservoirs under Northwest Ohio.",
+        "Each one has its own home page with a map and ramps, lake rules, species notes, stocking, dock season and Bait nearby. None of the thirteen has a public level or water temp gauge, and each page says so.",
+        "Four new pages: Winter drawdowns (MWCD's 2026–27 schedule for its lakes on this site), Night access (who lets you fish after dark, water by water, with the source), Rule changes (every bass and crappie rule here that changes on March 1, 2027) and Trout (where ODNR stocked trout in the last ten years).",
+        "Updates land more cleanly: a page never mixes one version's look with another's, a saved page only opens offline when everything it needs was saved with it, and reading times from an earlier day show the weekday and date (Mon Nov. 9, 8:45 AM ET).",
+        "Pages fade into each other as you move around the site (Less motion turns that off), pictures further down a page load when you get to them, and the Species page only loads the map for the water you pick."
+      ],
+      "links": [
+        {
+          "label": "Winter drawdowns",
+          "href": "drawdown"
+        },
+        {
+          "label": "Night access",
+          "href": "night"
+        },
+        {
+          "label": "Rule changes",
+          "href": "rules"
+        },
+        {
+          "label": "Trout",
+          "href": "species/trout"
+        },
+        {
+          "label": "Kiser Lake",
+          "href": "kiser/"
+        },
+        {
+          "label": "Hargus Creek Lake",
+          "href": "hargus/"
+        },
+        {
+          "label": "Stonelick Lake",
+          "href": "stonelick/"
+        },
+        {
+          "label": "Grant Lake",
+          "href": "grant/"
+        },
+        {
+          "label": "Lake White",
+          "href": "lakewhite/"
+        },
+        {
+          "label": "Lake Rupert",
+          "href": "lakerupert/"
+        },
+        {
+          "label": "Jackson Lake",
+          "href": "jackson/"
+        },
+        {
+          "label": "Wolf Run Lake",
+          "href": "wolfrun/"
+        },
+        {
+          "label": "Tycoon Lake",
+          "href": "tycoon/"
+        },
+        {
+          "label": "Lake Hope",
+          "href": "lakehope/"
+        },
+        {
+          "label": "Findlay Reservoirs",
+          "href": "findlayreservoirs/"
+        },
+        {
+          "label": "Bresler Reservoir",
+          "href": "bresler/"
+        },
+        {
+          "label": "Ferguson and Metzger Reservoirs",
+          "href": "fergusonmetzger/"
+        }
+      ]
+    },
+    {
       "id": "2026-11-10-bass-rules-march-2027",
       "date": "2026-11-10",
       "tag": "Improved",

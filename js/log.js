@@ -95,7 +95,7 @@
     var empty = document.getElementById("log-empty"), add = document.getElementById("add-private");
     var total = loadEntries().length;
     if (entries.length === 0) {
-      list.innerHTML = "";
+      list.replaceChildren();
       list.hidden = true;
       if (empty) {
         empty.textContent = total && !showAll()

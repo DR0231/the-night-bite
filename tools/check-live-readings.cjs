@@ -14,6 +14,8 @@
 //   trend-old      the 7 day chart ends at its last reading's time, not "Now", when that is more than 6 h old
 //   hidden         F13: a page opened in a background tab fetches nothing until it is visible
 //   alert-expiry   a banner whose end time passed goes away even when the alerts refresh fails
+//   f9-dates       F9: a reading time from any day but today carries its weekday and date ("Mon Nov. 9, 8:45 AM ET"),
+//                  not a weekday alone, on the pool card status, the saved line and the share image
 //   wind-failed    Glance wind says how old the forecast is after a failed NWS refresh (real NWS for the first load;
 //                  skipped with an INFO line when weather.gov can't be reached)
 // Usage: node tools/check-live-readings.cjs [BASE] [OUTDIR]     (BASE: the preview, or tools/serve.py for local runs)
@@ -30,6 +32,12 @@ const lines = []; let fails = 0;
 const check = (n, ok, info) => { lines.push((ok ? 'PASS ' : 'FAIL ') + n + (info ? ' :: ' + info : '')); if (!ok) fails++; };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const H = 36e5, iso = ms => new Date(ms).toISOString().replace('Z', '+00:00');
+// F9: the words js/refresh.js (NightBiteOffline.when) writes: "8:45 AM" today in Ohio, else "Mon Nov. 9, 8:45 AM"
+const MON = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
+const etf = (ms, o) => new Intl.DateTimeFormat('en-US', Object.assign({ timeZone: 'America/New_York' }, o)).format(new Date(ms));
+const etDay = ms => etf(ms, { year: 'numeric', month: 'numeric', day: 'numeric' });
+const etWhen = ms => { const t = etf(ms, { hour: 'numeric', minute: '2-digit' }); return etDay(ms) === etDay(Date.now()) ? t : etf(ms, { weekday: 'short' }) + ' ' + MON[+etf(ms, { month: 'numeric' }) - 1] + ' ' + etf(ms, { day: 'numeric' }) + ', ' + t; };
+const DATED = /(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan\.|Feb\.|Mar\.|Apr\.|May|June|July|Aug\.|Sept\.|Oct\.|Nov\.|Dec\.) \d{1,2}, \d{1,2}:\d{2} [AP]M ET/;
 const GAUGE = '03228400:62614:00010';   // js/usgs.js GAUGE_ID for Hoover (site, level and temp parameters)
 const USGS_LATEST = /api\.waterdata\.usgs\.gov\/ogcapi\/v1\/collections\/latest-continuous\//;
 const USGS_SERIES = /api\.waterdata\.usgs\.gov\/ogcapi\/v1\/collections\/continuous\//;
@@ -116,7 +124,7 @@ async function scenario(browser, name, opts, fn) {
     await page.click('[data-act="share"]');
     await page.waitForFunction(() => { const i = document.getElementById('tt-share-img'); return i && i.getAttribute('src'); }, null, { timeout: 15000 });
     const alt = await page.getAttribute('#tt-share-img', 'alt');
-    const want = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date(now - 9 * 24 * H));   // over 6 days: dated, not a weekday
+    const want = etWhen(now - 9 * 24 * H);   // not today: weekday and date (F9)
     check('stale-9d: share image carries the reading time', alt.includes('(reading ' + want + ' ET)'), alt);
     await page.locator('#tt-share-img').screenshot({ path: OUT + 'share-stale-9d.png' }).catch(() => {});
   });
@@ -145,6 +153,7 @@ async function scenario(browser, name, opts, fn) {
     const r = await read(page);
     check('saved: shown as saved after the failed refresh', r.src === 'saved' && r.failed && /^890\.30 ft/.test(r.line), JSON.stringify([r.src, r.line]));
     check('saved: status says the refresh failed, with the reading time', /^Live refresh failed, check USGS\. Showing the reading from .+ ET\.$/.test(r.status), r.status);
+    check('saved: a 2-day-old reading time carries its date, not a weekday alone (F9)', r.status.includes('Showing the reading from ' + etWhen(d2) + ' ET.') && DATED.test(r.status), r.status);
     check('saved: never shared with the bite rating', (r.waterF === null || r.waterF === undefined) && !/°F water/.test(r.condLine) && r.biteWater !== 'yes', JSON.stringify([r.waterF, r.condLine, r.biteWater]));
   });
 
@@ -208,6 +217,22 @@ async function scenario(browser, name, opts, fn) {
 
   // Glance wind after a failed NWS refresh: the first load uses the real weather.gov (no fake forecast is invented)
   let nwsUp = true;
+  // F9: the shared formatter itself, the offline label, and the share image for a reading from 4 days ago
+  const d4 = now - 4 * 24 * H;
+  await scenario(browser, 'f9-dates', { latest: () => latest({ t: d4, v: 890.35 }, { t: d4, c: 15 }), snapshotAt: now - 20 * 24 * H }, async page => {
+    const w = await page.evaluate(([a, b]) => ({ today: NightBiteOffline.when(new Date(a)), old: NightBiteOffline.when(new Date(b)), label: NightBiteOffline.label(new Date(b)) }), [now - 60e3, d4]);
+    check('f9-dates: a reading from today is its time only', w.today === etWhen(now - 60e3) + ' ET' && !DATED.test(w.today), w.today);
+    check('f9-dates: a 4-day-old reading carries its weekday and date', w.old === etWhen(d4) + ' ET' && DATED.test(w.old), w.old);
+    check('f9-dates: the offline label carries the date', w.label === 'Offline. Last updated ' + etWhen(d4) + ' ET.', w.label);
+    const r = await read(page);
+    check('f9-dates: pool card status carries the date', r.status.includes(etWhen(d4) + ' ET') && DATED.test(r.status), r.status);
+    await page.click('[data-act="share"]');
+    await page.waitForFunction(() => { const i = document.getElementById('tt-share-img'); return i && i.getAttribute('src'); }, null, { timeout: 15000 });
+    const alt = await page.getAttribute('#tt-share-img', 'alt');
+    check('f9-dates: share image carries the weekday and date', alt.includes('(reading ' + etWhen(d4) + ' ET)'), alt);
+    await page.locator('#tt-share-img').screenshot({ path: OUT + 'share-f9-4d.png' }).catch(() => {});
+  });
+
   await scenario(browser, 'wind-failed', { wait: 9000, nws: r => nwsUp ? r.continue() : r.abort('failed') }, async page => {
     const ok = await page.evaluate(() => { const c = document.getElementById('conditions'); return c && c.getAttribute('data-state') === 'ok' && !c.hasAttribute('data-saved'); });
     if (!ok) { lines.push('INFO wind-failed: weather.gov not reachable from here, skipped'); return; }

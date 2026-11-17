@@ -11,11 +11,15 @@
  * older one was already controlling, the page reloads once, within the first few seconds only, so nobody loses
  * what they're doing.
  *
- * Only when it can actually be stale (since v19): workers from v19 on answer a hello message and say their CSS and JS
- * are network first, so a page they controlled can't be mixed and is never reloaded. An older worker that doesn't
- * answer still gets the one reload, and never more than once per deploy (localStorage "nb-sw-healed" holds the
- * version from this script's ?v=). Before this, every returning visitor's home page reloaded itself once after
- * each deploy, which showed up in Cloudflare as home to home "reload" visits.
+ * Only when it can actually be stale. Workers from v135 on answer the hello message with assets "by-deploy": they
+ * hand every page the styles and scripts of its own deploy (sw.js, "Deploys never mix" in SERVICE-WORKER.md), so a
+ * page they served is never reloaded, unless the worker says "mixed" (it had no network for a newer deploy's files
+ * and used a saved copy), in the hello answer or later in an "nb-mixed" message. Workers v19 to v134 (live v41)
+ * answer "network-first"; their 4 second fallback could pair a slow page or a slow styles.css with another deploy,
+ * so a page they served reloads once when the new worker takes over, but only if the page or one of its styles or
+ * scripts took 3.5 seconds or more, or the phone is offline (otherwise nothing could have fallen back). An older
+ * worker that doesn't answer still gets the one reload. Never more than once per deploy (localStorage
+ * "nb-sw-healed" holds the version from this script's ?v=) and never more than once a minute.
  */
 (function () {
   if (!("serviceWorker" in navigator) || !window.URL) return;
@@ -25,17 +29,33 @@
   if (location.protocol !== "https:" && location.hostname !== "localhost" && location.hostname !== "127.0.0.1") return;
 
   var ver = new URL(me.src).searchParams.get("v") || "unversioned";
-  var hadController = !!navigator.serviceWorker.controller, healed = false, safe = false;
-  // ask the worker that served this page whether it keeps CSS and JS network first (v19 and newer say yes)
+  var hadController = !!navigator.serviceWorker.controller, healed = false, answer = null;
+  // ask the worker that served this page how it picks styles and scripts
   if (hadController && window.MessageChannel) {
     try {
       var ch = new MessageChannel();
-      ch.port1.onmessage = function (e) { if (e.data && e.data.assets === "network-first") safe = true; };
+      ch.port1.onmessage = function (e) {
+        answer = e.data || {};
+        if (answer.mixed) heal();
+      };
       navigator.serviceWorker.controller.postMessage({ type: "nb-hello" }, [ch.port2]);
     } catch (e) {}
   }
-  navigator.serviceWorker.addEventListener("controllerchange", function () {
-    if (!hadController || healed || safe) return;          // first visit, or the old worker never mixed versions
+
+  // a v19 to v134 worker only fell back to a saved copy after 4 seconds, or with no network at all
+  function slowOrOffline() {
+    if (navigator.onLine === false) return true;
+    try {
+      var nav = performance.getEntriesByType("navigation")[0];
+      if (nav && nav.responseEnd - nav.startTime >= 3500) return true;
+      return performance.getEntriesByType("resource").some(function (r) {
+        return r.name.indexOf(root.href) === 0 && /\.(css|js)(\?|$)/.test(r.name) && r.duration >= 3500;
+      });
+    } catch (e) { return true; }
+  }
+
+  function heal() {
+    if (healed) return;
     if (window.performance && performance.now() > 20000) return;
     healed = true;
     try {
@@ -46,6 +66,17 @@
       sessionStorage.setItem("nb-sw-healed", String(Date.now()));
     } catch (e) { return; }                                // no storage: can't guard it, so don't reload
     location.reload();
+  }
+
+  // v135 and newer: the worker says when it had to give this page another deploy's file
+  navigator.serviceWorker.addEventListener("message", function (e) {
+    if (e.data && e.data.type === "nb-mixed") heal();
+  });
+  navigator.serviceWorker.addEventListener("controllerchange", function () {
+    if (!hadController) return;                            // first visit: nothing old on the page
+    if (answer && answer.assets === "by-deploy") return;   // that worker never mixed deploys
+    if (answer && answer.assets === "network-first" && !slowOrOffline()) return;
+    heal();
   });
 
   function go() {

@@ -8,7 +8,7 @@ Links only, to the site's own profiles (the same three as the About page and the
 right after the footer's "Add to home screen" line, between <!-- nb:footer-social --> markers, on every page with
 that line: root pages, species pages, and tools/lake-home.html (so every lake home and every new water gets it from
 the build). Never whisperwood.html, never offline.html (no signal, nothing to open). Text and labels match About, so
-the translations already in data/i18n/tm apply; colors are tokens, so red light and high contrast follow.
+the translations already in .github/build-inputs/i18n-tm apply; colors are tokens, so red light and high contrast follow.
 """
 import pathlib, re, sys
 

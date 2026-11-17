@@ -53,10 +53,9 @@
     if (!listEl) return;
     trips = (trips || []).filter(function (t) { return t && !t.sample && (window.NightBiteLogFilter === "all" || (t.lake || "hoover") === LAKE); });
     if (sectionEl) sectionEl.hidden = !trips.length;
-    if (!trips.length) { listEl.innerHTML = ""; return; }
+    if (!trips.length) { listEl.replaceChildren(); return; }
     listEl.innerHTML = trips
-      .slice()
-      .sort(function (a, b) {
+      .toSorted(function (a, b) {
         return (b.date || "").localeCompare(a.date || "");
       })
       .map(function (e) {
@@ -119,7 +118,7 @@
         announce("ok");
       })
       .catch(function () {
-        listEl.innerHTML = "";
+        listEl.replaceChildren();
         if (sectionEl) sectionEl.hidden = true;
         announce("failed");
       });
