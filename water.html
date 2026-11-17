@@ -31,9 +31,9 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="js/a11y-boot.js?v=v42-2026-11-17"></script>
-  <link rel="stylesheet" href="css/styles.css?v=v42-2026-11-17">
-  <script src="js/lakes.js?v=v42-2026-11-17"></script>
+  <script src="js/a11y-boot.js?v=v43-2026-11-17"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v43-2026-11-17">
+  <script src="js/lakes.js?v=v43-2026-11-17"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -62,6 +62,11 @@
               <a href="log">Log</a>
               <a href="about">About</a>
               <a href="updates" data-updates="2026-11-17">What&rsquo;s new</a>
+              <span class="nav-guides-label">Guides</span>
+              <a class="nav-guide" href="drawdown">Winter drawdowns</a>
+              <a class="nav-guide" href="night">Night access</a>
+              <a class="nav-guide" href="rules">Rule changes</a>
+              <a class="nav-guide" href="species/trout">Trout</a>
               <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
@@ -77,6 +82,8 @@
       Quick reference for <span data-lk="name">Hoover Reservoir</span>: maps, depth structure, pool vs the ODNR chart,
       and public ramps. Not a navigation chart.
     </p>
+
+    <p class="meta page-guides">Guides: <a href="drawdown">Winter drawdowns</a> &middot; <a href="night">Night access</a></p>
 
     <section id="maps" aria-labelledby="maps-title">
       <h2 id="maps-title">Maps &amp; depth</h2>
@@ -2611,7 +2618,7 @@
       </p>
       <div class="card" id="pool-correction">
         <p class="pool-lead" id="correction-line">889.85 ft · 56°F · ~4.2 ft below full pool</p>
-        <script src="js/pool-readout.js?v=v42-2026-11-17"></script>
+        <script src="js/pool-readout.js?v=v43-2026-11-17"></script>
         <p class="meta" id="correction-checked">
           Checked: <time datetime="2026-11-16T08:45:00.000-05:00">2026-11-16 08:45 ET</time>.
           <a href="https://waterdata.usgs.gov/monitoring-location/USGS-03228400/" target="_blank" rel="noopener">Live USGS gauge</a>.
@@ -2623,7 +2630,7 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.75rem;">
           Provisional snapshot; your browser may refresh it from USGS. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v42-2026-11-17"></script>
+        <script src="js/lake-snapshot.js?v=v43-2026-11-17"></script>
         <details class="how-to-read" id="how-to-read">
           <summary>How to read this</summary>
           <div class="how-to-read-body">
@@ -7727,6 +7734,12 @@
         <a href="privacy">Privacy</a>
         <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
+      <p class="footer-guides"><span class="guides-label">Guides</span>
+        <a href="drawdown">Winter drawdowns</a>
+        <a href="night">Night access</a>
+        <a href="rules">Rule changes</a>
+        <a href="species/trout">Trout</a>
+      </p>
       <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <!-- nb:footer-social (tools/footer-social.py) -->
       <p class="footer-social"><span class="social-label">Follow along</span>
@@ -7738,18 +7751,18 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v42-2026-11-17"></script>
-  <script src="js/sw-update.js?v=v42-2026-11-17"></script>
-  <script src="js/alerts.js?v=v42-2026-11-17"></script>
-  <script src="js/nav.js?v=v42-2026-11-17"></script>
-  <script src="js/visits.js?v=v42-2026-11-17"></script>
-  <script src="js/lake-picker.js?v=v42-2026-11-17"></script>
-  <script src="js/usgs.js?v=v42-2026-11-17"></script>
-  <script src="js/local-notes.js?v=v42-2026-11-17"></script>
-  <script src="js/fold-anchors.js?v=v42-2026-11-17"></script>
-  <script src="js/docks.js?v=v42-2026-11-17"></script>
-  <script src="js/scrollspy.js?v=v42-2026-11-17"></script>
-  <script src="js/a11y.js?v=v42-2026-11-17" defer></script>
+  <script src="js/refresh.js?v=v43-2026-11-17"></script>
+  <script src="js/sw-update.js?v=v43-2026-11-17"></script>
+  <script src="js/alerts.js?v=v43-2026-11-17"></script>
+  <script src="js/nav.js?v=v43-2026-11-17"></script>
+  <script src="js/visits.js?v=v43-2026-11-17"></script>
+  <script src="js/lake-picker.js?v=v43-2026-11-17"></script>
+  <script src="js/usgs.js?v=v43-2026-11-17"></script>
+  <script src="js/local-notes.js?v=v43-2026-11-17"></script>
+  <script src="js/fold-anchors.js?v=v43-2026-11-17"></script>
+  <script src="js/docks.js?v=v43-2026-11-17"></script>
+  <script src="js/scrollspy.js?v=v43-2026-11-17"></script>
+  <script src="js/a11y.js?v=v43-2026-11-17" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

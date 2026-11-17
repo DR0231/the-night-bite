@@ -34,10 +34,10 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="js/a11y-boot.js?v=v42-2026-11-17"></script>
-  <link rel="stylesheet" href="css/styles.css?v=v42-2026-11-17">
+  <script src="js/a11y-boot.js?v=v43-2026-11-17"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v43-2026-11-17">
   <noscript><style>.glance-actions{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
-  <script src="js/lakes.js?v=v42-2026-11-17"></script>
+  <script src="js/lakes.js?v=v43-2026-11-17"></script>
   <!-- nb:jsonld (tools/build-lake-pages.py) -->
   <script type="application/ld+json">
   [{"@context": "https://schema.org", "@type": "WebPage", "@id": "https://nightbiteoh.com/punderson/#webpage", "url": "https://nightbiteoh.com/punderson/", "name": "Punderson Lake Fishing: Level, Ramps, Rules | The Night Bite", "isPartOf": {"@id": "https://nightbiteoh.com/#website"}, "about": {"@type": "LakeBodyOfWater", "name": "Punderson Lake"}, "dateModified": "2026-11-10", "inLanguage": "en-US", "breadcrumb": {"@id": "https://nightbiteoh.com/punderson/#breadcrumb"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "@id": "https://nightbiteoh.com/punderson/#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Punderson Lake", "item": "https://nightbiteoh.com/punderson/"}]}]
@@ -71,6 +71,11 @@
               <a href="log">Log</a>
               <a href="about">About</a>
               <a href="updates" data-updates="2026-11-17">What&rsquo;s new</a>
+              <span class="nav-guides-label">Guides</span>
+              <a class="nav-guide" href="drawdown">Winter drawdowns</a>
+              <a class="nav-guide" href="night">Night access</a>
+              <a class="nav-guide" href="rules">Rule changes</a>
+              <a class="nav-guide" href="species/trout">Trout</a>
               <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
@@ -190,7 +195,7 @@
       <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
         <p class="pool-lead" id="correction-line">No public lake level gauge</p>
-        <script src="js/pool-readout.js?v=v42-2026-11-17"></script>
+        <script src="js/pool-readout.js?v=v43-2026-11-17"></script>
         <p class="meta" id="correction-checked">
           ODNR fishing map pool: 1144 ft. No USGS or Corps gauge posts this lake's level or water temp, so there is no live reading to show.
         </p>
@@ -201,7 +206,7 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           No public lake level or water temp gauge on this lake. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v42-2026-11-17"></script>
+        <script src="js/lake-snapshot.js?v=v43-2026-11-17"></script>
         <div class="pool-trend" id="pool-trend" hidden data-pending>
           <div class="pool-trend-head">
             <span class="pool-trend-label">Pool, last 7 days</span>
@@ -290,7 +295,7 @@
         </details>
         <p class="meta bait-foot">Drive times are rough. <a class="bait-tell" href="mailto:contact@nightbiteoh.com?subject=Bait%20shop">Know a shop? Tell us</a></p>
       </section>
-      <script src="js/bait-nearby.js?v=v42-2026-11-17"></script>
+      <script src="js/bait-nearby.js?v=v43-2026-11-17"></script>
 
       <a class="bento-card bento-maps" href="water#maps">
         <h3>Water / maps</h3>
@@ -315,7 +320,7 @@
         <span class="card-cue" aria-hidden="true">Open the log</span>
       </a>
     </div>
-    <script src="js/glance.js?v=v42-2026-11-17"></script>
+    <script src="js/glance.js?v=v43-2026-11-17"></script>
 
 
 
@@ -328,7 +333,7 @@
         <summary>More waters in Northeast Ohio</summary>
         <div class="how-to-read-body"><ul class="lake-chips"><li><a class="lake-chip" href="mosquito/">Mosquito Creek Lake</a></li><li><a class="lake-chip" href="berlin/">Berlin Lake</a></li><li><a class="lake-chip" href="westbranch/">West Branch Reservoir</a></li><li><a class="lake-chip" href="pymatuning/">Pymatuning Lake</a></li><li><a class="lake-chip" href="milton/">Lake Milton</a></li><li><a class="lake-chip" href="leesville/">Leesville Lake</a></li><li><a class="lake-chip" href="ladue/">LaDue Reservoir</a></li><li><a class="lake-chip" href="portagelakes/">Portage Lakes</a></li><li><a class="lake-chip" href="mogadore/">Mogadore Reservoir</a></li><li><a class="lake-chip" href="nimisila/">Nimisila Reservoir</a></li><li><a class="lake-chip" href="atwood/">Atwood Lake</a></li><li><a class="lake-chip" href="beachcity/">Beach City Lake</a></li><li><a class="lake-chip" href="wingfoot/">Wingfoot Lake</a></li><li><a class="lake-chip" href="eastbranch/">East Branch Reservoir</a></li><li><a class="lake-chip" href="guilford/">Guilford Lake</a></li><li><a class="lake-chip" href="highlandtown/">Highlandtown Lake</a></li><li><a class="lake-chip" href="wellington/">Wellington Upground Reservoir</a></li></ul></div>
       </details>
-      <p class="meta lake-links-also"><a href="stocking?lake=punderson#stocked">Stocking records</a> &middot; <a href="water?lake=punderson#docks">Dock season</a> &middot; <a href="./?pick">All waters</a></p>
+      <p class="meta lake-links-also"><a href="stocking?lake=punderson#stocked">Stocking records</a> &middot; <a href="water?lake=punderson#docks">Dock season</a> &middot; <a href="night#punderson">Night access</a> &middot; <a href="./?pick">All waters</a></p>
     </section>
     <!-- /nb:lake-links -->
 
@@ -366,7 +371,7 @@
         </details>
       </div>
     </section>
-    <script src="js/get-app.js?v=v42-2026-11-17"></script>
+    <script src="js/get-app.js?v=v43-2026-11-17"></script>
 
     <hr class="divider">
 
@@ -422,6 +427,12 @@
         <a href="privacy">Privacy</a>
         <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
+      <p class="footer-guides"><span class="guides-label">Guides</span>
+        <a href="drawdown">Winter drawdowns</a>
+        <a href="night">Night access</a>
+        <a href="rules">Rule changes</a>
+        <a href="species/trout">Trout</a>
+      </p>
       <p class="footer-app"><a href="punderson/#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <!-- nb:footer-social (tools/footer-social.py) -->
       <p class="footer-social"><span class="social-label">Follow along</span>
@@ -433,23 +444,23 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v42-2026-11-17"></script>
-  <script src="js/sw-update.js?v=v42-2026-11-17"></script>
-  <script src="js/alerts.js?v=v42-2026-11-17"></script>
-  <script src="js/nav.js?v=v42-2026-11-17"></script>
-  <script src="js/visits.js?v=v42-2026-11-17"></script>
-  <script src="js/lake-picker.js?v=v42-2026-11-17"></script>
-  <script src="js/usgs.js?v=v42-2026-11-17"></script>
-  <script src="js/home-log.js?v=v42-2026-11-17"></script>
-  <script src="js/astro.js?v=v42-2026-11-17"></script>
-  <script src="js/night-rules.js?v=v42-2026-11-17"></script>
-  <script src="js/conditions.js?v=v42-2026-11-17"></script>
-  <script src="js/pool-trend.js?v=v42-2026-11-17"></script>
-  <script src="js/lake-map-data-punderson.js?v=v42-2026-11-17"></script>
-  <script src="js/hoover-map.js?v=v42-2026-11-17"></script>
-  <script src="js/install-tip.js?v=v42-2026-11-17"></script>
-  <script src="js/tonight-tools.js?v=v42-2026-11-17"></script>
-  <script src="js/a11y.js?v=v42-2026-11-17" defer></script>
+  <script src="js/refresh.js?v=v43-2026-11-17"></script>
+  <script src="js/sw-update.js?v=v43-2026-11-17"></script>
+  <script src="js/alerts.js?v=v43-2026-11-17"></script>
+  <script src="js/nav.js?v=v43-2026-11-17"></script>
+  <script src="js/visits.js?v=v43-2026-11-17"></script>
+  <script src="js/lake-picker.js?v=v43-2026-11-17"></script>
+  <script src="js/usgs.js?v=v43-2026-11-17"></script>
+  <script src="js/home-log.js?v=v43-2026-11-17"></script>
+  <script src="js/astro.js?v=v43-2026-11-17"></script>
+  <script src="js/night-rules.js?v=v43-2026-11-17"></script>
+  <script src="js/conditions.js?v=v43-2026-11-17"></script>
+  <script src="js/pool-trend.js?v=v43-2026-11-17"></script>
+  <script src="js/lake-map-data-punderson.js?v=v43-2026-11-17"></script>
+  <script src="js/hoover-map.js?v=v43-2026-11-17"></script>
+  <script src="js/install-tip.js?v=v43-2026-11-17"></script>
+  <script src="js/tonight-tools.js?v=v43-2026-11-17"></script>
+  <script src="js/a11y.js?v=v43-2026-11-17" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

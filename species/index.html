@@ -31,9 +31,9 @@
   <link rel="preload" href="../assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="../js/a11y-boot.js?v=v42-2026-11-17"></script>
-  <link rel="stylesheet" href="../css/styles.css?v=v42-2026-11-17">
-  <script src="../js/lakes.js?v=v42-2026-11-17" data-biting></script>
+  <script src="../js/a11y-boot.js?v=v43-2026-11-17"></script>
+  <link rel="stylesheet" href="../css/styles.css?v=v43-2026-11-17">
+  <script src="../js/lakes.js?v=v43-2026-11-17" data-biting></script>
   <script type="application/ld+json">
   [{"@context": "https://schema.org", "@type": "WebPage", "@id": "https://nightbiteoh.com/species/#webpage", "url": "https://nightbiteoh.com/species/", "name": "Ohio Lake Fish Species: Where, Limits, Bait | The Night Bite", "description": "Species guide for every lake on The Night Bite, from Hoover and Buckeye Lake to Seneca and Salt Fork: catfish, bass, crappie, saugeye and more.", "isPartOf": {"@id": "https://nightbiteoh.com/#website"}, "inLanguage": "en-US", "breadcrumb": {"@id": "https://nightbiteoh.com/species/#breadcrumb"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "@id": "https://nightbiteoh.com/species/#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "Species", "item": "https://nightbiteoh.com/species/"}]}]
   </script>
@@ -65,6 +65,11 @@
               <a href="../log">Log</a>
               <a href="../about">About</a>
               <a href="../updates" data-updates="2026-11-17">What&rsquo;s new</a>
+              <span class="nav-guides-label">Guides</span>
+              <a class="nav-guide" href="../drawdown">Winter drawdowns</a>
+              <a class="nav-guide" href="../night">Night access</a>
+              <a class="nav-guide" href="../rules">Rule changes</a>
+              <a class="nav-guide" href="../species/trout">Trout</a>
               <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
@@ -211,7 +216,7 @@
       <p class="meta biting-note">Changes each month. Typical patterns from the species pages and ODNR, not a fishing report.</p>
     </section>
     <!-- rendered right here, before the filters and grid below exist, so filling the card never pushes them down -->
-    <script src="../js/biting.js?v=v42-2026-11-17"></script>
+    <script src="../js/biting.js?v=v43-2026-11-17"></script>
     <div class="filter-chips" role="group" aria-label="Filter species">
       <button type="button" class="filter-chip is-active" data-filter="all">All</button>
       <button type="button" class="filter-chip" data-filter="cats">Cats</button>
@@ -739,8 +744,11 @@
         <h3><img class="icon-inline" src="../assets/icons/fish-longnose-gar.svg" alt="" width="32" height="32" loading="lazy" decoding="async"> Longnose gar</h3>
         <p class="meta" data-for="hoover">Incidental oddball, occasionally encountered and not a primary Night Bite target.</p>
       </a>
+      <a class="card species-card" data-group="others" href="trout" style="text-decoration:none;color:inherit;">
+        <h3>Trout</h3>
+        <p class="meta">Not on any water&rsquo;s species list here, only in ODNR&rsquo;s stocking records. Where ODNR stocked them, and the statewide limit.</p>
+      </a>
     </div>
-    <p class="meta sp-trout-note">Trout aren&rsquo;t on any water&rsquo;s species list here, only in ODNR&rsquo;s stocking records. <a href="trout">Where ODNR stocked trout</a>.</p>
     <section class="bento-card sp-access" id="sp-access" aria-labelledby="sp-access-title" hidden>
       <h2 id="sp-access-title">Ramps &amp; access at <span data-lk="short">Hoover</span></h2>
       <p class="meta">Public ramps and fishing access from the lake map, each with its public sources. Check posted hours and rules before a night trip.</p>
@@ -748,10 +756,13 @@
       <p class="meta"><a href="../water#access">Full access table on the Water page</a></p>
     </section>
     <!-- right after the grid and the access card, before paint: tags this month's picks, moves species not at the lake into their own group. The ramps and access list loads only the picked lake's map data, on demand. -->
-    <script src="../js/species-lake.js?v=v42-2026-11-17"></script>
+    <script src="../js/species-lake.js?v=v43-2026-11-17"></script>
     <p class="meta">
       Limits on species pages are reminders only. Confirm on HuntFish OH /
       <a href="https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/laws-regs-licenses/OhioFishingRegs_English.pdf" target="_blank" rel="noopener">ODNR Fishing Regulations 2026–27 (verify current)</a>.
+    </p>
+    <p class="meta">
+      Waters whose bass or Hoover crappie rule changes on <time datetime="2027-03-01">March 1, 2027</time> are listed on the <a href="../rules">Rule changes page</a>.
     </p>
   </main>
 
@@ -769,6 +780,12 @@
         <a href="../privacy">Privacy</a>
         <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
+      <p class="footer-guides"><span class="guides-label">Guides</span>
+        <a href="../drawdown">Winter drawdowns</a>
+        <a href="../night">Night access</a>
+        <a href="../rules">Rule changes</a>
+        <a href="../species/trout">Trout</a>
+      </p>
       <p class="footer-app"><a href="../#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <!-- nb:footer-social (tools/footer-social.py) -->
       <p class="footer-social"><span class="social-label">Follow along</span>
@@ -780,14 +797,14 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="../js/refresh.js?v=v42-2026-11-17"></script>
-  <script src="../js/sw-update.js?v=v42-2026-11-17"></script>
-  <script src="../js/alerts.js?v=v42-2026-11-17"></script>
-  <script src="../js/nav.js?v=v42-2026-11-17"></script>
-  <script src="../js/visits.js?v=v42-2026-11-17"></script>
-  <script src="../js/lake-picker.js?v=v42-2026-11-17"></script>
-  <script src="../js/species-filter.js?v=v42-2026-11-17"></script>
-  <script src="../js/a11y.js?v=v42-2026-11-17" defer></script>
+  <script src="../js/refresh.js?v=v43-2026-11-17"></script>
+  <script src="../js/sw-update.js?v=v43-2026-11-17"></script>
+  <script src="../js/alerts.js?v=v43-2026-11-17"></script>
+  <script src="../js/nav.js?v=v43-2026-11-17"></script>
+  <script src="../js/visits.js?v=v43-2026-11-17"></script>
+  <script src="../js/lake-picker.js?v=v43-2026-11-17"></script>
+  <script src="../js/species-filter.js?v=v43-2026-11-17"></script>
+  <script src="../js/a11y.js?v=v43-2026-11-17" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

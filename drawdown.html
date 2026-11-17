@@ -31,9 +31,9 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="js/a11y-boot.js?v=v42-2026-11-17"></script>
-  <link rel="stylesheet" href="css/styles.css?v=v42-2026-11-17">
-  <script src="js/lakes.js?v=v42-2026-11-17"></script>
+  <script src="js/a11y-boot.js?v=v43-2026-11-17"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v43-2026-11-17">
+  <script src="js/lakes.js?v=v43-2026-11-17"></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
@@ -62,6 +62,11 @@
               <a href="log">Log</a>
               <a href="about">About</a>
               <a href="updates" data-updates="2026-11-17">What&rsquo;s new</a>
+              <span class="nav-guides-label">Guides</span>
+              <a class="nav-guide" href="drawdown" aria-current="page">Winter drawdowns</a>
+              <a class="nav-guide" href="night">Night access</a>
+              <a class="nav-guide" href="rules">Rule changes</a>
+              <a class="nav-guide" href="species/trout">Trout</a>
               <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
             </div>
           </li>
@@ -86,14 +91,14 @@
         <caption>MWCD winter drawdown, 2026–27. Levels in feet above sea level, as MWCD lists them.</caption>
         <thead><tr><th scope="col">Water</th><th scope="col">Starts</th><th scope="col" class="num">Normal pool</th><th scope="col" class="num">Winter level</th><th scope="col" class="num">Drop</th><th scope="col" class="num">Days</th><th scope="col" class="num">Refill by <time datetime="2027-03-15">March 15</time></th></tr></thead>
         <tbody>
-          <tr><th scope="row"><a href="charlesmill/">Charles Mill Lake</a></th><td><time datetime="2026-11-01">Nov. 1</time></td><td class="num">997 ft</td><td class="num">992 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">995 ft</td></tr>
-          <tr><th scope="row"><a href="leesville/">Leesville Lake</a></th><td><time datetime="2026-11-01">Nov. 1</time></td><td class="num">963 ft</td><td class="num">958 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">961 ft</td></tr>
-          <tr><th scope="row"><a href="piedmont/">Piedmont Lake</a></th><td><time datetime="2026-11-01">Nov. 1</time></td><td class="num">913 ft</td><td class="num">908 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">911 ft</td></tr>
-          <tr><th scope="row"><a href="atwood/">Atwood Lake</a></th><td><time datetime="2026-11-08">Nov. 8</time></td><td class="num">928 ft</td><td class="num">920 ft</td><td class="num">8 ft</td><td class="num">42</td><td class="num">926 ft</td></tr>
-          <tr><th scope="row"><a href="clendening/">Clendening Lake</a></th><td><time datetime="2026-11-15">Nov. 15</time></td><td class="num">898 ft</td><td class="num">893 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">896 ft</td></tr>
-          <tr><th scope="row"><a href="pleasanthill/">Pleasant Hill Lake</a></th><td><time datetime="2026-11-15">Nov. 15</time></td><td class="num">1,020 ft</td><td class="num">1,012 ft</td><td class="num">8 ft</td><td class="num">42</td><td class="num">1,018 ft</td></tr>
-          <tr><th scope="row"><a href="seneca/">Seneca Lake</a></th><td><time datetime="2026-11-15">Nov. 15</time></td><td class="num">832.2 ft</td><td class="num">827.2 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">830.2 ft</td></tr>
-          <tr><th scope="row"><a href="tappan/">Tappan Lake</a></th><td><time datetime="2026-11-15">Nov. 15</time></td><td class="num">899.3 ft</td><td class="num">894.3 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">897.3 ft</td></tr>
+          <tr id="charlesmill"><th scope="row"><a href="charlesmill/">Charles Mill Lake</a></th><td><time datetime="2026-11-01">Nov. 1</time></td><td class="num">997 ft</td><td class="num">992 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">995 ft</td></tr>
+          <tr id="leesville"><th scope="row"><a href="leesville/">Leesville Lake</a></th><td><time datetime="2026-11-01">Nov. 1</time></td><td class="num">963 ft</td><td class="num">958 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">961 ft</td></tr>
+          <tr id="piedmont"><th scope="row"><a href="piedmont/">Piedmont Lake</a></th><td><time datetime="2026-11-01">Nov. 1</time></td><td class="num">913 ft</td><td class="num">908 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">911 ft</td></tr>
+          <tr id="atwood"><th scope="row"><a href="atwood/">Atwood Lake</a></th><td><time datetime="2026-11-08">Nov. 8</time></td><td class="num">928 ft</td><td class="num">920 ft</td><td class="num">8 ft</td><td class="num">42</td><td class="num">926 ft</td></tr>
+          <tr id="clendening"><th scope="row"><a href="clendening/">Clendening Lake</a></th><td><time datetime="2026-11-15">Nov. 15</time></td><td class="num">898 ft</td><td class="num">893 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">896 ft</td></tr>
+          <tr id="pleasanthill"><th scope="row"><a href="pleasanthill/">Pleasant Hill Lake</a></th><td><time datetime="2026-11-15">Nov. 15</time></td><td class="num">1,020 ft</td><td class="num">1,012 ft</td><td class="num">8 ft</td><td class="num">42</td><td class="num">1,018 ft</td></tr>
+          <tr id="seneca"><th scope="row"><a href="seneca/">Seneca Lake</a></th><td><time datetime="2026-11-15">Nov. 15</time></td><td class="num">832.2 ft</td><td class="num">827.2 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">830.2 ft</td></tr>
+          <tr id="tappan"><th scope="row"><a href="tappan/">Tappan Lake</a></th><td><time datetime="2026-11-15">Nov. 15</time></td><td class="num">899.3 ft</td><td class="num">894.3 ft</td><td class="num">5 ft</td><td class="num">35</td><td class="num">897.3 ft</td></tr>
         </tbody>
       </table></div>
       <p class="meta">Not on MWCD&rsquo;s schedule: <a href="beachcity/">Beach City Lake</a>. Its lake page shows the Corps of Engineers gauge.</p>
@@ -129,6 +134,12 @@
         <a href="privacy">Privacy</a>
         <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
+      <p class="footer-guides"><span class="guides-label">Guides</span>
+        <a href="drawdown" aria-current="page">Winter drawdowns</a>
+        <a href="night">Night access</a>
+        <a href="rules">Rule changes</a>
+        <a href="species/trout">Trout</a>
+      </p>
       <p class="footer-app"><a href="./#get-the-app"><span class="footer-app-icon" aria-hidden="true"></span>Add to home screen</a></p>
       <!-- nb:footer-social (tools/footer-social.py) -->
       <p class="footer-social"><span class="social-label">Follow along</span>
@@ -140,13 +151,13 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v42-2026-11-17"></script>
-  <script src="js/sw-update.js?v=v42-2026-11-17"></script>
-  <script src="js/alerts.js?v=v42-2026-11-17"></script>
-  <script src="js/nav.js?v=v42-2026-11-17"></script>
-  <script src="js/visits.js?v=v42-2026-11-17"></script>
-  <script src="js/lake-picker.js?v=v42-2026-11-17"></script>
-  <script src="js/a11y.js?v=v42-2026-11-17" defer></script>
+  <script src="js/refresh.js?v=v43-2026-11-17"></script>
+  <script src="js/sw-update.js?v=v43-2026-11-17"></script>
+  <script src="js/alerts.js?v=v43-2026-11-17"></script>
+  <script src="js/nav.js?v=v43-2026-11-17"></script>
+  <script src="js/visits.js?v=v43-2026-11-17"></script>
+  <script src="js/lake-picker.js?v=v43-2026-11-17"></script>
+  <script src="js/a11y.js?v=v43-2026-11-17" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

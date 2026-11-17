@@ -225,7 +225,10 @@ def jsonld(lake, name, url, title):
 
 
 # Linking (review S1, V5): species pages and nearby waters, generated from js/lakes.js (species lists, regions, order),
-# stocking.html (which waters have ODNR stocking rows) and data/docks.json, so a new water picks them up on its build.
+# stocking.html (which waters have ODNR stocking rows), data/docks.json, data/drawdowns.json (MWCD schedule rows),
+# data/quick-facts.json (sourced night lines, the same rows night.html lists), and rules.html (waters already listed
+# with a lake-specific change: bass table rows and Hoover's crappie paragraph),
+# so a new water picks them up on its build.
 SPECIES_NAMES = dict(re.findall(r'"([a-z-]+)": "([^"]+)"', re.search(r"var SPECIES = \{(.*?)\};", LAKES_JS, re.S).group(1)))
 SPECIES_PAGES = {p.stem for p in (root / "species").glob("*.html") if p.stem != "index"}
 REGION_NAME = {r["id"]: r["name"] for r in REG["regions"]}
@@ -247,6 +250,33 @@ def _stocked():
 
 STOCKED = _stocked()
 DOCKS = set(json.loads((root / "data" / "docks.json").read_text()).get("lakes", {}))
+# Schedule rows only, not not_listed (Beach City is named on the drawdown page as not on MWCD's table).
+DRAWDOWNS = {r["lake"] for r in json.loads((root / "data" / "drawdowns.json").read_text()).get("rows", [])}
+# Sourced night lines only, not the "no night rule sourced yet" placeholder on night.html.
+NIGHT = {lid for lid, f in FACTS.items() if f.get("night")}
+
+
+def _rules_covered():
+    """Waters rules.html already lists with a lake-specific change.
+
+    Bass table rows, plus Hoover's crappie paragraph. Does not include waters only named as keeping a
+    rule, and does not treat the statewide March 1, 2027 bass change as covering every lake.
+    """
+    text = (root / "rules.html").read_text()
+    out = set()
+    bass = re.search(r'<section id="bass".*?<tbody>(.*?)</tbody>', text, re.S)
+    if bass:
+        for lake in re.findall(r'<a href="([a-z0-9-]+)/">', bass.group(1)):
+            if lake in REG["lakes"]:
+                out.add(lake)
+    if re.search(r'<section id="crappie".*?<a href="hoover/">', text, re.S):
+        if "hoover" in REG["lakes"]:
+            out.add("hoover")
+    return out
+
+
+# Lake-specific items already on rules.html, not the five waters still missing from that page.
+RULES = _rules_covered()
 
 
 def lake_species(lake):
@@ -258,7 +288,7 @@ def chips(items):
 
 
 def lake_links(lake):
-    """Lake home block: this water's species pages, the other waters in its picker region, stocking and docks."""
+    """Lake home block: this water's species pages, the other waters in its picker region, stocking, docks, drawdowns, night access and rule changes."""
     c = REG["lakes"][lake]
     sp = lake_species(lake)
     region = c.get("region")
@@ -279,6 +309,12 @@ def lake_links(lake):
         also.append(f'<a href="stocking?lake={lake}#stocked">Stocking records</a>')
     if lake in DOCKS:
         also.append(f'<a href="water?lake={lake}#docks">Dock season</a>')
+    if lake in DRAWDOWNS:
+        also.append(f'<a href="drawdown#{lake}">Winter drawdowns</a>')
+    if lake in NIGHT:
+        also.append(f'<a href="night#{lake}">Night access</a>')
+    if lake in RULES:
+        also.append(f'<a href="rules#{lake}">Rule changes</a>')
     also.append('<a href="./?pick">All waters</a>')
     parts += [f'      <p class="meta lake-links-also">{" &middot; ".join(also)}</p>',
               '    </section>',

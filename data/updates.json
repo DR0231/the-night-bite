@@ -2,6 +2,36 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-17-guides-and-night-access-regions",
+      "date": "2026-11-17",
+      "tag": "Improved",
+      "title": "The four guides are easier to find, and Night access is sorted by region",
+      "bullets": [
+        "Winter drawdowns, Night access, Rule changes and Trout now sit together under Guides in the More menu and in the footer of every page.",
+        "The Water page links to Winter drawdowns and Night access. Species has a Trout card and a link to Rule changes, and Stocking & surveys links to Trout.",
+        "Every water's home page links to its own row on Night access. The eight MWCD lakes on the drawdown schedule link to their row on Winter drawdowns, and the 13 waters named on Rule changes link to their entry there.",
+        "Night access folds into dropdowns by region, in the same order as the lake picker, with a Find a water search on top. Coming from a lake page opens that region and lights up the water's row."
+      ],
+      "links": [
+        {
+          "label": "Night access",
+          "href": "night"
+        },
+        {
+          "label": "Winter drawdowns",
+          "href": "drawdown"
+        },
+        {
+          "label": "Rule changes",
+          "href": "rules"
+        },
+        {
+          "label": "Trout",
+          "href": "species/trout"
+        }
+      ]
+    },
+    {
       "id": "2026-11-17-thirteen-waters-and-new-pages",
       "date": "2026-11-17",
       "tag": "New",
