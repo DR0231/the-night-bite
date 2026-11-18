@@ -16,3 +16,4 @@ Worker: https://nb-trip-queue.nightbiteoh.workers.dev (workers.dev only, no DNS)
 
 Deploy: `wrangler deploy` from this folder (wrangler.jsonc), or the Cloudflare API script upload with the same
 bindings. Set the secret with `wrangler secret put ADMIN_TOKEN < /home/box/.nightbite/trip-queue-admin-token`.
+Optional secrets `TRIP_WEBHOOK_URL` and `TRIP_WEBHOOK_KEY` (Grok Bot "Night Bite trip arrived" webhook): when both are set, each new pending trip sends one POST with only `{event, id, note}`, never the trip text; a failed ping never affects the submission.

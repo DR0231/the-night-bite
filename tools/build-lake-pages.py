@@ -275,7 +275,7 @@ def _rules_covered():
     return out
 
 
-# Lake-specific items already on rules.html, not the five waters still missing from that page.
+# Lake-specific items already on rules.html (bass table rows and Hoover's crappie paragraph).
 RULES = _rules_covered()
 
 

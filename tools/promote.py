@@ -21,6 +21,8 @@ What it does (the v20/v21 promote steps, generalized):
   · html: CSP gets Cloudflare Insights (live CSP kept when it differs), the analytics beacon before </body> (not
     offline.html), robots noindex,nofollow removed (404 and offline keep noindex), Preview chip removed,
     /night-bite-preview/ becomes /, Whisperwood links relative, live's pool lead, Checked time and water temp kept.
+  · translation memory (.github/build-inputs/i18n-tm/*.json): merged, not copied. Union of "strings" keys, preview
+    wins where both have a key, live-only keys (live-only What's new strings) are kept; a check fails if any is dropped.
   · css: the "Preview copy only" block is dropped. sw.js: PREFIX nb-live-, VERSION (--version, default the next vN
     with today's date). DATA-SOURCES.md: live title. site.webmanifest: name "The Night Bite (Preview)" becomes
     "The Night Bite". Anything else is copied as is.
@@ -254,7 +256,28 @@ def transform(f, data, dst):
         name = json.loads(s).get("name", "")
         assert "Preview" not in name and name == "The Night Bite", f
         return s.encode("utf-8")
+    if TM_RE.fullmatch(f):
+        return merge_tm(f, data, dst)
     return data
+
+
+TM_RE = re.compile(r"\.github/build-inputs/i18n-tm/[A-Za-z_-]+\.json")
+
+
+def merge_tm(f, data, dst):
+    """Translation memory: merge, never overwrite. Union of keys under "strings"; preview wins on a key both have,
+    keys only on live (e.g. live-only What's new strings) are kept. Written the way i18n-extract.py writes it."""
+    pv = json.loads(data.decode("utf-8"))
+    if not dst.exists():
+        return data
+    lv = json.loads(dst.read_text(encoding="utf-8"))
+    out = {**lv, **pv}
+    ls, ps = lv.get("strings") or {}, pv.get("strings") or {}
+    out["strings"] = {**ls, **ps}
+    kept = len(set(ls) - set(ps))
+    if kept:
+        notes.append(f"{f}: merged, kept {kept} live-only string(s)")
+    return (json.dumps(out, ensure_ascii=False, indent=1, sort_keys=True) + "\n").encode("utf-8")
 
 
 # ---------------------------------------------------------------- apply into the target tree
@@ -356,6 +379,13 @@ after_guard = snapshot(T, guard)
 for r in sorted(set(before_guard) | set(after_guard)):
     if before_guard.get(r) != after_guard.get(r):
         problems.append(f"live-only file changed: {r}")
+for f in todo:   # self-check: the translation memory merge never drops a string live HEAD has
+    if TM_RE.fullmatch(f):
+        o = subprocess.run(["git", "show", f"HEAD:{f}"], cwd=LIVE, capture_output=True)
+        if o.returncode == 0:
+            lost = set(json.loads(o.stdout).get("strings", {})) - set(json.loads((T / f).read_text(encoding="utf-8")).get("strings", {}))
+            if lost:
+                problems.append(f"{f}: {len(lost)} live translation string(s) dropped")
 if deleted:
     notes.append("deleted in the preview, left on live (delete by hand if meant): " + ", ".join(deleted))
 

@@ -2,6 +2,42 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-18-five-more-rule-changes",
+      "date": "2026-11-18",
+      "tag": "Improved",
+      "title": "Five more waters on Rule changes",
+      "bullets": [
+        "Rule changes now lists Kiser Lake, Hargus Creek Lake, Lake Rupert, Wolf Run Lake and Tycoon Lake. Their own bass rules end on March 1, 2027, and they go to the statewide 5 a day, 12″ minimum.",
+        "Each of those five home pages links to its row on Rule changes, and the page now cites ODNR's filed rule text next to the 2026–27 booklet."
+      ],
+      "links": [
+        {
+          "label": "Rule changes",
+          "href": "rules"
+        },
+        {
+          "label": "Kiser Lake",
+          "href": "kiser/"
+        },
+        {
+          "label": "Hargus Creek Lake",
+          "href": "hargus/"
+        },
+        {
+          "label": "Lake Rupert",
+          "href": "lakerupert/"
+        },
+        {
+          "label": "Wolf Run Lake",
+          "href": "wolfrun/"
+        },
+        {
+          "label": "Tycoon Lake",
+          "href": "tycoon/"
+        }
+      ]
+    },
+    {
       "id": "2026-11-17-guides-and-night-access-regions",
       "date": "2026-11-17",
       "tag": "Improved",

@@ -4,7 +4,8 @@
  * D'Angelo approves or rejects each one (tools/trip-queue.py), and approved trips go into data/community-log.json by hand.
  * Admin: GET /admin/list?status=pending|approved, POST /admin/approve {id}, POST /admin/reject {id} (deletes),
  * all with "Authorization: Bearer <ADMIN_TOKEN>" (a Worker secret, never in this repo).
- * Bindings: TRIPS (KV), ADMIN_TOKEN (secret).
+ * Bindings: TRIPS (KV), ADMIN_TOKEN (secret), TRIP_WEBHOOK_URL and TRIP_WEBHOOK_KEY (optional secrets: after a trip is
+ * stored as pending, one POST with only the trip id wakes the site keeper; never the trip text, never blocks the reply).
  * No raw IP is stored: the rate limit key is a salted SHA-256 of the IP and the hour, and it expires.
  */
 const ORIGINS = ["https://nightbiteoh.com", "https://dr0231.github.io"];
@@ -96,7 +97,22 @@ async function listAll(env, prefix) {
   return out;
 }
 
-async function submit(req, env, origin) {
+// One fire-and-forget ping per new pending trip. Body is only the id and a note. Skipped if either secret is missing;
+// errors and timeouts are swallowed, no retry, and the reader's response never waits on it.
+function notify(env, ctx, id) {
+  if (!env.TRIP_WEBHOOK_URL || !env.TRIP_WEBHOOK_KEY || !ctx || typeof ctx.waitUntil !== "function") return;
+  try {
+    ctx.waitUntil(fetch(env.TRIP_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + env.TRIP_WEBHOOK_KEY,
+        "X-Automation-Key": env.TRIP_WEBHOOK_KEY },
+      body: JSON.stringify({ event: "new_trip", id, note: "new trip" }),
+      signal: AbortSignal.timeout(8000)
+    }).catch(() => {}));
+  } catch (e) { /* never let the ping affect the submission */ }
+}
+
+async function submit(req, env, origin, ctx) {
   const h = cors(origin);
   if (!ORIGINS.includes(origin)) return json(403, { ok: false, error: "origin" }, h);
   if (!(req.headers.get("Content-Type") || "").startsWith("application/json")) return json(415, { ok: false, error: "type" }, h);
@@ -124,6 +140,7 @@ async function submit(req, env, origin) {
   const id = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14) + "-" + crypto.randomUUID().slice(0, 8);
   const entry = { id, status: "pending", received: new Date().toISOString(), from: origin, ...t };
   await env.TRIPS.put("pending:" + id, JSON.stringify(entry));
+  if (!t.check) notify(env, ctx, id); // automated check trips (tools/check-trip-queue.cjs) do not wake anyone
   return json(200, { ok: true, status: "pending", id }, h);
 }
 
@@ -164,13 +181,13 @@ async function admin(req, env, path) {
 }
 
 export default {
-  async fetch(req, env) {
+  async fetch(req, env, ctx) {
     const url = new URL(req.url);
     const origin = req.headers.get("Origin") || "";
     try {
       if (url.pathname === "/submit") {
         if (req.method === "OPTIONS") return new Response(null, { status: ORIGINS.includes(origin) ? 204 : 403, headers: cors(origin) });
-        if (req.method === "POST") return await submit(req, env, origin);
+        if (req.method === "POST") return await submit(req, env, origin, ctx);
         return json(405, { ok: false, error: "method" }, cors(origin));
       }
       if (url.pathname.startsWith("/admin/")) return await admin(req, env, url.pathname);
