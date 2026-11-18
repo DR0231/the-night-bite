@@ -28,7 +28,6 @@ const UI = {
     const state = typeof Fishing !== "undefined" ? Fishing.state : "";
     if (state === "bite") return "Hook";
     if (state && state !== "idle") return "Fish";
-    if (text.indexOf("Tap Fish to hook") === 0) return "Hook";
     if (!text || text === "Tap Fish to cast") return "Fish";
     if (text.indexOf("Pick") === 0) return "Pick";
     if (text.indexOf("Talk") === 0 || text.indexOf("to talk to ") !== -1) return "Talk";
@@ -304,6 +303,7 @@ const UI = {
     // Journal pauses movement and world time, but is not a bite-timer exploit:
     // wait/nibble packs up the rod; an open minigame fails on the spot.
     if (Fishing.state === "wait" || Fishing.state === "nibble") Fishing.reelIn();
+    else if (Fishing.state === "bite") Fishing._miss();
     else if (Fishing.state === "play") Minigame.failOpenMenu();
     this.journalOpen = true;
     this.els.journal.classList.remove("hidden");

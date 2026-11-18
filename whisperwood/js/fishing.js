@@ -369,10 +369,15 @@ const Fishing = {
     try { AudioFX.bite(); } catch (err) { /* minigame must still start */ }
     Camera.shake = 1.6;
     Particles.splash(this.bobber.x, this.bobber.y, 12, this._splashColor());
-    Minigame.start(this.spot);
+    this.state = "bite";
+    this.t = 0;
   },
 
   _hook() {
+    if (this.state === "bite") {
+      Minigame.start(this.spot);
+      return;
+    }
     this.state = "reel";
     this.t = 0;
     Camera.shake = 2.2;
@@ -474,6 +479,7 @@ const Fishing = {
   prompt() {
     const tt = (desk, touch) => (typeof UI !== "undefined" && UI.tt ? UI.tt(desk, touch) : desk);
     if (this.state === "play") return Minigame._hintThisFight ? Minigame.hint() : Minigame.shortHint();
+    if (this.state === "bite") return tt("{hook} now", "Tap Hook now");
     if (this.state === "wait" || this.state === "nibble") {
       return "Watch the bobber…  Move to pack up";
     }
