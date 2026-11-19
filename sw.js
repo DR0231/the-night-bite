@@ -35,7 +35,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v45-2026-11-18";
+var VERSION = "v46-2026-11-18";
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
 var PRECACHE_CACHE = PREFIX + "precache";

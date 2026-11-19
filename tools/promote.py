@@ -29,6 +29,7 @@ What it does (the v20/v21 promote steps, generalized):
   · --whats-new FILE: a JSON entry or a JSON array of entries (id, tag, title, bullets, links; date defaults to today) added at the top of
     live data/updates.json. Then the build order runs in the live tree: build-lake-pages, build-docks, build-meta,
     stamp-version, build-updates, footer-social (live-only privacy and updates pages get the footer follow row too),
+    clean-url-script (inserts js/clean-url.js on live-only privacy.html and updates.html, wording unchanged),
     wrap-dates, sw-precache.
   · --small-fix: skip only the What's new entry requirement, for small fixes that get no entry. The VERSION bump
     check and every other check still apply.
@@ -333,7 +334,7 @@ if a.whats_new:
         (T / "data/updates.json").write_text(registry.dump_like(up_t, up))
 
 build_log = []
-for b in ("build-lake-pages.py", "build-docks.py", "build-summaries.py", "build-meta.py", "stamp-version.py", "build-updates.py", "footer-social.py", "wrap-dates.py", "stamp-assets.py", "sw-precache.py"):   # sw-precache last: hashes of the final live files
+for b in ("build-lake-pages.py", "build-docks.py", "build-summaries.py", "build-meta.py", "stamp-version.py", "build-updates.py", "footer-social.py", "clean-url-script.py", "wrap-dates.py", "stamp-assets.py", "sw-precache.py"):   # sw-precache last: hashes of the final live files. clean-url-script keeps js/clean-url.js on live-only privacy.html and updates.html without changing their wording.
     p = subprocess.run([sys.executable, str(T / "tools" / b)], cwd=T, capture_output=True, text=True)
     last = (p.stdout.strip().splitlines() or [""])[-1]
     build_log.append(f"{b}: {'ok' if p.returncode == 0 else 'FAILED'} {last}")
@@ -351,6 +352,16 @@ if not new_entries and not a.small_fix:
 sw_now = re.search(r'var VERSION = "([^"]*)";', (T / "sw.js").read_text()).group(1)
 if not (vnum(sw_now) and vnum(old_ver) and vnum(sw_now) > vnum(old_ver)):
     problems.append(f"sw.js VERSION {sw_now} is not newer than live {old_ver}")
+# Live-only pages are never copied from preview, so the boot script has to be
+# inserted during the promote builds. Wording on those pages is left alone.
+clean_boot = re.compile(
+    r'<script src="js/clean-url\.js\?v=' + re.escape(sw_now) + r'"></script>\s*'
+    r'<script src="js/a11y-boot\.js\?v=' + re.escape(sw_now) + r'"></script>'
+)
+for r in ("privacy.html", "updates.html"):
+    body = (T / r).read_text(encoding="utf-8")
+    if not clean_boot.search(body):
+        problems.append(f"{r}: missing js/clean-url.js immediately before a11y-boot with ?v={sw_now}")
 for p in sorted(T.rglob("*.html")):
     r = p.relative_to(T).as_posix()
     if r.startswith(("whisperwood", "previews/", "review/")) or re.fullmatch(r"google[0-9a-f]+\.html", r):

@@ -9,8 +9,10 @@ the clean URL. This check keeps links, sitemap locs, canonicals, og:url and
 hreflang from slipping back to the .html form.
 
 A .html path is allowed only when that is the official public URL (today,
-/whisperwood.html) or when no clean twin exists. whisperwood.html and
-everything under whisperwood/ are skipped (the game; left alone). External
+/whisperwood.html) or when no clean twin exists. whisperwood.html,
+everything under whisperwood/, and links to /whisperwood/ paths (for
+example whisperwood/play.html, which the Vale bots own) are left alone.
+Pages under whisperwood/ are also skipped. External
 http(s) links are ignored unless they point at nightbiteoh.com or the
 preview host. 404.html is not expected to load js/clean-url.js.
 
@@ -111,6 +113,11 @@ def clean_form(path):
         return path
     bare = path.split("#")[0].split("?")[0]
     if bare in ALLOW_HTML:
+        return path
+    # Links into /whisperwood/ (for example whisperwood/play.html) are owned
+    # by the Vale bots, so they stay as written, the same way /whisperwood.html
+    # is the official public URL and is left alone.
+    if bare.startswith("whisperwood/"):
         return path
     if bare.endswith("/index.html"):
         return bare[: -len("index.html")] + (path[len(bare):] if len(path) > len(bare) else "")
