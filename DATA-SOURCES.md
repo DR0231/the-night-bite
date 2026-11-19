@@ -547,7 +547,7 @@ No new data. The card copies the Tonight at a glance strip (USGS or USACE gauge 
 from the NWS forecast with its "Checked" time) and prints "--" for anything missing. Static per-lake OG images
 (`assets/og/og-<lake>.png` for every lake but Hoover) are the site art with the lake's name, no live data.
 
-## Dock season (water.html#docks), checked Oct. 28, 2026
+## Dock season (water.html#docks), checked Oct. 28, 2026 (Hoover status updated Nov. 19, 2026)
 
 Built from `data/docks.json` by `tools/build-docks.py` (then `tools/stamp-version.py`). `js/docks.js` flips an
 "ending" line to its after text once the date passes in Columbus, and flags a check older than 14 days. No fetches.
@@ -569,11 +569,18 @@ Built from `data/docks.json` by `tools/build-docks.py` (then `tools/stamp-versio
   control (Corps of Engineers); Buckeye Lake 3 ft, 11/15/25 to 12/15/25, refill 03/01/26 to 05/01/26, dock maintenance,
   seawall repair, shoreline maintenance.
   https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns
-- No 2026 dock pull dates are posted for any of the three on Oct. 28, 2026.
+- Hoover, Nov. 19, 2026: the site owner reported that the marina docks and the public launch courtesy docks are
+  pulled for the season. The city and ODNR have not posted a confirmation. That report lives in `data/docks.json`
+  under `attributions` (id `nightbite-owner`) and is not in the `watch` list, so `tools/check-docks.py` does not
+  fetch it. The rental calendar is unchanged: public boat dock rentals ran May 1 to Oct. 31, which is not a report
+  of which docks are in the water.
+- No official 2026 dock pull date is posted for Hoover, Alum Creek or Buckeye Lake. Hoover's pulled-for-the-season
+  line is the site owner report of Nov. 19, 2026, not an agency posting.
 - Watching: `python3 tools/check-docks.py` reads every page in the `watch` list of `data/docks.json` and compares
   the dock, ramp, closure and drawdown sentences with `tools/docks-watch-state.json`. Last line `RESULT: CHANGED n`
   means read the +/- lines and the page, update `data/docks.json` (and `checked`), rebuild, then rerun with
-  `--update` and commit the new baseline. ODNR and Columbus also post on Facebook; those are not watched.
+  `--update` and commit the new baseline. Entries under `attributions` are not fetched. ODNR and Columbus also post
+  on Facebook; those are not watched.
 
 ## Ice season (ice.html), checked Oct. 27, 2026
 

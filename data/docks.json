@@ -1,10 +1,10 @@
 {
- "_readme": "Dock season status for water.html#docks. Edit here, then run: python3 tools/build-docks.py && python3 tools/stamp-version.py. Status is one of: in, ending, out, unannounced. 'ending' needs 'ends' (YYYY-MM-DD) and flips to 'after' text on the page once that date passes. Never set 'out' without an official source saying so. 'checked' is the date someone last read every source below. tools/check-docks.py watches the 'watch' list.",
+ "_readme": "Dock season status for water.html#docks. Edit here, then run: python3 tools/build-docks.py && python3 tools/stamp-version.py. Status is one of: in, ending, out, unannounced. 'ending' needs 'ends' (YYYY-MM-DD) and flips to 'after' text on the page once that date passes. Set 'out' when an official source says so, or when a dated site-owner report is on file and the note says official pages have not confirmed. 'checked' is the date someone last read every source below. tools/check-docks.py watches the 'watch' list (not 'attributions', which are on-site notes and are not fetched).",
  "checked": "2026-11-03",
  "lakes": {
   "hoover": {
    "name": "Hoover",
-   "checked": "2026-11-06",
+   "checked": "2026-11-19",
    "items": [
     {
      "name": "Public boat dock rentals",
@@ -19,10 +19,10 @@
     },
     {
      "name": "Marina and courtesy docks",
-     "status": "unannounced",
-     "label": "Not confirmed",
-     "note": "Whether the marina docks and the public launch courtesy docks are in the water is unconfirmed. City alerts have no current confirmation of a pull. The lack of an alert is not evidence the docks are in. ODNR says Columbus maintains the docks and does not report whether they are in now. An open ramp does not mean a dock is installed.",
-     "source": "recparks-alerts"
+     "status": "out",
+     "label": "Pulled for the season",
+     "note": "The site owner reported on Nov. 19, 2026 that the marina docks and the public launch courtesy docks are pulled for the season. The city and ODNR have not posted a confirmation.",
+     "source": "nightbite-owner"
     }
    ],
    "history": "",
@@ -44,7 +44,8 @@
    "sources": [
     "recparks-docks",
     "recparks-alerts",
-    "recparks-hoover"
+    "recparks-hoover",
+    "nightbite-owner"
    ]
   },
   "alum": {
@@ -3669,6 +3670,12 @@
     "alert",
     "marina"
    ]
+  }
+ ],
+ "attributions": [
+  {
+   "id": "nightbite-owner",
+   "label": "The Night Bite, site owner report, Nov. 19, 2026"
   }
  ]
 }

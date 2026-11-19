@@ -35,7 +35,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v47-2026-11-19";
+var VERSION = "v48-2026-11-19";
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
 var PRECACHE_CACHE = PREFIX + "precache";
@@ -641,7 +641,7 @@ var REVISIONS = {
   "js/your-water.js": "da7865eb55a2",
   "js/local-notes.js": "d68fc177c5f1",
   "js/docks.js": "a1a7f6febfb1",
-  "data/quick-facts.json": "38c4ef10cd3e",
+  "data/quick-facts.json": "fee3e6c3ef6b",
   "data/bait-shops.json": "2a13412f3883",
   "data/community-log.json": "11d7942a8e63",
   "data/tournaments.json": "d843f370ad46",
@@ -751,7 +751,7 @@ var REVISIONS = {
   "assets/map/pin-shop.png": "b7beeb5fd6a9",
   "assets/moon/moon-phases.png": "88eb81447164",
   "assets/wind/wind-arrows.png": "320e354157c4",
-  "hoover/": "16dd9d4a2c9f",
+  "hoover/": "d501f69e11a1",
   "assets/hoover-chart.png": "fe743cba0221",
   "js/biting/hoover.js": "7205a1f4077d",
   "assets/map/hoover-map-tall.png": "8ccedbbfb7ab",

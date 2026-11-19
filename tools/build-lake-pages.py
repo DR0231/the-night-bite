@@ -132,10 +132,13 @@ def quick_facts(lake):
         rows.append(("Motors and speed", t(F["motors"])))
     if F.get("ramps"):
         ramps = t(F["ramps"])
-        D = F.get("docks")   # optional dated end of season dock line, official source only
+        D = F.get("docks")   # optional dated end of season dock line; official source, or a dated site-owner report
         if D:
+            src_label, src_url = D["source"][0], D["source"][1] if len(D["source"]) > 1 else ""
+            src_html = (f'Source: <a href="{src_url}" target="_blank" rel="noopener">{t(src_label)}</a>. '
+                        if src_url else f'Source: {t(src_label)}. ')
             ramps += (f'<br><span class="qf-docks">Docks, checked <time datetime="{D["checked"]}">{nice_date(D["checked"])}</time>: '
-                      f'{t(D["text"])} Source: <a href="{D["source"][1]}" target="_blank" rel="noopener">{t(D["source"][0])}</a>. '
+                      f'{t(D["text"])} {src_html}'
                       f'<a href="water#docks">Dock season, all lakes</a>.</span>')
         rows.append(("Ramps and access", ramps))
     pool = t(F["pool"]) + " " if F.get("pool") else ""
