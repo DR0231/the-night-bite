@@ -5,12 +5,12 @@ window.NightBiteMapDataWellington = {
  "notes": "Village of Wellington water supply reservoir with an ODNR fishing agreement: paddle craft and electric motors only, boats up to 23 ft. Public access sunrise to sunset daily (ODNR). Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "wellington-map-wide": {
-   "src": "assets/map/wellington-map-wide.png",
+   "src": "assets/map/wellington-map-wide.png?v=a0fbcd0c598d",
    "w": 262,
    "h": 270
   },
   "wellington-map-tall": {
-   "src": "assets/map/wellington-map-tall.png",
+   "src": "assets/map/wellington-map-tall.png?v=3718dfd9adb2",
    "w": 242,
    "h": 251
   }

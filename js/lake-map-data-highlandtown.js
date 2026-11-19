@@ -5,12 +5,12 @@ window.NightBiteMapDataHighlandtown = {
  "notes": "Highlandtown Wildlife Area: 10 hp limit (OAC 1501:47-5-03). The two wildlife area ramps in ODNR's boating list are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "highlandtown-map-wide": {
-   "src": "assets/map/highlandtown-map-wide.png",
+   "src": "assets/map/highlandtown-map-wide.png?v=c8eebeace78b",
    "w": 227,
    "h": 169
   },
   "highlandtown-map-tall": {
-   "src": "assets/map/highlandtown-map-tall.png",
+   "src": "assets/map/highlandtown-map-tall.png?v=be58591f52cf",
    "w": 161,
    "h": 229
   }

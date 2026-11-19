@@ -5,12 +5,12 @@ window.NightBiteMapDataCharlesmill = {
  "notes": "Muskingum Watershed Conservancy District lake: MWCD areas close 11 p.m. to 6 a.m. except to people fishing, hunting or boating (rule 1.13). 10 hp limit; electric motors only on Sites Lake. The basin north of SR 430 is very shallow; the eastern basin is the deepest (ODNR). Trotlines and floatlines only north of SR 430. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "charlesmill-map-wide": {
-   "src": "assets/map/charlesmill-map-wide.png",
+   "src": "assets/map/charlesmill-map-wide.png?v=68cf0cfd22f2",
    "w": 226,
    "h": 164
   },
   "charlesmill-map-tall": {
-   "src": "assets/map/charlesmill-map-tall.png",
+   "src": "assets/map/charlesmill-map-tall.png?v=bf9ebbfcfa1a",
    "w": 162,
    "h": 235
   }

@@ -9,7 +9,7 @@ Run from the repo root after any change to tools/lake-home.html, then run tools/
 Each copy:
   · gets <base href="../"> so every relative link, image, script and fetch() resolves from the site root
     (same files, same service worker scope); in-page links (#main, #get-the-app) become alum/#main and so on;
-  · says which lake it is (<meta name="nb-home" content="alum">), which js/lakes.js reads before first paint;
+  · says which lake it is (<meta name="nb-home" content="alum">), which js/lakes-boot.js reads before first paint;
   · has its own title, description, canonical, og:url, og:title, og:description, og:image and JSON-LD url;
   · has the lake's names already filled in [data-lk] spots, so nothing swaps after paint;
   · has its own Quick facts block and JSON-LD (see below);
@@ -28,7 +28,7 @@ JSON-LD (between <!-- nb:jsonld --> markers): every lake home gets its own WebPa
 site root (the water picker) declares. Each WebPage carries dateModified = that lake's "checked" date, the same date
 the page shows as "Facts checked". The template's own two blocks are refreshed with Hoover's.
 Tonight at a glance: tools/glance_bake.py bakes the strip from each page's own pool card (level, temp, Checked time)
-and, for lakes other than Hoover, writes that lake's snapshot from js/lakes.js into the pool card's static lines.
+and sunset and last light from js/astro.js, and, for lakes other than Hoover, writes that lake's snapshot from js/lakes.js into the pool card's static lines.
 Never edit the <lake>/index.html copies by hand (except the three snapshot lines in hoover/index.html); they are overwritten.
 """
 import datetime, html, json, pathlib, re, sys
@@ -51,6 +51,8 @@ import lake_isolate  # noqa: E402  (each lake home keeps only its own data-for b
 import importlib.util  # noqa: E402
 
 REG = registry.load(root)
+_LAKES_GEO = [{"id": l, "lat": REG["lakes"][l]["lat"], "lng": REG["lakes"][l]["lng"]} for l in REG["order"]]
+_SUNSETS = glance_bake.compute_sunsets(root, _LAKES_GEO)
 
 # picker tile charts first (assets/tiles/<id>.png and their sw.js PRECACHE lines), so a lake whose chart was just
 # added gets its tile on this build; see tools/build-tile-charts.py
@@ -65,6 +67,10 @@ for _id in REG["order"]:
     _f = FACTS.get(_id) or {}
     if not (_f.get("title") and _f.get("description")):
         sys.exit(f"build-lake-pages: data/quick-facts.json needs a title and description for {_id}")
+    if len(_f["title"]) > 60:
+        sys.exit(f"build-lake-pages: title for {_id} is {len(_f['title'])} characters (keep at 60 or fewer)")
+    if len(_f["description"]) > 160:
+        sys.exit(f"build-lake-pages: description for {_id} is {len(_f['description'])} characters (keep at 160 or fewer)")
     LAKES[_id] = {"name": REG["lakes"][_id]["name"], "short": REG["lakes"][_id]["short"],
                   "title": _f["title"], "desc": _f["description"]}
 
@@ -264,7 +270,7 @@ def _rules_covered():
     """
     text = (root / "rules.html").read_text()
     out = set()
-    bass = re.search(r'<section id="bass".*?<tbody>(.*?)</tbody>', text, re.S)
+    bass = re.search(r'<section id="bass".*?<tbody[^>]*>(.*?)</tbody>', text, re.S)
     if bass:
         for lake in re.findall(r'<a href="([a-z0-9-]+)/">', bass.group(1)):
             if lake in REG["lakes"]:
@@ -366,7 +372,7 @@ if _hv.exists():
 # the template's own Quick facts and JSON-LD: Hoover's, so it reads like the page it becomes
 new_src = fill(src, "hoover", "Hoover Reservoir", SITE + "hoover/", LAKES["hoover"]["title"])
 # and its glance strip, baked from Hoover's own pool card lines (tools/glance_bake.py)
-new_src = glance_bake.bake(new_src, REG["lakes"]["hoover"].get("pool") or {}, (REG["lakes"]["hoover"].get("nws") or {}).get("page"), card=False)
+new_src = glance_bake.bake(new_src, REG["lakes"]["hoover"].get("pool") or {}, (REG["lakes"]["hoover"].get("nws") or {}).get("page"), card=False, sun=_SUNSETS.get("hoover"))
 if new_src != TEMPLATE.read_text():
     TEMPLATE.write_text(new_src)
     print("wrote tools/lake-home.html (Hoover quick facts, JSON-LD, snapshot lines)")
@@ -426,7 +432,7 @@ for lake, L in LAKES.items():
     # this lake's own snapshot in the pool card (not Hoover's) and the glance strip baked from it, so the first paint,
     # a page with JavaScript off and a page whose USGS or NWS calls fail all show a stamped reading, never "--"
     _c = REG["lakes"][lake]
-    h = glance_bake.bake(h, _c.get("pool") or {}, (_c.get("nws") or {}).get("page"), card=lake != "hoover")
+    h = glance_bake.bake(h, _c.get("pool") or {}, (_c.get("nws") or {}).get("page"), card=lake != "hoover", sun=_SUNSETS.get(lake))
     # in-page links and Home links: with <base href="../"> they would otherwise point at the root page
     h = re.sub(r'href="#', f'href="{lake}/#', h)
     h = re.sub(r'href="\./"', f'href="{lake}/"', h)

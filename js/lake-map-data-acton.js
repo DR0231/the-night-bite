@@ -5,12 +5,12 @@ window.NightBiteMapDataActon = {
  "notes": "Hueston Woods State Park: boats over 10 hp at no wake speed. One five lane ramp; the marina on the west side has a kayak launch. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "acton-map-wide": {
-   "src": "assets/map/acton-map-wide.png",
+   "src": "assets/map/acton-map-wide.png?v=d1c411bc272a",
    "w": 229,
    "h": 270
   },
   "acton-map-tall": {
-   "src": "assets/map/acton-map-tall.png",
+   "src": "assets/map/acton-map-tall.png?v=bc35e309faab",
    "w": 242,
    "h": 286
   }

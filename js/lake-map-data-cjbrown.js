@@ -5,12 +5,12 @@ window.NightBiteMapDataCjbrown = {
  "notes": "Buck Creek State Park and Corps of Engineers land: park hours 7 a.m. to 11 p.m., unlimited horsepower. The north end above the Buck Creek Lane crossing is very shallow (ODNR). The four ramps in ODNR's boating list are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "cjbrown-map-wide": {
-   "src": "assets/map/cjbrown-map-wide.png",
+   "src": "assets/map/cjbrown-map-wide.png?v=fe941203b2e4",
    "w": 219,
    "h": 270
   },
   "cjbrown-map-tall": {
-   "src": "assets/map/cjbrown-map-tall.png",
+   "src": "assets/map/cjbrown-map-tall.png?v=2b9d57dfc4a3",
    "w": 242,
    "h": 299
   }

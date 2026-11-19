@@ -1,16 +1,25 @@
 /**
- * The Night Bite: one time "Add to home screen" tip, phones only, Home page only.
+ * The Night Bite: one time "Add to home screen" tip, phones only.
+ *  · Shown after this device has a saved water (localStorage "nb-lake", the key the site already uses), and on
+ *    lake pages. Not shown on the first-time picker, where it covered the tiles.
  *  · Android / Chrome: waits for beforeinstallprompt and shows an Install button.
  *  · iOS Safari: shows the Share, then "Add to Home Screen" steps.
  *  · Never shows when already running from the home screen, or after it's been closed or used once
  *    (localStorage nb-install-tip-v1).
  *  · Shares the install prompt with the Get the app card (get-app.js) through window.nbInstallEvent.
+ *  · Reads only the device-local keys already in use. No new data is collected or sent.
  */
 (function () {
   var KEY = "nb-install-tip-v1";
   var mm = window.matchMedia ? function (q) { return window.matchMedia(q).matches; } : function () { return false; };
   function done() { try { return !!localStorage.getItem(KEY); } catch (e) { return true; } }
   function remember(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function hasSavedPick() {
+    var k = (window.NightBiteLakes && window.NightBiteLakes.storageKey) || "nb-lake";
+    try { return !!localStorage.getItem(k); } catch (e) { return false; }
+  }
+  function onLakePage() { return !!document.querySelector('meta[name="nb-home"]'); }
+  function allowed() { return onLakePage() || hasSavedPick(); }
   var standalone = mm("(display-mode: standalone)") || mm("(display-mode: fullscreen)") || mm("(display-mode: minimal-ui)") || navigator.standalone === true;
   var phone = mm("(max-width: 767px)") && (mm("(pointer: coarse)") || "ontouchstart" in window);
   if (standalone || !phone || done()) return;
@@ -97,9 +106,9 @@
   window.addEventListener("beforeinstallprompt", function (e) {
     window.nbInstallEvent = e;
     if (done()) return;
-    e.preventDefault();   // show our own one time tip instead of the browser's mini bar
+    e.preventDefault();   // show our own one time tip instead of the browser's mini bar (also suppresses the bar on the first-time picker)
     deferred = e;
-    build("android");
+    if (allowed()) build("android");
   });
   // the Get the app card used the prompt: the tip's Install button has nothing left to open
   document.addEventListener("nb-install-change", function () {
@@ -107,7 +116,7 @@
   });
   window.addEventListener("appinstalled", function () { close("installed"); });
   if (iosSafari) {
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { build("ios"); });
-    else build("ios");
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { if (allowed()) build("ios"); });
+    else if (allowed()) build("ios");
   }
 })();

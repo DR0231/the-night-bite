@@ -3,12 +3,12 @@
 window.NightBiteMapData = {
  "maps": {
   "hoover-map-wide": {
-   "src": "assets/map/hoover-map-wide.png",
+   "src": "assets/map/hoover-map-wide.png?v=1330bbed1c9a",
    "w": 323,
    "h": 102
   },
   "hoover-map-tall": {
-   "src": "assets/map/hoover-map-tall.png",
+   "src": "assets/map/hoover-map-tall.png?v=8ccedbbfb7ab",
    "w": 96,
    "h": 324
   }

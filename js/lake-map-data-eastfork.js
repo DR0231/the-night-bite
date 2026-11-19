@@ -5,12 +5,12 @@ window.NightBiteMapDataEastfork = {
  "notes": "East Fork State Park and Corps of Engineers land: park hours 6 a.m. to 11 p.m., unlimited horsepower. Summer pool 733 ft, winter pool 729 ft. No paddlefish may be taken in the lake or within 2,000 ft of it or the dam. The two hand launches are not pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "eastfork-map-wide": {
-   "src": "assets/map/eastfork-map-wide.png",
+   "src": "assets/map/eastfork-map-wide.png?v=47951587ddcc",
    "w": 312,
    "h": 241
   },
   "eastfork-map-tall": {
-   "src": "assets/map/eastfork-map-tall.png",
+   "src": "assets/map/eastfork-map-tall.png?v=f7806350d292",
    "w": 241,
    "h": 190
   }

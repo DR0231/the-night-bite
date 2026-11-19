@@ -5,12 +5,12 @@ window.NightBiteMapDataBuckeye = {
  "notes": "No wake within 300 ft of any land mass and in marked areas (ODNR fishing map). Check posted state park hours before a night trip. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "buckeye-map-wide": {
-   "src": "assets/map/buckeye-map-wide.png",
+   "src": "assets/map/buckeye-map-wide.png?v=5025bb2f3a4f",
    "w": 324,
    "h": 164
   },
   "buckeye-map-tall": {
-   "src": "assets/map/buckeye-map-tall.png",
+   "src": "assets/map/buckeye-map-tall.png?v=64957d8aef76",
    "w": 151,
    "h": 313
   }

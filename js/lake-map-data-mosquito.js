@@ -5,12 +5,12 @@ window.NightBiteMapDataMosquito = {
  "notes": "Mosquito Lake State Park and Corps of Engineers land: park hours 6 a.m. to 11 p.m., no hp limit, no wake within 300 ft of shore, no skiing, tubing or PWCs north of the SR 88 causeway. Marina and beach lot road construction since Oct. 3, 2026. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "mosquito-map-wide": {
-   "src": "assets/map/mosquito-map-wide.png",
+   "src": "assets/map/mosquito-map-wide.png?v=5f9c8adca6e1",
    "w": 311,
    "h": 79
   },
   "mosquito-map-tall": {
-   "src": "assets/map/mosquito-map-tall.png",
+   "src": "assets/map/mosquito-map-tall.png?v=0ec97542cfcb",
    "w": 71,
    "h": 310
   }

@@ -5,12 +5,12 @@ window.NightBiteMapDataDeercreek = {
  "notes": "Deer Creek State Park and Corps of Engineers land: park hours 6 a.m. to 11 p.m., unlimited horsepower, two ramps. Fall drawdown to winter pool, so ramps and banks change. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "deercreek-map-wide": {
-   "src": "assets/map/deercreek-map-wide.png",
+   "src": "assets/map/deercreek-map-wide.png?v=94741d413ed8",
    "w": 263,
    "h": 270
   },
   "deercreek-map-tall": {
-   "src": "assets/map/deercreek-map-tall.png",
+   "src": "assets/map/deercreek-map-tall.png?v=5654e0f59db7",
    "w": 242,
    "h": 250
   }

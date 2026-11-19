@@ -5,12 +5,12 @@ window.NightBiteMapDataDillon = {
  "notes": "Dillon State Park and Corps of Engineers land: park hours 6 a.m. to 11 p.m., unlimited horsepower, many coves no wake, two ramps at the south end. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "dillon-map-wide": {
-   "src": "assets/map/dillon-map-wide.png",
+   "src": "assets/map/dillon-map-wide.png?v=c9b315494172",
    "w": 263,
    "h": 270
   },
   "dillon-map-tall": {
-   "src": "assets/map/dillon-map-tall.png",
+   "src": "assets/map/dillon-map-tall.png?v=29d7f7030500",
    "w": 241,
    "h": 249
   }

@@ -9,7 +9,7 @@ How it works (S12, the lever for "every piece of text in the picked language"):
   * Walks every built page (index.html, <lake>/index.html, species/*.html and the other root pages; never
     whisperwood.html). Lake homes are generated from tools/lake-home.html, so the built pages cover the template.
   * Collects each visible text node inside <main> and dialogs (the same places js/i18n.js translates), plus the alt,
-    aria-label, title and placeholder attributes. Skipped: h1 (titles stay as they are), .cond-summary (NWS words),
+    aria-label, title, placeholder and data-label attributes. Skipped: h1 (titles stay as they are), .cond-summary (NWS words),
     [data-nb-keep], script/style, chrome already covered by data/i18n/en.json (exact strings and pg.* templates),
     and lines that hold no words once names and numbers are taken out.
   * Key = <page>.<first 8 hex of sha1 of the normalised English>, so a key is stable until the English changes, and an
@@ -29,7 +29,7 @@ from bs4 import BeautifulSoup, Comment, NavigableString
 ROOT = pathlib.Path(os.environ.get("NB_ROOT") or pathlib.Path(__file__).resolve().parent.parent)
 # the translation memory is a build input, kept under .github/ so GitHub Pages never publishes its 14 MB
 D = ROOT / "data" / "i18n"; PAGES = D / "pages"; TM = ROOT / ".github" / "build-inputs" / "i18n-tm"
-ATTRS = ["alt", "aria-label", "title", "placeholder"]
+ATTRS = ["alt", "aria-label", "title", "placeholder", "data-label"]
 SCOPES = ".site-header, .site-footer, .glance, #glance-actions, .a11y-panel, .night-chip, .nws-alert, #my-trips, #add-trip, [data-log-filter], .i18n-draft, .spy-label, a.sr-only[href$=\"#main\"]"
 KEEP = "h1, .cond-summary, [data-nb-keep]"
 # S13: text the scripts write after load (values, units, subs, status lines, the hourly strip) and <time> (Intl in the

@@ -2,6 +2,35 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-18-easier-on-a-phone",
+      "date": "2026-11-18",
+      "tag": "Improved",
+      "title": "The site is easier to use on a phone",
+      "bullets": [
+        "On a phone, Winter drawdowns, Rule changes and Trout now show one card per water, so every column is visible. Labels, the USGS line and the nav are larger, and buttons and links are easier to tap.",
+        "If you've saved a water on your device, those three guides show a Your water line that jumps to its row. Lake pages fold Pool details and Tonight details behind a tap, and waters with no public gauge now share one box.",
+        "Pages show up sooner. The footer on every page, and About, now have a Contact / send a correction link to contact@nightbiteoh.com."
+      ],
+      "links": [
+        {
+          "label": "Winter drawdowns",
+          "href": "drawdown"
+        },
+        {
+          "label": "Rule changes",
+          "href": "rules"
+        },
+        {
+          "label": "Trout",
+          "href": "species/trout"
+        },
+        {
+          "label": "About",
+          "href": "about"
+        }
+      ]
+    },
+    {
       "id": "2026-11-18-five-more-rule-changes",
       "date": "2026-11-18",
       "tag": "Improved",

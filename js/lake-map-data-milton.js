@@ -5,12 +5,12 @@ window.NightBiteMapDataMilton = {
  "notes": "Lake Milton State Park: park hours 6 a.m. to 11 p.m., no hp limit, three lit ramps. Fall drawdown of about 8 ft from Oct. 15, refill from March 15. Miller's Landing ramp is not pinned here. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "milton-map-wide": {
-   "src": "assets/map/milton-map-wide.png",
+   "src": "assets/map/milton-map-wide.png?v=f53f78b14569",
    "w": 312,
    "h": 123
   },
   "milton-map-tall": {
-   "src": "assets/map/milton-map-tall.png",
+   "src": "assets/map/milton-map-tall.png?v=99dad2407b96",
    "w": 118,
    "h": 310
   }

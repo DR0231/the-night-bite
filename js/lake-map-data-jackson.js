@@ -5,12 +5,12 @@ window.NightBiteMapDataJackson = {
  "notes": "Jackson Lake State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. 10 hp limit, bigger motors at no wake (ODNR fishing area page; the park page says any horsepower at idle speed). The state park ramp and the Furnace ramp from ODNR's boating layer are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "jackson-map-wide": {
-   "src": "assets/map/jackson-map-wide.png",
+   "src": "assets/map/jackson-map-wide.png?v=ce8819d51e44",
    "w": 312,
    "h": 139
   },
   "jackson-map-tall": {
-   "src": "assets/map/jackson-map-tall.png",
+   "src": "assets/map/jackson-map-tall.png?v=521692247685",
    "w": 133,
    "h": 310
   }

@@ -9,8 +9,11 @@
     var el;
     try { el = document.getElementById(decodeURIComponent(id)); } catch (e) { return; }
     if (!el) return;
-    var d = el.closest ? el.closest("details") : null;
-    if (d) d.open = true;
+    var node = el;
+    while (node) {
+      if (node.tagName === "DETAILS") node.open = true;
+      node = node.parentElement;
+    }
     if (el.tagName === "SECTION") {
       Array.prototype.forEach.call(el.querySelectorAll("details.gear-fold"), function (f) { f.open = true; });
     }

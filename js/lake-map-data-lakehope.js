@@ -5,12 +5,12 @@ window.NightBiteMapDataLakehope = {
  "notes": "Lake Hope State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Electric motors and hand powered boats only. The one ramp, on SR 278 by the dam, is pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "lakehope-map-wide": {
-   "src": "assets/map/lakehope-map-wide.png",
+   "src": "assets/map/lakehope-map-wide.png?v=5c4d97727e39",
    "w": 176,
    "h": 270
   },
   "lakehope-map-tall": {
-   "src": "assets/map/lakehope-map-tall.png",
+   "src": "assets/map/lakehope-map-tall.png?v=682266708b92",
    "w": 202,
    "h": 310
   }

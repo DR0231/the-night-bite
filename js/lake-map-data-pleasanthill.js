@@ -5,12 +5,12 @@ window.NightBiteMapDataPleasanthill = {
  "notes": "Muskingum Watershed Conservancy District lake: MWCD areas close 11 p.m. to 6 a.m. except to people fishing, hunting or boating (rule 1.13). No horsepower limit. One public launch ramp by the marina; Mohican State Park is on the south shore. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "pleasanthill-map-wide": {
-   "src": "assets/map/pleasanthill-map-wide.png",
+   "src": "assets/map/pleasanthill-map-wide.png?v=9a55abbdc0e4",
    "w": 273,
    "h": 170
   },
   "pleasanthill-map-tall": {
-   "src": "assets/map/pleasanthill-map-tall.png",
+   "src": "assets/map/pleasanthill-map-tall.png?v=0d1e720854ce",
    "w": 162,
    "h": 276
   }

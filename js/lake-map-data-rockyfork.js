@@ -5,12 +5,12 @@ window.NightBiteMapDataRockyfork = {
  "notes": "Rocky Fork State Park: park hours 6 a.m. to 11 p.m., unlimited horsepower. The six state park ramps are pinned; North Beach Marina sells fuel. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "rockyfork-map-wide": {
-   "src": "assets/map/rockyfork-map-wide.png",
+   "src": "assets/map/rockyfork-map-wide.png?v=0c8f026eb1f3",
    "w": 312,
    "h": 141
   },
   "rockyfork-map-tall": {
-   "src": "assets/map/rockyfork-map-tall.png",
+   "src": "assets/map/rockyfork-map-tall.png?v=5d21225b0589",
    "w": 129,
    "h": 304
   }

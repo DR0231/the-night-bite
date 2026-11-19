@@ -5,12 +5,12 @@ window.NightBiteMapDataCowan = {
  "notes": "Cowan Lake State Park: park hours 6 a.m. to 11 p.m., 10 hp limit. ODNR is drawing the lake down 13.5 ft from Nov. 1, 2026 for dam work; ramps stay usable only while there is enough water. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "cowan-map-wide": {
-   "src": "assets/map/cowan-map-wide.png",
+   "src": "assets/map/cowan-map-wide.png?v=f37e386679d2",
    "w": 281,
    "h": 144
   },
   "cowan-map-tall": {
-   "src": "assets/map/cowan-map-tall.png",
+   "src": "assets/map/cowan-map-tall.png?v=d5f31b62cf19",
    "w": 134,
    "h": 283
   }

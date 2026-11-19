@@ -5,12 +5,12 @@ window.NightBiteMapDataClearfork = {
  "notes": "City of Mansfield water supply lake: idle speed, no wake on the whole lake, shore fishing on the south and west shores only, no swimming, no parking from dark to dawn outside camping areas. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "clearfork-map-wide": {
-   "src": "assets/map/clearfork-map-wide.png",
+   "src": "assets/map/clearfork-map-wide.png?v=70e32449565e",
    "w": 312,
    "h": 251
   },
   "clearfork-map-tall": {
-   "src": "assets/map/clearfork-map-tall.png",
+   "src": "assets/map/clearfork-map-tall.png?v=0bbdf6e67c04",
    "w": 242,
    "h": 197
   }

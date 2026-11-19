@@ -5,12 +5,12 @@ window.NightBiteMapDataNimisila = {
  "notes": "Electric motors only. ODNR posted on Nov. 3, 2026 that Nimisila Reservoir is being lowered while engineers study its dams; ramps may be short of water. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "nimisila-map-wide": {
-   "src": "assets/map/nimisila-map-wide.png",
+   "src": "assets/map/nimisila-map-wide.png?v=01d63520cf96",
    "w": 312,
    "h": 149
   },
   "nimisila-map-tall": {
-   "src": "assets/map/nimisila-map-tall.png",
+   "src": "assets/map/nimisila-map-tall.png?v=ba1aa383793b",
    "w": 143,
    "h": 310
   }

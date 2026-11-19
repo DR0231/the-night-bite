@@ -5,12 +5,12 @@ window.NightBiteMapDataPiedmont = {
  "notes": "Muskingum Watershed Conservancy District lake: MWCD areas close 11 p.m. to 6 a.m. except to people fishing, hunting or boating (rule 1.13). 10 hp limit. MWCD lists two public launch ramps, two kayak launches and a fishing pier at the Reynolds Rd ramp; trotlines and floatlines only in sections 11 and 12 of Kirkwood Township. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "piedmont-map-wide": {
-   "src": "assets/map/piedmont-map-wide.png",
+   "src": "assets/map/piedmont-map-wide.png?v=b0c39dae5f65",
    "w": 222,
    "h": 164
   },
   "piedmont-map-tall": {
-   "src": "assets/map/piedmont-map-tall.png",
+   "src": "assets/map/piedmont-map-tall.png?v=41d69caa4595",
    "w": 162,
    "h": 230
   }

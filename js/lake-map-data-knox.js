@@ -5,12 +5,12 @@ window.NightBiteMapDataKnox = {
  "notes": "Knox Lake Fishing Area: 10 hp limit, larger motors at no wake or idle only. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "knox-map-wide": {
-   "src": "assets/map/knox-map-wide.png",
+   "src": "assets/map/knox-map-wide.png?v=979e6ba7ddfb",
    "w": 299,
    "h": 269
   },
   "knox-map-tall": {
-   "src": "assets/map/knox-map-tall.png",
+   "src": "assets/map/knox-map-tall.png?v=4fc3e6e27e1e",
    "w": 242,
    "h": 220
   }

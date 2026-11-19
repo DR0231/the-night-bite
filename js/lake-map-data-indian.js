@@ -5,12 +5,12 @@ window.NightBiteMapDataIndian = {
  "notes": "Indian Lake State Park: park hours 6 a.m. to 11 p.m., unlimited horsepower, five ramps. Check posted no wake zones around the islands and channels. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "indian-map-wide": {
-   "src": "assets/map/indian-map-wide.png",
+   "src": "assets/map/indian-map-wide.png?v=f9de608ea45c",
    "w": 269,
    "h": 270
   },
   "indian-map-tall": {
-   "src": "assets/map/indian-map-tall.png",
+   "src": "assets/map/indian-map-tall.png?v=2326904e34ad",
    "w": 208,
    "h": 210
   }

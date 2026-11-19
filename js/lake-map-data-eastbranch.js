@@ -5,12 +5,12 @@ window.NightBiteMapDataEastbranch = {
  "notes": "City of Akron water supply reservoir; Headwaters Park is leased to Geauga Park District. Electric motors only, 1.5 hp or less at the park launch. No bank fishing or wading north of US 322, nor on the east shore south of US 322 down to the dam (OAC 1501:31-13-07). Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "eastbranch-map-wide": {
-   "src": "assets/map/eastbranch-map-wide.png",
+   "src": "assets/map/eastbranch-map-wide.png?v=32a67f51a58d",
    "w": 312,
    "h": 116
   },
   "eastbranch-map-tall": {
-   "src": "assets/map/eastbranch-map-tall.png",
+   "src": "assets/map/eastbranch-map-tall.png?v=1be479b72836",
    "w": 108,
    "h": 305
   }

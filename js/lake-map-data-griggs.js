@@ -5,12 +5,12 @@ window.NightBiteMapDataGriggs = {
  "notes": "City of Columbus reservoir: park hours 7 a.m. to 11 p.m., unlimited horsepower, 40 mph limit by day, 10 mph from sunset to sunrise, 22 ft vessel limit, no jet skis, idle within 100 ft of shore and bridges. Trabue-Murphy ramp closed since July 2025. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "griggs-map-wide": {
-   "src": "assets/map/griggs-map-wide.png",
+   "src": "assets/map/griggs-map-wide.png?v=a2ea510cefdf",
    "w": 312,
    "h": 81
   },
   "griggs-map-tall": {
-   "src": "assets/map/griggs-map-tall.png",
+   "src": "assets/map/griggs-map-tall.png?v=ce164fce175f",
    "w": 73,
    "h": 310
   }

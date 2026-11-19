@@ -5,12 +5,12 @@ window.NightBiteMapDataKiser = {
  "notes": "Kiser Lake State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. No motors on the lake. The boat ramp, three small launch areas and the marina from ODNR's boating layer are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "kiser-map-wide": {
-   "src": "assets/map/kiser-map-wide.png",
+   "src": "assets/map/kiser-map-wide.png?v=1e676d9e24aa",
    "w": 211,
    "h": 170
   },
   "kiser-map-tall": {
-   "src": "assets/map/kiser-map-tall.png",
+   "src": "assets/map/kiser-map-tall.png?v=522208b9f6e4",
    "w": 162,
    "h": 216
   }

@@ -5,12 +5,12 @@ window.NightBiteMapDataGuilford = {
  "notes": "DAM WORK: ODNR has Guilford Lake drawn down about 20 ft for dam rehabilitation, with refill planned to finish in spring 2027; map depths read deeper than the water and the construction site is closed. Park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. 10 hp limit. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "guilford-map-wide": {
-   "src": "assets/map/guilford-map-wide.png",
+   "src": "assets/map/guilford-map-wide.png?v=9734ecd641e1",
    "w": 311,
    "h": 260
   },
   "guilford-map-tall": {
-   "src": "assets/map/guilford-map-tall.png",
+   "src": "assets/map/guilford-map-tall.png?v=e3f8882c6aa5",
    "w": 240,
    "h": 204
   }

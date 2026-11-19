@@ -525,11 +525,18 @@
   }
   /* links to #bite-how (the glance Bite cell) open the explainer */
   (function () {
-    function openHow() { var d = document.getElementById("bite-how"); if (d && location.hash === "#bite-how") d.open = true; }
+    function openAncestors(el) {
+      var node = el;
+      while (node) {
+        if (node.tagName === "DETAILS") node.open = true;
+        node = node.parentElement;
+      }
+    }
+    function openHow() { var d = document.getElementById("bite-how"); if (d && location.hash === "#bite-how") openAncestors(d); }
     window.addEventListener("hashchange", openHow);
     document.addEventListener("click", function (e) {
       var a = e.target && e.target.closest && e.target.closest('a[href$="#bite-how"]'), d = document.getElementById("bite-how");
-      if (a && d) d.open = true;
+      if (a && d) openAncestors(d);
     });
     openHow();
   })();

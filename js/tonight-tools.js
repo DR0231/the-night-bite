@@ -165,7 +165,7 @@
     var fonts = document.fonts && document.fonts.load ? Promise.all([
       document.fonts.load('44px "Night Bite Pixel"'), document.fonts.load('600 44px "Source Serif 4"'), document.fonts.load('28px "Source Serif 4"')
     ]).catch(function () {}) : Promise.resolve();
-    return Promise.all([fonts, img(LS.base + "assets/lantern.svg"), bitingData()]).then(function (a) {
+    return Promise.all([fonts, img(LS.base + "assets/lantern.svg?v=e99d689ca189"), bitingData()]).then(function (a) {
       var lantern = a[1], r = readings(a[2]);
       // the palette comes from the page's own CSS tokens, so red light (html[data-light="red"]) draws a red card
       var cs = getComputedStyle(document.documentElement);
@@ -398,7 +398,7 @@
     return lines.join("\r\n") + "\r\n";
   }
   function fire(note) {
-    var opts = { body: body(), tag: "nb-remind", icon: LS.base + "assets/icons/icon-192.png", data: { url: home } };
+    var opts = { body: body(), tag: "nb-remind", icon: LS.base + "assets/icons/icon-192.png?v=1a71fa8bf8ff", data: { url: home } };
     if (navigator.serviceWorker && navigator.serviceWorker.controller) {
       navigator.serviceWorker.ready.then(function (reg) { reg.showNotification(title(), opts); });
     } else { try { new Notification(title(), opts); } catch (e) {} }
@@ -453,7 +453,7 @@
       var done = function () { try { localStorage.setItem(REMIND_KEY, JSON.stringify(rec)); } catch (e) {} if (!rec.trigger) arm(rec); status(); };
       if (canTrigger && navigator.serviceWorker) {
         navigator.serviceWorker.ready.then(function (reg) {
-          return reg.showNotification(title(), { body: body(), tag: "nb-remind", icon: LS.base + "assets/icons/icon-192.png", data: { url: home }, showTrigger: new window.TimestampTrigger(ts) });
+          return reg.showNotification(title(), { body: body(), tag: "nb-remind", icon: LS.base + "assets/icons/icon-192.png?v=1a71fa8bf8ff", data: { url: home }, showTrigger: new window.TimestampTrigger(ts) });
         }).then(function () { rec.trigger = true; done(); }, done);
       } else done();
     });

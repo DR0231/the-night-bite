@@ -5,12 +5,12 @@ window.NightBiteMapDataDelaware = {
  "notes": "Delaware State Park and Corps of Engineers land: park hours sunrise to sunset, unlimited horsepower, three ramps. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "delaware-map-wide": {
-   "src": "assets/map/delaware-map-wide.png",
+   "src": "assets/map/delaware-map-wide.png?v=1a4b178ec53b",
    "w": 312,
    "h": 109
   },
   "delaware-map-tall": {
-   "src": "assets/map/delaware-map-tall.png",
+   "src": "assets/map/delaware-map-tall.png?v=cf176edc91f6",
    "w": 104,
    "h": 309
   }

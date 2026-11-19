@@ -5,12 +5,12 @@ window.NightBiteMapDataBurroak = {
  "notes": "Burr Oak State Park: park hours 6 a.m. to 11 p.m., 10 hp limit, larger motors at idle only, no jet drives, four ramps. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "burroak-map-wide": {
-   "src": "assets/map/burroak-map-wide.png",
+   "src": "assets/map/burroak-map-wide.png?v=9a456fa305f4",
    "w": 310,
    "h": 194
   },
   "burroak-map-tall": {
-   "src": "assets/map/burroak-map-tall.png",
+   "src": "assets/map/burroak-map-tall.png?v=e18358a3c235",
    "w": 187,
    "h": 309
   }

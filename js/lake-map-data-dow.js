@@ -5,12 +5,12 @@ window.NightBiteMapDataDow = {
  "notes": "Strouds Run State Park: park hours 6 a.m. to 11 p.m., 10 hp limit, one ramp. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "dow-map-wide": {
-   "src": "assets/map/dow-map-wide.png",
+   "src": "assets/map/dow-map-wide.png?v=1282bad36e66",
    "w": 304,
    "h": 236
   },
   "dow-map-tall": {
-   "src": "assets/map/dow-map-tall.png",
+   "src": "assets/map/dow-map-tall.png?v=c6ee1b4bfdcc",
    "w": 223,
    "h": 299
   }

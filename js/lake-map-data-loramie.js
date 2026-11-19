@@ -5,12 +5,12 @@ window.NightBiteMapDataLoramie = {
  "notes": "Lake Loramie State Park: park hours 6 a.m. to 11 p.m., no horsepower limit, but the whole lake is no wake except the speed zone at the west end. No skiing or tubing. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "loramie-map-wide": {
-   "src": "assets/map/loramie-map-wide.png",
+   "src": "assets/map/loramie-map-wide.png?v=deb0f997547a",
    "w": 306,
    "h": 241
   },
   "loramie-map-tall": {
-   "src": "assets/map/loramie-map-tall.png",
+   "src": "assets/map/loramie-map-tall.png?v=53124225a5c0",
    "w": 235,
    "h": 174
   }

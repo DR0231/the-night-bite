@@ -5,12 +5,12 @@ window.NightBiteMapDataLakerupert = {
  "notes": "Wellston Wildlife Area: any horsepower, but motors over 10 hp only at idle speed, no wake (OAC 1501:47-5-03). The wildlife area ramp on SR 683 is pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "lakerupert-map-wide": {
-   "src": "assets/map/lakerupert-map-wide.png",
+   "src": "assets/map/lakerupert-map-wide.png?v=8005a1bffef8",
    "w": 234,
    "h": 270
   },
   "lakerupert-map-tall": {
-   "src": "assets/map/lakerupert-map-tall.png",
+   "src": "assets/map/lakerupert-map-tall.png?v=ccca05a4eeaa",
    "w": 242,
    "h": 280
   }

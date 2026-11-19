@@ -5,12 +5,12 @@ window.NightBiteMapDataStonelick = {
  "notes": "Stonelick State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Electric motors and hand powered boats only. The ramp, the campground hand launch and the accessible pier by the dam are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "stonelick-map-wide": {
-   "src": "assets/map/stonelick-map-wide.png",
+   "src": "assets/map/stonelick-map-wide.png?v=195d93b5a95c",
    "w": 312,
    "h": 153
   },
   "stonelick-map-tall": {
-   "src": "assets/map/stonelick-map-tall.png",
+   "src": "assets/map/stonelick-map-tall.png?v=3d48a79769b8",
    "w": 140,
    "h": 304
   }

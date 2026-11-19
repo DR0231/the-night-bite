@@ -5,12 +5,12 @@ window.NightBiteMapDataPunderson = {
  "notes": "Punderson State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Electric motors only, one launch ramp. A natural kettle lake, 57 ft deep at most. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "punderson-map-wide": {
-   "src": "assets/map/punderson-map-wide.png",
+   "src": "assets/map/punderson-map-wide.png?v=6937a26a8398",
    "w": 312,
    "h": 155
   },
   "punderson-map-tall": {
-   "src": "assets/map/punderson-map-tall.png",
+   "src": "assets/map/punderson-map-tall.png?v=bb10daaeeecf",
    "w": 148,
    "h": 310
   }

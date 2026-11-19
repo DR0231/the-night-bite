@@ -2,7 +2,7 @@
 """Build the two summary pages from data already on the site, so they never drift from the lake pages:
 
     python3 tools/build-summaries.py           # write drawdown.html and night.html between their nb:summary markers;
-                                               # stamp lake row ids on rules.html items already on the page
+                                               # stamp lake row ids on rules.html and species/trout.html items already on the page
     python3 tools/build-summaries.py --check   # change nothing; exit 1 if a page would change
 
   · drawdown.html: MWCD's winter drawdown table for the waters on this site, from data/drawdowns.json (MWCD's own
@@ -14,8 +14,11 @@
     still lands on that water.
   · rules.html: add id="<lake>" to each bass-table row already on the page, and id="hoover" to the Hoover crappie
     paragraph, so lake-home also-links can go to /rules#<lake>. This does not add or rewrite rows.
+  · species/trout.html: add id="<lake>" to the first stocking row for each water, and data-lake="<lake>" to every
+    stocking row, so /species/trout#<lake> lands on that water. A water with two rows (Punderson, Wolf Run) keeps one
+    id, on the first row. This does not add or rewrite cells.
 Only the part between <!-- nb:summary --> and <!-- /nb:summary --> is written on drawdown.html and night.html; the rest
-of each of those pages is hand edited. rules.html is stamped in place, with no new content rows.
+of each of those pages is hand edited. rules.html and species/trout.html are stamped in place, with no new content rows.
 """
 import datetime, html, json, os, pathlib, re, sys
 
@@ -50,16 +53,20 @@ def name(lake):
 def drawdown():
     d = json.loads((root / "data" / "drawdowns.json").read_text())
     rows = sorted(d["rows"], key=lambda r: (r["begins"], name(r["lake"])))
-    out = ['      <div class="table-wrap data-table-wrap"><table class="data-table summary-table">',
+    refill = f'Refill by {ap(d["refill_by"], year=False)}'
+    # every cell carries its column name in data-label (shown as the label when the table stacks into cards on
+    # phones; js/i18n.js translates it), and explicit table roles keep the table read as a table when CSS restacks it
+    out = ['      <div class="table-wrap data-table-wrap"><table class="data-table summary-table stack-table" role="table">',
            f'        <caption>MWCD winter drawdown, {d["season"]}. Levels in feet above sea level, as MWCD lists them.</caption>',
-           '        <thead><tr><th scope="col">Water</th><th scope="col">Starts</th><th scope="col" class="num">Normal pool</th>'
-           '<th scope="col" class="num">Winter level</th><th scope="col" class="num">Drop</th><th scope="col" class="num">Days</th>'
-           f'<th scope="col" class="num">Refill by {ap(d["refill_by"], year=False)}</th></tr></thead>',
-           '        <tbody>']
+           '        <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Water</th><th scope="col" role="columnheader">Starts</th><th scope="col" role="columnheader" class="num">Normal pool</th>'
+           '<th scope="col" role="columnheader" class="num">Winter level</th><th scope="col" role="columnheader" class="num">Drop</th><th scope="col" role="columnheader" class="num">Days</th>'
+           f'<th scope="col" role="columnheader" class="num">{refill}</th></tr></thead>',
+           '        <tbody role="rowgroup">']
+    rl = html.escape(re.sub(r"<[^>]+>", "", refill), quote=True)
     for r in rows:
-        out.append(f'          <tr id="{html.escape(r["lake"], quote=True)}"><th scope="row"><a href="{r["lake"]}/">{html.escape(name(r["lake"]))}</a></th><td>{ap(r["begins"], year=False)}</td>'
-                   f'<td class="num">{ft(r["normal"])} ft</td><td class="num">{ft(r["winter"])} ft</td><td class="num">{ft(r["drop"])} ft</td>'
-                   f'<td class="num">{r["days"]}</td><td class="num">{ft(r["refill"])} ft</td></tr>')
+        out.append(f'          <tr id="{html.escape(r["lake"], quote=True)}" role="row"><th scope="row" role="rowheader"><a href="{r["lake"]}/">{html.escape(name(r["lake"]))}</a></th><td role="cell" data-label="Starts">{ap(r["begins"], year=False)}</td>'
+                   f'<td role="cell" data-label="Normal pool" class="num">{ft(r["normal"])} ft</td><td role="cell" data-label="Winter level" class="num">{ft(r["winter"])} ft</td><td role="cell" data-label="Drop" class="num">{ft(r["drop"])} ft</td>'
+                   f'<td role="cell" data-label="Days" class="num">{r["days"]}</td><td role="cell" data-label="{rl}" class="num">{ft(r["refill"])} ft</td></tr>')
     out += ['        </tbody>', '      </table></div>']
     if d.get("not_listed"):
         nl = [f'<a href="{l}/">{html.escape(name(l))}</a>' for l in d["not_listed"]]
@@ -129,15 +136,15 @@ def night():
 def stamp_rules_ids(s):
     """Add id="<lake>" to lake-specific items already on rules.html. Does not add or rewrite rows."""
     def tr(m):
-        lake = m.group(1)
+        lake = m.group(3)
         if lake not in REG["lakes"]:
             return m.group(0)
-        return f'<tr id="{html.escape(lake, quote=True)}"><th scope="row"><a href="{lake}/">'
+        return f'<tr id="{html.escape(lake, quote=True)}"{m.group(1) or ""}><th scope="row"{m.group(2) or ""}><a href="{lake}/">'
 
-    bass = re.search(r'(<section id="bass".*?<tbody>)(.*?)(</tbody>)', s, re.S)
+    bass = re.search(r'(<section id="bass".*?<tbody[^>]*>)(.*?)(</tbody>)', s, re.S)
     if bass:
         body = re.sub(
-            r'<tr(?:\s+id="[^"]*")?><th scope="row"><a href="([a-z0-9-]+)/">',
+            r'<tr(?:\s+id="[^"]*")?(\s+role="row")?><th scope="row"(\s+role="rowheader")?><a href="([a-z0-9-]+)/">',
             tr,
             bass.group(2),
         )
@@ -150,6 +157,35 @@ def stamp_rules_ids(s):
         flags=re.S,
     )
     return s
+
+
+
+def stamp_trout_ids(s):
+    """Add id="<lake>" to the first stocking row for each water, and data-lake on every row. Does not add or rewrite cells."""
+    sec = re.search(r'(<section id="stocked".*?<tbody[^>]*>)(.*?)(</tbody>)', s, re.S)
+    if not sec:
+        return s
+    seen = set()
+
+    def tr(m):
+        lake = m.group(3)
+        if lake not in REG["lakes"]:
+            return m.group(0)
+        attrs = m.group(1) or ""
+        th = m.group(2) or ""
+        data = f' data-lake="{html.escape(lake, quote=True)}"'
+        iid = ""
+        if lake not in seen:
+            seen.add(lake)
+            iid = f' id="{html.escape(lake, quote=True)}"'
+        return f'<tr{iid}{data}{attrs}><th scope="row"{th}><a href="../{lake}/">'
+
+    body = re.sub(
+        r'<tr(?:\s+id="[^"]*")?(?:\s+data-lake="[^"]*")?(\s+role="row")?><th scope="row"(\s+role="rowheader")?><a href="\.\./([a-z0-9-]+)/">',
+        tr,
+        sec.group(2),
+    )
+    return s[:sec.start()] + sec.group(1) + body + sec.group(3) + s[sec.end():]
 
 
 MARK = re.compile(r"(<!-- nb:summary -->)(.*?)(<!-- /nb:summary -->)", re.S)
@@ -182,4 +218,16 @@ if rs2 != rs:
         rp.write_text(rs2); print("wrote rules.html (row ids)")
 elif check:
     print("PASS rules.html")
+
+# species/trout.html: stamp row ids on items already on the page. Do not add or rewrite rows.
+tp = root / "species" / "trout.html"
+ts = tp.read_text()
+ts2 = stamp_trout_ids(ts)
+if ts2 != ts:
+    if check:
+        print("FAIL species/trout.html is missing lake row ids (run python3 tools/build-summaries.py)"); bad = 1
+    else:
+        tp.write_text(ts2); print("wrote species/trout.html (row ids)")
+elif check:
+    print("PASS species/trout.html")
 sys.exit(bad)

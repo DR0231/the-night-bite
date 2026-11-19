@@ -28,7 +28,7 @@
 
   var TYPE = { ramp: "Public boat ramp", shop: "Bait shop", access: "Boardwalk, shore access" };
   var SHORT = { ramp: "Ramp", shop: "Bait shop", access: "Boardwalk" };
-  var PIN = { ramp: "assets/map/pin-ramp.png", shop: "assets/map/pin-shop.png", access: "assets/map/pin-access.png" };
+  var PIN = { ramp: "assets/map/pin-ramp.png?v=4fb65a1c2743", shop: "assets/map/pin-shop.png?v=b7beeb5fd6a9", access: "assets/map/pin-access.png?v=0b291a11e61d" };
   var foot = dlg.querySelector(".map-foot");
   var NOTES = data.notes || "City park hours are 7 a.m. to 11 p.m. (Columbus Rec and Parks); check posted signs before a night trip. Shoreline traced from a map, not for navigation.";
   var group = null;   // ids that share the pin the current card came from

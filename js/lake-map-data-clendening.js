@@ -5,12 +5,12 @@ window.NightBiteMapDataClendening = {
  "notes": "Muskingum Watershed Conservancy District lake: MWCD areas close 11 p.m. to 6 a.m. except to people fishing, hunting or boating (rule 1.13). 10 hp limit. MWCD lists three public launch ramps, a kayak launch and an accessible fishing pier; trotlines and floatlines only east of SR 799. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "clendening-map-wide": {
-   "src": "assets/map/clendening-map-wide.png",
+   "src": "assets/map/clendening-map-wide.png?v=97b8c906d740",
    "w": 308,
    "h": 170
   },
   "clendening-map-tall": {
-   "src": "assets/map/clendening-map-tall.png",
+   "src": "assets/map/clendening-map-tall.png?v=4dbccaec5959",
    "w": 159,
    "h": 304
   }

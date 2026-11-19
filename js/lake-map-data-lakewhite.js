@@ -5,12 +5,12 @@ window.NightBiteMapDataLakewhite = {
  "notes": "Lake White State Park: open sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours. Unlimited horsepower. The two launches in ODNR's boating layer are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "lakewhite-map-wide": {
-   "src": "assets/map/lakewhite-map-wide.png",
+   "src": "assets/map/lakewhite-map-wide.png?v=4500d8885ea8",
    "w": 199,
    "h": 170
   },
   "lakewhite-map-tall": {
-   "src": "assets/map/lakewhite-map-tall.png",
+   "src": "assets/map/lakewhite-map-tall.png?v=76753f37d53b",
    "w": 162,
    "h": 201
   }

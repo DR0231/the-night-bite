@@ -2,7 +2,7 @@
 // Usage: node tools/check-glance.cjs [BASE] [OUTDIR]   (lakes from js/lakes.js, other pages from sitemap.xml)
 //   BASE defaults to the preview (https://dr0231.github.io/night-bite-preview/); OUTDIR gets the log and a Hoover phone shot.
 // Blocks analytics and the visits counter (tools/no-analytics.cjs). Checks per lake and width: 4 cells plus the bite,
-// the right source links (gauge, NWS) or a "No gauge" state linked to the pool card note, sunset filled, no sideways scroll, no console or CSP
+// the right source links (gauge, NWS) or a merged "No public gauge" cell linked to the pool card note, sunset filled, no sideways scroll, no console or CSP
 // errors. Then NWS blocked (wind says "Check NWS", bite "Needs forecast", page fine), the share image with the gauges
 // blocked (it prints the snapshot reading's own time), and offline after one visit (the service worker copy still fills
 // the strip). Exit code 1 on any FAIL. APIs blocked and JavaScript off: tools/check-glance-fallback.cjs.
@@ -55,21 +55,27 @@ async function read(page) {
       await sleep(2500);
       const r = await read(page); const t = `${lake} ${name}`;
       if (!r) { check(t + ' strip present', false); await page.close(); continue; }
-      check(t + ' title + 4 cells + bite', r.title === 'Tonight at a glance' && r.cells === 4 && !!r.bite, `${r.title} / ${r.cells} / bite ${r.bite}`);
-      if (NOGAUGE.includes(lake)) {
-        check(t + ' level: "No gauge" state, linked to the pool card note', (R.lakes()[lake].pool.stale ? r.pool.v === 'No reading' && r.pool.s === 'Gauge not reporting' : r.pool.v === 'No gauge' && r.pool.s === 'No public gauge') && /#pool-snapshot$/.test(r.pool.href || ''), JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
+      const PL = R.lakes()[lake].pool || {};
+      const noSrc = NOGAUGE.includes(lake) && !PL.stale;
+      const cellN = noSrc ? 3 : 4;
+      check(t + ' title + ' + cellN + ' cells + bite', r.title === 'Tonight at a glance' && r.cells === cellN && !!r.bite, `${r.title} / ${r.cells} / bite ${r.bite}`);
+      if (noSrc) {
+        check(t + ' level: one "No public gauge" cell, linked to the pool card note', r.pool.v === 'No public gauge' && r.pool.s === 'Nothing estimated' && /#pool-snapshot$/.test(r.pool.href || '') && !r.temp, JSON.stringify([r.pool.v, r.pool.s, r.pool.href, r.temp]));
+      } else if (NOGAUGE.includes(lake)) {
+        check(t + ' level: "No reading" state, linked to the pool card note', r.pool.v === 'No reading' && r.pool.s === 'Gauge not reporting' && /#pool-snapshot$/.test(r.pool.href || ''), JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
       } else {
         check(t + ' level from gauge, links to gauge', /^\d+\.\d+ ft$/.test(r.pool.v) && /waterdata\.usgs\.gov|water\.usace\.army\.mil/.test(r.pool.href || '') && r.pool.target === '_blank', JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
       }
-      const PL = R.lakes()[lake].pool || {};
-      if (!PL.temp && PL.outflow) check(t + ' outflow temp from USACE, labelled outflow, links to the Corps feed', (/^-?\d+ °F$/.test(r.temp.v) || r.temp.v === 'No reading' || r.temp.v === 'Check gauge') && r.temp.l === 'Outflow temp' && r.temp.href === PL.outflow.url, JSON.stringify([r.temp.l, r.temp.v, r.temp.s, r.temp.href]));
+      if (noSrc) { /* temp merged into the level cell */ }
+      else if (!PL.temp && PL.outflow) check(t + ' outflow temp from USACE, labelled outflow, links to the Corps feed', (/^-?\d+ °F$/.test(r.temp.v) || r.temp.v === 'No reading' || r.temp.v === 'Check gauge') && r.temp.l === 'Outflow temp' && r.temp.href === PL.outflow.url, JSON.stringify([r.temp.l, r.temp.v, r.temp.s, r.temp.href]));
       else if (!PL.temp && PL.profile) check(t + ' water temp: "Profile only", dated, linked to the Corps profile', r.temp.v === 'Profile only' && r.temp.s === 'Corps, ' + PL.profile.short && r.temp.href === PL.profile.url, JSON.stringify([r.temp.v, r.temp.s, r.temp.href]));
       else if (TEMP.includes(lake)) check(t + ' water temp from USGS, links to gauge', (/^-?\d+ °F$/.test(r.temp.v) || r.temp.v === 'No reading') && /waterdata\.usgs\.gov/.test(r.temp.href || ''), JSON.stringify([r.temp.v, r.temp.s, r.temp.href]));
       else check(t + ' water temp: "No gauge" state, linked to the pool card note', r.temp.v === 'No gauge' && r.temp.s === 'No public gauge' && /#pool-snapshot$/.test(r.temp.href || ''), JSON.stringify([r.temp.v, r.temp.s, r.temp.href]));
       check(t + ' sunset filled', /^\d{1,2}:\d{2} (AM|PM)( [A-Z][a-z]{2})?$/.test(r.sunset.v.replace(/\s+/g, ' ')), JSON.stringify([r.sunset.v, r.sunset.s, r.sunset.href]));
       check(t + ' wind from NWS, links to NWS page', (/mph|Calm/.test(r.wind.v) || r.wind.v === 'Check NWS') && /forecast\.weather\.gov\/MapClick/.test(r.wind.href || ''), JSON.stringify([r.wind.v, r.wind.s, r.wind.href]));
-      const hs = [r.pool.h, r.temp.h, r.sunset.h, r.wind.h];
-      check(t + ' equal cell heights (1px row rule), no clipped values', Math.max(...hs) - Math.min(...hs) <= 1 && ![r.pool, r.temp, r.sunset, r.wind].some(c => c.over), hs.join(','));
+      const present = [r.pool, r.temp, r.sunset, r.wind].filter(Boolean);
+      const hs = present.map(c => c.h);
+      check(t + ' equal cell heights (1px row rule), no clipped values', Math.max(...hs) - Math.min(...hs) <= 1 && !present.some(c => c.over), hs.join(','));
       check(t + ' no sideways scroll', !r.sideways);
       // S4: the "How the bite is rated" explainer lists the same inputs and numbers as RULES in js/conditions.js
       const bx = await page.evaluate(() => {

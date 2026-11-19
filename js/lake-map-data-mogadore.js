@@ -5,12 +5,12 @@ window.NightBiteMapDataMogadore = {
  "notes": "City of Akron reservoir managed for fishing by ODNR Wildlife: electric motors only, no external fuel tanks. No bank fishing within 500 ft of the dam, on the bridges or in the Ranfield Rd, Congress Lake Rd and SR 43 rights of way. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "mogadore-map-wide": {
-   "src": "assets/map/mogadore-map-wide.png",
+   "src": "assets/map/mogadore-map-wide.png?v=557a8dad255a",
    "w": 312,
    "h": 204
   },
   "mogadore-map-tall": {
-   "src": "assets/map/mogadore-map-tall.png",
+   "src": "assets/map/mogadore-map-tall.png?v=7ce4ba731042",
    "w": 242,
    "h": 162
   }

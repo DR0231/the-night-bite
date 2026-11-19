@@ -10,7 +10,7 @@
  * number, so it reads right with JavaScript off and with USGS or NWS blocked. This script then:
  *  · turns the stamp into "last updated X hours ago" (from the pool card's Checked <time>), every minute;
  *  · swaps in the live reading when js/usgs.js gets one, and keeps the last reading (with its time) when a refresh
- *    fails or the phone is offline; a lake with no gauge keeps its "No gauge" state, linked to the pool card note;
+ *    fails or the phone is offline; a lake with no gauge keeps one "No public gauge" cell, linked to the pool card note;
  *    a lake with a Corps outflow temp shows it under an "Outflow temp" label (never as lake surface temperature), and a
  *    lake with only a dated Corps temperature profile says "Profile only", linked to that profile;
  *  · shows tonight's NWS wind and the bite once the forecast loads, the saved forecast (with its age) when NWS is
@@ -125,8 +125,12 @@
 
   function pool() {
     if (NOGAUGE) {
-      state(poolV, P.stale ? "No reading" : "No gauge"); set(poolS, P.stale ? "Gauge not reporting" : "No public gauge"); cell(poolV, false);
-      state(tempV, "No gauge"); set(tempS, "No public gauge"); cell(tempV, false);
+      if (P.stale) {
+        state(poolV, "No reading"); set(poolS, "Gauge not reporting"); cell(poolV, false);
+        state(tempV, "No gauge"); set(tempS, "No public gauge"); cell(tempV, false);
+      } else {
+        state(poolV, "No public gauge"); set(poolS, "Nothing estimated"); cell(poolV, false);
+      }
       return;
     }
     var m = line ? RE.exec((line.getAttribute("data-nb-out") === line.textContent && line.getAttribute("data-en") || line.textContent || "")) : null;

@@ -7,7 +7,7 @@ Every public page (same list as tools/build-meta.py) must have:
   · one <title> and one non-empty meta description
   · one canonical on https://nightbiteoh.com/ in the clean form (no .html, except whisperwood.html)
   · og:site_name, og:type, og:title, og:description, og:url (= canonical), og:image (absolute https://nightbiteoh.com
-    URL to a file that exists in assets/og/), og:image:width, og:image:height, og:image:alt
+    URL to a file that exists in assets/og/, optional ?v= content hash from stamp-assets.py), og:image:width, og:image:height, og:image:alt
   · twitter:card summary_large_image, twitter:title, twitter:description, twitter:image (absolute, file exists)
   · og:title and twitter:title equal to <title>; og/twitter descriptions equal to the meta description
   · every <script type="application/ld+json"> block parses as JSON and has @context https://schema.org and @type
@@ -16,10 +16,12 @@ characters, titles over 70, spaced dashes in title or description, an indexable 
 Across pages (errors): two indexable pages with the same <title>, meta description or first <h1> text (404, offline
 and noindex redirect pages left out), so every lake and page can be found and shared on its own.
 Header nav (error): the old two-span labels (nav-label-full + nav-label-short, read as "SpeciesSpecies", "WaterLake")
-anywhere but whisperwood.html; tools/nav-labels.py rewrites them.
+or the later data-short CSS-content trick, anywhere but whisperwood.html; tools/nav-labels.py rewrites them
+to a single plain "Water" (or "Species") label.
 Lake count (error): a title or description that states a site-wide count ("23 Ohio lakes", "and 20 more Ohio
 waters") that does not match the registry in js/lakes.js. A correct count that still says "lakes" instead of
-"waters" is a warning only.
+"waters" is a warning only. A data-nb-water-count mark (the home "What this site is" line) must also match;
+index.html must have one. tools/stamp-water-count.py writes the number from the registry.
 """
 import html, json, os, pathlib, re, sys
 
@@ -95,6 +97,8 @@ for p in sorted(root.rglob("*.html")):
     err = lambda m: errors.append(f"{rel}: {m}")
     if 'class="nav-label-short"' in src and not rel.startswith("whisperwood"):
         err("old two-span nav labels (run python3 tools/nav-labels.py)")
+    if (("data-short=" in src and "nav-label" in src) or "nav-label-text" in src) and not rel.startswith("whisperwood"):
+        err("short nav labels that hide the link text (run python3 tools/nav-labels.py)")
     if 'class="nav-more-item"' in src and not rel.startswith("whisperwood"):
         err("nav More not marked for desktop (run python3 tools/nav-desk-more.py)")
     titles = re.findall(r"<title>([^<]*)</title>", head)
@@ -158,8 +162,10 @@ for p in sorted(root.rglob("*.html")):
         img = get(kind, n)
         if not img.startswith(SITE + "assets/og/"):
             err(f"{n} should be an absolute {SITE}assets/og/ URL")
-        elif not (root / img[len(SITE):]).exists():
-            err(f"{n} points at a missing file {img}")
+        else:
+            path = img[len(SITE):].split("?", 1)[0]
+            if not (root / path).exists():
+                err(f"{n} points at a missing file {img}")
     noindex = re.search(r'<meta name="robots" content="[^"]*noindex', head) and 'http-equiv="refresh"' in head
     if not noindex and canon not in sitemap:
         warnings.append(f"{rel}: canonical {canon} is not in sitemap.xml")
@@ -173,6 +179,16 @@ for p in sorted(root.rglob("*.html")):
                 err(f"same {kind} as {seen[kind][text]}: {text[:70]}")
             else:
                 seen[kind][text] = rel
+    if rel == "index.html":
+        if "data-nb-water-count" not in src:
+            err("missing data-nb-water-count (run python3 tools/stamp-water-count.py)")
+    for m in re.finditer(r"data-nb-water-count[^>]*>(.*?)</", src, re.S):
+        text = html.unescape(re.sub(r"<[^>]+>", "", m.group(1)))
+        nums = re.findall(r"\b(\d+) waters\b", text, re.I)
+        if not nums:
+            err("data-nb-water-count has no 'N waters' count")
+        elif any(int(n) != WATER_COUNT for n in nums):
+            err(f"data-nb-water-count count does not match the registry ({WATER_COUNT} waters)")
 
 for w in warnings:
     print("warn:", w)

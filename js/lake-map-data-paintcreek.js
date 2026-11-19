@@ -5,12 +5,12 @@ window.NightBiteMapDataPaintcreek = {
  "notes": "Paint Creek State Park and Corps of Engineers land: park hours 6 a.m. to 11 p.m., unlimited horsepower. No paddlefish may be taken in the lake or within 2,000 ft of it or the dam. The three state park ramps are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "paintcreek-map-wide": {
-   "src": "assets/map/paintcreek-map-wide.png",
+   "src": "assets/map/paintcreek-map-wide.png?v=441b1eaa4e1d",
    "w": 268,
    "h": 269
   },
   "paintcreek-map-tall": {
-   "src": "assets/map/paintcreek-map-tall.png",
+   "src": "assets/map/paintcreek-map-tall.png?v=c8e40efa53d4",
    "w": 242,
    "h": 244
   }

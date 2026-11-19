@@ -5,12 +5,12 @@ window.NightBiteMapDataPortagelakes = {
  "notes": "Portage Lakes State Park: park hours 6 a.m. to 11 p.m., 400 hp limit, no wake everywhere except parts of Turkeyfoot Lake and East Reservoir on the posted schedule. Four state ramps are pinned; the park lists eight. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "portagelakes-map-wide": {
-   "src": "assets/map/portagelakes-map-wide.png",
+   "src": "assets/map/portagelakes-map-wide.png?v=62d1be84e5dc",
    "w": 312,
    "h": 138
   },
   "portagelakes-map-tall": {
-   "src": "assets/map/portagelakes-map-tall.png",
+   "src": "assets/map/portagelakes-map-tall.png?v=3cb868942cf0",
    "w": 132,
    "h": 310
   }

@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
 """The Night Bite: bake the "Tonight at a glance" strip (and, for lakes other than Hoover, the pool card's snapshot
 lines) into a lake home's static HTML, so the strip never shows a placeholder: with JavaScript off, or with USGS or
-NWS blocked or offline, it still shows the stamped snapshot (level, water temp) with its checked date and time.
+NWS blocked or offline, it still shows the stamped snapshot (level, water temp) with its checked date and time,
+and sunset and last light computed for a dated day.
 
 The level and temp come from the page's own pool card (#correction-line and the Checked <time>), the same lines the
 weekly USGS snapshot routine edits on hoover/index.html, so the strip and the card can never disagree.
-js/glance.js turns the absolute time into "last updated X hours ago" and swaps in live values when they arrive.
+Sunset and last light are computed at build time with js/astro.js (the same SunCalc port the pages use), labelled
+with that date, and js/glance.js replaces them with the live computation once it runs. Never invents a value.
+js/glance.js turns the absolute pool time into "last updated X hours ago" and swaps in live values when they arrive.
 
     python3 tools/glance_bake.py hoover/index.html   # rebake one page from its own snapshot lines (after the routine)
     python3 tools/glance_bake.py --check             # exit 1 if any lake home's strip is out of step with its card
 
 Used by tools/build-lake-pages.py (every lake home and the template) and tools/promote.py (hoover/index.html, after
-live's snapshot lines are kept). Lakes with no public gauge get an intentional "No gauge" state linking to the pool
+live's snapshot lines are kept). Lakes with no public gauge get one intentional "No public gauge" cell linking to the pool
 card's source note; a gauge that stopped reporting says so. Never invents a value.
 """
-import datetime, html, pathlib, re, sys
+import datetime, html, json, pathlib, re, subprocess, sys
 from zoneinfo import ZoneInfo
 
 ET = ZoneInfo("America/New_York")
@@ -85,18 +88,19 @@ def pool_card(page, pool):
     return page
 
 
-def cell(key, label, value, sub, href, state=False, unit=None, ext=False, empty=False, sub_key=True):
-    v = (f'<span class="glance-value glance-state" data-glance="{key}">{value}</span>' if state else
-         f'<span class="glance-value" data-glance="{key}">{t(value)}' + (f'<span class="glance-unit"> {t(unit)}</span>' if unit else "") + "</span>")
-    attrs = f' href="{a(href)}"' + (' target="_blank" rel="noopener"' if ext else "") + f' data-cell="{key}"' + (" data-empty" if empty else "")
+def cell(key, label, value, sub, href, state=False, unit=None, ext=False, empty=False, sub_key=True, dyn=False, extra=""):
+    dyn_attr = " data-nb-dyn" if dyn else ""
+    v = (f'<span class="glance-value glance-state" data-glance="{key}"{dyn_attr}>{value}</span>' if state else
+         f'<span class="glance-value" data-glance="{key}"{dyn_attr}>{t(value)}' + (f'<span class="glance-unit"> {t(unit)}</span>' if unit else "") + "</span>")
+    attrs = f' href="{a(href)}"' + (' target="_blank" rel="noopener"' if ext else "") + f' data-cell="{key}"' + (" data-empty" if empty else "") + ((" " + extra) if extra else "")
     return (f'        <a class="glance-cell"{attrs}>\n'
             f'          <span class="glance-label">{label}</span>\n'
             f'          {v}\n'
-            f'          <span class="glance-sub" data-glance="{key}-sub">{t(sub)}</span>\n'
+            f'          <span class="glance-sub" data-glance="{key}-sub"{dyn_attr}>{t(sub)}</span>\n'
             '        </a>')
 
 
-def glance(page, pool, nws_page, prefix=""):
+def glance(page, pool, nws_page, prefix="", sun=None):
     """The whole <section class="glance"> for one lake, from the page's own pool card lines."""
     card = f"{prefix}#pool-snapshot"
     line, at = page_snapshot(page)
@@ -112,8 +116,9 @@ def glance(page, pool, nws_page, prefix=""):
         stamp = f'USGS gauge {t(st["site"])} last reported {t(st["lastWhen"])}, so there is no current level. Nothing is estimated.'
         kind = "stale"
     elif not pool.get("src"):
-        pc = cell("pool", "Lake level", "No gauge", "No public gauge", card, state=True, empty=True)
-        tc = cell("temp", "Water temp", "No gauge", "No public gauge", card, state=True, empty=True)
+        # one cell for both empty slots: this water has no public gauge (stale gauges keep two cells)
+        pc = cell("pool", "Level and temp", "No public gauge", "Nothing estimated", card, state=True, empty=True)
+        tc = ""
         stamp = "No public lake level or temp gauge on this water. Nothing is estimated."
         kind = "none"
     elif m and at:
@@ -143,7 +148,13 @@ def glance(page, pool, nws_page, prefix=""):
               else cell("temp", "Water temp", "No gauge", "No public gauge", card, state=True, empty=True))
         stamp = f"No saved {t(src_name)} reading on this page yet. Tap Lake level for the live gauge."
         kind = "nosnap"
-    sun = cell("sunset", "Sunset", "<noscript>JS is off</noscript>", "On this phone", f"{prefix}#conditions", state=True, empty=True)
+    if sun and sun.get("sunsetValue") and sun.get("lastLight"):
+        sun_cell = cell("sunset", "Sunset", sun["sunsetValue"],
+                        f'Last light {sun["lastLight"]}, {sun["dateLabel"]}',
+                        f"{prefix}#conditions", unit=sun.get("sunsetUnit") or "PM",
+                        dyn=True, extra=f'data-sunset-for="{a(sun["date"])}"')
+    else:
+        sun_cell = cell("sunset", "Sunset", "<noscript>JS is off</noscript>", "On this phone", f"{prefix}#conditions", state=True, empty=True)
     wind = cell("wind", "Wind tonight", "Check NWS", "At weather.gov", nws_page or f"{prefix}#conditions", state=True, ext=bool(nws_page), empty=True)
     return (
         f'    <section class="glance" id="glance" aria-labelledby="glance-title" data-baked="{kind}">\n'
@@ -156,18 +167,18 @@ def glance(page, pool, nws_page, prefix=""):
         '        </a>\n'
         '      </div>\n'
         '      <div class="glance-grid">\n'
-        f"{pc}\n{tc}\n{sun}\n{wind}\n"
+        + "\n".join(x for x in (pc, tc, sun_cell, wind) if x) + "\n"
         '      </div>\n'
         f'      <p class="glance-stamp" data-glance="stamp">{stamp}</p>\n'
         '    </section>'
     )
 
 
-def bake(page, pool, nws_page, prefix="", card=True):
+def bake(page, pool, nws_page, prefix="", card=True, sun=None):
     """page HTML -> page HTML with the pool card (card=True, lakes other than Hoover) and the glance strip baked."""
     if card:
         page = pool_card(page, pool)
-    new, n = GLANCE_RE.subn(lambda m_: glance(page, pool, nws_page, prefix), page, count=1)
+    new, n = GLANCE_RE.subn(lambda m_: glance(page, pool, nws_page, prefix, sun=sun), page, count=1)
     if n != 1:
         raise SystemExit("glance_bake: no <section class=\"glance\" id=\"glance\"> in the page")
     return new
@@ -178,6 +189,31 @@ def lake_cfg(root, lake):
     import registry
     c = registry.load(root)["lakes"][lake]
     return c.get("pool") or {}, (c.get("nws") or {}).get("page")
+
+
+
+def page_sunset_date(page):
+    """The ISO date a baked sunset cell was computed for, or None."""
+    m = re.search(r'data-cell="sunset"[^>]*\bdata-sunset-for="([^"]+)"', page) or re.search(
+        r'\bdata-sunset-for="([^"]+)"[^>]*data-cell="sunset"', page)
+    return m.group(1) if m else None
+
+
+def compute_sunsets(root, lakes, date=None):
+    """id -> sunset dict, computed by tools/bake-sunset.cjs with js/astro.js."""
+    payload = {"lakes": lakes}
+    if date:
+        payload["date"] = date
+    proc = subprocess.run(
+        ["node", str(pathlib.Path(__file__).resolve().parent / "bake-sunset.cjs")],
+        input=json.dumps(payload), text=True, capture_output=True, cwd=str(root),
+    )
+    if proc.returncode != 0:
+        raise SystemExit("glance_bake: bake-sunset.cjs failed: " + (proc.stderr or proc.stdout or str(proc.returncode)).strip())
+    try:
+        return json.loads(proc.stdout)
+    except json.JSONDecodeError:
+        raise SystemExit("glance_bake: bake-sunset.cjs wrote invalid JSON: " + proc.stdout[:400])
 
 
 def main(argv):
@@ -192,12 +228,21 @@ def main(argv):
     wrap_dates = lambda h: wd.wrap(h)[0]
     files = [x for x in argv if not x.startswith("--")] or [registry.home(l) + "index.html" for l in R["order"]]
     bad = []
+    lakes_geo = [{"id": l, "lat": R["lakes"][l]["lat"], "lng": R["lakes"][l]["lng"]} for l in R["order"] if l in {pathlib.Path(f).parent.name for f in files}]
+    sun_by_date = {}
+    def sun_for(lake, date=None):
+        key = date or "today"
+        if key not in sun_by_date:
+            sun_by_date[key] = compute_sunsets(root, lakes_geo, date)
+        return sun_by_date[key].get(lake)
     for f in files:
         p = root / f
         lake = p.parent.name
         c = R["lakes"][lake]
         old = p.read_text()
-        new = bake(old, c.get("pool") or {}, (c.get("nws") or {}).get("page"), prefix=lake + "/", card=False)
+        # --check rebakes for the date already stamped in the cell, so a day-old sunset is still in step
+        bake_date = page_sunset_date(old) if check else None
+        new = bake(old, c.get("pool") or {}, (c.get("nws") or {}).get("page"), prefix=lake + "/", card=False, sun=sun_for(lake, bake_date))
         # the full build wraps written dates after baking (build-lake-pages.py runs wrap-dates); do the same here so a
         # standalone rebake keeps <time datetime> for js/i18n.js and --check compares like with like (Pymatuning's stale date)
         new = wrap_dates(new)

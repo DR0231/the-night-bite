@@ -5,12 +5,12 @@ window.NightBiteMapDataWingfoot = {
  "notes": "Wingfoot Lake State Park and Wildlife Area: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Any motor, idle speed only, no wake. The wildlife area ramp, the accessible pier and the paddle dock from ODNR's map layer are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "wingfoot-map-wide": {
-   "src": "assets/map/wingfoot-map-wide.png",
+   "src": "assets/map/wingfoot-map-wide.png?v=10a8a2a71e8f",
    "w": 293,
    "h": 270
   },
   "wingfoot-map-tall": {
-   "src": "assets/map/wingfoot-map-tall.png",
+   "src": "assets/map/wingfoot-map-tall.png?v=c1ce380c5bba",
    "w": 242,
    "h": 225
   }

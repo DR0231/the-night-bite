@@ -5,12 +5,12 @@ window.NightBiteMapDataGrant = {
  "notes": "Grant Lake Wildlife Area: 10 hp limit (OAC 1501:47-5-03). The wildlife area access off SR 68 is pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "grant-map-wide": {
-   "src": "assets/map/grant-map-wide.png",
+   "src": "assets/map/grant-map-wide.png?v=110d2eb043b2",
    "w": 312,
    "h": 114
   },
   "grant-map-tall": {
-   "src": "assets/map/grant-map-tall.png",
+   "src": "assets/map/grant-map-tall.png?v=9eaa7d379111",
    "w": 108,
    "h": 310
   }

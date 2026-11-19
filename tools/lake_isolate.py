@@ -9,7 +9,7 @@ lake's pool chart <img>. On a built page <id>/index.html, isolate(html, id):
     js/hoover-map.js only reads the current lake's);
   · rewrites the kept ones to data-for="<id>" (CSS still sizes the chart by img[data-for="<id>"]);
   · sets <html data-lake="<id>">, so with JavaScript off the page shows its own lake (css/styles.css only falls back to
-    Hoover's blocks on pages with no data-lake). js/lakes.js sets the same value, so nothing changes with JS on.
+    Hoover's blocks on pages with no data-lake). js/lakes-boot.js sets the same value, so nothing changes with JS on.
 Switching lakes is a page load to the other lake's home page (js/lakes.js hrefFor), so no page needs another lake's blocks.
 Shared pages (water.html, gear.html, stocking.html, species/) are not touched; they still switch lakes in place.
 tools/check-lake-isolation.py checks the built pages.
@@ -17,7 +17,7 @@ tools/check-lake-isolation.py checks the built pages.
 import re
 
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
-MAP_SCRIPT = re.compile(r'[ \t]*<script src="js/(?:hoover-map-data|lake-map-data-([a-z0-9]+))\.js[^"]*"></script>\n')
+MAP_SCRIPT = re.compile(r'[ \t]*<script src="js/(?:hoover-map-data|lake-map-data-([a-z0-9]+))\.js[^"]*"[^>]*></script>\n')
 OPEN_FOR = re.compile(r'<([a-zA-Z][a-zA-Z0-9]*)\b[^>]*?\sdata-for="([^"]*)"[^>]*>')
 
 

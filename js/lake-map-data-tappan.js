@@ -5,12 +5,12 @@ window.NightBiteMapDataTappan = {
  "notes": "Muskingum Watershed Conservancy District lake: MWCD areas close 11 p.m. to 6 a.m. except to people fishing, hunting or boating (rule 1.13). 399 hp limit. MWCD lists two public launch ramps, two kayak launches and two accessible fishing piers; the ramps in ODNR's boating list and the marina are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "tappan-map-wide": {
-   "src": "assets/map/tappan-map-wide.png",
+   "src": "assets/map/tappan-map-wide.png?v=09831e023ccd",
    "w": 312,
    "h": 235
   },
   "tappan-map-tall": {
-   "src": "assets/map/tappan-map-tall.png",
+   "src": "assets/map/tappan-map-tall.png?v=7cdb8fee9f87",
    "w": 242,
    "h": 185
   }

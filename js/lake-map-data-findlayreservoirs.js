@@ -5,12 +5,12 @@ window.NightBiteMapDataFindlayreservoirs = {
  "notes": "City of Findlay water supply reservoirs with an ODNR fishing agreement: electric motors only on Reservoir 1, gas outboards up to 9.9 hp on Reservoir 2. The two city ramps are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "findlayreservoirs-map-wide": {
-   "src": "assets/map/findlayreservoirs-map-wide.png",
+   "src": "assets/map/findlayreservoirs-map-wide.png?v=8330efb19879",
    "w": 216,
    "h": 270
   },
   "findlayreservoirs-map-tall": {
-   "src": "assets/map/findlayreservoirs-map-tall.png",
+   "src": "assets/map/findlayreservoirs-map-tall.png?v=55dc3b7afe5d",
    "w": 242,
    "h": 304
   }

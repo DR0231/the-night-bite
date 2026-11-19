@@ -5,12 +5,12 @@ window.NightBiteMapDataAlum = {
  "notes": "Alum Creek State Park and Corps of Engineers land: check posted hours and rules before a night trip. Unlimited horsepower on the south main lake, no wake on the north end. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "alum-map-wide": {
-   "src": "assets/map/alum-map-wide.png",
+   "src": "assets/map/alum-map-wide.png?v=764c9fd37d01",
    "w": 282,
    "h": 88
   },
   "alum-map-tall": {
-   "src": "assets/map/alum-map-tall.png",
+   "src": "assets/map/alum-map-tall.png?v=6690ef553cf0",
    "w": 80,
    "h": 281
   }

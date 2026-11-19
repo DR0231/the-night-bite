@@ -5,12 +5,12 @@ window.NightBiteMapDataMadison = {
  "notes": "Madison Lake State Park: park hours 6 a.m. to 11 p.m., electric motors only, one ramp. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "madison-map-wide": {
-   "src": "assets/map/madison-map-wide.png",
+   "src": "assets/map/madison-map-wide.png?v=95878b3ea30f",
    "w": 309,
    "h": 110
   },
   "madison-map-tall": {
-   "src": "assets/map/madison-map-tall.png",
+   "src": "assets/map/madison-map-tall.png?v=444806e561ae",
    "w": 106,
    "h": 310
   }

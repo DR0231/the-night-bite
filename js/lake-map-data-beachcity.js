@@ -5,12 +5,12 @@ window.NightBiteMapDataBeachcity = {
  "notes": "Muskingum Watershed Conservancy District lake: MWCD areas close 11 p.m. to 6 a.m. except to people fishing, hunting or boating (rule 1.13). 10 hp limit, but MWCD and the Corps say there is no public boat ramp because of sedimentation. Fishing is allowed at the Corps day use area and below the dam. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "beachcity-map-wide": {
-   "src": "assets/map/beachcity-map-wide.png",
+   "src": "assets/map/beachcity-map-wide.png?v=b146b52abe4a",
    "w": 251,
    "h": 270
   },
   "beachcity-map-tall": {
-   "src": "assets/map/beachcity-map-tall.png",
+   "src": "assets/map/beachcity-map-tall.png?v=e424f61d133c",
    "w": 242,
    "h": 261
   }

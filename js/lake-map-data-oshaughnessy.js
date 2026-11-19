@@ -5,12 +5,12 @@ window.NightBiteMapDataOshaughnessy = {
  "notes": "City of Columbus reservoir: park hours 7 a.m. to 11 p.m., unlimited horsepower, 40 mph limit by day, 10 mph from sunset to sunrise, 22 ft vessel limit, no jet skis, idle within 100 ft of shore and bridges. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "oshaughnessy-map-wide": {
-   "src": "assets/map/oshaughnessy-map-wide.png",
+   "src": "assets/map/oshaughnessy-map-wide.png?v=81aa41f82d1f",
    "w": 312,
    "h": 79
   },
   "oshaughnessy-map-tall": {
-   "src": "assets/map/oshaughnessy-map-tall.png",
+   "src": "assets/map/oshaughnessy-map-tall.png?v=17fa0ebfc502",
    "w": 78,
    "h": 309
   }

@@ -5,12 +5,12 @@ window.NightBiteMapDataSeneca = {
  "notes": "MWCD lake: 399 hp limit, idle or no wake in buoyed and shore zones, launch only at authorized sites. MWCD lists five public launch ramps; the two pinned here have mapped coordinates. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "seneca-map-wide": {
-   "src": "assets/map/seneca-map-wide.png",
+   "src": "assets/map/seneca-map-wide.png?v=86379360b101",
    "w": 268,
    "h": 269
   },
   "seneca-map-tall": {
-   "src": "assets/map/seneca-map-tall.png",
+   "src": "assets/map/seneca-map-tall.png?v=90ccd70ec71d",
    "w": 242,
    "h": 244
   }

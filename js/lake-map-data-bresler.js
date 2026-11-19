@@ -5,12 +5,12 @@ window.NightBiteMapDataBresler = {
  "notes": "City of Lima water supply reservoir: electric motors only. The Kemp Rd ramp and main lot are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "bresler-map-wide": {
-   "src": "assets/map/bresler-map-wide.png",
+   "src": "assets/map/bresler-map-wide.png?v=47b54a4a600b",
    "w": 237,
    "h": 270
   },
   "bresler-map-tall": {
-   "src": "assets/map/bresler-map-tall.png",
+   "src": "assets/map/bresler-map-tall.png?v=9525856792ac",
    "w": 244,
    "h": 279
   }

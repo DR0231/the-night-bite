@@ -7,7 +7,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../assets/fonts/pixelify-sans-latin-ext.woff2) format('woff2');
+  src: url(../assets/fonts/pixelify-sans-latin-ext.woff2?v=0afa0101fd8c) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* Pixelify Sans latin */
@@ -16,7 +16,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../assets/fonts/pixelify-sans-latin.woff2) format('woff2');
+  src: url(../assets/fonts/pixelify-sans-latin.woff2?v=9c367c6a9e26) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* Pixelify Sans latin-ext */
@@ -25,7 +25,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(../assets/fonts/pixelify-sans-latin-ext.woff2) format('woff2');
+  src: url(../assets/fonts/pixelify-sans-latin-ext.woff2?v=0afa0101fd8c) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* Pixelify Sans latin */
@@ -34,7 +34,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(../assets/fonts/pixelify-sans-latin.woff2) format('woff2');
+  src: url(../assets/fonts/pixelify-sans-latin.woff2?v=9c367c6a9e26) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* Pixelify Sans latin-ext */
@@ -43,7 +43,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(../assets/fonts/pixelify-sans-latin-ext.woff2) format('woff2');
+  src: url(../assets/fonts/pixelify-sans-latin-ext.woff2?v=0afa0101fd8c) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* Pixelify Sans latin */
@@ -52,7 +52,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(../assets/fonts/pixelify-sans-latin.woff2) format('woff2');
+  src: url(../assets/fonts/pixelify-sans-latin.woff2?v=9c367c6a9e26) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* Night Bite Pixel: original pixel face for headings + pool numbers (see assets/fonts/README.md).
@@ -62,14 +62,14 @@
   font-style: normal;
   font-weight: 100 599;
   font-display: swap;
-  src: url(../assets/fonts/night-bite-pixel-regular.woff2) format('woff2');
+  src: url(../assets/fonts/night-bite-pixel-regular.woff2?v=1458fee0d42d) format('woff2');
 }
 @font-face {
   font-family: 'Night Bite Pixel';
   font-style: normal;
   font-weight: 600 900;
   font-display: swap;
-  src: url(../assets/fonts/night-bite-pixel-bold.woff2) format('woff2');
+  src: url(../assets/fonts/night-bite-pixel-bold.woff2?v=3e683f59654f) format('woff2');
 }
 /* Source Serif 4 latin-ext */
 @font-face {
@@ -77,7 +77,7 @@
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url(../assets/fonts/source-serif-4-italic-latin-ext.woff2) format('woff2');
+  src: url(../assets/fonts/source-serif-4-italic-latin-ext.woff2?v=a98065d414c1) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* Source Serif 4 latin */
@@ -86,7 +86,7 @@
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url(../assets/fonts/source-serif-4-italic-latin.woff2) format('woff2');
+  src: url(../assets/fonts/source-serif-4-italic-latin.woff2?v=f97463f721a8) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* Source Serif 4 latin-ext */
@@ -95,7 +95,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../assets/fonts/source-serif-4-latin-ext.woff2) format('woff2');
+  src: url(../assets/fonts/source-serif-4-latin-ext.woff2?v=0eca99f28f44) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* Source Serif 4 latin */
@@ -104,7 +104,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../assets/fonts/source-serif-4-latin.woff2) format('woff2');
+  src: url(../assets/fonts/source-serif-4-latin.woff2?v=88c3215f1779) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* Source Serif 4 latin-ext */
@@ -113,7 +113,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(../assets/fonts/source-serif-4-latin-ext.woff2) format('woff2');
+  src: url(../assets/fonts/source-serif-4-latin-ext.woff2?v=0eca99f28f44) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* Source Serif 4 latin */
@@ -122,7 +122,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(../assets/fonts/source-serif-4-latin.woff2) format('woff2');
+  src: url(../assets/fonts/source-serif-4-latin.woff2?v=88c3215f1779) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -163,8 +163,10 @@
   --measure: 38rem;
   --header-h: 3.5rem;
 
-  /* Type scale (~1.2 ratio, fluid). Pixelify sizes never drop below 12px. */
-  --text-label: 0.75rem;                                         /* 12px Pixelify labels */
+  /* Type scale (~1.2 ratio, fluid). Data sublabels and provenance are 14px; header nav is at least 13px;
+     other Pixelify chrome labels stay 12px. */
+  --text-label: 0.75rem;                                         /* 12px Pixelify chrome labels */
+  --text-sub: 0.875rem;                                          /* 14px data sublabels and provenance */
   --text-sm: clamp(0.875rem, 0.85rem + 0.12vw, 0.9375rem);       /* 14–15px meta */
   --text-base: clamp(1.0625rem, 1.03rem + 0.15vw, 1.125rem);     /* 17–18px body */
   --text-md: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);            /* h3 / card titles */
@@ -423,7 +425,7 @@ button, .btn, .site-nav a, .nav-more-btn, .species-subnav a, .gear-sticky-nav a,
   .nav-label-full { display: inline; }
 }
 /* Wide screens: Whisperwood Vale sits in More (tools/nav-desk-more.py marks the nav; whisperwood.html is unmarked).
-   Log, About and What's new stay in the row, so the panel shows only Whisperwood and Display there. */
+   Log, About and What's new stay in the row, so the panel shows Whisperwood, Display and Language there. */
 @media (min-width: 901px) {
   .site-nav .nav-extra.nav-ww { display: none; }
   .site-nav .nav-more-item.nav-more-desk { display: list-item !important; }
@@ -432,14 +434,14 @@ button, .btn, .site-nav a, .nav-more-btn, .species-subnav a, .gear-sticky-nav a,
   .nav-more-desk .nav-more-btn.has-new { background-image: none; }
 }
 
-/* Phones + small tablets: Home · Species · Lake · Log · More */
+/* Phones + small tablets: Home · Species · Water · Gear · More.
+   The Water link is real text (same word as the footer and desktop nav).
+   whisperwood.html still uses the older .nav-label-full / .nav-label-short spans. */
 @media (max-width: 900px) {
   .site-nav .nav-extra { display: none; }
   .site-nav .nav-more-item { display: list-item; }
   .nav-label-full { display: none; }
   .nav-label-short { display: inline; }
-  .nav-label-text { display: none; }
-  .nav-label[data-short]::before { content: attr(data-short); }
   .nav-more-panel {
     position: fixed;
     top: auto;
@@ -450,13 +452,13 @@ button, .btn, .site-nav a, .nav-more-btn, .species-subnav a, .gear-sticky-nav a,
     overscroll-behavior: contain;
   }
 }
-/* Phones: "Species" is spelled out, so the row runs tighter (12px labels, 4px side padding, 44px targets kept) */
+/* Phones: "Species" is spelled out, so the row runs tighter (13px labels, 4px side padding, 44px targets kept) */
 @media (max-width: 440px) {
   .header-inner { gap: 0.5rem; padding-left: max(0.75rem, env(safe-area-inset-left)); padding-right: max(0.75rem, env(safe-area-inset-right)); }
   .logo { gap: 0.5rem; }
   .logo-text { letter-spacing: 0.01em; }
   .site-nav ul { gap: 0; }
-  .site-nav a, .nav-more-btn { padding: 0 0.25rem; font-size: 0.75rem; letter-spacing: 0; }
+  .site-nav a, .nav-more-btn { padding: 0 0.25rem; font-size: 0.8125rem; letter-spacing: 0; }
   .site-nav a::after, .nav-more-btn::after { left: 0.25rem; right: 0.25rem; }
   .nav-more-btn::before { margin-inline-start: 0.25rem; }
 }
@@ -591,7 +593,7 @@ code {
   display: flex;
   justify-content: center;
   overflow: hidden;
-  background: url("../assets/horizon-tile.png") left top / 480px 92px repeat-x;
+  background: url("../assets/horizon-tile.png?v=f876ce581248") left top / 480px 92px repeat-x;
   image-rendering: pixelated;
 }
 .hero-horizon img {
@@ -623,7 +625,7 @@ code {
   margin: calc(-1 * var(--space-xs)) 0 var(--space-lg);
   margin-inline-start: calc(50% - 50vw);
   height: 44px;
-  background: url("../assets/horizon-thin.png") left top / 480px 44px repeat-x;
+  background: url("../assets/horizon-thin.png?v=e221a7fc7502") left top / 480px 44px repeat-x;
   image-rendering: pixelated;
 }
 
@@ -690,7 +692,7 @@ h1.tagline {
 }
 .chip-nights { background: rgb(var(--amber-rgb) / 0.12); border-color: var(--amber-dim); color: var(--amber); }
 .chip-wait { background: rgb(var(--muted-rgb) / 0.12); border-color: var(--muted); color: var(--muted); }
-.chip .chip-label { display: block; font-size: var(--text-label); opacity: 0.85; margin-top: 0.2rem; }
+.chip .chip-label { display: block; font-size: var(--text-sub); opacity: 0.85; margin-top: 0.2rem; }
 
 /* Quiet note (formerly the dashed "placeholder" box) */
 .placeholder-note,
@@ -973,7 +975,7 @@ a.card:hover,
   min-width: 44px;
   padding: 0 0.5rem;
   font-family: var(--font-display); font-variant-ligatures: none;
-  font-size: var(--text-label);
+  font-size: 0.8125rem; /* 13px, same floor as header nav */
   letter-spacing: 0.04em;
   color: var(--muted);
   text-decoration: none;
@@ -1202,7 +1204,7 @@ html[data-contrast="high"] .trip-send-status { border-inline-start-color: curren
   .access-table td[data-label]::before {
     content: attr(data-label) ": ";
     font-family: var(--font-display); font-variant-ligatures: none;
-    font-size: var(--text-label); letter-spacing: 0.04em; color: var(--muted);
+    font-size: var(--text-sub); letter-spacing: 0.04em; color: var(--muted);
   }
 }
 
@@ -1685,7 +1687,7 @@ a.bento-card:hover .log-value { color: var(--amber); }
 .pool-readout-cell + .pool-readout-cell { padding-left: var(--space-sm); box-shadow: inset 1px 0 0 var(--navy-light); }
 .pool-readout-label {
   font-family: var(--font-display); font-variant-ligatures: none;
-  font-size: var(--text-label);
+  font-size: var(--text-sub);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1745,6 +1747,17 @@ h3 { font-size: 20px; line-height: 30px; }
 .hero .hero-brand { font-size: 40px; line-height: 50px; font-weight: 400; }
 .pool-lead { font-size: 30px; line-height: 40px; }
 .card .pool-lead { font-size: 20px; line-height: 30px; }
+/* a word state on the pool line ("No public lake level gauge"): sentence type, not the 30px numeral */
+.pool-lead.is-state {
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: weight style;
+  padding-block: var(--space-sm);
+}
 .pool-readout-value,
 .card .pool-readout-value { font-size: 30px; line-height: 30px; }
 
@@ -1810,7 +1823,7 @@ h3 { font-size: 20px; line-height: 30px; }
 .cond-label,
 .cond-sub {
   font-family: var(--font-display); font-variant-ligatures: none;
-  font-size: var(--text-label);
+  font-size: var(--text-sub);
   letter-spacing: 0.08em;
   line-height: 1.3;
   color: var(--muted);
@@ -1851,7 +1864,7 @@ h3 { font-size: 20px; line-height: 30px; }
   flex-shrink: 0;
   width: calc(13px * var(--wind-scale));
   height: calc(13px * var(--wind-scale));
-  background: url("../assets/wind/wind-arrows.png") no-repeat;
+  background: url("../assets/wind/wind-arrows.png?v=320e354157c4") no-repeat;
   background-size: calc(130px * var(--wind-scale)) calc(13px * var(--wind-scale));
   background-position: calc(-13px * var(--wind-scale) * var(--wind-i, 0)) 0;
   image-rendering: pixelated;
@@ -1867,7 +1880,7 @@ h3 { font-size: 20px; line-height: 30px; }
   flex-shrink: 0;
   width: calc(13px * var(--moon-scale));
   height: calc(13px * var(--moon-scale));
-  background: url("../assets/moon/moon-phases.png") no-repeat;
+  background: url("../assets/moon/moon-phases.png?v=88eb81447164") no-repeat;
   background-size: calc(104px * var(--moon-scale)) calc(13px * var(--moon-scale));
   background-position: calc(-13px * var(--moon-scale) * var(--moon-i, 0)) 0;
   image-rendering: pixelated;
@@ -1959,7 +1972,7 @@ h3 { font-size: 20px; line-height: 30px; }
 .cond-hour[data-storm] { border-color: var(--amber); background: var(--amber-glow); }
 .cond-hour-t, .cond-hour-wind, .cond-hour-pop {
   font-family: var(--font-display); font-variant-ligatures: none;
-  font-size: var(--text-label);
+  font-size: var(--text-sub);
   letter-spacing: 0.04em;
   line-height: 1.3;
   white-space: nowrap;
@@ -2585,7 +2598,7 @@ html.map-open { overflow: hidden; }
    Lakes: Hoover, Alum Creek, Buckeye Lake, O'Shaughnessy, Griggs, Indian Lake, Delaware Lake, Deer Creek Lake, Madison Lake, Knox Lake, Clear Fork Reservoir (js/lakes.js sets html[data-lake])
    ========================================================================== */
 /* Lake-only blocks: data-for="<lake id>" or a space separated list; species cards list their lakes in data-lakes.
-   js/lakes.js adds the hide rule for the current lake before first paint, from its LAKES entry. No data-lake (no JS): Hoover. */
+   js/lakes-boot.js adds the hide rule for the current lake before first paint, from its SHORTS entry. No data-lake (no JS): Hoover. */
 html:not([data-lake]) [data-for]:not([data-for~="hoover"]),
 html:not([data-lake]) [data-lakes]:not([data-lakes~="hoover"]) { display: none !important; }
 
@@ -2600,8 +2613,9 @@ html:not([data-lake]) [data-lakes]:not([data-lakes~="hoover"]) { display: none !
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-start;
   gap: 0.1875rem;
-  min-height: 2.125rem;
+  min-height: 44px;
   padding: 0;
   margin: 0;
   font-family: var(--font-display);
@@ -2637,10 +2651,10 @@ html:not([data-lake]) [data-lakes]:not([data-lakes~="hoover"]) { display: none !
   border-radius: var(--radius-pill);
   transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
 }
-.lake-pill::before {   /* touch slop around label + pill, so the target is at least 44px tall */
+.lake-pill::before {   /* horizontal slop only; the button itself is now 44px tall */
   content: "";
   position: absolute;
-  inset: -0.3125rem -0.375rem;
+  inset: 0 -0.375rem;
 }
 .lake-pill-dot { width: 6px; height: 6px; background: var(--amber); box-shadow: 0 0 6px var(--amber-glow); flex-shrink: 0; }
 .lake-pill-name::after { content: var(--lake-short, "Hoover"); }
@@ -2750,6 +2764,20 @@ html.lake-sheet-open { overflow: hidden; padding-right: var(--lp-gutter, 0px); }
 .lp-search::placeholder { color: var(--muted); opacity: 1; }
 .lp-search:hover { border-color: rgb(var(--cream-rgb) / 0.18); }
 .lp-search:focus { outline: none; border-color: rgb(var(--amber-rgb) / 0.55); background: rgb(var(--cream-rgb) / 0.06); box-shadow: 0 0 0 3px rgb(var(--amber-rgb) / 0.12); }
+/* Native search clear control, in cream/amber on navy (not the browser's default blue).
+   44px tap target; the accessible name stays the browser's ("Clear" / "Clear field"). */
+.lp-search::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  background-color: var(--amber);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23000' d='M1 0h2l3 3 3-3h2v2L8 5l3 3v2H9L6 7 3 10H1V8l3-3-3-3z'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23000' d='M1 0h2l3 3 3-3h2v2L8 5l3 3v2H9L6 7 3 10H1V8l3-3-3-3z'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+  cursor: pointer;
+}
+.lp-search::-webkit-search-decoration { -webkit-appearance: none; }
 .lp-near {
   flex-shrink: 0; min-height: 44px; padding: 0 0.875rem;
   font-family: var(--font-display); font-size: 0.8125rem; letter-spacing: 0.03em; color: var(--cream-dark);
@@ -3084,17 +3112,24 @@ a.glance-cell[href]:hover { background: var(--navy-mid); color: inherit; }
 .glance-label,
 .glance-sub {
   font-family: var(--font-display); font-variant-ligatures: none;
-  font-size: var(--text-label);
+  font-size: var(--text-sub);
   letter-spacing: 0.08em;
-  line-height: 16px;
-  height: 16px;
+  line-height: 18px;
   color: var(--muted);
-  white-space: nowrap;
   overflow: hidden;
+}
+.glance-label {
+  text-transform: uppercase;
+  height: 18px;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
-.glance-label { text-transform: uppercase; }
-.glance-sub { letter-spacing: 0.04em; color: var(--cream-dark); }
+.glance-sub {
+  letter-spacing: 0.04em;
+  color: var(--cream-dark);
+  min-height: 18px;
+  overflow-wrap: anywhere;
+}
 .glance-cell[data-none] .glance-sub,
 .glance-cell[data-empty] .glance-sub { color: var(--muted); }
 .glance-value {
@@ -3138,7 +3173,7 @@ a.glance-cell[href]:hover { background: var(--navy-mid); color: inherit; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.glance-bite .glance-value.glance-state { font-size: var(--text-label); align-items: center; }
+.glance-bite .glance-value.glance-state { font-size: var(--text-sub); align-items: center; }
 .glance-cell[data-empty] .glance-value.glance-state { color: var(--cream-dark); }
 .glance-head { flex-wrap: wrap; row-gap: 0; }
 .glance-head .glance-bite { margin-inline-start: auto; min-height: 44px; margin-block: -6px; justify-content: center; }   /* 44px target, head stays 32px */
@@ -3147,17 +3182,51 @@ a.glance-cell[href]:hover { background: var(--navy-mid); color: inherit; }
 .glance-stamp {
   margin: 0;
   padding: var(--space-2xs) 0;
-  min-height: 40px;
+  min-height: 44px;
   border-top: 1px solid var(--navy-light);
   font-family: var(--font-display); font-variant-ligatures: none;
-  font-size: var(--text-label);
+  font-size: var(--text-sub);
   letter-spacing: 0.04em;
-  line-height: 16px;
+  line-height: 18px;
   color: var(--muted);
 }
 .glance-stamp time { color: var(--cream-dark); white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) {
   .glance-cell { transition: none; }
+}
+
+/* No-gauge waters: one merged "No public gauge" cell in place of the empty level and temp cells */
+#glance[data-baked="none"] .glance-grid [data-cell="pool"] { grid-column: 1 / -1; }
+#glance[data-baked="none"] .glance-grid .glance-cell:nth-child(even) { padding-inline-start: 0; box-shadow: none; }
+#glance[data-baked="none"] .glance-grid .glance-cell:nth-child(n+3) { border-top: 0; }
+#glance[data-baked="none"] .glance-grid [data-cell="sunset"],
+#glance[data-baked="none"] .glance-grid [data-cell="wind"] { border-top: 1px solid var(--navy-light); }
+#glance[data-baked="none"] .glance-grid [data-cell="wind"] {
+  padding-inline-start: var(--space-sm);
+  box-shadow: inset 1px 0 0 var(--navy-light);
+}
+@media (min-width: 600px) {
+  #glance[data-baked="none"] .glance-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); --glance-cols: 3; }
+  #glance[data-baked="none"] .glance-grid [data-cell="pool"] { grid-column: auto; }
+  #glance[data-baked="none"] .glance-grid [data-cell="sunset"],
+  #glance[data-baked="none"] .glance-grid [data-cell="wind"] { border-top: 0; padding-inline-start: var(--space-sm); box-shadow: inset 1px 0 0 var(--navy-light); }
+}
+
+/* Pool and Tonight details toggles: 14px summary, 44px target (from .how-to-read summary) */
+.pool-more > summary,
+.cond-more > summary { font-size: var(--text-sub); }
+.pool-more .how-to-read,
+.cond-more .how-to-read {
+  background: rgb(var(--navy-rgb) / 0.35);
+  margin-top: var(--space-sm);
+  padding-inline: 0.75rem;
+}
+@media (max-width: 599px) {
+  .bento-pool .pool-lead,
+  .bento-pool .pool-readout { margin-bottom: var(--space-sm); padding-block: var(--space-sm); }
+  .bento-pool .pool-lead.is-state { padding-block: var(--space-sm); }
+  .bento-pool .pool-chart { margin-top: var(--space-sm); padding-top: var(--space-sm); }
+  .bento-pool .pool-more { margin-top: var(--space-sm); }
 }
 
 /* Pool trend: hold its space while the week of readings loads, so the map below doesn't jump (js/pool-trend.js
@@ -3399,7 +3468,7 @@ html:not([data-lake]) .sp-away .species-card[data-lakes][data-lakes]:not([hidden
   background: rgb(var(--cream-rgb) / 0.03); border: 1px solid rgb(var(--cream-rgb) / 0.12); border-left: 3px solid var(--navy-light);
 }
 .summary-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.375rem 0.75rem; margin: 0 0 0.3rem; }
-.summary-head a { font-weight: 600; }
+.summary-head a { font-weight: 600; display: inline-flex; align-items: center; min-height: 44px; }
 .summary-chip {
   display: inline-flex; align-items: center; min-height: 1.5rem; padding: 0.1rem 0.5rem;
   font-family: var(--font-display); font-size: var(--text-label); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.2;
@@ -3409,6 +3478,97 @@ html:not([data-lake]) .sp-away .species-card[data-lakes][data-lakes]:not([hidden
 .summary-src { display: block; margin-top: 0.25rem; color: var(--muted); }
 .summary-table caption { caption-side: top; text-align: left; padding-bottom: 0.375rem; color: var(--muted); font-size: var(--text-sm); }
 .summary-table th[scope="row"] { white-space: nowrap; }
+/* Guide tables (drawdown, rules, trout). Wider screens: a normal table that may use the whole text column, with
+   short headers allowed to wrap so every column fits. */
+.data-table-wrap:has(> .stack-table) { max-width: none; }
+.stack-table thead th { white-space: normal; }
+.data-table.stack-table th, .data-table.stack-table td { padding-left: 0.5rem; padding-right: 0.5rem; }
+.stack-table td:has(> time:only-child) { white-space: nowrap; }
+.stack-table td:last-child:not(.num) { min-width: 10rem; }
+/* Phones (up to 680px, where the seven drawdown columns stop fitting): each row stacks into a card, the water as its heading and every other cell as "label  value" from its
+   data-label (js/i18n.js translates it). The table keeps its roles and its column headers stay in the accessibility
+   tree; the generated label has empty alt text so it isn't read twice. */
+@media (max-width: 680px) {
+  .table-wrap:has(> .stack-table) { overflow: visible; background: none; max-width: none; }
+  .stack-table, .stack-table caption, .stack-table tbody, .stack-table tr, .stack-table th, .stack-table td { display: block; }
+  .stack-table caption { padding-bottom: 0.5rem; }
+  .stack-table thead { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .stack-table tbody tr {
+    margin: 0 0 0.625rem; padding: 0.625rem 0.875rem 0.5rem;
+    background: var(--navy-mid); border: 1px solid var(--navy-light); border-radius: var(--radius);
+  }
+  .data-table.stack-table th, .data-table.stack-table td { padding-left: 0; padding-right: 0; }
+  .stack-table tbody th[scope="row"] {
+    white-space: normal; padding: 0 0 0.375rem; margin-bottom: 0.25rem; border-bottom: 1px solid var(--navy-light);
+    font-size: 1rem;
+  }
+  .stack-table tbody td, .stack-table tbody td.num {
+    display: grid; grid-template-columns: minmax(6.5rem, 42%) 1fr; column-gap: 0.75rem; align-items: baseline;
+    padding: 0.3rem 0; border-bottom: none; text-align: left; white-space: normal; color: var(--cream);
+  }
+  .stack-table tbody td::before {
+    content: attr(data-label);
+    content: attr(data-label) / "";
+    font-family: var(--font-display); font-variant-ligatures: none; font-size: var(--text-sub); font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.35; color: var(--muted);
+  }
+  html[data-lang] .stack-table tbody td::before { letter-spacing: 0; text-transform: none; }
+}
+/* "Your water" jump on /rules, /drawdown and /species/trout (UX step 6). Hidden until
+   js/your-water.js reads the existing device-local pick. 14px text, 44px tap target. */
+.your-water {
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--muted);
+  margin: 0 0 var(--space-md);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.your-water[hidden] { display: none; }
+.your-water a {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  min-height: 44px;
+  border-radius: var(--radius);
+}
+.stack-table tbody tr,
+#crappie #hoover {
+  scroll-margin-top: calc(var(--header-h, 56px) + 1rem);
+}
+.stack-table tbody tr:target,
+.stack-table tbody tr.is-your-water,
+#crappie #hoover:target,
+#crappie #hoover.is-your-water {
+  background-color: rgb(var(--amber-rgb) / 0.12);
+  box-shadow: inset 3px 0 0 var(--amber);
+}
+#crappie #hoover:target,
+#crappie #hoover.is-your-water {
+  border-radius: var(--radius);
+}
+@media (max-width: 680px) {
+  .stack-table tbody tr:target,
+  .stack-table tbody tr.is-your-water {
+    border-color: var(--amber);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .stack-table tbody tr.is-your-water,
+  #crappie #hoover.is-your-water {
+    animation: your-water-flash 1.6s var(--ease);
+  }
+}
+@keyframes your-water-flash {
+  0%, 20% { background-color: rgb(var(--amber-rgb) / 0.22); }
+  100% { background-color: rgb(var(--amber-rgb) / 0.12); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stack-table tbody tr.is-your-water,
+  #crappie #hoover.is-your-water { animation: none; }
+}
 .sp-trout-note { margin-top: var(--space-sm); }
 .page-guides {
   max-width: var(--measure);
@@ -3966,6 +4126,13 @@ a[href^="tel:"],
 main.water-home { max-width: 1160px; }
 .water-home > :not(.wp):not(.wp-hero) { max-width: var(--max-wide); margin-left: auto; margin-right: auto; }
 .water-home > .condensed-list { margin-left: auto; margin-right: auto; }
+.water-home > .site-is {
+  max-width: var(--measure);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--space-md);
+  color: var(--cream-dark);
+}
 .wp-hero { padding: var(--space-md) 0 var(--space-lg); }
 .wp-hero .hero-horizon { margin-bottom: var(--space-md); }
 .wp-hero .hero-brand { margin-bottom: var(--space-2xs); }
@@ -3974,18 +4141,21 @@ main.water-home { max-width: 1160px; }
   max-width: 33rem; margin: var(--space-xs) auto 0;
   font-size: var(--text-base); line-height: 1.6; color: var(--cream-dark); text-wrap: pretty;
 }
-.wp-browse { margin: var(--space-md) 0 0; }
+/* search + a plain "Just browsing" text link directly under the box (not a button in the hero) */
+.wp-find { display: flex; flex-direction: column; align-items: stretch; gap: var(--space-2xs); }
+.wp-browse { margin: 0; }
 .wp-browse-link {
-  display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.125rem;
-  min-height: 52px; min-width: min(100%, 17rem); padding: 0.4375rem 1.25rem;
-  font-family: var(--font-display); font-variant-ligatures: none;
-  font-size: var(--text-label); letter-spacing: 0.08em; text-transform: uppercase; line-height: 16px;
-  color: var(--amber); text-decoration: none;
-  border: 1px solid rgb(var(--amber-rgb) / 0.45); border-radius: var(--radius);
-  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0.35em;
+  min-height: 44px; padding: 0.25rem 0;
+  font-family: var(--font-body); font-size: var(--text-sm); letter-spacing: normal; text-transform: none; line-height: 1.4;
+  color: var(--cream-dark); text-decoration: none;
+  border: 0; background: none; border-radius: var(--radius);
+  transition: color var(--dur) var(--ease);
 }
-.wp-browse-sub { font-family: var(--font-body); font-size: var(--text-sm); letter-spacing: normal; text-transform: none; color: var(--cream-dark); line-height: 1.3; }
-.wp-browse-link:hover { background: var(--navy-light); border-color: var(--amber); color: var(--cream); }
+.wp-browse-text { text-decoration: underline; text-underline-offset: 0.15em; }
+.wp-browse-sub { font-family: var(--font-body); font-size: var(--text-sm); letter-spacing: normal; text-transform: none; color: var(--muted); line-height: 1.3; }
+.wp-browse-link:hover { color: var(--amber); background: none; border: 0; }
+.wp-browse-link:hover .wp-browse-sub { color: var(--amber); }
 .wp-browse-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
 /* the bar: search, then the regions as chips (jump links with no script, filters with it) */
@@ -4102,9 +4272,9 @@ main.water-home { max-width: 1160px; }
 }
 @media (min-width: 1000px) {
   .wp-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-md); }
-  .wp-bar { flex-direction: row; align-items: center; flex-wrap: wrap; gap: var(--space-sm) var(--space-md); }
+  .wp-bar { flex-direction: row; align-items: flex-start; flex-wrap: wrap; gap: var(--space-sm) var(--space-md); }
   .wp-title { flex: 0 0 auto; }
-  .wp-search { flex: 0 1 22rem; order: 3; margin-left: auto; }
+  .wp-find { flex: 0 1 22rem; order: 3; margin-left: auto; }
   .wp-chips { order: 2; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -4189,8 +4359,32 @@ html[data-light="red"] :is(.contour-key-shallow, .contour-key-deep) { filter: va
 html[data-light="red"] ::selection { background: #3a0d08; color: #ff4422; }
 html[data-light="red"] input, html[data-light="red"] select, html[data-light="red"] textarea { accent-color: var(--amber); }
 
-/* Touch targets (S3b): a link standing alone on a meta line gets 44px of tap height without moving the text */
+/* Touch targets (S3b / UX 2026-11-18): 44px minimum height on phones for standalone controls and
+   for water-name, source, and "also" links. Inline links in running sentences stay as they are.
+   Water-name links in a heading row are their own 44px box. Source and "also" lines keep their
+   punctuation in the sentence: 44px line spacing, plus 12px padding on each link so a one-line
+   name measures 44px (the measured text is 20px). */
 p.meta > a:only-child { padding-block: 0.75rem; }
+.stack-table tbody th[scope="row"] a {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  min-height: 44px;
+  vertical-align: middle;
+  border-radius: var(--radius);
+}
+.summary-src,
+.qf-src,
+.lake-links-also {
+  line-height: 44px;
+}
+.summary-src a,
+.qf-src a,
+.lake-links-also a {
+  padding-block: 12px;
+  border-radius: var(--radius);
+}
 .lp-search:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
 /* Display entry points: hidden until js/a11y.js runs (no JS, no dead button) */
@@ -4202,9 +4396,14 @@ p.meta > a:only-child { padding-block: 0.75rem; }
 }
 .nav-more-panel .a11y-open:hover { color: var(--amber); background: var(--navy-light); }
 .site-footer .a11y-open {
-  font: inherit; color: inherit; background: transparent; border: 0; padding: 0; cursor: pointer;
-  text-decoration: underline; text-underline-offset: 0.18em; min-height: 44px; border-radius: var(--radius);
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; min-width: 44px; padding: 0 0.5rem;
+  font-family: var(--font-display); font-variant-ligatures: none;
+  font-size: 0.8125rem; letter-spacing: 0.04em;
+  color: var(--muted); background: transparent; border: 0; cursor: pointer;
+  text-decoration: none; border-radius: var(--radius);
 }
+.site-footer .a11y-open:hover { color: var(--amber); }
 [data-a11y-open][hidden] { display: none !important; }
 
 /* Panel (S14 redesign): a bottom sheet on phones, a centered card from 600px. Grouped cards with small pixel
@@ -4304,11 +4503,11 @@ html[data-lang] .logo-text, html[data-lang] .hero-brand { font-family: "Night Bi
 .i18n-rule-note { display: block; margin-top: 0.25rem; font-size: 0.8125rem; font-style: italic; color: var(--amber); }
 html[data-light="red"] .i18n-rule-note { color: inherit; }
 html[data-contrast="more"] .i18n-rule-note { color: var(--cream); }
-/* Translated labels run longer than English (Fischarten, Attrezzatura): on phones the nav row tightens to 11px with
-   3px side padding so Home, Species, Lake, Gear and More still fit beside the lantern at 375 to 440px; a label that
+/* Translated labels run longer than English (Fischarten, Attrezzatura): on phones the nav row stays at 13px with
+   3px side padding so Home, Species, Water, Gear and More still fit beside the lantern at 375 to 440px; a label that
    still won't fit ends in an ellipsis rather than pushing the page sideways. English is untouched. */
 @media (max-width: 440px) {
-  html[data-lang] .site-nav a, html[data-lang] .nav-more-btn { font-size: 0.6875rem; padding: 0 0.1875rem; }
+  html[data-lang] .site-nav a, html[data-lang] .nav-more-btn { font-size: 0.8125rem; padding: 0 0.1875rem; }
   html[data-lang] .site-nav { min-width: 0; }
   html[data-lang] .site-nav > ul > li { min-width: 0; flex: 0 1 auto; }
   html[data-lang] .site-nav a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -4320,11 +4519,17 @@ html[data-contrast="more"] .i18n-rule-note { color: var(--cream); }
    Facts (numbers, lake and ramp names, the rule chip) get dir="ltr" from js/i18n.js and keep the RTL edge. */
 html[dir="rtl"] .glance-grid .glance-cell:nth-child(even) { box-shadow: inset -1px 0 0 var(--navy-light); }
 @media (min-width: 600px) { html[dir="rtl"] .glance-grid .glance-cell:nth-child(n+2) { box-shadow: inset -1px 0 0 var(--navy-light); } }
+html[dir="rtl"] #glance[data-baked="none"] .glance-grid .glance-cell:nth-child(even) { box-shadow: none; }
+html[dir="rtl"] #glance[data-baked="none"] .glance-grid [data-cell="wind"] { box-shadow: inset -1px 0 0 var(--navy-light); }
+@media (min-width: 600px) {
+  html[dir="rtl"] #glance[data-baked="none"] .glance-grid [data-cell="sunset"],
+  html[dir="rtl"] #glance[data-baked="none"] .glance-grid [data-cell="wind"] { box-shadow: inset -1px 0 0 var(--navy-light); }
+}
 :where(html[dir="rtl"] [data-nb-ltr]) { text-align: end; }
 .a11y-actions { display: flex; gap: var(--space-xs); margin-inline-start: auto; }
 .a11y-actions .btn { min-height: 44px; }
 /* Large and XL on phones: the header row keeps a readable fixed size (system font) and the wordmark goes to
-   screen-reader text, so Home, Species, Lake, Gear and More still fit beside the lantern */
+   screen-reader text, so Home, Species, Water, Gear and More still fit beside the lantern */
 @media (max-width: 900px) {
   html[data-text="lg"] .site-nav a, html[data-text="xl"] .site-nav a,
   html[data-text="lg"] .nav-more-btn, html[data-text="xl"] .nav-more-btn { font-size: 15px; padding: 0 0.3rem; }

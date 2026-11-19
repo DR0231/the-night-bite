@@ -257,10 +257,17 @@ else:
     missing.append("nws and alerts: null (--no-nws); fill from api.weather.gov/points/<lat>,<lng>")
 
 has_gauge = pool["src"] is not None
-title = E.get("title") or f"{short} Fishing: {'Level' if has_gauge else 'Map'}, Ramps, Rules | The Night Bite"
+BRAND = " | The Night Bite"
+title = E.get("title") or f"{short} Fishing: {'Level' if has_gauge else 'Map'}, Ramps, Rules{BRAND}"
+if len(title) > 60 and title.endswith(BRAND):
+    title = title[:-len(BRAND)]
+if len(title) > 60:
+    missing.append(f"title is {len(title)} characters; keep it to 60 or fewer (the site name suffix is dropped when that brings it under)")
 desc = E.get("description") or (f"{E['name']} fishing: " + ("live lake level, " if has_gauge else "") + "tonight's bite and species." + ("" if has_gauge else " No public level gauge.") + " Unofficial.")
 if not E.get("description"):
     missing.append("description: placeholder from the name only; write one from the sourced facts (under 160 characters)")
+elif len(desc) > 160:
+    missing.append(f"description is {len(desc)} characters; keep it to 160 or fewer")
 
 # ---------------------------------------------------------------- js/lakes.js
 J = lambda v: json.dumps(v, ensure_ascii=False)

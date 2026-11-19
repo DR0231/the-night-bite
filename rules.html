@@ -16,31 +16,33 @@
   <meta property="og:title" content="Ohio Fishing Rule Changes, March 1, 2027 | The Night Bite">
   <meta property="og:description" content="Bass rules at Knox, Seneca, Salt Fork and 14 more waters go statewide on March 1, 2027, and Hoover's crappie rule comes off. Unofficial.">
   <meta property="og:url" content="https://nightbiteoh.com/rules">
-  <meta property="og:image" content="https://nightbiteoh.com/assets/og/og-card.png">
+  <meta property="og:image" content="https://nightbiteoh.com/assets/og/og-card.png?v=1255b9427df4">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The Night Bite: a pixel lantern over a moonlit tree line">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Ohio Fishing Rule Changes, March 1, 2027 | The Night Bite">
   <meta name="twitter:description" content="Bass rules at Knox, Seneca, Salt Fork and 14 more waters go statewide on March 1, 2027, and Hoover's crappie rule comes off. Unofficial.">
-  <meta name="twitter:image" content="https://nightbiteoh.com/assets/og/og-card.png">
+  <meta name="twitter:image" content="https://nightbiteoh.com/assets/og/og-card.png?v=1255b9427df4">
   <meta name="twitter:image:alt" content="The Night Bite: a pixel lantern over a moonlit tree line">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="favicon.ico" sizes="16x16 32x32">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="js/a11y-boot.js?v=v44-2026-11-18"></script>
-  <link rel="stylesheet" href="css/styles.css?v=v44-2026-11-18">
-  <script src="js/lakes.js?v=v44-2026-11-18"></script>
+  <link rel="icon" href="favicon.svg?v=a4203bb6ec2d" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico?v=ec8fafebba48" sizes="16x16 32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=ae1b52f0a95b">
+  <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2?v=9c367c6a9e26" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2?v=1458fee0d42d" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2?v=88c3215f1779" as="font" type="font/woff2" crossorigin>
+  <script src="js/clean-url.js?v=v45-2026-11-18"></script>
+  <script src="js/a11y-boot.js?v=v45-2026-11-18"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v45-2026-11-18">
+  <script src="js/lakes-boot.js?v=v45-2026-11-18"></script>
+  <script src="js/lakes.js?v=v45-2026-11-18" defer></script>
 </head>
 <body>
   <a class="sr-only" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="header-inner">
       <a class="logo" href="./">
-        <img src="assets/lantern.svg" alt="" width="24" height="36" class="lantern-glow">
+        <img src="assets/lantern.svg?v=e99d689ca189" alt="" width="24" height="36" class="lantern-glow">
         <span class="logo-text">The Night Bite</span>
       </a>
       <button type="button" class="lake-pill"><span class="lake-pill-label">Choose a lake</span><span class="lake-pill-chip" aria-hidden="true"><span class="lake-pill-dot"></span><span class="lake-pill-name"></span><span class="lake-pill-chev"></span></span></button>
@@ -49,7 +51,7 @@
         <ul>
           <li class="nav-core"><a href="./">Home</a></li>
           <li class="nav-core"><a href="species/">Species</a></li>
-          <li class="nav-core"><a href="water"><span class="nav-label" data-short="Lake"><span class="nav-label-text">Water</span></span></a></li>
+          <li class="nav-core"><a href="water">Water</a></li>
           <li class="nav-core"><a href="gear">Gear</a></li>
           <li class="nav-extra nav-ww"><a href="whisperwood.html">Whisperwood Vale</a></li>
           <li class="nav-extra"><a href="log">Log</a></li>
@@ -82,31 +84,32 @@
       The Ohio Wildlife Council voted on <time datetime="2026-10-28">Oct. 28, 2026</time> to drop most lake by lake bass rules and Hoover&rsquo;s crappie rule. Here is every water on this site that changes, what the rule is today and what it becomes.
     </p>
     <p class="meta">Until <time datetime="2027-03-01">March 1, 2027</time> the 2026&ndash;27 rules stand. Source: <a href="https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/ohios-spring-2027-turkey-hunting-seasons-updated-bass-fishing-regulations-approved-by-wildlife-council" target="_blank" rel="noopener">ODNR news release</a> (<time datetime="2026-10-29">Oct. 29, 2026</time>).</p>
+    <p class="your-water" id="your-water" hidden></p>
 
     <section id="bass" aria-labelledby="bass-title">
       <h2 id="bass-title">Bass: to the statewide rule</h2>
       <p>Largemouth, smallmouth and spotted bass at these waters go to Ohio&rsquo;s statewide rule: 5 a day, singly or in combination, 12&Prime; minimum.</p>
-      <div class="table-wrap data-table-wrap"><table class="data-table summary-table">
+      <div class="table-wrap data-table-wrap"><table class="data-table summary-table stack-table" role="table">
         <caption>Bass rules that change on <time datetime="2027-03-01">March 1, 2027</time></caption>
-        <thead><tr><th scope="col">Water</th><th scope="col">Today (2026&ndash;27)</th><th scope="col">From <time datetime="2027-03-01">March 1, 2027</time></th></tr></thead>
-        <tbody>
-          <tr id="knox"><th scope="row"><a href="knox/">Knox Lake</a></th><td>5 a day combined, 18&Prime; minimum.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="seneca"><th scope="row"><a href="seneca/">Seneca Lake</a></th><td>5 a day combined, 15&Prime; minimum.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="saltfork"><th scope="row"><a href="saltfork/">Salt Fork Lake</a></th><td>4 a day combined, no more than 2 under 15&Prime; and 2 at 15&Prime; or longer.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="burroak"><th scope="row"><a href="burroak/">Burr Oak Lake</a></th><td>5 a day combined, none from 12&Prime; to 15&Prime; may be kept.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="dow"><th scope="row"><a href="dow/">Dow Lake</a></th><td>5 a day combined, none from 12&Prime; to 15&Prime; may be kept.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="paintcreek"><th scope="row"><a href="paintcreek/">Paint Creek Lake</a></th><td>4 a day combined, no more than 2 under 15&Prime; and 2 at 15&Prime; or longer.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="cowan"><th scope="row"><a href="cowan/">Cowan Lake</a></th><td>5 a day, largemouth, smallmouth and spotted combined, 15&Prime; minimum.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="acton"><th scope="row"><a href="acton/">Acton Lake</a></th><td>4 a day combined, no more than 2 under 15&Prime; and 2 at 15&Prime; or longer.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="portagelakes"><th scope="row"><a href="portagelakes/">Portage Lakes (Long Lake)</a></th><td>3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="wingfoot"><th scope="row"><a href="wingfoot/">Wingfoot Lake</a></th><td>3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="guilford"><th scope="row"><a href="guilford/">Guilford Lake</a></th><td>3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="highlandtown"><th scope="row"><a href="highlandtown/">Highlandtown Lake</a></th><td>4 a day combined, no more than 2 under 15&Prime; and 2 at 15&Prime; or longer.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="kiser"><th scope="row"><a href="kiser/">Kiser Lake</a></th><td>3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="hargus"><th scope="row"><a href="hargus/">Hargus Creek Lake</a></th><td>4 a day combined, no more than 2 under 15&Prime; and 2 at 15&Prime; or longer.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="lakerupert"><th scope="row"><a href="lakerupert/">Lake Rupert</a></th><td>5 a day combined, none from 12&Prime; to 15&Prime; may be kept.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="wolfrun"><th scope="row"><a href="wolfrun/">Wolf Run Lake</a></th><td>3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td>5 a day, 12&Prime; minimum</td></tr>
-          <tr id="tycoon"><th scope="row"><a href="tycoon/">Tycoon Lake</a></th><td>3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td>5 a day, 12&Prime; minimum</td></tr>
+        <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Water</th><th scope="col" role="columnheader">Today (2026&ndash;27)</th><th scope="col" role="columnheader">From <time datetime="2027-03-01">March 1, 2027</time></th></tr></thead>
+        <tbody role="rowgroup">
+          <tr id="knox" role="row"><th scope="row" role="rowheader"><a href="knox/">Knox Lake</a></th><td role="cell" data-label="Today (2026–27)">5 a day combined, 18&Prime; minimum.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="seneca" role="row"><th scope="row" role="rowheader"><a href="seneca/">Seneca Lake</a></th><td role="cell" data-label="Today (2026–27)">5 a day combined, 15&Prime; minimum.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="saltfork" role="row"><th scope="row" role="rowheader"><a href="saltfork/">Salt Fork Lake</a></th><td role="cell" data-label="Today (2026–27)">4 a day combined, no more than 2 under 15&Prime; and 2 at 15&Prime; or longer.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="burroak" role="row"><th scope="row" role="rowheader"><a href="burroak/">Burr Oak Lake</a></th><td role="cell" data-label="Today (2026–27)">5 a day combined, none from 12&Prime; to 15&Prime; may be kept.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="dow" role="row"><th scope="row" role="rowheader"><a href="dow/">Dow Lake</a></th><td role="cell" data-label="Today (2026–27)">5 a day combined, none from 12&Prime; to 15&Prime; may be kept.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="paintcreek" role="row"><th scope="row" role="rowheader"><a href="paintcreek/">Paint Creek Lake</a></th><td role="cell" data-label="Today (2026–27)">4 a day combined, no more than 2 under 15&Prime; and 2 at 15&Prime; or longer.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="cowan" role="row"><th scope="row" role="rowheader"><a href="cowan/">Cowan Lake</a></th><td role="cell" data-label="Today (2026–27)">5 a day, largemouth, smallmouth and spotted combined, 15&Prime; minimum.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="acton" role="row"><th scope="row" role="rowheader"><a href="acton/">Acton Lake</a></th><td role="cell" data-label="Today (2026–27)">4 a day combined, no more than 2 under 15&Prime; and 2 at 15&Prime; or longer.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="portagelakes" role="row"><th scope="row" role="rowheader"><a href="portagelakes/">Portage Lakes (Long Lake)</a></th><td role="cell" data-label="Today (2026–27)">3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="wingfoot" role="row"><th scope="row" role="rowheader"><a href="wingfoot/">Wingfoot Lake</a></th><td role="cell" data-label="Today (2026–27)">3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="guilford" role="row"><th scope="row" role="rowheader"><a href="guilford/">Guilford Lake</a></th><td role="cell" data-label="Today (2026–27)">3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="highlandtown" role="row"><th scope="row" role="rowheader"><a href="highlandtown/">Highlandtown Lake</a></th><td role="cell" data-label="Today (2026–27)">4 a day combined, no more than 2 under 15&Prime; and 2 at 15&Prime; or longer.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="kiser" role="row"><th scope="row" role="rowheader"><a href="kiser/">Kiser Lake</a></th><td role="cell" data-label="Today (2026–27)">3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="hargus" role="row"><th scope="row" role="rowheader"><a href="hargus/">Hargus Creek Lake</a></th><td role="cell" data-label="Today (2026–27)">4 a day combined, no more than 2 under 15&Prime; and 2 at 15&Prime; or longer.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="lakerupert" role="row"><th scope="row" role="rowheader"><a href="lakerupert/">Lake Rupert</a></th><td role="cell" data-label="Today (2026–27)">5 a day combined, none from 12&Prime; to 15&Prime; may be kept.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="wolfrun" role="row"><th scope="row" role="rowheader"><a href="wolfrun/">Wolf Run Lake</a></th><td role="cell" data-label="Today (2026–27)">3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
+          <tr id="tycoon" role="row"><th scope="row" role="rowheader"><a href="tycoon/">Tycoon Lake</a></th><td role="cell" data-label="Today (2026–27)">3 a day combined, no more than 2 under 14&Prime; and 1 at 20&Prime; or longer; none from 14&Prime; to 20&Prime; may be kept.</td><td role="cell" data-label="From March 1, 2027">5 a day, 12&Prime; minimum</td></tr>
         </tbody>
       </table></div>
       <p class="meta">ODNR says most waters with their own bass rules move to the statewide limit, so other Ohio waters change too. Only the waters on this site are listed here.</p>
@@ -146,6 +149,7 @@
         <a href="about">About</a>
         <a href="updates" data-updates="2026-11-18">What&rsquo;s new</a>
         <a href="privacy">Privacy</a>
+        <a href="mailto:contact@nightbiteoh.com?subject=Correction">Contact / send a correction</a>
         <button type="button" class="a11y-open" data-a11y-open hidden>Display</button>
       </nav>
       <p class="footer-guides"><span class="guides-label">Guides</span>
@@ -165,13 +169,14 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v44-2026-11-18"></script>
-  <script src="js/sw-update.js?v=v44-2026-11-18"></script>
-  <script src="js/alerts.js?v=v44-2026-11-18"></script>
-  <script src="js/nav.js?v=v44-2026-11-18"></script>
-  <script src="js/visits.js?v=v44-2026-11-18"></script>
-  <script src="js/lake-picker.js?v=v44-2026-11-18"></script>
-  <script src="js/a11y.js?v=v44-2026-11-18" defer></script>
+  <script src="js/refresh.js?v=v45-2026-11-18" defer></script>
+  <script src="js/sw-update.js?v=v45-2026-11-18" defer></script>
+  <script src="js/alerts.js?v=v45-2026-11-18" defer></script>
+  <script src="js/nav.js?v=v45-2026-11-18" defer></script>
+  <script src="js/visits.js?v=v45-2026-11-18" defer></script>
+  <script src="js/lake-picker.js?v=v45-2026-11-18" defer></script>
+  <script src="js/your-water.js?v=v45-2026-11-18" defer></script>
+  <script src="js/a11y.js?v=v45-2026-11-18" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

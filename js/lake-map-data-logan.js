@@ -5,12 +5,12 @@ window.NightBiteMapDataLogan = {
  "notes": "Lake Logan State Park: park hours 6 a.m. to 11 p.m., 10 hp limit, 10 mph speed limit, two ramps off Lake Logan Road. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "logan-map-wide": {
-   "src": "assets/map/logan-map-wide.png",
+   "src": "assets/map/logan-map-wide.png?v=4dc4302101c2",
    "w": 312,
    "h": 205
   },
   "logan-map-tall": {
-   "src": "assets/map/logan-map-tall.png",
+   "src": "assets/map/logan-map-tall.png?v=974c448fa6a8",
    "w": 192,
    "h": 304
   }

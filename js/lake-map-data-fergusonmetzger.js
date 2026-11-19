@@ -5,12 +5,12 @@ window.NightBiteMapDataFergusonmetzger = {
  "notes": "City of Lima water supply reservoirs: no gas motors on either. The primitive ramps by the Reservoir Rd entrance are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "fergusonmetzger-map-wide": {
-   "src": "assets/map/fergusonmetzger-map-wide.png",
+   "src": "assets/map/fergusonmetzger-map-wide.png?v=5313caf7a9a5",
    "w": 312,
    "h": 244
   },
   "fergusonmetzger-map-tall": {
-   "src": "assets/map/fergusonmetzger-map-tall.png",
+   "src": "assets/map/fergusonmetzger-map-tall.png?v=8255f68e582b",
    "w": 242,
    "h": 192
   }

@@ -5,12 +5,12 @@ window.NightBiteMapDataTycoon = {
  "notes": "Tycoon Lake Wildlife Area: any motor, idle speed only, no wake (OAC 1501:47-5-03). The concrete ramp off Tycoon Rd, with its accessible pier, is pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "tycoon-map-wide": {
-   "src": "assets/map/tycoon-map-wide.png",
+   "src": "assets/map/tycoon-map-wide.png?v=fc68bba7d776",
    "w": 211,
    "h": 270
   },
   "tycoon-map-tall": {
-   "src": "assets/map/tycoon-map-tall.png",
+   "src": "assets/map/tycoon-map-tall.png?v=970277eda22a",
    "w": 242,
    "h": 309
   }

@@ -5,12 +5,12 @@ window.NightBiteMapDataPymatuning = {
  "notes": "Pymatuning State Park, Ohio side: park hours 6 a.m. to 11 p.m., 20 hp limit. Boat anglers may carry an Ohio or a Pennsylvania license; shore anglers need the license for the state they stand in. Cabin Beach and New Bowers ramps are not pinned here. The east shore is Pennsylvania. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "pymatuning-map-wide": {
-   "src": "assets/map/pymatuning-map-wide.png",
+   "src": "assets/map/pymatuning-map-wide.png?v=6cb0238db655",
    "w": 309,
    "h": 159
   },
   "pymatuning-map-tall": {
-   "src": "assets/map/pymatuning-map-tall.png",
+   "src": "assets/map/pymatuning-map-tall.png?v=c7d15d6af5fb",
    "w": 154,
    "h": 308
   }

@@ -5,12 +5,12 @@ window.NightBiteMapDataWestbranch = {
  "notes": "West Branch State Park: park hours sunup to sundown, unlimited horsepower, no wake within 300 ft of shore and west of the Rock Spring Road causeway. Five ramps; the Camp and Rock Spring Road ramps are not pinned here. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "westbranch-map-wide": {
-   "src": "assets/map/westbranch-map-wide.png",
+   "src": "assets/map/westbranch-map-wide.png?v=28227371f1b1",
    "w": 312,
    "h": 145
   },
   "westbranch-map-tall": {
-   "src": "assets/map/westbranch-map-tall.png",
+   "src": "assets/map/westbranch-map-tall.png?v=1e08f8cc8cb5",
    "w": 133,
    "h": 304
   }

@@ -1,6 +1,6 @@
 // The Night Bite: the "Tonight at a glance" strip never shows a placeholder. Loads each lake home twice per width:
 //   apis-blocked  JavaScript on, USGS, the Corps (CWMS) and NWS all blocked, nothing saved on the phone
-//   js-off        JavaScript off (the baked HTML from tools/glance_bake.py on its own)
+//   js-off        JavaScript off (the baked HTML from tools/glance_bake.py on its own, including dated sunset)
 // at 320 and 430 px wide, and asserts: the strip is visible; no "--", "Loading", "unavailable", "Gauge unavailable" or
 // "NWS not available" anywhere in it; every value has text; gauge lakes show a level in ft and a visible stamp with a
 // <time> ("last updated X ago" with JavaScript, the absolute date and time without); lakes with no gauge show the
@@ -73,16 +73,21 @@ function read(page) {
         check(t + ' strip visible', r.visible);
         const bad = BAD.exec(r.text);
         check(t + ' no placeholder text in the strip', !bad, bad ? JSON.stringify(bad[0]) + ' in ' + JSON.stringify(r.text.replace(/\s+/g, ' ').slice(0, 220)) : '');
-        const empty = ['pool', 'temp', 'sunset', 'wind'].filter(k => !r[k] || !r[k].v || !r[k].s);
-        check(t + ' every cell has a value and a sub', !empty.length && !!r.bite, empty.join(',') + (r.bite ? '' : ' bite'));
+        const stale = (R.lakes()[lake].pool || {}).stale;
+        const noSrc = NOGAUGE.includes(lake) && !stale;
+        const keys = noSrc ? ['pool', 'sunset', 'wind'] : ['pool', 'temp', 'sunset', 'wind'];
+        const empty = keys.filter(k => !r[k] || !r[k].v || !r[k].s);
+        check(t + ' every cell has a value and a sub', !empty.length && !!r.bite && (noSrc ? !r.temp : true), empty.join(',') + (r.bite ? '' : ' bite') + (noSrc && r.temp ? ' extra-temp' : ''));
         check(t + ' bite says what it needs', r.bite === 'Needs forecast' || /^(Good|Fair|Tough)$/.test(r.bite), r.bite);
         check(t + ' wind points at NWS', /forecast\.weather\.gov/.test(r.wind.href) && (/Check NWS/.test(r.wind.v) || /mph|Calm/.test(r.wind.v)), JSON.stringify([r.wind.v, r.wind.s]));
-        if (mode === 'js-off') check(t + ' sunset says JS is off', r.sunset.v === 'JS is off', r.sunset.v);
+        if (mode === 'js-off') check(t + ' sunset is baked for a dated day', /^\d{1,2}:\d{2} (AM|PM)$/.test(r.sunset.v.replace(/\s+/g, ' ')) && /Last light/.test(r.sunset.s) && /\d{4}/.test(r.sunset.s), JSON.stringify([r.sunset.v, r.sunset.s]));
         else check(t + ' sunset worked out on the phone', /^\d{1,2}:\d{2} (AM|PM)( [A-Z][a-z]{2})?$/.test(r.sunset.v.replace(/\s+/g, ' ')), r.sunset.v.replace(/\s+/g, ' '));   // after today's sunset: "5:15 PM Wed"
-        const stale = (R.lakes()[lake].pool || {}).stale;
-        if (NOGAUGE.includes(lake)) {
-          check(t + ' no gauge: intentional state linked to the pool card note', r.pool.state && (stale ? r.pool.v === 'No reading' : r.pool.v === 'No gauge') && /#pool-snapshot$/.test(r.pool.href) && /#pool-snapshot$/.test(r.temp.href), JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
-          check(t + ' no gauge: the stamp says so', r.stampVis && (stale ? /last reported/.test(r.stamp) : /No public lake level/.test(r.stamp)), r.stamp);
+        if (noSrc) {
+          check(t + ' no gauge: one "No public gauge" cell linked to the pool card note', r.pool.state && r.pool.v === 'No public gauge' && r.pool.s === 'Nothing estimated' && /#pool-snapshot$/.test(r.pool.href) && !r.temp, JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
+          check(t + ' no gauge: the stamp says so', r.stampVis && /No public lake level/.test(r.stamp), r.stamp);
+        } else if (NOGAUGE.includes(lake)) {
+          check(t + ' no gauge: intentional state linked to the pool card note', r.pool.state && r.pool.v === 'No reading' && /#pool-snapshot$/.test(r.pool.href) && /#pool-snapshot$/.test(r.temp.href), JSON.stringify([r.pool.v, r.pool.s, r.pool.href]));
+          check(t + ' no gauge: the stamp says so', r.stampVis && /last reported/.test(r.stamp), r.stamp);
         } else {
           check(t + ' level is the stamped reading in ft', /^\d+\.\d+\s*ft$/.test(r.pool.v) && !r.pool.state, JSON.stringify([r.pool.v, r.pool.s]));
           check(t + ' timestamp visible', r.stampVis && !!r.time && r.time.vis && !!r.time.txt && !isNaN(Date.parse(r.time.dt)), JSON.stringify([r.stamp, r.time]));
@@ -90,8 +95,8 @@ function read(page) {
           else check(t + ' JS: "last updated X ago" with the date', /last updated (just now|\d+ (min|hours?|days) ago)/.test(r.stamp) && /\(.+ ET\)/.test(r.time.txt), r.stamp);
           check(t + ' pool card keeps the reading', !/unavailable/i.test(r.card) && /\d+\.\d+ ft/.test(r.card), r.card);
         }
-        check(t + ' nothing clipped', !['pool', 'temp', 'sunset', 'wind'].some(k => r[k].clip) && !r.biteClip && !r.stampClip,
-          ['pool', 'temp', 'sunset', 'wind'].filter(k => r[k].clip).join(',') + (r.biteClip ? ' bite' : '') + (r.stampClip ? ' stamp' : ''));
+        check(t + ' nothing clipped', !keys.some(k => r[k].clip) && !r.biteClip && !r.stampClip,
+          keys.filter(k => r[k].clip).join(',') + (r.biteClip ? ' bite' : '') + (r.stampClip ? ' stamp' : ''));
         check(t + ' no sideways scroll', !r.sideways);
         check(t + ' no script errors', perr.length === 0, perr.join(' | ').slice(0, 300));
         await page.close();

@@ -50,7 +50,7 @@ for lake in lakes:
         print(f"FAIL {lake}/index.html missing"); bad += 1; continue
     h = f.read_text()
     probs = lake_isolate.foreign(h, lake)
-    n = len(re.findall(rf'<img src="assets/{lake}-chart\.png"', h))
+    n = len(re.findall(rf'<img src="assets/{lake}-chart\.png(?:\?v=[^"]*)?"', h))
     if n != 1:
         probs.append(f"{n} copies of its own chart (want 1)")
     for p in probs:

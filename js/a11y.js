@@ -1,6 +1,7 @@
 /* The Night Bite: Display panel (text size, readable text, less motion, high contrast). Settings live in
  * localStorage "nb-a11y" on this device only; js/a11y-boot.js applies them before paint. Any [data-a11y-open]
- * button opens the panel (More menu and footer). Red light (data-light="red") is the last toggle.
+ * button opens the panel (More menu and footer). A Language button in the More menu and the footer
+ * opens the same panel on the language list. Red light (data-light="red") is the last toggle.
  */
 (function () {
   var A = window.NB_A11Y; if (!A) return;
@@ -116,6 +117,10 @@
     var b = el("button", { type: "button", "class": "a11y-open", "data-a11y-open": "", "data-lang-open": "", text: "Language" });
     b.insertBefore(el("span", { "class": "lang-globe", "aria-hidden": "true" }), b.firstChild);
     n.appendChild(b);
+  });
+  document.querySelectorAll("#nav-more-panel").forEach(function (n) {
+    if (n.querySelector("[data-lang-open]")) return;
+    n.appendChild(el("button", { type: "button", "class": "a11y-open", "data-a11y-open": "", "data-lang-open": "", text: "Language" }));
   });
   document.addEventListener("click", function (e) {
     var b = e.target.closest && e.target.closest("[data-a11y-open]");

@@ -5,12 +5,12 @@ window.NightBiteMapDataGrandlakestmarys = {
  "notes": "Grand Lake St. Marys State Park: park hours 6 a.m. to 11 p.m., unlimited horsepower, no wake within 300 ft of shore, and the ODNR map marks the open zone no wake at night. The state wildlife refuge on the southwest corner is off limits to boats at all times. Seven state ramps plus the Celina and Montezuma ramps are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "grandlakestmarys-map-wide": {
-   "src": "assets/map/grandlakestmarys-map-wide.png",
+   "src": "assets/map/grandlakestmarys-map-wide.png?v=8ee5a67cbc3a",
    "w": 311,
    "h": 165
   },
   "grandlakestmarys-map-tall": {
-   "src": "assets/map/grandlakestmarys-map-tall.png",
+   "src": "assets/map/grandlakestmarys-map-tall.png?v=3a1658e2596a",
    "w": 152,
    "h": 305
   }

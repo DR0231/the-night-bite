@@ -5,12 +5,12 @@ window.NightBiteMapDataLadue = {
  "notes": "City of Akron water supply lake managed for fishing by ODNR Wildlife: electric motors only, no external fuel tanks. No bank fishing within 500 ft of the Black Brook and Bridge Creek dams; the main dam and Black Brook Dike zones are closed to the public. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "ladue-map-wide": {
-   "src": "assets/map/ladue-map-wide.png",
+   "src": "assets/map/ladue-map-wide.png?v=38d5e5827892",
    "w": 237,
    "h": 225
   },
   "ladue-map-tall": {
-   "src": "assets/map/ladue-map-tall.png",
+   "src": "assets/map/ladue-map-tall.png?v=13e4125e1e35",
    "w": 242,
    "h": 228
   }

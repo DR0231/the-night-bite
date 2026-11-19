@@ -5,12 +5,12 @@ window.NightBiteMapDataWolfrun = {
  "notes": "Wolf Run State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. 10 hp limit. The south side ramp is pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "wolfrun-map-wide": {
-   "src": "assets/map/wolfrun-map-wide.png",
+   "src": "assets/map/wolfrun-map-wide.png?v=0ef678780f18",
    "w": 299,
    "h": 270
   },
   "wolfrun-map-tall": {
-   "src": "assets/map/wolfrun-map-tall.png",
+   "src": "assets/map/wolfrun-map-tall.png?v=68acf311e6aa",
    "w": 242,
    "h": 220
   }

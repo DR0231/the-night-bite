@@ -5,12 +5,12 @@ window.NightBiteMapDataAtwood = {
  "notes": "Muskingum Watershed Conservancy District lake: MWCD areas close 11 p.m. to 6 a.m. except to people fishing, hunting or boating (rule 1.13). 25 hp limit. MWCD lists two public launch ramps, two accessible fishing piers, a kayak launch and two marinas; trotlines and floatlines only north and east of SR 542 at Dellroy. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "atwood-map-wide": {
-   "src": "assets/map/atwood-map-wide.png",
+   "src": "assets/map/atwood-map-wide.png?v=3e10dc51356a",
    "w": 252,
    "h": 170
   },
   "atwood-map-tall": {
-   "src": "assets/map/atwood-map-tall.png",
+   "src": "assets/map/atwood-map-tall.png?v=9dd21ad90ce3",
    "w": 162,
    "h": 255
   }

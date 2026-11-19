@@ -5,8 +5,8 @@ Run after bumping VERSION in sw.js, from the repo root:  python3 tools/stamp-ver
 A new ?v= on each deploy skips the browser's 10 minute HTTP cache on GitHub Pages, so a page always loads the
 styles and scripts from its own deploy. sw.js strips ?v= when it saves a copy, so offline copies still match.
 whisperwood.html and everything under whisperwood/ are left alone.
-Then it splits the "what's biting" data into js/biting/<id>.js (tools/biting-split.py) and refreshes the precache
-hashes in sw.js (tools/sw-precache.py).
+Then it stamps static font and image URLs with a content hash (tools/stamp-assets.py), splits the "what's biting"
+data into js/biting/<id>.js (tools/biting-split.py) and refreshes the precache hashes in sw.js (tools/sw-precache.py).
 """
 import pathlib, re, subprocess, sys
 
@@ -27,5 +27,6 @@ for page in sorted(root.rglob("*.html")):
         page.write_text(new)
         changed += 1
 print(f"stamped {changed} pages with ?v={ver}")
+subprocess.run([sys.executable, str(root / "tools" / "stamp-assets.py")], check=True)
 subprocess.run([sys.executable, str(root / "tools" / "biting-split.py")], check=True)
 subprocess.run([sys.executable, str(root / "tools" / "sw-precache.py")], check=True)

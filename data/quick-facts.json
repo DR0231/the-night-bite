@@ -415,7 +415,7 @@
     },
     "mosquito": {
       "checked": "2026-11-03",
-      "title": "Mosquito Creek Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Mosquito Creek Lake Fishing: Level, Ramps, Rules",
       "description": "Mosquito Creek Lake fishing: live USGS lake level, no hp limit, five state park ramps, marina lot construction notice, tonight's bite. Unofficial.",
       "motors": "No horsepower limit. No wake within 300 ft of shore, and no skiing, tubing or PWCs north of the SR 88 causeway.",
       "ramps": "ODNR counts five state park launch ramps. The main ramp off SR 305 (3 lanes) and the causeway ramp at SR 88 and SR 46 (2 lanes) are both lit. Road construction at the marina and beach lots since Oct. 3, 2026.",
@@ -457,7 +457,7 @@
     },
     "westbranch": {
       "checked": "2026-11-03",
-      "title": "West Branch Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "West Branch Reservoir Fishing: Level, Ramps, Rules",
       "description": "West Branch (Kirwan Reservoir) fishing: live USGS lake level, unlimited hp, five state park ramps, no wake west of Rock Spring Road, tonight's bite. Unofficial.",
       "motors": "Unlimited horsepower. No wake within 300 ft of shore and everywhere west of the Rock Spring Road causeway.",
       "ramps": "Five state park ramps: East and West (two lanes, lit), the campground ramp, and gravel ramps at Rock Spring Road and Knapp Road. Marina with an accessible fishing pier.",
@@ -551,7 +551,7 @@
     },
     "grandlakestmarys": {
       "checked": "2026-11-09",
-      "title": "Grand Lake St. Marys Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Grand Lake St. Marys Fishing: Level, Ramps, Rules",
       "description": "Grand Lake St. Marys fishing: live USGS lake level, unlimited hp, seven state ramps, crappie 30 a day and 9 in, tonight's bite and species. Unofficial.",
       "motors": "Unlimited horsepower, with no wake within 300 ft of shore. The state wildlife refuge on the southwest corner is closed to boats at all times.",
       "ramps": "ODNR runs seven state boat ramps, plus a marina, seasonal rental docks and accessible fishing piers.",
@@ -574,7 +574,7 @@
     },
     "caesarcreek": {
       "checked": "2026-11-09",
-      "title": "Caesar Creek Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Caesar Creek Lake Fishing: Level, Ramps, Rules",
       "description": "Caesar Creek Lake fishing: live USGS lake level, unlimited hp, four public ramps, 115 ft near the dam, crappie 30 a day and 9 in, tonight's bite. Unofficial.",
       "motors": "Unlimited horsepower designation (ODNR).",
       "ramps": "ODNR lists four public launch ramps: Wellman Meadows near the dam, Furnas Shores and North Pool off SR 73, and Haines off Young Rd. at the upper end.",
@@ -620,7 +620,7 @@
     },
     "cjbrown": {
       "checked": "2026-11-09",
-      "title": "C.J. Brown Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "C.J. Brown Reservoir Fishing: Level, Ramps, Rules",
       "description": "C.J. Brown Reservoir fishing: live USGS lake level, Corps temp profile, unlimited hp, walleye 6 a day and 15 in, ramps, tonight's bite. Unofficial.",
       "motors": "No horsepower limit (ODNR).",
       "ramps": "Five lane launch ramp near the park office, a marina ramp with fuel, and north end and Corps ramps (ODNR).",
@@ -643,7 +643,7 @@
     },
     "rockyfork": {
       "checked": "2026-11-09",
-      "title": "Rocky Fork Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Rocky Fork Lake Fishing: Level, Ramps, Rules",
       "description": "Rocky Fork Lake fishing: unlimited hp, six state park ramps, crappie 30 a day and 9 in, the lake map, tonight's bite. No public level gauge. Unofficial.",
       "motors": "No horsepower limit (ODNR).",
       "ramps": "Six state park launch ramps, all lighted, plus seasonal docks (ODNR).",
@@ -666,7 +666,7 @@
     },
     "ladue": {
       "checked": "2026-11-11",
-      "title": "LaDue Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "LaDue Reservoir Fishing: Level, Ramps, Rules",
       "description": "LaDue Reservoir fishing: electric motors only, walleye 6 a day and 15 in, two ramps, the lake map, tonight's bite. No public level gauge. Unofficial.",
       "motors": "Electric motors only; no gas motors or external fuel tanks (ODNR).",
       "ramps": "Two boat ramps: off Washington St north of US 422, and on SR 44 south of Taylor-May Rd (ODNR).",
@@ -686,7 +686,7 @@
     },
     "paintcreek": {
       "checked": "2026-11-09",
-      "title": "Paint Creek Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Paint Creek Lake Fishing: Level, Ramps, Rules",
       "description": "Paint Creek Lake fishing: live Corps lake level and outflow temp, unlimited hp, three ramps, crappie and bass rules, tonight's bite. Unofficial.",
       "motors": "No horsepower limit (ODNR).",
       "ramps": "Three launch ramps: Taylor Rd (campground), Deer Park and Rattlesnake (ODNR).",
@@ -731,7 +731,7 @@
     },
     "mogadore": {
       "checked": "2026-11-11",
-      "title": "Mogadore Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Mogadore Reservoir Fishing: Level, Ramps, Rules",
       "description": "Mogadore Reservoir fishing: electric motors only, bank closures by the dam and roads, ramps, the lake map, tonight's bite. No public level gauge. Unofficial.",
       "motors": "Electric motors only; no gas motors or external fuel tanks (ODNR).",
       "ramps": "City of Akron boat house on SR 43, Ticknor Rd ramp and a boat stake area on Lansinger Rd (ODNR boating facilities list).",
@@ -773,7 +773,7 @@
     },
     "nimisila": {
       "checked": "2026-11-11",
-      "title": "Nimisila Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Nimisila Reservoir Fishing: Level, Ramps, Rules",
       "description": "Nimisila Reservoir fishing: electric motors only, the lake is being lowered for a dam study, four ramps, the map, tonight's bite. No level gauge. Unofficial.",
       "motors": "Electric motors only (ODNR).",
       "ramps": "Four ramps off Christman Rd and South Main St (ODNR boating facilities list).",
@@ -895,7 +895,7 @@
     },
     "clendening": {
       "checked": "2026-11-09",
-      "title": "Clendening Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Clendening Lake Fishing: Level, Ramps, Rules",
       "description": "Clendening Lake fishing: live USGS lake level, MWCD winter drawdown, 10 hp limit, saugeye and blue catfish stocking, ramps, tonight's bite. Unofficial.",
       "motors": "10 hp limit (MWCD).",
       "ramps": "MWCD lists three public launch ramps, an accessible kayak launch and an accessible fishing pier, plus Clendening Marina.",
@@ -947,7 +947,7 @@
     },
     "charlesmill": {
       "checked": "2026-11-09",
-      "title": "Charles Mill Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Charles Mill Lake Fishing: Level, Ramps, Rules",
       "description": "Charles Mill Lake fishing: live Corps lake level, MWCD winter drawdown, 10 hp limit, saugeye and hybrid striper stocking, ramps, tonight's bite. Unofficial.",
       "motors": "10 hp limit; electric motors only on Sites Lake (MWCD).",
       "ramps": "MWCD lists two public launch ramps, one at the marina and one on SR 430, two kayak launches and an accessible fishing pier.",
@@ -973,7 +973,7 @@
     },
     "pleasanthill": {
       "checked": "2026-11-09",
-      "title": "Pleasant Hill Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Pleasant Hill Lake Fishing: Level, Ramps, Rules",
       "description": "Pleasant Hill Lake fishing: live Corps lake level, 8 ft MWCD winter drawdown, unlimited hp, crappie 30 a day and 9 in, the ramp, tonight's bite. Unofficial.",
       "motors": "No horsepower limit (MWCD).",
       "ramps": "MWCD lists one public launch ramp by the marina, two accessible kayak ramps and two accessible fishing piers.",
@@ -998,7 +998,7 @@
     },
     "beachcity": {
       "checked": "2026-11-09",
-      "title": "Beach City Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Beach City Lake Fishing: Level, Ramps, Rules",
       "description": "Beach City Lake fishing: live Corps lake level, 10 hp limit, no public boat ramp, bank fishing at the dam day use area, tonight's bite. Unofficial.",
       "motors": "10 hp limit (MWCD).",
       "ramps": "No public boat ramp; MWCD and the Corps say sedimentation ended it. Fishing is allowed at the Corps day use area and below the dam.",
@@ -1048,7 +1048,7 @@
     },
     "eastbranch": {
       "checked": "2026-11-11",
-      "title": "East Branch Reservoir Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "East Branch Reservoir Fishing: Level, Ramps, Rules",
       "description": "East Branch Reservoir fishing: electric motors only, bank closures north of US 322 and the east shore, Headwaters Park launch, tonight's bite. Unofficial.",
       "motors": "Electric motors only; no gas motors or external fuel tanks (OAC 1501:47-5-03). Geauga Park District allows electric motors of 1.5 hp or less.",
       "ramps": "One small craft launch at Headwaters Park, Geauga Park District.",
@@ -1095,7 +1095,7 @@
     },
     "highlandtown": {
       "checked": "2026-11-11",
-      "title": "Highlandtown Lake Fishing: Level, Ramps, Rules | The Night Bite",
+      "title": "Highlandtown Lake Fishing: Level, Ramps, Rules",
       "description": "Highlandtown Lake fishing: 10 hp limit, bass 4 a day split at 15 in until March 2027, two wildlife area ramps, tonight's bite. Unofficial.",
       "motors": "10 hp or less (ODNR; OAC 1501:47-5-03).",
       "ramps": "Two wildlife area ramps off SR 39 in ODNR's boating facilities list.",
@@ -1138,7 +1138,7 @@
     },
     "wellington": {
       "checked": "2026-11-10",
-      "title": "Wellington Upground Reservoir: Level, Ramps, Rules | The Night Bite",
+      "title": "Wellington Upground Reservoir: Level, Ramps, Rules",
       "description": "Wellington Upground Reservoir fishing: paddle craft and electric motors only, yellow perch stocked yearly, sunrise to sunset, Jones Rd launch. Unofficial.",
       "motors": "Paddle craft and electric motors only, boats up to 23 ft (ODNR).",
       "ramps": "One public launch and parking lot on the south side off Jones Rd, west of SR 58 (ODNR).",
@@ -1185,8 +1185,8 @@
     },
     "hargus": {
       "checked": "2026-11-16",
-      "title": "Hargus Creek Lake Fishing: Map, Ramps, Rules | The Night Bite",
-      "description": "Hargus Creek Lake fishing: electric and hand powered only, one ramp in A.W. Marion State Park, bass, bluegill, crappie and stocked cats, tonight's bite. Unofficial.",
+      "title": "Hargus Creek Lake Fishing: Map, Ramps, Rules",
+      "description": "Hargus Creek Lake fishing: electric and hand powered only, A.W. Marion State Park ramp, bass, bluegill, crappie and stocked cats, tonight's bite. Unofficial.",
       "motors": "Electric motors and hand powered boats only (ODNR).",
       "ramps": "One launch ramp; seasonal boat rentals at the marina, (740) 474-9201 (ODNR).",
       "pool": "Summer pool is 821.5 ft, the level the ODNR fishing map is drawn at.",
@@ -1209,7 +1209,7 @@
     "stonelick": {
       "checked": "2026-11-16",
       "title": "Stonelick Lake Fishing: Map, Ramps, Rules | The Night Bite",
-      "description": "Stonelick Lake fishing: electric and hand powered only, ramp on SR 727, accessible piers off the dam, bass, crappie, bluegill and cats, tonight's bite. Unofficial.",
+      "description": "Stonelick Lake fishing: electric and hand powered only, SR 727 ramp, accessible piers off the dam, bass, crappie, bluegill and cats, tonight's bite. Unofficial.",
       "motors": "Electric motors and hand powered boats only (ODNR).",
       "ramps": "One launch ramp on SR 727 on the northwest side; hand launches in the campground and behind the Sycamore Day Use Area (ODNR).",
       "pool": "Summer pool is 874.2 ft, the level the ODNR fishing map is drawn at.",
@@ -1359,7 +1359,7 @@
     "lakehope": {
       "checked": "2026-11-16",
       "title": "Lake Hope Fishing: Map, Ramps, Rules | The Night Bite",
-      "description": "Lake Hope fishing: electric and hand powered only, one ramp on SR 278 by the dam, boathouse rentals, bluegill, crappie, bass and cats, tonight's bite. Unofficial.",
+      "description": "Lake Hope fishing: electric and hand powered only, one SR 278 ramp by the dam, boathouse rentals, bluegill, crappie, bass and cats, tonight's bite. Unofficial.",
       "motors": "Electric motors and hand powered boats only (ODNR).",
       "ramps": "One boat ramp on SR 278 by the dam; the boathouse rents canoes, kayaks and pontoons spring to fall, (740) 596-4949 (ODNR).",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
@@ -1380,8 +1380,8 @@
     },
     "findlayreservoirs": {
       "checked": "2026-11-16",
-      "title": "Findlay Reservoirs Fishing: Map, Ramps, Rules | The Night Bite",
-      "description": "Findlay Reservoirs fishing: Reservoir 1 electric only, Reservoir 2 9.9 hp, city ramps, floating piers, walleye, saugeye, perch stocked, tonight's bite. Unofficial.",
+      "title": "Findlay Reservoirs Fishing: Map, Ramps, Rules",
+      "description": "Findlay Reservoirs fishing: Reservoir 1 electric only, Reservoir 2 9.9 hp, ramps, floating piers, walleye, saugeye, perch stocked, tonight's bite. Unofficial.",
       "motors": "Reservoir 1: electric motors only. Reservoir 2: gas outboards up to 9.9 hp (ODNR).",
       "ramps": "City operated ramps with floating fishing piers on both reservoirs; restrooms at the Reservoir 2 ramp (ODNR).",
       "pool": "Summer pool is 815 ft, the level the ODNR fishing map is drawn at.",
@@ -1399,7 +1399,7 @@
     },
     "bresler": {
       "checked": "2026-11-16",
-      "title": "Bresler Reservoir Fishing: Map, Ramps, Rules | The Night Bite",
+      "title": "Bresler Reservoir Fishing: Map, Ramps, Rules",
       "description": "Bresler Reservoir fishing: electric motors only, ramp off Kemp Rd, upground reservoir 44 ft deep, walleye and yellow perch stocked, tonight's bite. Unofficial.",
       "motors": "Electric motors only (ODNR).",
       "ramps": "Boat ramp and main parking on the east side off Kemp Rd; more lots off Agerter Rd and Grubb Rd (ODNR).",
@@ -1417,7 +1417,7 @@
     },
     "fergusonmetzger": {
       "checked": "2026-11-16",
-      "title": "Ferguson and Metzger Reservoirs Fishing: Map, Ramps, Rules | The Night Bite",
+      "title": "Ferguson and Metzger Reservoirs Fishing: Map, Ramps, Rules",
       "description": "Ferguson and Metzger fishing: no gas motors, primitive ramps off Reservoir Rd, walleye, saugeye and perch stocked, crappie 30 a day, 9″ minimum. Unofficial.",
       "motors": "Boats allowed on both reservoirs; gasoline motors prohibited (ODNR).",
       "ramps": "Primitive boat ramps on both reservoirs near the Reservoir Rd entrance; two lots off Reservoir Rd and one off North Mumaugh Rd (ODNR).",

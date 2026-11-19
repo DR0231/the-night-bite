@@ -5,12 +5,12 @@ window.NightBiteMapDataHargus = {
  "notes": "A.W. Marion State Park: park hours 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours. Electric motors and hand powered boats only. The one launch ramp and the marina are pinned. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "hargus-map-wide": {
-   "src": "assets/map/hargus-map-wide.png",
+   "src": "assets/map/hargus-map-wide.png?v=d4bc81fca805",
    "w": 280,
    "h": 164
   },
   "hargus-map-tall": {
-   "src": "assets/map/hargus-map-tall.png",
+   "src": "assets/map/hargus-map-tall.png?v=29d846786107",
    "w": 162,
    "h": 288
   }

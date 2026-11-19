@@ -53,8 +53,10 @@
     if (!m) {
       readout.hidden = true;
       line.classList.remove("is-mirrored");
+      line.classList.add("is-state");
       return;
     }
+    line.classList.remove("is-state");
     readout.textContent = "";
     readout.appendChild(cell("Pool", m[1], "ft"));
     var outflow = /°F\s+outflow\s*·/.test(text);

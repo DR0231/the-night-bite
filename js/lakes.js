@@ -1,7 +1,9 @@
 /**
  * The Night Bite: per-lake settings and the active lake.
- * Loaded in <head> on every page (before any other script), so html[data-lake] is set before first paint and the
- * lake-only blocks ([data-for="alum"] and so on, see css/styles.css) never flash the wrong lake.
+ * The tiny head boot (js/lakes-boot.js, sync) sets html[data-lake] and hides other lakes' blocks before first paint,
+ * and sends a saved pick from the water picker to that lake's home. This file is deferred: the full lake list, gauge
+ * helpers and Home-link rewriting. It still does the same boot work if the tiny script is missing, so the two stay
+ * in step.
  *
  * Active lake: ?lake=<id> in the URL first, then localStorage "nb-lake" (the last water chosen on this device, the id
  * only), then Hoover for pages that need a lake before one is chosen.
@@ -53,7 +55,7 @@
       },
       alerts: { zones: "OHC041,OHC049,OHZ046,OHZ055", counties: "the Hoover area" },
       push: null,      // null: js/conditions.js keeps its own Hoover list (north to south lake)
-      map: { data: "NightBiteMapData", chart: "assets/hoover-chart.png" },
+      map: { data: "NightBiteMapData", chart: "assets/hoover-chart.png?v=fe743cba0221" },
       /* nb:hoover-ramps (tools/build-hoover-ramps.py) */ spots: ["Oxbow Road ramp", "Sunbury Road ramp", "Twin Bridges ramp", "Red Bank ramp", "Walnut Street ramp", "Hoover Mudflats Boardwalk"], spotAliases: {"Oxbow (upper ramp)": "Oxbow Road ramp", "Oxbow": "Oxbow Road ramp", "Redbank (middle ramp)": "Red Bank ramp", "Redbank": "Red Bank ramp", "Maxtown": "Red Bank ramp", "Maxtown ramp": "Red Bank ramp", "Walnut Road (lower ramp)": "Walnut Street ramp", "Walnut Road": "Walnut Street ramp", "Walnut Road (public)": "Walnut Street ramp", "Other / not sure": "Other public area", "Other public / not sure": "Other public area"},
       species: ["channel-catfish", "blue-catfish", "flathead-catfish", "largemouth-bass", "smallmouth-bass", "black-crappie", "white-crappie", "bluegill", "white-bass", "hybrid-striped-bass", "saugeye", "walleye", "common-carp", "longnose-gar", "yellow-perch"]   // + yellow perch: ODNR Waterbody Report survey data
     },
@@ -86,7 +88,7 @@
       },
       alerts: { zones: "OHC041,OHZ046", counties: "the Alum Creek area" },
       push: null,      // Alum Creek also runs north to south, so the Hoover wording fits
-      map: { data: "NightBiteMapDataAlum", chart: "assets/alum-chart.png" },
+      map: { data: "NightBiteMapDataAlum", chart: "assets/alum-chart.png?v=c16bd4b47fe9" },
       spots: ["New Galena ramp", "Marina ramp (Hollenback Rd)", "Cheshire ramp", "Howard ramp", "Bank (south, main lake)", "Bank (middle)", "Bank (north, no wake)", "Kayak launch"],
       species: ["saugeye", "walleye", "muskellunge", "largemouth-bass", "smallmouth-bass", "white-crappie", "black-crappie", "white-bass", "bluegill", "channel-catfish", "yellow-perch", "blue-catfish"]   // perch: ODNR Waterbody Report; blue cats: ODNR stocking 2023 to 2025
     },
@@ -117,7 +119,7 @@
       // Buckeye Lake runs west southwest to east northeast: north and south winds name a shore, east and west winds name an end
       push: ["into the south shore", "toward the southwest end", "toward the west end", "into the northwest shore",
         "into the north shore", "toward the northeast end", "toward the east end", "into the southeast shore"],
-      map: { data: "NightBiteMapDataBuckeye", chart: "assets/buckeye-chart.png" },
+      map: { data: "NightBiteMapDataBuckeye", chart: "assets/buckeye-chart.png?v=bfe2966578a3" },
       spots: ["North Shore ramp", "Liebs Island ramp", "Fairfield Beach ramp", "Mud Island pier", "Bank (north shore)", "Bank (south shore)", "Canal / Millersport"],
       species: ["saugeye", "largemouth-bass", "white-crappie", "black-crappie", "bluegill", "yellow-perch", "channel-catfish", "bullhead", "hybrid-striped-bass", "white-bass"]   // hybrids and white bass: ODNR Waterbody Report; hybrids also ODNR stocking
     },
@@ -146,7 +148,7 @@
       },
       alerts: { zones: "OHC041,OHZ046", counties: "the O'Shaughnessy area" },
       push: null,      // runs north to south like Hoover
-      map: { data: "NightBiteMapDataOshaughnessy", chart: "assets/oshaughnessy-chart.png" },
+      map: { data: "NightBiteMapDataOshaughnessy", chart: "assets/oshaughnessy-chart.png?v=3b40fae44c40" },
       spots: ["Home Road ramp", "Twin Lakes launch", "Bellepoint ramp", "Bank (south, near the dam)", "Bank (middle)", "Bank (north)", "Kayak launch"],
       species: ["hybrid-striped-bass", "saugeye", "blue-catfish", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "largemouth-bass", "smallmouth-bass", "white-bass"]   // ODNR Waterbody Report surveys; hybrids, saugeye and blue cats also ODNR stocking
     },
@@ -174,7 +176,7 @@
       },
       alerts: { zones: "OHC049,OHZ055", counties: "the Griggs area" },
       push: null,      // runs north to south like Hoover
-      map: { data: "NightBiteMapDataGriggs", chart: "assets/griggs-chart.png" },
+      map: { data: "NightBiteMapDataGriggs", chart: "assets/griggs-chart.png?v=8a264a3b7c7d" },
       spots: ["Griggs boat launch (Fishinger Rd)", "Griggs marina docks", "Bank (east side park)", "Bank (west side, south of Fishinger Rd)", "Bank (north)", "Kayak launch"],
       species: ["hybrid-striped-bass", "saugeye", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "largemouth-bass", "smallmouth-bass", "white-bass"]   // ODNR Waterbody Report surveys; hybrids also ODNR stocking and the 2026 central Ohio forecast
     },
@@ -204,7 +206,7 @@
       // Indian Lake is a wide, round lake: every wind direction names the shore it blows into
       push: ["into the south shore", "into the southwest shore", "into the west shore", "into the northwest shore",
         "into the north shore", "into the northeast shore", "into the east shore", "into the southeast shore"],
-      map: { data: "NightBiteMapDataIndian", chart: "assets/indian-chart.png" },
+      map: { data: "NightBiteMapDataIndian", chart: "assets/indian-chart.png?v=84b8f17a1d85" },
       spots: ["Moundwood ramp", "Lakeview Harbor ramp", "Blackhawk ramp", "Chippewa ramp", "Cranetown Island ramp", "Old Field Beach jetties", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "black-crappie", "white-crappie", "largemouth-bass", "bluegill", "channel-catfish", "flathead-catfish", "white-bass", "walleye", "yellow-perch", "smallmouth-bass"]   // + smallmouth: ODNR Waterbody Report survey data
     },
@@ -234,7 +236,7 @@
       },
       alerts: { zones: "OHC041,OHZ046", counties: "the Delaware Lake area" },
       push: null,      // runs north to south like Hoover
-      map: { data: "NightBiteMapDataDelaware", chart: "assets/delaware-chart.png" },
+      map: { data: "NightBiteMapDataDelaware", chart: "assets/delaware-chart.png?v=c998d5020831" },
       spots: ["Main marina ramp", "Southwest launch", "Sherwood Road ramp (east)", "Bank (dam area)", "Bank (other)", "Kayak launch"],
       species: ["black-crappie", "white-crappie", "largemouth-bass", "smallmouth-bass", "channel-catfish", "bluegill", "white-bass"]
     },
@@ -267,7 +269,7 @@
       },
       alerts: { zones: "OHC129,OHC047,OHZ064,OHZ063", counties: "the Deer Creek Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataDeercreek", chart: "assets/deercreek-chart.png" },
+      map: { data: "NightBiteMapDataDeercreek", chart: "assets/deercreek-chart.png?v=092a1b944384" },
       spots: ["Marina ramp (west)", "Ramp by the dam", "Below the dam", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "black-crappie", "white-crappie", "largemouth-bass", "smallmouth-bass", "channel-catfish", "bluegill", "white-bass"]
     },
@@ -295,7 +297,7 @@
       },
       alerts: { zones: "OHC097,OHZ054", counties: "the Madison Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataMadison", chart: "assets/madison-chart.png" },
+      map: { data: "NightBiteMapDataMadison", chart: "assets/madison-chart.png?v=d3766badfbd1" },
       spots: ["Launch ramp", "Bank by the ramp", "Bank (other)", "Kayak launch"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "bullhead"]
     },
@@ -323,7 +325,7 @@
       },
       alerts: { zones: "OHC083,OHZ047", counties: "the Knox Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataKnox", chart: "assets/knox-chart.png" },
+      map: { data: "NightBiteMapDataKnox", chart: "assets/knox-chart.png?v=025d6bb15f45" },
       spots: ["Marina ramp (lower lake)", "Upper lake ramp", "Carry-in access", "Bank (other)", "Kayak launch"],
       species: ["largemouth-bass", "flathead-catfish", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "yellow-perch"]
     },
@@ -351,7 +353,7 @@
       },
       alerts: { zones: "OHC139,OHC117,OHZ029,OHZ037", counties: "the Clear Fork Reservoir area" },
       push: null,
-      map: { data: "NightBiteMapDataClearfork", chart: "assets/clearfork-chart.png" },
+      map: { data: "NightBiteMapDataClearfork", chart: "assets/clearfork-chart.png?v=71d6124a936a" },
       spots: ["Ramp and marina (south side)", "Picnic area pier", "Bank (south shore)", "Bank (other)", "Kayak launch"],
       species: ["muskellunge", "largemouth-bass", "black-crappie", "white-crappie", "channel-catfish"]
     },
@@ -379,7 +381,7 @@
       },
       alerts: { zones: "OHC121,OHC059,OHZ068,OHZ058", counties: "the Seneca Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataSeneca", chart: "assets/seneca-chart.png" },
+      map: { data: "NightBiteMapDataSeneca", chart: "assets/seneca-chart.png?v=30b242bf47e0" },
       spots: ["Seneca Lake Marina ramp", "Lake Park ramps", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "blue-catfish", "white-bass", "largemouth-bass", "smallmouth-bass", "white-crappie", "black-crappie", "bluegill", "yellow-perch"]
     },
@@ -409,7 +411,7 @@
       },
       alerts: { zones: "OHC119,OHZ057", counties: "the Dillon Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataDillon", chart: "assets/dillon-chart.png" },
+      map: { data: "NightBiteMapDataDillon", chart: "assets/dillon-chart.png?v=5acb4d046c23" },
       spots: ["Marina ramp (east arm)", "Big Run ramp", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "hybrid-striped-bass", "blue-catfish", "channel-catfish", "largemouth-bass", "smallmouth-bass", "white-crappie", "black-crappie", "bluegill"]
     },
@@ -437,7 +439,7 @@
       },
       alerts: { zones: "OHC073,OHZ074", counties: "the Lake Logan area" },
       push: null,
-      map: { data: "NightBiteMapDataLogan", chart: "assets/logan-chart.png" },
+      map: { data: "NightBiteMapDataLogan", chart: "assets/logan-chart.png?v=f2e49674592a" },
       spots: ["Main ramp (southeast side)", "Beach ramp (north shore)", "Below the dam", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "channel-catfish", "largemouth-bass", "muskellunge", "bluegill", "black-crappie", "white-crappie"]
     },
@@ -465,7 +467,7 @@
       },
       alerts: { zones: "OHC059,OHZ058", counties: "the Salt Fork Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataSaltfork", chart: "assets/saltfork-chart.png" },
+      map: { data: "NightBiteMapDataSaltfork", chart: "assets/saltfork-chart.png?v=00c70968ea52" },
       spots: ["Sugartree Marina ramp", "Morning Glory ramp", "Bank (other)", "Kayak launch"],
       species: ["muskellunge", "saugeye", "walleye", "largemouth-bass", "smallmouth-bass", "white-bass", "white-crappie", "black-crappie", "bluegill", "yellow-perch"]
     },
@@ -495,7 +497,7 @@
       },
       alerts: { zones: "OHC115,OHC009,OHZ067,OHZ075", counties: "the Burr Oak Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataBurroak", chart: "assets/burroak-chart.png" },
+      map: { data: "NightBiteMapDataBurroak", chart: "assets/burroak-chart.png?v=dfd696e071e0" },
       spots: ["Dock 1 ramp", "Lodge ramp", "Dock 4 ramp", "Dock 3 ramp", "Bank (other)", "Kayak launch"],
       species: ["largemouth-bass", "white-crappie", "black-crappie", "channel-catfish", "blue-catfish", "flathead-catfish", "bluegill"]
     },
@@ -523,7 +525,7 @@
       },
       alerts: { zones: "OHC009,OHZ075", counties: "the Dow Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataDow", chart: "assets/dow-chart.png" },
+      map: { data: "NightBiteMapDataDow", chart: "assets/dow-chart.png?v=9dea67521582" },
       spots: ["Boat ramp (northeast edge)", "Bank by the dam", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "largemouth-bass", "white-crappie", "channel-catfish"]
     },
@@ -552,7 +554,7 @@
       },
       alerts: { zones: "OHC155,OHZ023", counties: "the Mosquito Creek Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataMosquito", chart: "assets/mosquito-chart.png" },
+      map: { data: "NightBiteMapDataMosquito", chart: "assets/mosquito-chart.png?v=fbcd2e567bbb" },
       spots: ["SR 305 main ramp", "Causeway ramp (SR 88)", "Marina ramp", "Bank (other)", "Kayak launch"],
       species: ["walleye", "black-crappie", "white-crappie", "yellow-perch", "largemouth-bass", "channel-catfish", "bluegill"]
     },
@@ -581,7 +583,7 @@
       },
       alerts: { zones: "OHC133,OHC099,OHC151,OHZ022,OHZ033,OHZ032", counties: "the Berlin Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataBerlin", chart: "assets/berlin-chart.png" },
+      map: { data: "NightBiteMapDataBerlin", chart: "assets/berlin-chart.png?v=b830fa015fb7" },
       spots: ["Bonner Road ramp", "Mill Creek ramp", "German Church Road ramp", "Bank (other)", "Kayak launch"],
       species: ["walleye", "white-bass", "smallmouth-bass", "largemouth-bass", "black-crappie", "white-crappie", "channel-catfish"]
     },
@@ -610,7 +612,7 @@
       },
       alerts: { zones: "OHC133,OHZ022", counties: "the West Branch area" },
       push: null,
-      map: { data: "NightBiteMapDataWestbranch", chart: "assets/westbranch-chart.png" },
+      map: { data: "NightBiteMapDataWestbranch", chart: "assets/westbranch-chart.png?v=882121f583eb" },
       spots: ["East ramp", "West ramp", "Knapp Road ramp", "Marina fishing pier", "Bank (other)", "Kayak launch"],
       species: ["muskellunge", "walleye", "blue-catfish", "channel-catfish", "largemouth-bass", "smallmouth-bass", "white-bass", "black-crappie", "white-crappie", "yellow-perch", "bluegill", "bullhead"]
     },
@@ -638,7 +640,7 @@
       },
       alerts: { zones: "OHC007,OHZ014", counties: "the Pymatuning area" },
       push: null,
-      map: { data: "NightBiteMapDataPymatuning", chart: "assets/pymatuning-chart.png" },
+      map: { data: "NightBiteMapDataPymatuning", chart: "assets/pymatuning-chart.png?v=cc48ee19f208" },
       spots: ["Padanaram ramp", "Birches Landing ramp", "Campground ramp", "Bank (other)", "Kayak launch"],
       species: ["walleye", "muskellunge", "yellow-perch", "black-crappie", "white-crappie", "white-bass", "largemouth-bass", "smallmouth-bass", "channel-catfish", "bluegill"]
     },
@@ -667,7 +669,7 @@
       },
       alerts: { zones: "OHC099,OHZ033", counties: "the Lake Milton area" },
       push: null,
-      map: { data: "NightBiteMapDataMilton", chart: "assets/milton-chart.png" },
+      map: { data: "NightBiteMapDataMilton", chart: "assets/milton-chart.png?v=86d5f99e27e1" },
       spots: ["Robinson Point ramp", "Pointview ramp", "Miller's Landing ramp", "Bank (other)", "Kayak launch"],
       species: ["walleye", "muskellunge", "white-bass", "smallmouth-bass", "largemouth-bass", "black-crappie", "white-crappie", "channel-catfish", "bluegill", "yellow-perch", "bullhead"]
     },
@@ -696,7 +698,7 @@
       },
       alerts: { zones: "OHC019,OHZ040", counties: "the Leesville Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataLeesville", chart: "assets/leesville-chart.png" },
+      map: { data: "NightBiteMapDataLeesville", chart: "assets/leesville-chart.png?v=f9e088059c15" },
       spots: ["South Fork Marina ramp", "North Fork Marina ramp", "Bank (other)", "Kayak launch"],
       species: ["muskellunge", "saugeye", "hybrid-striped-bass", "largemouth-bass", "smallmouth-bass", "black-crappie", "white-crappie", "channel-catfish", "bluegill", "yellow-perch"]
     },
@@ -725,7 +727,7 @@
       },
       alerts: { zones: "OHC107,OHZ034", counties: "the Grand Lake St. Marys area" },
       push: null,
-      map: { data: "NightBiteMapDataGrandlakestmarys", chart: "assets/grandlakestmarys-chart.png" },
+      map: { data: "NightBiteMapDataGrandlakestmarys", chart: "assets/grandlakestmarys-chart.png?v=b09d980eba98" },
       spots: ["Marina ramp", "Fries Channel ramp", "Boat Club ramp", "Campground ramp", "West Bank ramp", "Its It ramp", "Windy Point ramp", "Mercelina Park ramp", "Montezuma ramp", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "walleye", "black-crappie", "white-crappie", "yellow-perch", "channel-catfish", "flathead-catfish", "largemouth-bass", "bluegill", "bullhead", "common-carp"]
     },
@@ -758,7 +760,7 @@
       },
       alerts: { zones: "OHC165,OHZ071", counties: "the Caesar Creek Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataCaesarcreek", chart: "assets/caesarcreek-chart.png" },
+      map: { data: "NightBiteMapDataCaesarcreek", chart: "assets/caesarcreek-chart.png?v=29e57056cc97" },
       spots: ["Wellman Meadows ramp", "Furnas Shores ramp", "North Pool ramp", "Campground ramp", "Haines ramp, Young Rd", "Dam and tailwater (Corps)", "Bank (other)", "Kayak launch"],
       species: ["muskellunge", "saugeye", "blue-catfish", "channel-catfish", "largemouth-bass", "smallmouth-bass", "white-bass", "black-crappie", "white-crappie", "yellow-perch"]
     },
@@ -791,7 +793,7 @@
       },
       alerts: { zones: "OHC025,OHZ078", counties: "the East Fork Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataEastfork", chart: "assets/eastfork-chart.png" },
+      map: { data: "NightBiteMapDataEastfork", chart: "assets/eastfork-chart.png?v=a13ff7f07bd6" },
       spots: ["North Shore ramp", "Campground ramp", "Slade Road ramp", "Tate ramp", "Reisinger ramp", "Tunnel Mill ramp", "Hand launch (main beach)", "Bank (other)", "Kayak launch"],
       species: ["largemouth-bass", "smallmouth-bass", "black-crappie", "white-crappie", "bluegill", "hybrid-striped-bass", "saugeye", "blue-catfish", "white-bass"]
     },
@@ -824,7 +826,7 @@
       },
       alerts: { zones: "OHC023,OHZ053", counties: "the C.J. Brown area" },
       push: null,
-      map: { data: "NightBiteMapDataCjbrown", chart: "assets/cjbrown-chart.png" },
+      map: { data: "NightBiteMapDataCjbrown", chart: "assets/cjbrown-chart.png?v=5cd4d674053d" },
       spots: ["Main ramp (Buck Creek Lane)", "Marina ramp", "North End ramp", "Corps area, Grant Rd", "Marina fishing pier", "Bank (other)", "Kayak launch"],
       species: ["walleye", "saugeye", "muskellunge", "largemouth-bass", "smallmouth-bass", "white-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
     },
@@ -853,7 +855,7 @@
       },
       alerts: { zones: "OHC071,OHZ080", counties: "the Rocky Fork area" },
       push: null,
-      map: { data: "NightBiteMapDataRockyfork", chart: "assets/rockyfork-chart.png" },
+      map: { data: "NightBiteMapDataRockyfork", chart: "assets/rockyfork-chart.png?v=d25868daf005" },
       spots: ["North Beach ramp", "Campground ramp", "East Shore ramp", "East Shore Drive ramp", "South Beach ramp", "Fishermans Wharf ramp", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "largemouth-bass", "black-crappie", "white-crappie", "white-bass", "channel-catfish", "flathead-catfish", "bluegill", "yellow-perch", "common-carp"]
     },
@@ -882,7 +884,7 @@
       },
       alerts: { zones: "OHC055,OHZ013", counties: "the LaDue area" },
       push: null,
-      map: { data: "NightBiteMapDataLadue", chart: "assets/ladue-chart.png" },
+      map: { data: "NightBiteMapDataLadue", chart: "assets/ladue-chart.png?v=25c5f2b830a4" },
       spots: ["SR 44 ramp", "Auburn Rd ramp", "Boat house, Valley Rd", "Bank (other)", "Kayak launch"],
       species: ["walleye", "saugeye", "largemouth-bass", "smallmouth-bass", "black-crappie", "white-crappie", "channel-catfish", "bluegill", "yellow-perch"]
     },
@@ -915,7 +917,7 @@
       },
       alerts: { zones: "OHC071,OHZ080", counties: "the Paint Creek area" },
       push: null,
-      map: { data: "NightBiteMapDataPaintcreek", chart: "assets/paintcreek-chart.png" },
+      map: { data: "NightBiteMapDataPaintcreek", chart: "assets/paintcreek-chart.png?v=5ff440009e16" },
       spots: ["Taylor Rd ramp (campground)", "Deer Park ramp", "Rattlesnake ramp", "Marina", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "largemouth-bass", "white-bass", "black-crappie", "white-crappie", "channel-catfish", "bluegill"]
     },
@@ -944,7 +946,7 @@
       },
       alerts: { zones: "OHC153,OHZ021", counties: "the Portage Lakes area" },
       push: null,
-      map: { data: "NightBiteMapDataPortagelakes", chart: "assets/portagelakes-chart.png" },
+      map: { data: "NightBiteMapDataPortagelakes", chart: "assets/portagelakes-chart.png?v=30a8f8f2ef6a" },
       spots: ["Turkeyfoot ramp (New Ramp)", "Old State Park ramp", "North Reservoir ramp", "Long Lake ramp", "New Ramp fishing pier", "Bank (other)", "Kayak launch"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "bullhead", "common-carp"]
     },
@@ -973,7 +975,7 @@
       },
       alerts: { zones: "OHC133,OHZ022", counties: "the Mogadore area" },
       push: null,
-      map: { data: "NightBiteMapDataMogadore", chart: "assets/mogadore-chart.png" },
+      map: { data: "NightBiteMapDataMogadore", chart: "assets/mogadore-chart.png?v=d3af6b763190" },
       spots: ["Boat house, SR 43", "Ticknor Rd ramp", "Boat stake area, Lansinger Rd", "Bank (other)", "Kayak launch"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
     },
@@ -1002,7 +1004,7 @@
       },
       alerts: { zones: "OHC149,OHZ043", counties: "the Lake Loramie area" },
       push: null,
-      map: { data: "NightBiteMapDataLoramie", chart: "assets/loramie-chart.png" },
+      map: { data: "NightBiteMapDataLoramie", chart: "assets/loramie-chart.png?v=228a1f546d2f" },
       spots: ["Campground ramp", "West Bank ramp", "Earl's Island ramp", "Filburn's ramp", "Luthman Rd ramp", "Schmitmeyer-Baker access", "Fishing pier", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "bullhead", "common-carp"]
     },
@@ -1031,7 +1033,7 @@
       },
       alerts: { zones: "OHC153,OHZ021", counties: "the Nimisila area" },
       push: null,
-      map: { data: "NightBiteMapDataNimisila", chart: "assets/nimisila-chart.png" },
+      map: { data: "NightBiteMapDataNimisila", chart: "assets/nimisila-chart.png?v=ec73119c7718" },
       spots: ["C1 ramp", "C6 ramp", "CG ramp", "SM2 ramp", "Bank (other)", "Kayak launch"],
       species: ["walleye", "saugeye", "largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
     },
@@ -1060,7 +1062,7 @@
       },
       alerts: { zones: "OHC027,OHZ072", counties: "the Cowan Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataCowan", chart: "assets/cowan-chart.png" },
+      map: { data: "NightBiteMapDataCowan", chart: "assets/cowan-chart.png?v=9705f25dda90" },
       spots: ["West End ramp", "South Shore Marina", "Campground ramp", "East End ramp", "Pine Tree fishing pier", "Bank (other)", "Kayak launch"],
       species: ["largemouth-bass", "saugeye", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "flathead-catfish"]
     },
@@ -1089,7 +1091,7 @@
       },
       alerts: { zones: "OHC135,OHZ060", counties: "the Acton Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataActon", chart: "assets/acton-chart.png" },
+      map: { data: "NightBiteMapDataActon", chart: "assets/acton-chart.png?v=cf8d50b7fdf2" },
       spots: ["Main ramp", "Marina", "Lodge courtesy docks", "West shore fishing pier", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "largemouth-bass", "white-crappie", "black-crappie", "bluegill"]
     },
@@ -1118,7 +1120,7 @@
       },
       alerts: { zones: "OHC067,OHZ049", counties: "the Tappan Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataTappan", chart: "assets/tappan-chart.png" },
+      map: { data: "NightBiteMapDataTappan", chart: "assets/tappan-chart.png?v=92ac7e4c0244" },
       spots: ["Tappan Lake Park ramp", "US 250 ramp", "Fire Station ramps", "Tappan Lake Marina", "Fishing piers", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "largemouth-bass", "smallmouth-bass", "white-bass", "white-crappie", "black-crappie", "bluegill", "channel-catfish", "yellow-perch"]
     },
@@ -1147,7 +1149,7 @@
       },
       alerts: { zones: "OHC013,OHZ059", counties: "the Piedmont Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataPiedmont", chart: "assets/piedmont-chart.png" },
+      map: { data: "NightBiteMapDataPiedmont", chart: "assets/piedmont-chart.png?v=22532c56448f" },
       spots: ["Piedmont Marina", "Reynolds Rd ramp and pier", "Kirkwood ramp", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "muskellunge", "walleye", "largemouth-bass", "smallmouth-bass", "white-bass", "white-crappie", "black-crappie", "bluegill"]
     },
@@ -1176,7 +1178,7 @@
       },
       alerts: { zones: "OHC067,OHZ049", counties: "the Clendening Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataClendening", chart: "assets/clendening-chart.png" },
+      map: { data: "NightBiteMapDataClendening", chart: "assets/clendening-chart.png?v=8dd4bee562e7" },
       spots: ["Clendening Marina", "Simpson Rd ramp", "County Rd 6 ramp", "Fishing pier", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "blue-catfish", "channel-catfish", "largemouth-bass", "white-bass", "white-crappie"]
     },
@@ -1205,7 +1207,7 @@
       },
       alerts: { zones: "OHC019,OHZ040", counties: "the Atwood Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataAtwood", chart: "assets/atwood-chart.png" },
+      map: { data: "NightBiteMapDataAtwood", chart: "assets/atwood-chart.png?v=bd3b66838ed0" },
       spots: ["Shop Rd ramp", "Atwood Marina West", "East marina", "Beach courtesy docks", "Fishing piers", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "blue-catfish", "channel-catfish", "largemouth-bass", "smallmouth-bass", "white-bass", "white-crappie", "black-crappie", "yellow-perch"]
     },
@@ -1236,7 +1238,7 @@
       },
       alerts: { zones: "OHC005,OHZ030", counties: "the Charles Mill area" },
       push: null,
-      map: { data: "NightBiteMapDataCharlesmill", chart: "assets/charlesmill-chart.png" },
+      map: { data: "NightBiteMapDataCharlesmill", chart: "assets/charlesmill-chart.png?v=768dbb404e8b" },
       spots: ["SR 430 ramp", "Charles Mill Marina", "Fishing pier", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "hybrid-striped-bass", "largemouth-bass", "white-crappie", "black-crappie", "channel-catfish"]
     },
@@ -1267,7 +1269,7 @@
       },
       alerts: { zones: "OHC139,OHZ029", counties: "the Pleasant Hill area" },
       push: null,
-      map: { data: "NightBiteMapDataPleasanthill", chart: "assets/pleasanthill-chart.png" },
+      map: { data: "NightBiteMapDataPleasanthill", chart: "assets/pleasanthill-chart.png?v=28092b8e4ce5" },
       spots: ["Pleasant Hill Marina ramp", "Beach area", "Fishing piers", "Bank (other)", "Kayak launch"],
       species: ["saugeye", "largemouth-bass", "smallmouth-bass", "white-bass", "white-crappie", "black-crappie", "bluegill", "channel-catfish", "bullhead", "yellow-perch"]
     },
@@ -1298,7 +1300,7 @@
       },
       alerts: { zones: "OHC157,OHZ039", counties: "the Beach City area" },
       push: null,
-      map: { data: "NightBiteMapDataBeachcity", chart: "assets/beachcity-chart.png" },
+      map: { data: "NightBiteMapDataBeachcity", chart: "assets/beachcity-chart.png?v=7116c969b477" },
       spots: ["Dam day use area", "Below the dam", "Bank (other)"],
       species: ["saugeye", "largemouth-bass", "white-crappie", "black-crappie", "bluegill", "bullhead", "common-carp"]
     },
@@ -1327,7 +1329,7 @@
       },
       alerts: { zones: "OHC133,OHZ022", counties: "the Wingfoot area" },
       push: null,
-      map: { data: "NightBiteMapDataWingfoot", chart: "assets/wingfoot-chart.png" },
+      map: { data: "NightBiteMapDataWingfoot", chart: "assets/wingfoot-chart.png?v=2b8e6ff1268a" },
       spots: ["Northeast launch (wildlife area)", "Northwest launch, Farr Ln", "Accessible pier", "Paddle dock", "Bank (other)"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
     },
@@ -1356,7 +1358,7 @@
       },
       alerts: { zones: "OHC055,OHZ013", counties: "the East Branch area" },
       push: null,
-      map: { data: "NightBiteMapDataEastbranch", chart: "assets/eastbranch-chart.png" },
+      map: { data: "NightBiteMapDataEastbranch", chart: "assets/eastbranch-chart.png?v=e1643a053f6a" },
       spots: ["Headwaters Park launch", "West shore, Buckeye Trail", "Bank (other)"],
       species: ["largemouth-bass"]
     },
@@ -1385,7 +1387,7 @@
       },
       alerts: { zones: "OHC029,OHZ041", counties: "the Guilford area" },
       push: null,
-      map: { data: "NightBiteMapDataGuilford", chart: "assets/guilford-chart.png" },
+      map: { data: "NightBiteMapDataGuilford", chart: "assets/guilford-chart.png?v=0b2f53702f0a" },
       spots: ["Dam ramp", "Campground ramp", "Red Maple ramp", "Hanna Dr pier", "Bank (other)"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "hybrid-striped-bass"]
     },
@@ -1414,7 +1416,7 @@
       },
       alerts: { zones: "OHC029,OHZ041", counties: "the Highlandtown area" },
       push: null,
-      map: { data: "NightBiteMapDataHighlandtown", chart: "assets/highlandtown-chart.png" },
+      map: { data: "NightBiteMapDataHighlandtown", chart: "assets/highlandtown-chart.png?v=484eac6a47f9" },
       spots: ["North ramp", "South ramp", "Bank (other)"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "yellow-perch", "channel-catfish"]
     },
@@ -1443,7 +1445,7 @@
       },
       alerts: { zones: "OHC055,OHZ013", counties: "the Punderson area" },
       push: null,
-      map: { data: "NightBiteMapDataPunderson", chart: "assets/punderson-chart.png" },
+      map: { data: "NightBiteMapDataPunderson", chart: "assets/punderson-chart.png?v=2d4546432478" },
       spots: ["Launch ramp", "Fishing pier", "Bank (other)", "Kayak rental"],
       species: ["largemouth-bass", "bluegill", "channel-catfish"]
     },
@@ -1472,7 +1474,7 @@
       },
       alerts: { zones: "OHC093,OHZ010", counties: "the Wellington area" },
       push: null,
-      map: { data: "NightBiteMapDataWellington", chart: "assets/wellington-chart.png" },
+      map: { data: "NightBiteMapDataWellington", chart: "assets/wellington-chart.png?v=16ed1eac23b1" },
       spots: ["Jones Rd launch", "Bank (other)"],
       species: ["yellow-perch", "largemouth-bass", "smallmouth-bass", "black-crappie", "channel-catfish"]
     },
@@ -1501,7 +1503,7 @@
       },
       alerts: { zones: "OHC021,OHZ052", counties: "the Kiser area" },
       push: null,
-      map: { data: "NightBiteMapDataKiser", chart: "assets/kiser-chart.png" },
+      map: { data: "NightBiteMapDataKiser", chart: "assets/kiser-chart.png?v=6a8043b072f6" },
       spots: ["Main launch ramp", "Nature center launch", "Grandview Heights launch", "Campground launch", "Fishing piers", "Bank (other)"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "hybrid-striped-bass", "yellow-perch"]
     },
@@ -1530,7 +1532,7 @@
       },
       alerts: { zones: "OHC129,OHZ064", counties: "the Hargus area" },
       push: null,
-      map: { data: "NightBiteMapDataHargus", chart: "assets/hargus-chart.png" },
+      map: { data: "NightBiteMapDataHargus", chart: "assets/hargus-chart.png?v=f7e976a9db8d" },
       spots: ["Launch ramp", "Marina", "Hargus Lake Trail", "Bank (other)"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
     },
@@ -1559,7 +1561,7 @@
       },
       alerts: { zones: "OHC025,OHZ078", counties: "the Stonelick area" },
       push: null,
-      map: { data: "NightBiteMapDataStonelick", chart: "assets/stonelick-chart.png" },
+      map: { data: "NightBiteMapDataStonelick", chart: "assets/stonelick-chart.png?v=6cae87db00da" },
       spots: ["West ramp", "Campground hand launch", "Accessible pier by the dam", "Sycamore Day Use Area", "Bank (other)"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
     },
@@ -1588,7 +1590,7 @@
       },
       alerts: { zones: "OHC015,OHZ079", counties: "the Grant Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataGrant", chart: "assets/grant-chart.png" },
+      map: { data: "NightBiteMapDataGrant", chart: "assets/grant-chart.png?v=d6c119931438" },
       spots: ["Grant Lake access, SR 68", "Accessible pier, Grant Rd", "Bank (other)"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
     },
@@ -1617,7 +1619,7 @@
       },
       alerts: { zones: "OHC131,OHZ082", counties: "the Lake White area" },
       push: null,
-      map: { data: "NightBiteMapDataLakewhite", chart: "assets/lakewhite-chart.png" },
+      map: { data: "NightBiteMapDataLakewhite", chart: "assets/lakewhite-chart.png?v=d9f70bf0fff7" },
       spots: ["State park ramp, SR 551", "North launch, SR 552", "Bank (other)"],
       species: ["saugeye", "largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
     },
@@ -1646,7 +1648,7 @@
       },
       alerts: { zones: "OHC163,OHZ084", counties: "the Rupert area" },
       push: null,
-      map: { data: "NightBiteMapDataLakerupert", chart: "assets/lakerupert-chart.png" },
+      map: { data: "NightBiteMapDataLakerupert", chart: "assets/lakerupert-chart.png?v=575bbb9374a3" },
       spots: ["Wellston Wildlife Area ramp, SR 683", "Bank (other)"],
       species: ["saugeye", "largemouth-bass", "black-crappie", "white-crappie", "channel-catfish", "yellow-perch"]
     },
@@ -1675,7 +1677,7 @@
       },
       alerts: { zones: "OHC079,OHZ083", counties: "the Jackson Lake area" },
       push: null,
-      map: { data: "NightBiteMapDataJackson", chart: "assets/jackson-chart.png" },
+      map: { data: "NightBiteMapDataJackson", chart: "assets/jackson-chart.png?v=daf394aebdf6" },
       spots: ["State park ramp, McCorkle Rd", "Furnace ramp, SR 279", "Bank (other)"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish", "muskellunge", "common-carp"]
     },
@@ -1704,7 +1706,7 @@
       },
       alerts: { zones: "OHC121,OHZ068", counties: "the Wolf Run area" },
       push: null,
-      map: { data: "NightBiteMapDataWolfrun", chart: "assets/wolfrun-chart.png" },
+      map: { data: "NightBiteMapDataWolfrun", chart: "assets/wolfrun-chart.png?v=93068d6a60fc" },
       spots: ["State park ramp, SR 215", "Bank (other)"],
       species: ["saugeye", "largemouth-bass", "bluegill", "channel-catfish", "yellow-perch"]
     },
@@ -1733,7 +1735,7 @@
       },
       alerts: { zones: "OHC053,OHZ086", counties: "the Tycoon area" },
       push: null,
-      map: { data: "NightBiteMapDataTycoon", chart: "assets/tycoon-chart.png" },
+      map: { data: "NightBiteMapDataTycoon", chart: "assets/tycoon-chart.png?v=a598d96631cd" },
       spots: ["Tycoon Rd ramp and accessible pier", "Bank (other)"],
       species: ["largemouth-bass", "black-crappie", "white-crappie", "bluegill", "channel-catfish"]
     },
@@ -1762,7 +1764,7 @@
       },
       alerts: { zones: "OHC163,OHZ084", counties: "the Lake Hope area" },
       push: null,
-      map: { data: "NightBiteMapDataLakehope", chart: "assets/lakehope-chart.png" },
+      map: { data: "NightBiteMapDataLakehope", chart: "assets/lakehope-chart.png?v=b018be152841" },
       spots: ["SR 278 ramp by the dam", "Bank (other)"],
       species: ["largemouth-bass", "bluegill", "channel-catfish", "yellow-perch"]
     },
@@ -1791,7 +1793,7 @@
       },
       alerts: { zones: "OHC063,OHZ017", counties: "the Findlay area" },
       push: null,
-      map: { data: "NightBiteMapDataFindlayreservoirs", chart: "assets/findlayreservoirs-chart.png" },
+      map: { data: "NightBiteMapDataFindlayreservoirs", chart: "assets/findlayreservoirs-chart.png?v=6c507436c500" },
       spots: ["Reservoir 1 ramp", "Reservoir 2 ramp", "Floating piers", "Dike bank (other)"],
       species: ["walleye", "saugeye", "yellow-perch", "white-bass"]
     },
@@ -1820,7 +1822,7 @@
       },
       alerts: { zones: "OHC003,OHZ025", counties: "the Bresler area" },
       push: null,
-      map: { data: "NightBiteMapDataBresler", chart: "assets/bresler-chart.png" },
+      map: { data: "NightBiteMapDataBresler", chart: "assets/bresler-chart.png?v=09cec0a0120a" },
       spots: ["Kemp Rd ramp", "Agerter Rd lot", "Grubb Rd lots", "Dike bank (other)"],
       species: ["walleye", "yellow-perch", "white-bass"]
     },
@@ -1849,7 +1851,7 @@
       },
       alerts: { zones: "OHC003,OHZ025", counties: "the Ferguson & Metzger area" },
       push: null,
-      map: { data: "NightBiteMapDataFergusonmetzger", chart: "assets/fergusonmetzger-chart.png" },
+      map: { data: "NightBiteMapDataFergusonmetzger", chart: "assets/fergusonmetzger-chart.png?v=816292c0879a" },
       spots: ["Reservoir Rd ramps", "North Mumaugh Rd lot", "Bank (other)"],
       species: ["walleye", "saugeye", "yellow-perch", "white-bass", "black-crappie", "largemouth-bass", "smallmouth-bass", "channel-catfish"]
     }

@@ -5,12 +5,12 @@ window.NightBiteMapDataCaesarcreek = {
  "notes": "Caesar Creek State Park and Corps of Engineers land: park hours 6 a.m. to 11 p.m., unlimited horsepower. No paddlefish may be taken in the lake or within 2,000 ft of it or the dam. The North Pool hand launch is next to the North Pool ramp. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "caesarcreek-map-wide": {
-   "src": "assets/map/caesarcreek-map-wide.png",
+   "src": "assets/map/caesarcreek-map-wide.png?v=004ee69b5927",
    "w": 261,
    "h": 269
   },
   "caesarcreek-map-tall": {
-   "src": "assets/map/caesarcreek-map-tall.png",
+   "src": "assets/map/caesarcreek-map-tall.png?v=184424f54ae3",
    "w": 242,
    "h": 250
   }

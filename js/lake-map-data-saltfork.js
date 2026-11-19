@@ -5,12 +5,12 @@ window.NightBiteMapDataSaltfork = {
  "notes": "Salt Fork State Park: park hours 6 a.m. to 11 p.m., unlimited horsepower with speed and ski zones. ODNR lists eight ramps; the two pinned here have mapped coordinates. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "saltfork-map-wide": {
-   "src": "assets/map/saltfork-map-wide.png",
+   "src": "assets/map/saltfork-map-wide.png?v=fc75e61e3fff",
    "w": 256,
    "h": 269
   },
   "saltfork-map-tall": {
-   "src": "assets/map/saltfork-map-tall.png",
+   "src": "assets/map/saltfork-map-tall.png?v=86b0df903f84",
    "w": 241,
    "h": 247
   }

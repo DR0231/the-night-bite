@@ -5,12 +5,12 @@ window.NightBiteMapDataLeesville = {
  "notes": "MWCD lake: 10 hp limit, two public ramps at the South Fork and North Fork marinas, no road around the lake. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "leesville-map-wide": {
-   "src": "assets/map/leesville-map-wide.png",
+   "src": "assets/map/leesville-map-wide.png?v=1e7cf0bdfe35",
    "w": 239,
    "h": 268
   },
   "leesville-map-tall": {
-   "src": "assets/map/leesville-map-tall.png",
+   "src": "assets/map/leesville-map-tall.png?v=6c1554562cd4",
    "w": 242,
    "h": 272
   }

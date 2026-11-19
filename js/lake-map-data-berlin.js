@@ -5,12 +5,12 @@ window.NightBiteMapDataBerlin = {
  "notes": "Corps of Engineers lake with an ODNR fishing area: no hp limit by day, 10 mph at night. Bonner Road ramp closed Sept. 14, 2026 to May 28, 2027; Mill Creek ramp open in its place. The Corps also lists ramps at Dutch Harbor, Deer Creek and Willow Creek, not pinned here. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "berlin-map-wide": {
-   "src": "assets/map/berlin-map-wide.png",
+   "src": "assets/map/berlin-map-wide.png?v=f06db7bafa09",
    "w": 303,
    "h": 249
   },
   "berlin-map-tall": {
-   "src": "assets/map/berlin-map-tall.png",
+   "src": "assets/map/berlin-map-tall.png?v=8bda38969671",
    "w": 237,
    "h": 198
   }
