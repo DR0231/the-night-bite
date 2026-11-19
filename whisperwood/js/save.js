@@ -9,7 +9,6 @@ const NO_CORNER = "There's no dry corner for your newer vale. Copy save first.";
 
 const Save = {
   data: null,
-  _timer: 0,
   _keepData: false,
   _writeBlocked: false,
   _loadWarn: "",
@@ -29,7 +28,7 @@ const Save = {
     const journal = Object.create(null);
     for (const f of FISH) journal[f.id] = this.blankJournalEntry();
     const npcs = Object.create(null);
-    for (const n of NPC_DATA) npcs[n.id] = { hearts: 0, lastCatchRemembered: "", giftedToday: 0 };
+    for (const n of NPC_DATA) npcs[n.id] = { hearts: 0, lastCatchRemembered: "", giftedToday: 0, talks: 0 };
     return {
       version: 1,
       worldSeed,
@@ -46,7 +45,7 @@ const Save = {
       player: {
         map: "vale", x: 0, y: 0, dir: 0,
         coins: DESIGN.startCoins, favoriteSpot: "pond", lastLogoutAt: Date.now(),
-        hunger: 100, warmth: 100, rest: 100,
+        hunger: 100, warmth: 100, rest: 100, lastCatchName: "",
       },
       inventory: {
         rodId: "willow", ownedRods: ["willow"],
@@ -54,7 +53,7 @@ const Save = {
         bait: Object.assign({ worms: 0, crickets: 0, glow: 0, berries: 0, millreed: 0, saltberries: 0, crystal: 0, berryblend: 0, glowplus: 0, rainworms: 0 }, DESIGN.startBait),
         equippedBait: "worms",
         hotbar: ["bait:worms", "rod:willow", null, null],
-        items: { tank: 0, cloak: 0, lantern: 0, lanternFuel: 0, campfireKit: 0 },
+        items: { tank: 0, cloak: 0, lantern: 0, lanternFuel: 0, campfireKit: 0, dayclock: 0 },
         meals: { panperch: 0, dawntea: 0, riverstew: 0, cavebroth: 0, mistskillet: 0, reedchowder: 0, amberpot: 0, moonkettle: 0, saltskillet: 0, galechowder: 0 },
         mealId: "",
         mealUntilDay: 0,
@@ -69,11 +68,12 @@ const Save = {
       npcs,
       quests: {
         active: [], done: [],
-        daily: { day: 0, fish: "", done: false, text: "" },
+        daily: { day: 0, fish: "", spot: "", done: false, text: "" },
         rumor: { day: 0, fish: "", spot: "", text: "" },
         derby: { key: "", mood: "still", landed: 0, goal: 8 },
       },
       flags: { fifthWater: false, spotMastery: {}, introComplete: false, mute: false, campfire: false, passedOutDay: 0, cooked: {}, gotCampKit: false, millSpine: "none", millEndDay: 0, millEndSeen: false, stamps: {}, islandOpen: false, onboard: {}, stewLetter: false, fightHints: 0, stumpUntil: 0, sleepWakeAt: 0 },
+      shop: { day: 0, stock: {} },
       recap: [],
     };
   },
@@ -231,6 +231,7 @@ const Save = {
     }
     if (!Array.isArray(out.quests.active)) out.quests.active = [];
     if (!Array.isArray(out.quests.done)) out.quests.done = [];
+    out.shop = (d.shop && d.shop.stock && typeof d.shop.stock === "object") ? Object.assign({}, base.shop, d.shop) : base.shop;
     out.flags = Object.assign({}, base.flags, d.flags || {});
     out.flags.cooked = Object.assign({}, base.flags.cooked, (d.flags && d.flags.cooked) || {});
     const spineOk = { none: 1, heard: 1, opened: 1, visited: 1, done: 1, turning: 1 };
@@ -265,10 +266,10 @@ const Save = {
     out.journal = Object.assign(Object.create(null), base.journal, d.journal || {});
     const JOURNAL_NUM = ["caught", "biggest", "firstAt", "lastAt", "hooked", "landed", "gotAway", "shiny", "firstDay"];
     for (const id of Object.keys(out.journal)) {
-      const row = out.journal[id];
-      if (!row || typeof row !== "object" || Array.isArray(row)) continue;
+      const src = out.journal[id];
+      if (!src || typeof src !== "object" || Array.isArray(src)) continue;
+      const row = out.journal[id] = Object.assign(this.blankJournalEntry(), src);
       for (const key of JOURNAL_NUM) {
-        if (!Object.prototype.hasOwnProperty.call(row, key)) continue;
         row[key] = (typeof row[key] === "number" && Number.isFinite(row[key])) ? row[key] : 0;
       }
     }
@@ -505,8 +506,14 @@ const Save = {
     const d = this.data;
     const hour = (TimeCycle.hour | 0);
     const w = Utils.hash(d.clock.weather.length, hour);
-    const n = (d.worldSeed ^ (d.clock.day * 2654435761) ^ Utils.hash(salt, hour) ^ w) >>> 0;
+    const n = (d.worldSeed ^ (d.clock.day * 2654435761) ^ Utils.hash(this.saltHash(salt), hour) ^ w) >>> 0;
     return mulberry32(n);
+  },
+  saltHash(salt) {
+    const s = String(salt);
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+    return h >>> 8;
   },
 
   clockDay() {

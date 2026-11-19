@@ -419,11 +419,11 @@ const FISH = [
 const SEASONS = ["spring", "summer", "autumn", "winter"];
 
 const WEATHERS = {
-  clear: { id: "clear", name: "Clear", line: "The vale is bright and still.", bite: 1 },
-  rain: { id: "rain", name: "Rain", line: "Rain dimples every pool.", bite: 1.28 },
-  mist: { id: "mist", name: "Mist", line: "The mist is in tonight.", bite: 1.12 },
-  heat: { id: "heat", name: "Heat", line: "The air shimmers over the water.", bite: 0.82 },
-  frost: { id: "frost", name: "Frost", line: "A thin frost laces the reeds.", bite: 0.88 },
+  clear: { id: "clear", name: "Clear", line: "The vale is bright and still.", bite: 1, odds: 2 },
+  rain: { id: "rain", name: "Rain", line: "Rain dimples every pool.", bite: 1.28, odds: 1 },
+  mist: { id: "mist", name: "Mist", line: "The mist is in tonight.", bite: 1.12, odds: 2 },
+  heat: { id: "heat", name: "Heat", line: "The air shimmers over the water.", bite: 0.82, odds: 1 },
+  frost: { id: "frost", name: "Frost", line: "A thin frost laces the reeds.", bite: 0.88, odds: 1 },
 };
 
 const RODS = {

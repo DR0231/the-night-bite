@@ -88,15 +88,15 @@ TimeCycle.sample = function () {
 const Weather = {
   rollDay() {
     const rng = Save.dayRng("weather");
-    const bag = ["clear", "clear", "rain", "mist", "heat", "frost", "mist"];
+    const bag = [];
+    for (const id of Object.keys(WEATHERS)) for (let i = 0; i < (WEATHERS[id].odds | 0); i++) bag.push(id);
+    if (!bag.length) bag.push("clear");
     const forecast = [];
     for (let i = 0; i < 3; i++) forecast.push(Utils.pick(rng, bag));
     Save.data.clock.forecast = forecast;
     Save.data.clock.weather = forecast[0];
     Save.data.clock.weatherUntil = TimeCycle.hour + 6 + rng() * 5;
-    const spots = ["pond", "river", "lake", "cave"];
-    if (Save.data.flags.fifthWater) spots.push("marsh");
-    if (Save.data.flags.islandOpen) spots.push("island");
+    const spots = Object.keys(SPOTS).filter((id) => Quests._askOpen(id));
     Save.data.clock.hotspot = Utils.pick(rng, spots);
     if (TimeCycle.season() === "winter" && Skills.rank() >= 4) Save.data.clock.hotspot = "lake";
   },
