@@ -34,12 +34,12 @@
   <link rel="preload" href="assets/fonts/pixelify-sans-latin.woff2?v=9c367c6a9e26" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/night-bite-pixel-regular.woff2?v=1458fee0d42d" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2?v=88c3215f1779" as="font" type="font/woff2" crossorigin>
-  <script src="js/clean-url.js?v=v46-2026-11-18"></script>
-  <script src="js/a11y-boot.js?v=v46-2026-11-18"></script>
-  <link rel="stylesheet" href="css/styles.css?v=v46-2026-11-18">
+  <script src="js/clean-url.js?v=v47-2026-11-19"></script>
+  <script src="js/a11y-boot.js?v=v47-2026-11-19"></script>
+  <link rel="stylesheet" href="css/styles.css?v=v47-2026-11-19">
   <noscript><style>.glance-actions{display:none}.pool-trend[data-pending]{display:none!important}</style></noscript>
-  <script src="js/lakes-boot.js?v=v46-2026-11-18"></script>
-  <script src="js/lakes.js?v=v46-2026-11-18" defer></script>
+  <script src="js/lakes-boot.js?v=v47-2026-11-19"></script>
+  <script src="js/lakes.js?v=v47-2026-11-19" defer></script>
   <!-- nb:jsonld (tools/build-lake-pages.py) -->
   <script type="application/ld+json">
   [{"@context": "https://schema.org", "@type": "WebPage", "@id": "https://nightbiteoh.com/ladue/#webpage", "url": "https://nightbiteoh.com/ladue/", "name": "LaDue Reservoir Fishing: Level, Ramps, Rules", "isPartOf": {"@id": "https://nightbiteoh.com/#website"}, "about": {"@type": "Reservoir", "name": "LaDue Reservoir"}, "dateModified": "2026-11-11", "inLanguage": "en-US", "breadcrumb": {"@id": "https://nightbiteoh.com/ladue/#breadcrumb"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "@id": "https://nightbiteoh.com/ladue/#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nightbiteoh.com/"}, {"@type": "ListItem", "position": 2, "name": "LaDue Reservoir", "item": "https://nightbiteoh.com/ladue/"}]}]
@@ -113,10 +113,10 @@
           <span class="glance-value glance-state" data-glance="pool">No public gauge</span>
           <span class="glance-sub" data-glance="pool-sub">Nothing estimated</span>
         </a>
-        <a class="glance-cell" href="ladue/#conditions" data-cell="sunset" data-sunset-for="2026-11-18">
+        <a class="glance-cell" href="ladue/#conditions" data-cell="sunset" data-sunset-for="2026-11-19">
           <span class="glance-label">Sunset</span>
           <span class="glance-value" data-glance="sunset" data-nb-dyn>5:04<span class="glance-unit"> PM</span></span>
-          <span class="glance-sub" data-glance="sunset-sub" data-nb-dyn>Last light 5:34 PM, Nov 18, 2026</span>
+          <span class="glance-sub" data-glance="sunset-sub" data-nb-dyn>Last light 5:34 PM, Nov 19, 2026</span>
         </a>
         <a class="glance-cell" href="https://forecast.weather.gov/MapClick.php?lat=41.379&amp;lon=-81.217" target="_blank" rel="noopener" data-cell="wind" data-empty>
           <span class="glance-label">Wind tonight</span>
@@ -184,10 +184,12 @@
     <!-- /nb:quick-facts -->
 
     <div class="bento-grid" aria-label="Next actions">
-      <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
+      <div class="bento-stack bento-stack-upper">
+        <div class="bento-col bento-col-main">
+<section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
         <p class="pool-lead" id="correction-line">No public lake level gauge</p>
-        <script src="js/pool-readout.js?v=v46-2026-11-18" defer></script>
+        <script src="js/pool-readout.js?v=v47-2026-11-19" defer></script>
         <figure class="pool-chart">
           <button type="button" class="pool-chart-open" id="map-open" aria-haspopup="dialog" aria-controls="hoover-map">
             <img src="assets/ladue-chart.png?v=25c5f2b830a4" alt="" width="44" height="40" data-for="ladue" loading="lazy" decoding="async">
@@ -195,7 +197,7 @@
           </button>
           <figcaption><span class="pool-chart-name" data-lk="name">LaDue Reservoir</span><span class="pool-chart-key"><span data-for="ladue">&uarr; North</span><span class="pool-chart-legend"><span class="pool-chart-dot" aria-hidden="true"></span><span data-for="ladue">SR 44 ramp</span></span></span><span class="pool-chart-cue" aria-hidden="true">Tap the map for ramps &amp; <span data-for="ladue">access</span></span></figcaption>
         </figure>
-        <details class="how-to-read pool-more" id="pool-more">
+        <details class="how-to-read pool-more" id="pool-more" open>
           <summary>Pool details</summary>
           <div class="how-to-read-body">
         <p class="meta" id="correction-checked">
@@ -208,7 +210,7 @@
         <p class="meta" id="usgs-live-status" style="margin-bottom:0.5rem;margin-top:0.5rem;">
           No public lake level or water temp gauge on this lake. Never invented.
         </p>
-        <script src="js/lake-snapshot.js?v=v46-2026-11-18" defer></script>
+        <script src="js/lake-snapshot.js?v=v47-2026-11-19" defer></script>
         <div class="pool-trend" id="pool-trend" hidden data-pending>
           <div class="pool-trend-head">
             <span class="pool-trend-label">Pool, last 7 days</span>
@@ -231,8 +233,19 @@
           </div>
         </details>
       </section>
-
-      <section class="bento-card bento-conditions" id="conditions" aria-labelledby="conditions-title" data-state="loading">
+<a class="bento-card bento-maps" href="water#maps">
+        <h3>Water / maps</h3>
+        <p class="card-text" data-for="ladue">ODNR fishing map @ 1127, two ramps and the boat house.</p>
+        <span class="card-cue" aria-hidden="true">Open maps</span>
+      </a>
+<a class="bento-card bento-species" href="species/">
+        <h3>Species</h3>
+        <p class="card-text" data-for="ladue">Walleye, bass, crappie, perch, cats: season, where, limits, gear.</p>
+        <span class="card-cue" aria-hidden="true">Browse species</span>
+      </a>
+        </div>
+        <div class="bento-col bento-col-tonight">
+<section class="bento-card bento-conditions" id="conditions" aria-labelledby="conditions-title" data-state="loading">
         <h2 id="conditions-title"><span>Tonight at <span data-lk="short">LaDue</span></span></h2>
         <p class="cond-line" hidden><span class="cond-label">Tonight, in short</span> <span class="cond-line-text"></span></p>
         <p class="cond-storm" role="status" hidden></p>
@@ -240,7 +253,7 @@
           <p class="cond-bite-line"><span class="cond-label">Tonight&rsquo;s bite</span> <span class="cond-bite-rate"></span> <span class="cond-bite-why"></span></p>
           <p class="cond-bite-note">A rule of thumb guide, not a promise.</p>
         </div>
-        <details class="how-to-read cond-more" id="cond-more">
+        <details class="how-to-read cond-more" id="cond-more" open>
           <summary>Tonight details</summary>
           <div class="how-to-read-body">
         <details class="how-to-read bite-how" id="bite-how">
@@ -282,8 +295,25 @@
           </div>
         </details>
       </section>
-
-      <section class="bento-card bento-bait" id="bait-nearby" aria-labelledby="bait-title" data-state="loading">
+        </div>
+      </div>
+      <div class="bento-stack bento-stack-lower">
+        <div class="bento-col bento-col-main">
+<a class="bento-card bento-whisper" href="../whisperwood/play.html">
+        <h3>Play Whisperwood</h3>
+        <p class="card-text">Cozy pixel fishing game. Fiction, not the real lake.</p>
+        <span class="card-cue" aria-hidden="true">Play in the browser</span>
+      </a>
+<a class="bento-card bento-log" id="latest-log-card" href="log">
+        <h3>Latest log</h3>
+        <div class="latest-log-body">
+          <p class="meta log-loading">Opening the notebook…</p>
+        </div>
+        <span class="card-cue" aria-hidden="true">Open the log</span>
+      </a>
+        </div>
+        <div class="bento-col bento-col-bait">
+<section class="bento-card bento-bait" id="bait-nearby" aria-labelledby="bait-title" data-state="loading">
         <h2 id="bait-title">Bait nearby</h2>
         <div class="bait-tools" hidden>
           <button type="button" class="bait-near" aria-pressed="false" aria-describedby="bait-loc">Sort by my location</button>
@@ -297,32 +327,12 @@
         </details>
         <p class="meta bait-foot">Drive times are rough. <a class="bait-tell" href="mailto:contact@nightbiteoh.com?subject=Bait%20shop">Know a shop? Tell us</a></p>
       </section>
-      <script src="js/bait-nearby.js?v=v46-2026-11-18" defer></script>
-
-      <a class="bento-card bento-maps" href="water#maps">
-        <h3>Water / maps</h3>
-        <p class="card-text" data-for="ladue">ODNR fishing map @ 1127, two ramps and the boat house.</p>
-        <span class="card-cue" aria-hidden="true">Open maps</span>
-      </a>
-      <a class="bento-card bento-species" href="species/">
-        <h3>Species</h3>
-        <p class="card-text" data-for="ladue">Walleye, bass, crappie, perch, cats: season, where, limits, gear.</p>
-        <span class="card-cue" aria-hidden="true">Browse species</span>
-      </a>
-      <a class="bento-card bento-whisper" href="../whisperwood/play.html">
-        <h3>Play Whisperwood</h3>
-        <p class="card-text">Cozy pixel fishing game. Fiction, not the real lake.</p>
-        <span class="card-cue" aria-hidden="true">Play in the browser</span>
-      </a>
-      <a class="bento-card bento-log" id="latest-log-card" href="log">
-        <h3>Latest log</h3>
-        <div class="latest-log-body">
-          <p class="meta log-loading">Opening the notebook…</p>
         </div>
-        <span class="card-cue" aria-hidden="true">Open the log</span>
-      </a>
+      </div>
+      <script src="js/bait-nearby.js?v=v47-2026-11-19" defer></script>
+
     </div>
-    <script src="js/glance.js?v=v46-2026-11-18" defer></script>
+    <script src="js/glance.js?v=v47-2026-11-19" defer></script>
 
 
 
@@ -373,7 +383,7 @@
         </details>
       </div>
     </section>
-    <script src="js/get-app.js?v=v46-2026-11-18" defer></script>
+    <script src="js/get-app.js?v=v47-2026-11-19" defer></script>
 
     <hr class="divider">
 
@@ -447,24 +457,24 @@
       <p class="disclaimer-short">The Night Bite is unofficial and personal. Not affiliated with ODNR, the City of Columbus, USGS, or the US&nbsp;Army Corps of Engineers.</p>
     </div>
   </footer>
-  <script src="js/refresh.js?v=v46-2026-11-18" defer></script>
-  <script src="js/sw-update.js?v=v46-2026-11-18" defer></script>
-  <script src="js/alerts.js?v=v46-2026-11-18" defer></script>
-  <script src="js/nav.js?v=v46-2026-11-18" defer></script>
-  <script src="js/visits.js?v=v46-2026-11-18" defer></script>
-  <script src="js/lake-picker.js?v=v46-2026-11-18" defer></script>
-  <script src="js/usgs.js?v=v46-2026-11-18" defer></script>
-  <script src="js/home-log.js?v=v46-2026-11-18" defer></script>
-  <script src="js/astro.js?v=v46-2026-11-18" defer></script>
-  <script src="js/night-rules.js?v=v46-2026-11-18" defer></script>
-  <script src="js/conditions.js?v=v46-2026-11-18" defer></script>
-  <script src="js/fold-anchors.js?v=v46-2026-11-18" defer></script>
-  <script src="js/pool-trend.js?v=v46-2026-11-18" defer></script>
-  <script src="js/lake-map-data-ladue.js?v=v46-2026-11-18" defer></script>
-  <script src="js/hoover-map.js?v=v46-2026-11-18" defer></script>
-  <script src="js/install-tip.js?v=v46-2026-11-18" defer></script>
-  <script src="js/tonight-tools.js?v=v46-2026-11-18" defer></script>
-  <script src="js/a11y.js?v=v46-2026-11-18" defer></script>
+  <script src="js/refresh.js?v=v47-2026-11-19" defer></script>
+  <script src="js/sw-update.js?v=v47-2026-11-19" defer></script>
+  <script src="js/alerts.js?v=v47-2026-11-19" defer></script>
+  <script src="js/nav.js?v=v47-2026-11-19" defer></script>
+  <script src="js/visits.js?v=v47-2026-11-19" defer></script>
+  <script src="js/lake-picker.js?v=v47-2026-11-19" defer></script>
+  <script src="js/usgs.js?v=v47-2026-11-19" defer></script>
+  <script src="js/home-log.js?v=v47-2026-11-19" defer></script>
+  <script src="js/astro.js?v=v47-2026-11-19" defer></script>
+  <script src="js/night-rules.js?v=v47-2026-11-19" defer></script>
+  <script src="js/conditions.js?v=v47-2026-11-19" defer></script>
+  <script src="js/fold-anchors.js?v=v47-2026-11-19" defer></script>
+  <script src="js/pool-trend.js?v=v47-2026-11-19" defer></script>
+  <script src="js/lake-map-data-ladue.js?v=v47-2026-11-19" defer></script>
+  <script src="js/hoover-map.js?v=v47-2026-11-19" defer></script>
+  <script src="js/install-tip.js?v=v47-2026-11-19" defer></script>
+  <script src="js/tonight-tools.js?v=v47-2026-11-19" defer></script>
+  <script src="js/a11y.js?v=v47-2026-11-19" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "145e7409a0914c4cb3ccff3fffe4f1f4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

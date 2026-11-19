@@ -123,10 +123,10 @@
           <span class="glance-value" data-glance="temp">56<span class="glance-unit"> °F</span></span>
           <span class="glance-sub" data-glance="temp-sub">USGS gauge</span>
         </a>
-        <a class="glance-cell" href="#conditions" data-cell="sunset" data-sunset-for="2026-11-18">
+        <a class="glance-cell" href="#conditions" data-cell="sunset" data-sunset-for="2026-11-19">
           <span class="glance-label">Sunset</span>
-          <span class="glance-value" data-glance="sunset" data-nb-dyn>5:14<span class="glance-unit"> PM</span></span>
-          <span class="glance-sub" data-glance="sunset-sub" data-nb-dyn>Last light 5:43 PM, Nov 18, 2026</span>
+          <span class="glance-value" data-glance="sunset" data-nb-dyn>5:13<span class="glance-unit"> PM</span></span>
+          <span class="glance-sub" data-glance="sunset-sub" data-nb-dyn>Last light 5:43 PM, Nov 19, 2026</span>
         </a>
         <a class="glance-cell" href="https://forecast.weather.gov/MapClick.php?lat=40.11&amp;lon=-82.88" target="_blank" rel="noopener" data-cell="wind" data-empty>
           <span class="glance-label">Wind tonight</span>
@@ -438,7 +438,9 @@
     <!-- /nb:quick-facts -->
 
     <div class="bento-grid" aria-label="Next actions">
-      <section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
+      <div class="bento-stack bento-stack-upper">
+        <div class="bento-col bento-col-main">
+<section class="bento-card bento-pool" id="pool-snapshot" aria-labelledby="snapshot-title">
         <h2 id="snapshot-title">Today’s pool &amp; temp</h2>
         <p class="pool-lead" id="correction-line">889.85 ft · 56°F · ~4.2 ft below full pool</p>
         <script src="js/pool-readout.js" defer></script>
@@ -510,7 +512,7 @@
           </button>
           <figcaption><span class="pool-chart-name" data-lk="name">Hoover Reservoir</span><span class="pool-chart-key"><span data-for="hoover alum oshaughnessy griggs delaware madison burroak mosquito pymatuning milton">&larr; North</span><span data-for="buckeye indian deercreek knox clearfork seneca dillon logan saltfork dow berlin westbranch leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington kiser hargus stonelick grant lakewhite lakerupert jackson wolfrun tycoon lakehope findlayreservoirs bresler fergusonmetzger">&uarr; North</span><span class="pool-chart-legend"><span class="pool-chart-dot" aria-hidden="true"></span><span data-for="hoover">Dam park &amp; dock</span><span data-for="alum">Dam</span><span data-for="buckeye">Liebs Island ramp</span><span data-for="oshaughnessy griggs delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow mosquito berlin westbranch pymatuning milton leesville caesarcreek eastfork paintcreek tappan piedmont clendening atwood charlesmill pleasanthill beachcity">Dam</span><span data-for="indian">Moundwood ramp</span><span data-for="fergusonmetzger">Reservoir Rd ramps</span><span data-for="bresler">Kemp Rd ramp</span><span data-for="findlayreservoirs">City ramp</span><span data-for="lakehope">SR 278 ramp</span><span data-for="tycoon">Tycoon Rd ramp</span><span data-for="wolfrun">State park ramp</span><span data-for="jackson">State park ramp</span><span data-for="lakerupert">Wildlife area ramp</span><span data-for="lakewhite">State park ramp</span><span data-for="grant">Wildlife area access</span><span data-for="stonelick">West ramp</span><span data-for="hargus">Launch ramp</span><span data-for="kiser">Main ramp</span><span data-for="wellington">Jones Rd launch</span><span data-for="punderson">Launch ramp</span><span data-for="highlandtown">North ramp</span><span data-for="guilford">Dam ramp</span><span data-for="eastbranch">Headwaters Park</span><span data-for="wingfoot">Wildlife area ramp</span><span data-for="acton">Main ramp</span><span data-for="cowan">Marina</span><span data-for="nimisila">C1 ramp</span><span data-for="loramie">Campground ramp</span><span data-for="mogadore">Boat house</span><span data-for="portagelakes">Turkeyfoot ramp</span><span data-for="ladue">SR 44 ramp</span><span data-for="rockyfork">North Beach ramp</span><span data-for="cjbrown">Main ramp</span><span data-for="grandlakestmarys">State park marina ramp</span></span></span><span class="pool-chart-cue" aria-hidden="true">Tap the map for ramps &amp; <span data-for="hoover alum buckeye mosquito berlin pymatuning milton">bait</span><span data-for="oshaughnessy griggs indian delaware deercreek madison knox clearfork seneca dillon logan saltfork burroak dow westbranch leesville grandlakestmarys caesarcreek eastfork cjbrown rockyfork ladue paintcreek portagelakes mogadore loramie nimisila cowan acton tappan piedmont clendening atwood charlesmill pleasanthill beachcity wingfoot eastbranch guilford highlandtown punderson wellington kiser hargus stonelick grant lakewhite lakerupert jackson wolfrun tycoon lakehope findlayreservoirs bresler fergusonmetzger">access</span></span></figcaption>
         </figure>
-        <details class="how-to-read pool-more" id="pool-more">
+        <details class="how-to-read pool-more" id="pool-more" open>
           <summary>Pool details</summary>
           <div class="how-to-read-body">
         <p class="meta" id="correction-checked">
@@ -968,75 +970,7 @@
           </div>
         </details>
       </section>
-
-      <section class="bento-card bento-conditions" id="conditions" aria-labelledby="conditions-title" data-state="loading">
-        <h2 id="conditions-title"><span>Tonight at <span data-lk="short">Hoover</span></span></h2>
-        <p class="cond-line" hidden><span class="cond-label">Tonight, in short</span> <span class="cond-line-text"></span></p>
-        <p class="cond-storm" role="status" hidden></p>
-        <div class="cond-bite" hidden>
-          <p class="cond-bite-line"><span class="cond-label">Tonight&rsquo;s bite</span> <span class="cond-bite-rate"></span> <span class="cond-bite-why"></span></p>
-          <p class="cond-bite-note">A rule of thumb guide, not a promise.</p>
-        </div>
-        <details class="how-to-read cond-more" id="cond-more">
-          <summary>Tonight details</summary>
-          <div class="how-to-read-body">
-        <details class="how-to-read bite-how" id="bite-how">
-          <summary>How the bite is rated</summary>
-          <div class="how-to-read-body">
-            <p>The Bite is this site&rsquo;s own rule of thumb, not fishing science and not a forecast. It adds points from readings already on this page.</p>
-            <ul class="bite-rules">
-              <li data-rule="pressure"><strong>Barometer</strong>, the change over the last 3 hours at <span data-bite-src="station">the lake&rsquo;s NWS station</span>. Falling slowly <b data-r="pressure.pts.fallSlow">+2</b>, steady <b data-r="pressure.pts.steady">+1</b>, rising slowly <b data-r="pressure.pts.riseSlow">0</b>, falling fast <b data-r="pressure.pts.fallFast">0</b>, rising fast <b data-r="pressure.pts.riseFast">&minus;1</b>. Steady means within <b data-r="pressure.steady">0.02</b> inHg; fast means <b data-r="pressure.fast">0.06</b> inHg or more. <span class="bite-now" data-bite-now="pressure" hidden></span></li>
-              <li data-rule="wind"><strong>Wind</strong>, tonight&rsquo;s average NWS hourly speed from sunset to 2 AM (the top of each hour&rsquo;s range). Under <b data-r="wind.calm">3</b> mph <b data-r="wind.pts.calm">0</b>, 3 to <b data-r="wind.chop">12</b> mph <b data-r="wind.pts.chop">+1</b>, 13 to <b data-r="wind.breezy">18</b> mph <b data-r="wind.pts.breezy">0</b>, over 18 mph <b data-r="wind.pts.strong">&minus;2</b>. <span class="bite-now" data-bite-now="wind" hidden></span></li>
-              <li data-rule="moon"><strong>Moon</strong>, worked out on this phone. New or full moon tonight (or under <b data-r="moon.dark" data-fmt="pct">10%</b> or over <b data-r="moon.bright" data-fmt="pct">90%</b> lit) <b data-r="moon.pts.major">+1</b>, otherwise <b data-r="moon.pts.other">0</b>. <span class="bite-now" data-bite-now="moon" hidden></span></li>
-              <li data-rule="water"><strong>Water temp</strong>, from this lake&rsquo;s USGS gauge where one reports it. <b data-r="water.goodLo">55</b> to <b data-r="water.goodHi">80</b>&deg;F <b data-r="water.pts.good">+1</b>, colder than <b data-r="water.okLo">45</b> or warmer than <b data-r="water.okHi">86</b>&deg;F <b data-r="water.pts.bad">&minus;1</b>, anything between <b data-r="water.pts.ok">0</b>. It never makes a rating alone. <span class="bite-now" data-bite-now="water" hidden></span></li>
-              <li data-rule="storm"><strong>Thunder</strong> anywhere in tonight&rsquo;s NWS forecast makes it Tough, whatever the points. <span class="bite-now" data-bite-now="storm" hidden></span></li>
-            </ul>
-            <p><b data-r="rate.good">4</b> points or more is Good, <b data-r="rate.fair">2</b> or 3 is Fair, less is Tough. A missing reading counts 0, and with no barometer trend and no wind there is no rating.</p>
-            <p class="bite-tonight" data-bite-tonight hidden></p>
-          </div>
-        </details>
-        <div class="cond-grid">
-          <div class="cond-cell cond-wind" data-cond="wind" data-empty><span class="cond-label">Wind</span><span class="cond-wind-row"><span class="wind-sprite" role="img" aria-label="Wind not loaded yet"></span><span class="cond-value" aria-hidden="true">--</span></span><span class="cond-sub" aria-hidden="true"></span></div>
-          <div class="cond-cell" data-cond="air" data-empty><span class="cond-label">Air</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
-          <div class="cond-cell" data-cond="rain" data-empty><span class="cond-label">Rain chance</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
-          <div class="cond-cell" data-cond="pressure" data-empty><span class="cond-label">Barometer</span><span class="cond-value">--</span><span class="cond-sub"></span><span class="cond-sub cond-asof" hidden></span></div>
-          <div class="cond-cell" data-cond="sunset" data-empty><span class="cond-label">Sunset</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
-          <div class="cond-cell" data-cond="moonrise" data-empty><span class="cond-label">Moonrise</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
-          <div class="cond-cell cond-moon" data-cond="moon" data-empty><span class="cond-label">Moon tonight</span><span class="cond-moon-row"><span class="moon-sprite" aria-hidden="true"></span><span class="cond-moon-text"><span class="cond-value">--</span><span class="cond-sub"></span></span></span></div>
-        </div>
-        <div class="cond-hours" hidden>
-          <p class="cond-label cond-hours-label">Tonight, hour by hour</p>
-          <ol class="cond-hours-list" tabindex="0" aria-label="Tonight's hourly forecast"></ol>
-        </div>
-        <dl class="cond-extra" hidden>
-          <div data-x="water" hidden><dt class="cond-x-label">On the water</dt><dd class="cond-x-value"></dd></div>
-          <div data-x="dew" hidden><dt class="cond-x-label">Dew point</dt><dd class="cond-x-value"></dd></div>
-          <div data-x="moonset" hidden><dt class="cond-x-label">Moonset</dt><dd class="cond-x-value"></dd></div>
-        </dl>
-        <p class="cond-summary"></p>
-        <p class="meta cond-status">Loading the National Weather Service forecast…</p>
-        <p class="meta cond-note">Sun and moon times are worked out on your phone, within a few minutes of the US Naval Observatory.</p>
-          </div>
-        </details>
-      </section>
-
-      <section class="bento-card bento-bait" id="bait-nearby" aria-labelledby="bait-title" data-state="loading">
-        <h2 id="bait-title">Bait nearby</h2>
-        <div class="bait-tools" hidden>
-          <button type="button" class="bait-near" aria-pressed="false" aria-describedby="bait-loc">Sort by my location</button>
-          <p class="bait-loc" id="bait-loc" role="status" hidden></p>
-        </div>
-        <ul class="bait-list" hidden></ul>
-        <p class="meta bait-status">Finding shops near <span data-lk="short">Hoover</span>…</p>
-        <details class="how-to-read bait-more" hidden>
-          <summary>More shops</summary>
-          <ul class="bait-list bait-more-list how-to-read-body"></ul>
-        </details>
-        <p class="meta bait-foot">Drive times are rough. <a class="bait-tell" href="mailto:contact@nightbiteoh.com?subject=Bait%20shop">Know a shop? Tell us</a></p>
-      </section>
-      <script src="js/bait-nearby.js" defer></script>
-
-      <a class="bento-card bento-maps" href="water#maps">
+<a class="bento-card bento-maps" href="water#maps">
         <h3>Water / maps</h3>
         <p class="card-text" data-for="hoover">ODNR contours @ 894, city ramp map, USGS gauge, pool correction.</p>
         <p class="card-text" data-for="alum">ODNR fishing map @ 888, Corps ramps, USACE lake level, pool correction.</p>
@@ -1102,7 +1036,7 @@
         <p class="card-text" data-for="fergusonmetzger">ODNR fishing map @ 921 and the Reservoir Rd ramps.</p>
         <span class="card-cue" aria-hidden="true">Open maps</span>
       </a>
-      <a class="bento-card bento-species" href="species/">
+<a class="bento-card bento-species" href="species/">
         <h3>Species</h3>
         <p class="card-text" data-for="hoover">Cats, bass, panfish, saugeye: season, where, limits, gear.</p>
         <p class="card-text" data-for="alum">Saugeye, muskie, bass, crappie: season, where, limits, gear.</p>
@@ -1167,18 +1101,94 @@
         <p class="card-text" data-for="fergusonmetzger">Walleye, saugeye, perch, crappie, bass: season, where, limits, gear.</p>
         <span class="card-cue" aria-hidden="true">Browse species</span>
       </a>
-      <a class="bento-card bento-whisper" href="../whisperwood/play.html">
+        </div>
+        <div class="bento-col bento-col-tonight">
+<section class="bento-card bento-conditions" id="conditions" aria-labelledby="conditions-title" data-state="loading">
+        <h2 id="conditions-title"><span>Tonight at <span data-lk="short">Hoover</span></span></h2>
+        <p class="cond-line" hidden><span class="cond-label">Tonight, in short</span> <span class="cond-line-text"></span></p>
+        <p class="cond-storm" role="status" hidden></p>
+        <div class="cond-bite" hidden>
+          <p class="cond-bite-line"><span class="cond-label">Tonight&rsquo;s bite</span> <span class="cond-bite-rate"></span> <span class="cond-bite-why"></span></p>
+          <p class="cond-bite-note">A rule of thumb guide, not a promise.</p>
+        </div>
+        <details class="how-to-read cond-more" id="cond-more" open>
+          <summary>Tonight details</summary>
+          <div class="how-to-read-body">
+        <details class="how-to-read bite-how" id="bite-how">
+          <summary>How the bite is rated</summary>
+          <div class="how-to-read-body">
+            <p>The Bite is this site&rsquo;s own rule of thumb, not fishing science and not a forecast. It adds points from readings already on this page.</p>
+            <ul class="bite-rules">
+              <li data-rule="pressure"><strong>Barometer</strong>, the change over the last 3 hours at <span data-bite-src="station">the lake&rsquo;s NWS station</span>. Falling slowly <b data-r="pressure.pts.fallSlow">+2</b>, steady <b data-r="pressure.pts.steady">+1</b>, rising slowly <b data-r="pressure.pts.riseSlow">0</b>, falling fast <b data-r="pressure.pts.fallFast">0</b>, rising fast <b data-r="pressure.pts.riseFast">&minus;1</b>. Steady means within <b data-r="pressure.steady">0.02</b> inHg; fast means <b data-r="pressure.fast">0.06</b> inHg or more. <span class="bite-now" data-bite-now="pressure" hidden></span></li>
+              <li data-rule="wind"><strong>Wind</strong>, tonight&rsquo;s average NWS hourly speed from sunset to 2 AM (the top of each hour&rsquo;s range). Under <b data-r="wind.calm">3</b> mph <b data-r="wind.pts.calm">0</b>, 3 to <b data-r="wind.chop">12</b> mph <b data-r="wind.pts.chop">+1</b>, 13 to <b data-r="wind.breezy">18</b> mph <b data-r="wind.pts.breezy">0</b>, over 18 mph <b data-r="wind.pts.strong">&minus;2</b>. <span class="bite-now" data-bite-now="wind" hidden></span></li>
+              <li data-rule="moon"><strong>Moon</strong>, worked out on this phone. New or full moon tonight (or under <b data-r="moon.dark" data-fmt="pct">10%</b> or over <b data-r="moon.bright" data-fmt="pct">90%</b> lit) <b data-r="moon.pts.major">+1</b>, otherwise <b data-r="moon.pts.other">0</b>. <span class="bite-now" data-bite-now="moon" hidden></span></li>
+              <li data-rule="water"><strong>Water temp</strong>, from this lake&rsquo;s USGS gauge where one reports it. <b data-r="water.goodLo">55</b> to <b data-r="water.goodHi">80</b>&deg;F <b data-r="water.pts.good">+1</b>, colder than <b data-r="water.okLo">45</b> or warmer than <b data-r="water.okHi">86</b>&deg;F <b data-r="water.pts.bad">&minus;1</b>, anything between <b data-r="water.pts.ok">0</b>. It never makes a rating alone. <span class="bite-now" data-bite-now="water" hidden></span></li>
+              <li data-rule="storm"><strong>Thunder</strong> anywhere in tonight&rsquo;s NWS forecast makes it Tough, whatever the points. <span class="bite-now" data-bite-now="storm" hidden></span></li>
+            </ul>
+            <p><b data-r="rate.good">4</b> points or more is Good, <b data-r="rate.fair">2</b> or 3 is Fair, less is Tough. A missing reading counts 0, and with no barometer trend and no wind there is no rating.</p>
+            <p class="bite-tonight" data-bite-tonight hidden></p>
+          </div>
+        </details>
+        <div class="cond-grid">
+          <div class="cond-cell cond-wind" data-cond="wind" data-empty><span class="cond-label">Wind</span><span class="cond-wind-row"><span class="wind-sprite" role="img" aria-label="Wind not loaded yet"></span><span class="cond-value" aria-hidden="true">--</span></span><span class="cond-sub" aria-hidden="true"></span></div>
+          <div class="cond-cell" data-cond="air" data-empty><span class="cond-label">Air</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
+          <div class="cond-cell" data-cond="rain" data-empty><span class="cond-label">Rain chance</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
+          <div class="cond-cell" data-cond="pressure" data-empty><span class="cond-label">Barometer</span><span class="cond-value">--</span><span class="cond-sub"></span><span class="cond-sub cond-asof" hidden></span></div>
+          <div class="cond-cell" data-cond="sunset" data-empty><span class="cond-label">Sunset</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
+          <div class="cond-cell" data-cond="moonrise" data-empty><span class="cond-label">Moonrise</span><span class="cond-value">--</span><span class="cond-sub"></span></div>
+          <div class="cond-cell cond-moon" data-cond="moon" data-empty><span class="cond-label">Moon tonight</span><span class="cond-moon-row"><span class="moon-sprite" aria-hidden="true"></span><span class="cond-moon-text"><span class="cond-value">--</span><span class="cond-sub"></span></span></span></div>
+        </div>
+        <div class="cond-hours" hidden>
+          <p class="cond-label cond-hours-label">Tonight, hour by hour</p>
+          <ol class="cond-hours-list" tabindex="0" aria-label="Tonight's hourly forecast"></ol>
+        </div>
+        <dl class="cond-extra" hidden>
+          <div data-x="water" hidden><dt class="cond-x-label">On the water</dt><dd class="cond-x-value"></dd></div>
+          <div data-x="dew" hidden><dt class="cond-x-label">Dew point</dt><dd class="cond-x-value"></dd></div>
+          <div data-x="moonset" hidden><dt class="cond-x-label">Moonset</dt><dd class="cond-x-value"></dd></div>
+        </dl>
+        <p class="cond-summary"></p>
+        <p class="meta cond-status">Loading the National Weather Service forecast…</p>
+        <p class="meta cond-note">Sun and moon times are worked out on your phone, within a few minutes of the US Naval Observatory.</p>
+          </div>
+        </details>
+      </section>
+        </div>
+      </div>
+      <div class="bento-stack bento-stack-lower">
+        <div class="bento-col bento-col-main">
+<a class="bento-card bento-whisper" href="../whisperwood/play.html">
         <h3>Play Whisperwood</h3>
         <p class="card-text">Cozy pixel fishing game. Fiction, not the real lake.</p>
         <span class="card-cue" aria-hidden="true">Play in the browser</span>
       </a>
-      <a class="bento-card bento-log" id="latest-log-card" href="log">
+<a class="bento-card bento-log" id="latest-log-card" href="log">
         <h3>Latest log</h3>
         <div class="latest-log-body">
           <p class="meta log-loading">Opening the notebook…</p>
         </div>
         <span class="card-cue" aria-hidden="true">Open the log</span>
       </a>
+        </div>
+        <div class="bento-col bento-col-bait">
+<section class="bento-card bento-bait" id="bait-nearby" aria-labelledby="bait-title" data-state="loading">
+        <h2 id="bait-title">Bait nearby</h2>
+        <div class="bait-tools" hidden>
+          <button type="button" class="bait-near" aria-pressed="false" aria-describedby="bait-loc">Sort by my location</button>
+          <p class="bait-loc" id="bait-loc" role="status" hidden></p>
+        </div>
+        <ul class="bait-list" hidden></ul>
+        <p class="meta bait-status">Finding shops near <span data-lk="short">Hoover</span>…</p>
+        <details class="how-to-read bait-more" hidden>
+          <summary>More shops</summary>
+          <ul class="bait-list bait-more-list how-to-read-body"></ul>
+        </details>
+        <p class="meta bait-foot">Drive times are rough. <a class="bait-tell" href="mailto:contact@nightbiteoh.com?subject=Bait%20shop">Know a shop? Tell us</a></p>
+      </section>
+        </div>
+      </div>
+      <script src="js/bait-nearby.js" defer></script>
+
     </div>
     <script src="js/glance.js" defer></script>
 

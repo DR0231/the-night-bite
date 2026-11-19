@@ -1511,13 +1511,66 @@ html[data-contrast="high"] .trip-send-status { border-inline-start-color: curren
   .bento-grid { grid-template-columns: 1fr 1fr; }
   .bento-grid .bento-pool, .bento-grid .bento-wide { grid-column: 1 / -1; }
 }
+
+/* Stack wrappers are display:contents below 720px, so cards keep the original
+   phone order (pool, Tonight, bait, maps, species, Whisperwood, log) and the
+   mid-width layout (pool / Tonight / bait full width, then two-up cards). */
+.bento-stack,
+.bento-col { display: contents; }
+.bento-pool { order: 1; }
+.bento-conditions { order: 2; }
+.bento-bait { order: 3; }
+.bento-maps { order: 4; }
+.bento-species { order: 5; }
+.bento-whisper { order: 6; }
+.bento-log { order: 7; }
+.bento-grid { reading-flow: grid-order; }
+
+@media (min-width: 720px) {
+  /* Upper stack: pool, maps, species beside Tonight. Lower: Whisperwood and
+     log beside Bait nearby. Equal gaps, both columns in a stack stretch to
+     the same height. Link cards (maps, species, Whisperwood, log) keep their
+     natural height. If the left column is short, the pool card grows; if the
+     right is short, Tonight or Bait grows. */
+  .bento-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    reading-flow: normal;
+  }
+  .bento-stack {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    align-items: stretch;
+  }
+  .bento-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    min-width: 0;
+  }
+  .bento-col > .bento-pool,
+  .bento-col > .bento-conditions,
+  .bento-col > .bento-bait { flex: 1 1 auto; }
+  .bento-col > .bento-maps,
+  .bento-col > .bento-species,
+  .bento-col > .bento-whisper,
+  .bento-col > .bento-log { flex: 0 0 auto; }
+  .bento-pool, .bento-conditions, .bento-bait,
+  .bento-maps, .bento-species, .bento-whisper, .bento-log { order: 0; }
+  /* Extra height in the pool card goes to the chart, so the map sits in a
+     taller well instead of leaving a hole under Species. */
+  .bento-pool .pool-chart {
+    flex: 1 1 auto;
+    align-items: center;
+  }
+  /* When Bait nearby grows (no shops listed), keep the tell-us line at the
+     bottom of the card so the extra space is not a blank gap in the middle. */
+  .bento-bait .bait-foot { margin-top: auto; }
+}
 @media (min-width: 1000px) {
-  .bento-grid { grid-template-columns: 1.15fr 1fr; }
-  .bento-grid .bento-pool { grid-column: 1; grid-row: 1 / span 2; }
-  .bento-grid .bento-maps { grid-column: 2; grid-row: 1; }
-  .bento-grid .bento-species { grid-column: 2; grid-row: 2; }
-  .bento-grid .bento-whisper { grid-column: 1; grid-row: 3; }
-  .bento-grid .bento-log { grid-column: 2; grid-row: 3; }
+  .bento-stack { grid-template-columns: 1.15fr 1fr; }
   .bento-grid .bento-wide { grid-column: 1 / -1; }
 }
 
@@ -1783,17 +1836,10 @@ h3 { font-size: 20px; line-height: 30px; }
 /* ==========================================================================
    Live data features: conditions card, pool trend, Hoover map lightbox, NWS alert bar
    ========================================================================== */
-/* Bento placement with the conditions card (phones: right after the pool card) */
-@media (min-width: 560px) {
+/* Conditions card sits full width under the pool card from 560px until the
+   two-column stacks take over at 720px. */
+@media (min-width: 560px) and (max-width: 719px) {
   .bento-grid .bento-conditions { grid-column: 1 / -1; }
-}
-@media (min-width: 1000px) {
-  .bento-grid .bento-pool { grid-column: 1; grid-row: 1 / span 3; }
-  .bento-grid .bento-conditions { grid-column: 2; grid-row: 1; }
-  .bento-grid .bento-maps { grid-column: 2; grid-row: 2; }
-  .bento-grid .bento-species { grid-column: 2; grid-row: 3; }
-  .bento-grid .bento-whisper { grid-column: 1; grid-row: 4; }
-  .bento-grid .bento-log { grid-column: 2; grid-row: 4; }
 }
 
 /* ---- Tonight at Hoover ---- */
@@ -4051,20 +4097,8 @@ a[href^="tel:"],
 }
 
 /* ---- Bait nearby (js/bait-nearby.js, data/bait-shops.json) ---- */
-@media (min-width: 560px) {
+@media (min-width: 560px) and (max-width: 719px) {
   .bento-grid .bento-bait { grid-column: 1 / -1; }
-}
-@media (min-width: 1000px) {
-  /* Left: pool, maps, species beside the tall conditions card; then Whisperwood and log beside Bait nearby.
-     Nothing stretches to fill a taller neighbour (v47 stretched the pool card down beside Bait nearby). */
-  .bento-grid { align-items: start; }
-  .bento-grid .bento-pool { grid-column: 1; grid-row: 1; }
-  .bento-grid .bento-maps { grid-column: 1; grid-row: 2; }
-  .bento-grid .bento-species { grid-column: 1; grid-row: 3; }
-  .bento-grid .bento-conditions { grid-column: 2; grid-row: 1 / span 3; }
-  .bento-grid .bento-whisper { grid-column: 1; grid-row: 4; }
-  .bento-grid .bento-log { grid-column: 1; grid-row: 5; }
-  .bento-grid .bento-bait { grid-column: 2; grid-row: 4 / span 2; }
 }
 .bait-list { list-style: none; margin: 0; padding: 0; }
 .bait-row {

@@ -20,11 +20,13 @@ let pass=0,fail=0;const out=[];function ok(n,c,i){c?pass++:fail++; if(!c||proces
    await p.waitForFunction(()=>document.getElementById('bait-nearby').dataset.state!=='loading',null,{timeout:15000}).catch(()=>{});
    const r=await p.evaluate(()=>{const c=document.getElementById('bait-nearby');const cs=getComputedStyle(c);
      const rows=[...c.querySelectorAll('.bait-row')].map(li=>({n:li.querySelector('.bait-name').textContent,t:li.querySelector('.bait-time').textContent,h:li.querySelector('a').href}));
-     const prev=c.previousElementSibling; let p2=c; while(p2&&p2.tagName!=='SECTION'||p2===c) p2=p2.previousElementSibling;
      const cond=document.getElementById('conditions').getBoundingClientRect(),bb=c.getBoundingClientRect();
+     // Bait sits under Tonight in the same column (or under it in the phone stack). Wrappers
+     // for the even two-column layout mean it may not be the next section sibling in the DOM.
      return {id:NightBiteLake.id,state:c.dataset.state,vis:cs.display!=='none'&&bb.height>0,rows,vis3:c.querySelectorAll('.bait-list:not(.bait-more-list) .bait-row').length,
       moreHidden:c.querySelector('.bait-more').hidden,status:c.querySelector('.bait-status').hidden?'':c.querySelector('.bait-status').textContent,
-      tell:c.querySelector('.bait-tell').href,afterCond:p2&&p2.id==='conditions',below:bb.top>=cond.top-1,
+      tell:c.querySelector('.bait-tell').href,afterCond:bb.top>=cond.bottom-8,
+      below:bb.top>=cond.top-1,
       cards:document.querySelectorAll('#bait-nearby').length,ovf:document.documentElement.scrollWidth<=innerWidth,cardOvf:c.scrollWidth<=c.clientWidth+1}});
    const exp=data[id]||[];   // a lake with no entry in data/bait-shops.json shows No shops confirmed yet
    ok(W+'lake id',r.id===id,r.id);
@@ -102,10 +104,12 @@ let pass=0,fail=0;const out=[];function ok(n,c,i){c?pass++:fail++; if(!c||proces
     const {c,p,errs}=await mk({},init);await p.goto(BASE+'griggs/');await ready(p);const r=await st(p);
     ok(W+'unsupported: lake order + calm line, no button',r.sort==='lake'&&r.btnHidden&&r.loc==='Location off, sorted from the lake.',r);ok(W+'unsupported: no errors',errs.length===0,errs);await c.close();}
   }
-  // layout: no card stretched far past its content at desktop
+  // layout: link cards (maps, species, Whisperwood, log) still hug their content at desktop.
+  // Pool, Tonight and Bait may grow so the two columns end level.
   if(vp[0]===1440){const {c,p}=await mk({});for(const id of ['hoover/','buckeye/','madison/','alum/']){await p.goto(BASE+id);await ready(p);await p.waitForTimeout(3000);
-    const g=await p.evaluate(()=>[...document.querySelectorAll('.bento-grid > .bento-card')].map(e=>{const r=e.getBoundingClientRect();let h=0;for(const k of e.children){if(k.tagName==='SCRIPT')continue;const kr=k.getBoundingClientRect();if(kr.height)h=Math.max(h,kr.bottom-r.top)}return [e.className.split(' ')[1],Math.round(r.height-h)]}));
-    ok(W+'no stretched cards '+id.replace('/',''),g.every(x=>x[1]<80),g);
+    const g=await p.evaluate(()=>[...document.querySelectorAll('.bento-grid .bento-card')].map(e=>{const r=e.getBoundingClientRect();let h=0;for(const k of e.children){if(k.tagName==='SCRIPT')continue;const kr=k.getBoundingClientRect();if(kr.height)h=Math.max(h,kr.bottom-r.top)}return [e.className.split(' ')[1],Math.round(r.height-h)]}));
+    const tight=g.filter(x=>/^(bento-maps|bento-species|bento-whisper|bento-log)$/.test(x[0]));
+    ok(W+'no stretched cards '+id.replace('/',''),tight.every(x=>x[1]<80),g);
     if(id==='hoover/') await p.screenshot({path:''+(process.env.OUT||'/tmp')+'/bait-1440-home-grid.png',fullPage:true});}
    await c.close();}
  }
