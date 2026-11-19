@@ -6,7 +6,8 @@ Promoted from the preview copy (DR0231/night-bite-preview) on 2026-10-22; fetch 
 `sw-update.js` promoted on 2026-10-24 (v6). The hashed precache diet (preview v127) and every-lake-home precache
 (preview v128) were promoted on 2026-11-11 as live v38. The per-lake "what's biting" split (preview v132) was
 promoted on 2026-11-11 as live v40. "Deploys never mix" and the new kill switch (preview v135 to v140) were
-promoted on 2026-11-17 as live v42.
+promoted on 2026-11-17 as live v42. Content-hash stamps on static fonts and images, and cache-first
+serving of those URLs (preview v159), were promoted on 2026-11-18 as live v45.
 
 ## What it does
 
@@ -47,9 +48,15 @@ promoted on 2026-11-17 as live v42.
   deploy a page could get new HTML with last deploy's `styles.css` and `hoover-map.js`: the lake picker showed
   unstyled and every map opened Hoover. Live v6 to v41 were network first with a 4 second fallback to the saved
   copy, which still mixed deploys on a slow connection; N1 and N2 below.)
-* Fonts and images: precached ones come straight from the precache (they change only with their hash); the rest
-  are stale while revalidate in the assets cache.
-* Every page links its own CSS and JS with `?v=VERSION`, which skips GitHub Pages' 10 minute HTTP cache. The worker
+* Fonts and images: precached ones come straight from the precache (they change only with their hash). The rest
+  are cache first in the assets cache: a request with `?v=<content hash>` is served from that cache with no
+  revalidate; an unversioned one is stale while revalidate. `tools/stamp-assets.py` writes a 12 hex sha256 of the
+  file on static font and image URLs (CSS `@font-face`, preloads, `img`, icons, manifest, and JS string literals),
+  so a later long HTTP cache at the edge is safe and a changed file gets a new URL. Dynamic concatenations (for
+  example the species fish icons) are left unstamped and stay stale while revalidate. The latin and latin-ext
+  faces are all in the precache.
+* Every page links its own CSS and JS with `?v=VERSION`, which skips GitHub Pages' 10 minute HTTP cache. Static
+  fonts and images use `?v=<content hash>` instead, so their URL changes only when the file changes. The worker
   strips `?v=` (and any query) when it saves or looks up a copy, so offline copies still match.
 * `js/sw-update.js` (renamed from `sw-register.js` in live v6 and preview v12) asks the worker that served the page
   `nb-hello`. A live v42 or newer worker answers `assets: "by-deploy"` and never needs a reload, unless it says the
@@ -109,11 +116,15 @@ the v42 worker takes over (`legacy-slow-css`).
 ## Every deploy
 
 1. Bump `VERSION` in `sw.js`.
-2. Run `python3 tools/stamp-version.py` from the repo root. It rewrites every `?v=` to match (skips Whisperwood) and
-   then runs `tools/sw-precache.py`, which refreshes `REVISIONS`. Run `sw-precache.py` again after any later build
-   that touches a precached file; `tools/check-all.py` and `tools/promote.py` run it last on their own.
+2. Run `python3 tools/stamp-version.py` from the repo root. It rewrites every CSS and JS `?v=` to match (skips
+   Whisperwood), runs `tools/stamp-assets.py` (content-hash stamps on static font and image URLs), and then runs
+   `tools/sw-precache.py`, which refreshes `REVISIONS`. Run `stamp-assets.py` and `sw-precache.py` again after any
+   later build that touches a stamped or precached file; `tools/check-all.py` and `tools/promote.py` run them late
+   on their own, with `sw-precache.py` last.
 3. `python3 tools/sw-precache.py --check` (in the GitHub static checks and in check-all as `check-sw-precache`)
    fails when `REVISIONS` is stale or a precached file is missing (a missing file would fail every install).
+   `python3 tools/stamp-assets.py --check` (check-all as `check-asset-revs`) fails when a static font or image URL
+   is missing its content hash, or the hash does not match the file.
 4. `python3 tools/check-precache-refs.py` (in the GitHub static checks and in check-all) fails when a lake home, the
    lake home template or offline.html loads a script, stylesheet or first-paint image that `PRECACHE` doesn't list, so
    a new `<script>` can't quietly break offline pages.
