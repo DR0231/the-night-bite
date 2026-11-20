@@ -10,7 +10,10 @@
       "docks": {
         "checked": "2026-11-19",
         "text": "Public boat dock rentals run May 1 to Oct. 31, so the rental season is closed. The site owner reported on Nov. 19, 2026 that the marina docks and the public launch courtesy docks are pulled for the season. The city and ODNR have not posted a confirmation.",
-        "source": ["The Night Bite, Nov. 19, 2026", ""]
+        "source": [
+          "The Night Bite, Nov. 19, 2026",
+          ""
+        ]
       },
       "pool": "Summer pool is 894 ft, the level the ODNR contour map is drawn at.",
       "night": "City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
@@ -20,13 +23,25 @@
         "close": "23:00",
         "fishing_after_hours": null,
         "chip": "City park closes 11 p.m.",
-        "source": ["Columbus Recreation and Parks, Hoover Reservoir", "https://columbusrecparks.com/parks/hoover-reservoir/"],
+        "source": [
+          "Columbus Recreation and Parks, Hoover Reservoir",
+          "https://columbusrecparks.com/parks/hoover-reservoir/"
+        ],
         "checked": "2026-11-03"
       },
       "sources": [
-        ["Columbus Recreation and Parks, Hoover Reservoir", "https://columbusrecparks.com/parks/hoover-reservoir/"],
-        ["ODNR, Hoover Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf"]
+        [
+          "Columbus Recreation and Parks, Hoover Reservoir",
+          "https://columbusrecparks.com/parks/hoover-reservoir/"
+        ],
+        [
+          "ODNR, Hoover Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hoover-reservoir-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/hooverreservoir2.pdf"
+        ]
       ]
     },
     "alum": {
@@ -37,9 +52,18 @@
       "ramps": "Four public launch ramps: New Galena, the marina ramp on Hollenback Road, Cheshire and Howard. One more for campers.",
       "pool": "Summer pool is 888 ft, the level the ODNR fishing map is drawn at.",
       "sources": [
-        ["US Army Corps of Engineers, Alum Creek Lake", "https://www.lrd.usace.army.mil/Missions/Recreation/Display/Article/3632213/alum-creek-lake/"],
-        ["ODNR, Alum Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/alumcreeklake2.pdf"]
+        [
+          "US Army Corps of Engineers, Alum Creek Lake",
+          "https://www.lrd.usace.army.mil/Missions/Recreation/Display/Article/3632213/alum-creek-lake/"
+        ],
+        [
+          "ODNR, Alum Creek State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/alumcreeklake2.pdf"
+        ]
       ],
       "night": "State park hours are sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours.",
       "hours": {
@@ -48,7 +72,10 @@
         "close": "sunset",
         "fishing_after_hours": true,
         "chip": "Park hours end at sunset, fishing allowed after (ODNR)",
-        "source": ["ODNR, Alum Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park"],
+        "source": [
+          "ODNR, Alum Creek State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/alum-creek-state-park"
+        ],
         "checked": "2026-11-03"
       }
     },
@@ -60,9 +87,18 @@
       "ramps": "North Shore, Liebs Island and Fairfield Beach ramps, plus the Mud Island fishing access.",
       "pool": "Normal summer pool is 891.75 ft, the level the ODNR fishing map is drawn at.",
       "sources": [
-        ["ODNR, Buckeye Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area"],
-        ["ODNR, Buckeye Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf"]
+        [
+          "ODNR, Buckeye Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-fishing-area"
+        ],
+        [
+          "ODNR, Buckeye Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/buckeyelake2.pdf"
+        ]
       ],
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
       "hours": {
@@ -71,7 +107,10 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Buckeye Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park"],
+        "source": [
+          "ODNR, Buckeye Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buckeye-lake-state-park"
+        ],
         "checked": "2026-11-03"
       }
     },
@@ -84,7 +123,10 @@
       "docks": {
         "checked": "2026-11-03",
         "text": "The city lists the marina dock season as May 1 to Oct. 31, so the marina docks are done for 2026. No date posted yet for pulling the ramp docks.",
-        "source": ["Columbus Recreation and Parks, Marinas & Docks", "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"]
+        "source": [
+          "Columbus Recreation and Parks, Marinas & Docks",
+          "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"
+        ]
       },
       "pool": "Full pool is the City dam crest, 848.5 ft. ODNR fishing map depths are based on 847.9 ft.",
       "night": "10 mph from sunset to sunrise (City code). City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
@@ -94,13 +136,25 @@
         "close": "23:00",
         "fishing_after_hours": null,
         "chip": "City park closes 11 p.m.",
-        "source": ["Columbus Recreation and Parks, O’Shaughnessy Reservoir", "https://columbusrecparks.com/parks/oshaughnessy-reservoir/"],
+        "source": [
+          "Columbus Recreation and Parks, O’Shaughnessy Reservoir",
+          "https://columbusrecparks.com/parks/oshaughnessy-reservoir/"
+        ],
         "checked": "2026-11-03"
       },
       "sources": [
-        ["Columbus Recreation and Parks, O’Shaughnessy Reservoir", "https://columbusrecparks.com/parks/oshaughnessy-reservoir/"],
-        ["Columbus City Code 921.01-1(G)", "https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf"],
-        ["ODNR, O’Shaughnessy Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/o-shaughnessy-reservoir-fishing-area"]
+        [
+          "Columbus Recreation and Parks, O’Shaughnessy Reservoir",
+          "https://columbusrecparks.com/parks/oshaughnessy-reservoir/"
+        ],
+        [
+          "Columbus City Code 921.01-1(G)",
+          "https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf"
+        ],
+        [
+          "ODNR, O’Shaughnessy Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/o-shaughnessy-reservoir-fishing-area"
+        ]
       ]
     },
     "griggs": {
@@ -112,7 +166,10 @@
       "docks": {
         "checked": "2026-11-03",
         "text": "The city lists the marina dock season as May 1 to Oct. 31, so the marina docks are done for 2026. No date posted yet for pulling the ramp docks.",
-        "source": ["Columbus Recreation and Parks, Marinas & Docks", "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"]
+        "source": [
+          "Columbus Recreation and Parks, Marinas & Docks",
+          "https://columbusrecparks.com/facilities/rentals/marinas-and-docks/"
+        ]
       },
       "pool": "Full pool is the City dam crest, 756.18 ft. ODNR fishing map depths are based on 757 ft.",
       "night": "10 mph from sunset to sunrise (City code). City park hours are 7 a.m. to 11 p.m.; check posted signs before a night trip.",
@@ -122,13 +179,25 @@
         "close": "23:00",
         "fishing_after_hours": null,
         "chip": "City park closes 11 p.m.",
-        "source": ["Columbus Recreation and Parks, Griggs Park", "https://columbusrecparks.com/parks/griggs-park/"],
+        "source": [
+          "Columbus Recreation and Parks, Griggs Park",
+          "https://columbusrecparks.com/parks/griggs-park/"
+        ],
         "checked": "2026-11-03"
       },
       "sources": [
-        ["Columbus Recreation and Parks, Griggs Park", "https://columbusrecparks.com/parks/griggs-park/"],
-        ["Columbus City Code 921.01-1(G)", "https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf"],
-        ["ODNR, Griggs Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/griggs-reservoir-fishing-area"]
+        [
+          "Columbus Recreation and Parks, Griggs Park",
+          "https://columbusrecparks.com/parks/griggs-park/"
+        ],
+        [
+          "Columbus City Code 921.01-1(G)",
+          "https://mcclibraryfunctions.azurewebsites.us/api/ordinanceDownload/16219/1286124/pdf"
+        ],
+        [
+          "ODNR, Griggs Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/griggs-reservoir-fishing-area"
+        ]
       ]
     },
     "indian": {
@@ -140,7 +209,10 @@
       "docks": {
         "checked": "2026-11-03",
         "text": "Peak of Ohio reported on Oct. 24, 2026 that ODNR reminds boaters “all boats must be removed from state docks by November 1,” so the state docks are done for 2026. ODNR’s own pages do not post the date.",
-        "source": ["Peak of Ohio, Oct. 24, 2026", "https://www.peakofohio.com/local-news/odnr-shares-end-of-season-boating-reminders-for-indian-lake/"]
+        "source": [
+          "Peak of Ohio, Oct. 24, 2026",
+          "https://www.peakofohio.com/local-news/odnr-shares-end-of-season-boating-reminders-for-indian-lake/"
+        ]
       },
       "pool": "Normal summer pool is 996.3 ft, the level the ODNR fishing map is drawn at.",
       "night": "State park hours are 6 a.m. to 11 p.m.; ODNR allows legitimate recreation, like fishing, outside those hours.",
@@ -150,13 +222,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Indian Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park"],
+        "source": [
+          "ODNR, Indian Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park"
+        ],
         "checked": "2026-11-03"
       },
       "sources": [
-        ["ODNR, Indian Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park"],
-        ["ODNR, Indian Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/indianlake2.pdf"]
+        [
+          "ODNR, Indian Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-state-park"
+        ],
+        [
+          "ODNR, Indian Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/indian-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/indianlake2.pdf"
+        ]
       ]
     },
     "delaware": {
@@ -168,7 +252,10 @@
       "docks": {
         "checked": "2026-11-03",
         "text": "ODNR lists the lease dock season as April 15 to Oct. 1, so the lease docks are done for 2026. No date posted yet for pulling the launch docks.",
-        "source": ["ODNR, Delaware Dock Lottery", "https://ohiodnr.gov/discover-and-learn/safety-conservation/about-odnr/division-parks-watercraft/boating-paddling-ohio/dock-lotteries/delaware"]
+        "source": [
+          "ODNR, Delaware Dock Lottery",
+          "https://ohiodnr.gov/discover-and-learn/safety-conservation/about-odnr/division-parks-watercraft/boating-paddling-ohio/dock-lotteries/delaware"
+        ]
       },
       "pool": "Normal summer pool is 915 ft. ODNR lists a winter drawdown to about 910 ft.",
       "night": "State park hours are sunrise to sunset; ODNR allows legitimate recreation, like fishing, outside those hours.",
@@ -178,13 +265,25 @@
         "close": "sunset",
         "fishing_after_hours": true,
         "chip": "Park hours end at sunset, fishing allowed after (ODNR)",
-        "source": ["ODNR, Delaware State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park"],
+        "source": [
+          "ODNR, Delaware State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park"
+        ],
         "checked": "2026-10-29"
       },
       "sources": [
-        ["ODNR, Delaware State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park"],
-        ["ODNR, Delaware Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-lake-fishing-area"],
-        ["ODNR, Winter Drawdowns", "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns"]
+        [
+          "ODNR, Delaware State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-state-park"
+        ],
+        [
+          "ODNR, Delaware Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/delaware-lake-fishing-area"
+        ],
+        [
+          "ODNR, Winter Drawdowns",
+          "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns"
+        ]
       ]
     },
     "deercreek": {
@@ -201,13 +300,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Deer Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park"],
+        "source": [
+          "ODNR, Deer Creek State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park"
+        ],
         "checked": "2026-10-31"
       },
       "sources": [
-        ["ODNR, Deer Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park"],
-        ["ODNR, Deer Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-lake-fishing-area"],
-        ["ODNR, Winter Drawdowns", "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns"]
+        [
+          "ODNR, Deer Creek State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-state-park"
+        ],
+        [
+          "ODNR, Deer Creek Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/deer-creek-lake-fishing-area"
+        ],
+        [
+          "ODNR, Winter Drawdowns",
+          "https://ohiodnr.gov/discover-and-learn/land-water/inland-lakes/osp-winter-drawdowns"
+        ]
       ]
     },
     "madison": {
@@ -224,25 +335,43 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Madison Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park"],
+        "source": [
+          "ODNR, Madison Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park"
+        ],
         "checked": "2026-10-31"
       },
       "sources": [
-        ["ODNR, Madison Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park"],
-        ["ODNR, Madison Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-fishing-area"],
-        ["Ohio Adm. Code 1501:47-3-17", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-3-17"]
+        [
+          "ODNR, Madison Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-state-park"
+        ],
+        [
+          "ODNR, Madison Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/madison-lake-fishing-area"
+        ],
+        [
+          "Ohio Adm. Code 1501:47-3-17",
+          "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-3-17"
+        ]
       ]
     },
     "knox": {
-      "checked": "2026-10-30",
+      "checked": "2026-11-20",
       "title": "Knox Lake Fishing: Map, Ramps, Rules | The Night Bite",
-      "description": "Knox Lake fishing: 10 hp limit, the Armentrout Road ramp and marina, the lake map, tonight's bite and species. No public level gauge. Unofficial.",
-      "motors": "10 hp limit; larger motors at no wake or idle only.",
-      "ramps": "Marina and main ramp on Armentrout Road and an upper lake ramp. Carry-in access on the east side.",
+      "description": "Knox Lake fishing: over 10 hp at idle or no wake, Buena Vista Road ramp and marina, lake map, tonight's bite and species. No public level gauge. Unofficial.",
+      "motors": "Motors over 10 hp allowed at idle speed or no wake only.",
+      "ramps": "Marina and main ramp off Buena Vista Road and an upper lake ramp. Carry-in access on the east side.",
       "pool": "Summer pool is 1,100 ft, the level the ODNR fishing map is drawn at.",
       "sources": [
-        ["ODNR, Knox Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/knoxlake2.pdf"]
+        [
+          "ODNR, Knox Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/knox-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/knoxlake2.pdf"
+        ]
       ],
       "night": "ODNR's Knox Lake Fishing Area page lists no hours, so there's no official night rule to show; follow posted signs.",
       "hours": {
@@ -265,13 +394,25 @@
         "close": null,
         "fishing_after_hours": null,
         "chip": "No parking dark to dawn outside camping areas (City code)",
-        "source": ["Mansfield Codified Ordinances, chapter 971", "https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714"],
+        "source": [
+          "Mansfield Codified Ordinances, chapter 971",
+          "https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714"
+        ],
         "checked": "2026-10-31"
       },
       "sources": [
-        ["City of Mansfield, Clearfork Reservoir Park", "https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/"],
-        ["Mansfield Codified Ordinances, chapter 971", "https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714"],
-        ["ODNR, Clear Fork Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area"]
+        [
+          "City of Mansfield, Clearfork Reservoir Park",
+          "https://mansfieldohio.gov/public-works-departments/clearfork-reservoir/"
+        ],
+        [
+          "Mansfield Codified Ordinances, chapter 971",
+          "https://codelibrary.amlegal.com/codes/mansfield/latest/mansfield_oh/0-0-0-19714"
+        ],
+        [
+          "ODNR, Clear Fork Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clear-fork-reservoir-fishing-area"
+        ]
       ]
     },
     "seneca": {
@@ -288,14 +429,29 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)",
-        "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
+        "source": [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
         "checked": "2026-11-03"
       },
       "sources": [
-        ["MWCD, Seneca Lake", "https://www.mwcd.org/places/seneca-lake/"],
-        ["ODNR, Seneca Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/seneca-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/senecalake2.pdf"],
-        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"]
+        [
+          "MWCD, Seneca Lake",
+          "https://www.mwcd.org/places/seneca-lake/"
+        ],
+        [
+          "ODNR, Seneca Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/seneca-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/senecalake2.pdf"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ]
       ]
     },
     "dillon": {
@@ -312,13 +468,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Dillon State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park"],
+        "source": [
+          "ODNR, Dillon State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park"
+        ],
         "checked": "2026-10-31"
       },
       "sources": [
-        ["ODNR, Dillon State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park"],
-        ["ODNR, Dillon Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dillonlake2.pdf"]
+        [
+          "ODNR, Dillon State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-state-park"
+        ],
+        [
+          "ODNR, Dillon Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dillon-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dillonlake2.pdf"
+        ]
       ]
     },
     "logan": {
@@ -335,13 +503,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Lake Logan State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park"],
+        "source": [
+          "ODNR, Lake Logan State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park"
+        ],
         "checked": "2026-10-31"
       },
       "sources": [
-        ["ODNR, Lake Logan State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park"],
-        ["ODNR, Lake Logan Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakelogan2.pdf"]
+        [
+          "ODNR, Lake Logan State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-state-park"
+        ],
+        [
+          "ODNR, Lake Logan Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-logan-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakelogan2.pdf"
+        ]
       ]
     },
     "saltfork": {
@@ -358,13 +538,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Salt Fork State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park"],
+        "source": [
+          "ODNR, Salt Fork State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park"
+        ],
         "checked": "2026-10-31"
       },
       "sources": [
-        ["ODNR, Salt Fork State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park"],
-        ["ODNR, Salt Fork Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/saltforklake2.pdf"]
+        [
+          "ODNR, Salt Fork State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-state-park"
+        ],
+        [
+          "ODNR, Salt Fork Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/salt-fork-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/saltforklake2.pdf"
+        ]
       ]
     },
     "burroak": {
@@ -381,13 +573,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Burr Oak State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park"],
+        "source": [
+          "ODNR, Burr Oak State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park"
+        ],
         "checked": "2026-10-31"
       },
       "sources": [
-        ["ODNR, Burr Oak State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park"],
-        ["ODNR, Burr Oak Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/burroaklake2.pdf"]
+        [
+          "ODNR, Burr Oak State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-state-park"
+        ],
+        [
+          "ODNR, Burr Oak Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/burr-oak-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/burroaklake2.pdf"
+        ]
       ]
     },
     "dow": {
@@ -404,13 +608,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Strouds Run hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Strouds Run State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park"],
+        "source": [
+          "ODNR, Strouds Run State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park"
+        ],
         "checked": "2026-10-31"
       },
       "sources": [
-        ["ODNR, Strouds Run State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park"],
-        ["ODNR, Dow Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dowlake2.pdf"]
+        [
+          "ODNR, Strouds Run State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/strouds-run-state-park"
+        ],
+        [
+          "ODNR, Dow Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/dow-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/dowlake2.pdf"
+        ]
       ]
     },
     "mosquito": {
@@ -427,13 +643,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Mosquito Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park"],
+        "source": [
+          "ODNR, Mosquito Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park"
+        ],
         "checked": "2026-11-03"
       },
       "sources": [
-        ["ODNR, Mosquito Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park"],
-        ["ODNR, Mosquito Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-creek-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mosquitocreeklake2.pdf"]
+        [
+          "ODNR, Mosquito Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-lake-state-park"
+        ],
+        [
+          "ODNR, Mosquito Creek Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mosquito-creek-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mosquitocreeklake2.pdf"
+        ]
       ]
     },
     "berlin": {
@@ -444,9 +672,18 @@
       "ramps": "Bonner Road ramp is closed for renovation from Sept. 14, 2026 to May 28, 2027. Mill Creek ramp is open Sept. 7 to Nov. 25, 2026 and Feb. 27 to May 21, 2027.",
       "pool": "Corps summer pool (top of conservation) is 1,024 ft; the lake can swing as much as 20 ft in a year.",
       "sources": [
-        ["ODNR, Berlin Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area"],
-        ["US Army Corps of Engineers, Berlin Lake", "https://water.usace.army.mil/overview/lrp/locations/berlin"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/berlinlake2.pdf"]
+        [
+          "ODNR, Berlin Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area"
+        ],
+        [
+          "US Army Corps of Engineers, Berlin Lake",
+          "https://water.usace.army.mil/overview/lrp/locations/berlin"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/berlinlake2.pdf"
+        ]
       ],
       "night": "ODNR's Berlin Lake Fishing Area page lists no access hours, only a 10 mph limit on the lake at night; follow posted signs.",
       "hours": {
@@ -469,13 +706,25 @@
         "close": "sunset",
         "fishing_after_hours": true,
         "chip": "Park hours end at sunset, fishing allowed after (ODNR)",
-        "source": ["ODNR, West Branch State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park"],
+        "source": [
+          "ODNR, West Branch State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park"
+        ],
         "checked": "2026-11-03"
       },
       "sources": [
-        ["ODNR, West Branch State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park"],
-        ["ODNR, Kirwan Reservoir (West Branch) Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kirwan-reservoir-west-branch-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mjkirwanreservoir.pdf"]
+        [
+          "ODNR, West Branch State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/west-branch-state-park"
+        ],
+        [
+          "ODNR, Kirwan Reservoir (West Branch) Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kirwan-reservoir-west-branch-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mjkirwanreservoir.pdf"
+        ]
       ]
     },
     "pymatuning": {
@@ -492,13 +741,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Pymatuning State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park"],
+        "source": [
+          "ODNR, Pymatuning State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park"
+        ],
         "checked": "2026-11-03"
       },
       "sources": [
-        ["ODNR, Pymatuning State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park"],
-        ["ODNR, Pymatuning Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pymatuninglake2.pdf"]
+        [
+          "ODNR, Pymatuning State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-state-park"
+        ],
+        [
+          "ODNR, Pymatuning Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pymatuning-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pymatuninglake2.pdf"
+        ]
       ]
     },
     "milton": {
@@ -515,13 +776,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Lake Milton State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park"],
+        "source": [
+          "ODNR, Lake Milton State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park"
+        ],
         "checked": "2026-11-03"
       },
       "sources": [
-        ["ODNR, Lake Milton State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park"],
-        ["ODNR, Lake Milton Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakemilton2.pdf"]
+        [
+          "ODNR, Lake Milton State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-state-park"
+        ],
+        [
+          "ODNR, Lake Milton Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-milton-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakemilton2.pdf"
+        ]
       ]
     },
     "leesville": {
@@ -532,11 +805,26 @@
       "ramps": "MWCD lists two public launch ramps, an accessible kayak launch and an accessible fishing pier, plus South Fork and North Fork marinas.",
       "pool": "Corps summer pool is 963 ft. No road circles the lake, so plan where you launch.",
       "sources": [
-        ["MWCD, Leesville Lake", "https://www.mwcd.org/places/leesville-lake/"],
-        ["ODNR, Leesville Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/leesville-lake-fishing-area"],
-        ["US Army Corps of Engineers, Leesville Lake", "https://water.usace.army.mil/overview/lrh/locations/leesville"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/leesvillelake2.pdf"],
-        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"]
+        [
+          "MWCD, Leesville Lake",
+          "https://www.mwcd.org/places/leesville-lake/"
+        ],
+        [
+          "ODNR, Leesville Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/leesville-lake-fishing-area"
+        ],
+        [
+          "US Army Corps of Engineers, Leesville Lake",
+          "https://water.usace.army.mil/overview/lrh/locations/leesville"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/leesvillelake2.pdf"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ]
       ],
       "night": "MWCD areas close from 11 p.m. to 6 a.m. except to people fishing, hunting or boating.",
       "hours": {
@@ -545,7 +833,10 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)",
-        "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
+        "source": [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
         "checked": "2026-11-03"
       }
     },
@@ -563,13 +854,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Grand Lake St. Marys State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grand-lake-st-marys-state-park"],
+        "source": [
+          "ODNR, Grand Lake St. Marys State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grand-lake-st-marys-state-park"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["ODNR, Grand Lake St. Marys State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grand-lake-st-marys-state-park"],
-        ["ODNR, Grand Lake St. Marys Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grand-lake-st-marys-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/grandlakestmarys2.pdf"]
+        [
+          "ODNR, Grand Lake St. Marys State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grand-lake-st-marys-state-park"
+        ],
+        [
+          "ODNR, Grand Lake St. Marys Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grand-lake-st-marys-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/grandlakestmarys2.pdf"
+        ]
       ]
     },
     "caesarcreek": {
@@ -586,13 +889,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Caesar Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/caesar-creek-state-park"],
+        "source": [
+          "ODNR, Caesar Creek State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/caesar-creek-state-park"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["ODNR, Caesar Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/caesar-creek-state-park"],
-        ["ODNR, Caesar Creek Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/caesar-creek-reservoir-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/caesarcreeklake2.pdf"]
+        [
+          "ODNR, Caesar Creek State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/caesar-creek-state-park"
+        ],
+        [
+          "ODNR, Caesar Creek Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/caesar-creek-reservoir-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/caesarcreeklake2.pdf"
+        ]
       ]
     },
     "eastfork": {
@@ -609,13 +924,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, East Fork State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/east-fork-state-park"],
+        "source": [
+          "ODNR, East Fork State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/east-fork-state-park"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["ODNR, East Fork State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/east-fork-state-park"],
-        ["ODNR, East Fork Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/east-fork-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/eastforklake2.pdf"]
+        [
+          "ODNR, East Fork State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/east-fork-state-park"
+        ],
+        [
+          "ODNR, East Fork Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/east-fork-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/eastforklake2.pdf"
+        ]
       ]
     },
     "cjbrown": {
@@ -632,13 +959,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Buck Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buck-creek-state-park"],
+        "source": [
+          "ODNR, Buck Creek State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buck-creek-state-park"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["ODNR, Buck Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buck-creek-state-park"],
-        ["ODNR, C.J. Brown Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/c-j-brown-reservoir-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/cjbrownreservoir2.pdf"]
+        [
+          "ODNR, Buck Creek State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/buck-creek-state-park"
+        ],
+        [
+          "ODNR, C.J. Brown Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/c-j-brown-reservoir-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/cjbrownreservoir2.pdf"
+        ]
       ]
     },
     "rockyfork": {
@@ -655,13 +994,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Rocky Fork State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/rocky-fork-state-park"],
+        "source": [
+          "ODNR, Rocky Fork State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/rocky-fork-state-park"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["ODNR, Rocky Fork State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/rocky-fork-state-park"],
-        ["ODNR, Rocky Fork Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/rocky-fork-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/rockyforklake2.pdf"]
+        [
+          "ODNR, Rocky Fork State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/rocky-fork-state-park"
+        ],
+        [
+          "ODNR, Rocky Fork Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/rocky-fork-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/rockyforklake2.pdf"
+        ]
       ]
     },
     "ladue": {
@@ -678,10 +1029,22 @@
         "checked": "2026-11-11"
       },
       "sources": [
-        ["ODNR, LaDue Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ladue-reservoir-fishing-area"],
-        ["ODNR, LaDue Hunting Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ladue-hunting-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/laduereservoir2.pdf"],
-        ["City of Akron, Watershed Division", "https://www.akronohio.gov/departments/service/water_supply_bureau/watershed_division.php"]
+        [
+          "ODNR, LaDue Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ladue-reservoir-fishing-area"
+        ],
+        [
+          "ODNR, LaDue Hunting Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ladue-hunting-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/laduereservoir2.pdf"
+        ],
+        [
+          "City of Akron, Watershed Division",
+          "https://www.akronohio.gov/departments/service/water_supply_bureau/watershed_division.php"
+        ]
       ]
     },
     "paintcreek": {
@@ -698,13 +1061,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Paint Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/paint-creek-state-park"],
+        "source": [
+          "ODNR, Paint Creek State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/paint-creek-state-park"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["ODNR, Paint Creek State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/paint-creek-state-park"],
-        ["ODNR, Paint Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/paint-creek-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/paintcreeklake2.pdf"]
+        [
+          "ODNR, Paint Creek State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/paint-creek-state-park"
+        ],
+        [
+          "ODNR, Paint Creek Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/paint-creek-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/paintcreeklake2.pdf"
+        ]
       ]
     },
     "portagelakes": {
@@ -720,13 +1095,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Portage Lakes State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-state-park"],
+        "source": [
+          "ODNR, Portage Lakes State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-state-park"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["ODNR, Portage Lakes State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-state-park"],
-        ["ODNR, Portage Lakes Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/portagelakes2.pdf"]
+        [
+          "ODNR, Portage Lakes State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-state-park"
+        ],
+        [
+          "ODNR, Portage Lakes Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/portagelakes2.pdf"
+        ]
       ]
     },
     "mogadore": {
@@ -743,9 +1130,18 @@
         "checked": "2026-11-11"
       },
       "sources": [
-        ["ODNR, Mogadore Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mogadore-reservoir-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mogadorereservoir2.pdf"],
-        ["City of Akron, Watershed Division", "https://www.akronohio.gov/departments/service/water_supply_bureau/watershed_division.php"]
+        [
+          "ODNR, Mogadore Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/mogadore-reservoir-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/mogadorereservoir2.pdf"
+        ],
+        [
+          "City of Akron, Watershed Division",
+          "https://www.akronohio.gov/departments/service/water_supply_bureau/watershed_division.php"
+        ]
       ]
     },
     "loramie": {
@@ -762,13 +1158,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Lake Loramie State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-loramie-state-park"],
+        "source": [
+          "ODNR, Lake Loramie State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-loramie-state-park"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["ODNR, Lake Loramie State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-loramie-state-park"],
-        ["ODNR, Lake Loramie Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-loramie-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakeloramie2.pdf"]
+        [
+          "ODNR, Lake Loramie State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-loramie-state-park"
+        ],
+        [
+          "ODNR, Lake Loramie Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-loramie-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakeloramie2.pdf"
+        ]
       ]
     },
     "nimisila": {
@@ -785,13 +1193,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Portage Lakes State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-state-park"],
+        "source": [
+          "ODNR, Portage Lakes State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-state-park"
+        ],
         "checked": "2026-11-11"
       },
       "sources": [
-        ["ODNR, Nimisila Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/nimisila-reservoir-fishing-area"],
-        ["ODNR, Portage Lakes State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-state-park"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/nimisilalake2.pdf"]
+        [
+          "ODNR, Nimisila Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/nimisila-reservoir-fishing-area"
+        ],
+        [
+          "ODNR, Portage Lakes State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/portage-lakes-state-park"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/nimisilalake2.pdf"
+        ]
       ]
     },
     "cowan": {
@@ -808,13 +1228,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Cowan Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/cowan-lake-state-park"],
+        "source": [
+          "ODNR, Cowan Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/cowan-lake-state-park"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["ODNR, Cowan Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/cowan-lake-state-park"],
-        ["ODNR, Cowan Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/cowan-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/cowanlake2.pdf"]
+        [
+          "ODNR, Cowan Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/cowan-lake-state-park"
+        ],
+        [
+          "ODNR, Cowan Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/cowan-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/cowanlake2.pdf"
+        ]
       ]
     },
     "acton": {
@@ -831,14 +1263,29 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Ohio State Park Rules: Hours of Operation", "https://ohiodnr.gov/rules-and-regulations/rules-and-regulations-by-division/state-parks-and-watercraft/ohio-state-park-rules/3-hours-of-operation"],
+        "source": [
+          "ODNR, Ohio State Park Rules: Hours of Operation",
+          "https://ohiodnr.gov/rules-and-regulations/rules-and-regulations-by-division/state-parks-and-watercraft/ohio-state-park-rules/3-hours-of-operation"
+        ],
         "checked": "2026-11-11"
       },
       "sources": [
-        ["ODNR, Hueston Woods State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hueston-woods-state-park"],
-        ["ODNR, Acton Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/acton-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/actonlake2.pdf"],
-        ["ODNR, Ohio State Park Rules: Hours of Operation", "https://ohiodnr.gov/rules-and-regulations/rules-and-regulations-by-division/state-parks-and-watercraft/ohio-state-park-rules/3-hours-of-operation"]
+        [
+          "ODNR, Hueston Woods State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hueston-woods-state-park"
+        ],
+        [
+          "ODNR, Acton Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/acton-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/actonlake2.pdf"
+        ],
+        [
+          "ODNR, Ohio State Park Rules: Hours of Operation",
+          "https://ohiodnr.gov/rules-and-regulations/rules-and-regulations-by-division/state-parks-and-watercraft/ohio-state-park-rules/3-hours-of-operation"
+        ]
       ]
     },
     "tappan": {
@@ -855,16 +1302,37 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)",
-        "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
+        "source": [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["MWCD, Tappan Lake", "https://www.mwcd.org/places/tappan-lake/"],
-        ["ODNR, Tappan Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/tappan-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/tappanlake2.pdf"],
-        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
-        ["MWCD, Winter Drawdown Schedule (Oct. 2026)", "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"],
-        ["MWCD Rules and Regulations, rule 3.3", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"]
+        [
+          "MWCD, Tappan Lake",
+          "https://www.mwcd.org/places/tappan-lake/"
+        ],
+        [
+          "ODNR, Tappan Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/tappan-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/tappanlake2.pdf"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
+        [
+          "MWCD, Winter Drawdown Schedule (Oct. 2026)",
+          "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 3.3",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ]
       ]
     },
     "piedmont": {
@@ -881,16 +1349,37 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)",
-        "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
+        "source": [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["MWCD, Piedmont Lake", "https://www.mwcd.org/places/piedmont-lake/"],
-        ["ODNR, Piedmont Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/piedmont-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/piedmontlake2.pdf"],
-        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
-        ["MWCD, Winter Drawdown Schedule (Oct. 2026)", "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"],
-        ["MWCD Rules and Regulations, rule 3.3", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"]
+        [
+          "MWCD, Piedmont Lake",
+          "https://www.mwcd.org/places/piedmont-lake/"
+        ],
+        [
+          "ODNR, Piedmont Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/piedmont-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/piedmontlake2.pdf"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
+        [
+          "MWCD, Winter Drawdown Schedule (Oct. 2026)",
+          "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 3.3",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ]
       ]
     },
     "clendening": {
@@ -907,16 +1396,37 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)",
-        "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
+        "source": [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["MWCD, Clendening Lake", "https://www.mwcd.org/places/clendening-lake/"],
-        ["ODNR, Clendening Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clendening-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/clendeninglake2.pdf"],
-        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
-        ["MWCD, Winter Drawdown Schedule (Oct. 2026)", "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"],
-        ["MWCD Rules and Regulations, rule 3.3", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"]
+        [
+          "MWCD, Clendening Lake",
+          "https://www.mwcd.org/places/clendening-lake/"
+        ],
+        [
+          "ODNR, Clendening Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/clendening-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/clendeninglake2.pdf"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
+        [
+          "MWCD, Winter Drawdown Schedule (Oct. 2026)",
+          "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 3.3",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ]
       ]
     },
     "atwood": {
@@ -933,16 +1443,37 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)",
-        "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
+        "source": [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["MWCD, Atwood Lake Park", "https://www.mwcd.org/places/atwood-lake-park/"],
-        ["ODNR, Atwood Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/atwood-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/atwoodlake2.pdf"],
-        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
-        ["MWCD, Winter Drawdown Schedule (Oct. 2026)", "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"],
-        ["MWCD Rules and Regulations, rule 3.3", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"]
+        [
+          "MWCD, Atwood Lake Park",
+          "https://www.mwcd.org/places/atwood-lake-park/"
+        ],
+        [
+          "ODNR, Atwood Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/atwood-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/atwoodlake2.pdf"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
+        [
+          "MWCD, Winter Drawdown Schedule (Oct. 2026)",
+          "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 3.3",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ]
       ]
     },
     "charlesmill": {
@@ -959,16 +1490,37 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)",
-        "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
+        "source": [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["MWCD, Charles Mill Lake Park", "https://www.mwcd.org/places/charles-mill-lake-park/"],
-        ["ODNR, Charles Mill Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/charles-mill-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/charlesmilllake2.pdf"],
-        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
-        ["MWCD, Winter Drawdown Schedule (Oct. 2026)", "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"],
-        ["MWCD Rules and Regulations, rule 3.3", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"]
+        [
+          "MWCD, Charles Mill Lake Park",
+          "https://www.mwcd.org/places/charles-mill-lake-park/"
+        ],
+        [
+          "ODNR, Charles Mill Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/charles-mill-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/charlesmilllake2.pdf"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
+        [
+          "MWCD, Winter Drawdown Schedule (Oct. 2026)",
+          "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 3.3",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ]
       ]
     },
     "pleasanthill": {
@@ -985,15 +1537,33 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)",
-        "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
+        "source": [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["MWCD, Pleasant Hill Lake", "https://www.mwcd.org/places/pleasant-hill-lake/"],
-        ["ODNR, Pleasant Hill Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pleasant-hill-reservoir-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pleasanthillreservoir2.pdf"],
-        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
-        ["MWCD, Winter Drawdown Schedule (Oct. 2026)", "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"]
+        [
+          "MWCD, Pleasant Hill Lake",
+          "https://www.mwcd.org/places/pleasant-hill-lake/"
+        ],
+        [
+          "ODNR, Pleasant Hill Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/pleasant-hill-reservoir-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pleasanthillreservoir2.pdf"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
+        [
+          "MWCD, Winter Drawdown Schedule (Oct. 2026)",
+          "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"
+        ]
       ]
     },
     "beachcity": {
@@ -1010,16 +1580,37 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Closed 11 p.m. to 6 a.m. except fishing (MWCD)",
-        "source": ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
+        "source": [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
         "checked": "2026-11-09"
       },
       "sources": [
-        ["MWCD, Beach City Lake", "https://www.mwcd.org/places/beach-city-lake/"],
-        ["USACE Huntington District, Beach City Lake", "https://www.lrd.usace.army.mil/Submit-ArticleCS/Recreation/Article/3632236/beach-city-lake/"],
-        ["ODNR, Beach City Wildlife Area map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/wildlife-area-maps/beachcity.pdf"],
-        ["MWCD Rules and Regulations, rule 1.13", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"],
-        ["MWCD, Winter Drawdown Schedule (Oct. 2026)", "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"],
-        ["MWCD Rules and Regulations, rule 3.3", "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"]
+        [
+          "MWCD, Beach City Lake",
+          "https://www.mwcd.org/places/beach-city-lake/"
+        ],
+        [
+          "USACE Huntington District, Beach City Lake",
+          "https://www.lrd.usace.army.mil/Submit-ArticleCS/Recreation/Article/3632236/beach-city-lake/"
+        ],
+        [
+          "ODNR, Beach City Wildlife Area map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/wildlife-area-maps/beachcity.pdf"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 1.13",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ],
+        [
+          "MWCD, Winter Drawdown Schedule (Oct. 2026)",
+          "https://www.mwcd.org/blog/mwcd-announces-winter-drawdown-schedule-and-reservoir-improvement-projects/"
+        ],
+        [
+          "MWCD Rules and Regulations, rule 3.3",
+          "https://www.mwcd.org/wp-content/uploads/2023/11/rules_and_regulations_for_web.pdf"
+        ]
       ]
     },
     "wingfoot": {
@@ -1036,14 +1627,29 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Wingfoot Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wingfoot-lake-state-park"],
+        "source": [
+          "ODNR, Wingfoot Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wingfoot-lake-state-park"
+        ],
         "checked": "2026-11-10"
       },
       "sources": [
-        ["ODNR, Wingfoot Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wingfoot-lake-state-park"],
-        ["ODNR, Wingfoot Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wingfoot-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wingfootlake2.pdf"],
-        ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"]
+        [
+          "ODNR, Wingfoot Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wingfoot-lake-state-park"
+        ],
+        [
+          "ODNR, Wingfoot Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wingfoot-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wingfootlake2.pdf"
+        ],
+        [
+          "OAC 1501:47-5-03",
+          "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"
+        ]
       ]
     },
     "eastbranch": {
@@ -1059,14 +1665,29 @@
         "close": "23:00",
         "fishing_after_hours": null,
         "chip": "Headwaters Park open 6 a.m. to 11 p.m. (Geauga Park District)",
-        "source": ["Geauga Park District, Headwaters Park", "https://geaugaparkdistrict.org/park/headwaters-park/"],
+        "source": [
+          "Geauga Park District, Headwaters Park",
+          "https://geaugaparkdistrict.org/park/headwaters-park/"
+        ],
         "checked": "2026-11-11"
       },
       "sources": [
-        ["Geauga Park District, Headwaters Park", "https://geaugaparkdistrict.org/park/headwaters-park/"],
-        ["Geauga Park District, canoeing, kayaking and boating", "https://geaugaparkdistrict.org/activity/canoeing-kayaking-boating/"],
-        ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"],
-        ["OAC 1501:31-13-07", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:31-13-07"]
+        [
+          "Geauga Park District, Headwaters Park",
+          "https://geaugaparkdistrict.org/park/headwaters-park/"
+        ],
+        [
+          "Geauga Park District, canoeing, kayaking and boating",
+          "https://geaugaparkdistrict.org/activity/canoeing-kayaking-boating/"
+        ],
+        [
+          "OAC 1501:47-5-03",
+          "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"
+        ],
+        [
+          "OAC 1501:31-13-07",
+          "https://codes.ohio.gov/ohio-administrative-code/rule-1501:31-13-07"
+        ]
       ]
     },
     "guilford": {
@@ -1083,14 +1704,29 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Guilford Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/guilford-lake-state-park"],
+        "source": [
+          "ODNR, Guilford Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/guilford-lake-state-park"
+        ],
         "checked": "2026-11-10"
       },
       "sources": [
-        ["ODNR, Guilford Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/guilford-lake-state-park"],
-        ["ODNR, Guilford Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/guilford-lake-fishing-area"],
-        ["ODNR, Guilford Lake Dam Rehabilitation", "https://ohiodnr.gov/business-and-industry/business-opportunities/improvement-projects/guilford-lake-rehabilitation"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/guilfordlake2.pdf"]
+        [
+          "ODNR, Guilford Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/guilford-lake-state-park"
+        ],
+        [
+          "ODNR, Guilford Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/guilford-lake-fishing-area"
+        ],
+        [
+          "ODNR, Guilford Lake Dam Rehabilitation",
+          "https://ohiodnr.gov/business-and-industry/business-opportunities/improvement-projects/guilford-lake-rehabilitation"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/guilfordlake2.pdf"
+        ]
       ]
     },
     "highlandtown": {
@@ -1107,10 +1743,22 @@
         "checked": "2026-11-11"
       },
       "sources": [
-        ["ODNR, Highlandtown Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/highlandtown-lake-fishing-area"],
-        ["ODNR, Highlandtown Wildlife Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/highlandtown-wildlife-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/highlandtownlake2.pdf"],
-        ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"]
+        [
+          "ODNR, Highlandtown Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/highlandtown-lake-fishing-area"
+        ],
+        [
+          "ODNR, Highlandtown Wildlife Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/highlandtown-wildlife-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/highlandtownlake2.pdf"
+        ],
+        [
+          "OAC 1501:47-5-03",
+          "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"
+        ]
       ]
     },
     "punderson": {
@@ -1127,13 +1775,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Punderson State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/punderson-state-park"],
+        "source": [
+          "ODNR, Punderson State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/punderson-state-park"
+        ],
         "checked": "2026-11-10"
       },
       "sources": [
-        ["ODNR, Punderson State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/punderson-state-park"],
-        ["ODNR, Punderson Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/punderson-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pundersonlake2.pdf"]
+        [
+          "ODNR, Punderson State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/punderson-state-park"
+        ],
+        [
+          "ODNR, Punderson Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/punderson-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/pundersonlake2.pdf"
+        ]
       ]
     },
     "wellington": {
@@ -1150,14 +1810,29 @@
         "close": "sunset",
         "fishing_after_hours": null,
         "chip": "Open sunrise to sunset (ODNR)",
-        "source": ["ODNR, Lake Erie Birding Trail: Wellington Upground Reservoir", "https://ohiodnr.gov/go-and-do/see-the-sights/lake-erie-birding-trail/huron-lorain-loop/wellington-reservoir"],
+        "source": [
+          "ODNR, Lake Erie Birding Trail: Wellington Upground Reservoir",
+          "https://ohiodnr.gov/go-and-do/see-the-sights/lake-erie-birding-trail/huron-lorain-loop/wellington-reservoir"
+        ],
         "checked": "2026-11-10"
       },
       "sources": [
-        ["ODNR, Wellington Upground Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wellington-upground-reservoir-fishing-area"],
-        ["ODNR, Lake Erie Birding Trail: Wellington Upground Reservoir", "https://ohiodnr.gov/go-and-do/see-the-sights/lake-erie-birding-trail/huron-lorain-loop/wellington-reservoir"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wellingtonupgroundreservoir.pdf"],
-        ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"]
+        [
+          "ODNR, Wellington Upground Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wellington-upground-reservoir-fishing-area"
+        ],
+        [
+          "ODNR, Lake Erie Birding Trail: Wellington Upground Reservoir",
+          "https://ohiodnr.gov/go-and-do/see-the-sights/lake-erie-birding-trail/huron-lorain-loop/wellington-reservoir"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wellingtonupgroundreservoir.pdf"
+        ],
+        [
+          "OAC 1501:47-5-03",
+          "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"
+        ]
       ]
     },
     "kiser": {
@@ -1174,13 +1849,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Kiser Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-state-park"],
+        "source": [
+          "ODNR, Kiser Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-state-park"
+        ],
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Kiser Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-state-park"],
-        ["ODNR, Kiser Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/kiserlake2.pdf"]
+        [
+          "ODNR, Kiser Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-state-park"
+        ],
+        [
+          "ODNR, Kiser Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/kiser-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/kiserlake2.pdf"
+        ]
       ]
     },
     "hargus": {
@@ -1197,13 +1884,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, A.W. Marion State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/a-w-marion-state-park"],
+        "source": [
+          "ODNR, A.W. Marion State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/a-w-marion-state-park"
+        ],
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, A.W. Marion State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/a-w-marion-state-park"],
-        ["ODNR, Hargus Creek Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hargus-creek-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/harguscreeklake2.pdf"]
+        [
+          "ODNR, A.W. Marion State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/a-w-marion-state-park"
+        ],
+        [
+          "ODNR, Hargus Creek Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/hargus-creek-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/harguscreeklake2.pdf"
+        ]
       ]
     },
     "stonelick": {
@@ -1220,13 +1919,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Stonelick State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-state-park"],
+        "source": [
+          "ODNR, Stonelick State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-state-park"
+        ],
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Stonelick State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-state-park"],
-        ["ODNR, Stonelick Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/stonelicklake2.pdf"]
+        [
+          "ODNR, Stonelick State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-state-park"
+        ],
+        [
+          "ODNR, Stonelick Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/stonelick-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/stonelicklake2.pdf"
+        ]
       ]
     },
     "grant": {
@@ -1242,9 +1953,18 @@
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Grant Lake Wildlife Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grant-lake-wildlife-area"],
-        ["ODNR, Accessible Fishing Areas", "https://ohiodnr.gov/go-and-do/outdoor/accessible-activities-facilities/accessible-fishing"],
-        ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"]
+        [
+          "ODNR, Grant Lake Wildlife Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/grant-lake-wildlife-area"
+        ],
+        [
+          "ODNR, Accessible Fishing Areas",
+          "https://ohiodnr.gov/go-and-do/outdoor/accessible-activities-facilities/accessible-fishing"
+        ],
+        [
+          "OAC 1501:47-5-03",
+          "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"
+        ]
       ]
     },
     "lakewhite": {
@@ -1261,13 +1981,25 @@
         "close": "sunset",
         "fishing_after_hours": true,
         "chip": "Park open sunrise to sunset, fishing allowed after (ODNR)",
-        "source": ["ODNR, Lake White State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-state-park"],
+        "source": [
+          "ODNR, Lake White State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-state-park"
+        ],
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Lake White State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-state-park"],
-        ["ODNR, Lake White Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakewhite2.pdf"]
+        [
+          "ODNR, Lake White State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-state-park"
+        ],
+        [
+          "ODNR, Lake White Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-white-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakewhite2.pdf"
+        ]
       ]
     },
     "lakerupert": {
@@ -1284,10 +2016,22 @@
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Lake Rupert Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-rupert-fishing-area"],
-        ["ODNR, Wellston Wildlife Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wellston-wildlife-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakerupert2.pdf"],
-        ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"]
+        [
+          "ODNR, Lake Rupert Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-rupert-fishing-area"
+        ],
+        [
+          "ODNR, Wellston Wildlife Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wellston-wildlife-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakerupert2.pdf"
+        ],
+        [
+          "OAC 1501:47-5-03",
+          "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"
+        ]
       ]
     },
     "jackson": {
@@ -1304,13 +2048,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Jackson Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-state-park"],
+        "source": [
+          "ODNR, Jackson Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-state-park"
+        ],
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Jackson Lake State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-state-park"],
-        ["ODNR, Jackson Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/jacksonlake2.pdf"]
+        [
+          "ODNR, Jackson Lake State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-state-park"
+        ],
+        [
+          "ODNR, Jackson Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/jackson-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/jacksonlake2.pdf"
+        ]
       ]
     },
     "wolfrun": {
@@ -1327,13 +2083,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Wolf Run State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-state-park"],
+        "source": [
+          "ODNR, Wolf Run State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-state-park"
+        ],
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Wolf Run State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-state-park"],
-        ["ODNR, Wolf Run Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-lake-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wolfrunlake2.pdf"]
+        [
+          "ODNR, Wolf Run State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-state-park"
+        ],
+        [
+          "ODNR, Wolf Run Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/wolf-run-lake-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/wolfrunlake2.pdf"
+        ]
       ]
     },
     "tycoon": {
@@ -1350,10 +2118,22 @@
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Tycoon Lake Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/tycoon-lake-fishing-area"],
-        ["ODNR, Tycoon Lake Wildlife Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/tycoon-lake-wildlife-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/tycoonlake2.pdf"],
-        ["OAC 1501:47-5-03", "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"]
+        [
+          "ODNR, Tycoon Lake Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/tycoon-lake-fishing-area"
+        ],
+        [
+          "ODNR, Tycoon Lake Wildlife Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/tycoon-lake-wildlife-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/tycoonlake2.pdf"
+        ],
+        [
+          "OAC 1501:47-5-03",
+          "https://codes.ohio.gov/ohio-administrative-code/rule-1501:47-5-03"
+        ]
       ]
     },
     "lakehope": {
@@ -1369,13 +2149,25 @@
         "close": "23:00",
         "fishing_after_hours": true,
         "chip": "Park hours end 11 p.m., fishing allowed after (ODNR)",
-        "source": ["ODNR, Lake Hope State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-state-park"],
+        "source": [
+          "ODNR, Lake Hope State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-state-park"
+        ],
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Lake Hope State Park", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-state-park"],
-        ["ODNR, Lake Hope Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakehope1.pdf"]
+        [
+          "ODNR, Lake Hope State Park",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-state-park"
+        ],
+        [
+          "ODNR, Lake Hope Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/lake-hope-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/lakehope1.pdf"
+        ]
       ]
     },
     "findlayreservoirs": {
@@ -1392,9 +2184,18 @@
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Findlay Reservoir #1 Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/findlay-reservoir-1-fishing-area"],
-        ["ODNR, Findlay Reservoirs #2 Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/findlay-reservoirs-2-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/findlayreservoirs2.pdf"]
+        [
+          "ODNR, Findlay Reservoir #1 Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/findlay-reservoir-1-fishing-area"
+        ],
+        [
+          "ODNR, Findlay Reservoirs #2 Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/findlay-reservoirs-2-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/findlayreservoirs2.pdf"
+        ]
       ]
     },
     "bresler": {
@@ -1411,8 +2212,14 @@
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Bresler Reservoir Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/bresler-reservoir-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/breslerreservoir2.pdf"]
+        [
+          "ODNR, Bresler Reservoir Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/bresler-reservoir-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/breslerreservoir2.pdf"
+        ]
       ]
     },
     "fergusonmetzger": {
@@ -1429,8 +2236,14 @@
         "checked": "2026-11-17"
       },
       "sources": [
-        ["ODNR, Ferguson & Metzger Reservoirs Fishing Area", "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ferguson-metzger-reservoirs-fishing-area"],
-        ["ODNR fishing map", "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/fergusonmetzgerreservoirs2.pdf"]
+        [
+          "ODNR, Ferguson & Metzger Reservoirs Fishing Area",
+          "https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/ferguson-metzger-reservoirs-fishing-area"
+        ],
+        [
+          "ODNR fishing map",
+          "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/fergusonmetzgerreservoirs2.pdf"
+        ]
       ]
     }
   }

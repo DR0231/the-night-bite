@@ -37,13 +37,34 @@ const state = () => {
     poolVal: t('[data-glance="pool"]'), h1: t('main h1'), chip: t('.night-chip-text'), foot: t('.site-footer a[href="privacy"]'),
     gear: t('.site-nav a[href="gear"]'), ov: document.documentElement.scrollWidth - 390 };
 };
+// Live lake homes keep NWS and USGS connections open (Tonight and Pool details are open by default), so
+// Playwright's networkidle can hang until the 30s timeout. Navigations below use waitUntil: "load",
+// then the existing short pauses.
+// js/i18n.js is fetched only after a non-English pick, then several JSON files. A fixed 800ms wait can
+// miss a slow first load (lang is set immediately, chrome stays English until i18n.js applies). Only the
+// first English-to-Spanish switch uses this waiter; later rapid switches keep their fixed pauses so
+// overlapping set() calls in js/a11y.js are not raced.
+async function pickLang(page, lang) {
+  await page.selectOption("#a11y-lang", lang);
+  if (lang === "en") {
+    await page.waitForFunction(() => {
+      const m = document.querySelector("#i18n-draft");
+      return document.documentElement.lang === "en" && !(m && m.offsetParent);
+    }, null, { timeout: 8000 });
+  } else {
+    await page.waitForFunction((want) => {
+      const m = document.querySelector("#i18n-draft");
+      return document.documentElement.lang === want && !!(m && m.offsetParent && /Draft translation/.test(m.textContent || ""));
+    }, lang, { timeout: 8000 });
+  }
+}
 (async () => {
   const br = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: na.args() });
   const ctx = await br.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
   await na.block(ctx);
   const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.goto(B + 'hoover/', { waitUntil: 'load' }); await p.evaluate(() => localStorage.clear());
-  await p.reload({ waitUntil: 'networkidle' }); await p.waitForTimeout(400);
+  await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
   const en = await p.evaluate(state);
   ok('fresh: English, lang="en", no draft marker', en.lang === 'en' && !en.marker && en.nav === 'Species' && !en.store, en);
   const btn = p.locator('.site-footer [data-lang-open]');
@@ -51,7 +72,7 @@ const state = () => {
   await btn.click(); await p.waitForTimeout(300);
   const foc = await p.evaluate(() => document.activeElement && document.activeElement.id);
   ok('Language opens the Display panel on the language select', foc === 'a11y-lang', foc);
-  await p.selectOption('#a11y-lang', 'es'); await p.waitForTimeout(800);
+  await pickLang(p, 'es');
   await p.keyboard.press('Escape'); await p.waitForTimeout(200);
   const es = await p.evaluate(state);
   ok('es: html lang="es", nb-lang saved', es.lang === 'es' && es.store === 'es', es);
@@ -74,7 +95,7 @@ const state = () => {
   ok('es: no sideways scroll', es.ov <= 1, es.ov);
   await p.reload({ waitUntil: 'load' });
   const early = await p.evaluate(() => document.documentElement.lang);
-  await p.waitForLoadState('networkidle'); await p.waitForTimeout(600);
+  await p.waitForTimeout(600);
   const re = await p.evaluate(state);
   ok('reload: Spanish kept (lang set before page scripts)', early === 'es' && re.nav === 'Especies' && /Draft translation/.test(re.marker), { early, re });
   for (const mode of [['data-light', 'red'], ['data-contrast', 'more']]) {
@@ -88,7 +109,7 @@ const state = () => {
     ok(mode.join('=') + ': draft marker readable (>= 4.5:1)', c.r.every(x => x >= 4.5), c);
     await p.evaluate(m => document.documentElement.removeAttribute(m[0]), mode);
   }
-  await p.goto(B + 'log', { waitUntil: 'networkidle' }); await p.waitForTimeout(600);
+  await p.goto(B + 'log', { waitUntil: 'load' }); await p.waitForTimeout(600);
   const lg = await p.evaluate(() => ({ sum: (document.querySelector('#add-private summary') || {}).textContent, date: (document.querySelector('label[for="date"]') || {}).textContent,
     ph: (document.querySelector('#trip-form textarea') || {}).placeholder, opts: [...document.querySelectorAll('#trip-form option')].map(o => o.textContent).join('|'),
     ov: document.documentElement.scrollWidth - 390 }));
@@ -96,7 +117,7 @@ const state = () => {
   ok('log es: species and ramp options stay English', /Walleye/.test(lg.opts) && /Walnut Street ramp/.test(lg.opts) && /Channel catfish/.test(lg.opts), lg.opts.slice(0, 300));
   ok('log es: no sideways scroll', lg.ov <= 1, lg.ov);
   // back to English from the panel
-  await p.goto(B + 'hoover/', { waitUntil: 'networkidle' }); await p.waitForTimeout(500);
+  await p.goto(B + 'hoover/', { waitUntil: 'load' }); await p.waitForTimeout(500);
   await p.locator('.site-footer [data-lang-open]').click(); await p.waitForTimeout(300);
   await p.selectOption('#a11y-lang', 'en'); await p.waitForTimeout(600); await p.keyboard.press('Escape');
   const back = await p.evaluate(state);
@@ -107,7 +128,7 @@ const state = () => {
   await na.block(c2);
   await c2.route(/data\/i18n\/es\.json/, async r => { const res = await r.fetch(); const j = await res.json(); delete j.strings['nav.gear']; await r.fulfill({ response: res, json: j }); });
   await c2.addInitScript(() => { try { localStorage.setItem('nb-lang', 'es'); } catch (e) {} });
-  const p2 = await c2.newPage(); await p2.goto(B + 'hoover/', { waitUntil: 'networkidle' }); await p2.waitForTimeout(700);
+  const p2 = await c2.newPage(); await p2.goto(B + 'hoover/', { waitUntil: 'load' }); await p2.waitForTimeout(700);
   const fb = await p2.evaluate(state);
   ok('missing key falls back to English (Gear), others Spanish', fb.gear === 'Gear' && fb.nav === 'Especies' && fb.lang === 'es', fb);
   // header fit at 390: logo, lake pill and nav inside the row, nav on one row, nothing overlapping (S9c)
@@ -128,7 +149,7 @@ const state = () => {
     await na.block(c3);
     await c3.addInitScript(v => { try { localStorage.setItem('nb-lang', v); } catch (e) {} }, l);
     const p3 = await c3.newPage(); const e3 = []; p3.on('pageerror', e => e3.push(e.message));
-    await p3.goto(B + 'hoover/', { waitUntil: 'networkidle' }); await p3.waitForTimeout(700);
+    await p3.goto(B + 'hoover/', { waitUntil: 'load' }); await p3.waitForTimeout(700);
     const st = await p3.evaluate(state), f3 = await p3.evaluate(fit);
     ok(`${l}: applies (lang, dir ${(j._meta && j._meta.dir) || 'ltr'}, marker, nav), facts unchanged, no sideways scroll, no errors`, st.lang === l && st.dir === ((j._meta && j._meta.dir) || 'ltr') && /Draft translation/.test(st.marker) && st.nav === j.strings['nav.species'] && st.h1 === en.h1 && !!st.chip && st.chip !== en.chip && st.ov <= 1 && !e3.length, { st, e3 });
     ok(`${l}: header fits at 390 (logo, lake pill, nav in view, one row, no overlap)`, f3.ov <= 1 && f3.hdrOv <= 1 && f3.logo && f3.pill && f3.nav && f3.oneRow && !f3.navHitsLogo && !f3.navHitsPill, f3);
@@ -140,7 +161,7 @@ const state = () => {
   const c4 = await br.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
   await na.block(c4);
   const p4 = await c4.newPage(); const e4 = []; p4.on('pageerror', e => e4.push(e.message));
-  await p4.goto(B + 'hoover/', { waitUntil: 'networkidle' }); await p4.waitForTimeout(400);
+  await p4.goto(B + 'hoover/', { waitUntil: 'load' }); await p4.waitForTimeout(400);
   const enFit = await p4.evaluate(fit);
   await p4.locator('.site-footer [data-lang-open]').click(); await p4.waitForTimeout(300);
   await p4.selectOption('#a11y-lang', 'ar'); await p4.waitForTimeout(800);
@@ -150,20 +171,20 @@ const state = () => {
   await p4.keyboard.press('Escape'); await p4.waitForTimeout(200);
   await p4.reload({ waitUntil: 'load' });
   const earlyDir = await p4.evaluate(() => document.documentElement.dir);
-  await p4.waitForLoadState('networkidle'); await p4.waitForTimeout(700);
+  await p4.waitForTimeout(700);
   const ar = await p4.evaluate(state), arFit = await p4.evaluate(fit), arMk = await p4.evaluate(marks);
   ok('ar: dir="rtl" kept on reload, set before page scripts', earlyDir === 'rtl' && ar.dir === 'rtl' && ar.lang === 'ar' && ar.store === 'ar', { earlyDir, ar });
   ok('ar: no sideways scroll at 390 (hoover/)', arFit.ov <= 1, arFit);
   ok('ar: header still fits (logo, lake pill, nav in view, one row, no overlap)', arFit.hdrOv <= 1 && arFit.logo && arFit.pill && arFit.nav && arFit.oneRow && !arFit.navHitsLogo && !arFit.navHitsPill, { arFit, enFit });
   ok('ar: Draft translation marker in view, nav in Arabic', /Draft translation/.test(ar.marker) && ar.nav === 'الأنواع', ar);
   ok('ar: rule chip translated, level number and lake name unchanged and marked dir="ltr"', ar.chip !== en.chip && ar.poolVal === en.poolVal && ar.h1 === en.h1 && arMk.chip !== 'ltr' && arMk.pool === 'ltr' && arMk.h1 === 'ltr', { ar, arMk });
-  await p4.goto(B + 'log', { waitUntil: 'networkidle' }); await p4.waitForTimeout(700);
+  await p4.goto(B + 'log', { waitUntil: 'load' }); await p4.waitForTimeout(700);
   const alog = await p4.evaluate(() => { const o = [...document.querySelectorAll('#trip-form option')]; const w = o.find(x => /Walleye/.test(x.textContent));
     return { dir: document.documentElement.dir, date: (document.querySelector('label[for="date"]') || {}).textContent, wdir: w && w.dir,
       ov: document.documentElement.scrollWidth - 390, formIn: (() => { const b = document.querySelector('#trip-form').getBoundingClientRect(); return b.left >= -1 && b.right <= 391; })() }; });
   ok('log ar: dir rtl, labels in Arabic, species option marked dir="ltr", form in view, no sideways scroll', alog.dir === 'rtl' && alog.date === 'التاريخ' && alog.wdir === 'ltr' && alog.formIn && alog.ov <= 1, alog);
   // to a left-to-right language: dir resets, no leftover ltr marks
-  await p4.goto(B + 'hoover/', { waitUntil: 'networkidle' }); await p4.waitForTimeout(500);
+  await p4.goto(B + 'hoover/', { waitUntil: 'load' }); await p4.waitForTimeout(500);
   await p4.locator('.site-footer [data-lang-open]').click(); await p4.waitForTimeout(300);
   await p4.selectOption('#a11y-lang', 'fr'); await p4.waitForTimeout(800); await p4.keyboard.press('Escape');
   const fr = await p4.evaluate(state), frMk = await p4.evaluate(marks);
@@ -177,7 +198,7 @@ const state = () => {
   await p4.locator('.site-footer [data-lang-open]').click(); await p4.waitForTimeout(300);
   await p4.selectOption('#a11y-lang', 'en'); await p4.waitForTimeout(700); await p4.keyboard.press('Escape');
   const b4 = await p4.evaluate(state), bm = await p4.evaluate(marks);
-  await p4.reload({ waitUntil: 'networkidle' }); const b5 = await p4.evaluate(state);
+  await p4.reload({ waitUntil: 'load' }); const b5 = await p4.evaluate(state);
   ok('RTL back to English: dir="ltr", marks gone, nb-lang cleared, still ltr after reload', b4.dir === 'ltr' && b4.lang === 'en' && bm.left === 0 && !b4.store && b5.dir === 'ltr' && b5.lang === 'en', { b4, bm, b5 });
   ok('RTL run: no page errors', !e4.length, e4);
   await c4.close();
@@ -214,7 +235,7 @@ const state = () => {
     const trVals = Object.values(JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'i18n', l + '.json'), 'utf8')).strings).map(v => v.replace(/\s+/g, ' ').trim());
     const p5 = await c5.newPage(); const e5 = []; p5.on('pageerror', e => e5.push(e.message));
     for (const pg of UIPAGES) {
-      await p5.goto(B + pg, { waitUntil: 'networkidle' }); await p5.waitForTimeout(900);
+      await p5.goto(B + pg, { waitUntil: 'load' }); await p5.waitForTimeout(900);
       const a = await p5.evaluate(audit, [enVals, trVals]);
       const bad = a.filter(x => x.same || (l !== 'de' && x.eng)).map(x => x.t);
       ok(`${l} /${pg}: every visible heading, label, control and status line translated (${a.length} checked)`, a.length > 3 && !bad.length, bad.slice(0, 12));
@@ -226,7 +247,7 @@ const state = () => {
   {
     const c6 = await br.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
     await na.block(c6);
-    const p6 = await c6.newPage(); await p6.goto(B + 'hoover/', { waitUntil: 'networkidle' }); await p6.waitForTimeout(500);
+    const p6 = await c6.newPage(); await p6.goto(B + 'hoover/', { waitUntil: 'load' }); await p6.waitForTimeout(500);
     const grab = () => [...document.querySelectorAll('main h2, main summary, main dt, .glance-sub, .cond-label')].map(e => e.textContent.replace(/\s+/g, ' ').trim()).join('|');
     const before = await p6.evaluate(grab);
     await p6.locator('.site-footer [data-lang-open]').click(); await p6.waitForTimeout(300);
@@ -243,7 +264,7 @@ const state = () => {
     const c7 = await br.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
     await na.block(c7);
     const p7 = await c7.newPage(); const e7 = []; p7.on('pageerror', e => e7.push(e.message));
-    await p7.goto(B + 'hoover/', { waitUntil: 'networkidle' }); await p7.evaluate(() => localStorage.clear()); await p7.reload({ waitUntil: 'networkidle' });
+    await p7.goto(B + 'hoover/', { waitUntil: 'load' }); await p7.evaluate(() => localStorage.clear()); await p7.reload({ waitUntil: 'load' });
     const rd = () => { const f = document.querySelector('#a11y-font'), n = document.querySelector('#a11y-font-note'), h = document.documentElement;
       return { checked: f.checked, disabled: f.disabled, note: n.textContent, attr: h.getAttribute('data-font'), saved: (JSON.parse(localStorage.getItem('nb-a11y') || '{}')).font || null,
         bodyFont: getComputedStyle(document.body).fontFamily, lang: h.lang, dir: h.dir }; };
