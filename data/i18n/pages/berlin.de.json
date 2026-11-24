@@ -6,7 +6,7 @@
  },
  "strings": {
   "berlin.03baf64e": "wegen Renovierung vom",
-  "berlin.04e2bcca": ". Die Mill Creek ramp ist geöffnet vom 7. Sept. bis",
+  "berlin.0685b077": ". Das Corps sagte, die Bootsrampe des Mill Creek Campground bleibe offen bis",
   "berlin.072dc887": ", steigt schnell",
   "berlin.07f6d49b": "Punkte oder mehr sind Gut,",
   "berlin.09ca55ca": "Teilen",
@@ -15,7 +15,6 @@
   "berlin.0f01ed56": "Beispiel",
   "berlin.0ffa76e1": "Die ODNR-Seite Berlin Lake Fishing Area nennt keine Zugangszeiten, nur eine Grenze von 10 mph nachts auf dem See; beachte die ausgehängten Schilder.",
   "berlin.106e9470": "irgendwo in der NWS-Vorhersage für heute Nacht ergibt Schwer, egal wie viele Punkte.",
-  "berlin.113a2331": "; Mill Creek ist geöffnet vom 7. Sept. bis",
   "berlin.1242f2c4": "(ODNR). Tagsüber keine hp-Begrenzung, nachts 10 mph auf dem ganzen See. Laut Corps-Handbuch liegt die German Church Road ramp unter 1,009.31 ft trocken.",
   "berlin.134e9305": "Gewitter",
   "berlin.13f453a4": "Fahrzeiten sind grob geschätzt.",
@@ -95,10 +94,10 @@
   "berlin.a7fa610c": "Logbuch öffnen",
   "berlin.a8d4cf97": ". Gleichbleibend heißt innerhalb von",
   "berlin.a9f3ee46": "Karte mit Bootsrampen",
+  "berlin.b1481d47": "U.S. Army Corps of Engineers, Berlin Lake (",
   "berlin.b2f53719": "inHg oder mehr.",
   "berlin.b31906af": "Der Seepegel stammt vom USGS-Pegel 03090000 bei Berlin Center. Er liegt",
   "berlin.b83bf8c4": "Arten ansehen",
-  "berlin.b8aa2b73": "und 27. Feb. bis",
   "berlin.bb5dfee0": "Der Sommerstau des Corps (Obergrenze Dauerstau) liegt bei 1,024 ft; der See kann im Jahr um bis zu 20 ft schwanken. Live-Pegel:",
   "berlin.bfa17ff0": "Artenseiten mit Hinweisen zu Fanglimits aus den ODNR-Regeln 2026–27",
   "berlin.c0488800": ". Tagsüber keine hp-Begrenzung, nachts 10 mph. Dutch Harbor, Deer Creek und Willow Creek sind nicht markiert. Uferlinie nach OpenStreetMap, nicht zur Navigation.",
@@ -127,6 +126,7 @@
   "berlin.ef095ca1": ", alles dazwischen",
   "berlin.f132d7dd": "Rampen und",
   "berlin.f2eb9a7b": "Kein öffentlicher Wassertemperatur-Pegel",
+  "berlin.f73ad3b6": "; sie ist jetzt für die Saison geschlossen. ODNR führt sie weiterhin als offen bis zum 25. Nov., und wieder offen vom 27. Feb. bis",
   "berlin.f82eb2f1": "AM oder PM",
   "berlin.f9bb7357": "Erinnerung abbrechen"
  }

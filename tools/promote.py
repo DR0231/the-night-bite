@@ -8,7 +8,7 @@ has said "push" in chat for this promotion. Without that word in chat, run the d
     python3 tools/promote.py --whats-new entry.json            # dry run including the new What's new entry
     python3 tools/promote.py --live --confirm-push --whats-new entry.json            # after "push": write live tree
     python3 tools/promote.py --live --confirm-push --whats-new entry.json --commit   # ...and commit (no push)
-    python3 tools/promote.py --live --confirm-push --commit --push                  # ...pull --rebase, push (never force)
+    python3 tools/promote.py --live --confirm-push --commit --push                  # ...push (never force, never rebase)
     python3 tools/promote.py --small-fix                                            # dry run for a small fix (no What's new entry)
     python3 tools/promote.py --live --confirm-push --small-fix --commit --push      # small fix: skip only the What's new requirement
     python3 tools/promote.py --live --confirm-push --live-dir /tmp/live-copy        # rehearse on a copy
@@ -17,7 +17,7 @@ What it does (the v20/v21 promote steps, generalized):
   · files: everything that changed in the preview between --base (default: the end of the range in live's last
     "Promote preview A..B" commit) and --ref (default origin/main), read from git, not the working tree. --all takes
     every tracked file instead. Live-only files are never written: CNAME, robots.txt, the IndexNow key file,
-    google*.html, privacy.html, data/updates.json, updates.html, whisperwood*, previews/, review/, and .github/ except .github/workflows/.
+    google*.html, privacy.html, data/updates.json, updates.html, whisperwood*, previews/, review/, Worker drafts (*.draft.js, *.draft.jsonc, DEPLOY-DRAFT.md, check-worker-draft.mjs), and .github/ except .github/workflows/.
   · html: CSP gets Cloudflare Insights (live CSP kept when it differs), the analytics beacon before </body> (not
     offline.html), robots noindex,nofollow removed (404 and offline keep noindex), Preview chip removed,
     /night-bite-preview/ becomes /, Whisperwood links relative, live's pool lead, Checked time and water temp kept.
@@ -35,10 +35,13 @@ What it does (the v20/v21 promote steps, generalized):
     check and every other check still apply.
 Checks (real mode refuses, dry run reports and exits 1): a new dated What's new entry in live data/updates.json that
 is not in live HEAD (skipped with --small-fix); VERSION newer than live HEAD's; no preview URLs, chip or
-noindex,nofollow on any page, and no Preview left in site.webmanifest's name; beacon once per page; live-only files and whisperwood/ unchanged; live tree clean
-before a real run.
-Nothing is committed without --commit, nothing pushed without --push, and it never force-pushes. After a push it
-prints the IndexNow command; it does not run it.
+noindex,nofollow on any page, and no Preview left in site.webmanifest's name; beacon once per page; live-only files and whisperwood/ unchanged
+(including previews/, review/, non-workflow .github/, and privacy/updates wording beyond allowed stamps, the clean-url line, the footer
+follow row, and the updates.html entries block); live tree clean and at origin/main before a real run.
+Nothing is committed without --commit, nothing pushed without --push, and it never force-pushes. After --commit it
+stages only the promoted files, known build outputs, and data/updates.json by name (never git add -A). After --push it
+does a plain push that fails on non-fast-forward (never a post-commit rebase); if live main has moved, update the
+checkout and rerun the promote. After a push it prints the IndexNow command; it does not run it.
 """
 import argparse, datetime, difflib, filecmp, json, os, pathlib, re, shutil, subprocess, sys, tempfile
 
@@ -46,28 +49,22 @@ TOOLS = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS))
 import registry  # noqa: E402
 
-ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-ap.add_argument("--preview", default=str(TOOLS.parent), help="preview checkout (any branch; files are read from --ref)")
-ap.add_argument("--ref", default="origin/main", help="preview commit to promote (default origin/main)")
-ap.add_argument("--base", help="preview commit live already has (default: from live's last 'Promote preview A..B' commit)")
-ap.add_argument("--all", action="store_true", help="transform every tracked preview file, not just base..ref")
-ap.add_argument("--live-dir", default="/workspace/the-night-bite", help="live checkout (default /workspace/the-night-bite)")
-ap.add_argument("--version", help='sw.js VERSION for live (default next vN, e.g. "v22-2026-11-01")')
-ap.add_argument("--whats-new", metavar="FILE", help="JSON What's new entry, or a JSON array of entries, to add to live data/updates.json")
-ap.add_argument("--small-fix", action="store_true", help="skip only the What's new entry requirement (small fixes get no entry); the VERSION bump and every other check still apply")
-ap.add_argument("--live", action="store_true", help="REAL MODE: write into --live-dir. Only after D'Angelo said \"push\" in chat")
-ap.add_argument("--confirm-push", action="store_true", help="required with --live: confirms D'Angelo said \"push\" in chat")
-ap.add_argument("--commit", action="store_true", help="real mode: commit the promoted files in the live checkout")
-ap.add_argument("--push", action="store_true", help="real mode with --commit: git pull --rebase, then push (never force)")
-ap.add_argument("--no-fetch", action="store_true", help="do not git fetch the preview or live before reading")
-ap.add_argument("--show-diff", action="store_true", help="dry run: print a unified diff of each changed text file")
-a = ap.parse_args()
-
-PV = pathlib.Path(a.preview).resolve()
-LIVE = pathlib.Path(a.live_dir).resolve()
-REAL = a.live
-today = datetime.date.today().isoformat()
 GIT_ID = ["-c", "user.email=nightbite@local", "-c", "user.name=The Night Bite"]
+
+# whisperwood* (any name, not just whisperwood.html and whisperwood/), previews/, review/ never go to live
+SKIP_EXACT = {"robots.txt", "robots.live.txt", ".gitignore", "SERVICE-WORKER.md", "README.md",
+              "privacy.html", "data/updates.json", "updates.html", "CNAME"}
+SKIP_PREFIX = ("whisperwood", "previews/", "review/")
+TM_RE = re.compile(r"\.github/build-inputs/i18n-tm/[^/]+\.json")
+TM_DIR = ".github/build-inputs/i18n-tm"
+WHATS_NEW_KEYS = frozenset({"id", "date", "tag", "title", "bullets", "links"})
+DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}$")
+FOOTER_RE = re.compile(r"[ \t]*<!-- nb:footer-social.*?<!-- /nb:footer-social -->\n", re.S)
+CLEAN_URL_RE = re.compile(r'[ \t]*<script src="(?:\.\./|/night-bite-preview/|/)?js/clean-url\.js[^"]*"></script>\n?')
+V_STAMP_RE = re.compile(r"\?v=[A-Za-z0-9._-]+")
+DATA_UPDATES_RE = re.compile(r'data-updates="[^"]*"')
+UPDATES_BLOCK_RE = re.compile(r"<!-- updates:start -->.*?<!-- updates:end -->", re.S)
+STAGE_ALWAYS = frozenset({"sw.js", "data/updates.json", "updates.html", "privacy.html"})
 
 
 def die(msg, code=2):
@@ -82,67 +79,116 @@ def git(cwd, *args, check=True, binary=False):
     return p.stdout
 
 
-if REAL and not a.confirm_push:
-    die('real mode needs --live --confirm-push, and is only used after D\'Angelo has said "push" in chat')
-if a.confirm_push and not REAL:
-    die("--confirm-push only goes with --live")
-if (a.commit or a.push) and not REAL:
-    die("--commit and --push only go with --live --confirm-push")
-if a.push and not a.commit:
-    die("--push needs --commit")
-if not (LIVE / ".git").exists():
-    die(f"{LIVE} is not a git checkout of the live repo")
-if not (LIVE / "CNAME").exists():
-    die(f"{LIVE} has no CNAME: not the live site?")
-if PV == LIVE or (PV / "CNAME").exists():
-    die("--preview points at a live tree")
-
-# ---------------------------------------------------------------- what to promote
-if not a.no_fetch:
-    git(PV, "fetch", "--quiet", "origin")
-    if REAL:
-        git(LIVE, "fetch", "--quiet", "origin")
-ref = git(PV, "rev-parse", "--verify", a.ref + "^{commit}").strip()
-if REAL:
-    if git(LIVE, "status", "--porcelain").strip():
-        die(f"live tree {LIVE} has uncommitted changes; commit or clean them first")
-    up = subprocess.run(["git", "rev-parse", "--verify", "-q", "origin/main"], cwd=LIVE, capture_output=True, text=True).stdout.strip()
-    if up and git(LIVE, "rev-parse", "HEAD").strip() != up:
-        print(f"note: live HEAD is not origin/main ({up[:7]}); --push pulls with --rebase first")
-base = a.base
-if not base and not a.all:
-    log = git(LIVE, "log", "--format=%s", "-n", "200")
-    m = re.search(r"Promote preview [0-9a-f]+\.\.([0-9a-f]+)", log)
-    if not m:
-        die("no 'Promote preview A..B' commit in live history; pass --base or --all")
-    base = m.group(1)
-if base:
-    base = git(PV, "rev-parse", "--verify", base + "^{commit}").strip()
-    rows = [l.split("\t") for l in git(PV, "diff", "--name-status", "--no-renames", base, ref).splitlines() if l]
-    files = [r[-1] for r in rows if r[0] != "D"]
-    deleted = [r[-1] for r in rows if r[0] == "D"]
-else:
-    files = [f for f in git(PV, "ls-tree", "-r", "--name-only", ref).splitlines() if f]
-    deleted = []
-
-SKIP_EXACT = {"whisperwood.html", "robots.txt", "robots.live.txt", ".gitignore", "SERVICE-WORKER.md", "README.md",
-              "privacy.html", "data/updates.json", "updates.html", "CNAME"}
-SKIP_PREFIX = ("whisperwood/", "previews/", "review/")
+def is_worker_draft(f):
+    """Draft Worker files stay on preview: they are not deployed, and must not be copied to the live tree."""
+    name = f.rsplit("/", 1)[-1]
+    return (name.endswith(".draft.js") or name.endswith(".draft.jsonc")
+            or name == "DEPLOY-DRAFT.md" or name == "check-worker-draft.mjs")
 
 
 def live_only(f):
     # Workflows go to live so the static gate runs there too. Other .github/ files (issue templates) stay skipped.
     # .github/build-inputs/ (translation memory, biting sources) goes too: live's builds read it, Pages never serves it.
+    # startswith("whisperwood") matches the post-run guard: never write a stray whisperwood-icon.png (or similar).
+    # Worker drafts (*.draft.js, *.draft.jsonc, DEPLOY-DRAFT.md, check-worker-draft.mjs) stay on preview until a separate go.
+    if is_worker_draft(f):
+        return True
     if f.startswith(".github/"):
         return not f.startswith((".github/workflows/", ".github/build-inputs/"))
-    return (f in SKIP_EXACT or f.startswith(SKIP_PREFIX) or "__pycache__" in f
+    return bool(f in SKIP_EXACT or f.startswith(SKIP_PREFIX) or "__pycache__" in f
             or re.fullmatch(r"google[0-9a-f]+\.html", f) or re.fullmatch(r"[0-9a-f]{32}\.txt", f))
 
 
-todo = [f for f in files if not live_only(f)]
-skipped = [f for f in files if live_only(f)]
+def guard_path(r):
+    """Live-only paths that must be byte-identical after a promote (privacy/updates wording is checked separately)."""
+    if r.startswith(("whisperwood", "previews/", "review/")):
+        return True
+    if r in ("CNAME", "robots.txt"):
+        return True
+    if r.startswith(".github/") and not r.startswith((".github/workflows/", ".github/build-inputs/")):
+        return True
+    return bool(re.fullmatch(r"google[0-9a-f]+\.html|[0-9a-f]{32}\.txt", r))
 
-# ---------------------------------------------------------------- transforms (v21 promote.py)
+
+def live_page_shell(s, updates=False):
+    """privacy.html / updates.html after stripping bits the promote builds are allowed to refresh."""
+    if updates:
+        s = UPDATES_BLOCK_RE.sub("<!-- updates:start --><!-- updates:end -->", s)
+    s = V_STAMP_RE.sub("?v=", s)
+    s = DATA_UPDATES_RE.sub('data-updates=""', s)
+    s = CLEAN_URL_RE.sub("", s)
+    s = FOOTER_RE.sub("", s)
+    return s
+
+
+def validate_whats_new_entry(entry, today):
+    """Return a cleaned entry, or raise ValueError. Call before any file is written."""
+    if not isinstance(entry, dict):
+        raise ValueError("--whats-new entry must be an object")
+    E = dict(entry)
+    E.pop("draft", None)
+    unknown = set(E) - WHATS_NEW_KEYS
+    if unknown:
+        raise ValueError("--whats-new entry has unknown key(s): " + ", ".join(sorted(unknown)))
+    for k in ("id", "tag"):
+        if not isinstance(E.get(k), str) or not E[k]:
+            raise ValueError(f"--whats-new entry needs {k} as a non-empty string")
+    if not isinstance(E.get("title"), str) or not E["title"]:
+        raise ValueError("--whats-new entry needs title as a non-empty string")
+    bullets = E.get("bullets")
+    if not isinstance(bullets, list) or not bullets or any(not isinstance(b, str) or not b for b in bullets):
+        raise ValueError("--whats-new entry needs bullets as a non-empty list of strings")
+    if "date" in E and E["date"] is not None:
+        if not isinstance(E["date"], str) or not DATE_RE.fullmatch(E["date"]):
+            raise ValueError("--whats-new entry date must be YYYY-MM-DD")
+    else:
+        E["date"] = today
+    if "links" in E:
+        links = E["links"]
+        def ok_link(x):
+            return (isinstance(x, dict) and set(x) == {"label", "href"}
+                    and isinstance(x["label"], str) and x["label"]
+                    and isinstance(x["href"], str) and x["href"])
+        if not isinstance(links, list) or any(not ok_link(x) for x in links):
+            raise ValueError("--whats-new entry links must be a list of {label, href}")
+    return E
+
+
+def is_known_build_output(f):
+    if f in STAGE_ALWAYS or f in ("site.webmanifest", "sitemap.xml", "sitemap.txt"):
+        return True
+    if f.startswith(("js/", "css/", "data/")):
+        return True
+    if f.endswith(".html") and not live_only(f):
+        return True
+    return False
+
+
+def may_stage(f, todo):
+    """Named paths --commit may git-add: todo, known build outputs, and data/updates.json. Never git add -A."""
+    if f in todo or f in STAGE_ALWAYS:
+        return True
+    if live_only(f):
+        return False
+    return is_known_build_output(f)
+
+
+def porcelain_paths(cwd):
+    """Paths from git status -z (the new path of a rename)."""
+    raw = git(cwd, "status", "-z", "--porcelain", "--untracked-files=all")
+    items = raw.split("\0")
+    out, i = [], 0
+    while i < len(items) and items[i]:
+        ent = items[i]
+        st, path = ent[:2], ent[3:]
+        if st[0] in ("R", "C"):
+            i += 1
+            if i < len(items) and items[i]:
+                path = items[i]
+        out.append(path)
+        i += 1
+    return out
+
 BEACON = ("<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' "
           "data-cf-beacon='{\"token\": \"145e7409a0914c4cb3ccff3fffe4f1f4\"}'></script><!-- End Cloudflare Web Analytics -->")
 CHIP = '      <p class="preview-chip-row"><span class="preview-chip" title="Test copy. Changes here are not on nightbiteoh.com yet.">Preview</span></p>\n'
@@ -199,16 +245,6 @@ def vnum(v):
     return (int(m.group(1)), m.group(2)) if m else None
 
 
-old_ver = live_version()
-if a.version:
-    VER = a.version
-else:
-    n = vnum(old_ver)
-    if not n:
-        die(f"cannot read live VERSION ({old_ver!r}); pass --version")
-    VER = f"v{n[0] + 1}-{today}"
-
-
 def transform(f, data, dst):
     """bytes of preview file f -> bytes for live"""
     if f.endswith(".html"):
@@ -262,9 +298,6 @@ def transform(f, data, dst):
     return data
 
 
-TM_RE = re.compile(r"\.github/build-inputs/i18n-tm/[A-Za-z_-]+\.json")
-
-
 def merge_tm(f, data, dst):
     """Translation memory: merge, never overwrite. Union of keys under "strings"; preview wins on a key both have,
     keys only on live (e.g. live-only What's new strings) are kept. Written the way i18n-extract.py writes it."""
@@ -281,209 +314,324 @@ def merge_tm(f, data, dst):
     return (json.dumps(out, ensure_ascii=False, indent=1, sort_keys=True) + "\n").encode("utf-8")
 
 
-# ---------------------------------------------------------------- apply into the target tree
-notes, problems = [], []
-if REAL:
-    T = LIVE
-    tmp = None
-else:
-    tmp = pathlib.Path(tempfile.mkdtemp(prefix="nb-promote-dry-"))
-    T = tmp / "live"
-    shutil.copytree(LIVE, T, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
+
+def parse_args(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--preview", default=str(TOOLS.parent), help="preview checkout (any branch; files are read from --ref)")
+    ap.add_argument("--ref", default="origin/main", help="preview commit to promote (default origin/main)")
+    ap.add_argument("--base", help="preview commit live already has (default: from live's last 'Promote preview A..B' commit)")
+    ap.add_argument("--all", action="store_true", help="transform every tracked preview file, not just base..ref")
+    ap.add_argument("--live-dir", default="/workspace/the-night-bite", help="live checkout (default /workspace/the-night-bite)")
+    ap.add_argument("--version", help='sw.js VERSION for live (default next vN, e.g. "v22-2026-11-01")')
+    ap.add_argument("--whats-new", metavar="FILE", help="JSON What's new entry, or a JSON array of entries, to add to live data/updates.json")
+    ap.add_argument("--small-fix", action="store_true", help="skip only the What's new entry requirement (small fixes get no entry); the VERSION bump and every other check still apply")
+    ap.add_argument("--live", action="store_true", help="REAL MODE: write into --live-dir. Only after D'Angelo said \"push\" in chat")
+    ap.add_argument("--confirm-push", action="store_true", help="required with --live: confirms D'Angelo said \"push\" in chat")
+    ap.add_argument("--commit", action="store_true", help="real mode: commit the promoted files in the live checkout")
+    ap.add_argument("--push", action="store_true", help="real mode with --commit: push origin HEAD:main (never force, never rebase)")
+    ap.add_argument("--no-fetch", action="store_true", help="dry run only: do not git fetch the preview or live before reading")
+    ap.add_argument("--show-diff", action="store_true", help="dry run: print a unified diff of each changed text file")
+    return ap.parse_args(argv)
 
 
-def snapshot(root, pred):
-    return {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob("*")
-            if p.is_file() and ".git" not in p.parts and "__pycache__" not in p.parts and pred(p.relative_to(root).as_posix())}
+def main(argv=None):
+    global a, PV, LIVE, REAL, today, VER, notes, problems, T, todo, ref, base
+    a = parse_args(argv)
+    PV = pathlib.Path(a.preview).resolve()
+    LIVE = pathlib.Path(a.live_dir).resolve()
+    REAL = a.live
+    today = datetime.date.today().isoformat()
 
+    incoming = None
+    if a.whats_new:
+        # validate before any git write or live-tree copy, so a bad entry cannot leave a half-written live checkout
+        try:
+            raw = json.loads(pathlib.Path(a.whats_new).read_text())
+        except (OSError, json.JSONDecodeError) as e:
+            die(f"--whats-new is not valid JSON: {e}")
+        incoming = raw if isinstance(raw, list) else [raw]
+        try:
+            incoming = [validate_whats_new_entry(E, today) for E in incoming]
+        except ValueError as e:
+            die(str(e))
 
-guard = lambda r: r.startswith("whisperwood") or r in ("CNAME", "robots.txt") or re.fullmatch(r"google[0-9a-f]+\.html|[0-9a-f]{32}\.txt", r)
-before_guard = snapshot(T, guard)
-try:
-    for f in todo:
-        data = git(PV, "show", f"{ref}:{f}", binary=True)
-        dst = T / f
-        dst.parent.mkdir(parents=True, exist_ok=True)
-        out = transform(f, data, dst)
-        dst.write_bytes(out)
-except AssertionError as e:
-    die(f"transform stopped: {e}", 1)
-if "sw.js" not in todo:   # every promotion gets a new cache VERSION, even when the preview's sw.js did not change
-    sw = (T / "sw.js").read_text()
-    (T / "sw.js").write_text(re.sub(r'var VERSION = "[^"]*";', 'var VERSION = "%s";' % VER, sw, count=1))
+    if REAL and not a.confirm_push:
+        die('real mode needs --live --confirm-push, and is only used after D\'Angelo has said "push" in chat')
+    if a.confirm_push and not REAL:
+        die("--confirm-push only goes with --live")
+    if (a.commit or a.push) and not REAL:
+        die("--commit and --push only go with --live --confirm-push")
+    if a.push and not a.commit:
+        die("--push needs --commit")
+    if REAL and a.no_fetch:
+        die("real mode always fetches; --no-fetch is only for dry runs")
+    if not (LIVE / ".git").exists():
+        die(f"{LIVE} is not a git checkout of the live repo")
+    if not (LIVE / "CNAME").exists():
+        die(f"{LIVE} has no CNAME: not the live site?")
+    if PV == LIVE or (PV / "CNAME").exists():
+        die("--preview points at a live tree")
 
-if a.whats_new:
-    raw = json.loads(pathlib.Path(a.whats_new).read_text())
-    incoming = raw if isinstance(raw, list) else [raw]
-    up_t = (T / "data/updates.json").read_text(); up = json.loads(up_t)
-    added = 0
-    for E in incoming:
-        E = dict(E)
-        E.pop("draft", None)
-        E["date"] = E.get("date") or today
-        for k in ("id", "tag", "title", "bullets"):
-            if not E.get(k):
-                die(f"--whats-new entry needs {k}")
-        if any(x.get("id") == E["id"] for x in up["entries"]):
-            notes.append(f"What's new entry {E['id']} already in live data/updates.json; not added again")
-        else:
-            keys = ["id", "date", "tag", "title", "bullets", "links"]
-            up["entries"].insert(added, {k: E[k] for k in keys if k in E} | {k: v for k, v in E.items() if k not in keys})
-            added += 1
-    if added:
-        (T / "data/updates.json").write_text(registry.dump_like(up_t, up))
-
-build_log = []
-for b in ("build-lake-pages.py", "build-docks.py", "build-summaries.py", "build-meta.py", "stamp-version.py", "build-updates.py", "footer-social.py", "clean-url-script.py", "wrap-dates.py", "stamp-assets.py", "sw-precache.py"):   # sw-precache last: hashes of the final live files. clean-url-script keeps js/clean-url.js on live-only privacy.html and updates.html without changing their wording.
-    p = subprocess.run([sys.executable, str(T / "tools" / b)], cwd=T, capture_output=True, text=True)
-    last = (p.stdout.strip().splitlines() or [""])[-1]
-    build_log.append(f"{b}: {'ok' if p.returncode == 0 else 'FAILED'} {last}")
-    if p.returncode:
-        problems.append(f"{b} failed: {(p.stdout + p.stderr).strip()[-400:]}")
-        break
-
-# ---------------------------------------------------------------- checks
-head_up = json.loads(git(LIVE, "show", "HEAD:data/updates.json"))
-head_ids = {x.get("id") for x in head_up["entries"]}
-now_up = json.loads((T / "data/updates.json").read_text())
-new_entries = [x for x in now_up["entries"] if x.get("id") not in head_ids and x.get("date") and not x.get("draft")]
-if not new_entries and not a.small_fix:
-    problems.append("no new dated What's new entry in live data/updates.json (pass --whats-new FILE, or --small-fix)")
-sw_now = re.search(r'var VERSION = "([^"]*)";', (T / "sw.js").read_text()).group(1)
-if not (vnum(sw_now) and vnum(old_ver) and vnum(sw_now) > vnum(old_ver)):
-    problems.append(f"sw.js VERSION {sw_now} is not newer than live {old_ver}")
-# Live-only pages are never copied from preview, so the boot script has to be
-# inserted during the promote builds. Wording on those pages is left alone.
-clean_boot = re.compile(
-    r'<script src="js/clean-url\.js\?v=' + re.escape(sw_now) + r'"></script>\s*'
-    r'<script src="js/a11y-boot\.js\?v=' + re.escape(sw_now) + r'"></script>'
-)
-for r in ("privacy.html", "updates.html"):
-    body = (T / r).read_text(encoding="utf-8")
-    if not clean_boot.search(body):
-        problems.append(f"{r}: missing js/clean-url.js immediately before a11y-boot with ?v={sw_now}")
-for p in sorted(T.rglob("*.html")):
-    r = p.relative_to(T).as_posix()
-    if r.startswith(("whisperwood", "previews/", "review/")) or re.fullmatch(r"google[0-9a-f]+\.html", r):
-        continue
-    s = p.read_text(encoding="utf-8")
-    if "night-bite-preview" in s or "dr0231.github.io" in s.lower() or "preview-chip" in s:
-        problems.append(f"{r}: preview URL or chip left in")
-    if 'content="noindex,nofollow"' in s:
-        problems.append(f"{r}: robots noindex,nofollow left in")
-    want = 0 if r in STUBS or r == "offline.html" else 1
-    if s.count("static.cloudflareinsights.com/beacon.min.js") != want and r not in STUBS:
-        problems.append(f"{r}: beacon count {s.count('static.cloudflareinsights.com/beacon.min.js')}, want {want}")
-man_p = T / "site.webmanifest"
-if man_p.exists():
-    ms = man_p.read_text(encoding="utf-8")
-    if "night-bite-preview" in ms or "dr0231.github.io" in ms.lower():
-        problems.append("site.webmanifest: preview URL left in")
-    try:
-        mname = json.loads(ms).get("name", "")
-    except ValueError:
-        mname = ""
-        problems.append("site.webmanifest: not valid JSON after promote")
-    if "Preview" in mname:
-        problems.append("site.webmanifest: Preview left in name")
-after_guard = snapshot(T, guard)
-for r in sorted(set(before_guard) | set(after_guard)):
-    if before_guard.get(r) != after_guard.get(r):
-        problems.append(f"live-only file changed: {r}")
-for f in todo:   # self-check: the translation memory merge never drops a string live HEAD has
-    if TM_RE.fullmatch(f):
-        o = subprocess.run(["git", "show", f"HEAD:{f}"], cwd=LIVE, capture_output=True)
-        if o.returncode == 0:
-            lost = set(json.loads(o.stdout).get("strings", {})) - set(json.loads((T / f).read_text(encoding="utf-8")).get("strings", {}))
-            if lost:
-                problems.append(f"{f}: {len(lost)} live translation string(s) dropped")
-if deleted:
-    notes.append("deleted in the preview, left on live (delete by hand if meant): " + ", ".join(deleted))
-
-# ---------------------------------------------------------------- what changed
-STAMP = [(r"\?v=[A-Za-z0-9._-]+", "?v="), (r'data-updates="[^"]*"', 'data-updates=""'), (r"<lastmod>[^<]*</lastmod>", "<lastmod></lastmod>")]
-
-
-def norm(b):
-    try:
-        s = b.decode("utf-8")
-    except UnicodeDecodeError:
-        return b
-    for pat, rep in STAMP:
-        s = re.sub(pat, rep, s)
-    return s
-
-
-if REAL:
-    st = [l for l in git(LIVE, "status", "--porcelain", "--untracked-files=all").splitlines() if l]
-    real_c, stamp_c = [], []
-    for r in (l[3:] for l in st):
-        o = subprocess.run(["git", "show", f"HEAD:{r}"], cwd=LIVE, capture_output=True)
-        if o.returncode == 0 and (LIVE / r).exists() and norm(o.stdout) == norm((LIVE / r).read_bytes()):
-            stamp_c.append(r)
-        else:
-            real_c.append(r)
-else:
-    real_c, stamp_c = [], []
-    for p in sorted(T.rglob("*")):
-        if not p.is_file() or "__pycache__" in p.parts:
-            continue
-        r = p.relative_to(T).as_posix(); o = LIVE / r
-        if o.exists() and filecmp.cmp(o, p, shallow=False):
-            continue
-        if o.exists() and norm(o.read_bytes()) == norm(p.read_bytes()):
-            stamp_c.append(r)
-        else:
-            real_c.append(r)
-            if a.show_diff and o.exists() and r.endswith((".html", ".js", ".css", ".json", ".md", ".xml", ".py", ".cjs")):
-                sys.stdout.writelines(difflib.unified_diff(o.read_text().splitlines(True), p.read_text().splitlines(True), "live/" + r, "promoted/" + r, n=1))
-
-mode = "REAL (wrote " + str(LIVE) + ")" if REAL else "DRY RUN (nothing written; live tree untouched)"
-print(f"promote {mode}")
-print(f"  preview {base[:7] + '..' if base else 'all files at '}{ref[:7]}  ->  {LIVE}")
-print(f"  sw.js VERSION {old_ver} -> {sw_now}")
-print(f"  {len(todo)} preview files promoted, {len(skipped)} live-only skipped" + (f" ({', '.join(skipped[:6])}{'...' if len(skipped) > 6 else ''})" if skipped else ""))
-for l in build_log:
-    print("  " + l)
-print(f"  files {'changed' if REAL else 'that would change'} on live: {len(real_c)} content, {len(stamp_c)} version-stamp only")
-for r in real_c:
-    print("    " + r)
-for n_ in notes:
-    print("  note: " + n_)
-if new_entries:
-    print("  What's new: " + "; ".join(f"{x['id']} ({x['date']}) {x['title']}" for x in new_entries))
-elif a.small_fix:
-    print("  What's new: skipped (--small-fix)")
-if tmp:
-    shutil.rmtree(tmp)
-if problems:
-    print("PROBLEMS (real mode would stop here):" if not REAL else "PROBLEMS (live tree written but NOT committed; fix or `git -C %s checkout -- . && git clean -fd`):" % LIVE)
-    for p_ in problems:
-        print("  ! " + p_)
-    sys.exit(1)
-wn_ok = "What's new skipped (--small-fix)" if (a.small_fix and not new_entries) else "new What's new entry"
-print(f"checks: OK ({wn_ok}, VERSION bumped, no preview leftovers, beacon once per page, live-only files untouched)")
-if not REAL:
-    extra = f" --whats-new {a.whats_new}" if a.whats_new else (" --small-fix" if a.small_fix else " --whats-new FILE")
-    print('real mode, ONLY after D\'Angelo says "push" in chat: add --live --confirm-push' + extra)
-    sys.exit(0)
-
-if a.commit:
-    if new_entries:
-        lead = f"What's new '{new_entries[0]['title']}'"
+    # ---------------------------------------------------------------- what to promote
+    if not a.no_fetch:
+        git(PV, "fetch", "--quiet", "origin")
+        if REAL:
+            git(LIVE, "fetch", "--quiet", "origin")
+    ref = git(PV, "rev-parse", "--verify", a.ref + "^{commit}").strip()
+    if REAL:
+        if git(LIVE, "status", "--porcelain").strip():
+            die(f"live tree {LIVE} has uncommitted changes; commit or clean them first")
+        up = git(LIVE, "rev-parse", "--verify", "origin/main").strip()
+        if git(LIVE, "rev-parse", "HEAD").strip() != up:
+            die(f"live HEAD is not origin/main ({up[:7]}); update the checkout and rerun the promote")
+    elif not a.no_fetch:
+        up_p = subprocess.run(["git", "rev-parse", "--verify", "-q", "origin/main"], cwd=LIVE, capture_output=True, text=True)
+        if up_p.returncode == 0 and git(LIVE, "rev-parse", "HEAD").strip() != up_p.stdout.strip():
+            print(f"note: live HEAD is not origin/main ({up_p.stdout.strip()[:7]}); real mode would refuse")
+    base = a.base
+    if not base and not a.all:
+        log = git(LIVE, "log", "--format=%s", "-n", "200")
+        m = re.search(r"Promote preview [0-9a-f]+\.\.([0-9a-f]+)", log)
+        if not m:
+            die("no 'Promote preview A..B' commit in live history; pass --base or --all")
+        base = m.group(1)
+    if base:
+        base = git(PV, "rev-parse", "--verify", base + "^{commit}").strip()
+        rows = [l.split("\t") for l in git(PV, "diff", "--name-status", "--no-renames", base, ref).splitlines() if l]
+        files = [r[-1] for r in rows if r[0] != "D"]
+        deleted = [r[-1] for r in rows if r[0] == "D"]
     else:
-        lead = "small fix (no What's new entry)"
-    msg = (f"Promote preview {base[:7] + '..' if base else ''}{ref[:7]} to live: {lead}; privacy and updates copy, "
-           f"beacon, CSP, CNAME and IndexNow key kept; SW {sw_now}")
-    git(LIVE, "add", "-A")
-    git(LIVE, *GIT_ID, "commit", "-q", "-m", msg)
-    print("committed " + git(LIVE, "rev-parse", "--short", "HEAD").strip() + ": " + msg)
-    if a.push:
-        git(LIVE, *GIT_ID, "pull", "--rebase", "--quiet")
-        p = subprocess.run(["timeout", "120", "git", "push", "origin", "HEAD:main"], cwd=LIVE, capture_output=True, text=True)
+        files = [f for f in git(PV, "ls-tree", "-r", "--name-only", ref).splitlines() if f]
+        deleted = []
+
+    todo = [f for f in files if not live_only(f)]
+    skipped = [f for f in files if live_only(f)]
+
+    old_ver = live_version()
+    if a.version:
+        VER = a.version
+    else:
+        n = vnum(old_ver)
+        if not n:
+            die(f"cannot read live VERSION ({old_ver!r}); pass --version")
+        VER = f"v{n[0] + 1}-{today}"
+
+
+    # ---------------------------------------------------------------- apply into the target tree
+    notes, problems = [], []
+    if REAL:
+        T = LIVE
+        tmp = None
+    else:
+        tmp = pathlib.Path(tempfile.mkdtemp(prefix="nb-promote-dry-"))
+        T = tmp / "live"
+        shutil.copytree(LIVE, T, ignore=shutil.ignore_patterns(".git", "__pycache__"), symlinks=True)
+
+
+    def snapshot(root, pred):
+        return {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob("*")
+                if p.is_file() and ".git" not in p.parts and "__pycache__" not in p.parts and pred(p.relative_to(root).as_posix())}
+
+
+    guard = guard_path
+    before_guard = snapshot(T, guard)
+    try:
+        for f in todo:
+            data = git(PV, "show", f"{ref}:{f}", binary=True)
+            dst = T / f
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            out = transform(f, data, dst)
+            dst.write_bytes(out)
+    except AssertionError as e:
+        die(f"transform stopped: {e}", 1)
+    if "sw.js" not in todo:   # every promotion gets a new cache VERSION, even when the preview's sw.js did not change
+        sw = (T / "sw.js").read_text()
+        (T / "sw.js").write_text(re.sub(r'var VERSION = "[^"]*";', 'var VERSION = "%s";' % VER, sw, count=1))
+
+    if incoming:
+        up_t = (T / "data/updates.json").read_text(); up = json.loads(up_t)
+        added = 0
+        for E in incoming:
+            if any(x.get("id") == E["id"] for x in up["entries"]):
+                notes.append(f"What's new entry {E['id']} already in live data/updates.json; not added again")
+            else:
+                keys = ["id", "date", "tag", "title", "bullets", "links"]
+                up["entries"].insert(added, {k: E[k] for k in keys if k in E})
+                added += 1
+        if added:
+            (T / "data/updates.json").write_text(registry.dump_like(up_t, up))
+
+    build_log = []
+    for b in ("build-lake-pages.py", "build-docks.py", "build-summaries.py", "build-meta.py", "stamp-version.py", "build-updates.py", "footer-social.py", "clean-url-script.py", "wrap-dates.py", "stamp-assets.py", "sw-precache.py"):   # sw-precache last: hashes of the final live files. clean-url-script keeps js/clean-url.js on live-only privacy.html and updates.html without changing their wording.
+        p = subprocess.run([sys.executable, str(T / "tools" / b)], cwd=T, capture_output=True, text=True)
+        last = (p.stdout.strip().splitlines() or [""])[-1]
+        build_log.append(f"{b}: {'ok' if p.returncode == 0 else 'FAILED'} {last}")
         if p.returncode:
-            die("push failed (not retried, never forced): " + p.stderr.strip(), 1)
-        print("pushed " + git(LIVE, "rev-parse", "--short", "HEAD").strip() + " to origin main")
-        print("when nightbiteoh.com serves it: python3 tools/indexnow.py --since HEAD~1 --send   (run from the live checkout)")
-else:
-    print("not committed (add --commit)")
+            problems.append(f"{b} failed: {(p.stdout + p.stderr).strip()[-400:]}")
+            break
+
+    # ---------------------------------------------------------------- checks
+    head_up = json.loads(git(LIVE, "show", "HEAD:data/updates.json"))
+    head_ids = {x.get("id") for x in head_up["entries"]}
+    now_up = json.loads((T / "data/updates.json").read_text())
+    new_entries = [x for x in now_up["entries"] if x.get("id") not in head_ids and x.get("date") and not x.get("draft")]
+    if not new_entries and not a.small_fix:
+        problems.append("no new dated What's new entry in live data/updates.json (pass --whats-new FILE, or --small-fix)")
+    sw_now = re.search(r'var VERSION = "([^"]*)";', (T / "sw.js").read_text()).group(1)
+    if not (vnum(sw_now) and vnum(old_ver) and vnum(sw_now) > vnum(old_ver)):
+        problems.append(f"sw.js VERSION {sw_now} is not newer than live {old_ver}")
+    # Live-only pages are never copied from preview, so the boot script has to be
+    # inserted during the promote builds. Wording on those pages is left alone.
+    clean_boot = re.compile(
+        r'<script src="js/clean-url\.js\?v=' + re.escape(sw_now) + r'"></script>\s*'
+        r'<script src="js/a11y-boot\.js\?v=' + re.escape(sw_now) + r'"></script>'
+    )
+    for r in ("privacy.html", "updates.html"):
+        body = (T / r).read_text(encoding="utf-8")
+        if not clean_boot.search(body):
+            problems.append(f"{r}: missing js/clean-url.js immediately before a11y-boot with ?v={sw_now}")
+    for name, is_upd in (("privacy.html", False), ("updates.html", True)):
+        now = (T / name).read_text(encoding="utf-8")
+        old = git(LIVE, "show", f"HEAD:{name}", check=False)
+        if not old:
+            problems.append(f"{name}: missing from live HEAD")
+        elif live_page_shell(old, updates=is_upd) != live_page_shell(now, updates=is_upd):
+            extra = " and the What's new block" if is_upd else ""
+            problems.append(f"{name}: wording changed beyond allowed stamps, clean-url, footer follow row{extra}")
+    for p in sorted(T.rglob("*.html")):
+        r = p.relative_to(T).as_posix()
+        if r.startswith(("whisperwood", "previews/", "review/")) or re.fullmatch(r"google[0-9a-f]+\.html", r):
+            continue
+        s = p.read_text(encoding="utf-8")
+        if "night-bite-preview" in s or "dr0231.github.io" in s.lower() or "preview-chip" in s:
+            problems.append(f"{r}: preview URL or chip left in")
+        if 'content="noindex,nofollow"' in s:
+            problems.append(f"{r}: robots noindex,nofollow left in")
+        want = 0 if r in STUBS or r == "offline.html" else 1
+        if s.count("static.cloudflareinsights.com/beacon.min.js") != want and r not in STUBS:
+            problems.append(f"{r}: beacon count {s.count('static.cloudflareinsights.com/beacon.min.js')}, want {want}")
+    man_p = T / "site.webmanifest"
+    if man_p.exists():
+        ms = man_p.read_text(encoding="utf-8")
+        if "night-bite-preview" in ms or "dr0231.github.io" in ms.lower():
+            problems.append("site.webmanifest: preview URL left in")
+        try:
+            mname = json.loads(ms).get("name", "")
+        except ValueError:
+            mname = ""
+            problems.append("site.webmanifest: not valid JSON after promote")
+        if "Preview" in mname:
+            problems.append("site.webmanifest: Preview left in name")
+    after_guard = snapshot(T, guard)
+    for r in sorted(set(before_guard) | set(after_guard)):
+        if before_guard.get(r) != after_guard.get(r):
+            problems.append(f"live-only file changed: {r}")
+    tm_root = T / TM_DIR   # every .json under the folder, not only names TM_RE used to match
+    if tm_root.is_dir():
+        for p in sorted(tm_root.glob("*.json")):
+            f = p.relative_to(T).as_posix()
+            o = subprocess.run(["git", "show", f"HEAD:{f}"], cwd=LIVE, capture_output=True)
+            if o.returncode == 0:
+                lost = set(json.loads(o.stdout).get("strings", {})) - set(json.loads(p.read_text(encoding="utf-8")).get("strings", {}))
+                if lost:
+                    problems.append(f"{f}: {len(lost)} live translation string(s) dropped")
+    if deleted:
+        notes.append("deleted in the preview, left on live (delete by hand if meant): " + ", ".join(deleted))
+
+    # ---------------------------------------------------------------- what changed
+    STAMP = [(r"\?v=[A-Za-z0-9._-]+", "?v="), (r'data-updates="[^"]*"', 'data-updates=""'), (r"<lastmod>[^<]*</lastmod>", "<lastmod></lastmod>")]
+
+
+    def norm(b):
+        try:
+            s = b.decode("utf-8")
+        except UnicodeDecodeError:
+            return b
+        for pat, rep in STAMP:
+            s = re.sub(pat, rep, s)
+        return s
+
+
+    if REAL:
+        st = [l for l in git(LIVE, "status", "--porcelain", "--untracked-files=all").splitlines() if l]
+        real_c, stamp_c = [], []
+        for r in (l[3:] for l in st):
+            o = subprocess.run(["git", "show", f"HEAD:{r}"], cwd=LIVE, capture_output=True)
+            if o.returncode == 0 and (LIVE / r).exists() and norm(o.stdout) == norm((LIVE / r).read_bytes()):
+                stamp_c.append(r)
+            else:
+                real_c.append(r)
+    else:
+        real_c, stamp_c = [], []
+        for p in sorted(T.rglob("*")):
+            if not p.is_file() or "__pycache__" in p.parts:
+                continue
+            r = p.relative_to(T).as_posix(); o = LIVE / r
+            if o.exists() and filecmp.cmp(o, p, shallow=False):
+                continue
+            if o.exists() and norm(o.read_bytes()) == norm(p.read_bytes()):
+                stamp_c.append(r)
+            else:
+                real_c.append(r)
+                if a.show_diff and o.exists() and r.endswith((".html", ".js", ".css", ".json", ".md", ".xml", ".py", ".cjs")):
+                    sys.stdout.writelines(difflib.unified_diff(o.read_text().splitlines(True), p.read_text().splitlines(True), "live/" + r, "promoted/" + r, n=1))
+
+    mode = "REAL (wrote " + str(LIVE) + ")" if REAL else "DRY RUN (nothing written; live tree untouched)"
+    print(f"promote {mode}")
+    print(f"  preview {base[:7] + '..' if base else 'all files at '}{ref[:7]}  ->  {LIVE}")
+    print(f"  sw.js VERSION {old_ver} -> {sw_now}")
+    print(f"  {len(todo)} preview files promoted, {len(skipped)} live-only skipped" + (f" ({', '.join(skipped[:6])}{'...' if len(skipped) > 6 else ''})" if skipped else ""))
+    for l in build_log:
+        print("  " + l)
+    print(f"  files {'changed' if REAL else 'that would change'} on live: {len(real_c)} content, {len(stamp_c)} version-stamp only")
+    for r in real_c:
+        print("    " + r)
+    for n_ in notes:
+        print("  note: " + n_)
+    if new_entries:
+        print("  What's new: " + "; ".join(f"{x['id']} ({x['date']}) {x['title']}" for x in new_entries))
+    elif a.small_fix:
+        print("  What's new: skipped (--small-fix)")
+    if tmp:
+        shutil.rmtree(tmp)
+    if problems:
+        print("PROBLEMS (real mode would stop here):" if not REAL else "PROBLEMS (live tree written but NOT committed; fix or `git -C %s checkout -- . && git clean -fd`):" % LIVE)
+        for p_ in problems:
+            print("  ! " + p_)
+        sys.exit(1)
+    wn_ok = "What's new skipped (--small-fix)" if (a.small_fix and not new_entries) else "new What's new entry"
+    print(f"checks: OK ({wn_ok}, VERSION bumped, no preview leftovers, beacon once per page, live-only files untouched)")
+    if not REAL:
+        extra = f" --whats-new {a.whats_new}" if a.whats_new else (" --small-fix" if a.small_fix else " --whats-new FILE")
+        print('real mode, ONLY after D\'Angelo says "push" in chat: add --live --confirm-push' + extra)
+        sys.exit(0)
+
+    if a.commit:
+        if new_entries:
+            lead = f"What's new '{new_entries[0]['title']}'"
+        else:
+            lead = "small fix (no What's new entry)"
+        msg = (f"Promote preview {base[:7] + '..' if base else ''}{ref[:7]} to live: {lead}; privacy and updates copy, "
+               f"beacon, CSP, CNAME and IndexNow key kept; SW {sw_now}")
+        changed = porcelain_paths(LIVE)
+        unexpected = [f for f in changed if not may_stage(f, set(todo))]
+        if unexpected:
+            die("refusing to commit; unexpected paths changed (not staged): " + ", ".join(unexpected), 1)
+        if not changed:
+            die("nothing to commit", 1)
+        git(LIVE, "add", "--", *changed)
+        git(LIVE, *GIT_ID, "commit", "-q", "-m", msg)
+        print("committed " + git(LIVE, "rev-parse", "--short", "HEAD").strip() + ": " + msg)
+        if a.push:
+            # plain push only: a post-commit rebase can change the commit the checks never ran against
+            p = subprocess.run(["timeout", "120", "git", "push", "origin", "HEAD:main"], cwd=LIVE, capture_output=True, text=True)
+            if p.returncode:
+                die("push failed (not retried, never forced, never rebased). If live main has moved, update the checkout and rerun the promote: " + (p.stderr or p.stdout).strip(), 1)
+            print("pushed " + git(LIVE, "rev-parse", "--short", "HEAD").strip() + " to origin main")
+            print("when nightbiteoh.com serves it: python3 tools/indexnow.py --since HEAD~1 --send   (run from the live checkout)")
+    else:
+        print("not committed (add --commit)")
+
+
+if __name__ == "__main__":
+    main()

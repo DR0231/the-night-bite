@@ -6,7 +6,7 @@
  },
  "strings": {
   "berlin.03baf64e": "z powodu remontu od",
-  "berlin.04e2bcca": ". Slip Mill Creek jest otwarty od 7 września do",
+  "berlin.0685b077": ". Corps podał, że slip Mill Creek Campground pozostanie otwarty do",
   "berlin.072dc887": ", szybko rośnie",
   "berlin.07f6d49b": "punktów lub więcej to Dobrze,",
   "berlin.09ca55ca": "Udostępnij",
@@ -15,7 +15,6 @@
   "berlin.0f01ed56": "Przykład",
   "berlin.0ffa76e1": "Strona ODNR Berlin Lake Fishing Area nie podaje godzin dostępu, tylko limit 10 mph na jeziorze w nocy; stosuj się do znaków.",
   "berlin.106e9470": "gdziekolwiek w dzisiejszej prognozie NWS daje ocenę Słabo, bez względu na punkty.",
-  "berlin.113a2331": "; Mill Creek jest otwarty od 7 września do",
   "berlin.1242f2c4": "(ODNR). W dzień bez limitu mocy, w nocy 10 mph na całym jeziorze. Według instrukcji Korpusu slip German Church Road jest suchy poniżej 1,009.31 ft.",
   "berlin.134e9305": "Burza",
   "berlin.13f453a4": "Czasy dojazdu są orientacyjne.",
@@ -95,10 +94,10 @@
   "berlin.a7fa610c": "Otwórz dziennik",
   "berlin.a8d4cf97": ". Stałe oznacza w granicach",
   "berlin.a9f3ee46": "mapę ze slipami",
+  "berlin.b1481d47": "U.S. Army Corps of Engineers, Berlin Lake (",
   "berlin.b2f53719": "inHg lub więcej.",
   "berlin.b31906af": "Poziom jeziora pochodzi z wodowskazu USGS 03090000 koło Berlin Center. Jest",
   "berlin.b83bf8c4": "Przeglądaj gatunki",
-  "berlin.b8aa2b73": "i od 27 lutego do",
   "berlin.bb5dfee0": "Letni poziom Korpusu (górna granica rezerwy) to 1,024 ft; poziom może się wahać nawet o 20 ft w ciągu roku. Poziom na żywo:",
   "berlin.bfa17ff0": "Strony gatunków z przypomnieniami o limitach według przepisów ODNR 2026–27",
   "berlin.c0488800": ". W dzień bez limitu hp, w nocy 10 mph. Dutch Harbor, Deer Creek i Willow Creek nie są zaznaczone. Linia brzegu z OpenStreetMap, nie do nawigacji.",
@@ -127,6 +126,7 @@
   "berlin.ef095ca1": ", wszystko pomiędzy",
   "berlin.f132d7dd": "Slipy i",
   "berlin.f2eb9a7b": "Brak publicznego pomiaru temperatury wody",
+  "berlin.f73ad3b6": "; jest już zamknięty na sezon. ODNR nadal podaje, że jest otwarty do 25 listopada, i znów od 27 lutego do",
   "berlin.f82eb2f1": "AM lub PM",
   "berlin.f9bb7357": "Anuluj przypomnienie"
  }

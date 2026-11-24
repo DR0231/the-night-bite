@@ -6,7 +6,7 @@
  },
  "strings": {
   "berlin.03baf64e": "改修のため、期間",
-  "berlin.04e2bcca": "。Mill Creek のスロープは 9月7日 から",
+  "berlin.0685b077": "。Corps によると Mill Creek Campground のボートスロープは次の日まで開いていました：",
   "berlin.072dc887": "、急上昇",
   "berlin.07f6d49b": "点以上は「良い」、",
   "berlin.09ca55ca": "共有",
@@ -15,7 +15,6 @@
   "berlin.0f01ed56": "例",
   "berlin.0ffa76e1": "ODNR の Berlin Lake Fishing Area ページには利用時間の記載がなく、夜間は湖で 10 mph 制限のみです。掲示に従ってください。",
   "berlin.106e9470": "が今夜の NWS 予報のどこかにあれば、点数に関係なく「厳しい」になります。",
-  "berlin.113a2331": "。Mill Creek は 9月7日 から",
   "berlin.1242f2c4": "（ODNR）。日中は馬力制限なし、夜間は湖全体で 10 mph。Corps の資料では、German Church Road のスロープは 1,009.31 ft 未満で干上がります。",
   "berlin.134e9305": "雷",
   "berlin.13f453a4": "所要時間はおおよそです。",
@@ -95,10 +94,10 @@
   "berlin.a7fa610c": "記録を開く",
   "berlin.a8d4cf97": "。安定は",
   "berlin.a9f3ee46": "ボートスロープの地図",
+  "berlin.b1481d47": "U.S. Army Corps of Engineers, Berlin Lake (",
   "berlin.b2f53719": "inHg 以上です。",
   "berlin.b31906af": "湖の水位は Berlin Center 近くの USGS 水位計 03090000 によるもので、",
   "berlin.b83bf8c4": "魚種を見る",
-  "berlin.b8aa2b73": "と 2月27日 から",
   "berlin.bb5dfee0": "Corps の夏季水位（保全水位の上限）は 1,024 ft で、湖の水位は1年で最大 20 ft 変動します。現在の水位：",
   "berlin.bfa17ff0": "ODNR 2026–27 規則に基づく制限の目安つき魚種ページ",
   "berlin.c0488800": "まで利用可。日中は hp 制限なし、夜間は 10 mph。Dutch Harbor、Deer Creek、Willow Creek はピンなし。湖岸線は OpenStreetMap からのトレースで、航行用ではありません。",
@@ -127,6 +126,7 @@
   "berlin.ef095ca1": "、その間は",
   "berlin.f132d7dd": "スロープと",
   "berlin.f2eb9a7b": "公開の水温計なし",
+  "berlin.f73ad3b6": "。現在は今季閉鎖中です。ODNR はなお 11月25日まで開いているとし、2月27日から次の日まで再開すると掲載しています：",
   "berlin.f82eb2f1": "午前または午後",
   "berlin.f9bb7357": "リマインダーを取り消す"
  }

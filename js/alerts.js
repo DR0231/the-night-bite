@@ -8,7 +8,16 @@
  */
 (function () {
   if (!window.fetch) return;
-  var LK = window.NightBiteLake, LC = (LK && LK.cfg) || null;   // js/lakes.js; Hoover if missing
+  function pageLake() {
+    var id = (window.NightBitePageLake || document.documentElement.getAttribute("data-lake") || "").toLowerCase();
+    if (id) return id;
+    var m = document.querySelector('meta[name="nb-home"]');
+    return ((m && m.getAttribute("content")) || "").toLowerCase();
+  }
+  var LK = window.NightBiteLake;
+  // If lakes.js is missing, only a Hoover page may use Hoover's zones or unsuffixed alert cache.
+  if (!LK && pageLake() !== "hoover") return;
+  var LC = (LK && LK.cfg) || null;
   var URL = "https://api.weather.gov/alerts/active?zone=" + ((LC && LC.alerts.zones) || "OHC041,OHC049,OHZ046,OHZ055");
   var MORE = (LC && LC.nws.page) || "https://forecast.weather.gov/MapClick.php?lat=40.11&lon=-82.88";
   var COUNTIES = (LC && LC.alerts.counties) || "the Hoover area";

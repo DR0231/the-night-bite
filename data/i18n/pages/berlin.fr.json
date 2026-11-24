@@ -6,7 +6,7 @@
  },
  "strings": {
   "berlin.03baf64e": "pour rénovation du",
-  "berlin.04e2bcca": ". La rampe de Mill Creek est ouverte du 7 sept. au",
+  "berlin.0685b077": ". Le Corps a indiqué que la rampe du Mill Creek Campground resterait ouverte jusqu’au",
   "berlin.072dc887": ", hausse rapide",
   "berlin.07f6d49b": "points ou plus, c’est Bon,",
   "berlin.09ca55ca": "Partager",
@@ -15,7 +15,6 @@
   "berlin.0f01ed56": "Exemple",
   "berlin.0ffa76e1": "La page Berlin Lake Fishing Area de l’ODNR n’indique aucun horaire d’accès, seulement une limite de 10 mph la nuit ; suivez les panneaux.",
   "berlin.106e9470": "n’importe où dans la prévision NWS de ce soir donne Difficile, quels que soient les points.",
-  "berlin.113a2331": " ; Mill Creek est ouverte du 7 sept. au",
   "berlin.1242f2c4": "(ODNR). Pas de limite de puissance le jour, 10 mph sur tout le lac la nuit. Le manuel du Corps indique que la rampe de German Church Road est à sec sous 1,009.31 ft.",
   "berlin.134e9305": "Orage",
   "berlin.13f453a4": "Les temps de trajet sont approximatifs.",
@@ -95,10 +94,10 @@
   "berlin.a7fa610c": "Ouvrir le carnet",
   "berlin.a8d4cf97": ". Stable signifie à moins de",
   "berlin.a9f3ee46": "carte avec rampes de mise à l’eau",
+  "berlin.b1481d47": "U.S. Army Corps of Engineers, Berlin Lake (",
   "berlin.b2f53719": "inHg ou plus.",
   "berlin.b31906af": "Le niveau du lac vient de la jauge USGS 03090000 près de Berlin Center. Il est",
   "berlin.b83bf8c4": "Voir les espèces",
-  "berlin.b8aa2b73": "et du 27 févr. au",
   "berlin.bb5dfee0": "Le niveau d’été du Corps (haut de conservation) est de 1,024 ft ; le lac peut varier jusqu’à 20 ft en un an. Niveau en direct :",
   "berlin.bfa17ff0": "Pages espèces avec rappels de limites des règles ODNR 2026–27",
   "berlin.c0488800": ". Pas de limite de hp le jour, 10 mph la nuit. Dutch Harbor, Deer Creek et Willow Creek ne sont pas placés. Rive tracée d’après OpenStreetMap, pas pour la navigation.",
@@ -127,6 +126,7 @@
   "berlin.ef095ca1": ", tout ce qui est entre",
   "berlin.f132d7dd": "Rampes et",
   "berlin.f2eb9a7b": "Pas de sonde publique de température de l’eau",
+  "berlin.f73ad3b6": " ; elle est maintenant fermée pour la saison. L’ODNR l’indique encore ouverte jusqu’au 25 nov., et de nouveau du 27 févr. au",
   "berlin.f82eb2f1": "AM ou PM",
   "berlin.f9bb7357": "Annuler le rappel"
  }

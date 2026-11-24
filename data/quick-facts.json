@@ -665,11 +665,11 @@
       ]
     },
     "berlin": {
-      "checked": "2026-11-03",
+      "checked": "2026-11-24",
       "title": "Berlin Lake Fishing: Level, Ramps, Rules | The Night Bite",
       "description": "Berlin Lake fishing: live USGS lake level, no hp limit by day and 10 mph at night, Bonner Road ramp closed to May 2027, tonight's bite. Unofficial.",
       "motors": "No horsepower limit by day; 10 mph on the whole lake at night.",
-      "ramps": "Bonner Road ramp is closed for renovation from Sept. 14, 2026 to May 28, 2027. Mill Creek ramp is open Sept. 7 to Nov. 25, 2026 and Feb. 27 to May 21, 2027.",
+      "ramps": "Bonner Road ramp is closed for renovation from Sept. 14, 2026 to May 28, 2027. The Corps said the Mill Creek Campground boat ramp would remain open until Nov. 23, 2026; it is now closed for the season. ODNR still lists it open to Nov. 25, and open again from Feb. 27 to May 21, 2027.",
       "pool": "Corps summer pool (top of conservation) is 1,024 ft; the lake can swing as much as 20 ft in a year.",
       "sources": [
         [
@@ -683,6 +683,10 @@
         [
           "ODNR fishing map",
           "https://dam.assets.ohio.gov/image/upload/ohiodnr.gov/documents/wildlife/maps/berlinlake2.pdf"
+        ],
+        [
+          "U.S. Army Corps of Engineers, Berlin Lake (Nov. 19, 2026)",
+          "https://www.facebook.com/BerlinLakeUSACE/posts/lake-informationthursday-november-19th-2026remindersmill-creek-campground-boat-r/1838834070937233/"
         ]
       ],
       "night": "ODNR's Berlin Lake Fishing Area page lists no access hours, only a 10 mph limit on the lake at night; follow posted signs.",

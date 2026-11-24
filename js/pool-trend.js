@@ -8,7 +8,15 @@
   var box = document.getElementById("pool-trend");
   if (box && !window.fetch) box.removeAttribute("data-pending");
   if (!box || !window.fetch) return;
-  var LK = window.NightBiteLake, LP = LK && LK.cfg && LK.cfg.pool;   // js/lakes.js; Hoover if missing
+  function pageLake() {
+    var id = (window.NightBitePageLake || document.documentElement.getAttribute("data-lake") || "").toLowerCase();
+    if (id) return id;
+    var m = document.querySelector('meta[name="nb-home"]');
+    return ((m && m.getAttribute("content")) || "").toLowerCase();
+  }
+  var LK = window.NightBiteLake, LP = LK && LK.cfg && LK.cfg.pool;
+  // If lakes.js is missing, only a Hoover page may use Hoover's gauge or unsuffixed saved week.
+  if (!LK && pageLake() !== "hoover") { box.removeAttribute("data-pending"); return; }
   if (LP && !LP.src) { box.hidden = true; box.removeAttribute("data-pending"); return; }   // no public lake gauge: no trend
   var CWMS = !!(LP && LP.src === "cwms");
   var LS = window.NightBiteLakes;
@@ -38,9 +46,19 @@
   }
 
   // each load gets a number, so a slow older answer never redraws over a newer one
-  var seq = 0;
+  var seq = 0, lastPt = null, MAX_AGE = 6 * 36e5;
+  // a failed refresh keeps the last chart, but "Now" and the 7-day word are only current while the last point is
+  // from the last 6 hours. Re-check on every tick and in the catch path so an old end is not left as Now.
+  function ageCheck() {
+    if (!lastPt || !box.hasAttribute("data-drawn")) return;
+    if (Date.now() - lastPt.t <= MAX_AGE) return;
+    var endEl = box.querySelector(".pool-trend-axis span:last-child");
+    if (endEl) endEl.textContent = clock(lastPt.iso || lastPt.t);
+    box.setAttribute("data-old", "1");
+  }
   function load() {
   var mine = ++seq;
+  ageCheck();
   return points()
     .then(function (pts) {
       if (mine !== seq) return;
@@ -51,6 +69,7 @@
     })
     .catch(function () {
       if (mine !== seq) return;
+      ageCheck();
       // offline: redraw the last saved week; a failed refresh keeps the last chart; otherwise stay hidden
       var saved = !box.hasAttribute("data-drawn") && OFF && OFF.isOffline() && OFF.load(SAVE_KEY, 14 * 864e5);
       if (saved && saved.pts && saved.pts.length >= 12) { draw(saved.pts); box.setAttribute("data-offline", "1"); return; }
@@ -85,12 +104,13 @@
       pts.forEach(function (p, i) { d += (i ? "L" : "M") + x(p.t).toFixed(1) + " " + y(p.v).toFixed(1); });
       svg.appendChild(el("path", { d: d, class: "pool-trend-line" }));
       var last = pts[pts.length - 1];
+      lastPt = last;
       svg.appendChild(el("rect", { x: (x(last.t) - 3).toFixed(1), y: (y(last.v) - 3).toFixed(1), width: 6, height: 6, class: "pool-trend-now" }));
 
       // the chart ends at its last reading: "Now" only when that reading is from the last 6 hours, else its own time
       // ("9:00 AM Tue"), and an old chart's word stays out of "Tonight, in short" (js/conditions.js reads data-old)
       var endEl = box.querySelector(".pool-trend-axis span:last-child");
-      var old = Date.now() - last.t > 6 * 36e5;
+      var old = Date.now() - last.t > MAX_AGE;
       if (endEl) endEl.textContent = old ? clock(last.iso || last.t) : "Now";
       if (old) box.setAttribute("data-old", "1"); else box.removeAttribute("data-old");
 

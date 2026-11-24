@@ -1,0 +1,5 @@
+# Pinned packages for .github/workflows/static-checks.yml.
+# Versions from PyPI on 2026-11-24 (beautifulsoup4 4.15.0, lxml 6.1.3, pillow 13.0.0).
+beautifulsoup4==4.15.0
+lxml==6.1.3
+pillow==13.0.0

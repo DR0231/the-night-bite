@@ -273,7 +273,7 @@ Gaps (said on the site, never filled in):
 - ODNR's acreage differs between pages (Dillon 1,376 or 1,560; Lake Logan 333 or 400; Dow 171 or 161); both are shown where it matters.
 - No ice reports, no 2026 dock pull dates, and no community trips logged at these lakes yet.
 
-## Lakes: Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton and Leesville Lake, checked Nov. 3, 2026
+## Lakes: Mosquito Creek Lake, Berlin Lake, West Branch Reservoir, Pymatuning Lake, Lake Milton and Leesville Lake, checked Nov. 3, 2026 (Berlin Mill Creek ramp updated Nov. 24, 2026)
 
 Same system as the other lakes: `?lake=mosquito|berlin|westbranch|pymatuning|milton|leesville`, home pages at `/mosquito/`, `/berlin/`, `/westbranch/`, `/pymatuning/`, `/milton/`, `/leesville/` (built by `tools/build-lake-pages.py`), per lake settings in `js/lakes.js`, region `northeast`. Five have a USGS lake gauge. Pymatuning's USGS gauge (03100500) has posted nothing since June 4, 2026, so `pool.src` is `null`, the pool card says the gauge is stale and the last reading is never shown as current. No lake has a public water temperature gauge.
 
@@ -294,7 +294,7 @@ Regulations (2026–27, ODNR Fishing Regulations PDF above): walleye, sauger and
 
 ODNR Fish Stocking dashboard (https://analytics.das.ohio.gov/t/DOPPUB/views/ODNR_Fish_Stocking/FishStocking, read Nov. 3, 2026), 2016 to 2025: Mosquito walleye every year (2025: 883,376 fingerlings, plus fry) and 125 bluegill catchables in 2025; Berlin walleye every year (2025: 404,931 fingerlings); West Branch walleye every year but 2023 (2025: 264,996), muskellunge every year (2025: 1,699) and blue catfish 2023 to 2025 (2025: 27,612); Pymatuning walleye every year but 2023 (2025: 293,132), no muskellunge stocked on the Ohio side; Lake Milton walleye every year (2025: 254,873) and muskellunge every year (2025: 1,096); Leesville saugeye every year (2025: 101,544), muskellunge every year (2025: 985) and channel catfish in odd years 2017 to 2025 (2025: 10,125).
 
-Dock season, ramp notices and drawdowns (`data/docks.json`, watched by `tools/check-docks.py`): Berlin's Bonner Road ramp is closed Sept. 14, 2026 to May 28, 2027 (Mill Creek ramp open in its place, ODNR); Mosquito's marina and beach lots have construction from Oct. 3 (ODNR park page); Lake Milton's fall drawdown typically begins Oct. 15, takes the lake down about 8 ft, and refill starts March 15 (ODNR).
+Dock season, ramp notices and drawdowns (`data/docks.json`, watched by `tools/check-docks.py`): Berlin's Bonner Road ramp is closed Sept. 14, 2026 to May 28, 2027 (ODNR). The U.S. Army Corps of Engineers (official Berlin Lake Facebook page) said the Mill Creek Campground boat ramp would remain open until Nov. 23, 2026; as of Nov. 24 it is closed for the season. ODNR's Berlin Lake Fishing Area page still lists Mill Creek open 9/7 to 11/25/2026 and 2/27 to 5/21/2027. Do not put the Mill Creek close date back to Nov. 25 from the ODNR page alone; the Corps runs that ramp. Mosquito's marina and beach lots have construction from Oct. 3 (ODNR park page); Lake Milton's fall drawdown typically begins Oct. 15, takes the lake down about 8 ft, and refill starts March 15 (ODNR).
 
 Map pins (`js/lake-map-data-mosquito.js`, `-berlin.js`, `-westbranch.js`, `-pymatuning.js`, `-milton.js`, `-leesville.js`; shorelines traced from OpenStreetMap, not for navigation):
 
@@ -307,7 +307,7 @@ Map pins (`js/lake-map-data-mosquito.js`, `-berlin.js`, `-westbranch.js`, `-pyma
 | Mosquito Creek Lake | Causeway Bait and Tackle (ramp and bait) (shop) | 2233 Greenville Rd NE, Cortland | ODNR Mosquito Lake State Park page (Causeway Bait and Tackle Launch Ramp, 2233 Greenville Rd NE, 330-637-7076); Google listing (open, recent reviews; coordinates) |
 | Mosquito Creek Lake | Wildlife launch area (kayaks and small boats) (access) | Off Mahan Denman Rd NE, northwest side | ODNR Mosquito Lake State Park page (Wildlife Launch Area, ODNR Wildlife 440-685-4776); OpenStreetMap way 1182089442 (coordinates) |
 | Berlin Lake | Bonner Road ramp (closed to May 28, 2027) (ramp) | Bonner Road, Deerfield | ODNR Berlin Lake Fishing Area page (Bonner Road ramp closed 9/14/2026 to 5/28/2027); OpenStreetMap way 942253439, Berlin Lake Boat Ramp (coordinates) |
-| Berlin Lake | Mill Creek ramp (Corps) (ramp) | Mill Creek Recreation Area, US Army Corps of Engineers | ODNR Berlin Lake Fishing Area page (Mill Creek ramp open 9/7 to 11/25/2026 and 2/27 to 5/21/2027); US Army Corps of Engineers, Berlin water control manual (Mill Creek recreation area ramp); OpenStreetMap node 357402758 (coordinates) |
+| Berlin Lake | Mill Creek ramp (Corps) (ramp) | Mill Creek Recreation Area, US Army Corps of Engineers | U.S. Army Corps of Engineers, official Berlin Lake page, Nov. 19, 2026 ("Mill Creek Campground Boat Ramp will remain open until November 23rd"): https://www.facebook.com/BerlinLakeUSACE/posts/lake-informationthursday-november-19th-2026remindersmill-creek-campground-boat-r/1838834070937233/ ; earlier announcement, Sept. 4, 2026: https://www.facebook.com/BerlinLakeUSACE/posts/due-to-the-constructionclosure-of-the-bonner-rd-boat-ramp-the-mill-creek-campgro/1757258385761469/ ; ODNR Berlin Lake Fishing Area page (still lists Mill Creek open 9/7 to 11/25/2026 and 2/27 to 5/21/2027): https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/berlin-lake-fishing-area ; US Army Corps of Engineers, Berlin water control manual (Mill Creek recreation area ramp); OpenStreetMap node 357402758 (coordinates) |
 | Berlin Lake | German Church Road ramp (ramp) | 15988 German Church Rd, Atwater | US Army Corps of Engineers, Berlin water control manual (German Church Road ramp, dry below 1009.31 ft); US Census Geocoder (address point) |
 | Berlin Lake | Les's Bait & Marina (shop) | 10583 Cobb Rd, Deerfield | Google listing (open, recent reviews; coordinates); US Army Corps of Engineers, Berlin water control manual (marina with boat ramp) |
 | West Branch Reservoir | East boat ramp (ramp) | West Branch State Park, east end near the dam | ODNR West Branch State Park page (East Boat Ramp: two paved lanes, lighting, flush restroom, courtesy docks); ODNR West Branch dock map (courtesy docks, 4 hour limit); OpenStreetMap East Boat Ramp (coordinates) |
@@ -547,7 +547,7 @@ No new data. The card copies the Tonight at a glance strip (USGS or USACE gauge 
 from the NWS forecast with its "Checked" time) and prints "--" for anything missing. Static per-lake OG images
 (`assets/og/og-<lake>.png` for every lake but Hoover) are the site art with the lake's name, no live data.
 
-## Dock season (water.html#docks), checked Oct. 28, 2026 (Hoover status updated Nov. 19, 2026)
+## Dock season (water.html#docks), checked Oct. 28, 2026 (Hoover status updated Nov. 19, 2026; Berlin Mill Creek ramp updated Nov. 24, 2026)
 
 Built from `data/docks.json` by `tools/build-docks.py` (then `tools/stamp-version.py`). `js/docks.js` flips an
 "ending" line to its after text once the date passes in Columbus, and flags a check older than 14 days. No fetches.
@@ -576,11 +576,18 @@ Built from `data/docks.json` by `tools/build-docks.py` (then `tools/stamp-versio
   of which docks are in the water.
 - No official 2026 dock pull date is posted for Hoover, Alum Creek or Buckeye Lake. Hoover's pulled-for-the-season
   line is the site owner report of Nov. 19, 2026, not an agency posting.
+- Berlin, Nov. 24, 2026: the U.S. Army Corps of Engineers (Pittsburgh District official Berlin Lake Facebook page)
+  said the Mill Creek Campground boat ramp would remain open until Nov. 23, 2026. That notice was first posted
+  Sept. 4, 2026 and repeated in lake information posts, including Nov. 19, 2026. The ramp is now closed for the
+  season. ODNR's Berlin Lake Fishing Area page still lists it open to Nov. 25, 2026, and open again from Feb. 27
+  to May 21, 2027. The Corps close date lives in `data/docks.json` under `attributions` (id `usace-berlin-fb`) and
+  is not in the `watch` list, so `tools/check-docks.py` does not fetch Facebook and should not put the date back to
+  Nov. 25 from the still-watched ODNR page alone.
 - Watching: `python3 tools/check-docks.py` reads every page in the `watch` list of `data/docks.json` and compares
   the dock, ramp, closure and drawdown sentences with `tools/docks-watch-state.json`. Last line `RESULT: CHANGED n`
   means read the +/- lines and the page, update `data/docks.json` (and `checked`), rebuild, then rerun with
-  `--update` and commit the new baseline. Entries under `attributions` are not fetched. ODNR and Columbus also post
-  on Facebook; those are not watched.
+  `--update` and commit the new baseline. Entries under `attributions` are not fetched. ODNR, Columbus and the
+  Corps also post on Facebook; those are not watched.
 
 ## Ice season (ice.html), checked Oct. 27, 2026
 

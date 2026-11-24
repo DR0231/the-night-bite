@@ -798,7 +798,7 @@
   },
   "berlin": {
    "name": "Berlin Lake",
-   "checked": "2026-11-03",
+   "checked": "2026-11-24",
    "items": [
     {
      "name": "Bonner Road ramp",
@@ -809,13 +809,10 @@
     },
     {
      "name": "Mill Creek ramp",
-     "status": "ending",
-     "label": "Open to Nov. 25",
-     "note": "ODNR opens Mill Creek while Bonner Road is closed: Sept. 7 to Nov. 25, 2026, then Feb. 27 to May 21, 2027.",
-     "source": "odnr-berlin",
-     "ends": "2026-11-25",
-     "after_label": "Reopens Feb. 27",
-     "after_note": "ODNR lists Mill Creek open again from Feb. 27 to May 21, 2027 while Bonner Road is closed."
+     "status": "out",
+     "label": "Closed for the season",
+     "note": "The U.S. Army Corps of Engineers said the Mill Creek Campground boat ramp would remain open until Nov. 23, 2026; it is now closed for the season. ODNR still lists it open to Nov. 25, and open again from Feb. 27 to May 21, 2027.",
+     "source": "usace-berlin-fb"
     },
     {
      "name": "Winter level",
@@ -836,7 +833,8 @@
     ]
    ],
    "sources": [
-    "odnr-berlin"
+    "odnr-berlin",
+    "usace-berlin-fb"
    ]
   },
   "westbranch": {
@@ -3676,6 +3674,11 @@
   {
    "id": "nightbite-owner",
    "label": "The Night Bite, site owner report, Nov. 19, 2026"
+  },
+  {
+   "id": "usace-berlin-fb",
+   "label": "U.S. Army Corps of Engineers, Berlin Lake, Nov. 19, 2026",
+   "url": "https://www.facebook.com/BerlinLakeUSACE/posts/lake-informationthursday-november-19th-2026remindersmill-creek-campground-boat-r/1838834070937233/"
   }
  ]
 }

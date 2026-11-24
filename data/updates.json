@@ -2,6 +2,28 @@
   "about": "What's new on The Night Bite, newest first. Edit this file, then run: python3 tools/build-updates.py (see README, 'What's new'). Entries come from what actually shipped to nightbiteoh.com. An entry with \"draft\": true and \"date\": null is on the preview only: it shows on the preview, and is hidden on nightbiteoh.com until you set the date and remove the draft flag at promotion.",
   "entries": [
     {
+      "id": "2026-11-24-lake-numbers-and-berlin-ramp",
+      "date": "2026-11-24",
+      "tag": "Improved",
+      "title": "Lake numbers stay current, and Berlin's Mill Creek ramp is closed",
+      "bullets": [
+        "If a lake page can't load its usual data, it no longer shows Hoover's level or weather as if they belonged to that lake.",
+        "The bite rating leaves out a pressure reading older than six hours or a water temp older than three hours. A lake level older than six hours is no longer tagged live, and a trend or weather cell that hasn't refreshed no longer says Now.",
+        "The Corps said Berlin Lake's Mill Creek Campground boat ramp would remain open until Nov. 23, 2026. It is now closed for the season. ODNR still lists it open to Nov. 25, and open again from Feb. 27 to May 21, 2027.",
+        "On a slow or dropped connection, lake data isn't shown as current just because an older copy loaded first, and a page doesn't mix an old copy of a file with a new one."
+      ],
+      "links": [
+        {
+          "label": "Berlin Lake",
+          "href": "berlin/"
+        },
+        {
+          "label": "Water",
+          "href": "water"
+        }
+      ]
+    },
+    {
       "id": "2026-11-18-easier-on-a-phone",
       "date": "2026-11-18",
       "tag": "Improved",

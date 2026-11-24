@@ -6,7 +6,7 @@
  },
  "strings": {
   "berlin.03baf64e": "보수 공사 기간:",
-  "berlin.04e2bcca": ". Mill Creek 선착장 운영: 9월 7일 ~",
+  "berlin.0685b077": ". Corps는 Mill Creek Campground 보트 램프가 다음 날까지 열려 있다고 했어요:",
   "berlin.072dc887": ", 빠르게 상승",
   "berlin.07f6d49b": "점 이상은 Good,",
   "berlin.09ca55ca": "공유",
@@ -15,7 +15,6 @@
   "berlin.0f01ed56": "예시",
   "berlin.0ffa76e1": "ODNR의 Berlin Lake Fishing Area 페이지에는 이용 시간이 없고, 밤에 호수 10 mph 제한만 있어요. 게시된 안내판을 따르세요.",
   "berlin.106e9470": "이 오늘 밤 NWS 예보에 조금이라도 있으면 점수와 상관없이 Tough예요.",
-  "berlin.113a2331": "; Mill Creek 운영: 9월 7일 ~",
   "berlin.1242f2c4": "(ODNR). 낮에는 마력 제한 없음, 밤에는 호수 전체 10 mph. Corps 매뉴얼에 따르면 German Church Road 선착장은 1,009.31 ft 아래에서 물이 빠져 쓸 수 없어요.",
   "berlin.134e9305": "천둥",
   "berlin.13f453a4": "운전 시간은 대략적이에요.",
@@ -95,10 +94,10 @@
   "berlin.a7fa610c": "기록 열기",
   "berlin.a8d4cf97": ". 안정은 다음 이내:",
   "berlin.a9f3ee46": "보트 선착장 지도",
+  "berlin.b1481d47": "U.S. Army Corps of Engineers, Berlin Lake (",
   "berlin.b2f53719": "inHg 이상.",
   "berlin.b31906af": "호수 수위는 Berlin Center 인근 USGS 수위계 03090000에서 가져와요. 이 값은",
   "berlin.b83bf8c4": "어종 둘러보기",
-  "berlin.b8aa2b73": "및 2월 27일 ~",
   "berlin.bb5dfee0": "Corps 여름 수위(보전 수위 상단)는 1,024 ft이며, 호수는 1년에 최대 20 ft까지 변할 수 있어요. 실시간 수위:",
   "berlin.bfa17ff0": "ODNR 2026–27 규정의 한도 안내가 담긴 어종 페이지",
   "berlin.c0488800": ". 낮에는 hp 제한 없음, 밤에는 10 mph. Dutch Harbor, Deer Creek, Willow Creek은 핀으로 표시되지 않았어요. 호안선은 OpenStreetMap에서 따왔으며 항해용이 아니에요.",
@@ -127,6 +126,7 @@
   "berlin.ef095ca1": ", 그 사이 값은",
   "berlin.f132d7dd": "선착장과",
   "berlin.f2eb9a7b": "공공 수온 측정기 없음",
+  "berlin.f73ad3b6": "; 지금은 시즌 동안 폐쇄되어 있어요. ODNR는 여전히 11월 25일까지 열려 있고, 2월 27일부터 다음 날까지 다시 열린다고 적어요:",
   "berlin.f82eb2f1": "오전 또는 오후",
   "berlin.f9bb7357": "알림 취소"
  }

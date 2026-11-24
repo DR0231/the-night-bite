@@ -31,7 +31,9 @@ its own pool snapshot for water.html; static, fast), check-glance-bake (each lak
 card; static), check-precache-refs (every script, style and first-paint image a lake home loads is in sw.js PRECACHE;
 static), check-live-readings (fake gauge answers on Hoover: a reading over 6 h old, a temp alone, a saved reading or a
 slow older answer is never shown or shared as live; the bite rating drops a temp over 3 h old; the share image prints the
-reading's time; nothing fetched in a hidden tab; expired alerts go; about 1 minute; browser), check-sw-deploys (this
+reading's time; nothing fetched in a hidden tab; expired alerts go; about 1 minute; browser), check-corps-live (fake Corps
+CWMS answers on Alum Creek and East Fork: a 7 h-old level is never tagged live, a hung CWMS fetch times out and drops
+the live tag past 6 hours, a hung outflow does not hold back a USGS level; about 30 s; browser), check-sw-deploys (this
 checkout's service worker across fake deploys on its own local server: a slow styles.css or page, a saved page
 offline after a deploy, the kill switch; never one deploy's page with another's styles; about 2 minutes; browser),
 check-glance, check-glance-fallback (USGS and NWS blocked, and JavaScript off, at 320 and 430 px: no placeholder,
@@ -43,7 +45,7 @@ check-tap-targets (interactive elements at 390px are at least 44px tall, except 
 without duplicates, bad files refused; about 10 s), check-i18n (string files: missing keys per language, placeholders,
 protected words, draft flag; static), check-manifest (install name and water count in site.webmanifest; static), check-biting-split (js/biting/<id>.js match
 the combined biting data value for value; static), check-sw-precache (sw.js REVISIONS match the
-precached files, none missing; static), check-asset-revs (every static font and image URL carries its content hash; static), check-i18n-browser (language picker: Spanish applies, persists, falls back to English
+precached files, none missing; static), check-promote (promote.py skip list, What's new shape, stale HEAD, named git add; static), check-asset-revs (every static font and image URL carries its content hash; static), check-i18n-browser (language picker: Spanish applies, persists, falls back to English
 for a missing key; facts stay English; about 20 s), sweep (every sitemap page).
 Every browser check loads tools/no-analytics.cjs. Against live nothing is written: static checks read the live
 checkout (--live-dir, default /workspace/the-night-bite) through NB_ROOT, and no build runs.
@@ -61,8 +63,8 @@ TOOLS = pathlib.Path(__file__).resolve().parent
 ROOT = TOOLS.parent
 BASES = {"preview": "https://dr0231.github.io/night-bite-preview/", "live": "https://nightbiteoh.com/"}
 BUILDS = ["build-lakes-boot.py", "build-lake-pages.py", "build-docks.py", "build-summaries.py", "build-meta.py", "clean-url-script.py", "stamp-version.py", "build-updates.py", "footer-social.py", "footer-contact.py", "wrap-dates.py", "stamp-water-count.py", "stamp-assets.py", "i18n-extract.py", "sw-precache.py"]
-CHECKS = ["check-meta", "check-clean-urls", "check-radius", "check-hours", "check-ramp-names", "check-docks", "check-lake-isolation", "check-glance-bake", "check-precache-refs", "check-glance", "check-glance-fallback", "check-live-readings", "check-sw-deploys", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-tap-targets", "check-min-font", "check-log-io", "check-trip-queue", "check-night-rules", "check-i18n", "check-manifest", "check-biting-split", "check-sw-precache", "check-asset-revs", "check-i18n-browser", "sweep"]
-BROWSER = {"check-glance", "check-glance-fallback", "check-live-readings", "check-sw-deploys", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-tap-targets", "check-min-font", "check-log-io", "check-trip-queue", "check-i18n-browser", "sweep"}
+CHECKS = ["check-meta", "check-clean-urls", "check-radius", "check-hours", "check-ramp-names", "check-docks", "check-lake-isolation", "check-glance-bake", "check-precache-refs", "check-glance", "check-glance-fallback", "check-live-readings", "check-corps-live", "check-lakes-js-fallback", "check-sw-deploys", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-tap-targets", "check-min-font", "check-log-io", "check-trip-queue", "check-night-rules", "check-i18n", "check-manifest", "check-biting-split", "check-sw-precache", "check-promote", "check-asset-revs", "check-i18n-browser", "sweep"]
+BROWSER = {"check-glance", "check-glance-fallback", "check-live-readings", "check-corps-live", "check-lakes-js-fallback", "check-sw-deploys", "check-bait", "check-waters", "check-picker-flow", "check-a11y-settings", "check-tap-targets", "check-min-font", "check-log-io", "check-trip-queue", "check-i18n-browser", "sweep"}
 
 ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
 ap.add_argument("--target", choices=["preview", "live", "local"], default="preview")
@@ -270,10 +272,13 @@ def cmd_for(name):
         "check-manifest": ([py, str(TOOLS / "check-manifest.py")], static_env),
         "check-biting-split": ([py, str(TOOLS / "biting-split.py"), "--check"], static_env),
         "check-sw-precache": ([py, str(TOOLS / "sw-precache.py"), "--check"], static_env),
+        "check-promote": ([py, str(TOOLS / "check-promote.py")], static_env),
         "check-asset-revs": ([py, str(TOOLS / "stamp-assets.py"), "--check"], static_env),
         "check-glance-bake": ([py, str(TOOLS / "glance_bake.py"), "--check"], static_env),
         "check-precache-refs": ([py, str(TOOLS / "check-precache-refs.py")], static_env),
         "check-live-readings": (["node", str(TOOLS / "check-live-readings.cjs"), base, d], {}),
+        "check-corps-live": (["node", str(TOOLS / "check-corps-live.cjs"), base, d], {}),
+        "check-lakes-js-fallback": (["node", str(TOOLS / "check-lakes-js-fallback.cjs"), base, d], {}),
         "check-sw-deploys": (["node", str(TOOLS / "check-sw-deploys.cjs"), d], {}),
         "check-i18n-browser": (["node", str(TOOLS / "check-i18n.cjs"), base, d], {}),
         "check-docks": ([py, str(TOOLS / "check-docks.py")], {}),

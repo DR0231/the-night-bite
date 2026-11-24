@@ -12,6 +12,13 @@
 //   legacy-slow-css the one deploy that still runs an old worker: its mix after a slow styles.css heals with one reload
 //   many-deploys    one visitor through four deploys in a row (A, B, C, A again): each worker takes over, one deploy each
 //   no-reload       an ordinary deploy reloads nobody (every returning visitor's page reloading showed in Cloudflare)
+//   asset-v-hash    a non-precached image cached at ?v=old is not served for ?v=new; the cache entry is replaced;
+//                   offline, a different ?v= may fall back to the last saved copy only because the network failed
+//   data-no-stale   a data/ feed delayed 6 s is the new bytes, not a 4 s saved copy; offline fallback is labelled X-NB-Saved: 1
+//   asset-deploy-match  a non-precached script cached under A is not served for B's ?v= when B is slow; wait for B
+//   install-hash-retry  a precached file whose first hash mismatches is retried with nbrev= and installs if the retry matches
+//   install-hash-mismatch  if the retry still mismatches, install fails (the bad copy is not stored under the new hash)
+//   whisperwood-query  isWhisperwood is path-only: /whisperwood?utm= is skipped; /hoover/ and whisperwood-icon.png are not
 //   kill-sw-only    tools/sw-kill-switch.js deployed as sw.js: every nb- cache and the registration are gone
 //   kill-both       N3: kill switch plus js/sw-update.js replaced by tools/sw-kill-switch-page.js: still all gone
 //   repro-kill-old  INFO only: the kill switch the docs gave up to v134, both files replaced (the N3 race)
@@ -75,7 +82,11 @@ const server = http.createServer((req, res) => {
   let rel = decodeURIComponent(u.pathname.slice(PREFIX.length));
   const d = S.deploy;
   const send = (status, rel2) => {
-    const body = d.over[rel2] != null ? Buffer.from(d.over[rel2]) : fs.readFileSync(path.join(d.dir, rel2));
+    const nbrev = u.searchParams.get('nbrev');
+    let body;
+    if (nbrev && d.overNbrev && d.overNbrev[rel2] != null) body = Buffer.from(d.overNbrev[rel2]);
+    else if (d.over[rel2] != null) body = Buffer.from(d.over[rel2]);
+    else body = fs.readFileSync(path.join(d.dir, rel2));
     const delay = S.delays.filter(x => x.re.test(u.pathname)).reduce((a, x) => Math.max(a, x.ms), 0);
     setTimeout(() => {
       if (S.down) { req.socket.destroy(); return; }
@@ -272,6 +283,178 @@ async function run(name, fn) {
     const m = await markers(page);
     check('no-reload: a deploy on a good connection: B, one deploy', one(m) && m.html === 'B', fmt(m));
     check('no-reload: and no reload', loads.n === 1, 'loads ' + loads.n);
+    await ctx.close();
+  });
+
+  await run('asset-v-hash', async () => {
+    const { ctx, page } = await visit(browser, A);
+    const rel = 'assets/nb-v-test.png';   // not in PRECACHE, so cacheFirstAsset uses the runtime cache
+    const oldBytes = 'old-asset-bytes', newBytes = 'new-asset-bytes';
+    const get = v => page.evaluate(async url => {
+      try {
+        const r = await fetch(url);
+        return { ok: r.ok, status: r.status, body: await r.text(), deploy: r.headers.get('X-NB-Deploy') };
+      } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+    }, BASE + rel + '?v=' + v);
+    S.deploy = Object.assign({}, A, { over: { [rel]: oldBytes } });
+    S.hits = [];
+    const r1 = await get('oldhash');
+    check('asset-v-hash: first fetch of ?v=oldhash is the old bytes', r1.ok && r1.body === oldBytes, JSON.stringify(r1));
+    S.deploy = Object.assign({}, A, { over: { [rel]: newBytes } });
+    S.hits = [];
+    const r2 = await get('newhash');
+    check('asset-v-hash: ?v=newhash is not served from the old cache entry', r2.ok && r2.body === newBytes, JSON.stringify(r2));
+    check('asset-v-hash: the new hash went to the network', S.hits.some(h => h.indexOf(rel) >= 0 && /[?&]v=newhash/.test(h)), S.hits.filter(h => h.indexOf('nb-v-test') >= 0).join(' '));
+    S.hits = [];
+    const r3 = await get('newhash');
+    check('asset-v-hash: a matching ?v= is served from cache', r3.ok && r3.body === newBytes && r3.deploy === 'newhash', JSON.stringify(r3));
+    check('asset-v-hash: a matching ?v= does not hit the network again', !S.hits.some(h => h.indexOf('nb-v-test') >= 0), S.hits.filter(h => h.indexOf('nb-v-test') >= 0).join(' '));
+    S.down = true; await ctx.setOffline(true);
+    const r4 = await get('otherhash');
+    check('asset-v-hash: offline, a different ?v= falls back to the last saved copy', r4.ok && r4.body === newBytes, JSON.stringify(r4));
+    await ctx.setOffline(false); S.down = false;
+    await ctx.close();
+  });
+
+  await run('data-no-stale', async () => {
+    const { ctx, page } = await visit(browser, A);
+    const rel = 'data/nb-v-test.json';   // not in PRECACHE, so saved() uses the runtime data cache
+    const get = () => page.evaluate(async url => {
+      const t0 = Date.now();
+      try {
+        const r = await fetch(url);
+        return { ok: r.ok, status: r.status, body: await r.text(), saved: r.headers.get('X-NB-Saved'), ms: Date.now() - t0 };
+      } catch (e) { return { ok: false, error: String(e && e.message || e), ms: Date.now() - t0 }; }
+    }, BASE + rel);
+    S.deploy = Object.assign({}, A, { over: { [rel]: '{"n":"old"}' } });
+    const r1 = await get();
+    check('data-no-stale: first fetch is live and unmarked', r1.ok && r1.body === '{"n":"old"}' && r1.saved !== '1', JSON.stringify(r1));
+    S.deploy = Object.assign({}, A, { over: { [rel]: '{"n":"new"}' } });
+    S.delays = [{ re: /\/data\/nb-v-test\.json$/, ms: 6000 }];
+    const r2 = await get();
+    check('data-no-stale: a slow refresh waits for the new bytes, not the 4 s saved copy', r2.ok && r2.body === '{"n":"new"}', JSON.stringify(r2));
+    check('data-no-stale: the live refresh is still unmarked', r2.saved !== '1', JSON.stringify(r2));
+    S.delays = [];
+    S.down = true; await ctx.setOffline(true);
+    const r3 = await get();
+    check('data-no-stale: offline fallback is the last saved copy, labelled X-NB-Saved: 1', r3.ok && r3.body === '{"n":"new"}' && r3.saved === '1', JSON.stringify(r3));
+    await ctx.setOffline(false); S.down = false;
+    await ctx.close();
+  });
+
+  await run('asset-deploy-match', async () => {
+    const { ctx, page } = await visit(browser, A);
+    const rel = 'js/nb-v-test.js';   // not in PRECACHE, so code() falls through to networkFirst assets
+    const get = v => page.evaluate(async url => {
+      try {
+        const r = await fetch(url);
+        return { ok: r.ok, status: r.status, body: await r.text(), deploy: r.headers.get('X-NB-Deploy') };
+      } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+    }, BASE + rel + '?v=' + v);
+    S.deploy = Object.assign({}, A, { over: { [rel]: 'window.NB_TEST="A";' } });
+    const r1 = await get(A.ver);
+    check('asset-deploy-match: first fetch under A is A', r1.ok && r1.body === 'window.NB_TEST="A";', JSON.stringify(r1));
+    await sleep(500);
+    const cached = await page.evaluate(async rel => {
+      for (const k of await caches.keys()) {
+        const c = await caches.open(k);
+        for (const r of await c.keys()) {
+          if (r.url.indexOf(rel) >= 0) {
+            const x = await c.match(r);
+            return { cache: k, url: r.url, deploy: x.headers.get('X-NB-Deploy'), body: await x.text() };
+          }
+        }
+      }
+      return null;
+    }, rel);
+    check('asset-deploy-match: the cached A copy is tagged with X-NB-Deploy', !!(cached && cached.body === 'window.NB_TEST="A";' && cached.deploy === A.ver), JSON.stringify(cached));
+    S.deploy = B;
+    await goto(page, 'hoover/');
+    const took = await waitWorker(page, B.ver);
+    check('asset-deploy-match: worker B took over', !!took, took ? took.version : 'no worker');
+    S.deploy = Object.assign({}, B, { over: { [rel]: 'window.NB_TEST="B";' } });
+    S.delays = [{ re: /\/js\/nb-v-test\.js$/, ms: 6000 }];
+    S.hits = [];
+    const r2 = await get(B.ver);
+    check('asset-deploy-match: a slow request for B does not get A\'s runtime copy', r2.ok && r2.body === 'window.NB_TEST="B";', JSON.stringify(r2));
+    check('asset-deploy-match: the slow B request went to the network', S.hits.some(h => h.indexOf(rel) >= 0 && h.indexOf('v=' + B.ver) >= 0), S.hits.filter(h => h.indexOf('nb-v-test') >= 0).join(' '));
+    S.delays = [];
+    await ctx.close();
+  });
+
+  await run('install-hash-retry', async () => {
+    const rel = 'favicon.svg';
+    const dest = path.join(A.dir, rel);
+    const good = fs.readFileSync(dest);
+    fs.writeFileSync(dest, Buffer.concat([good, Buffer.from('x')]));
+    try {
+      const d = Object.assign({}, A, { overNbrev: { [rel]: good } });
+      const { ctx, page } = await visit(browser, d);
+      const h = await hello(page);
+      check('install-hash-retry: a mismatched first copy is retried with nbrev= and installs', !!(h && h.version === A.ver), JSON.stringify(h));
+      check('install-hash-retry: the retry asked past the cache', S.hits.some(x => x.indexOf(rel) >= 0 && /[?&]nbrev=/.test(x)), S.hits.filter(x => x.indexOf('favicon') >= 0).join(' '));
+      await ctx.close();
+    } finally {
+      fs.writeFileSync(dest, good);
+    }
+  });
+
+  await run('install-hash-mismatch', async () => {
+    const rel = 'favicon.svg';
+    const dest = path.join(A.dir, rel);
+    const good = fs.readFileSync(dest);
+    fs.writeFileSync(dest, Buffer.concat([good, Buffer.from('x')]));
+    try {
+      const ctx = await context(), page = await ctx.newPage();
+      S.deploy = A; S.delays = []; S.down = false; S.hits = [];
+      await goto(page, 'hoover/');
+      const ok = await waitWorker(page, A.ver, 20000);
+      check('install-hash-mismatch: install fails when the retry still does not match', !ok, ok ? 'worker took over' : 'no worker (expected)');
+      await ctx.close();
+    } finally {
+      fs.writeFileSync(dest, good);
+    }
+  });
+
+  await run('whisperwood-query', async () => {
+    const { ctx, page } = await visit(browser, A);
+    const sws = page.context().serviceWorkers();
+    if (!sws.length) {
+      check('whisperwood-query: worker present', false, 'no worker');
+    } else {
+      const got = await sws[sws.length - 1].evaluate(scope => {
+        const t = u => isWhisperwood(new URL(u, scope));
+        return {
+          bare: t(scope + 'whisperwood'),
+          query: t(scope + 'whisperwood?utm_source=x'),
+          slash: t(scope + 'whisperwood/?x=1'),
+          html: t(scope + 'whisperwood.html?x=1'),
+          deep: t(scope + 'whisperwood/foo.js'),
+          lake: t(scope + 'hoover/'),
+          icon: t(scope + 'whisperwood-icon.png')
+        };
+      }, BASE);
+      check('whisperwood-query: /whisperwood is Whisperwood', got.bare === true, JSON.stringify(got));
+      check('whisperwood-query: /whisperwood?utm= is path-only Whisperwood', got.query === true, JSON.stringify(got));
+      check('whisperwood-query: /whisperwood/?x=1 and /whisperwood.html?x=1 and a deep path are Whisperwood', got.slash === true && got.html === true && got.deep === true, JSON.stringify(got));
+      check('whisperwood-query: a lake path and whisperwood-icon.png are not', got.lake === false && got.icon === false, JSON.stringify(got));
+      S.down = true; await ctx.setOffline(true);
+      const p2 = await ctx.newPage();
+      let landed;
+      try {
+        await p2.goto(BASE + 'whisperwood?utm_source=x', { waitUntil: 'domcontentloaded', timeout: 8000 });
+        landed = await p2.evaluate(() => ({
+          title: document.title,
+          offline: !!document.querySelector('.offline-links'),
+          url: location.href
+        }));
+      } catch (e) {
+        landed = { threw: (e.message || String(e)).split('\n')[0] };
+      }
+      await p2.close().catch(() => {});
+      check('whisperwood-query: offline, /whisperwood?utm= is not intercepted as offline.html', !!(landed.threw || landed.offline === false), JSON.stringify(landed));
+      await ctx.setOffline(false); S.down = false;
+    }
     await ctx.close();
   });
 

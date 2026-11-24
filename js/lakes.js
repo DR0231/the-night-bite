@@ -1948,9 +1948,7 @@
     var begin = new Date(Date.now() - hours * 36e5).toISOString().replace(/\.\d+Z$/, "Z");
     var url = "https://cwms-data.usace.army.mil/cwms-data/timeseries?office=" + P.office + "&name=" + encodeURIComponent(P.ts) +
       "&begin=" + begin + "&page-size=1000";
-    return fetch(url, { headers: { Accept: "application/json;version=2" } })
-      .then(function (r) { if (!r.ok) throw new Error("cwms " + r.status); return r.json(); })
-      .then(function (j) {
+    return getJson(url, 8000, { Accept: "application/json;version=2" }).then(function (j) {
         var out = [];
         (j.values || []).forEach(function (row) {
           var v = row && row[1];
@@ -1970,9 +1968,7 @@
     var begin = new Date(Date.now() - (hours || 6) * 36e5).toISOString().replace(/\.\d+Z$/, "Z");
     var url = "https://cwms-data.usace.army.mil/cwms-data/timeseries?office=" + O.office + "&name=" + encodeURIComponent(O.ts) +
       "&unit=EN&begin=" + begin + "&page-size=1000";
-    return fetch(url, { headers: { Accept: "application/json;version=2" } })
-      .then(function (r) { if (!r.ok) throw new Error("cwms " + r.status); return r.json(); })
-      .then(function (j) {
+    return getJson(url, 8000, { Accept: "application/json;version=2" }).then(function (j) {
         var c = /^(C|degC|celsius)$/i.test(String(j.units || "")), last = null;
         (j.values || []).forEach(function (row) {
           var v = row && row[1];
@@ -1992,10 +1988,13 @@
   // fallback can be deleted after Feb. 22, 2027. window.NightBiteUsgsVia says which one answered last (for testing).
   var USGS_API = "https://api.waterdata.usgs.gov/ogcapi/v1/collections/";
   var USGS_IV = "https://waterservices.usgs.gov/nwis/iv/?format=json&sites=";
-  function getJson(url, ms) {
+  function getJson(url, ms, headers) {
     var ctl = ms && window.AbortController ? new AbortController() : null;
     var timer = ctl ? setTimeout(function () { ctl.abort(); }, ms) : 0;
-    return fetch(url, ctl ? { signal: ctl.signal } : undefined)
+    var opts = {};
+    if (ctl) opts.signal = ctl.signal;
+    if (headers) opts.headers = headers;
+    return fetch(url, Object.keys(opts).length ? opts : undefined)
       .then(function (r) { if (!r.ok) throw new Error("http " + r.status); return r.json(); })
       .then(function (j) { clearTimeout(timer); return j; }, function (e) { clearTimeout(timer); throw e; });
   }

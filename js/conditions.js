@@ -13,8 +13,30 @@
 (function () {
   var card = document.getElementById("conditions");
   if (!card || !window.fetch) return;
-  // lake settings from js/lakes.js; the fallbacks are Hoover's original values
-  var LK = window.NightBiteLake, LC = (LK && LK.cfg) || null, NW = (LC && LC.nws) || {};
+  // lake settings from js/lakes.js. Hoover's original values are the fallback only on a Hoover page.
+  // If lakes.js did not load, any other page shows "Weather unavailable" with no lake-specific link:
+  // no Hoover forecast, station, cache keys, or bite input from KCMH.
+  function pageLake() {
+    var id = (window.NightBitePageLake || document.documentElement.getAttribute("data-lake") || "").toLowerCase();
+    if (id) return id;
+    var m = document.querySelector('meta[name="nb-home"]');
+    return ((m && m.getAttribute("content")) || "").toLowerCase();
+  }
+  var LK = window.NightBiteLake;
+  if (!LK && pageLake() !== "hoover") {
+    var statusEl = card.querySelector(".cond-status");
+    var grid = card.querySelector(".cond-grid");
+    card.setAttribute("data-state", "error");
+    if (statusEl) {
+      statusEl.innerHTML = 'Weather unavailable, check <a href="https://www.weather.gov/" target="_blank" rel="noopener">weather.gov</a>.';
+    }
+    ["wind", "air", "rain", "pressure"].forEach(function (k) {
+      var c = grid && grid.querySelector('[data-cond="' + k + '"]');
+      if (c) c.hidden = true;
+    });
+    return;
+  }
+  var LC = (LK && LK.cfg) || null, NW = (LC && LC.nws) || {};
   var LAT = LC ? LC.lat : 40.11, LNG = LC ? LC.lng : -82.88;
   var HOURLY = NW.hourly || "https://api.weather.gov/gridpoints/ILN/89,88/forecast/hourly";
   var POINT = NW.point || "https://api.weather.gov/points/40.11,-82.88";
@@ -121,18 +143,36 @@
     }
   }
 
+  function currentPeriod(periods) {
+    if (!periods || !periods.length) return null;
+    var now = Date.now();
+    for (var i = 0; i < periods.length; i++) {
+      if (new Date(periods[i].endTime).valueOf() > now) return periods[i];
+    }
+    return null;   // every saved hour has already ended
+  }
+  function showForecastCells(on) {
+    ["wind", "air", "rain"].forEach(function (k) {
+      var c = grid.querySelector('[data-cond="' + k + '"]');
+      if (c) c.hidden = !on;
+    });
+  }
+
   /* ---- hourly forecast ---- */
   function applyHourly(json, subNow) {
     subNow = subNow || "Now";
     var periods = json && json.properties && json.properties.periods;
     if (!periods || !periods.length) throw new Error("no periods");
-    var now = Date.now(), p = periods[0];
-    for (var i = 0; i < periods.length; i++) {
-      if (new Date(periods[i].endTime).valueOf() > now) { p = periods[i]; break; }
+    st.periods = periods;
+    var p = currentPeriod(periods);
+    st.now = p;
+    if (!p) {
+      windNow = null;
+      showForecastCells(false);
+      if (summaryEl) summaryEl.textContent = "";
+      return true;
     }
     var start = periods.indexOf(p);
-    st.periods = periods;
-    st.now = p;
     windNow = { p: p, sub: subNow };
     applyWind(null);
     var f = tempF(p);
@@ -147,6 +187,7 @@
     }
     if (maxPop !== null) setCell("rain", String(Math.round(maxPop)), "%", "Next 12 hours");
     if (summaryEl && p.shortForecast) summaryEl.textContent = p.shortForecast + ".";
+    showForecastCells(true);
     return true;
   }
 
@@ -280,7 +321,13 @@
     asOf(latest.t);
     return true;
   }
-
+  // the 3-hour trend counts toward the bite only while the newest reading is from the last 6 hours
+  // (the same live limit as the pool card). waterF() already drops a gauge temp after 3 hours.
+  var PRESSURE_MAX = 6 * 36e5;
+  function pressureFresh() {
+    var t = pressureAt ? pressureAt.valueOf() : NaN;
+    return st.p3 && isFinite(t) && Date.now() - t <= PRESSURE_MAX ? st.p3 : null;
+  }
 
   /* ---- shared helpers for the derived lines ---- */
   function tempF(p) {
@@ -442,7 +489,7 @@
   /* each input's part tonight: null when it isn't loaded, else { pts, word } */
   function biteParts() {
     var parts = { pressure: null, wind: null, moon: null, water: null, storm: !!st.storm };
-    var p3 = st.p3;
+    var p3 = pressureFresh();   // only a barometer reading from the last 6 hours
     if (p3) {
       if (p3.trend === "falling") parts.pressure = p3.fast ? { pts: PP.fallFast, word: "pressure dropping fast" } : { pts: PP.fallSlow, word: "pressure falling slowly" };
       else if (p3.trend === "steady") parts.pressure = { pts: PP.steady, word: "steady pressure" };
@@ -579,6 +626,9 @@
     var out = [], line = document.getElementById("correction-line");
     // only a live level: a snapshot, saved, old or failed reading has its own time on the card, and this line has none
     if (!line || line.getAttribute("data-source") !== "live" || line.hasAttribute("data-refresh-failed") || line.hasAttribute("data-offline")) return [];
+    var checked = document.getElementById("correction-checked");
+    var at = checked && checked.querySelector("time") && new Date(checked.querySelector("time").getAttribute("datetime")).valueOf();
+    if (!isFinite(at) || Date.now() - at > 6 * 36e5) return [];   // same 6 hour live limit as the pool card
     var m = /~?\s*([\d.]+)\s*ft\s+(below|above)\s+full pool/i.exec((line.getAttribute("data-nb-out") === line.textContent && line.getAttribute("data-en") || line.textContent || ""));
     if (m) out.push("pool " + m[1] + " ft " + m[2].toLowerCase() + " full");
     var tr = document.getElementById("pool-trend"), w = document.getElementById("pool-trend-word");
@@ -610,7 +660,8 @@
       if (pop !== null) bits.push(Math.round(pop) + "% rain chance");
     }
     if (st.storm) bits.push("storms possible");
-    if (st.p3) bits.push("pressure " + (st.p3.trend === "steady" ? "steady" : st.p3.trend));
+    var p3 = pressureFresh();
+    if (p3) bits.push("pressure " + (p3.trend === "steady" ? "steady" : p3.trend));
     if (waterF() !== null) bits.push(Math.round(waterF()) + "°F water");
     bits = bits.concat(poolBits());
     if (!bits.length) { lineEl.hidden = true; return; }
@@ -629,9 +680,9 @@
     try { renderExtras(); } catch (e) { if (extraEl) extraEl.hidden = true; }
     try { renderLine(); } catch (e) { if (lineEl) lineEl.hidden = true; }
   }
-  // the pool card fills in on its own schedule; redraw the short line when it changes
+  // the pool card fills in on its own schedule; redraw the bite and the short line when it changes
   (function () {
-    var t = null, again = function () { clearTimeout(t); t = setTimeout(function () { try { renderLine(); } catch (e) {} }, 50); };
+    var t = null, again = function () { clearTimeout(t); t = setTimeout(function () { try { render(); } catch (e) {} }, 50); };
     ["correction-line", "pool-trend"].forEach(function (id) {
       var el = document.getElementById(id);
       if (el && window.MutationObserver) new MutationObserver(again).observe(el, { childList: true, subtree: true, characterData: true, attributes: true });
@@ -700,10 +751,8 @@
     try { applyWind(saved.obs || {}); } catch (e) {}
     st.thunder = saved.thunder || null;
     render();
-    ["wind", "air", "rain", "pressure"].forEach(function (k) {
-      var c = grid.querySelector('[data-cond="' + k + '"]');
-      if (c) c.hidden = false;
-    });
+    var pc = grid.querySelector('[data-cond="pressure"]');
+    if (pc) pc.hidden = false;
     hasData = true;
     lastOk = new Date(saved.savedAt);
     card.setAttribute("data-state", "ok");
@@ -714,18 +763,29 @@
 
   function failRefresh() {
     // keep the last good numbers on screen and say how old they are; js/glance.js reads the two attributes
-    var t = timeEt(lastOk);
     card.setAttribute("data-refresh-failed", "1");
     if (lastOk) card.setAttribute("data-checked-at", String(lastOk.valueOf()));
+    // re-pick the current hour from the last forecast; hide air/wind/rain if every period has ended,
+    // and drop a pressure reading older than 6 hours so it is not left up as current
+    var saved = card.hasAttribute("data-saved") || (OFF && OFF.isOffline());
+    if (st.periods) {
+      try { applyHourly({ properties: { periods: st.periods } }, saved ? "Saved" : "Now"); } catch (e) {}
+    }
+    if (pressureAt && Date.now() - pressureAt.valueOf() > PRESSURE_MAX) noReading(STATION + " reading too old");
+    else if (pressureAt) asOf(pressureAt.valueOf());
     if (OFF && OFF.isOffline()) {
       card.setAttribute("data-offline", "1");
       if (statusEl) statusEl.textContent = OFF.label(lastOk);
+      render();   // drop a bite built from pressure older than 6 h or water older than 3 h
       return;
     }
     if (statusEl) {
-      statusEl.innerHTML = "Weather update failed, check " + '<a href="' + WX_PAGE + '" target="_blank" rel="noopener">weather.gov</a>' +
-        ". Showing the " + t.value + " " + t.unit + " ET reading.";
+      // OFF.when carries the weekday and date when the last good fetch was not today in Ohio
+      var when = lastOk && OFF && OFF.when ? OFF.when(lastOk) : null;
+      statusEl.innerHTML = "Weather update failed, check " + '<a href="' + WX_PAGE + '" target="_blank" rel="noopener">weather.gov</a>.' +
+        (when ? " Showing the " + when + " reading." : "");
     }
+    render();
   }
 
   /* force: skip the session cache (the 15 minute auto refresh always forces) */
@@ -745,10 +805,8 @@
     return hourlyP.then(function (h) {
       applyHourly(h, window.NightBiteOffline && window.NightBiteOffline.isOffline() ? "Saved" : "Now");
       card.setAttribute("data-state", "ok");
-      ["wind", "air", "rain", "pressure"].forEach(function (k) {
-        var c = grid.querySelector('[data-cond="' + k + '"]');
-        if (c) c.hidden = false;
-      });
+      var pc = grid.querySelector('[data-cond="pressure"]');
+      if (pc) pc.hidden = false;
       hasData = true;
       lastOk = cached ? new Date(cached.at) : new Date();
       card.removeAttribute("data-offline");
@@ -769,10 +827,11 @@
         var o = r[0], obs = null;
         st.thunder = r[1] || null;
         try {
-          applyPressure(o, offline || !!cached);
+          // a session-cache hit still has to pass the 6 hour age check; only the offline copy may skip it
+          var pressureOk = applyPressure(o, offline);
           applyWind(o || {});
           if (!offline) stamp(lastOk);   // adds the KCMH reading time
-          if (o) obs = slimObs(o);
+          if (o && pressureOk) obs = slimObs(o);
           if (!cached && obs) writeCache(slimHourly(h), obs, st.thunder);
         } catch (e) {
           noReading(STATION + " unavailable");

@@ -114,6 +114,7 @@
 
   var root = document.documentElement;
   root.setAttribute("data-lake", id);
+  window.NightBitePageLake = id;
   try {
     var hide = document.createElement("style");
     hide.textContent = 'html[data-lake="' + id + '"] [data-for]:not([data-for~="' + id + '"]),html[data-lake="' + id + '"] [data-lakes]:not([data-lakes~="' + id + '"]){display:none!important}';

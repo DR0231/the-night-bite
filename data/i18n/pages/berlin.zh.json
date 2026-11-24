@@ -6,7 +6,7 @@
  },
  "strings": {
   "berlin.03baf64e": "，翻修期间自",
-  "berlin.04e2bcca": "。Mill Creek ramp 开放时间 9 月 7 日至",
+  "berlin.0685b077": "。Corps 表示 Mill Creek Campground 船坡将开放至",
   "berlin.072dc887": "，快速上升",
   "berlin.07f6d49b": "分或以上为“好”，",
   "berlin.09ca55ca": "分享",
@@ -15,7 +15,6 @@
   "berlin.0f01ed56": "示例",
   "berlin.0ffa76e1": "ODNR 的 Berlin Lake Fishing Area 页面没有列出开放时间，只有夜间湖上限速 10 mph；请遵守现场告示。",
   "berlin.106e9470": "只要今晚 NWS 预报中出现，无论得分多少都评为“困难”。",
-  "berlin.113a2331": "；Mill Creek 开放时间 9 月 7 日至",
   "berlin.1242f2c4": "（ODNR）。白天不限马力，夜间全湖 10 mph。Corps 手册称水位低于 1,009.31 英尺时 German Church Road 坡道会干涸。",
   "berlin.134e9305": "雷暴",
   "berlin.13f453a4": "车程仅供参考。",
@@ -95,10 +94,10 @@
   "berlin.a7fa610c": "打开日志",
   "berlin.a8d4cf97": "。平稳指变化在",
   "berlin.a9f3ee46": "带船坡道的地图",
+  "berlin.b1481d47": "U.S. Army Corps of Engineers, Berlin Lake (",
   "berlin.b2f53719": "inHg 或以上。",
   "berlin.b31906af": "湖水位来自 Berlin Center 附近的 USGS 水文站 03090000。数据为",
   "berlin.b83bf8c4": "浏览鱼种",
-  "berlin.b8aa2b73": "以及 2 月 27 日至",
   "berlin.bb5dfee0": "工程兵团夏季水位（蓄水上限）为 1,024 ft；湖水位一年内的变化可达 20 ft。实时水位：",
   "berlin.bfa17ff0": "鱼种页面，附 ODNR 2026–27 规定中的限额提醒",
   "berlin.c0488800": "。白天无马力限制，夜间 10 mph。Dutch Harbor、Deer Creek 和 Willow Creek 未标注。岸线描自 OpenStreetMap，不能用于导航。",
@@ -127,6 +126,7 @@
   "berlin.ef095ca1": "，介于两者之间",
   "berlin.f132d7dd": "坡道和",
   "berlin.f2eb9a7b": "无公共水温监测站",
+  "berlin.f73ad3b6": "；现已关闭至本季结束。ODNR 仍列为开放至 11 月 25 日，并于 2 月 27 日至以下日期再次开放：",
   "berlin.f82eb2f1": "上午或下午",
   "berlin.f9bb7357": "取消提醒"
  }

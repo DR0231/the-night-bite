@@ -13,8 +13,10 @@
  *  · Pages (navigations and text/html): network first with a 4 second timeout, then the saved copy, then offline.html.
  *    Lake homes come from the precache, so they open offline right after install. Every other page you open online
  *    is saved (PREFIX + "pages", newest 40). An unvisited deeper page (water.html, a species page) shows offline.html.
- *  · data/*.json: network first, saved copy when offline (PREFIX + "data", newest 60; the precached copy is the
- *    last resort). The worker never adds headers: data/advisor-rules.json for the Android app is plain GitHub Pages.
+ *  · data/*.json: network first, no 4 second stale fallback (a slow feed must not be shown as current). Saved copy
+ *    only when the network fails (PREFIX + "data", newest 60; the precached copy is the last resort), labelled
+ *    X-NB-Saved: 1 so a page can mark it offline. A live fetch stays plain, including data/advisor-rules.json for
+ *    the Android app.
  *  · CSS and JS by deploy (v135): every page asks for them with ?v=<its deploy>. This deploy's come from the
  *    precache; a deploy a saved page still needs, from that deploy's kept copies; a newer deploy, from the network
  *    only. Saved pages carry their deploy and are only served with their own deploy's files, so a page never mixes
@@ -35,7 +37,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v49-2026-11-20";
+var VERSION = "v50-2026-11-24";
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
 var PRECACHE_CACHE = PREFIX + "precache";
@@ -588,23 +590,23 @@ var PRECACHE = [
 // tools/sw-precache.py writes this block (stamp-version.py and promote.py run it). Don't edit it by hand.
 // BEGIN REVISIONS
 var REVISIONS = {
-  "./": "231968a8a43d",
-  "offline.html": "8fc28143fcae",
+  "./": "ea980988ed4f",
+  "offline.html": "b815b5ecca49",
   "site.webmanifest": "a7e2879bb55a",
   "favicon.svg": "a4203bb6ec2d",
   "favicon.ico": "ec8fafebba48",
   "apple-touch-icon.png": "ae1b52f0a95b",
   "css/styles.css": "3328d7a28751",
-  "js/alerts.js": "b41431d3558c",
+  "js/alerts.js": "713acdc6077f",
   "js/astro.js": "a3ec0945f030",
   "js/night-rules.js": "c14111456232",
   "js/i18n.js": "29c05b8d2452",
   "js/bait-nearby.js": "b75e87af32d4",
   "js/biting.js": "2035244affef",
   "js/community-log.js": "62217f38aaa5",
-  "js/conditions.js": "f471b830969c",
+  "js/conditions.js": "a1bed5258b5a",
   "js/get-app.js": "8345fce8e5c8",
-  "js/glance.js": "955d3169a3c9",
+  "js/glance.js": "1250e4635c52",
   "js/home-log.js": "b0cf7771714e",
   "js/hoover-map-data.js": "34a54a22f7ab",
   "js/hoover-map.js": "f01d585f0d9d",
@@ -613,8 +615,8 @@ var REVISIONS = {
   "js/lake-picker.js": "b89008e0dbeb",
   "js/water-picker.js": "b48ce9fb2f0d",
   "js/lake-snapshot.js": "79e1111b8d18",
-  "js/lakes.js": "eb1a1993ce27",
-  "js/lakes-boot.js": "dec578da1165",
+  "js/lakes.js": "021c82b0e6d5",
+  "js/lakes-boot.js": "c840160a4328",
   "js/log.js": "966237501387",
   "js/mode-toggle.js": "842ee5852866",
   "js/nav.js": "85c14199105b",
@@ -624,7 +626,7 @@ var REVISIONS = {
   "js/updates-draft.js": "954b481592ef",
   "js/pack-list.js": "f9a5e5d83c93",
   "js/pool-readout.js": "9ce9ff4ef6cb",
-  "js/pool-trend.js": "a024c0a2ed48",
+  "js/pool-trend.js": "7c5ef172501d",
   "js/refresh.js": "5b0ca98fef84",
   "js/species-filter.js": "454f000c5ba6",
   "js/species-lake.js": "e58c74799c1c",
@@ -632,7 +634,7 @@ var REVISIONS = {
   "js/sw-update.js": "626f1e2076eb",
   "js/tonight-tools.js": "a7a6cf64125b",
   "js/tournaments.js": "f3ea2dbe151b",
-  "js/usgs.js": "c3f519eee62d",
+  "js/usgs.js": "9ec36b84f0ba",
   "js/water.js": "23040b9980b5",
   "js/visits.js": "e0f046529c59",
   "js/scrollspy.js": "1b056c72b92f",
@@ -641,7 +643,7 @@ var REVISIONS = {
   "js/your-water.js": "da7865eb55a2",
   "js/local-notes.js": "d68fc177c5f1",
   "js/docks.js": "a1a7f6febfb1",
-  "data/quick-facts.json": "ad3082eedd5a",
+  "data/quick-facts.json": "c78802c167b2",
   "data/bait-shops.json": "2a13412f3883",
   "data/community-log.json": "11d7942a8e63",
   "data/tournaments.json": "d843f370ad46",
@@ -751,372 +753,372 @@ var REVISIONS = {
   "assets/map/pin-shop.png": "b7beeb5fd6a9",
   "assets/moon/moon-phases.png": "88eb81447164",
   "assets/wind/wind-arrows.png": "320e354157c4",
-  "hoover/": "77dcb45e44b3",
+  "hoover/": "91dbe56609fc",
   "assets/hoover-chart.png": "fe743cba0221",
   "js/biting/hoover.js": "7205a1f4077d",
   "assets/map/hoover-map-tall.png": "8ccedbbfb7ab",
   "assets/map/hoover-map-wide.png": "1330bbed1c9a",
-  "alum/": "3bba3354668a",
+  "alum/": "d1ce4307745d",
   "assets/alum-chart.png": "c16bd4b47fe9",
   "js/lake-map-data-alum.js": "d3477ac2f959",
   "js/biting/alum.js": "6ade0ece8c7f",
   "assets/map/alum-map-tall.png": "6690ef553cf0",
   "assets/map/alum-map-wide.png": "764c9fd37d01",
-  "buckeye/": "1a42f954d392",
+  "buckeye/": "bc4749226c3a",
   "assets/buckeye-chart.png": "bfe2966578a3",
   "js/lake-map-data-buckeye.js": "7781547d9636",
   "js/biting/buckeye.js": "24951d36fadb",
   "assets/map/buckeye-map-tall.png": "64957d8aef76",
   "assets/map/buckeye-map-wide.png": "5025bb2f3a4f",
-  "oshaughnessy/": "4a97a3c31d1e",
+  "oshaughnessy/": "ae9c69fb01a1",
   "assets/oshaughnessy-chart.png": "3b40fae44c40",
   "js/lake-map-data-oshaughnessy.js": "1901aeeef26e",
   "js/biting/oshaughnessy.js": "2d70498b6974",
   "assets/map/oshaughnessy-map-tall.png": "17fa0ebfc502",
   "assets/map/oshaughnessy-map-wide.png": "81aa41f82d1f",
-  "griggs/": "79fc97166573",
+  "griggs/": "9d9f87ca976f",
   "assets/griggs-chart.png": "8a264a3b7c7d",
   "js/lake-map-data-griggs.js": "71177e706386",
   "js/biting/griggs.js": "c6c3d8f3be07",
   "assets/map/griggs-map-tall.png": "ce164fce175f",
   "assets/map/griggs-map-wide.png": "a2ea510cefdf",
-  "indian/": "e849c97d69fe",
+  "indian/": "9cc4abd9a9ec",
   "assets/indian-chart.png": "84b8f17a1d85",
   "js/lake-map-data-indian.js": "075d512561b5",
   "js/biting/indian.js": "f16ad79a3af2",
   "assets/map/indian-map-tall.png": "2326904e34ad",
   "assets/map/indian-map-wide.png": "f9de608ea45c",
-  "delaware/": "07f5e45b1b09",
+  "delaware/": "9ba0bf9f738f",
   "assets/delaware-chart.png": "c998d5020831",
   "js/lake-map-data-delaware.js": "180a09127c3e",
   "js/biting/delaware.js": "828d85d3dcfc",
   "assets/map/delaware-map-tall.png": "cf176edc91f6",
   "assets/map/delaware-map-wide.png": "1a4b178ec53b",
-  "deercreek/": "8e986c73c228",
+  "deercreek/": "0a67c0ba5a3a",
   "assets/deercreek-chart.png": "092a1b944384",
   "js/lake-map-data-deercreek.js": "5195cf735cc8",
   "js/biting/deercreek.js": "54668962b1f1",
   "assets/map/deercreek-map-tall.png": "5654e0f59db7",
   "assets/map/deercreek-map-wide.png": "94741d413ed8",
-  "madison/": "0874c153038c",
+  "madison/": "d48abb790bba",
   "assets/madison-chart.png": "d3766badfbd1",
   "js/lake-map-data-madison.js": "e45825c919e8",
   "js/biting/madison.js": "0eda8fc065eb",
   "assets/map/madison-map-tall.png": "444806e561ae",
   "assets/map/madison-map-wide.png": "95878b3ea30f",
-  "knox/": "15eedda5f395",
+  "knox/": "bfe4987a497c",
   "assets/knox-chart.png": "025d6bb15f45",
   "js/lake-map-data-knox.js": "b3ba24373db5",
   "js/biting/knox.js": "9c270393689a",
   "assets/map/knox-map-tall.png": "4fc3e6e27e1e",
   "assets/map/knox-map-wide.png": "979e6ba7ddfb",
-  "clearfork/": "1576b1578e32",
+  "clearfork/": "597fbd477d25",
   "assets/clearfork-chart.png": "71d6124a936a",
   "js/lake-map-data-clearfork.js": "2c356cae420e",
   "js/biting/clearfork.js": "9eed8ff2ee4f",
   "assets/map/clearfork-map-tall.png": "0bbdf6e67c04",
   "assets/map/clearfork-map-wide.png": "70e32449565e",
-  "seneca/": "2bd389969f29",
+  "seneca/": "5d4298a2b962",
   "assets/seneca-chart.png": "30b242bf47e0",
   "js/lake-map-data-seneca.js": "d102fc230de7",
   "js/biting/seneca.js": "f3ed073b7387",
   "assets/map/seneca-map-tall.png": "90ccd70ec71d",
   "assets/map/seneca-map-wide.png": "86379360b101",
-  "dillon/": "7717927a799c",
+  "dillon/": "9714e6691a39",
   "assets/dillon-chart.png": "5acb4d046c23",
   "js/lake-map-data-dillon.js": "f13ecc14aa94",
   "js/biting/dillon.js": "830399143f6c",
   "assets/map/dillon-map-tall.png": "29d7f7030500",
   "assets/map/dillon-map-wide.png": "c9b315494172",
-  "logan/": "4751c7538d0d",
+  "logan/": "b6287c967375",
   "assets/logan-chart.png": "f2e49674592a",
   "js/lake-map-data-logan.js": "caf4e1e4d2ca",
   "js/biting/logan.js": "400893480d95",
   "assets/map/logan-map-tall.png": "974c448fa6a8",
   "assets/map/logan-map-wide.png": "4dc4302101c2",
-  "saltfork/": "3987e5f0cc54",
+  "saltfork/": "032520c346dd",
   "assets/saltfork-chart.png": "00c70968ea52",
   "js/lake-map-data-saltfork.js": "846534aa0e1f",
   "js/biting/saltfork.js": "d839afaee077",
   "assets/map/saltfork-map-tall.png": "86b0df903f84",
   "assets/map/saltfork-map-wide.png": "fc75e61e3fff",
-  "burroak/": "a3ef38c8cfb0",
+  "burroak/": "a0185a68ce73",
   "assets/burroak-chart.png": "dfd696e071e0",
   "js/lake-map-data-burroak.js": "23e32c2e9daa",
   "js/biting/burroak.js": "78129464db80",
   "assets/map/burroak-map-tall.png": "e18358a3c235",
   "assets/map/burroak-map-wide.png": "9a456fa305f4",
-  "dow/": "91640ce324a8",
+  "dow/": "6f59acef58f9",
   "assets/dow-chart.png": "9dea67521582",
   "js/lake-map-data-dow.js": "d3e09b820606",
   "js/biting/dow.js": "a1f240384980",
   "assets/map/dow-map-tall.png": "c6ee1b4bfdcc",
   "assets/map/dow-map-wide.png": "1282bad36e66",
-  "mosquito/": "4a695539b594",
+  "mosquito/": "afc23b3db6dc",
   "assets/mosquito-chart.png": "fbcd2e567bbb",
   "js/lake-map-data-mosquito.js": "9b00b93864fe",
   "js/biting/mosquito.js": "a838e2c7b1ae",
   "assets/map/mosquito-map-tall.png": "0ec97542cfcb",
   "assets/map/mosquito-map-wide.png": "5f9c8adca6e1",
-  "berlin/": "a1f2db14efc6",
+  "berlin/": "4e0108a8e5f1",
   "assets/berlin-chart.png": "b830fa015fb7",
-  "js/lake-map-data-berlin.js": "5952b8eda982",
+  "js/lake-map-data-berlin.js": "106598a23c30",
   "js/biting/berlin.js": "31162a09a434",
   "assets/map/berlin-map-tall.png": "8bda38969671",
   "assets/map/berlin-map-wide.png": "f06db7bafa09",
-  "westbranch/": "5f3e7a330d31",
+  "westbranch/": "5b76f148e596",
   "assets/westbranch-chart.png": "882121f583eb",
   "js/lake-map-data-westbranch.js": "e005a7ba637a",
   "js/biting/westbranch.js": "fff129984e87",
   "assets/map/westbranch-map-tall.png": "1e08f8cc8cb5",
   "assets/map/westbranch-map-wide.png": "28227371f1b1",
-  "pymatuning/": "4c99992d4c5c",
+  "pymatuning/": "f3f2e1e10a87",
   "assets/pymatuning-chart.png": "cc48ee19f208",
   "js/lake-map-data-pymatuning.js": "3f016fbb89aa",
   "js/biting/pymatuning.js": "5f2d1dbca390",
   "assets/map/pymatuning-map-tall.png": "c7d15d6af5fb",
   "assets/map/pymatuning-map-wide.png": "6cb0238db655",
-  "milton/": "0b29d51ef9f8",
+  "milton/": "6ec7d11eee12",
   "assets/milton-chart.png": "86d5f99e27e1",
   "js/lake-map-data-milton.js": "9a99f43c4771",
   "js/biting/milton.js": "79f93a79bb98",
   "assets/map/milton-map-tall.png": "99dad2407b96",
   "assets/map/milton-map-wide.png": "f53f78b14569",
-  "leesville/": "24e39ffd63b0",
+  "leesville/": "90e8a6944d09",
   "assets/leesville-chart.png": "f9e088059c15",
   "js/lake-map-data-leesville.js": "225dc9ee359a",
   "js/biting/leesville.js": "4438c66a8ff3",
   "assets/map/leesville-map-tall.png": "6c1554562cd4",
   "assets/map/leesville-map-wide.png": "1e7cf0bdfe35",
-  "grandlakestmarys/": "93b9012b8f11",
+  "grandlakestmarys/": "fa251226cd81",
   "assets/grandlakestmarys-chart.png": "b09d980eba98",
   "js/lake-map-data-grandlakestmarys.js": "e7b5fc5a1da7",
   "js/biting/grandlakestmarys.js": "e38f367dc61e",
   "assets/map/grandlakestmarys-map-tall.png": "3a1658e2596a",
   "assets/map/grandlakestmarys-map-wide.png": "8ee5a67cbc3a",
-  "caesarcreek/": "0799f0f717a4",
+  "caesarcreek/": "ef31fe9cbe95",
   "assets/caesarcreek-chart.png": "29e57056cc97",
   "js/lake-map-data-caesarcreek.js": "e476e924fc03",
   "js/biting/caesarcreek.js": "b0cb22a7ec8c",
   "assets/map/caesarcreek-map-tall.png": "184424f54ae3",
   "assets/map/caesarcreek-map-wide.png": "004ee69b5927",
-  "eastfork/": "98258cefd904",
+  "eastfork/": "1a9cbd5b9ad8",
   "assets/eastfork-chart.png": "a13ff7f07bd6",
   "js/lake-map-data-eastfork.js": "153c7cbe3b69",
   "js/biting/eastfork.js": "425832c7fdb6",
   "assets/map/eastfork-map-tall.png": "f7806350d292",
   "assets/map/eastfork-map-wide.png": "47951587ddcc",
-  "cjbrown/": "f4b022c5f851",
+  "cjbrown/": "e6d05cb3e9c9",
   "assets/cjbrown-chart.png": "5cd4d674053d",
   "js/lake-map-data-cjbrown.js": "a0a7548f200f",
   "js/biting/cjbrown.js": "95e29b06dbb3",
   "assets/map/cjbrown-map-tall.png": "2b9d57dfc4a3",
   "assets/map/cjbrown-map-wide.png": "fe941203b2e4",
-  "rockyfork/": "5ae60c0b1120",
+  "rockyfork/": "c35f76e69bfc",
   "assets/rockyfork-chart.png": "d25868daf005",
   "js/lake-map-data-rockyfork.js": "d400c417ae29",
   "js/biting/rockyfork.js": "fa245187d73d",
   "assets/map/rockyfork-map-tall.png": "5d21225b0589",
   "assets/map/rockyfork-map-wide.png": "0c8f026eb1f3",
-  "ladue/": "620e5d5c5c52",
+  "ladue/": "927de06b5f7f",
   "assets/ladue-chart.png": "25c5f2b830a4",
   "js/lake-map-data-ladue.js": "8f9dedd8d729",
   "js/biting/ladue.js": "efb1def845a4",
   "assets/map/ladue-map-tall.png": "13e4125e1e35",
   "assets/map/ladue-map-wide.png": "38d5e5827892",
-  "paintcreek/": "06955312d250",
+  "paintcreek/": "f299319490a1",
   "assets/paintcreek-chart.png": "5ff440009e16",
   "js/lake-map-data-paintcreek.js": "549f08bca087",
   "js/biting/paintcreek.js": "f2468f9c8f40",
   "assets/map/paintcreek-map-tall.png": "c8e40efa53d4",
   "assets/map/paintcreek-map-wide.png": "441b1eaa4e1d",
-  "portagelakes/": "09ea2a8a2cf0",
+  "portagelakes/": "73b2a346e9d3",
   "assets/portagelakes-chart.png": "30a8f8f2ef6a",
   "js/lake-map-data-portagelakes.js": "e9533cd8d3f1",
   "js/biting/portagelakes.js": "d2e9c58f7364",
   "assets/map/portagelakes-map-tall.png": "3cb868942cf0",
   "assets/map/portagelakes-map-wide.png": "62d1be84e5dc",
-  "mogadore/": "d1c39b1ef078",
+  "mogadore/": "5dc4840e6c12",
   "assets/mogadore-chart.png": "d3af6b763190",
   "js/lake-map-data-mogadore.js": "802298d33beb",
   "js/biting/mogadore.js": "9a4bc4112ced",
   "assets/map/mogadore-map-tall.png": "7ce4ba731042",
   "assets/map/mogadore-map-wide.png": "557a8dad255a",
-  "loramie/": "84372b58d241",
+  "loramie/": "4ce67d641f10",
   "assets/loramie-chart.png": "228a1f546d2f",
   "js/lake-map-data-loramie.js": "9ee9cb89fc7d",
   "js/biting/loramie.js": "ffd4cfa2a91b",
   "assets/map/loramie-map-tall.png": "53124225a5c0",
   "assets/map/loramie-map-wide.png": "deb0f997547a",
-  "nimisila/": "a00858784e20",
+  "nimisila/": "4a368362feb3",
   "assets/nimisila-chart.png": "ec73119c7718",
   "js/lake-map-data-nimisila.js": "2a57b1d6d12b",
   "js/biting/nimisila.js": "e92f55f47f6d",
   "assets/map/nimisila-map-tall.png": "ba1aa383793b",
   "assets/map/nimisila-map-wide.png": "01d63520cf96",
-  "cowan/": "c41b07c7dd23",
+  "cowan/": "8ea422e3db72",
   "assets/cowan-chart.png": "9705f25dda90",
   "js/lake-map-data-cowan.js": "4d37ed8ccbd7",
   "js/biting/cowan.js": "eb6b1eb6d023",
   "assets/map/cowan-map-tall.png": "d5f31b62cf19",
   "assets/map/cowan-map-wide.png": "f37e386679d2",
-  "acton/": "aa519bbe0baf",
+  "acton/": "1e4944d09fdf",
   "assets/acton-chart.png": "cf8d50b7fdf2",
   "js/lake-map-data-acton.js": "c26bd1247b6c",
   "js/biting/acton.js": "f4872d3d5495",
   "assets/map/acton-map-tall.png": "bc35e309faab",
   "assets/map/acton-map-wide.png": "d1c411bc272a",
-  "tappan/": "8d7b19178307",
+  "tappan/": "609f70151613",
   "assets/tappan-chart.png": "92ac7e4c0244",
   "js/lake-map-data-tappan.js": "ebcb71d388e8",
   "js/biting/tappan.js": "2ef14eaa695f",
   "assets/map/tappan-map-tall.png": "7cdb8fee9f87",
   "assets/map/tappan-map-wide.png": "09831e023ccd",
-  "piedmont/": "3a1c25d56e08",
+  "piedmont/": "076fa6800aa8",
   "assets/piedmont-chart.png": "22532c56448f",
   "js/lake-map-data-piedmont.js": "902a46b07b91",
   "js/biting/piedmont.js": "813a57a3cff0",
   "assets/map/piedmont-map-tall.png": "41d69caa4595",
   "assets/map/piedmont-map-wide.png": "b0c39dae5f65",
-  "clendening/": "184e886ac1f9",
+  "clendening/": "fc6ef3e6d487",
   "assets/clendening-chart.png": "8dd4bee562e7",
   "js/lake-map-data-clendening.js": "cdd0038afac5",
   "js/biting/clendening.js": "392dd834db91",
   "assets/map/clendening-map-tall.png": "4dbccaec5959",
   "assets/map/clendening-map-wide.png": "97b8c906d740",
-  "atwood/": "49ed043b7b26",
+  "atwood/": "ee914e4f0047",
   "assets/atwood-chart.png": "bd3b66838ed0",
   "js/lake-map-data-atwood.js": "3842666b3467",
   "js/biting/atwood.js": "48af2327fb6a",
   "assets/map/atwood-map-tall.png": "9dd21ad90ce3",
   "assets/map/atwood-map-wide.png": "3e10dc51356a",
-  "charlesmill/": "dd8a19cb4d5b",
+  "charlesmill/": "f1775e769c73",
   "assets/charlesmill-chart.png": "768dbb404e8b",
   "js/lake-map-data-charlesmill.js": "2f21d90ded61",
   "js/biting/charlesmill.js": "25e23c54a3da",
   "assets/map/charlesmill-map-tall.png": "bf9ebbfcfa1a",
   "assets/map/charlesmill-map-wide.png": "68cf0cfd22f2",
-  "pleasanthill/": "d8362b766f53",
+  "pleasanthill/": "41b7aed15bc2",
   "assets/pleasanthill-chart.png": "28092b8e4ce5",
   "js/lake-map-data-pleasanthill.js": "7234942bf7cf",
   "js/biting/pleasanthill.js": "8ca32c73242f",
   "assets/map/pleasanthill-map-tall.png": "0d1e720854ce",
   "assets/map/pleasanthill-map-wide.png": "9a55abbdc0e4",
-  "beachcity/": "5428aeea73e6",
+  "beachcity/": "7e0bf61ad34d",
   "assets/beachcity-chart.png": "7116c969b477",
   "js/lake-map-data-beachcity.js": "57bff953f033",
   "js/biting/beachcity.js": "0af313b0bcde",
   "assets/map/beachcity-map-tall.png": "e424f61d133c",
   "assets/map/beachcity-map-wide.png": "b146b52abe4a",
-  "wingfoot/": "ea91d251e5d4",
+  "wingfoot/": "bf43439cb72f",
   "assets/wingfoot-chart.png": "2b8e6ff1268a",
   "js/lake-map-data-wingfoot.js": "b91d99837b5d",
   "js/biting/wingfoot.js": "10388d13a23e",
   "assets/map/wingfoot-map-tall.png": "c1ce380c5bba",
   "assets/map/wingfoot-map-wide.png": "10a8a2a71e8f",
-  "eastbranch/": "4fbf2bc645d5",
+  "eastbranch/": "7e6a1a81a77c",
   "assets/eastbranch-chart.png": "e1643a053f6a",
   "js/lake-map-data-eastbranch.js": "03405143a1ca",
   "js/biting/eastbranch.js": "8a8ff80f9f38",
   "assets/map/eastbranch-map-tall.png": "1be479b72836",
   "assets/map/eastbranch-map-wide.png": "32a67f51a58d",
-  "guilford/": "8819a1395e58",
+  "guilford/": "85699681f0cb",
   "assets/guilford-chart.png": "0b2f53702f0a",
   "js/lake-map-data-guilford.js": "89846a9e0364",
   "js/biting/guilford.js": "97e92e31fb56",
   "assets/map/guilford-map-tall.png": "e3f8882c6aa5",
   "assets/map/guilford-map-wide.png": "9734ecd641e1",
-  "highlandtown/": "caabdf4bccbd",
+  "highlandtown/": "eaca38295e34",
   "assets/highlandtown-chart.png": "484eac6a47f9",
   "js/lake-map-data-highlandtown.js": "db3e1564d27f",
   "js/biting/highlandtown.js": "4e4eee5f8b51",
   "assets/map/highlandtown-map-tall.png": "be58591f52cf",
   "assets/map/highlandtown-map-wide.png": "c8eebeace78b",
-  "punderson/": "fde829d4437e",
+  "punderson/": "d99f23990b3b",
   "assets/punderson-chart.png": "2d4546432478",
   "js/lake-map-data-punderson.js": "9376fc972e56",
   "js/biting/punderson.js": "58177dd08932",
   "assets/map/punderson-map-tall.png": "bb10daaeeecf",
   "assets/map/punderson-map-wide.png": "6937a26a8398",
-  "wellington/": "00ef93d85946",
+  "wellington/": "8ad47d0c939e",
   "assets/wellington-chart.png": "16ed1eac23b1",
   "js/lake-map-data-wellington.js": "3505ca50f1d6",
   "js/biting/wellington.js": "aa5fe79e5d1e",
   "assets/map/wellington-map-tall.png": "3718dfd9adb2",
   "assets/map/wellington-map-wide.png": "a0fbcd0c598d",
-  "kiser/": "ed0933fddfc1",
+  "kiser/": "4da6cd9683e4",
   "assets/kiser-chart.png": "6a8043b072f6",
   "js/lake-map-data-kiser.js": "9f648d0ee1ad",
   "js/biting/kiser.js": "5379f0e7680e",
   "assets/map/kiser-map-tall.png": "522208b9f6e4",
   "assets/map/kiser-map-wide.png": "1e676d9e24aa",
-  "hargus/": "d5f7b6dbf2ae",
+  "hargus/": "6384baae6144",
   "assets/hargus-chart.png": "f7e976a9db8d",
   "js/lake-map-data-hargus.js": "6130458a567f",
   "js/biting/hargus.js": "2a3053706451",
   "assets/map/hargus-map-tall.png": "29d846786107",
   "assets/map/hargus-map-wide.png": "d4bc81fca805",
-  "stonelick/": "0422e80d2495",
+  "stonelick/": "d6230a3e99eb",
   "assets/stonelick-chart.png": "6cae87db00da",
   "js/lake-map-data-stonelick.js": "d7b518629b63",
   "js/biting/stonelick.js": "2d6897458667",
   "assets/map/stonelick-map-tall.png": "3d48a79769b8",
   "assets/map/stonelick-map-wide.png": "195d93b5a95c",
-  "grant/": "99f2cc71b7f1",
+  "grant/": "a1b2a4511d5f",
   "assets/grant-chart.png": "d6c119931438",
   "js/lake-map-data-grant.js": "3b2dc8a3ef4e",
   "js/biting/grant.js": "cde49a110fb9",
   "assets/map/grant-map-tall.png": "9eaa7d379111",
   "assets/map/grant-map-wide.png": "110d2eb043b2",
-  "lakewhite/": "70f116dac373",
+  "lakewhite/": "f4aba49cb0e4",
   "assets/lakewhite-chart.png": "d9f70bf0fff7",
   "js/lake-map-data-lakewhite.js": "c4e49b70625d",
   "js/biting/lakewhite.js": "6a13cfdfb656",
   "assets/map/lakewhite-map-tall.png": "76753f37d53b",
   "assets/map/lakewhite-map-wide.png": "4500d8885ea8",
-  "lakerupert/": "af9692b10d3b",
+  "lakerupert/": "87447ef6988d",
   "assets/lakerupert-chart.png": "575bbb9374a3",
   "js/lake-map-data-lakerupert.js": "d3eaf48ab9a6",
   "js/biting/lakerupert.js": "c36264282233",
   "assets/map/lakerupert-map-tall.png": "ccca05a4eeaa",
   "assets/map/lakerupert-map-wide.png": "8005a1bffef8",
-  "jackson/": "5224740cf82e",
+  "jackson/": "00cdd41dea38",
   "assets/jackson-chart.png": "daf394aebdf6",
   "js/lake-map-data-jackson.js": "7db24cddcc01",
   "js/biting/jackson.js": "eebde2fc62c2",
   "assets/map/jackson-map-tall.png": "521692247685",
   "assets/map/jackson-map-wide.png": "ce8819d51e44",
-  "wolfrun/": "58bac550e0bd",
+  "wolfrun/": "d3114d90d513",
   "assets/wolfrun-chart.png": "93068d6a60fc",
   "js/lake-map-data-wolfrun.js": "26664bab9c14",
   "js/biting/wolfrun.js": "a622222f5cc4",
   "assets/map/wolfrun-map-tall.png": "68acf311e6aa",
   "assets/map/wolfrun-map-wide.png": "0ef678780f18",
-  "tycoon/": "3f72b3602bc0",
+  "tycoon/": "206d0667172b",
   "assets/tycoon-chart.png": "a598d96631cd",
   "js/lake-map-data-tycoon.js": "fb9338f2f39b",
   "js/biting/tycoon.js": "b01dc35f94ba",
   "assets/map/tycoon-map-tall.png": "970277eda22a",
   "assets/map/tycoon-map-wide.png": "fc68bba7d776",
-  "lakehope/": "8c7d35d8e86d",
+  "lakehope/": "00278b1d0f64",
   "assets/lakehope-chart.png": "b018be152841",
   "js/lake-map-data-lakehope.js": "80b1311a42f4",
   "js/biting/lakehope.js": "80af89c8a14a",
   "assets/map/lakehope-map-tall.png": "682266708b92",
   "assets/map/lakehope-map-wide.png": "5c4d97727e39",
-  "findlayreservoirs/": "684c0512e824",
+  "findlayreservoirs/": "7a8d09ba6a6a",
   "assets/findlayreservoirs-chart.png": "6c507436c500",
   "js/lake-map-data-findlayreservoirs.js": "e3c859f11db1",
   "js/biting/findlayreservoirs.js": "81c9f6059f2e",
   "assets/map/findlayreservoirs-map-tall.png": "55dc3b7afe5d",
   "assets/map/findlayreservoirs-map-wide.png": "8330efb19879",
-  "bresler/": "893a956f57f1",
+  "bresler/": "eeb1597d2a97",
   "assets/bresler-chart.png": "09cec0a0120a",
   "js/lake-map-data-bresler.js": "f667b2f03dde",
   "js/biting/bresler.js": "f589b0d3bfe9",
   "assets/map/bresler-map-tall.png": "9525856792ac",
   "assets/map/bresler-map-wide.png": "47b54a4a600b",
-  "fergusonmetzger/": "8770c64e361f",
+  "fergusonmetzger/": "0b516dfc1ae3",
   "assets/fergusonmetzger-chart.png": "816292c0879a",
   "js/lake-map-data-fergusonmetzger.js": "ebe1653a06dc",
   "js/biting/fergusonmetzger.js": "dcf60ec85569",
@@ -1128,8 +1130,12 @@ var REVISIONS = {
 function rel(url) { return url.href.slice(SCOPE.length); }
 
 function isWhisperwood(url) {
-  var r = rel(url).toLowerCase();
-  return r === "whisperwood" || r.indexOf("whisperwood/") === 0 || r.indexOf("whisperwood.html") === 0;
+  // path only: rel() includes the query, so /whisperwood?utm= would miss and get intercepted
+  var root = new URL(SCOPE).pathname, path = url.pathname || "";
+  if (path.indexOf(root) === 0) path = path.slice(root.length);
+  else if (path.charAt(0) === "/") path = path.slice(1);
+  path = path.toLowerCase();
+  return path === "whisperwood" || path.indexOf("whisperwood/") === 0 || path.indexOf("whisperwood.html") === 0;
 }
 
 // a cached redirect can't answer a navigation, so store a clean copy
@@ -1194,9 +1200,16 @@ function download(path, url) {
     if (!want) return res;
     return hashOf(path, res.clone()).then(function (h) {
       if (h === want || h === null) return res;
-      // a cache between here and the server still had the last deploy's copy: ask past it once, then keep what comes
+      // a cache between here and the server still had the last deploy's copy: ask past it once, and hash that too.
+      // if the retry still does not match, throw so install fails and the next update check tries again
       return fetch(new Request(url + (url.indexOf("?") < 0 ? "?" : "&") + "nbrev=" + want, { cache: "reload", credentials: "same-origin" }))
-        .then(function (r2) { return r2.ok ? r2 : res; }, function () { return res; });
+        .then(function (r2) {
+          if (!r2.ok) throw new Error(path + " " + r2.status);
+          return hashOf(path, r2.clone()).then(function (h2) {
+            if (h2 === want || h2 === null) return r2;
+            throw new Error(path + " hash mismatch");
+          });
+        });
     });
   });
 }
@@ -1490,6 +1503,22 @@ function offlinePage() {
 
 // kind: "pages", "data" or "assets" (CSS and JS). A precached page, script or style is not saved again at runtime
 // (its precache copy matches the shell); data is always saved, so the log and tournaments offline are the newest seen.
+function markSaved(res) {
+  return res.blob().then(function (b) {
+    var h = new Headers(res.headers);
+    h.set("X-NB-Saved", "1");
+    return new Response(b, { status: res.status, statusText: res.statusText, headers: h });
+  });
+}
+// a runtime assets hit is only this deploy if its X-NB-Deploy matches the request (or it is an untagged precache copy)
+function assetFallbackOk(hit, url) {
+  if (!hit) return false;
+  var want = url.searchParams.get("v") || VERSION;
+  var d = hit.headers.get(DEPLOY_HEADER);
+  if (d) return d === want;
+  return want === VERSION;
+}
+
 function networkFirst(event, url, kind) {
   var network = fetch(event.request).then(function (res) {
     if (res.ok && res.type === "basic" && (kind === "data" || !precachePath(url))) {
@@ -1497,14 +1526,31 @@ function networkFirst(event, url, kind) {
     }
     return res;
   });
+  // data feeds: wait for the network; a saved copy is only used when the fetch fails, and is labelled so
+  if (kind === "data") {
+    return network.catch(function () {
+      return saved("data", url).then(function (hit) { return hit ? markSaved(hit) : Response.error(); });
+    });
+  }
   var timeout = new Promise(function (resolve) {
     setTimeout(function () { resolve(saved(kind, url)); }, NETWORK_TIMEOUT);
   });
   return Promise.race([
     network,
-    timeout.then(function (hit) { return hit || network; })   // slow signal: use the saved copy if there is one
+    timeout.then(function (hit) {
+      // non-precached scripts: do not serve another deploy's copy just because the network is slow
+      if (kind === "assets" && hit && !assetFallbackOk(hit, url)) return network;
+      return hit || network;
+    })
   ]).catch(function () {
-    return saved(kind, url).then(function (hit) { return hit || (kind === "pages" ? offlinePage() : Response.error()); });
+    return saved(kind, url).then(function (hit) {
+      if (kind === "assets") {
+        if (assetFallbackOk(hit, url)) return hit;
+        if (hit) { tellMixed(event); return hit; }
+        return Response.error();
+      }
+      return hit || (kind === "pages" ? offlinePage() : Response.error());
+    });
   });
 }
 
@@ -1573,9 +1619,11 @@ function staleWhileRevalidate(event, url) {
 }
 
 // fonts and images: precache first, then the assets runtime cache. A ?v= content hash (tools/stamp-assets.py) means
-// the file is immutable, so a cached copy is returned with no revalidate. Unversioned requests (a dynamic URL that
-// was not stamped) stay stale while revalidate. Live readings never come through here: data/ is network first, and
-// NWS/USGS/Corps requests are cross origin and are not intercepted.
+// the file is immutable, so a cached copy is returned with no revalidate only when that copy's X-NB-Deploy matches
+// the requested v (remember() stores under a query-stripped key, so a new hash would otherwise hit the old bytes).
+// On a mismatch, go to the network and replace the cache entry; the old copy is used only if the network fails.
+// Unversioned requests (a dynamic URL that was not stamped) stay stale while revalidate. Live readings never come
+// through here: data/ is network first, and NWS/USGS/Corps requests are cross origin and are not intercepted.
 function isFontOrImage(url) {
   return /\.(woff2|png|svg|ico|jpe?g|webp|gif)$/i.test(url.pathname);
 }
@@ -1584,16 +1632,18 @@ function cacheFirstAsset(event, url) {
   return fromPrecache(url).then(function (pre) {
     if (pre) return pre;
     return fromRuntime(RUNTIME.assets, url).then(function (hit) {
-      if (hit && url.searchParams.get("v")) return hit;       // content-hashed URL: immutable
+      var want = url.searchParams.get("v");
+      if (hit && want && hit.headers.get(DEPLOY_HEADER) === want) return hit;   // same content hash as the request
       var fresh = fetch(event.request).then(function (res) {
         if (res.ok && res.type === "basic") return remember("assets", url, res.clone()).then(function () { return res; });
         return res;
       });
-      if (hit) {
+      if (hit && !want) {
         event.waitUntil(fresh.catch(function () {}));
         return hit;
       }
-      return fresh;
+      // hashed URL with no matching cache entry: wait for the network; fall back only when it fails
+      return want ? fresh.catch(function (err) { if (hit) return hit; throw err; }) : fresh;
     });
   });
 }

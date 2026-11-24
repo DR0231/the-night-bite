@@ -2,7 +2,7 @@
    listed in DATA-SOURCES.md. Positions are percentages of each map image, projected from real lat/lng. */
 window.NightBiteMapDataBerlin = {
  "title": "Ramps & bait at Berlin Lake",
- "notes": "Corps of Engineers lake with an ODNR fishing area: no hp limit by day, 10 mph at night. Bonner Road ramp closed Sept. 14, 2026 to May 28, 2027; Mill Creek ramp open in its place. The Corps also lists ramps at Dutch Harbor, Deer Creek and Willow Creek, not pinned here. Shoreline traced from OpenStreetMap, not for navigation.",
+ "notes": "Corps of Engineers lake with an ODNR fishing area: no hp limit by day, 10 mph at night. Bonner Road ramp closed Sept. 14, 2026 to May 28, 2027. The Corps said the Mill Creek Campground boat ramp would remain open until Nov. 23, 2026; it is now closed for the season. ODNR still lists it open to Nov. 25, and open again from Feb. 27 to May 21, 2027. The Corps also lists ramps at Dutch Harbor, Deer Creek and Willow Creek, not pinned here. Shoreline traced from OpenStreetMap, not for navigation.",
  "maps": {
   "berlin-map-wide": {
    "src": "assets/map/berlin-map-wide.png?v=f06db7bafa09",
@@ -24,7 +24,7 @@ window.NightBiteMapDataBerlin = {
    "shortLabel": "Bonner Rd",
    "address": "Bonner Road, Deerfield",
    "parking": "Yes",
-   "note": "CLOSED for renovation from Sept. 14, 2026 to May 28, 2027 (ODNR). Use Mill Creek while it is open.",
+   "note": "CLOSED for renovation from Sept. 14, 2026 to May 28, 2027 (ODNR). The Corps closed the Mill Creek Campground boat ramp for the season as of Nov. 23, 2026.",
    "directions": [
     41.03635,
     -81.00875
@@ -56,7 +56,7 @@ window.NightBiteMapDataBerlin = {
    "shortLabel": "Mill Creek",
    "address": "Mill Creek Recreation Area, US Army Corps of Engineers",
    "parking": "Yes",
-   "note": "ODNR: open Sept. 7 to Nov. 25, 2026 and Feb. 27 to May 21, 2027 while Bonner Road is closed.",
+   "note": "The Corps said this ramp would remain open until Nov. 23, 2026; it is now closed for the season. ODNR still lists it open to Nov. 25, and open again from Feb. 27 to May 21, 2027.",
    "directions": [
     41.007,
     -80.99787
@@ -72,12 +72,12 @@ window.NightBiteMapDataBerlin = {
     }
    },
    "sources": [
-    "ODNR Berlin Lake Fishing Area page (Mill Creek ramp open 9/7 to 11/25/2026 and 2/27 to 5/21/2027)",
+    "U.S. Army Corps of Engineers, Berlin Lake official page (ramp would remain open until Nov. 23, 2026; Nov. 19, 2026 notice); ODNR Berlin Lake Fishing Area page (still lists Mill Creek open 9/7 to 11/25/2026 and 2/27 to 5/21/2027)",
     "US Army Corps of Engineers, Berlin water control manual (Mill Creek recreation area ramp)",
     "OpenStreetMap node 357402758 (coordinates)"
    ],
    "sourceLabels": [
-    "ODNR",
+    "U.S. Army Corps of Engineers, Berlin Lake",
     "US Army Corps of Engineers, Berlin water control manual",
     "OpenStreetMap"
    ]

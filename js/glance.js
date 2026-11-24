@@ -20,7 +20,16 @@
 (function () {
   var box = document.getElementById("glance");
   if (!box) return;
-  var LK = window.NightBiteLake, C = (LK && LK.cfg) || {}, P = C.pool || {}, NW = C.nws || {};
+  function pageLake() {
+    var id = (window.NightBitePageLake || document.documentElement.getAttribute("data-lake") || "").toLowerCase();
+    if (id) return id;
+    var m = document.querySelector('meta[name="nb-home"]');
+    return ((m && m.getAttribute("content")) || "").toLowerCase();
+  }
+  var LK = window.NightBiteLake;
+  // If lakes.js is missing, leave the baked strip alone on any page that is not Hoover.
+  if (!LK && pageLake() !== "hoover") return;
+  var C = (LK && LK.cfg) || {}, P = C.pool || {}, NW = C.nws || {};
   var line = document.getElementById("correction-line");
   var checked = document.getElementById("correction-checked");
   var cond = document.getElementById("conditions");
@@ -113,7 +122,9 @@
     var failed = line.hasAttribute("data-refresh-failed"), off = line.hasAttribute("data-offline");
     var what = HASTEMP && lastM[2] !== undefined ? "Level and temp" : "Level";   // a line with no temp: the stamp speaks for the level only
     var text;
-    if (src === "live" && !failed && !off) text = what + " live from the " + SRC + " gauge, updated " + ago(at) + " ";
+    // a reading older than 6 hours is never called live, even if the card still has data-source="live"
+    var live = src === "live" && !failed && !off && Date.now() - at <= 6 * 36e5;
+    if (live) text = what + " live from the " + SRC + " gauge, updated " + ago(at) + " ";
     else text = (off ? "Offline. " : failed ? "Live refresh failed. " : "") + what + " last updated " + ago(at) + " ";
     var tm = document.createElement("time");
     tm.setAttribute("datetime", new Date(at).toISOString());
