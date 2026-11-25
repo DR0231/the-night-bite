@@ -4,14 +4,22 @@
  * D'Angelo approves or rejects each one (tools/trip-queue.py), and approved trips go into data/community-log.json by hand.
  * Admin: GET /admin/list?status=pending|approved, POST /admin/approve {id}, POST /admin/reject {id} (deletes),
  * all with "Authorization: Bearer <ADMIN_TOKEN>" (a Worker secret, never in this repo).
- * Bindings: TRIPS (KV), ADMIN_TOKEN (secret), TRIP_WEBHOOK_URL and TRIP_WEBHOOK_KEY (optional secrets: after a trip is
- * stored as pending, one POST with only the trip id wakes the site keeper; never the trip text, never blocks the reply).
- * No raw IP is stored: the rate limit key is a salted SHA-256 of the IP and the hour, and it expires.
+ * Bindings: TRIPS (KV), ADMIN_TOKEN (secret), RATE_SALT (secret, required: the rate-limit hash fails closed if it is
+ * missing), SUBMIT_RATE (Workers Rate Limiting binding: 5 requests per 60 seconds, the only window the binding
+ * supports), SUBMIT_LIMITS (Durable Object: a strict 5 submissions per UTC hour per hashed actor, and a global
+ * MAX_NEW_PER_DAY cap below the 300 pending ceiling), TRIP_WEBHOOK_URL and TRIP_WEBHOOK_KEY (optional secrets: after
+ * a trip is stored as pending, one POST with only the trip id wakes the site keeper; never the trip text, never
+ * blocks the reply). The webhook POST uses only Authorization, requires an https:// URL, and sets redirect: "error".
+ * No raw IP is stored: rate-limit keys are a SHA-256 of the IP and RATE_SALT. wrangler.draft.jsonc declares the new
+ * bindings; wrangler.jsonc is unchanged and still points at worker.js.
  */
 const ORIGINS = ["https://nightbiteoh.com", "https://dr0231.github.io"];
 const MAX_BODY = 4096;
-const RATE_PER_HOUR = 5;
-const MAX_PENDING = 300;
+export const RATE_PER_HOUR = 5;
+export const RATE_BURST_LIMIT = 5;
+export const RATE_BURST_PERIOD = 60;
+export const MAX_PENDING = 300;
+export const MAX_NEW_PER_DAY = 80;
 const SPECIES = ["Channel catfish", "Blue catfish", "Flathead catfish", "Largemouth bass", "Smallmouth bass",
   "Black crappie", "White crappie", "Bluegill / sunfish", "White bass", "Hybrid striped bass", "Saugeye",
   "Walleye", "Common carp", "Longnose gar", "Other"];
@@ -76,6 +84,130 @@ async function sha(s) {
   return [...new Uint8Array(buf)].map(x => x.toString(16).padStart(2, "0")).join("");
 }
 
+/** Read at most `max` bytes from the request body. Stops as soon as the cap is exceeded. Byte count, not UTF-16. */
+export async function readBodyCapped(req, max) {
+  const declared = req.headers.get("Content-Length");
+  if (declared != null && declared !== "" && Number(declared) > max) return { error: 413 };
+  if (!req.body) return { text: "" };
+  const reader = req.body.getReader();
+  const chunks = [];
+  let n = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    n += value.byteLength;
+    if (n > max) {
+      try { await reader.cancel(); } catch (e) { /* already over the cap */ }
+      return { error: 413 };
+    }
+    chunks.push(value);
+  }
+  const buf = new Uint8Array(n);
+  let off = 0;
+  for (const c of chunks) { buf.set(c, off); off += c.byteLength; }
+  return { text: new TextDecoder("utf-8").decode(buf) };
+}
+
+/**
+ * Build the webhook fetch, or null if it must be skipped (missing secrets, not https://, or a bad URL).
+ * Exactly one auth header: Authorization. redirect: "error" so a 3xx does not forward the key.
+ */
+export function webhookInit(url, key, id) {
+  if (!url || !key) return null;
+  if (typeof url !== "string" || !url.startsWith("https://")) return null;
+  try { if (new URL(url).protocol !== "https:") return null; } catch (e) { return null; }
+  return {
+    url,
+    init: {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
+      body: JSON.stringify({ event: "new_trip", id, note: "new trip" }),
+      redirect: "error",
+      signal: AbortSignal.timeout(8000)
+    }
+  };
+}
+
+export function rateSaltMissing(env) {
+  return !env || typeof env.RATE_SALT !== "string" || !env.RATE_SALT;
+}
+
+export async function rateActorKey(env, ip) {
+  if (rateSaltMissing(env)) return null;
+  return "a:" + (await sha((ip || "unknown") + "|" + env.RATE_SALT)).slice(0, 32);
+}
+
+// Apply one increment in a named window. prev is { window, n } or empty. Pure, so the Durable Object and the
+// checks can share it. Never takes an IP.
+export function applyBucket(prev, windowId, limit) {
+  if (typeof windowId !== "string" || !windowId || !Number.isFinite(limit) || limit < 1) {
+    return { ok: false, error: "args" };
+  }
+  const n = prev && prev.window === windowId ? Number(prev.n) || 0 : 0;
+  if (n >= limit) return { ok: false, window: windowId, n };
+  return { ok: true, window: windowId, n: n + 1 };
+}
+
+// Strict per-actor hourly cap and global per-day cap. Storage holds only { window, n } — no IPs.
+export class SubmitLimits {
+  constructor(state, env) {
+    this.state = state;
+    this.env = env;
+  }
+  async fetch(req) {
+    let body;
+    try { body = await req.json(); } catch (e) {
+      return Response.json({ ok: false, error: "json" }, { status: 400 });
+    }
+    const next = applyBucket(await this.state.storage.get("bucket"), body && body.window, Number(body && body.limit));
+    if (next.error === "args") return Response.json({ ok: false, error: "args" }, { status: 400 });
+    if (next.ok) await this.state.storage.put("bucket", { window: next.window, n: next.n });
+    return Response.json({ ok: next.ok, n: next.n });
+  }
+}
+
+async function bumpDo(env, name, windowId, limit) {
+  try {
+    if (!env.SUBMIT_LIMITS || typeof env.SUBMIT_LIMITS.idFromName !== "function" || typeof env.SUBMIT_LIMITS.get !== "function") {
+      return { ok: false, fail: "missing" };
+    }
+    const stub = env.SUBMIT_LIMITS.get(env.SUBMIT_LIMITS.idFromName(name));
+    const res = await stub.fetch(new Request("https://submit-limits/bump", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ window: windowId, limit })
+    }));
+    if (!res || !res.ok) return { ok: false, fail: "do" };
+    const out = await res.json();
+    return { ok: !!(out && out.ok === true) };
+  } catch (e) {
+    return { ok: false, fail: "do" };
+  }
+}
+
+// hashedKey is rateActorKey() — a salt hash, never the raw IP. Fail closed if RATE_SALT, the Rate Limiting
+// binding, or the Durable Object binding is missing. The binding is the first (approximate, per-location, 60s)
+// line; the Durable Object is the strict 5/hour and the global daily cap.
+export async function checkSubmitLimits(env, hashedKey, now) {
+  if (rateSaltMissing(env)) return { error: 503 };
+  if (!env.SUBMIT_RATE || typeof env.SUBMIT_RATE.limit !== "function") return { error: 503 };
+  if (typeof hashedKey !== "string" || !hashedKey) return { error: 503 };
+  let burst;
+  try { burst = await env.SUBMIT_RATE.limit({ key: hashedKey }); }
+  catch (e) { return { error: 503 }; }
+  if (!burst || burst.success !== true) return { error: 429, retryAfter: RATE_BURST_PERIOD };
+  if (!now) now = new Date();
+  const hour = now.toISOString().slice(0, 13);
+  const day = now.toISOString().slice(0, 10);
+  const hourBump = await bumpDo(env, "ip:" + hashedKey, hour, RATE_PER_HOUR);
+  if (hourBump.fail) return { error: 503 };
+  if (!hourBump.ok) return { error: 429, retryAfter: 3600 };
+  const dayBump = await bumpDo(env, "day-total", day, MAX_NEW_PER_DAY);
+  if (dayBump.fail) return { error: 503 };
+  if (!dayBump.ok) return { error: 503, reason: "day-cap" };
+  return { ok: true };
+}
+
 async function tokenOk(req, env) {
   const got = (req.headers.get("Authorization") || "").replace(/^Bearer /, "");
   if (!env.ADMIN_TOKEN || !got) return false;
@@ -97,18 +229,14 @@ async function listAll(env, prefix) {
   return out;
 }
 
-// One fire-and-forget ping per new pending trip. Body is only the id and a note. Skipped if either secret is missing;
-// errors and timeouts are swallowed, no retry, and the reader's response never waits on it.
+// One fire-and-forget ping per new pending trip. Body is only the id and a note. Skipped if either secret is missing,
+// the URL is not https://, or the init cannot be built; errors and timeouts are swallowed, no retry, and the
+// reader's response never waits on it.
 function notify(env, ctx, id) {
-  if (!env.TRIP_WEBHOOK_URL || !env.TRIP_WEBHOOK_KEY || !ctx || typeof ctx.waitUntil !== "function") return;
+  const built = webhookInit(env && env.TRIP_WEBHOOK_URL, env && env.TRIP_WEBHOOK_KEY, id);
+  if (!built || !ctx || typeof ctx.waitUntil !== "function") return;
   try {
-    ctx.waitUntil(fetch(env.TRIP_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + env.TRIP_WEBHOOK_KEY,
-        "X-Automation-Key": env.TRIP_WEBHOOK_KEY },
-      body: JSON.stringify({ event: "new_trip", id, note: "new trip" }),
-      signal: AbortSignal.timeout(8000)
-    }).catch(() => {}));
+    ctx.waitUntil(fetch(built.url, built.init).catch(() => {}));
   } catch (e) { /* never let the ping affect the submission */ }
 }
 
@@ -116,10 +244,9 @@ async function submit(req, env, origin, ctx) {
   const h = cors(origin);
   if (!ORIGINS.includes(origin)) return json(403, { ok: false, error: "origin" }, h);
   if (!(req.headers.get("Content-Type") || "").startsWith("application/json")) return json(415, { ok: false, error: "type" }, h);
-  const len = Number(req.headers.get("Content-Length") || 0);
-  if (len > MAX_BODY) return json(413, { ok: false, error: "too big" }, h);
-  const text = await req.text();
-  if (text.length > MAX_BODY) return json(413, { ok: false, error: "too big" }, h);
+  const bodyRead = await readBodyCapped(req, MAX_BODY);
+  if (bodyRead.error === 413) return json(413, { ok: false, error: "too big" }, h);
+  const text = bodyRead.text;
   let body;
   try { body = JSON.parse(text); } catch (e) { return json(400, { ok: false, error: "json" }, h); }
   // honeypot: a hidden "website" field people never fill; answer ok so bots learn nothing
@@ -127,12 +254,16 @@ async function submit(req, env, origin, ctx) {
   const t = validate(body);
   if (typeof t === "string") return json(400, { ok: false, error: t }, h);
 
+  // fail closed: no RATE_SALT, no Rate Limiting binding, or no Durable Object means we cannot limit safely
+  if (rateSaltMissing(env)) return json(503, { ok: false, error: "server" }, h);
   const ip = req.headers.get("CF-Connecting-IP") || "unknown";
-  const hour = new Date().toISOString().slice(0, 13);
-  const rlKey = "rl:" + (await sha(ip + "|" + hour + "|" + (env.ADMIN_TOKEN || ""))).slice(0, 32);
-  const n = Number((await env.TRIPS.get(rlKey)) || 0);
-  if (n >= RATE_PER_HOUR) return json(429, { ok: false, error: "rate" }, { ...h, "Retry-After": "3600" });
-  await env.TRIPS.put(rlKey, String(n + 1), { expirationTtl: 3600 });
+  const actor = await rateActorKey(env, ip);
+  const limited = await checkSubmitLimits(env, actor, new Date());
+  if (limited.error === 429) {
+    return json(429, { ok: false, error: "rate" }, { ...h, "Retry-After": String(limited.retryAfter || RATE_BURST_PERIOD) });
+  }
+  if (limited.error === 503 && limited.reason === "day-cap") return json(503, { ok: false, error: "queue full" }, h);
+  if (limited.error) return json(limited.error, { ok: false, error: "server" }, h);
 
   const pending = await env.TRIPS.list({ prefix: "pending:", limit: MAX_PENDING });
   if (pending.keys.length >= MAX_PENDING) return json(503, { ok: false, error: "queue full" }, h);

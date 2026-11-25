@@ -37,7 +37,7 @@
  * Kill switch: see SERVICE-WORKER.md.
  */
 var PREFIX = "nb-live-";
-var VERSION = "v50-2026-11-24";
+var VERSION = "v51-2026-11-24";
 var SCOPE = new URL("./", self.location).href;
 var NETWORK_TIMEOUT = 4000;
 var PRECACHE_CACHE = PREFIX + "precache";
@@ -600,11 +600,11 @@ var REVISIONS = {
   "js/alerts.js": "713acdc6077f",
   "js/astro.js": "a3ec0945f030",
   "js/night-rules.js": "c14111456232",
-  "js/i18n.js": "29c05b8d2452",
+  "js/i18n.js": "e7517f457c9e",
   "js/bait-nearby.js": "b75e87af32d4",
   "js/biting.js": "2035244affef",
   "js/community-log.js": "62217f38aaa5",
-  "js/conditions.js": "a1bed5258b5a",
+  "js/conditions.js": "749d6592f93c",
   "js/get-app.js": "8345fce8e5c8",
   "js/glance.js": "1250e4635c52",
   "js/home-log.js": "b0cf7771714e",

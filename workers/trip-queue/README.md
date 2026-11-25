@@ -7,7 +7,7 @@ Worker: https://nb-trip-queue.nightbiteoh.workers.dev (workers.dev only, no DNS)
 - `POST /submit` (CORS: https://nightbiteoh.com, https://dr0231.github.io only). JSON with only lake, date, species,
   ramp, time_window, bait, keep_release, notes, plus the hidden honeypot `website` and `check` (test trips from
   tools/check-trip-queue.cjs). 4 KB body cap, species/time/keep from the form's lists, ramp 80, bait 120, notes 500
-  characters, no links. 5 per IP per hour (salted hash, expires, no raw IP kept). Max 300 pending. Stored as
+  characters, no links. 5 submits per 60 seconds and 5 per UTC hour per hashed actor (RATE_SALT, never the raw IP), and at most 80 new pending trips per day. Max 300 pending. Stored as
   `pending:<id>`. Nothing is published.
 - `GET /admin/list?status=pending|approved`, `POST /admin/approve {id}`, `POST /admin/reject {id}` (deletes),
   `Authorization: Bearer <token>`. Use `python3 tools/trip-queue.py`.

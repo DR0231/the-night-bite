@@ -414,7 +414,7 @@
       ol.appendChild(li);
     });
     var head = stripEl.querySelector(".cond-hours-label");
-    if (head) head.textContent = win.started ? "Tonight, hour by hour" : "Sunset to 2 AM";
+    if (head) head.textContent = tr(win.started ? "Tonight, hour by hour" : "Sunset to 2 AM");
     stripEl.hidden = false;
   }
 
@@ -555,7 +555,7 @@
     if (tot) {
       var t = b ? "Tonight: " + signed(b.score) + " points, " + b.rate + "." : "Tonight: no rating yet. It needs the barometer trend or tonight's wind.";
       if (missing.length) t += " Missing tonight: " + missing.join(", ") + ".";
-      tot.textContent = t;
+      tot.textContent = tr(t);
       tot.hidden = false;
     }
   }
@@ -594,6 +594,10 @@
   var PUSH = ["toward the south end", "into the southwest bank", "into the west bank", "into the northwest bank",
     "toward the north end", "into the northeast bank", "into the east bank", "into the southeast bank"];   // wind FROM N, NE, E ...
   if (LC && LC.push) PUSH = LC.push;   // lakes that don't run north to south (Buckeye Lake) name their own shores
+  function tr(s) {
+    var I = window.NB_I18N;
+    return I && I.t ? I.t(s) : s;
+  }
   function extra(key, label, value) {
     var row = extraEl && extraEl.querySelector('[data-x="' + key + '"]');
     if (!row) return;
@@ -610,10 +614,10 @@
         dew = Math.round(/degF/.test(p.dewpoint.unitCode || "") ? p.dewpoint.value : cToF(p.dewpoint.value)) + "°F";
       }
     }
-    extra("water", "On the water", push);
-    extra("dew", "Dew point", dew);
+    extra("water", tr("On the water"), push);
+    extra("dew", tr("Dew point"), dew);
     var ms = st.moonset && timeEt(st.moonset, window.NightBiteAstro && window.NightBiteAstro.etMidnight(st.moonset).valueOf() !== window.NightBiteAstro.etMidnight(new Date()).valueOf());
-    extra("moonset", "Moonset", ms ? ms.value + " " + ms.unit : null);
+    extra("moonset", tr("Moonset"), ms ? ms.value + " " + ms.unit : null);
     var any = Array.prototype.some.call(extraEl.querySelectorAll("[data-x]"), function (r) { return !r.hidden; });
     extraEl.hidden = !any;
   }
@@ -850,6 +854,7 @@
   // first load once the tab is visible (js/refresh.js), then every 15 minutes while visible
   if (window.NightBiteRefresh && window.NightBiteRefresh.first) window.NightBiteRefresh.first(function () { load(false); }); else load(false);
   if (window.NightBiteRefresh) window.NightBiteRefresh.add("conditions", load);
+  document.addEventListener("nb-lang", function () { try { render(); } catch (e) {} });
 
   function slimHourly(h) {
     // 28 hours: enough to reach 2 AM tomorrow from any time today, for the strip and the storm check

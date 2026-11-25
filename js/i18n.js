@@ -305,7 +305,12 @@
       return lang;
     });
   }
-  window.NB_I18N = { set: set, load: load, current: function () { return cur; } };
+  function t(s) {
+    if (!tbl || cur === "en" || s == null || s === "") return s;
+    var out = lookup(tbl, s, true);
+    return out != null ? out : s;
+  }
+  window.NB_I18N = { set: set, load: load, current: function () { return cur; }, t: t };
   var saved = window.NB_A11Y && NB_A11Y.lang ? NB_A11Y.lang() : "en";
   if (saved !== "en") set(saved);
 })(document);

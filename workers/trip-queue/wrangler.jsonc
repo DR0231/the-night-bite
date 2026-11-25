@@ -1,9 +1,26 @@
+// Deployed through Wrangler (see README.md and DEPLOY-DRAFT.md). No secrets here.
+// ADMIN_TOKEN, RATE_SALT, TRIP_WEBHOOK_URL and TRIP_WEBHOOK_KEY are Worker secrets.
+// namespace_id 41701 was confirmed unused on the account at first deploy (2026-11-24).
+// Wrangler 4.36.0 or later is required for the Rate Limiting binding. The SubmitLimits
+// Durable Object uses a new_sqlite_classes migration (required on the free plan).
 {
-  // Deployed through the Cloudflare API (see README.md). No secrets here: ADMIN_TOKEN is a Worker secret.
   "name": "nb-trip-queue",
   "main": "worker.js",
   "compatibility_date": "2026-11-01",
   "workers_dev": true,
   "observability": { "enabled": false },
-  "kv_namespaces": [{ "binding": "TRIPS", "id": "d41222451003416fadb2d6f529bea6f8" }]
+  "kv_namespaces": [{ "binding": "TRIPS", "id": "d41222451003416fadb2d6f529bea6f8" }],
+  "ratelimits": [
+    {
+      "name": "SUBMIT_RATE",
+      "namespace_id": "41701",
+      "simple": { "limit": 5, "period": 60 }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "SUBMIT_LIMITS", "class_name": "SubmitLimits" }]
+  },
+  "migrations": [
+    { "tag": "v1-submit-limits", "new_sqlite_classes": ["SubmitLimits"] }
+  ]
 }
