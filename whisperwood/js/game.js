@@ -430,6 +430,20 @@ const UI = {
     this.toastHoldT = this.toastT;
   },
 
+  _liftToast() {
+    const t = this.els.toast, p = this.els.prompt;
+    if (!t || !p) return;
+    t.style.top = "";
+    t.style.bottom = "";
+    if (t.classList.contains("hidden") || p.classList.contains("hidden")) return;
+    const tr = t.getBoundingClientRect(), pr = p.getBoundingClientRect();
+    if (!pr.height || tr.top >= pr.bottom || tr.bottom <= pr.top - 8 || tr.left >= pr.right || tr.right <= pr.left) return;
+    const box = getComputedStyle(t).position === "fixed" ? null : t.offsetParent || t.parentNode;
+    const floor = box ? box.getBoundingClientRect().bottom : window.innerHeight;
+    t.style.top = "auto";
+    t.style.bottom = Math.ceil(floor - pr.top + 8) + "px";
+  },
+
   _fitFightHint() {
     const el = this.els.prompt;
     if (!el || typeof Minigame === "undefined" || !Minigame.shortHint) return;
@@ -596,6 +610,7 @@ const UI = {
       this.els.prompt.classList.add("hidden");
       this.els.prompt.style.bottom = "";
     }
+    this._liftToast();
     const movePad = document.getElementById("move-pad");
     if (this.touch() || (movePad && movePad.classList.contains("is-touch"))) {
       if (!this._fishBtn) this._fishBtn = document.getElementById("btn-fish");
@@ -834,7 +849,8 @@ const Game = {
     const hh = Math.floor(mins / 60), mm = mins % 60;
     const ap = hh >= 12 ? "PM" : "AM";
     const h12 = ((hh + 11) % 12) + 1;
-    return `The bed opens at ${h12}:${String(mm).padStart(2, "0")} ${ap}. Stay up a while.`;
+    const at = `${h12}:${String(mm).padStart(2, "0")} ${ap}`;
+    return UI.tt(`The bed opens at ${at}. Stay up a while.`, `Bed opens at ${at}.`);
   },
 
   startSleep() {
